@@ -1,0 +1,5 @@
+itemGroup.ancientspellcraft.tabAncientSpellcraft=Ancient Spellcraft
+
+spell.ancientspellcraft:hellgate=Hell's Gate
+spell.ancientspellcraft:hellgate.desc=Mastering the secrets of fire opens many doors of opportunity...
+spell.ancientspellcraft:hellgate.desc.aw=TODO - AW tooltip for Xoltec magic

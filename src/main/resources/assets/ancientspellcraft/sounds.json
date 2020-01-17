@@ -1,0 +1,8 @@
+{
+    "spell.hellgate": {
+        "category": "spells",
+        "sounds": [
+            "fire/ignite"
+        ]
+    }
+}
