@@ -2,4 +2,7 @@ itemGroup.ancientspellcraft.tabAncientSpellcraft=Ancient Spellcraft
 
 spell.ancientspellcraft:hellgate=Hell's Gate
 spell.ancientspellcraft:hellgate.desc=Mastering the secrets of fire opens many doors of opportunity...
-spell.ancientspellcraft:hellgate.desc.aw=TODO - AW tooltip for Xoltec magic
+spell.ancientspellcraft:hellgate.desc.aw=TODO
+spell.ancientspellcraft:tameanimal=Tame Animal
+spell.ancientspellcraft:tameanimal.desc=You must follow me, said the Earth Wizard, and the animals of the forest obeyed.
+spell.ancientspellcraft:tameanimal.desc.aw=TODO

@@ -1,8 +1,4 @@
 {
-    "spell.hellgate": {
-        "category": "spells",
-        "sounds": [
-            "fire/ignite"
-        ]
-    }
+    "spell.hellgate": { "category": "spells", "sounds": ["fire/ignite"]},
+    "spell.tameanimal": { "category": "spells", "sounds": ["ebwizardry:heal"]}
 }

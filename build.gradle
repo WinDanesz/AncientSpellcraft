@@ -16,7 +16,7 @@ repositories {
     }
 }
 
-version = "1.0"
+version = "1.0.1"
 group = "com.windanesz.ancientspellcraft" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "ancientspellcraft"
 

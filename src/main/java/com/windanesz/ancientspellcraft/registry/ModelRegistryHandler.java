@@ -1,4 +1,4 @@
-package com.windanesz.ancientspellcraft.util;
+package com.windanesz.ancientspellcraft.registry;
 
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
