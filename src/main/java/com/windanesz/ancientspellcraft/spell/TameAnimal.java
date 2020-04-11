@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.spell;
 
-import electroblob.wizardry.registry.WizardrySounds;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -18,6 +18,7 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -65,7 +66,8 @@ public class TameAnimal extends SpellRay {
 					wolf.setTamedBy(casterPlayer);
 					wolf.getNavigator().clearPath();
 					wolf.setAttackTarget((EntityLivingBase) null);
-					wolf.getAISit().setSitting(true);
+					wolf.setSitting(true);
+//					wolf.getAISit().setSitting(true);
 					wolf.setHealth(20.0F);
 					playTameEffect(true, wolf);
 					wolf.world.setEntityState(wolf, (byte) 7);
@@ -130,4 +132,8 @@ public class TameAnimal extends SpellRay {
 //		ParticleBuilder.create(ParticleBuilder.Type.SPARK).pos(x, y, z).vel(vx, vy, vz).collide(true).spawn(world);
 	}
 
+	@Override
+	public boolean applicableForItem(Item item) {
+		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+	}
 }

@@ -1,44 +1,62 @@
 package com.windanesz.ancientspellcraft;
 
-import com.windanesz.ancientspellcraft.proxy.IProxy;
+import com.windanesz.ancientspellcraft.command.CommandListBiomes;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftLoot;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import org.apache.logging.log4j.LogManager;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = AncientSpellcraft.MOD_ID, name = AncientSpellcraft.NAME, version = AncientSpellcraft.VERSION, acceptedMinecraftVersions = AncientSpellcraft.MC_VERSION, dependencies = "required-after:ebwizardry@[4.2.7,4.3)")
+@Mod(modid = AncientSpellcraft.MODID, name = AncientSpellcraft.NAME, version = AncientSpellcraft.VERSION, acceptedMinecraftVersions = AncientSpellcraft.MC_VERSION, dependencies = "required-after:ebwizardry@[4.2.10,4.3)")
 public class AncientSpellcraft {
 
-	public static final String MOD_ID = "ancientspellcraft";
+	public static final String MODID = "ancientspellcraft";
 	public static final String NAME = "Ancient Spellcraft by Dan";
-	public static final String VERSION = "1.0.1";
+	public static final String VERSION = "1.0.2";
 	public static final String MC_VERSION = "[1.12.2]";
 
-	public static final String CLIENT = "com.windanesz.ancientspellcraft.proxy.ClientProxy";
-	public static final String SERVER = "com.windanesz.ancientspellcraft.proxy.ServerProxy";
+	//	public static final Settings settings = new Settings();
 
-	@SidedProxy(clientSide = AncientSpellcraft.CLIENT, serverSide = AncientSpellcraft.SERVER)
-	public static IProxy proxy;
+	/**
+	 * Static instance of the {@link Settings} object for Wizardry.
+	 */
+	public static final Settings settings = new Settings();
 
-	public static final Logger LOG = LogManager.getLogger(MOD_ID);
+	public static Logger logger;
 
+	// The instance of wizardry that Forge uses.
+	@Mod.Instance(AncientSpellcraft.MODID)
+	public static AncientSpellcraft instance;
+
+	// Location of the proxy code, used by Forge.
+	@SidedProxy(clientSide = "com.windanesz.ancientspellcraft.client.ClientProxy", serverSide = "com.windanesz.ancientspellcraft.CommonProxy")
+	public static CommonProxy proxy;
+
+	/**
+	 * Static instance of the {@link electroblob.wizardry.Settings} object for Wizardry.
+	 */
+
+	//	public static final Logger LOG = LogManager.getLogger(MODID);
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		proxy.preInit(event);
+		logger = event.getModLog();
+		proxy.registerRenderers();
+		AncientSpellcraftLoot.register();
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		proxy.init(event);
+		AncientSpellcraftItems.registerDispenseBehaviours();
+		MinecraftForge.EVENT_BUS.register(instance); // Since there's already an instance we might as well use it
 	}
 
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
-		proxy.postInit(event);
+	public void serverStarting(FMLServerStartingEvent event) {
+		event.registerServerCommand(new CommandListBiomes());
 	}
-
 }

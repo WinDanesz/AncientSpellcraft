@@ -1,0 +1,55 @@
+Unsupposrted library path: C:\git\ancientspellcraft\build\classes\java\api
+Unsupposrted library path: C:\git\ancientspellcraft\build\resources\api
+Symbol range map extraction starting
+Processing 17 files
+startProcessing "com/windanesz/ancientspellcraft/AncientSpellcraft.java" md5: 0b807bcf2bd7c180d76694248f7c0786
+endProcessing "com/windanesz/ancientspellcraft/AncientSpellcraft.java"
+
+startProcessing "com/windanesz/ancientspellcraft/block/NetherFire.java" md5: 310743293b56b8511d9039b7167428c7
+endProcessing "com/windanesz/ancientspellcraft/block/NetherFire.java"
+
+startProcessing "com/windanesz/ancientspellcraft/client/model/ModelSkeletonMage.java" md5: df7db02e5232733dc0110277a688fab7
+endProcessing "com/windanesz/ancientspellcraft/client/model/ModelSkeletonMage.java"
+
+startProcessing "com/windanesz/ancientspellcraft/client/renderer/entity/RenderSkeletonMage.java" md5: 8f4c20f9fd1ea9ee22ba1a4bb70f022d
+endProcessing "com/windanesz/ancientspellcraft/client/renderer/entity/RenderSkeletonMage.java"
+
+startProcessing "com/windanesz/ancientspellcraft/entity/living/EntitySkeletonMage.java" md5: a9d5774b104812eae608887be71f6b16
+endProcessing "com/windanesz/ancientspellcraft/entity/living/EntitySkeletonMage.java"
+
+startProcessing "com/windanesz/ancientspellcraft/init/AncientSpellcraftBlocks.java" md5: 69f77aa9fad7047bccbf967e5a6bd256
+endProcessing "com/windanesz/ancientspellcraft/init/AncientSpellcraftBlocks.java"
+
+startProcessing "com/windanesz/ancientspellcraft/proxy/ClientProxy.java" md5: a970a51f1838a57de375818c26754b97
+endProcessing "com/windanesz/ancientspellcraft/proxy/ClientProxy.java"
+
+startProcessing "com/windanesz/ancientspellcraft/proxy/IProxy.java" md5: c17ef878e7ae5f24a0d223f5926e8a46
+endProcessing "com/windanesz/ancientspellcraft/proxy/IProxy.java"
+
+startProcessing "com/windanesz/ancientspellcraft/proxy/ServerProxy.java" md5: e70dd692da8cac113b14698ccd530fdc
+endProcessing "com/windanesz/ancientspellcraft/proxy/ServerProxy.java"
+
+startProcessing "com/windanesz/ancientspellcraft/registry/AncientSpellcraftSounds.java" md5: 9db93c3f97909ca0012c4ca8e51510c0
+endProcessing "com/windanesz/ancientspellcraft/registry/AncientSpellcraftSounds.java"
+
+startProcessing "com/windanesz/ancientspellcraft/registry/ModelRegistryHandler.java" md5: 65c3bc295ac809b682e80eb6e3a32cc3
+endProcessing "com/windanesz/ancientspellcraft/registry/ModelRegistryHandler.java"
+
+startProcessing "com/windanesz/ancientspellcraft/registry/RegistryHandler.java" md5: 6f4947f5b56d0456be8aae931779b018
+endProcessing "com/windanesz/ancientspellcraft/registry/RegistryHandler.java"
+
+startProcessing "com/windanesz/ancientspellcraft/spell/HellGate.java" md5: 322fa7a9395710c5a38ea405c3d40e61
+endProcessing "com/windanesz/ancientspellcraft/spell/HellGate.java"
+
+startProcessing "com/windanesz/ancientspellcraft/spell/SummonLicheLord.java" md5: 189bde1bb530e302708d7ddc1e006eca
+endProcessing "com/windanesz/ancientspellcraft/spell/SummonLicheLord.java"
+
+startProcessing "com/windanesz/ancientspellcraft/spell/TameAnimal.java" md5: fef0611bdc2ef2805fce215423c415a7
+endProcessing "com/windanesz/ancientspellcraft/spell/TameAnimal.java"
+
+startProcessing "com/windanesz/ancientspellcraft/util/InjectionTools.java" md5: 08fda5552cb0e6220c1583fcdc1ac91f
+endProcessing "com/windanesz/ancientspellcraft/util/InjectionTools.java"
+
+startProcessing "com/windanesz/ancientspellcraft/util/SpellTeleporter.java" md5: 15e3d9635b4198aeec2a653ecd6d9699
+endProcessing "com/windanesz/ancientspellcraft/util/SpellTeleporter.java"
+

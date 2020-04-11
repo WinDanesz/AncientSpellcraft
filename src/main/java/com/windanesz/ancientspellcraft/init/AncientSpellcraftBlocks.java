@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 import javax.annotation.Nonnull;
 
-@ObjectHolder(AncientSpellcraft.MOD_ID)
+@ObjectHolder(AncientSpellcraft.MODID)
 public class AncientSpellcraftBlocks {
 
 	@Nonnull

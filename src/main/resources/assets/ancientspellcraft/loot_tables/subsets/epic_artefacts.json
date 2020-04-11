@@ -1,0 +1,21 @@
+{
+    "pools": [
+        {
+            "name": "ancientspellcraft_epic_artefacts",
+            "rolls": 1,
+            "conditions": [
+                {
+                    "condition": "random_chance",
+                    "chance": 0.015
+                }
+            ],
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:magic_shield",
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}
