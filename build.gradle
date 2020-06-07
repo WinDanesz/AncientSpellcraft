@@ -11,22 +11,22 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 repositories {
-    flatDir {
-        dirs 'libraries'
+    maven {
+        name 'Curseforge Maven' // Wizardry
+        url 'https://minecraft.curseforge.com/api/maven/'
     }
 }
 
 version = "1.0.2"
 group = "com.windanesz.ancientspellcraft" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "ancientspellcraft"
-
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
 }
 
 minecraft {
-    version = "1.12.2-14.23.5.2814"
+    version = "1.12.2-14.23.5.2847"
     runDir = "run"
 
     // the mappings can be changed at any time, and must be in the following format.
@@ -39,8 +39,7 @@ minecraft {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libraries')
-
+    deobfCompile "electroblobs-wizardry:ElectroblobsWizardry:${wizardry_version}:MC${mc_version}"
 }
 
 processResources {
@@ -60,4 +59,13 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+
+    // download the sources for wizardry
+    task downloadWizardrySources {
+        doLast {
+            def f = new File("libraries/WizardrySrc-${wizardry_version}.zip")
+            new URL("https://github.com/Electroblob77/Wizardry/archive/${wizardry_version}.zip").withInputStream{ i -> f.withOutputStream{ it << i }}
+        }
+    }
+    
 }
