@@ -36,11 +36,11 @@ public class EntitySkeletonMage extends AbstractSkeleton implements ISummonedCre
 
 	}
 
-	@Nullable
-	@Override
-	public UUID func_184753_b() {
-		return null;
-	}
+//	@Nullable
+//	@Override
+//	public UUID func_184753_b() {
+//		return null;
+//	}
 
 	@Override
 	public void onSpawn() {
