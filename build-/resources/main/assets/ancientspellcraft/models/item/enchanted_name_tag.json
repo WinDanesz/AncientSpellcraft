@@ -1,6 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "ancientspellcraft:items/enchanted_name_tag"
-    }
-}
