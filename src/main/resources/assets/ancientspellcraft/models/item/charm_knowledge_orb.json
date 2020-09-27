@@ -1,0 +1,17 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "ancientspellcraft:items/charm_knowledge_orb_01"
+    },
+    "overrides": [
+        { "predicate": { "swirl": 0.0 }, "model": "ancientspellcraft:item/charm_knowledge_orb_01" },
+        { "predicate": { "swirl": 0.1 }, "model": "ancientspellcraft:item/charm_knowledge_orb_01" },
+        { "predicate": { "swirl": 0.2 }, "model": "ancientspellcraft:item/charm_knowledge_orb_02" },
+        { "predicate": { "swirl": 0.3 }, "model": "ancientspellcraft:item/charm_knowledge_orb_03" },
+        { "predicate": { "swirl": 0.4 }, "model": "ancientspellcraft:item/charm_knowledge_orb_04" },
+        { "predicate": { "swirl": 0.5 }, "model": "ancientspellcraft:item/charm_knowledge_orb_05" },
+        { "predicate": { "swirl": 0.6 }, "model": "ancientspellcraft:item/charm_knowledge_orb_06" },
+        { "predicate": { "swirl": 0.7 }, "model": "ancientspellcraft:item/charm_knowledge_orb_07" },
+        { "predicate": { "swirl": 0.8 }, "model": "ancientspellcraft:item/charm_knowledge_orb_08" }
+    ]
+}

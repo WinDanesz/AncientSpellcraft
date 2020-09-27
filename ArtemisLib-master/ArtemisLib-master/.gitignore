@@ -1,0 +1,10 @@
+# Ignore everything except specified directories
+/*
+!README.txt
+!/src
+!build.gradle
+!gradle.properties
+!.gitignore
+!/gradle
+!gradlew.bat
+!gradlew

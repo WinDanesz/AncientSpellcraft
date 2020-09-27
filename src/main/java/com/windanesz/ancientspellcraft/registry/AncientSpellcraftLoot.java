@@ -39,11 +39,13 @@ public class AncientSpellcraftLoot {
 		//		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/ancientspellcraft_books"));
 
 		//		 wizadry patching
-//		LootTableList.register(new ResourceLocation(Wizardry.MODID, "subsets/epic_artefacts"));
+		//		LootTableList.register(new ResourceLocation(Wizardry.MODID, "subsets/epic_artefacts"));
 
 		// subsets
-				LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/epic_artefacts"));
+		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/epic_artefacts"));
 
+		// entities
+		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "entities/void_creeper"));
 	}
 
 	//	Artefact Loot entries

@@ -1,0 +1,6 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "ancientspellcraft:items/shadow_blade_conjuring_3"
+    }
+}

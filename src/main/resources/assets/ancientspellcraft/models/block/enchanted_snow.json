@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "blocks/snow",
+        "all": "ancientspellcraft:blocks/enchanted_snow"
+    }
+}

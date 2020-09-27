@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.entity.EntityWisp;
 import com.windanesz.ancientspellcraft.item.ItemEnchantedNameTag;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.util.ASUtilities;
+import com.windanesz.ancientspellcraft.util.ASUtils;
 import com.windanesz.ancientspellcraft.util.BiomeLocator;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.registry.WizardryItems;
@@ -19,8 +19,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.Random;
@@ -64,11 +62,11 @@ public class WillOWisp extends Spell {
 					}
 					return false;
 				}
-				if (ASUtilities.isBiomeNameRegistered(nameTag)) { // biome id found
+				if (ASUtils.isBiomeNameRegistered(nameTag)) { // biome id found
 					// get biome res name
 					if (!world.isRemote && data.hasSpellBeenDiscovered(this))
 						caster.sendStatusMessage(new TextComponentTranslation("Searching for biome ..."), true);
-					ResourceLocation biomeResourceLocation = ASUtilities.getBiomeRegistryNameFromName(nameTag);
+					ResourceLocation biomeResourceLocation = ASUtils.getBiomeRegistryNameFromName(nameTag);
 					// get biome pos
 					BlockPos biomePos = BiomeLocator.spiralOutwardsLookingForBiome(world, ForgeRegistries.BIOMES.getValue(biomeResourceLocation), caster.posX, caster.posZ); // find biome pos
 					// calculate distance from current pos to biome
@@ -106,11 +104,6 @@ public class WillOWisp extends Spell {
 		return false;
 	}
 
-	@SubscribeEvent
-	public void onServerTick(TickEvent.ServerTickEvent event) {
-
-	}
-
 	/**
 	 * Called when the equipped item is right clicked.
 	 */
@@ -128,10 +121,6 @@ public class WillOWisp extends Spell {
 
 	}
 
-	@Override
-	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
-	}
 
 	public boolean hasCustomName(ItemStack nameTag) {
 		NBTTagCompound tag = nameTag.getTagCompound();
@@ -143,5 +132,10 @@ public class WillOWisp extends Spell {
 
 	public boolean hasEnoughMana(ItemStack nameTag) {
 		return (nameTag.getMaxDamage() - nameTag.getItemDamage() >= 100);
+	}
+
+	@Override
+	public boolean applicableForItem(Item item) {
+		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
 	}
 }

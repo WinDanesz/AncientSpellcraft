@@ -1,18 +1,26 @@
 package com.windanesz.ancientspellcraft.util;
 
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import electroblob.wizardry.packet.PacketTransportation;
+import electroblob.wizardry.packet.WizardryPacketHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.util.ITeleporter;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public class SpellTeleporter implements ITeleporter {
 
@@ -32,12 +40,11 @@ public class SpellTeleporter implements ITeleporter {
 		entity.motionZ = 0;
 	}
 
-	public static void teleportToDimension(EntityPlayer player, int targetDim, double x, double y, double z) {
-		int currDim = getCurrentDimension(player);
+	private static void teleportEntity(int targetDim, double x, double y, double z, EntityPlayer player) {
+		teleportEntity(targetDim, x, y, z, false, player);
+	}
 
-		if (targetDim == currDim)
-			return;
-
+	public static void teleportEntity(int targetDim, double x, double y, double z, boolean causeBlindness, EntityPlayer player) {
 		MinecraftServer server = player.getEntityWorld().getMinecraftServer();
 
 		if (server != null) {
@@ -67,28 +74,48 @@ public class SpellTeleporter implements ITeleporter {
 					worldServer.setBlockToAir(blockPos);
 					worldServer.setBlockToAir(blockPos.up());
 					for (BlockPos currPos : BlockPos.getAllInBox(blockPos.add(-2, -1, -2), blockPos.add(2, -1, 2))) {
-						worldServer.setBlockState(currPos, Blocks.NETHERRACK.getDefaultState());
+						if (!worldServer.isSideSolid(currPos, EnumFacing.UP)) {
+							worldServer.setBlockState(currPos, Blocks.NETHERRACK.getDefaultState());
+						}
 					}
 				}
 
 				// TP to overworld
 				if (targetDim == 0) {
 					BlockPos blockPos = (new BlockPos(x, y, z));
-					while (worldServer.isAirBlock(blockPos.down())) {
-						blockPos = blockPos.add(0, -1, 0);
-						y--;
+					if (!(worldServer.isAirBlock(blockPos) && worldServer.isAirBlock(blockPos.up()) && !worldServer.isAirBlock(blockPos.down()))) {
+						while (worldServer.isAirBlock(blockPos.down())) {
+							blockPos = blockPos.add(0, -1, 0);
+							y--;
+						}
 					}
 				}
-				worldServer.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) player, targetDim, new SpellTeleporter(x, y, z));
-				player.setPositionAndUpdate(x, y, z);
-				player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 70, 0));
+				worldServer.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) player, targetDim, new SpellTeleporter(x + 0.5, y, z + 0.5));
 
+				// experminental
+				player.setPositionAndUpdate(x + 0.5, y, z + 0.5);
+				IMessage msg = new PacketTransportation.Message(player.getEntityId());
+				WizardryPacketHandler.net.sendToDimension(msg, player.world.provider.getDimension());
+				// experminental
+
+				if (!player.world.isRemote && causeBlindness) {
+					player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 70, 0));
+				}
 			}
 		}
 	}
 
-	public static int getCurrentDimension(EntityPlayer player) {
-		return player.getEntityWorld().provider.getDimension();
+	public static void teleportEntity(EntityLivingBase entityLivingBase, int targetDim, double x, double y, double z) {
+		MinecraftServer server = entityLivingBase.getEntityWorld().getMinecraftServer();
+		if (server != null) {
+			WorldServer worldServer = server.getWorld(targetDim);
+			BlockPos pos = new BlockPos(x, y, z);
+			if (!worldServer.isAreaLoaded(pos, 1)) {
+				ForgeChunkManager.Ticket tk = ForgeChunkManager.requestTicket(AncientSpellcraft.MODID, worldServer, ForgeChunkManager.Type.ENTITY);
+				ForgeChunkManager.forceChunk(tk, new ChunkPos(pos));
+			}
+			entityLivingBase.setPositionAndUpdate(x, y, z);
+		}
 	}
 
 	@Override

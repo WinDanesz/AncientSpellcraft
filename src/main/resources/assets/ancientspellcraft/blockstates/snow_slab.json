@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "half=bottom,variant=default": { "model": "ancientspellcraft:half_slab_snow" },
+        "half=top,variant=default": { "model": "ancientspellcraft:upper_slab_snow" }
+    }
+}

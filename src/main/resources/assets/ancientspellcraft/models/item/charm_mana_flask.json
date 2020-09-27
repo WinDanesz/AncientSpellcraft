@@ -1,0 +1,19 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "ancientspellcraft:items/charm_mana_flask"
+    },
+    "overrides": [
+        { "predicate": { "mana": 0.0 }, "model": "ancientspellcraft:item/charm_mana_flask_00" },
+        { "predicate": { "mana": 0.1 }, "model": "ancientspellcraft:item/charm_mana_flask_01" },
+        { "predicate": { "mana": 0.2 }, "model": "ancientspellcraft:item/charm_mana_flask_02" },
+        { "predicate": { "mana": 0.3 }, "model": "ancientspellcraft:item/charm_mana_flask_03" },
+        { "predicate": { "mana": 0.4 }, "model": "ancientspellcraft:item/charm_mana_flask_04" },
+        { "predicate": { "mana": 0.5 }, "model": "ancientspellcraft:item/charm_mana_flask_05" },
+        { "predicate": { "mana": 0.6 }, "model": "ancientspellcraft:item/charm_mana_flask_06" },
+        { "predicate": { "mana": 0.7 }, "model": "ancientspellcraft:item/charm_mana_flask_07" },
+        { "predicate": { "mana": 0.8 }, "model": "ancientspellcraft:item/charm_mana_flask_08" },
+        { "predicate": { "mana": 0.9 }, "model": "ancientspellcraft:item/charm_mana_flask_09" },
+        { "predicate": { "mana": 1.0 }, "model": "ancientspellcraft:item/charm_mana_flask_full" }
+    ]
+}

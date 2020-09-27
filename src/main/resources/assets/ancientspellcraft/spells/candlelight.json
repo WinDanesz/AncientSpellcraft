@@ -1,0 +1,23 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": true,
+        "dispensers": true,
+        "commands": true,
+        "treasure": true,
+        "trades": true,
+        "looting": true
+    },
+    "tier": "novice",
+    "element": "fire",
+    "type": "buff",
+    "cost": 15,
+    "chargeup": 0,
+    "cooldown": 80,
+    "base_properties": {
+        "candlelight_duration": 1000,
+        "candlelight_strength": 0
+    }
+}

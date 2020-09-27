@@ -1,0 +1,7 @@
+{
+    "parent": "block/door_top_rh",
+    "textures": {
+        "bottom": "ancientspellcraft:blocks/ice_door_lower",
+        "top": "ancientspellcraft:blocks/ice_door_upper"
+    }
+}

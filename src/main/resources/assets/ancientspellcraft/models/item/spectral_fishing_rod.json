@@ -1,0 +1,63 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "ancientspellcraft:items/spectral_fishing_rod"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "conjuring": 1
+            },
+            "model": "ancientspellcraft:item/spectral_fishing_rod_conjuring_0"
+        },
+        {
+            "predicate": {
+                "conjuring": 1,
+                "conjure": 0.125
+            },
+            "model": "ancientspellcraft:item/spectral_fishing_rod_conjuring_1"
+        },
+        {
+            "predicate": {
+                "conjuring": 1,
+                "conjure": 0.25
+            },
+            "model": "ancientspellcraft:item/spectral_fishing_rod_conjuring_2"
+        },
+        {
+            "predicate": {
+                "conjuring": 1,
+                "conjure": 0.375
+            },
+            "model": "ancientspellcraft:item/spectral_fishing_rod_conjuring_3"
+        },
+        {
+            "predicate": {
+                "conjuring": 1,
+                "conjure": 0.5
+            },
+            "model": "ancientspellcraft:item/spectral_fishing_rod_conjuring_4"
+        },
+        {
+            "predicate": {
+                "conjuring": 1,
+                "conjure": 0.625
+            },
+            "model": "ancientspellcraft:item/spectral_fishing_rod_conjuring_5"
+        },
+        {
+            "predicate": {
+                "conjuring": 1,
+                "conjure": 0.75
+            },
+            "model": "ancientspellcraft:item/spectral_fishing_rod_conjuring_6"
+        },
+        {
+            "predicate": {
+                "conjuring": 1,
+                "conjure": 0.875
+            },
+            "model": "ancientspellcraft:item/spectral_fishing_rod_conjuring_7"
+        }
+    ]
+}

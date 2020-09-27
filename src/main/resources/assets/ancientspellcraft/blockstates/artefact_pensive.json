@@ -1,0 +1,16 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "normal": [
+            {}
+        ],
+        "empty": {
+            "true": {
+                "model": "ancientspellcraft:artefact_pensive_empty"
+            },
+            "false": {
+                "model": "ancientspellcraft:artefact_pensive_full"
+            }
+        }
+    }
+}

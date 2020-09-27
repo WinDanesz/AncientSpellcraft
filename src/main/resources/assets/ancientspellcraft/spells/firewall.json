@@ -1,0 +1,23 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": false,
+        "dispensers": false,
+        "commands": true,
+        "treasure": true,
+        "trades": true,
+        "looting": true
+    },
+    "tier": "apprentice",
+    "element": "fire",
+    "type": "alteration",
+    "cost": 50,
+    "chargeup": 0,
+    "cooldown": 30,
+    "base_properties": {
+        "range": 15,
+        "length": 3
+    }
+}

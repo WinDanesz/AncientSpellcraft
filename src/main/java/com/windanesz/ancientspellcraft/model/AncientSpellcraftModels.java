@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.model;
 
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.item.IMultiTexturedItem;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -25,28 +26,74 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.ancient_spellcraft_spell_book);
 		registerItemModel(AncientSpellcraftItems.ancient_spellcraft_scroll);
 		registerItemModel(AncientSpellcraftItems.enchanted_name_tag);
+		registerItemModel(AncientSpellcraftItems.wizard_hat_ancient);
 
+		// ====================== Artefacts ======================
+
+		registerItemModel(AncientSpellcraftItems.ring_lodestone);
+		registerItemModel(AncientSpellcraftItems.ring_poison_arrow);
+		registerItemModel(AncientSpellcraftItems.ring_power);
+		registerItemModel(AncientSpellcraftItems.ring_berserker);
+		registerItemModel(AncientSpellcraftItems.ring_blast);
+		registerItemModel(AncientSpellcraftItems.ring_range);
+		registerItemModel(AncientSpellcraftItems.ring_focus_crystal);
+
+		registerItemModel(AncientSpellcraftItems.amulet_mana);
+		registerItemModel(AncientSpellcraftItems.amulet_rabbit);
+		registerItemModel(AncientSpellcraftItems.amulet_poison_resistance);
+		registerItemModel(AncientSpellcraftItems.amulet_power);
+		registerItemModel(AncientSpellcraftItems.charm_cryostasis);
+		registerItemModel(AncientSpellcraftItems.amulet_curse_ward);
+		registerItemModel(AncientSpellcraftItems.amulet_pendant_of_eternity);
+		registerItemModel(AncientSpellcraftItems.amulet_time_knot);
+
+		registerItemModel(AncientSpellcraftItems.charm_rift_bottle);
+		registerItemModel(AncientSpellcraftItems.charm_mana_flask);
+		registerItemModel(AncientSpellcraftItems.charm_reanimation);
+		registerItemModel(AncientSpellcraftItems.charm_knowledge_orb);
+		registerItemModel(AncientSpellcraftItems.charm_power_orb);
+		registerItemModel(AncientSpellcraftItems.charm_mana_orb);
+		registerItemModel(AncientSpellcraftItems.charm_bucket_coal);
+		registerItemModel(AncientSpellcraftItems.charm_gold_bag);
+		registerItemModel(AncientSpellcraftItems.charm_evergrowing_crystal);
+		registerItemModel(AncientSpellcraftItems.charm_shadow_blade);
+		registerItemModel(AncientSpellcraftItems.charm_magic_light);
+		registerItemModel(AncientSpellcraftItems.charm_war_horn);
+		registerItemModel(AncientSpellcraftItems.charm_elemental_grimoire);
+		registerItemModel(AncientSpellcraftItems.charm_wand_upgrade);
+		registerItemModel(AncientSpellcraftItems.charm_enchanted_needle);
+		registerItemModel(AncientSpellcraftItems.charm_seed_bag);
+
+		// misc
+		registerItemModel(AncientSpellcraftItems.shadow_blade);
+		registerItemModel(AncientSpellcraftItems.spectral_fishing_rod);
+		registerItemModel(AncientSpellcraftItems.ice_shield);
+
+		// Itemblocks
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.ARTEFACT_PENSIVE));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.CRYSTAL_BALL_COGNIZANCE));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SKULL_WATCH));
 	}
 
 	// below registry methods are courtesy of EB
-	private static void registerItemModel(Item item){
+	private static void registerItemModel(Item item) {
 		ModelBakery.registerItemVariants(item, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		ModelLoader.setCustomMeshDefinition(item, s -> new ModelResourceLocation(item.getRegistryName(), "inventory"));
 	}
 
-	private static <T extends Item & IMultiTexturedItem> void registerMultiTexturedModel(T item){
+	private static <T extends Item & IMultiTexturedItem> void registerMultiTexturedModel(T item) {
 
-		if(item.getHasSubtypes()){
+		if (item.getHasSubtypes()) {
 			NonNullList<ItemStack> items = NonNullList.create();
 			item.getSubItems(item.getCreativeTab(), items);
-			for(ItemStack stack : items){
+			for (ItemStack stack : items) {
 				ModelLoader.setCustomModelResourceLocation(item, stack.getMetadata(),
 						new ModelResourceLocation(item.getModelName(stack), "inventory"));
 			}
 		}
 	}
 
-	private static void registerItemModel(Item item, int metadata, String variant){
+	private static void registerItemModel(Item item, int metadata, String variant) {
 		ModelLoader.setCustomModelResourceLocation(item, metadata,
 				new ModelResourceLocation(item.getRegistryName(), variant));
 	}

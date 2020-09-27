@@ -1,0 +1,25 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": true,
+        "dispensers": true,
+        "commands": true,
+        "treasure": true,
+        "trades": true,
+        "looting": true
+    },
+    "tier": "novice",
+    "element": "healing",
+    "type": "projectile",
+    "cost": 10,
+    "chargeup": 0,
+    "cooldown": 40,
+    "base_properties": {
+        "range": 18,
+        "damage": 2,
+        "seeking_strength": 10,
+        "health": 2
+    }
+}

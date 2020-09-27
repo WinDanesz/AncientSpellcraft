@@ -1,0 +1,23 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": true,
+        "dispensers": true,
+        "commands": true,
+        "treasure": true,
+        "trades": true,
+        "looting": true
+    },
+    "tier": "master",
+    "element": "magic",
+    "type": "buff",
+    "cost": 75,
+    "chargeup": 0,
+    "cooldown": 250,
+    "base_properties": {
+        "arcane_aegis_duration": 900,
+        "arcane_aegis_strength": 0
+    }
+}

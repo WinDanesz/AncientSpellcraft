@@ -1,0 +1,314 @@
+package com.windanesz.ancientspellcraft.util;
+
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import electroblob.wizardry.constants.Element;
+import electroblob.wizardry.constants.Tier;
+import electroblob.wizardry.item.IManaStoringItem;
+import electroblob.wizardry.item.ISpellCastingItem;
+import electroblob.wizardry.item.ItemWand;
+import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.WizardryUtilities;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderBiped;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
+import java.util.stream.Collectors;
+
+/**
+ * A class for common utilities used in the mod
+ *
+ * @autor Dan (WinDanesz)
+ **/
+public final class ASUtils {
+
+	/**
+	 * Get a Map of all biomes with their Ids
+	 *
+	 * @return A Map with all registered biome names with their corresponding biome Ids.
+	 **/
+	public static Map<String, Integer> getAllBiomes() {
+		Map<String, Integer> biomeMap = ForgeRegistries.BIOMES.getValuesCollection().stream().collect(Collectors.toMap(Biome::getBiomeName, Biome::getIdForBiome));
+		return biomeMap;
+	}
+
+	/**
+	 * Get a Map of all biomes with their registry names
+	 *
+	 * @return A Map with all registered biome names with their corresponding biome registry names.
+	 **/
+	public static Map<String, ResourceLocation> getAllBiomesWithRegnames() {
+		Map<String, ResourceLocation> biomeMap = ForgeRegistries.BIOMES.getValuesCollection().stream().collect(Collectors.toMap(Biome::getBiomeName, Biome::getRegistryName));
+		return biomeMap;
+	}
+
+	/**
+	 * Check if a biome name is registered
+	 *
+	 * @return A Map with all registered biome names with their corresponding biome Ids.
+	 **/
+	public static boolean isBiomeNameRegistered(String biomeName) {
+		Map<String, Integer> biomes = getAllBiomes();
+		return biomes.containsKey(biomeName);
+	}
+
+	public static int getBiomeIdFromName(String biomeName) {
+		Map<String, Integer> biomes = getAllBiomes();
+		return biomes.get(biomeName);
+	}
+
+	public static ResourceLocation getBiomeRegistryNameFromName(String biomeName) {
+		Map<String, ResourceLocation> biomes = getAllBiomesWithRegnames();
+		return biomes.get(biomeName);
+	}
+
+	public static ItemStack pickRandomStackFromItemStackList(List<ItemStack> stackList) {
+		return stackList.get(new Random().nextInt(stackList.size()));
+	}
+
+	public static Element getCrystalElementFromStack(ItemStack crystal) {
+		int metadata = crystal.getMetadata();
+		return Element.values()[metadata];
+	}
+
+	/**
+	 * @param min the minimum float value
+	 * @param max the maximum float value
+	 * @return returns a random float number between min-max
+	 */
+
+	public static float randFloatBetween(float min, float max) {
+		return min + AncientSpellcraft.rand.nextFloat() * (max - min);
+	}
+
+	public static int randIntBetween(int min, int max) {
+		return AncientSpellcraft.rand.nextInt((max - min) + 1) + min;
+	}
+
+	/**
+	 * Looks for the given ItemStack in the player's inventory and shrinks the first
+	 * found one by the specified amount. Order to check: main inv -> offhand -> others (mainhand, armorinv)
+	 *
+	 * @param player        the player who's inventory will be checked
+	 * @param stackToShrink the specific item stack which will be checked
+	 * @return True if found stack(s) to shrink and shrinked it successfully, False if not.
+	 */
+	public static boolean shrinkInventoryStackByOne(EntityPlayer player, ItemStack stackToShrink) {
+		if (player.inventory.hasItemStack(stackToShrink)) {
+			int j = player.inventory.getSlotFor(stackToShrink);
+			if (j != -1) {
+				player.inventory.getStackInSlot(j).shrink(1);
+				return true;
+			} else {
+				// check offhand only after main inv
+				if (stackEqualExact(player.getHeldItemOffhand(), stackToShrink)) {
+					player.getHeldItemOffhand().shrink(1);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	@Nullable
+	public static ItemStack getItemStackFromInventoryHotbar(EntityPlayer player, Item item) {
+		for (int i = 0; i < 9; ++i) {
+
+			if (!player.inventory.mainInventory.get(i).isEmpty()) {
+				ItemStack currItemStack = player.inventory.mainInventory.get(i);
+				if (currItemStack.getItem().getRegistryName() == item.getRegistryName()) {
+					return currItemStack;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Compares if two given stacks are equal by metadata. Order doesn't matters
+	 *
+	 * @param stack1 first stack to compare
+	 * @param stack2 second stack to compare
+	 * @return True if the stacks are equal, false otherwise.
+	 */
+	public static boolean stackEqualExact(ItemStack stack1, ItemStack stack2) {
+		return stack1.getItem() == stack2.getItem() && (!stack1.getHasSubtypes() || stack1.getMetadata() == stack2.getMetadata()) && ItemStack.areItemStackTagsEqual(stack1, stack2);
+	}
+
+	public static List<EntityItem> getEntityItemsWithinRadius(double radius, double x, double y, double z, World world) {
+		AxisAlignedBB aabb = new AxisAlignedBB(x - radius, y - radius, z - radius, x + radius, y + radius, z + radius);
+		List<EntityItem> entityItemList = world.getEntitiesWithinAABB(EntityItem.class, aabb);
+		for (int i = 0; i < entityItemList.size(); i++) {
+			if (entityItemList.get(i).getDistance(x, y, z) > radius) {
+				entityItemList.remove(i);
+				break;
+			}
+		}
+		return entityItemList;
+	}
+
+	public static class ReflectionUtil {
+		public static Field getField(Class clazz, String fieldName) throws NoSuchFieldException {
+			try {
+				return clazz.getDeclaredField(fieldName);
+			}
+			catch (NoSuchFieldException e) {
+				Class superClass = clazz.getSuperclass();
+				if (superClass == null) {
+					throw e;
+				} else {
+					return getField(superClass, fieldName);
+				}
+			}
+		}
+
+		public static void makeAccessible(Field field) {
+			if (!Modifier.isPublic(field.getModifiers()) ||
+					!Modifier.isPublic(field.getDeclaringClass().getModifiers())) {
+				field.setAccessible(true);
+			}
+		}
+
+		public static void removeFinalModifier(Field field) {
+			try {
+				Field modifiersField = Field.class.getDeclaredField("modifiers");
+				modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * Checks if an entity has a biped model
+	 *
+	 * @param entity The entity to check against
+	 * @return true or false whether the entity's model is a biped or a not biped model.
+	 */
+	@SideOnly(Side.CLIENT)
+	public static boolean isEntityBiped(Entity entity) {
+		return Minecraft.getMinecraft().getRenderManager().getEntityClassRenderObject(entity.getClass()) instanceof RenderBiped;
+	}
+
+	/**
+	 * Returns all wands from the player's hotbar (possibly including main and offhand wands)
+	 *
+	 * @param player to check
+	 * @return List of wand itemstacks
+	 */
+	public static List<ItemStack> getAllHotbarWands(EntityPlayer player) {
+		return getAllHotbarWands(player, Tier.MASTER);
+	}
+
+	public static List<ItemStack> getAllHotbarWands(EntityPlayer player, Tier maxTier) {
+		List<ItemStack> wands = new ArrayList<>();
+		for (ItemStack stack : WizardryUtilities.getHotbar(player)) {
+			if (stack.getItem() instanceof ItemWand && ((ItemWand) stack.getItem()).tier.level <= maxTier.level) {
+				wands.add(stack);
+			}
+		}
+		return wands;
+	}
+
+	/**
+	 * Attempts to drain mana from the mainhand or offhand wand, prioritizes mainhand.
+	 *
+	 * @param entity who holds the wand (possibly)
+	 * @param amount to drain
+	 * @return true if successfully drained mana, false if not
+	 */
+	public static boolean attemptConsumeManaFromHand(EntityLivingBase entity, int amount) {
+		if (!entity.getHeldItemMainhand().isEmpty() && entity.getHeldItemMainhand().getItem() instanceof ItemWand) {
+			if (attemptConsumeManaFromStack(entity, entity.getHeldItemMainhand(), amount)) {
+				return true;
+			} else if (!entity.getHeldItemOffhand().isEmpty() && entity.getHeldItemOffhand().getItem() instanceof ItemWand) {
+				return attemptConsumeManaFromStack(entity, entity.getHeldItemOffhand(), amount);
+			}
+		} else if (!entity.getHeldItemOffhand().isEmpty() && entity.getHeldItemOffhand().getItem() instanceof ItemWand) {
+			return attemptConsumeManaFromStack(entity, entity.getHeldItemOffhand(), amount);
+		}
+		return false;
+	}
+
+	public static boolean attemptConsumeManaFromStack(EntityLivingBase entity, ItemStack wandStack, int amount) {
+		ItemWand wand = (ItemWand) wandStack.getItem();
+		int mana = wand.getMana(wandStack);
+		if (mana > amount) {
+			wand.consumeMana(wandStack, amount, entity);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static boolean wandHasSpell(ItemStack wand, Spell spell) {
+		for (Spell currentSpell : ((ItemWand) wand.getItem()).getSpells(wand)) {
+			if (currentSpell == spell) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static <T> T getRandomListItem(List<T> list) {
+		int listSize = list.size();
+		int randomIndex = AncientSpellcraft.rand.nextInt(listSize);
+		return list.get(randomIndex);
+	}
+
+	public static int getRandomMapId(Map<?, ?> map) {
+		int mapSize = map.keySet().toArray().length;
+		return AncientSpellcraft.rand.nextInt(mapSize);
+	}
+
+	public static int getRandomNumberInRange(int min, int max) {
+		Random r = new Random();
+		return r.nextInt((max - min) + 1) + min;
+	}
+
+	public static Optional<TileEntity> getTile(IBlockAccess world, BlockPos pos) {
+		return getTile(world, pos, TileEntity.class);
+	}
+
+	public static <T> Optional<T> getTile(@Nullable IBlockAccess world, @Nullable BlockPos pos, Class<T> teClass) {
+		if (world == null || pos == null) {
+			return Optional.empty();
+		}
+
+		TileEntity te = world.getTileEntity(pos);
+
+		if (teClass.isInstance(te)) {
+			return Optional.of(teClass.cast(te));
+		}
+
+		return Optional.empty();
+	}
+
+	public static boolean isManaStoringCastingItem(Item item) {
+		return item instanceof ISpellCastingItem && item instanceof IManaStoringItem;
+	}
+
+}

@@ -1,0 +1,23 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": false,
+        "dispensers": false,
+        "commands": true,
+        "treasure": true,
+        "trades": true,
+        "looting": true
+    },
+    "tier": "apprentice",
+    "element": "magic",
+    "type": "buff",
+    "cost": 50,
+    "chargeup": 0,
+    "cooldown": 250,
+    "base_properties": {
+        "fortified_archery_duration": 600,
+        "fortified_archery_strength": 0
+    }
+}

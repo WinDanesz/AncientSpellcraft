@@ -1,0 +1,45 @@
+{
+	"credit": "Made by WinDanesz, with Blockbench",
+	"textures": {
+		"0": "ancientspellcraft:entity/skull_watch",
+		"particle": "ancientspellcraft:entity/skull_watch"
+	},
+	"elements": [
+		{
+			"from": [4, 0, 4],
+			"to": [12, 8, 12],
+			"faces": {
+				"north": {"uv": [4, 4, 8, 8], "rotation": 270, "texture": "#0"},
+				"east": {"uv": [4, 4, 8, 8], "texture": "#0"},
+				"south": {"uv": [4, 0, 8, 4], "rotation": 270, "texture": "#0"},
+				"west": {"uv": [12, 4, 16, 8], "texture": "#0"},
+				"up": {"uv": [4, 4, 8, 8], "texture": "#0"},
+				"down": {"uv": [8, 0, 12, 4], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [35, 45, 0],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [35, 45, 0],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"firstperson_righthand": {
+			"translation": [2.25, 1.25, 0]
+		},
+		"firstperson_lefthand": {
+			"translation": [0.75, 2.5, 0.75]
+		},
+		"ground": {
+			"translation": [0, 2.75, 0],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"gui": {
+			"rotation": [35, -45, 0],
+			"translation": [0, 3.25, 0]
+		}
+	}
+}

@@ -1,0 +1,22 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": false,
+        "dispensers": false,
+        "commands": true,
+        "treasure": true,
+        "trades": true,
+        "looting": true
+    },
+    "tier": "apprentice",
+    "element": "earth",
+    "type": "utility",
+    "cost": 50,
+    "chargeup": 0,
+    "cooldown": 600,
+    "base_properties": {
+        "range": 6
+    }
+}

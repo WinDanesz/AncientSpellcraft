@@ -66,7 +66,7 @@ public class TameAnimal extends SpellRay {
 					wolf.setTamedBy(casterPlayer);
 					wolf.getNavigator().clearPath();
 					wolf.setAttackTarget((EntityLivingBase) null);
-					wolf.setSitting(true);
+					wolf.setSitting(false);
 //					wolf.getAISit().setSitting(true);
 					wolf.setHealth(20.0F);
 					playTameEffect(true, wolf);

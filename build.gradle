@@ -60,9 +60,16 @@ processResources {
         exclude 'mcmod.info'
     }
 
+//    jar {
+//        manifest {
+//            attributes 'FMLAT': 'ancientspellcraft_at.cfg'
+//        }
+//    }
+//    
     // download the sources for wizardry
     task downloadWizardrySources {
         doLast {
+            mkdir "libraries"
             def f = new File("libraries/WizardrySrc-${wizardry_version}.zip")
             new URL("https://github.com/Electroblob77/Wizardry/archive/${wizardry_version}.zip").withInputStream{ i -> f.withOutputStream{ it << i }}
         }

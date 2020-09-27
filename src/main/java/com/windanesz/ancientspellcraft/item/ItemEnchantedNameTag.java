@@ -1,11 +1,11 @@
 package com.windanesz.ancientspellcraft.item;
 
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.item.IWorkbenchItem;
-import electroblob.wizardry.registry.WizardryTabs;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,7 +25,7 @@ import java.util.List;
 
 public class ItemEnchantedNameTag extends ItemNameTag implements IWorkbenchItem, IManaStoringItem {
 	public ItemEnchantedNameTag() {
-		this.setCreativeTab(WizardryTabs.WIZARDRY);
+		this.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
 		this.setMaxDamage(300);
 		this.maxStackSize = 1;
 	}
@@ -150,20 +150,6 @@ public class ItemEnchantedNameTag extends ItemNameTag implements IWorkbenchItem,
 		super.setDamage(stack, getManaCapacity(stack) - mana);
 	}
 
-	/**
-	 * Convenience method that decreases the amount of mana contained in the given item stack by the given value. This
-	 * method automatically limits the mana to a minimum of 0 and performs the relevant checks for creative mode, etc.
-	 */
-	@Override
-	public void consumeMana(ItemStack stack, int mana, EntityLivingBase wielder) {
-		if (wielder instanceof EntityPlayer && ((EntityPlayer) wielder).isCreative())
-			return; // Mana isn't consumed in creative
-		setMana(stack, Math.max(getMana(stack) - mana, 0));
-		if (getMana(stack) <= 0) {
-
-		}
-
-	}
 
 	@Override
 	public int getManaCapacity(ItemStack stack) {

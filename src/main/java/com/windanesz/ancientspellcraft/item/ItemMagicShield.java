@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.event.SpellCastEvent;
@@ -9,7 +10,6 @@ import electroblob.wizardry.item.IWorkbenchItem;
 import electroblob.wizardry.packet.PacketCastSpell;
 import electroblob.wizardry.packet.WizardryPacketHandler;
 import electroblob.wizardry.registry.Spells;
-import electroblob.wizardry.registry.WizardryTabs;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.block.BlockDispenser;
@@ -44,7 +44,7 @@ public class ItemMagicShield extends Item implements ISpellCastingItem, IManaSto
 	public ItemMagicShield(EnumRarity rarity) {
 		setFull3D();
 		this.maxStackSize = 1;
-		this.setCreativeTab(WizardryTabs.GEAR);
+		this.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
 		this.setMaxDamage(1000);
 		this.rarity = rarity;
 		this.addPropertyOverride(new ResourceLocation("blocking"), new IItemPropertyGetter() {

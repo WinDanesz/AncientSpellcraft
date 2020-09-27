@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.command;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.util.ASUtilities;
+import com.windanesz.ancientspellcraft.util.ASUtils;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -43,7 +43,7 @@ public class CommandListBiomes extends CommandBase {
 		catch (PlayerNotFoundException exception) {
 		}
 		// assemble biome name list
-		String list = ASUtilities.getAllBiomes().keySet().stream().map(Object::toString).collect(Collectors.joining(","));
+		String list = ASUtils.getAllBiomes().keySet().stream().map(Object::toString).collect(Collectors.joining(","));
 		TextComponentTranslation TextComponentTranslation2 = new TextComponentTranslation(list);
 		player.sendMessage(TextComponentTranslation2);
 		return;

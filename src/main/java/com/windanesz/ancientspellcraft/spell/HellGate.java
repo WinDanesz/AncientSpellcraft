@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.spell;
 
-import com.windanesz.ancientspellcraft.init.AncientSpellcraftBlocks;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.SpellModifiers;
@@ -62,7 +62,7 @@ public class HellGate extends SpellRay {
 	//	e.g.
 	//	@Override
 	//	protected String getDescriptionTranslationKey() {
-	//		return "spell." + getUnlocalisedName() + ".desc.aw";
+	//		return "spell." + getEffect() + ".desc.aw";
 	//	}
 
 	@Override
