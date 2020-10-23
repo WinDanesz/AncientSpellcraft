@@ -15,6 +15,10 @@ repositories {
         name 'Curseforge Maven' // Wizardry
         url 'https://minecraft.curseforge.com/api/maven/'
     }
+    maven { 
+        url 'https://maven.blamejared.com' 
+    }
+
 }
 
 version = "1.0.2"
@@ -40,6 +44,7 @@ minecraft {
 
 dependencies {
     deobfCompile "electroblobs-wizardry:ElectroblobsWizardry:${wizardry_version}:MC${mc_version}"
+    compile "vazkii.patchouli:Patchouli:1.0-21.2"
 }
 
 processResources {

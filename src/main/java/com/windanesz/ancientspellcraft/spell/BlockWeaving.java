@@ -45,7 +45,6 @@ public class BlockWeaving extends SpellRay {
 
 	public static final int COUNT = 1;
 
-	// For some reason 'the diamond' doesn't work if I chain methods onto this. Type inference is weird.
 	public static final IStoredVariable<List<Location>> LOCATION_KEY = new IStoredVariable.StoredVariable<List<Location>, NBTTagList>("blockWeavingPrevPos",
 			s -> NBTExtras.listToNBT(s, Location::toNBT), t -> new ArrayList<>(NBTExtras.NBTToList(t, Location::fromNBT)), Persistence.ALWAYS).setSynced();
 

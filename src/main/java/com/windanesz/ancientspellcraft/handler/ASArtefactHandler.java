@@ -326,21 +326,21 @@ public final class ASArtefactHandler {
 
 				} else if (artefact == AncientSpellcraftItems.ring_blast) {
 					modifiers.set(SpellModifiers.COST, 1.25f * cost, false);
-					System.out.println("blast before: " + event.getModifiers().get(WizardryItems.blast_upgrade));
+//					System.out.println("blast before: " + event.getModifiers().get(WizardryItems.blast_upgrade));
 					event.getModifiers().set(WizardryItems.blast_upgrade, event.getModifiers().get(WizardryItems.blast_upgrade) + 0.25F, true);
-					System.out.println("blast after: " + event.getModifiers().get(WizardryItems.blast_upgrade));
+//					System.out.println("blast after: " + event.getModifiers().get(WizardryItems.blast_upgrade));
 
 				} else if (artefact == AncientSpellcraftItems.ring_range) {
 					modifiers.set(SpellModifiers.COST, 1.25f * cost, false);
-					System.out.println("range_upgrade before: " + event.getModifiers().get(WizardryItems.range_upgrade));
+//					System.out.println("range_upgrade before: " + event.getModifiers().get(WizardryItems.range_upgrade));
 					event.getModifiers().set(WizardryItems.range_upgrade, event.getModifiers().get(WizardryItems.range_upgrade) + 0.25F, true);
-					System.out.println("range_upgrade after: " + event.getModifiers().get(WizardryItems.range_upgrade));
+//					System.out.println("range_upgrade after: " + event.getModifiers().get(WizardryItems.range_upgrade));
 
 				} else if (artefact == AncientSpellcraftItems.charm_elemental_grimoire) {
 					if (event.getSpell().getElement() == Element.FIRE || event.getSpell().getElement() == Element.ICE || event.getSpell().getElement() == Element.LIGHTNING) {
-						System.out.println("before:" + modifiers.get(SpellModifiers.POTENCY));
+//						System.out.println("before:" + modifiers.get(SpellModifiers.POTENCY));
 						modifiers.set(SpellModifiers.POTENCY, 0.1f + potency, false);
-						System.out.println("after:" + modifiers.get(SpellModifiers.POTENCY));
+//						System.out.println("after:" + modifiers.get(SpellModifiers.POTENCY));
 					}
 				}
 

@@ -30,7 +30,7 @@ public class AncientSpellcraftLoot {
 	 * Called from the preInit method in the main mod class to register the custom dungeon loot.
 	 */
 
-	public static void register() {
+	public static void preInit() {
 		// chest
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "chests/dungeon_additions"));
 		//		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "chests/obelisk_additions"));

@@ -12,7 +12,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -26,31 +25,18 @@ public class Zombification extends SpellRay {
 		super(modID, name, isContinuous, action);
 	}
 
-	// The following three methods serve as a good example of how to implement continuous spell sounds (hint: it's easy)
-
-	@Override
-	protected SoundEvent[] createSounds() {
-		return this.createContinuousSpellSounds();
-	}
-
-	@Override
-	protected void playSound(World world, EntityLivingBase entity, int ticksInUse, int duration, SpellModifiers modifiers, String... sounds) {
-		this.playSoundLoop(world, entity, ticksInUse);
-	}
-
-	@Override
-	protected void playSound(World world, double x, double y, double z, int ticksInUse, int duration, SpellModifiers modifiers, String... sounds) {
-		this.playSoundLoop(world, x, y, z, ticksInUse, duration);
-	}
+	// The following three methods serve as a good example of h||ow to implement continuous spell sounds (hint: it's easy)
 
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
+		this.playSound(world, target.getPosition().getX(), target.getPosition().getY(), target.getPosition().getZ(), ticksInUse, ticksInUse, modifiers);
+
 		if (!world.isRemote && target instanceof EntityVillager) {
 			EntityVillager entityvillager = (EntityVillager) target;
 			EntityZombieVillager entityzombievillager = new EntityZombieVillager(world);
 			entityzombievillager.copyLocationAndAnglesFrom(entityvillager);
 			world.removeEntity(entityvillager);
-//				entityzombievillager.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entityzombievillager)), new EntityZombie.GroupData(false));
+			//				entityzombievillager.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entityzombievillager)), new EntityZombie.GroupData(false));
 			entityzombievillager.setProfession(entityvillager.getProfession());
 			entityzombievillager.setChild(entityvillager.isChild());
 			entityzombievillager.setNoAI(entityvillager.isAIDisabled());

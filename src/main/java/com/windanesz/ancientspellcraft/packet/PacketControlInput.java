@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.packet;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.client.gui.ContainerCrystalBallCognizance;
+import com.windanesz.ancientspellcraft.client.gui.ContainerSphereCognizance;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -28,11 +28,11 @@ public class PacketControlInput implements IMessageHandler<PacketControlInput.Me
 
 					case APPLY_BUTTON:
 
-						if (!(player.openContainer instanceof ContainerCrystalBallCognizance)) {
+						if (!(player.openContainer instanceof ContainerSphereCognizance)) {
 							AncientSpellcraft.logger.warn("Received a PacketControlInput, but the player that sent it was not " +
 									"currently using a crystal ball of cognizance. This should not happen!");
 						} else {
-							ContainerCrystalBallCognizance container = (ContainerCrystalBallCognizance) player.openContainer;
+							ContainerSphereCognizance container = (ContainerSphereCognizance) player.openContainer;
 							container.onApplyButtonPressed();
 
 						}

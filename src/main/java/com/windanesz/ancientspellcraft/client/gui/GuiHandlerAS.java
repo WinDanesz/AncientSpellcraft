@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.client.gui;
 
 import com.windanesz.ancientspellcraft.item.ItemAncientSpellcraftSpellBook;
-import com.windanesz.ancientspellcraft.tileentity.TileCrystalBallCognizance;
+import com.windanesz.ancientspellcraft.tileentity.TileSphereCognizance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -17,15 +17,15 @@ public class GuiHandlerAS implements IGuiHandler {
 
 	public static final int ICE_CRAFTING_TABLE = nextGuiId++;
 	public static final int SPELL_BOOK_ANCIENT = nextGuiId++;
-	public static final int CRYSTAL_BALL_COGNIZANCE = nextGuiId++;
+	public static final int SPHERE_COGNIZANCE = nextGuiId++;
 
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		if (id == ICE_CRAFTING_TABLE) {
 			return new ContainerIceWorkbench(player.inventory, world, new BlockPos(x, y, z));
-		} else if (id == CRYSTAL_BALL_COGNIZANCE) {
+		} else if (id == SPHERE_COGNIZANCE) {
 			TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
-			return new ContainerCrystalBallCognizance(player, player.inventory, (TileCrystalBallCognizance) tileEntity);
+			return new ContainerSphereCognizance(player, player.inventory, (TileSphereCognizance) tileEntity);
 		}
 		return null;
 	}
@@ -41,11 +41,11 @@ public class GuiHandlerAS implements IGuiHandler {
 				return new GuiAncientSpellBook(player.getHeldItemOffhand());
 			}
 		}
-		if (id == CRYSTAL_BALL_COGNIZANCE) {
+		if (id == SPHERE_COGNIZANCE) {
 			TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
-			if (tileEntity instanceof TileCrystalBallCognizance) {
-				return new GuiCrystalBallCognizance(player, player.inventory,
-						(TileCrystalBallCognizance) tileEntity);
+			if (tileEntity instanceof TileSphereCognizance) {
+				return new GuiSphereCognizance(player, player.inventory,
+						(TileSphereCognizance) tileEntity);
 			}
 
 		}

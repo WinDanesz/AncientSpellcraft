@@ -2,10 +2,14 @@ package com.windanesz.ancientspellcraft;
 
 import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
 import com.windanesz.ancientspellcraft.command.CommandListBiomes;
+import com.windanesz.ancientspellcraft.data.Knowledge;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBiomes;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftDimensions;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftLoot;
+import com.windanesz.ancientspellcraft.worldgen.WorldGenCrystalShardOre;
 import electroblob.wizardry.constants.Element;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -15,6 +19,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
@@ -31,12 +36,14 @@ public class AncientSpellcraft {
 
 	public static final Random rand = new Random();
 
+//	public static final WorldGenAS worldGenAS = new WorldGenAS();
+
 	//	public static final Settings settings = new Settings();
 
 	/**
 	 * Static instance of the {@link Settings} object for Wizardry.
 	 */
-	public static final Settings settings = new Settings();
+	public static Settings settings = new Settings();
 
 	public static Logger logger;
 
@@ -56,27 +63,38 @@ public class AncientSpellcraft {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
+		settings = new Settings();
+
 		proxy.registerRenderers();
 
-
-		AncientSpellcraftLoot.register();
+		AncientSpellcraftLoot.preInit();
 		AncientSpellcraftBlocks.registerTileEntities();
+		AncientSpellcraftBiomes.preInit();
 
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+
+//		GameRegistry.registerWorldGenerator(new WorldGenCrystalShardOre(), 0);
+//		GameRegistry.registerWorldGenerator(worldGenAS, 0);
+//
+//		GameRegistry.registerWorldGenerator(new WorldGenTest(), 5);
+
+		GameRegistry.registerWorldGenerator(new WorldGenCrystalShardOre(), 0);
+
 		AncientSpellcraftItems.registerDispenseBehaviours();
 		MinecraftForge.EVENT_BUS.register(instance); // Since there's already an instance we might as well use it
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandlerAS());
 		ASPacketHandler.initPackets();
-
 		proxy.registerParticles();
 
-		//		Style style = new Style();
-//		style.setColor(TextFormatting.GOLD);
-//		System.out.println("registering runic element");
-//		RUNIC = WizardryEnumHelper.addElement("runic", style, "Runic", AncientSpellcraft.MODID);
+		AncientSpellcraftDimensions.init();
+
+		Knowledge.init();
+		//		AncientSpellcraftWorldGen.registerWorldGenerators();
+		//		AncientSpellcraftBiomes.initBiomeManagerAndDictionary();
+
 	}
 
 	@EventHandler

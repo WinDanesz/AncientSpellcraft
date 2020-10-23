@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "GCG",
+        "CBC",
+        "GCG"
+    ],
+    "key": {
+        "B": {
+            "item": "ebwizardry:crystal_block",
+            "data": 0
+        },
+        "G": {
+            "item": "minecraft:gold_ingot"
+        },
+        "C": {
+            "item": "minecraft:carpet",
+            "data": 10
+        }
+    },
+    "result": {
+        "item": "ancientspellcraft:sphere_cognizance"
+    }
+}

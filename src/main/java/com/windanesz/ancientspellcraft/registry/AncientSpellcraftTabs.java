@@ -11,8 +11,20 @@ import net.minecraft.item.ItemStack;
  */
 public final class AncientSpellcraftTabs {
 
-	public static final CreativeTabs ANCIENTSPELLCRAFT = new AncientSpellcraftTab("ancientspellcraft");
-	public static final CreativeTabs ANCIENTSPELLCRAFT_GEAR = new AncientSpellcraftTab("ancientspellcraftgear");
+	public static final CreativeTabs ANCIENTSPELLCRAFT = new AncientSpellcraftTab("ancientspellcraft") {
+		@Override
+		public ItemStack createIcon() {
+			return new ItemStack(AncientSpellcraftItems.stone_tablet_large);
+		}
+	};
+
+
+	public static final CreativeTabs ANCIENTSPELLCRAFT_GEAR = new AncientSpellcraftTab("ancientspellcraftgear") {
+		@Override
+		public ItemStack createIcon() {
+			return new ItemStack(AncientSpellcraftItems.ring_blast);
+		}
+	};
 
 	public static class AncientSpellcraftTab extends CreativeTabs {
 		public AncientSpellcraftTab(String label) {

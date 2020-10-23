@@ -1,6 +1,5 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
 import electroblob.wizardry.entity.projectile.EntityIceShard;
 import electroblob.wizardry.item.IConjuredItem;
 import electroblob.wizardry.registry.Spells;
@@ -51,7 +50,6 @@ public class ItemIceShield extends Item implements IConjuredItem {
 		this.maxStackSize = 1;
 		setMaxDamage(180);
 		setNoRepair();
-		this.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
 		this.addPropertyOverride(new ResourceLocation("blocking"), new IItemPropertyGetter() {
 			@SideOnly(Side.CLIENT)
 			public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {

@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "CCC",
+        "CCC",
+        "CCC"
+    ],
+    "key": {
+        "C": {
+            "item": "ancientspellcraft:crystal_shard_ice"
+        }
+    },
+    "result": {
+        "item": "ebwizardry:magic_crystal",
+        "data": 2
+    }
+}

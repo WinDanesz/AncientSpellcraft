@@ -1,16 +1,19 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftDimensions;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -51,6 +54,14 @@ public class HellGate extends SpellRay {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		if (caster.dimension == AncientSpellcraftDimensions.POCKET_DIM_ID) {
+			return false;
+		}
+		return super.cast(world, caster, hand, ticksInUse, modifiers);
 	}
 
 	@Override

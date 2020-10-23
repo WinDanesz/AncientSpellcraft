@@ -1,0 +1,9 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "axis=y":  { "model": "ancientspellcraft:log_crystal_tree" },
+        "axis=z":   { "model": "ancientspellcraft:log_crystal_tree", "x": 90 },
+        "axis=x":   { "model": "ancientspellcraft:log_crystal_tree", "x": 90, "y": 90 },
+        "axis=none": { "model": "ancientspellcraft:log_crystal_tree" }
+    }
+}

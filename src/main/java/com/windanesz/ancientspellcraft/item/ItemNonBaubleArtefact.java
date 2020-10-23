@@ -21,7 +21,7 @@ public class ItemNonBaubleArtefact extends Item {
 
 	public ItemNonBaubleArtefact(EnumRarity rarity) {
 		this.rarity = rarity;
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
 	}
 
 	@Override

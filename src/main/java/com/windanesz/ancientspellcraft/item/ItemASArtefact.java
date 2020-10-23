@@ -8,6 +8,6 @@ public class ItemASArtefact extends ItemArtefact {
 
 	public ItemASArtefact(EnumRarity rarity, Type type) {
 		super(rarity, type);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
 	}
 }

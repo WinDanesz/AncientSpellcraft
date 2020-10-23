@@ -44,7 +44,7 @@ public class ItemMagicShield extends Item implements ISpellCastingItem, IManaSto
 	public ItemMagicShield(EnumRarity rarity) {
 		setFull3D();
 		this.maxStackSize = 1;
-		this.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		this.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
 		this.setMaxDamage(1000);
 		this.rarity = rarity;
 		this.addPropertyOverride(new ResourceLocation("blocking"), new IItemPropertyGetter() {

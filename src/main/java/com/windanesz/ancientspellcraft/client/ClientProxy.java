@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.client;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.CommonProxy;
+import com.windanesz.ancientspellcraft.block.BlockCrystalLeaves;
 import com.windanesz.ancientspellcraft.client.particle.ParticleSoulChain;
 import com.windanesz.ancientspellcraft.client.particle.ParticleTimeKnot;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderEntityMageLight;
@@ -14,7 +15,7 @@ import com.windanesz.ancientspellcraft.client.renderer.entity.RenderVolcano;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderWisp;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderWolfMinion;
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderSkullWatch;
-import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderTileCrystalBallCognizance;
+import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderTileSphereCognizance;
 import com.windanesz.ancientspellcraft.entity.EntityMageLight;
 import com.windanesz.ancientspellcraft.entity.EntityVolcano;
 import com.windanesz.ancientspellcraft.entity.EntityWisp;
@@ -30,8 +31,8 @@ import com.windanesz.ancientspellcraft.entity.living.EntityVoidCreeper;
 import com.windanesz.ancientspellcraft.entity.living.EntityWolfMinion;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelMagic;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
-import com.windanesz.ancientspellcraft.tileentity.TileCrystalBallCognizance;
 import com.windanesz.ancientspellcraft.tileentity.TileSkullWatch;
+import com.windanesz.ancientspellcraft.tileentity.TileSphereCognizance;
 import com.windanesz.ancientspellcraft.util.ASParticles;
 import electroblob.wizardry.client.particle.ParticleWizardry;
 import electroblob.wizardry.client.renderer.RenderBlank;
@@ -75,7 +76,7 @@ public class ClientProxy extends CommonProxy {
 				manager -> new RenderProjectile(manager, 0.7f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/healing_heart.png"), false));
 
 		// TESRs
-		ClientRegistry.bindTileEntitySpecialRenderer(TileCrystalBallCognizance.class, new RenderTileCrystalBallCognizance());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileSphereCognizance.class, new RenderTileSphereCognizance());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileSkullWatch.class, new RenderSkullWatch());
 
 		// Runes on ground
@@ -102,6 +103,11 @@ public class ClientProxy extends CommonProxy {
 	public void registerParticles() {
 		ParticleWizardry.registerParticle(ASParticles.SOUL_CHAIN, ParticleSoulChain::new);
 		ParticleWizardry.registerParticle(ASParticles.TIME_KNOT, ParticleTimeKnot::new);
+	}
+
+	@Override
+	public void setGraphicsLevel(BlockCrystalLeaves block, boolean fancyEnabled) {
+		block.setGraphicsLevel(fancyEnabled);
 	}
 
 }

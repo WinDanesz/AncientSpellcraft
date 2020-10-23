@@ -69,10 +69,38 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.spectral_fishing_rod);
 		registerItemModel(AncientSpellcraftItems.ice_shield);
 
+		registerItemModel(AncientSpellcraftItems.stone_tablet_small);
+		registerItemModel(AncientSpellcraftItems.stone_tablet);
+		registerItemModel(AncientSpellcraftItems.stone_tablet_large);
+		registerItemModel(AncientSpellcraftItems.stone_tablet_grand);
+		registerItemModel(AncientSpellcraftItems.ancient_mana_flask);
+		registerItemModel(AncientSpellcraftItems.ancient_bound_stone);
+
+		registerItemModel(AncientSpellcraftItems.crystal_shard_fire);
+		registerItemModel(AncientSpellcraftItems.crystal_shard_earth);
+		registerItemModel(AncientSpellcraftItems.crystal_shard_healing);
+		registerItemModel(AncientSpellcraftItems.crystal_shard_ice);
+		registerItemModel(AncientSpellcraftItems.crystal_shard_lightning);
+		registerItemModel(AncientSpellcraftItems.crystal_shard_necromancy);
+		registerItemModel(AncientSpellcraftItems.crystal_shard_sorcery);
+
 		// Itemblocks
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.ARTEFACT_PENSIVE));
-		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.CRYSTAL_BALL_COGNIZANCE));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SPHERE_COGNIZANCE));
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SKULL_WATCH));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SCRIBING_DESK));
+
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.crystal_ore_fire));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.crystal_ore_earth));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.crystal_ore_healing));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.crystal_ore_ice));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.crystal_ore_lightning));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.crystal_ore_necromancy));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.crystal_ore_sorcery));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.log_crystal_tree));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.log_crystal_tree2));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.leaves_crystal_tree));
+
 	}
 
 	// below registry methods are courtesy of EB

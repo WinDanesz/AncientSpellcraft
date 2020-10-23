@@ -41,7 +41,6 @@ public class Cryostasis extends SpellBuff {
 			caster.setPositionAndUpdate((caster.getPosition().getX() + 0.5), (int) caster.getPosition().getY(), (int) caster.getPosition().getZ() + 0.5);
 			BlockPos pos = caster.getPosition();
 			for (EntityLivingBase currentTarget : WizardryUtilities.getEntitiesWithinRadius(4, caster.posX, caster.posY, caster.posZ, caster.world)) {
-//				System.out.println("entity: " + currentTarget);
 				if (AllyDesignationSystem.isValidTarget(caster, currentTarget) && !MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, currentTarget)) {
 
 					WizardryUtilities.applyStandardKnockback(caster, currentTarget);
@@ -54,19 +53,11 @@ public class Cryostasis extends SpellBuff {
 			for (BlockPos currPos :
 					BlockPos.getAllInBox(pos.offset(EnumFacing.SOUTH).offset(EnumFacing.EAST).offset(EnumFacing.DOWN), pos.offset(EnumFacing.UP, 2).offset(EnumFacing.NORTH).offset(EnumFacing.WEST))) {
 
-//				System.out.println("currpos: " + currPos);
-//				System.out.println("caster.getPosition(): " + caster.getPosition());
 				if (currPos == caster.getPosition() || currPos == caster.getPosition().offset(EnumFacing.UP)) {
-//					System.out.println("should skip " + currPos);
-					//					 skipped currpos
 					continue;
 				}
-				// Stops the ice being placed floating above snow and grass. Directions other than up included for
-				// completeness.
-				//						&& world.getBlockState(pos).getBlock() != WizardryBlocks.ice_statue && world.getBlockState(pos).getBlock() != WizardryBlocks.dry_frosted_ice) {
 				int duration = (int) (getProperty(EFFECT_DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade));
 
-				System.out.println("duration:" + duration);
 				if (WizardryUtilities.canBlockBeReplaced(caster.world, currPos)) {
 					caster.world.setBlockState(currPos, AncientSpellcraftBlocks.HARD_FROSTED_ICE.getDefaultState());
 					caster.world.scheduleUpdate(currPos.toImmutable(), AncientSpellcraftBlocks.HARD_FROSTED_ICE, duration);

@@ -1,136 +1,130 @@
 package com.windanesz.ancientspellcraft.spell;
 
-//public class FrostNova extends Spell implements IChargingSpell {
-public class FrostNova {
-//
-	public FrostNova() {
-//		super(AncientSpellcraft.MODID, "eye_of_the_storm", EnumAction.BLOCK, true);
-	}
-//
-//	@Override
-//	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-//
-//		if (ticksInUse > 1 && ticksInUse % 60 == 0) {
-//			if (!world.isRemote) {
-//
-//				for (EntityLivingBase entity : WizardryUtilities.getEntitiesWithinRadius(15, caster.posX, caster.posY, caster.posZ, world)) {
-//					if (!AllyDesignationSystem.isAllied(caster, entity)) {
-//
-//						// Releases shards
-//						for (int i = 0; i < 3; i++) {
-//							double dx = world.rand.nextDouble() - 0.5;
-//							double dy = 1;
-//							double dz = world.rand.nextDouble() - 0.5;
-//							EntityLightningArrow iceshard = new EntityLightningArrow(world);
-//							//				EntityIceShard iceshard = new EntityIceShard(world);
-//
-//							iceshard.aim(caster, entity, 0.6F, 0F);
-//							//							iceshard.posY = iceshard.posY + 1.5F;
-//							//							iceshard.setPosition(caster.xposX + d, caster.posY + dy + 3, caster.posZ + dz);
-//
-//							//						iceshard.motionX = dx / 2;
-//							//						iceshard.motionY = dy / 1.2;
-//							//						//				iceshard.motionY = dy * 1.5;
-//							//						iceshard.motionZ = dz;
-//							iceshard.setCaster(caster);
-//							iceshard.damageMultiplier = modifiers.get(DAMAGE);
-//							world.spawnEntity(iceshard);
-//						}
-//					}
-//				}
-//			}
-//
-//			if (world.isRemote) {
-//				System.out.println("bumm! finished charging");
-//				for (int i = 0; i < 50 * modifiers.get(WizardryItems.blast_upgrade); i++) {
-//
-//					//					ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x, y, z).vel(0, 0.03, 0).time(50).clr(157, 168, 249).spawn(world);
-//
-//				}
-//				//				spawnParticleEffect(world, caster, modifiers);
-//			}
-//			return true;
-//		} else {
-//
-//			if (!Wizardry.settings.replaceVanillaFallDamage) {
-//				caster.fallDistance = 0;
-//			}
-//
-//			caster.motionY = caster.motionY < 0.01f ? caster.motionY + 0.1f : caster.motionY;
-//
-//			if (world.isRemote) {
-//
-//				//				ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).scale(ticksInUse / 10F).pos(caster.posX, caster.posY + 1.5F, caster.posZ).time(4).spawn(world);
-//
-//				for (int i = 0; i < ticksInUse / 2; i++) {
-//
-//					ParticleBuilder.create(ParticleBuilder.Type.SPARK).pos(
-//							caster.posX + ((world.rand.nextDouble() / 5) * (ticksInUse / 10F) * (world.rand.nextBoolean() ? -1 : 1)),
-//							caster.posY + +(0.3 + (world.rand.nextDouble() / 5) * (ticksInUse / 10F) * (world.rand.nextBoolean() ? -1 : 1)),
-//							caster.posZ + (world.rand.nextDouble() / 5) * (ticksInUse / 10F) * (world.rand.nextBoolean() ? -1 : 1)).time(4).spawn(world);
-//
-//				}
-//			}
-//			if (ticksInUse > 61) {
-//				return false;
-//			}
-//		}
-//		return true;
-//	}
-//	//
-//	//		List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(getProperty(EFFECT_RADIUS).floatValue()
-//	//				* modifiers.get(WizardryItems.blast_upgrade), caster.posX, caster.posY, caster.posZ, world);
-//	//
-//	//		targets.removeIf(target -> !AllyDesignationSystem.isValidTarget(caster, target));
-//	//
-//	//		for (EntityLivingBase target : targets) {
-//	//			affectEntity(world, caster, target, modifiers);
-//	//		}
-//	//
-//	//		if (world.isRemote) {
-//	//			spawnParticleEffect(world, caster, modifiers);
-//	//		}
-//	//
-//	//		this.playSound(world, caster, ticksInUse, -1, modifiers);
-//	//		return true;
-//
-//	/**
-//	 * Only called client-side
-//	 *
-//	 * @param world     The world to spawn the particles in.
-//	 * @param caster    The caster of the spell.
-//	 * @param modifiers The modifiers the spell was cast with.
-//	 */
-//	//	protected void spawnParticleEffect(World world, EntityLivingBase caster, SpellModifiers modifiers) {
-//	//
-//	//		double maxRadius = 3; //getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
-//	//		int particleCount = (int) Math.round(particleDensity * Math.PI * maxRadius * maxRadius);
-//	//
-//	//		for (int i = 0; i < particleCount; i++) {
-//	//
-//	//			double radius = (1 + world.rand.nextDouble() * (maxRadius - 1));
-//	//			float angle = world.rand.nextFloat() * (float) Math.PI * 2f;
-//	//
-//	//			spawnParticle(world, caster.posX + radius * MathHelper.cos(angle),
-//	//					caster.getEntityBoundingBox().minY,
-//	//					caster.posZ + radius * MathHelper.sin(angle));
-//	//		}
-//	//	}
-//
-//	/**
-//	 * Called to do something to each entity within the spell's area of effect.
-//	 *
-//	 * @param world     The world in which the spell was cast.
-//	 * @param caster    The entity that cast the spell.
-//	 * @param target    The entity to do something to.
-//	 * @param modifiers The modifiers the spell was cast with.
-//	 */
-//	protected void affectEntity(World world, EntityLivingBase caster, EntityLivingBase target, SpellModifiers modifiers) {
-//
-//	}
-//
-//	protected void spawnParticle(World world, double x, double y, double z) {
-//
-//	}
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.entity.projectile.EntityIceShard;
+import electroblob.wizardry.registry.Spells;
+import electroblob.wizardry.registry.WizardryPotions;
+import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.AllyDesignationSystem;
+import electroblob.wizardry.util.MagicDamage;
+import electroblob.wizardry.util.ParticleBuilder;
+import electroblob.wizardry.util.ParticleBuilder.Type;
+import electroblob.wizardry.util.SpellModifiers;
+import electroblob.wizardry.util.WizardryUtilities;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntityDispenser;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.world.World;
 
+public class FrostNova extends Spell {
+	private static final String SHARD_COUNT = "shard_count";
+	private static final String FREEZE_RADIUS = "freeze_radius";
+
+	public FrostNova() {
+
+		super(AncientSpellcraft.MODID, "frost_nova", EnumAction.BLOCK, true);
+		soundValues(1.0f, 1.2f, 0.2f);
+		addProperties(SHARD_COUNT, FREEZE_RADIUS);
+	}
+
+	@Override
+	public boolean canBeCastBy(TileEntityDispenser dispenser) {
+		return false;
+	}
+
+	@Override
+	public boolean canBeCastBy(EntityLiving npc, boolean override) {
+		return false;
+	}
+
+	@Override
+	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+
+		if (ticksInUse < 40) {
+			if (world.isRemote)
+				this.spawnParticles(world, caster, modifiers);
+			return true;
+		}
+
+		if (ticksInUse > 40) {
+			return false;
+		}
+
+		if (!world.isRemote) {
+
+			caster.hurtResistantTime = 10;
+
+			for (int i = 0; i < getProperty(SHARD_COUNT).intValue(); i++) {
+				double dx = world.rand.nextDouble() - 0.5;
+				//				double dy = world.rand.nextDouble() - 0.5;
+				double dz = world.rand.nextDouble() - 0.5;
+				EntityIceShard iceshard = new EntityIceShard(world);
+				iceshard.setPosition(caster.posX + dx, caster.posY + 1, caster.posZ + dz);
+				iceshard.motionX = dx * 2.5;
+				iceshard.motionY = 0.2;
+				iceshard.motionZ = dz * 2.5;
+				iceshard.setCaster(caster);
+				world.spawnEntity(iceshard);
+			}
+
+			for (EntityLivingBase entity : WizardryUtilities.getEntitiesWithinRadius(getProperty(FREEZE_RADIUS).intValue(), caster.posX, caster.posY, caster.posZ, caster.world)) {
+				if (entity == caster) {
+					continue;
+				}
+				if (!AllyDesignationSystem.isAllied(caster, entity) && !(MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, entity))) {
+					entity.addPotionEffect(new PotionEffect(WizardryPotions.frost,
+							Spells.ice_shard.getProperty(Spell.EFFECT_DURATION).intValue(),
+							Spells.ice_shard.getProperty(Spell.EFFECT_STRENGTH).intValue()));
+				}
+			}
+
+			if (caster.isHandActive())
+				caster.stopActiveHand();
+		}
+		this.playSound(world, caster, ticksInUse, -1, modifiers);
+		return true;
+	}
+
+	protected void spawnParticles(World world, EntityLivingBase caster, SpellModifiers modifiers) {
+
+		for (int i = 0; i < 10; i++) {
+			double dx = (world.rand.nextDouble() * (world.rand.nextBoolean() ? 1 : -1)) * 0.1;
+			double dy = (world.rand.nextDouble() * (world.rand.nextBoolean() ? 1 : -1)) * 0.1;
+			double dz = (world.rand.nextDouble() * (world.rand.nextBoolean() ? 1 : -1)) * 0.1;
+
+			ParticleBuilder.create(Type.ICE)
+					.entity(caster)
+					.pos(0, caster.height / 2, 0)
+					.vel(dx * 0.3, dy * 0.3, dz * 0.3)
+					.spawn(world);
+		}
+	}
+
+
+	@Override
+	protected SoundEvent[] createSounds(){
+		return this.createContinuousSpellSounds();
+	}
+
+	@Override
+	protected void playSound(World world, EntityLivingBase entity, int ticksInUse, int duration, SpellModifiers modifiers, String... sounds){
+		this.playSoundLoop(world, entity, ticksInUse);
+	}
+
+	@Override
+	protected void playSound(World world, double x, double y, double z, int ticksInUse, int duration, SpellModifiers modifiers, String... sounds){
+		this.playSoundLoop(world, x, y, z, ticksInUse, duration);
+	}
+
+	@Override
+	public boolean applicableForItem(Item item) {
+		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+	}
 }

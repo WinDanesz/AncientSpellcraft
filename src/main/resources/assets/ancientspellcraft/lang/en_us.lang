@@ -2,6 +2,9 @@
 
 itemGroup.ancientspellcraft.tabAncientSpellcraft=Ancient Spellcraft
 
+
+settings.ancientspellcraft:\general_settings=General Settings
+
 #spells
 spell.ancientspellcraft\:hellgate=Hell's Gate
 spell.ancientspellcraft\:hellgate.name=Hell's Gate
@@ -305,6 +308,17 @@ spell.ancientspellcraft\:conflagration=Conflagration
 spell.ancientspellcraft\:conflagration.name=Conflagration
 spell.ancientspellcraft\:conflagration.desc=Burn them all...!
 
+spell.ancientspellcraft\:pocket_dimension=Pocket Dimension
+spell.ancientspellcraft\:pocket_dimension.name=Pocket Dimension
+spell.ancientspellcraft\:pocket_dimension.desc=After channeling for 3 seconds, teleports the caster to its own pocket dimension.
+
+spell.ancientspellcraft\:warp_wood=Warp Wood
+spell.ancientspellcraft\:warp_wood.name=Warp Wood
+spell.ancientspellcraft\:warp_wood.desc=TODO
+
+spell.ancientspellcraft\:frost_nova=Frost Nova
+spell.ancientspellcraft\:frost_nova.desc=Releases a ring of ice shards after two seconds of channeling
+
 #potions
 potion.ancientspellcraft\:curse_of_ender=Curse of Ender
 potion.ancientspellcraft\:unlimited_power=Unlimited Power
@@ -428,20 +442,19 @@ item.ancientspellcraft\:charm_wand_upgrade.success_text=The Quill prevented the 
 item.ancientspellcraft\:charm_enchanted_needle.name=Enchanted Needle
 item.ancientspellcraft\:charm_enchanted_needle.desc=Slowly repairs and imbues your wizard robes with mana while they are in the magical pocket of Attire Alteration
 
-##artefact sets
-item.ancientspellcraft\:ring_power.name=Ring of Power
-item.ancientspellcraft\:ring_power.desc=Grants +5%% spell potency for all spells, but increases mana costs by 5%%
+item.ancientspellcraft\:stone_tablet_small.name=Small Stone Tablet
+item.ancientspellcraft\:stone_tablet.name=Stone Tablet
+item.ancientspellcraft\:stone_tablet_large.name=Large Stone Tablet
+item.ancientspellcraft\:stone_tablet_grand.name=Grand Stone Tablet
+item.ancientspellcraft\:ancient_mana_flask.name=Ancient Mana Flask
+item.ancientspellcraft\:ancient_bound_stone.name=Ancient Bound Stone
 
-item.ancientspellcraft\:amulet_power.name=Amulet of Power
-item.ancientspellcraft\:amulet_power.desc=Grants +10%% spell potency for all spells, but increases mana costs by 10%%
-
-item.ancientspellcraft\:charm_power_orb.name=Orb of Power
-item.ancientspellcraft\:charm_power_orb.desc=Grants +20%% spell potency for all spells, but increases mana costs by 20%%
-
-## general
-set.ancientspellcraft\:set_name_with_count=%s (%s of %s)
-set.ancientspellcraft\:set_bonus=Artefact Set Bonus: %s
-
+item.ancientspellcraft\:stone_tablet.desc=DESC TODO
+item.ancientspellcraft\:stone_tablet_small.desc=A small stone tablet, containing text written in a long forgotten language
+item.ancientspellcraft\:stone_tablet_large.desc=What knowledge may it have?
+item.ancientspellcraft\:ancient_mana_flask.desc=Seems to have a rune carved into it
+item.ancientspellcraft\:ancient_bound_stone.desc=DESC TODO
+item.ancientspellcraft\:relic_researched=Researched
 
 #items
 item.ancientspellcraft\:spectral_shield.name=Spectral Shield
@@ -456,13 +469,57 @@ item.ancientspellcraft\:ice_shield.desc1=Applies a Frostbite effect to attackers
 item.ancientspellcraft\:ice_shield.desc2=Explodes when it breaks
 item.ancientspellcraft\:spectral_fishing_rod.name=Spectral Fishing Rod
 
+item.ancientspellcraft\:crystal_shard_fire.name=Fiery Crystal Shard
+item.ancientspellcraft\:crystal_shard_ice.name=Icy Crystal Shard
+item.ancientspellcraft\:crystal_shard_lightning.name=Stormy Crystal Shard
+item.ancientspellcraft\:crystal_shard_necromancy.name=Dark Crystal Shard
+item.ancientspellcraft\:crystal_shard_earth.name=Verdant Crystal Shard
+item.ancientspellcraft\:crystal_shard_sorcery.name=Mystical Crystal Shard
+item.ancientspellcraft\:crystal_shard_healing.name=Radiant Crystal Shard
+
+##artefact sets
+item.ancientspellcraft\:ring_power.name=Ring of Power
+item.ancientspellcraft\:ring_power.desc=Grants +5%% spell potency for all spells, but increases mana costs by 5%%
+
+item.ancientspellcraft\:amulet_power.name=Amulet of Power
+item.ancientspellcraft\:amulet_power.desc=Grants +10%% spell potency for all spells, but increases mana costs by 10%%
+
+item.ancientspellcraft\:charm_power_orb.name=Orb of Power
+item.ancientspellcraft\:charm_power_orb.desc=Grants +20%% spell potency for all spells, but increases mana costs by 20%%
+
+## general
+set.ancientspellcraft\:set_name_with_count=%s (%s of %s)
+set.ancientspellcraft\:set_bonus=Artefact Set Bonus: %s
+
 #block
+block.ancientspellcraft\:dimension_boundary=Dimension Boundary
+block.ancientspellcraft\:dimension_focus=Dimension Focus
+
+block.ancientspellcraft\:crystal_shard_fire.name=Fiery Crystal Ore
+block.ancientspellcraft\:crystal_shard_ice.name=Icy Crystal Ore
+block.ancientspellcraft\:crystal_shard_lightning.name=Stormy Crystal Ore
+block.ancientspellcraft\:crystal_shard_necromancy.name=Dark Crystal Ore
+block.ancientspellcraft\:crystal_shard_earth.name=Verdant Crystal Ore
+block.ancientspellcraft\:crystal_shard_sorcery.name=Mystical Crystal Ore
+block.ancientspellcraft\:crystal_shard_healing.name=Radiant Crystal Ore
+
+tile.ancientspellcraft\:crystal_ore_fire.name=Fiery Crystal Ore
+tile.ancientspellcraft\:crystal_ore_ice.name=Icy Crystal Ore
+tile.ancientspellcraft\:crystal_ore_lightning.name=Stormy Crystal Ore
+tile.ancientspellcraft\:crystal_ore_necromancy.name=Dark Crystal Ore
+tile.ancientspellcraft\:crystal_ore_earth.name=Verdant Crystal Ore
+tile.ancientspellcraft\:crystal_ore_sorcery.name=Mystical Crystal Ore
+tile.ancientspellcraft\:crystal_ore_healing.name=Radiant Crystal Ore
+
+tile.ancientspellcraft\:log_crystal_tree.name=Crystal Tree
+tile.ancientspellcraft\:leaves_crystal_tree.name=Crystal Tree Leaves
 
 #tile
-
 tile.ancientspellcraft\:artefact_pensive.name=Pensive
 tile.ancientspellcraft\:sphere_cognizance.name=Sphere of Cognizance
+tile.ancientspellcraft\:sphere_cognizance.desc=Desc
 tile.ancientspellcraft\:skull_watch.name=Skull Watch
+tile.ancientspellcraft\:scribing_desk.name=Scribing Desk
 
 item.ancientspellcraft\:artefact_pensive.name=Pensive
 item.ancientspellcraft\:pensive.desc=The Pensive can store your experience in a liquid form.
@@ -497,13 +554,14 @@ misc.ancientspellcraft\:potency=Potency
 #gui
 gui.ancientspellcraft\:element.magic=Ancient
 gui.ancientspellcraft\:research=Research
-gui.ancientspellcraft\:crystal_ball_cognizance.no_book=Requires an unknown Spell Book or Scroll in the book slot
-gui.ancientspellcraft\:crystal_ball_cognizance.known_book=You already know this Spell
-gui.ancientspellcraft\:crystal_ball_cognizance.no_crystal=Requires Magic Crystals
-gui.ancientspellcraft\:crystal_ball_cognizance.research=Research
-gui.ancientspellcraft\:crystal_ball_cognizance.too_few_crystals=Requires %s Magic Crystals
+gui.ancientspellcraft\:sphere_cognizance.no_book=Requires something to research
+gui.ancientspellcraft\:sphere_cognizance.known_book=You already know this Spell
+gui.ancientspellcraft\:sphere_cognizance.already_researched=You've already researched this relic
+gui.ancientspellcraft\:sphere_cognizance.no_crystal=Requires Magic Crystals
+gui.ancientspellcraft\:sphere_cognizance.research=Research
+gui.ancientspellcraft\:sphere_cognizance.too_few_crystals=Requires %s Magic Crystals
 
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.none.0=Null text
+gui.ancientspellcraft\:sphere_cognizance.hint.none.1=
 
 #spell types
 spelltype.metamagic=Metamagic
@@ -511,124 +569,133 @@ spelltype.metamagic=Metamagic
 #spell elements
 element.ancient=Ancient
 
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.test=Nothing you can do seems to be capable of breaking the arcane encryption.. Still some remonition keeps you from giving up.
+gui.ancientspellcraft\:sphere_cognizance.hint.test=Nothing you can do seems to be capable of breaking the arcane encryption.. Still some remonition keeps you from giving up.
 
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.failed.1=The more you try to decipher the script the harder it seems to become
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.failed.2=The sphere could not find anything helping you identify the spell
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.failed.3=After a while you give up trying to read and just look at the pictures
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.failed.4=You finish the tome having successfully drawn a mustache on every face you could find
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.failed.5=You cant help but doze off every second line due to the awful writing
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.failed.6=The script appears to be made obscure by some protective magic, rendering translation difficult
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.failed.7=You experience unnatural dyslexia when looking at the books pages.
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.failed.8=Your translation efforts are met with little success.
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.failed.9=Nothing you can do seems to be capable of breaking the arcane encryption.. Still some premonition keeps you from giving up.
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.discovered.1=With a final adjustment to the crystalline matrix the sphere is able to recognize the spells name... %s
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.discovered.2=After a while the buzzing sphere goes silent, it was finally able to decipher the tomes script... %s
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.discovered.3=Accessing the spheres archives you are finally able to translate the writing, and understand it at last - %s
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.discovered.4=The arcane amanuensis calls his magical composition %s
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.discovered.5=Ignoring the unreadable text, you are able to follow the pictograms and thus fathom the spells function which proved to be %s
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.discovered.6=Turning to your encyclopedias for advice you are struck by a sudden realization: this must be %s
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.discovered.7=The scripts design leads the sphere to concurring it being from wizards of the north, successfully translating it: %s
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.discovered.8=You realise the book seems to have been widely contributed once, you find a translation in your sphere, %s.
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.discovered.9=You find out you held the book the wrong way and read the title as: %s
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.discovered.10=The books encryption was excruciatingly thorough, but you found the dispel incantation scribbled down... %s
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.fire.1=Flicker little flame, scorch char and maim
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.fire.2=These texts shall allow you to conjure fire
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.fire.3=A great Pyromancer was the author of this text
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.fire.4=The spellbook is adorned with flames
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.fire.5=The text itself seems to emit heat
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.fire.6=On the cover of the tome, the name of Phlegethon stands, warning all of the scalding flood.
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.earth.1=This spell seems to draw its power from the very land you inhabit
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.earth.2=The author of this work found ways to use earth and wind for his endeavors
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.earth.3=The spellbook carries information on many poisons
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.earth.4=This tome is based on the magic of life itself
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.earth.5=This may have been written by a disciple of acheron, son of helios and demeter.
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.ice.1=Coldness shall be your adversaries demise
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.ice.2=The heavy pages are rather cold to the touch
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.ice.3=The "Codex of frost" is written on the cover
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.ice.4=These kinds of spells are rumored to have caused an ice age once
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.ice.5=The book is aimed at teaching you the ways of the Cryomancers
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.ice.6=As glittering light shines upon the covers of the tome, the name cocytus gleams up.
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.necromancy.1=Dark secrets are enclosed in these texts
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.necromancy.2=The book is written in the language of the dead
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.necromancy.3=This is the work of an ancient necromancer
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.necromancy.4=This tome might hold the secrets to corruption or resurrection
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.necromancy.5=Even the sphere can barely take out the stygian letters of this tenebrous text.
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.healing.1=There is no wound to deep, no injury to great that can't be mended
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.healing.2=Cleansing magic can be found within these pages
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.healing.3=A paladin once wrote these lines
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.healing.4=The writer of this text has sworn upon the names of Panaceia and Asclepius.
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.sorcery.1=This book might contain illusionary magics
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.sorcery.2=Within this codex ways to conjure, deceive and outsmart are described
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.sorcery.3=This is a manual focused on the arts of pure magic
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.sorcery.4=The ways of the trickster are before you
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.sorcery.5=This tome contains knowledge of the mystical ways in the wake of circe.
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.lightning.1=Be careful not to electrocute yourself with that!
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.lightning.2=Feel the current running through the script you hold
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.lightning.3=Thunder and lightning shall be your tool or weapon
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.lightning.4=Shockingly these text concern themselves with harnessing electricity
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.ancient.1=Extreme raw power emanates from the archaic scripture
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.ancient.2=You may have found one of the oldest magic texts ever recorded
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.ancient.3=The spell seems to be extremely different from anything you have ever seen
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.ancient.4=The magic in this manual seems incredibly sophisticated but also complex
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.ancient.5=The book appears to be barely held together by the magic flowing through it
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.ancient.6=You almost feel like the book is studying you as much as it is you
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.ancient.7=Strangely the weight of the tome seems to exceed that of the materials it was crafted from
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.buff.1=Harness this spells power to enhance your abilities
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.buff.2=Concentrate the power within you
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.buff.3=Your body shall grow more powerful with this magic
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.buff.4=This spell is focused on exceeding the limits of the human body
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.attack.1=Sometimes a good offence is the best defense
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.attack.2=No opponent shall stand against this magics might
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.attack.3=Nothing is more devastating than spells created to harm
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.attack.4=This spell, as many others, is intended to cause damage on anything it is cast on
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.projectile.1=This charm will act across great distances
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.projectile.2=This spell shall be the arrow that defeats your foe
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.projectile.3=The described spell shall function at range
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.projectile.4=The cunning warriors stay at range
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.defense.1=Carry this magick as your aegis...
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.defense.2=This spell was constructed to prevent harm
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.defense.3=Study this spellbook to protect yourself from danger
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.defense.4=The book describes ways to shield yourself from your opposition
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.utility.1=This tome might prove as an useful tool
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.utility.2=This spell will help you make a task less tedious
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.utility.3=With the right tool everything can be easy
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.utility.4=This spell was devised as a tool
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.utility.5=There is nothing that spells can't solve
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.construct.1=Creation is true power, such as this spell
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.construct.2=Use this spellbook to twist the fabric of reality and create new matter
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.construct.3=This tome describes a way to shape something from nothing
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.construct.4=You wield a codex of conjuration before you!
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.minion.1=True warlocks know, not every problem can be solved alone
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.minion.2=Nothing will stand in the way of your summons!
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.minion.3=Sheer numbers is a power of its own
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.minion.4=These texts devise a way to support you with servants
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.alteration.1=In your hands you hold the key to change the world around you
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.alteration.2=Make the world you canvas and alter it to your will
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.alteration.3=What was once this shall now be that
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.alteration.4=Nothing will stay as it is forever. You might as well speed it up
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.heal_ally.1=The spell seems to be in large parts based on a healing spell, yet it does not seem capable of regenerating its caster
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.heal_ally.2=The manuscript focuses on concentrating a beam with a regenerative effect
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.heal_ally.3=Those who keep their friends in good health will live longer themselves
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.heal_ally.4=It is not just always you that requires fixing...
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.pocket_furnace.1=The scripture contains an extract on the various uses of the magic from food preparation to ore processing
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.pocket_furnace.2=As you experiment with the spell your pockets seem to heat up
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.pocket_furnace.3=The author explains how his perilous and lengthy waiting in front of his furnace lead to this spell
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.pocket_furnace.4=For a wizard, well done is nothing but a magic trick
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.arcane_lock.1=The book is based around a force field, that only the caster may pass through
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.arcane_lock.2=For a wizard security is key, yet does not require them
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.arcane_lock.3=This magic seems to be applicable to any container
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.arcane_lock.4=The detailed incantation seems to fulfill a security function of sorts
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.remove_curse.1=A wizard spend his whole life in pain developing this spell as his salvation
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.remove_curse.2=Only through light may corruption be cleansed
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.remove_curse.3=This spell seeks to dispel the eternal
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.remove_curse.4=Curses last forever, until they don't
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.resurrection.1=To cheat death is a power only one has achieved...
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.resurrection.2=There is a legend of a wizard so powerful.. He could save others from dying
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.resurrection.3=The tome suggests death is not permanent, at least in theory
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.resurrection.4=This spell seems to reverse death, but not yours...
-gui.ancientspellcraft\:crystal_ball_cognizance.hint.resurrection.5=The giant book is cramped full of complicated spell advice little of which seems to be from experience
+gui.ancientspellcraft\:sphere_cognizance.hint.failed.1=The more you try to decipher the script the harder it seems to become
+gui.ancientspellcraft\:sphere_cognizance.hint.failed.2=The sphere could not find anything helping you identify the spell
+gui.ancientspellcraft\:sphere_cognizance.hint.failed.3=After a while you give up trying to read and just look at the pictures
+gui.ancientspellcraft\:sphere_cognizance.hint.failed.4=You finish the tome having successfully drawn a mustache on every face you could find
+gui.ancientspellcraft\:sphere_cognizance.hint.failed.5=You cant help but doze off every second line due to the awful writing
+gui.ancientspellcraft\:sphere_cognizance.hint.failed.6=The script appears to be made obscure by some protective magic, rendering translation difficult
+gui.ancientspellcraft\:sphere_cognizance.hint.failed.7=You experience unnatural dyslexia when looking at the books pages.
+gui.ancientspellcraft\:sphere_cognizance.hint.failed.8=Your translation efforts are met with little success.
+gui.ancientspellcraft\:sphere_cognizance.hint.failed.9=Nothing you can do seems to be capable of breaking the arcane encryption.. Still some premonition keeps you from giving up.
+gui.ancientspellcraft\:sphere_cognizance.hint.discovered.1=With a final adjustment to the crystalline matrix the sphere is able to recognize the spells name... %s
+gui.ancientspellcraft\:sphere_cognizance.hint.discovered.2=After a while the buzzing sphere goes silent, it was finally able to decipher the tomes script... %s
+gui.ancientspellcraft\:sphere_cognizance.hint.discovered.3=Accessing the spheres archives you are finally able to translate the writing, and understand it at last - %s
+gui.ancientspellcraft\:sphere_cognizance.hint.discovered.4=The arcane amanuensis calls his magical composition %s
+gui.ancientspellcraft\:sphere_cognizance.hint.discovered.5=Ignoring the unreadable text, you are able to follow the pictograms and thus fathom the spells function which proved to be %s
+gui.ancientspellcraft\:sphere_cognizance.hint.discovered.6=Turning to your encyclopedias for advice you are struck by a sudden realization: this must be %s
+gui.ancientspellcraft\:sphere_cognizance.hint.discovered.7=The scripts design leads the sphere to concurring it being from wizards of the north, successfully translating it: %s
+gui.ancientspellcraft\:sphere_cognizance.hint.discovered.8=You realise the book seems to have been widely contributed once, you find a translation in your sphere, %s.
+gui.ancientspellcraft\:sphere_cognizance.hint.discovered.9=You find out you held the book the wrong way and read the title as: %s
+gui.ancientspellcraft\:sphere_cognizance.hint.discovered.10=The books encryption was excruciatingly thorough, but you found the dispel incantation scribbled down... %s
+gui.ancientspellcraft\:sphere_cognizance.hint.fire.1=Flicker little flame, scorch char and maim
+gui.ancientspellcraft\:sphere_cognizance.hint.fire.2=These texts shall allow you to conjure fire
+gui.ancientspellcraft\:sphere_cognizance.hint.fire.3=A great Pyromancer was the author of this text
+gui.ancientspellcraft\:sphere_cognizance.hint.fire.4=The spellbook is adorned with flames
+gui.ancientspellcraft\:sphere_cognizance.hint.fire.5=The text itself seems to emit heat
+gui.ancientspellcraft\:sphere_cognizance.hint.fire.6=On the cover of the tome, the name of Phlegethon stands, warning all of the scalding flood.
+gui.ancientspellcraft\:sphere_cognizance.hint.earth.1=This spell seems to draw its power from the very land you inhabit
+gui.ancientspellcraft\:sphere_cognizance.hint.earth.2=The author of this work found ways to use earth and wind for his endeavors
+gui.ancientspellcraft\:sphere_cognizance.hint.earth.3=The spellbook carries information on many poisons
+gui.ancientspellcraft\:sphere_cognizance.hint.earth.4=This tome is based on the magic of life itself
+gui.ancientspellcraft\:sphere_cognizance.hint.earth.5=This may have been written by a disciple of acheron, son of helios and demeter.
+gui.ancientspellcraft\:sphere_cognizance.hint.ice.1=Coldness shall be your adversaries demise
+gui.ancientspellcraft\:sphere_cognizance.hint.ice.2=The heavy pages are rather cold to the touch
+gui.ancientspellcraft\:sphere_cognizance.hint.ice.3=The "Codex of frost" is written on the cover
+gui.ancientspellcraft\:sphere_cognizance.hint.ice.4=These kinds of spells are rumored to have caused an ice age once
+gui.ancientspellcraft\:sphere_cognizance.hint.ice.5=The book is aimed at teaching you the ways of the Cryomancers
+gui.ancientspellcraft\:sphere_cognizance.hint.ice.6=As glittering light shines upon the covers of the tome, the name cocytus gleams up.
+gui.ancientspellcraft\:sphere_cognizance.hint.necromancy.1=Dark secrets are enclosed in these texts
+gui.ancientspellcraft\:sphere_cognizance.hint.necromancy.2=The book is written in the language of the dead
+gui.ancientspellcraft\:sphere_cognizance.hint.necromancy.3=This is the work of an ancient necromancer
+gui.ancientspellcraft\:sphere_cognizance.hint.necromancy.4=This tome might hold the secrets to corruption or resurrection
+gui.ancientspellcraft\:sphere_cognizance.hint.necromancy.5=Even the sphere can barely take out the stygian letters of this tenebrous text.
+gui.ancientspellcraft\:sphere_cognizance.hint.healing.1=There is no wound to deep, no injury to great that can't be mended
+gui.ancientspellcraft\:sphere_cognizance.hint.healing.2=Cleansing magic can be found within these pages
+gui.ancientspellcraft\:sphere_cognizance.hint.healing.3=A paladin once wrote these lines
+gui.ancientspellcraft\:sphere_cognizance.hint.healing.4=The writer of this text has sworn upon the names of Panaceia and Asclepius.
+gui.ancientspellcraft\:sphere_cognizance.hint.sorcery.1=This book might contain illusionary magics
+gui.ancientspellcraft\:sphere_cognizance.hint.sorcery.2=Within this codex ways to conjure, deceive and outsmart are described
+gui.ancientspellcraft\:sphere_cognizance.hint.sorcery.3=This is a manual focused on the arts of pure magic
+gui.ancientspellcraft\:sphere_cognizance.hint.sorcery.4=The ways of the trickster are before you
+gui.ancientspellcraft\:sphere_cognizance.hint.sorcery.5=This tome contains knowledge of the mystical ways in the wake of circe.
+gui.ancientspellcraft\:sphere_cognizance.hint.lightning.1=Be careful not to electrocute yourself with that!
+gui.ancientspellcraft\:sphere_cognizance.hint.lightning.2=Feel the current running through the script you hold
+gui.ancientspellcraft\:sphere_cognizance.hint.lightning.3=Thunder and lightning shall be your tool or weapon
+gui.ancientspellcraft\:sphere_cognizance.hint.lightning.4=Shockingly these text concern themselves with harnessing electricity
+gui.ancientspellcraft\:sphere_cognizance.hint.ancient.1=Extreme raw power emanates from the archaic scripture
+gui.ancientspellcraft\:sphere_cognizance.hint.ancient.2=You may have found one of the oldest magic texts ever recorded
+gui.ancientspellcraft\:sphere_cognizance.hint.ancient.3=The spell seems to be extremely different from anything you have ever seen
+gui.ancientspellcraft\:sphere_cognizance.hint.ancient.4=The magic in this manual seems incredibly sophisticated but also complex
+gui.ancientspellcraft\:sphere_cognizance.hint.ancient.5=The book appears to be barely held together by the magic flowing through it
+gui.ancientspellcraft\:sphere_cognizance.hint.ancient.6=You almost feel like the book is studying you as much as it is you
+gui.ancientspellcraft\:sphere_cognizance.hint.ancient.7=Strangely the weight of the tome seems to exceed that of the materials it was crafted from
+gui.ancientspellcraft\:sphere_cognizance.hint.buff.1=Harness this spells power to enhance your abilities
+gui.ancientspellcraft\:sphere_cognizance.hint.buff.2=Concentrate the power within you
+gui.ancientspellcraft\:sphere_cognizance.hint.buff.3=Your body shall grow more powerful with this magic
+gui.ancientspellcraft\:sphere_cognizance.hint.buff.4=This spell is focused on exceeding the limits of the human body
+gui.ancientspellcraft\:sphere_cognizance.hint.attack.1=Sometimes a good offence is the best defense
+gui.ancientspellcraft\:sphere_cognizance.hint.attack.2=No opponent shall stand against this magics might
+gui.ancientspellcraft\:sphere_cognizance.hint.attack.3=Nothing is more devastating than spells created to harm
+gui.ancientspellcraft\:sphere_cognizance.hint.attack.4=This spell, as many others, is intended to cause damage on anything it is cast on
+gui.ancientspellcraft\:sphere_cognizance.hint.projectile.1=This charm will act across great distances
+gui.ancientspellcraft\:sphere_cognizance.hint.projectile.2=This spell shall be the arrow that defeats your foe
+gui.ancientspellcraft\:sphere_cognizance.hint.projectile.3=The described spell shall function at range
+gui.ancientspellcraft\:sphere_cognizance.hint.projectile.4=The cunning warriors stay at range
+gui.ancientspellcraft\:sphere_cognizance.hint.defense.1=Carry this magick as your aegis...
+gui.ancientspellcraft\:sphere_cognizance.hint.defense.2=This spell was constructed to prevent harm
+gui.ancientspellcraft\:sphere_cognizance.hint.defense.3=Study this spellbook to protect yourself from danger
+gui.ancientspellcraft\:sphere_cognizance.hint.defense.4=The book describes ways to shield yourself from your opposition
+gui.ancientspellcraft\:sphere_cognizance.hint.utility.1=This tome might prove as an useful tool
+gui.ancientspellcraft\:sphere_cognizance.hint.utility.2=This spell will help you make a task less tedious
+gui.ancientspellcraft\:sphere_cognizance.hint.utility.3=With the right tool everything can be easy
+gui.ancientspellcraft\:sphere_cognizance.hint.utility.4=This spell was devised as a tool
+gui.ancientspellcraft\:sphere_cognizance.hint.utility.5=There is nothing that spells can't solve
+gui.ancientspellcraft\:sphere_cognizance.hint.construct.1=Creation is true power, such as this spell
+gui.ancientspellcraft\:sphere_cognizance.hint.construct.2=Use this spellbook to twist the fabric of reality and create new matter
+gui.ancientspellcraft\:sphere_cognizance.hint.construct.3=This tome describes a way to shape something from nothing
+gui.ancientspellcraft\:sphere_cognizance.hint.construct.4=You wield a codex of conjuration before you!
+gui.ancientspellcraft\:sphere_cognizance.hint.minion.1=True warlocks know, not every problem can be solved alone
+gui.ancientspellcraft\:sphere_cognizance.hint.minion.2=Nothing will stand in the way of your summons!
+gui.ancientspellcraft\:sphere_cognizance.hint.minion.3=Sheer numbers is a power of its own
+gui.ancientspellcraft\:sphere_cognizance.hint.minion.4=These texts devise a way to support you with servants
+gui.ancientspellcraft\:sphere_cognizance.hint.alteration.1=In your hands you hold the key to change the world around you
+gui.ancientspellcraft\:sphere_cognizance.hint.alteration.2=Make the world you canvas and alter it to your will
+gui.ancientspellcraft\:sphere_cognizance.hint.alteration.3=What was once this shall now be that
+gui.ancientspellcraft\:sphere_cognizance.hint.alteration.4=Nothing will stay as it is forever. You might as well speed it up
+gui.ancientspellcraft\:sphere_cognizance.hint.heal_ally.1=The spell seems to be in large parts based on a healing spell, yet it does not seem capable of regenerating its caster
+gui.ancientspellcraft\:sphere_cognizance.hint.heal_ally.2=The manuscript focuses on concentrating a beam with a regenerative effect
+gui.ancientspellcraft\:sphere_cognizance.hint.heal_ally.3=Those who keep their friends in good health will live longer themselves
+gui.ancientspellcraft\:sphere_cognizance.hint.heal_ally.4=It is not just always you that requires fixing...
+gui.ancientspellcraft\:sphere_cognizance.hint.pocket_furnace.1=The scripture contains an extract on the various uses of the magic from food preparation to ore processing
+gui.ancientspellcraft\:sphere_cognizance.hint.pocket_furnace.2=As you experiment with the spell your pockets seem to heat up
+gui.ancientspellcraft\:sphere_cognizance.hint.pocket_furnace.3=The author explains how his perilous and lengthy waiting in front of his furnace lead to this spell
+gui.ancientspellcraft\:sphere_cognizance.hint.pocket_furnace.4=For a wizard, well done is nothing but a magic trick
+gui.ancientspellcraft\:sphere_cognizance.hint.arcane_lock.1=The book is based around a force field, that only the caster may pass through
+gui.ancientspellcraft\:sphere_cognizance.hint.arcane_lock.2=For a wizard security is key, yet does not require them
+gui.ancientspellcraft\:sphere_cognizance.hint.arcane_lock.3=This magic seems to be applicable to any container
+gui.ancientspellcraft\:sphere_cognizance.hint.arcane_lock.4=The detailed incantation seems to fulfill a security function of sorts
+gui.ancientspellcraft\:sphere_cognizance.hint.remove_curse.1=A wizard spend his whole life in pain developing this spell as his salvation
+gui.ancientspellcraft\:sphere_cognizance.hint.remove_curse.2=Only through light may corruption be cleansed
+gui.ancientspellcraft\:sphere_cognizance.hint.remove_curse.3=This spell seeks to dispel the eternal
+gui.ancientspellcraft\:sphere_cognizance.hint.remove_curse.4=Curses last forever, until they don't
+gui.ancientspellcraft\:sphere_cognizance.hint.resurrection.1=To cheat death is a power only one has achieved...
+gui.ancientspellcraft\:sphere_cognizance.hint.resurrection.2=There is a legend of a wizard so powerful.. He could save others from dying
+gui.ancientspellcraft\:sphere_cognizance.hint.resurrection.3=The tome suggests death is not permanent, at least in theory
+gui.ancientspellcraft\:sphere_cognizance.hint.resurrection.4=This spell seems to reverse death, but not yours...
+gui.ancientspellcraft\:sphere_cognizance.hint.resurrection.5=The giant book is cramped full of complicated spell advice little of which seems to be from experience
 
+gui.ancientspellcraft\:sphere_cognizance.hint.ancient_knowledge.0=Studying the relic has given you some insights about the art of ancient magic
+gui.ancientspellcraft\:sphere_cognizance.hint.ancient_knowledge.1=Studying the relic has given you some insights about the art of ancient magic
+gui.ancientspellcraft\:sphere_cognizance.hint.ancient_knowledge.2=By examining the glyphs have you gained some insights of ancient magic
+gui.ancientspellcraft\:sphere_cognizance.hint.ancient_knowledge.3=The magical properties of the relic have long faded into the past, but you were able to study the glyphs
+gui.ancientspellcraft\:sphere_cognizance.hint.ancient_knowledge.4=For a brief moment you felt like the symbols in the relic glowed
+
+
+## knowledge
+gui.ancientspellcraft\:ancient_knowledge_increased=Your knowledge of ancient magic increased by %s
 
 ## sets
 set.ancientspellcraft\:jewels_of_power=Jewels of Power

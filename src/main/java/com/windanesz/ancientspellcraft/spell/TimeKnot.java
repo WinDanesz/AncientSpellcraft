@@ -10,7 +10,6 @@ import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.packet.PacketTransportation;
 import electroblob.wizardry.packet.WizardryPacketHandler;
 import electroblob.wizardry.registry.WizardryItems;
-import electroblob.wizardry.spell.Heal;
 import electroblob.wizardry.spell.SpellBuff;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -51,26 +50,6 @@ public class TimeKnot extends SpellBuff {
 	}
 
 	/**
-	 * Actually applies the status effects to the caster. By default, this iterates through the array of effects and
-	 * applies each in turn, multiplying the duration and amplifier by the appropriate modifiers. Particles are always
-	 * hidden and isAmbient is always set to false. Override to do something special, like apply a non-potion buff.
-	 * Returns a boolean to allow subclasses to cause the spell to fail if for some reason the effect cannot be applied
-	 * (for example, {@link Heal} fails if the caster is on full health).
-	 */
-	//	@Override
-	//	protected boolean applyEffects(EntityLivingBase caster, SpellModifiers modifiers) {
-	//
-	//		// the default way to calculate this
-	//		int duration = (int) (getProperty(getDurationKey(AncientSpellcraftPotions.time_knot)).floatValue() * modifiers.get(WizardryItems.duration_upgrade));
-	//		System.out.println("potency: " + modifiers.get(SpellModifiers.POTENCY));
-	//		duration = (int) (duration * modifiers.get(SpellModifiers.POTENCY));
-	//
-	//		caster.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.time_knot, duration, 0, false, false));
-	//
-	//		return true;
-	//	}
-
-	/**
 	 * <b>Overriding as we don't want to spawn particles.</b>
 	 */
 	protected boolean applyEffects(EntityLivingBase caster, SpellModifiers modifiers) {
@@ -107,13 +86,6 @@ public class TimeKnot extends SpellBuff {
 
 	@Override
 	public boolean cast(World world, EntityPlayer player, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		//TODO artefact:
-		// "eye of agamotto" - allow surviving death
-		// maybe an infinte loop variant? these could be an artefact set actually... but then this second one needs an additional effect
-		// Only return on the server side or the client probably won't spawn particles
-
-		// Only return on the server side or the client probably won't spawn particles
-		//		if(!this.applyEffects(player, modifiers) && !world.isRemote) return false;
 		if (world.isRemote)
 			this.spawnParticles(world, player, modifiers);
 

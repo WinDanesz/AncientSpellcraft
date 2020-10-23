@@ -1,0 +1,23 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": false,
+        "dispensers": false,
+        "commands": true,
+        "treasure": true,
+        "trades": true,
+        "looting": true
+    },
+    "tier": "advanced",
+    "element": "ice",
+    "type": "attack",
+    "cost": 20,
+    "chargeup": 0,
+    "cooldown": 0,
+    "base_properties": {
+        "shard_count": 30,
+        "freeze_radius": 4
+    }
+}

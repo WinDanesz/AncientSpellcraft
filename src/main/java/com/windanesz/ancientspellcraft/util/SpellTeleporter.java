@@ -93,7 +93,7 @@ public class SpellTeleporter implements ITeleporter {
 				worldServer.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) player, targetDim, new SpellTeleporter(x + 0.5, y, z + 0.5));
 
 				// experminental
-				player.setPositionAndUpdate(x + 0.5, y, z + 0.5);
+//				player.setPositionAndUpdate(x + 0.5, y, z + 0.5);
 				IMessage msg = new PacketTransportation.Message(player.getEntityId());
 				WizardryPacketHandler.net.sendToDimension(msg, player.world.provider.getDimension());
 				// experminental

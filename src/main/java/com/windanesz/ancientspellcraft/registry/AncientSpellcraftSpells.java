@@ -33,6 +33,7 @@ import com.windanesz.ancientspellcraft.spell.Extinguish;
 import com.windanesz.ancientspellcraft.spell.EyeOfTheStorm;
 import com.windanesz.ancientspellcraft.spell.FireWall;
 import com.windanesz.ancientspellcraft.spell.Forcefend;
+import com.windanesz.ancientspellcraft.spell.FrostNova;
 import com.windanesz.ancientspellcraft.spell.Harvest;
 import com.windanesz.ancientspellcraft.spell.HellGate;
 import com.windanesz.ancientspellcraft.spell.IceTower;
@@ -46,6 +47,7 @@ import com.windanesz.ancientspellcraft.spell.MagmaStrider;
 import com.windanesz.ancientspellcraft.spell.ManaFlare;
 import com.windanesz.ancientspellcraft.spell.Martyr;
 import com.windanesz.ancientspellcraft.spell.NaturesSprout;
+import com.windanesz.ancientspellcraft.spell.PocketDimension;
 import com.windanesz.ancientspellcraft.spell.Pyrokinesis;
 import com.windanesz.ancientspellcraft.spell.RaiseSkeletonMage;
 import com.windanesz.ancientspellcraft.spell.SilencingSigil;
@@ -262,6 +264,8 @@ public final class AncientSpellcraftSpells {
 		registry.register(new StaticCharge());
 		registry.register(new Pyrokinesis());
 		registry.register(new Conflagration());
-
+		registry.register(new PocketDimension());
+		registry.register(new FrostNova());
+//		registry.register(new WarpWood());
 	}
 }
