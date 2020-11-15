@@ -2,18 +2,18 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.ParticleBuilder.Type;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityDispenser;
@@ -29,7 +29,7 @@ public class Pyrokinesis extends SpellRay {
 	public static String SLOW_DURATION = "slow_duration";
 
 	public Pyrokinesis() {
-		super(AncientSpellcraft.MODID, "pyrokinesis", true, EnumAction.BOW);
+		super(AncientSpellcraft.MODID, "pyrokinesis", SpellActions.SUMMON, true);
 		this.aimAssist(0.4f);
 		this.particleSpacing(1);
 		this.particleJitter(0.05);
@@ -74,14 +74,13 @@ public class Pyrokinesis extends SpellRay {
 				// with this mechanic for their own purposes, so this line makes sure that doesn't affect wizardry.
 			} else if (ticksInUse % ((EntityLivingBase) target).maxHurtResistantTime == 1) {
 				target.setFire((int) (getProperty(BURN_DURATION).floatValue()));
-				WizardryUtilities.attackEntityWithoutKnockback(target,
+				EntityUtils.attackEntityWithoutKnockback(target,
 						MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FIRE),
 						getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY));
 
 				((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS,
 						(int) (getProperty(SLOW_DURATION).floatValue()), 1));
 			}
-
 
 			if (world.isRemote) {
 
@@ -92,7 +91,7 @@ public class Pyrokinesis extends SpellRay {
 
 					ParticleBuilder.create(Type.MAGIC_FIRE)
 							.entity(target)
-							.pos(0,target.height / 2,0)
+							.pos(0, target.height / 2, 0)
 							.vel(dx, dy, dz)
 							.spawn(world);
 

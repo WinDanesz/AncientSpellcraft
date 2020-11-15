@@ -94,4 +94,14 @@ public class ItemKnowledgeOrb extends ItemASArtefact {
 			setDamage(stack, getDamage(stack) + 1);
 		}
 	}
+
+	@Override
+	public boolean isEnchantable(ItemStack stack){
+		return false;
+	}
+
+	@Override
+	public boolean isBookEnchantable(ItemStack stack, ItemStack book){
+		return false;
+	}
 }

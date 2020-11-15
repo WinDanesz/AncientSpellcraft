@@ -8,7 +8,6 @@ import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.packet.PacketTransportation;
-import electroblob.wizardry.packet.WizardryPacketHandler;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellBuff;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -164,6 +163,7 @@ public class TimeKnot extends SpellBuff {
 	}
 
 	public static void loopPlayer(EntityPlayer player) {
+
 		WizardData data = WizardData.get(player);
 		if (data != null) {
 			NBTTagCompound compound = data.getVariable(TIME_KNOT_DATA);
@@ -199,8 +199,8 @@ public class TimeKnot extends SpellBuff {
 
 			if (player.dimension == storedDim) {
 				player.setPositionAndUpdate(posX, posY, posZ);
-				IMessage msg = new PacketTransportation.Message(player.getEntityId());
-				WizardryPacketHandler.net.sendToDimension(msg, player.world.provider.getDimension());
+				IMessage msg = new PacketTransportation.Message();
+//				WizardryPacketHandler.net.sendToDimension(msg, player.world.provider.getDimension());
 			} else {
 				SpellTeleporter.teleportEntity(storedDim, posX, posY, posZ, false, player);
 			}

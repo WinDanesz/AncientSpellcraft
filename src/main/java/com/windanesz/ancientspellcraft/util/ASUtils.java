@@ -7,7 +7,6 @@ import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.item.ItemWand;
 import electroblob.wizardry.spell.Spell;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.entity.Entity;
@@ -36,6 +35,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
+
+import static electroblob.wizardry.util.InventoryUtils.getHotbar;
 
 /**
  * A class for common utilities used in the mod
@@ -225,7 +226,7 @@ public final class ASUtils {
 
 	public static List<ItemStack> getAllHotbarWands(EntityPlayer player, Tier maxTier) {
 		List<ItemStack> wands = new ArrayList<>();
-		for (ItemStack stack : WizardryUtilities.getHotbar(player)) {
+		for (ItemStack stack : getHotbar(player)) {
 			if (stack.getItem() instanceof ItemWand && ((ItemWand) stack.getItem()).tier.level <= maxTier.level) {
 				wands.add(stack);
 			}

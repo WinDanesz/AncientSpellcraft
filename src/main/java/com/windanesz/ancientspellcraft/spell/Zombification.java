@@ -1,6 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -9,7 +11,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityZombieVillager;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -21,8 +22,8 @@ public class Zombification extends SpellRay {
 	/**
 	 * The number by which this spell's damage is multiplied for undead entities.
 	 */
-	public Zombification(String modID, String name, EnumAction action, boolean isContinuous) {
-		super(modID, name, isContinuous, action);
+	public Zombification() {
+		super(AncientSpellcraft.MODID, "zombification", SpellActions.POINT, false);
 	}
 
 	// The following three methods serve as a good example of h||ow to implement continuous spell sounds (hint: it's easy)

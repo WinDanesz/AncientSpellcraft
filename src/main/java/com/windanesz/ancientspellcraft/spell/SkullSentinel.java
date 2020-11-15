@@ -3,13 +3,13 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.tileentity.TileEntityPlayerSave;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.EnumFacing;
@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 public class SkullSentinel extends SpellRay {
 
 	public SkullSentinel() {
-		super(AncientSpellcraft.MODID, "skull_sentinel", false, EnumAction.BOW);
+		super(AncientSpellcraft.MODID, "skull_sentinel", SpellActions.POINT, false);
 		this.soundValues(0.7F, 1.1F, 0.2F);
 	}
 
@@ -36,6 +36,8 @@ public class SkullSentinel extends SpellRay {
 			// regular skeleton 0, wither = 1 (net.minecraft.block.BlockSkull.checkWitherSpawn)
 			if (skullTe.getSkullType() == 0) {
 				world.setBlockToAir(pos);
+
+				// TODO: add particles at spellcast?
 				if (world.isAirBlock(pos.offset(EnumFacing.UP))) {
 					if (caster != null) {
 						world.setBlockState(pos.offset(EnumFacing.UP), AncientSpellcraftBlocks.SKULL_WATCH.getDefaultState());
@@ -75,6 +77,6 @@ public class SkullSentinel extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
 	}
 }

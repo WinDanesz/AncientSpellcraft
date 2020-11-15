@@ -3,9 +3,9 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import electroblob.wizardry.registry.WizardryItems;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -22,11 +22,10 @@ public class WaterWalking extends SpellBuffAS {
 		addProperties(EFFECT_RADIUS);
 	}
 
-
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 
-		List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(
+		List<EntityLivingBase> targets = EntityUtils.getEntitiesWithinRadius(
 				getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade),
 				caster.posX, caster.posY, caster.posZ, world, EntityLivingBase.class);
 
@@ -56,9 +55,8 @@ public class WaterWalking extends SpellBuffAS {
 		return super.cast(world, caster, hand, ticksInUse, modifiers);
 	}
 
-
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
 	}
 }

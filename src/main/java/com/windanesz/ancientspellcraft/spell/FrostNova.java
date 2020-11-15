@@ -3,24 +3,23 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.entity.projectile.EntityIceShard;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.AllyDesignationSystem;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.ParticleBuilder.Type;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class FrostNova extends Spell {
@@ -29,7 +28,7 @@ public class FrostNova extends Spell {
 
 	public FrostNova() {
 
-		super(AncientSpellcraft.MODID, "frost_nova", EnumAction.BLOCK, true);
+		super(AncientSpellcraft.MODID, "frost_nova", SpellActions.SUMMON, true);
 		soundValues(1.0f, 1.2f, 0.2f);
 		addProperties(SHARD_COUNT, FREEZE_RADIUS);
 	}
@@ -57,6 +56,7 @@ public class FrostNova extends Spell {
 			return false;
 		}
 
+
 		if (!world.isRemote) {
 
 			caster.hurtResistantTime = 10;
@@ -74,7 +74,7 @@ public class FrostNova extends Spell {
 				world.spawnEntity(iceshard);
 			}
 
-			for (EntityLivingBase entity : WizardryUtilities.getEntitiesWithinRadius(getProperty(FREEZE_RADIUS).intValue(), caster.posX, caster.posY, caster.posZ, caster.world)) {
+			for (EntityLivingBase entity : EntityUtils.getEntitiesWithinRadius(getProperty(FREEZE_RADIUS).intValue(), caster.posX, caster.posY, caster.posZ, caster.world, EntityLivingBase.class)) {
 				if (entity == caster) {
 					continue;
 				}
@@ -105,22 +105,8 @@ public class FrostNova extends Spell {
 					.vel(dx * 0.3, dy * 0.3, dz * 0.3)
 					.spawn(world);
 		}
-	}
 
 
-	@Override
-	protected SoundEvent[] createSounds(){
-		return this.createContinuousSpellSounds();
-	}
-
-	@Override
-	protected void playSound(World world, EntityLivingBase entity, int ticksInUse, int duration, SpellModifiers modifiers, String... sounds){
-		this.playSoundLoop(world, entity, ticksInUse);
-	}
-
-	@Override
-	protected void playSound(World world, double x, double y, double z, int ticksInUse, int duration, SpellModifiers modifiers, String... sounds){
-		this.playSoundLoop(world, x, y, z, ticksInUse, duration);
 	}
 
 	@Override

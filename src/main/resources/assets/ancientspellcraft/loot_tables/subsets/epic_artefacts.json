@@ -1,18 +1,117 @@
 {
     "pools": [
         {
-            "name": "ancientspellcraft_epic_artefacts",
+            "name": "main",
             "rolls": 1,
-            "conditions": [
-                {
-                    "condition": "random_chance",
-                    "chance": 0.015
-                }
-            ],
             "entries": [
                 {
                     "type": "item",
                     "name": "ancientspellcraft:magic_shield",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_curse_ward",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_pendant_of_eternity",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_time_knot",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_knowledge_orb",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_power_orb",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_progression_orb",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_lightning_orb",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_ice_orb",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_earth_orb",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_healing_orb",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_necromancy_orb",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_fire_orb",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_sorcery_orb",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_rift_bottle",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_reanimation",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_evergrowing_crystal",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_shadow_blade",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_elemental_grimoire",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_war_horn",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_wand_upgrade",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_cryostasis",
                     "weight": 1
                 }
             ]

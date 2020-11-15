@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.item;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.util.AllyDesignationSystem;
-import electroblob.wizardry.util.WizardryUtilities;
+import electroblob.wizardry.util.EntityUtils;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -42,7 +42,7 @@ public class ItemHorn extends ItemASArtefact {
 
 		if (!world.isRemote) {
 
-			List<EntityCreature> entities = WizardryUtilities.getEntitiesWithinRadius(
+			List<EntityCreature> entities = EntityUtils.getEntitiesWithinRadius(
 					SEARCH_RADIUS,
 					player.posX, player.posY, player.posZ, world, EntityCreature.class);
 

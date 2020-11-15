@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.tileentity;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.client.gui.ContainerSphereCognizance;
-import com.windanesz.ancientspellcraft.data.Knowledge;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.util.ASUtils;
@@ -314,7 +314,7 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 	public void setResearchDuration() {
 		//		System.out.println("setResearchDuration() called..");
 		if (getInputStack().getItem() instanceof ItemRelic) {
-			researchDuration = 60;
+			researchDuration = 300;
 		} else {
 			researchDuration = getResearchDuration(getCurrentSpell());
 		}
@@ -352,9 +352,11 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 
 			if (currentPlayer != null && !world.isRemote) {
 //				Knowledge.addKnowledgeLevel(currentPlayer, 1, true);
-				Knowledge.addKnowledge(currentPlayer, 1);
-				System.out.println("current lvl:" + Knowledge.getKnowledge(currentPlayer));
+//				Knowledge.addKnowledge(currentPlayer, 1);
+//				System.out.println("current lvl:" + Knowledge.getKnowledge(currentPlayer));
 				ItemRelic.setResearched(getInputStack());
+				ItemRelic.setRelicContent(getInputStack(), currentPlayer);
+				System.out.println(ItemRelic.getSpellComponentItems(getInputStack()));
 				//				setInventorySlotContents(1, ItemStack.EMPTY);
 			}
 			markDirty();
@@ -362,7 +364,7 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 			return;
 		}
 
-		if (special < 0.2) {
+		if (special < Settings.generalSettings.sphere_spell_identification_chance) {
 			// discover spell
 
 			this.currentHintTypeId = 2; // discovered
@@ -371,7 +373,7 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 			this.currentHintId = id;
 
 			if (!MinecraftForge.EVENT_BUS.post(new DiscoverSpellEvent(getCurrentPlayer(), getCurrentSpell(),
-					DiscoverSpellEvent.Source.IDENTIFICATION_SCROLL))) {
+					DiscoverSpellEvent.Source.OTHER))) {
 				// Identification scrolls give the chat readout in creative mode, otherwise it looks like
 				// nothing happens!
 				if (getPlayerWizardData().discoverSpell(getCurrentSpell()) && !world.isRemote) {
@@ -473,13 +475,13 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 	public static int getResearchDuration(Spell spell) {
 		switch (spell.getTier()) {
 			case NOVICE:
-				return 10;
+				return 100;
 			case APPRENTICE:
-				return 15;
+				return 150;
 			case ADVANCED:
-				return 20;
+				return 200;
 			case MASTER:
-				return 25;
+				return 250;
 			default:
 				return 10;
 		}

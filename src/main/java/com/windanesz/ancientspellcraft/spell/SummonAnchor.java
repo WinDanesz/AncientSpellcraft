@@ -4,27 +4,31 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.util.ASParticles;
 import electroblob.wizardry.entity.living.ISummonedCreature;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
 
 public class SummonAnchor extends Spell {
+
+	private static String MAX_AFFECTED_ENTITIES = "max_affected_entities";
+
 	public SummonAnchor() {
-		super(AncientSpellcraft.MODID, "summon_anchor", EnumAction.NONE, false);
+
+		super(AncientSpellcraft.MODID, "summon_anchor", SpellActions.SUMMON, false);
 		addProperties(BLAST_RADIUS);
 		addProperties(DURATION);
 		addProperties(HEALTH);
+		addProperties(MAX_AFFECTED_ENTITIES);
 		soundValues(1.0f, 1.2f, 0.2f);
 	}
 
@@ -41,11 +45,20 @@ public class SummonAnchor extends Spell {
 
 		playSound(world, caster.posX, caster.posY, caster.posZ, 0, 0, modifiers);
 
-		List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(radius, caster.posX, caster.posY, caster.posZ, world);
+		List<EntityLivingBase> targets = EntityUtils.getEntitiesWithinRadius(radius, caster.posX, caster.posY, caster.posZ, world, EntityLivingBase.class);
+		int entityCount = getProperty(MAX_AFFECTED_ENTITIES).intValue();
+
 		for (EntityLivingBase target : targets) {
+
 			if (!(target instanceof ISummonedCreature && ((ISummonedCreature) target).getOwnerId() == caster.getUniqueID())) {
 				continue;
 			}
+
+			entityCount--;
+			if (entityCount <= 0) {
+				return false;
+			}
+
 			ISummonedCreature summon = (ISummonedCreature) target;
 			summon.setLifetime(summon.getLifetime() + Math.round(duration));
 
@@ -55,22 +68,22 @@ public class SummonAnchor extends Spell {
 			}
 			foundSummon = true;
 
-			/// test
-			Vec3d origin = new Vec3d(caster.posX, caster.getEntityBoundingBox().minY + caster.getEyeHeight(), caster.posZ);
-			Vec3d hookPosition = new Vec3d(target.posX, target.getEntityBoundingBox().minY + target.getEyeHeight(), target.posZ);
-			Vec3d targetVec = new Vec3d(target.posX, target.getEntityBoundingBox().minY + target.height/2, target.posZ);
-			Vec3d vec = targetVec.subtract(origin).normalize();
-			float extensionSpeed = 5;
-
-			// Extension
 			if (world.isRemote) {
 				// world.getTotalWorldTime() - ticksInUse generates a constant but unique seed each time the spell is cast
 				ParticleBuilder.create(ASParticles.SOUL_CHAIN)
 						.entity(caster)
-						.time(30)
+						.time(60)
 						.pos(0, caster.getEyeHeight() - 0.25, 0)
 						.target(target)
 						.seed(world.getTotalWorldTime() - ticksInUse)
+						.spawn(world);
+
+				ParticleBuilder.create(ParticleBuilder.Type.GUARDIAN_BEAM)
+						.entity(caster)
+						.time(60)
+						.pos(0, caster.getEyeHeight() - 0.25, 0)
+						.target(target)
+						.clr(139, 8, 168)
 						.spawn(world);
 
 			}
@@ -80,7 +93,6 @@ public class SummonAnchor extends Spell {
 		if (world.isRemote)
 			spawnSpellParticles(caster, caster.world, radius);
 
-		System.out.println("foundSummon: " + foundSummon);
 		return foundSummon;
 	}
 

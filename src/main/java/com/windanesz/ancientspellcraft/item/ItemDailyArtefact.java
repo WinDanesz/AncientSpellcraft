@@ -25,8 +25,6 @@ public abstract class ItemDailyArtefact extends ItemASArtefact {
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(LAST_OPEN_TIME_TAG)) {
 			long lastAccess = stack.getTagCompound().getLong(LAST_OPEN_TIME_TAG);
 			if (isFullDayBetween(lastAccess, currentWorldTime)) {
-				System.out.println("fullday: diff: " + (currentWorldTime - lastAccess));
-				System.out.println("giving gold");
 				performAction(player);
 				setLastOpenTimeCurrent(stack, currentWorldTime);
 				return new ActionResult<>(EnumActionResult.SUCCESS, stack);
@@ -36,7 +34,6 @@ public abstract class ItemDailyArtefact extends ItemASArtefact {
 				return new ActionResult<>(EnumActionResult.FAIL, stack);
 			}
 		} else {
-			System.out.println("first open time");
 			performAction(player);
 			setLastOpenTimeCurrent(stack, currentWorldTime);
 			return new ActionResult<>(EnumActionResult.SUCCESS, stack);

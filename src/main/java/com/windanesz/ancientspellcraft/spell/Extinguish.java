@@ -3,9 +3,10 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.BlockUtils;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFire;
 import net.minecraft.entity.EntityLivingBase;
@@ -38,10 +39,10 @@ public class Extinguish extends Spell {
 
 		playSound(world, caster.posX, caster.posY, caster.posZ, 0, 0, modifiers);
 
-			List<BlockPos> sphere = WizardryUtilities.getBlockSphere(caster.getPosition(),
+			List<BlockPos> sphere = BlockUtils.getBlockSphere(caster.getPosition(),
 				getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade));
 
-		List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(radius, caster.posX, caster.posY, caster.posZ, world);
+		List<EntityLivingBase> targets = EntityUtils.getEntitiesWithinRadius(radius, caster.posX, caster.posY, caster.posZ, world, EntityLivingBase.class);
 
 		for (EntityLivingBase target : targets) {
 			if (target.isBurning()) {
@@ -54,13 +55,16 @@ public class Extinguish extends Spell {
 			if (block instanceof BlockFire) {
 				world.setBlockToAir(pos);
 			}
-			if (caster.isBurning()) {
-				caster.extinguish();
-				if (!world.isRemote && !caster.isPotionActive(MobEffects.FIRE_RESISTANCE)) {
-					caster.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 40));
-				}
-			}
 		}
+
+		if (caster.isBurning()) {
+			caster.extinguish();
+		}
+
+		if (!caster.isPotionActive(MobEffects.FIRE_RESISTANCE)) {
+			caster.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 60));
+		}
+
 		if (world.isRemote) {
 
 			float particleCount = 10;

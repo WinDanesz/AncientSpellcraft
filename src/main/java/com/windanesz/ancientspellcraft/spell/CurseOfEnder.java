@@ -2,11 +2,12 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellBuff;
 import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumAction;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 public class CurseOfEnder extends SpellRay {
 
 	public CurseOfEnder(String modID, String name, EnumAction action, boolean isContinuous) {
-		super(modID, name, isContinuous, action);
+		super(modID, name, SpellActions.POINT, false);
 		this.soundValues(1, 1.1f, 0.2f);
 		addProperties(EFFECT_STRENGTH);
 	}
@@ -29,7 +30,7 @@ public class CurseOfEnder extends SpellRay {
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 
-		if (WizardryUtilities.isLiving(target)) {
+		if (EntityUtils.isLiving(target)) {
 
 			// This will actually run out in the end, but only if you leave Minecraft running for 3.4 years
 			if (!world.isRemote)

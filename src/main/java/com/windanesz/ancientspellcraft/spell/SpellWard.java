@@ -1,8 +1,10 @@
 package com.windanesz.ancientspellcraft.spell;
 
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 
 import java.util.function.Supplier;
@@ -28,5 +30,10 @@ public class SpellWard extends SpellBuffAS {
 		}
 
 		return super.applyEffects(caster, modifiers);
+	}
+
+	@Override
+	public boolean applicableForItem(Item item) {
+		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
 	}
 }

@@ -5,8 +5,9 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellMinion;
+import electroblob.wizardry.util.BlockUtils;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -58,7 +59,7 @@ public class UnholyAlliance extends SpellMinion<EntitySkeletonMageMinion> {
 				if (world.isAirBlock(locations.get(i)) && world.isAirBlock(locations.get(i).up())) {
 					pos = locations.get(i);
 				} else {
-					pos = WizardryUtilities.findNearbyFloorSpace(caster, range, range * 2);
+					pos = BlockUtils.findNearbyFloorSpace(caster, range, range * 2);
 				}
 				i++;
 				//				for (int i = 0; i < getProperty(MINION_COUNT).intValue(); i++) {
@@ -81,10 +82,10 @@ public class UnholyAlliance extends SpellMinion<EntitySkeletonMageMinion> {
 				IAttributeInstance attribute = minion.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
 				if (attribute != null)
 					attribute.applyModifier( // Apparently some things don't have an attack damage
-							new AttributeModifier(POTENCY_ATTRIBUTE_MODIFIER, modifiers.get(SpellModifiers.POTENCY) - 1, WizardryUtilities.Operations.MULTIPLY_CUMULATIVE));
+							new AttributeModifier(POTENCY_ATTRIBUTE_MODIFIER, modifiers.get(SpellModifiers.POTENCY) - 1, EntityUtils.Operations.MULTIPLY_CUMULATIVE));
 				// This is only used for artefacts, but it's a nice example of custom spell modifiers
 				minion.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).applyModifier(
-						new AttributeModifier(HEALTH_MODIFIER, modifiers.get(HEALTH_MODIFIER) - 1, WizardryUtilities.Operations.MULTIPLY_CUMULATIVE));
+						new AttributeModifier(HEALTH_MODIFIER, modifiers.get(HEALTH_MODIFIER) - 1, EntityUtils.Operations.MULTIPLY_CUMULATIVE));
 				minion.setHealth(minion.getMaxHealth()); // Need to set this because we may have just modified the value
 
 				this.addMinionExtras(minion, pos, caster, modifiers, i);

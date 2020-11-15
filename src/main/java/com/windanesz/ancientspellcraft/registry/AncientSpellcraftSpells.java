@@ -10,12 +10,14 @@ import com.windanesz.ancientspellcraft.spell.AquaticAgility;
 import com.windanesz.ancientspellcraft.spell.ArcaneAugmentation;
 import com.windanesz.ancientspellcraft.spell.ArcaneBeam;
 import com.windanesz.ancientspellcraft.spell.ArcaneMagnetism;
+import com.windanesz.ancientspellcraft.spell.AspectHunter;
 import com.windanesz.ancientspellcraft.spell.AttireAlteration;
 import com.windanesz.ancientspellcraft.spell.BlockWeaving;
 import com.windanesz.ancientspellcraft.spell.CallOfThePack;
 import com.windanesz.ancientspellcraft.spell.Candlelight;
 import com.windanesz.ancientspellcraft.spell.Celerity;
 import com.windanesz.ancientspellcraft.spell.ChannelPower;
+import com.windanesz.ancientspellcraft.spell.Conduit;
 import com.windanesz.ancientspellcraft.spell.Conflagration;
 import com.windanesz.ancientspellcraft.spell.ConjureFishingRod;
 import com.windanesz.ancientspellcraft.spell.ConjureShadowBlade;
@@ -29,6 +31,7 @@ import com.windanesz.ancientspellcraft.spell.CurseOfEnder;
 import com.windanesz.ancientspellcraft.spell.CurseWard;
 import com.windanesz.ancientspellcraft.spell.DispelItemCurse;
 import com.windanesz.ancientspellcraft.spell.Drought;
+import com.windanesz.ancientspellcraft.spell.EssenceExtraction;
 import com.windanesz.ancientspellcraft.spell.Extinguish;
 import com.windanesz.ancientspellcraft.spell.EyeOfTheStorm;
 import com.windanesz.ancientspellcraft.spell.FireWall;
@@ -40,7 +43,6 @@ import com.windanesz.ancientspellcraft.spell.IceTower;
 import com.windanesz.ancientspellcraft.spell.IceWorkbench;
 import com.windanesz.ancientspellcraft.spell.Igloo;
 import com.windanesz.ancientspellcraft.spell.IntensifyingFocus;
-import com.windanesz.ancientspellcraft.spell.KnowledgeTransfer;
 import com.windanesz.ancientspellcraft.spell.LavaVision;
 import com.windanesz.ancientspellcraft.spell.Magelight;
 import com.windanesz.ancientspellcraft.spell.MagmaStrider;
@@ -50,6 +52,7 @@ import com.windanesz.ancientspellcraft.spell.NaturesSprout;
 import com.windanesz.ancientspellcraft.spell.PocketDimension;
 import com.windanesz.ancientspellcraft.spell.Pyrokinesis;
 import com.windanesz.ancientspellcraft.spell.RaiseSkeletonMage;
+import com.windanesz.ancientspellcraft.spell.Regrowth;
 import com.windanesz.ancientspellcraft.spell.SilencingSigil;
 import com.windanesz.ancientspellcraft.spell.SkullSentinel;
 import com.windanesz.ancientspellcraft.spell.SnowBlock;
@@ -67,15 +70,19 @@ import com.windanesz.ancientspellcraft.spell.TimeKnot;
 import com.windanesz.ancientspellcraft.spell.Transference;
 import com.windanesz.ancientspellcraft.spell.TransportationPortal;
 import com.windanesz.ancientspellcraft.spell.UnholyAlliance;
-import com.windanesz.ancientspellcraft.spell.VenusFlyTrap;
 import com.windanesz.ancientspellcraft.spell.WaterWalking;
 import com.windanesz.ancientspellcraft.spell.WillOWisp;
 import com.windanesz.ancientspellcraft.spell.Zombification;
+import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.spell.SpellConstruct;
 import electroblob.wizardry.spell.SpellProjectile;
+import electroblob.wizardry.util.ParticleBuilder;
+import electroblob.wizardry.util.SpellModifiers;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
+import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -83,6 +90,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 @ObjectHolder(AncientSpellcraft.MODID)
 @EventBusSubscriber
@@ -128,7 +136,7 @@ public final class AncientSpellcraftSpells {
 	public static final Spell blockweaving = placeholder();
 	public static final Spell cryostasis = placeholder();
 	public static final Spell arcane_magnetism = placeholder();
-	public static final Spell venus_fly_trap = placeholder();
+	//	public static final Spell venus_fly_trap = placeholder();
 	public static final Spell conjure_shadow_blade = placeholder();
 	public static final Spell magelight = placeholder();
 	public static final Spell curse_ward = placeholder();
@@ -136,13 +144,24 @@ public final class AncientSpellcraftSpells {
 	public static final Spell curse_of_death = placeholder();
 	public static final Spell frost_nova = placeholder();
 	public static final Spell arcane_augmentation = placeholder();
+	public static final Spell arcane_beam = placeholder();
+	public static final Spell aspect_hunter = placeholder();
+	public static final Spell dispel_lesser_magic = placeholder();
+	public static final Spell dispel_greater_magic = placeholder();
+	public static final Spell forcefend = placeholder();
+	public static final Spell mana_flare = placeholder();
 	public static final Spell intensifying_focus = placeholder();
+	public static final Spell silencing_sigil = placeholder();
 	public static final Spell continuity_charm = placeholder();
+	public static final Spell water_walking = placeholder();
 	public static final Spell projectile_ward = placeholder();
 	public static final Spell bulwark = placeholder();
 	public static final Spell arcane_aegis = placeholder();
 	public static final Spell skull_sentinel = placeholder();
 	public static final Spell antimagic_field = placeholder();
+	public static final Spell conduit = placeholder();
+	public static final Spell hand_of_gaia = placeholder();
+	public static final Spell essence_extraction = placeholder();
 
 	@SuppressWarnings("unchecked")
 	@SubscribeEvent
@@ -156,7 +175,7 @@ public final class AncientSpellcraftSpells {
 		registry.register(new HellGate(modId, "hellgate", EnumAction.BLOCK, false));
 
 		// AS 1.0.1 Spells
-		registry.register(new TameAnimal(modId, "tameanimal", false, EnumAction.BLOCK));
+		registry.register(new TameAnimal());
 		//		registry.register(new SummonLicheLord(modId, "summonlichelord", EntitySkeletonMinion::new)); // unused
 
 		// AS 1.0.2 Spells
@@ -169,16 +188,16 @@ public final class AncientSpellcraftSpells {
 		registry.register(new NaturesSprout(modId, "natures_sprout", EnumAction.BLOCK, false));
 
 		// AS 1.1 Spells
-		registry.register(new Igloo(modId, "create_igloo", EnumAction.BLOCK, false));
+		registry.register(new Igloo());
 		registry.register(new IceTower());
 		registry.register(new IceWorkbench(modId, "ice_workbench", EnumAction.BLOCK, false));
-		registry.register(new SnowBlock(modId, "snow_block", EnumAction.BLOCK, false));
+		registry.register(new SnowBlock());
 
 		registry.register(new CurseArmor(modId, "curse_armor", EnumAction.BLOCK, false));
 		registry.register(new DispelItemCurse(modId, "dispel_item_curse"));
 		registry.register(new ChannelPower(modId, "channel_power", EnumAction.BOW, true) {});
-		registry.register(new Zombification(modId, "zombification", EnumAction.BLOCK, false) {});
-		registry.register(new CureZombie(modId, "cure_zombie", EnumAction.BLOCK, false) {});
+		registry.register(new Zombification());
+		registry.register(new CureZombie());
 		registry.register(new RaiseSkeletonMage(modId, "raise_skeleton_mage", EntitySkeletonMageMinion::new) {});
 		registry.register(new UnholyAlliance(modId, "unholy_alliance", EntitySkeletonMageMinion::new) {});
 		registry.register(new TransportationPortal(modId, "transportation_portal", EnumAction.BOW, false) {});
@@ -207,9 +226,9 @@ public final class AncientSpellcraftSpells {
 		registry.register(new BlockWeaving());
 		registry.register(new Cryostasis());
 		registry.register(new ArcaneMagnetism());
-		registry.register(new KnowledgeTransfer());
+		registry.register(new Conduit());
 		registry.register(new SummonSpiritBear());
-		registry.register(new VenusFlyTrap());
+		//		registry.register(new VenusFlyTrap());
 
 		registry.register(new SummonBoat());
 		registry.register(new ConjureShadowBlade());
@@ -220,14 +239,42 @@ public final class AncientSpellcraftSpells {
 		registry.register(new SpellProjectile<EntityDispelMagic>(AncientSpellcraft.MODID, "dispel_lesser_magic", EntityDispelMagic::new) {
 			@Override
 			public boolean applicableForItem(Item item) {
-				return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+				return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+			}
+
+			@Override
+			protected void addProjectileExtras(EntityDispelMagic projectile, @Nullable EntityLivingBase caster, SpellModifiers modifiers) {
+				projectile.setTier(Tier.APPRENTICE);
+			}
+		});
+
+		registry.register(new SpellProjectile<EntityDispelMagic>(AncientSpellcraft.MODID, "dispel_greater_magic", EntityDispelMagic::new) {
+			@Override
+			public boolean applicableForItem(Item item) {
+				return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+			}
+
+			@Override
+			protected void addProjectileExtras(EntityDispelMagic projectile, @Nullable EntityLivingBase caster, SpellModifiers modifiers) {
+				projectile.setTier(Tier.ADVANCED);
 			}
 		});
 
 		registry.register(new ConjureFishingRod());
 		registry.register(new CurseWard());
 		registry.register(new ArcaneBeam());
-		registry.register(new SpellConjurationAS("ice_shield", AncientSpellcraftItems.ice_shield));
+		registry.register(new SpellConjurationAS("ice_shield", AncientSpellcraftItems.ice_shield) {
+			@Override
+			protected void spawnParticles(World world, EntityLivingBase caster, SpellModifiers modifiers) {
+				for(int i=0; i<2; i++){
+					double x = caster.posX;
+					double y = caster.posY + caster.getEyeHeight() - 0.5 + world.rand.nextDouble();
+					double z = caster.posZ;
+//					ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(x, y, z).clr(0.7f, 0.9f, 1).spawn(world);
+					ParticleBuilder.create(ParticleBuilder.Type.FLASH).scale(2f).entity(caster).pos(0, 1.5, 0).clr(168, 255, 255).spawn(world);
+				}
+			}
+		});
 		registry.register(new CurseOfDeath());
 		registry.register(new AttireAlteration());
 		registry.register(new TimeKnot());
@@ -260,12 +307,15 @@ public final class AncientSpellcraftSpells {
 
 		registry.register(new FireWall());
 		registry.register(new Harvest());
-		registry.register(new SpellBuffAS("aspect_hunter", 22, 102, 48, () -> AncientSpellcraftPotions.fortified_archery));
+		registry.register(new AspectHunter());
 		registry.register(new StaticCharge());
 		registry.register(new Pyrokinesis());
 		registry.register(new Conflagration());
 		registry.register(new PocketDimension());
 		registry.register(new FrostNova());
-//		registry.register(new WarpWood());
+		registry.register(new Regrowth());
+		registry.register(new EssenceExtraction());
+//		registry.register(new HandOfGaia());
+		//		registry.register(new WarpWood());
 	}
 }

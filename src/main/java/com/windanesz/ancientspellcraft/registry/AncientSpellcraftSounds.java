@@ -22,6 +22,10 @@ public class AncientSpellcraftSounds {
 	public static final SoundEvent WAR_HORN = createSound("war_horn");
 	public static final SoundEvent SKULL_WATCH_ALARM = createSound("skull_watch_alarm");
 	public static final SoundEvent SKULL_WATCH_SCREAM = createSound("skull_watch_scream");
+	public static final SoundEvent CHARM_OMNICRON = createSound("charm_omnicron");
+	public static final SoundEvent DISPEL = createSound("dispel");
+	public static final SoundEvent DISPEL_ENTITY = createSound("dispel_entity");
+	public static final SoundEvent IMBUEMENT_TABLE_BREAK = createSound("imbuement_table_break");
 
 	public static SoundEvent createSound(String name) {
 		return createSound(AncientSpellcraft.MODID, name);
@@ -45,5 +49,9 @@ public class AncientSpellcraftSounds {
 		event.getRegistry().register(WAR_HORN);
 		event.getRegistry().register(SKULL_WATCH_ALARM);
 		event.getRegistry().register(SKULL_WATCH_SCREAM);
+		event.getRegistry().register(CHARM_OMNICRON);
+		event.getRegistry().register(DISPEL);
+		event.getRegistry().register(DISPEL_ENTITY);
+		event.getRegistry().register(IMBUEMENT_TABLE_BREAK);
 	}
 }

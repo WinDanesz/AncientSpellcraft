@@ -8,6 +8,7 @@ import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.ISpellCastingItem;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.Location;
@@ -19,7 +20,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -51,7 +51,7 @@ public class BlockWeaving extends SpellRay {
 	Random rand = new Random();
 
 	public BlockWeaving() {
-		super(AncientSpellcraft.MODID, "blockweaving", false, EnumAction.BLOCK);
+		super(AncientSpellcraft.MODID, "blockweaving", SpellActions.POINT, false);
 		this.soundValues(0.7F, 1.2F, 0.4F);
 		addProperties(TIMEOUT_COUNTDOWN);
 		WizardData.registerStoredVariables(LOCATION_KEY);
@@ -214,6 +214,6 @@ public class BlockWeaving extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
 	}
 }

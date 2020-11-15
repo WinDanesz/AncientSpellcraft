@@ -3,8 +3,8 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.living.EntityFireAnt;
 import electroblob.wizardry.spell.SpellMinion;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -28,6 +28,6 @@ public class FireSpiderSwarm extends SpellMinion<EntityFireAnt> {
 
 		if (attribute != null)
 			attribute.applyModifier( // Apparently some things don't have an attack damage
-					new AttributeModifier("potency", modifiers.get(SpellModifiers.POTENCY) - 1 / 2, WizardryUtilities.Operations.MULTIPLY_CUMULATIVE));
+					new AttributeModifier("potency", modifiers.get(SpellModifiers.POTENCY) - 1 / 2, EntityUtils.Operations.MULTIPLY_CUMULATIVE));
 	}
 }

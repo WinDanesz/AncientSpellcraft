@@ -1,0 +1,71 @@
+{
+    "display": {
+        "title": {
+            "translate": "advancement.ancientspellcraft:relic_research"
+        },
+        "description": {
+            "translate": "advancement.ancientspellcraft:relic_research.desc"
+        },
+        "show_toast": true,
+        "announce_to_chat": false,
+        "background": "ancientspellcraft:textures/gui/advancement_background.png",
+        "icon": {
+            "item": "ancientspellcraft:stone_tablet"
+        }
+    },
+    "parent": "ancientspellcraft:sphere_of_cognizance",
+    "criteria": {
+        "stone_tablet_small": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "ancientspellcraft:stone_tablet_small",
+                        "nbt": "{researched:1}"
+                    }
+                ]
+            }
+        },
+        "stone_tablet": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "ancientspellcraft:stone_tablet",
+                        "nbt": "{researched:1}"
+                    }
+                ]
+            }
+        },
+        "stone_tablet_large": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "ancientspellcraft:stone_tablet_large",
+                        "nbt": "{researched:1}"
+                    }
+                ]
+            }
+        },
+        "stone_tablet_grand": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "ancientspellcraft:stone_tablet_grand",
+                        "nbt": "{researched:1}"
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "stone_tablet_small",
+            "stone_tablet",
+            "stone_tablet_large",
+            "stone_tablet_grand"
+        ]
+    ]
+}

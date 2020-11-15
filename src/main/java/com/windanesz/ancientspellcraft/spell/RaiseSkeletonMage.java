@@ -26,6 +26,8 @@ public class RaiseSkeletonMage extends SpellMinion<EntitySkeletonMageMinion> {
 
 	@Override
 	protected EntitySkeletonMageMinion createMinion(World world, EntityLivingBase caster, SpellModifiers modifiers) {
+		this.playSound(world, caster, 0, -1, modifiers);
+
 		Random rand = new Random();
 		Element element = (Element.values()[rand.nextInt(Element.values().length - 1) + 1]);
 

@@ -1,11 +1,11 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -35,11 +35,13 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Random;
 
+import static electroblob.wizardry.util.EntityUtils.canDamageBlocks;
+
 public class ConjureWater extends SpellRay {
 	private Random rand = new Random();
 
 	public ConjureWater(String modID, String name, EnumAction action, boolean isContinuous) {
-		super(modID, name, isContinuous, action);
+		super(modID, name, SpellActions.POINT, false);
 		this.soundValues(0.5f, 1.1f, 0.2f);
 		addProperties(BLAST_RADIUS);
 	}
@@ -61,7 +63,7 @@ public class ConjureWater extends SpellRay {
 
 	@Override
 	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-		if (!WizardryUtilities.canDamageBlocks(caster, world))
+		if (!canDamageBlocks(caster, world))
 			return false;
 
 		Item offhandItemItem = caster.getHeldItemOffhand().getItem();
@@ -77,6 +79,9 @@ public class ConjureWater extends SpellRay {
 
 		boolean createdWater = false;
 		for (BlockPos currPos : BlockPos.getAllInBox(pos.add(-waterRadius, -waterRadius, -waterRadius), pos.add(waterRadius, waterRadius, waterRadius))) {
+			if (currPos.getY() > pos.getY() || world.getBlockState(currPos).getBlock() == Blocks.WATER) {
+				continue;
+			}
 			currPos = currPos.offset(side);
 			IBlockState iblockstate = world.getBlockState(currPos);
 			Material material = iblockstate.getMaterial();

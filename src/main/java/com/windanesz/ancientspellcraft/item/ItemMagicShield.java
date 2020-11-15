@@ -10,6 +10,7 @@ import electroblob.wizardry.item.IWorkbenchItem;
 import electroblob.wizardry.packet.PacketCastSpell;
 import electroblob.wizardry.packet.WizardryPacketHandler;
 import electroblob.wizardry.registry.Spells;
+import electroblob.wizardry.registry.WizardryRecipes;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.block.BlockDispenser;
@@ -54,6 +55,7 @@ public class ItemMagicShield extends Item implements ISpellCastingItem, IManaSto
 			}
 		});
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(this, ItemArmor.DISPENSER_BEHAVIOR);
+		WizardryRecipes.addToManaFlaskCharging(this);
 	}
 
 	@Override

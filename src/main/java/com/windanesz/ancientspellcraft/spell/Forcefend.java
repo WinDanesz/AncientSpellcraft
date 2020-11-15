@@ -2,18 +2,17 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.AllyDesignationSystem;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.ParticleBuilder.Type;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.EnumFacing;
@@ -32,7 +31,7 @@ import java.util.List;
 public class Forcefend extends Spell {
 
 	public Forcefend() {
-		super(AncientSpellcraft.MODID, "forcefend", EnumAction.BOW, true);
+		super(AncientSpellcraft.MODID, "forcefend", SpellActions.SUMMON, true);
 		addProperties(EFFECT_RADIUS);
 	}
 
@@ -85,13 +84,13 @@ public class Forcefend extends Spell {
 
 		if (caster != null) {
 
-			List<Entity> projectiles = WizardryUtilities.getEntitiesWithinRadius(3, caster.posX, caster.posY, caster.posZ, caster.world, Entity.class);
+			List<Entity> projectiles = EntityUtils.getEntitiesWithinRadius(3, caster.posX, caster.posY, caster.posZ, caster.world, Entity.class);
 			for (Entity projectile : projectiles) {
 				if (!isProjectileOnGround(projectile)) {
 
 					if (projectile instanceof IProjectile) {
 
-						List<EntityLivingBase> entites = WizardryUtilities.getEntitiesWithinRadius(15, caster.posX, caster.posY, caster.posZ, world, EntityLivingBase.class);
+						List<EntityLivingBase> entites = EntityUtils.getEntitiesWithinRadius(15, caster.posX, caster.posY, caster.posZ, world, EntityLivingBase.class);
 						if (entites.isEmpty()) {
 							deflectProjectile(caster, projectile);
 							continue;
@@ -109,33 +108,55 @@ public class Forcefend extends Spell {
 					}
 				}
 			}
-		}
 
-		if (world.isRemote) {
-			//			if (ticksInUse % 5 == 0) {
-			ParticleBuilder.create(Type.FLASH).entity(caster).clr(255, 255, 235).scale(6).time(5).
-					entity(caster).
-					pos(caster.getLookVec().x * 1.3, caster.getEyeHeight(), caster.getLookVec().z * 1.3)
-					//					pos(caster.posX + caster.getLookVec().x * 0.3,
-					//							caster.posY + 1 + caster.getLookVec().y * 0.3,
-					//							caster.posZ + caster.getLookVec().z * 0.3)
-					.face(caster.rotationYawHead,
-							caster.rotationPitch)
-					.spawn(world);
-			//				ParticleBuilder.create(Type.FLASH).entity(caster).clr(255, 255, 235).scale(4).time(5)
-			//						.pos(caster != null ? centre.subtract(caster.getPositionVector()) : centre).spawn(world);
-			//			}
+			if (world.isRemote && ticksInUse % 2 == 0) {
+
+				double speed = (world.rand.nextBoolean() ? 1 : 1) * 0.1;// + 0.01 * rand.nextDouble();
+				double radius = world.rand.nextDouble() * 2.0;
+				float angle = world.rand.nextFloat() * (float) Math.PI * 2;
+				ParticleBuilder.create(ParticleBuilder.Type.FLASH)
+						.entity(caster)
+//						.pos(1 * MathHelper.cos(angle), 0, 1  * MathHelper.sin(angle))
+						.vel(0, 0.05, 0)
+						.scale(0.7F)
+						.time(48 + world.rand.nextInt(12))
+						.spin(1, speed)
+						.clr(1f, 1f, 1f)
+						.spawn(world);
+
+//				ParticleBuilder.create(ParticleBuilder.Type.FLASH)
+//						.entity(caster)
+////						.pos(1 * MathHelper.cos(angle), 0, 1  * MathHelper.sin(angle))
+//						.vel(0, 0.05, 0)
+//						.scale(0.7F)
+//						.time(48 + world.rand.nextInt(12))
+//						.spin(1, speed)
+//						.clr(1f, 1f, 1f)
+//						.shaded(true)
+//						.collide(true)
+//						.spawn(world);
+			}
 		}
+		//		if (world.isRemote) {
+		//			//			if (ticksInUse % 5 == 0) {
+		//			ParticleBuilder.create(Type.FLASH).entity(caster).clr(255, 255, 235).scale(6).time(5).
+		//					entity(caster).
+		//					pos(caster.getLookVec().x * 1.3, caster.getEyeHeight(), caster.getLookVec().z * 1.3)
+		//					//					pos(caster.posX + caster.getLookVec().x * 0.3,
+		//					//							caster.posY + 1 + caster.getLookVec().y * 0.3,
+		//					//							caster.posZ + caster.getLookVec().z * 0.3)
+		//					.face(caster.rotationYawHead,
+		//							caster.rotationPitch)
+		//					.spawn(world);
+		//			//				ParticleBuilder.create(Type.FLASH).entity(caster).clr(255, 255, 235).scale(4).time(5)
+		//			//						.pos(caster != null ? centre.subtract(caster.getPositionVector()) : centre).spawn(world);
+		//			//			}
+		//		}
 	}
 
 	@SideOnly(Side.CLIENT)
 	public String getDisplayNameWithFormatting() {
 		return TextFormatting.GOLD + net.minecraft.client.resources.I18n.format(getTranslationKey());
-	}
-
-	@Override
-	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
 	}
 
 	public void aimArrow(EntityLivingBase target, Entity entity, IProjectile projectile) {
@@ -154,5 +175,10 @@ public class Forcefend extends Spell {
 		Vec3d centre = entity.getPositionEyes(0).subtract(0, 0.1, 0);
 		Vec3d vec = projectile.getPositionVector().subtract(centre).normalize().scale(0.6);
 		projectile.addVelocity(vec.x, vec.y, vec.z);
+	}
+
+	@Override
+	public boolean applicableForItem(Item item) {
+		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
 	}
 }

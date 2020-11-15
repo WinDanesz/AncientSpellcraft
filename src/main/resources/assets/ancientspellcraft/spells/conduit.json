@@ -1,0 +1,24 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": false,
+        "wands": true,
+        "npcs": false,
+        "dispensers": false,
+        "commands": true,
+        "treasure": false,
+        "trades": false,
+        "looting": false
+    },
+    "tier": "apprentice",
+    "element": "magic",
+    "type": "utility",
+    "cost": 0,
+    "chargeup": 40,
+    "cooldown": 0,
+    "base_properties": {
+        "duration": 400,
+        "transfer_efficiency": 0.9,
+        "transfer_amount_per_tick": 10
+    }
+}

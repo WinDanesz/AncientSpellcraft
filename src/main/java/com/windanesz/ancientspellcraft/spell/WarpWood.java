@@ -4,13 +4,15 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.item.ItemArtefact;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.ArcaneLock;
 import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.util.BlockUtils;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.ParticleBuilder.Type;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -18,7 +20,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -38,7 +39,7 @@ import java.util.List;
 public class WarpWood extends SpellRay {
 
 	public WarpWood() {
-		super(AncientSpellcraft.MODID, "warp_wood", false, EnumAction.NONE);
+		super(AncientSpellcraft.MODID, "warp_wood", SpellActions.POINT, false);
 		this.ignoreLivingEntities(true);
 		this.particleSpacing(0.5);
 	}
@@ -62,9 +63,9 @@ public class WarpWood extends SpellRay {
 
 		if (!world.isRemote) {
 
-			if (WizardryUtilities.isBlockUnbreakable(world, pos))
+			if (BlockUtils.isBlockUnbreakable(world, pos))
 				return false;
-			if (!(caster instanceof EntityPlayer) && !WizardryUtilities.canDamageBlocks(caster, world))
+			if (!(caster instanceof EntityPlayer) && !EntityUtils.canDamageBlocks(caster, world))
 				return false;
 			// Can't mine arcane-locked blocks
 			if (world.getTileEntity(pos) != null && world.getTileEntity(pos).getTileData().hasUniqueId(ArcaneLock.NBT_KEY))
@@ -87,11 +88,11 @@ public class WarpWood extends SpellRay {
 			// 3 blast upgrades: 5x5 without corners or edges
 			float radius = 0.5f + 0.73f * blastUpgradeCount;
 
-			List<BlockPos> sphere = WizardryUtilities.getBlockSphere(pos, radius);
+			List<BlockPos> sphere = BlockUtils.getBlockSphere(pos, radius);
 
 			for (BlockPos pos1 : BlockPos.getAllInBox(pos.offset(EnumFacing.DOWN, 2 + blastUpgradeCount), pos.offset(EnumFacing.UP, 2 + blastUpgradeCount))) {
 
-				if (WizardryUtilities.isBlockUnbreakable(world, pos1))
+				if (BlockUtils.isBlockUnbreakable(world, pos1))
 					continue;
 
 				IBlockState state1 = world.getBlockState(pos1);

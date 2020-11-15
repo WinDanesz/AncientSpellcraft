@@ -5,15 +5,14 @@ itemGroup.ancientspellcraft.tabAncientSpellcraft=Ancient Spellcraft
 
 settings.ancientspellcraft:\general_settings=General Settings
 
+
 #spells
 spell.ancientspellcraft\:hellgate=Hell's Gate
 spell.ancientspellcraft\:hellgate.name=Hell's Gate
 spell.ancientspellcraft\:hellgate.desc=Mastering the secrets of fire opens many doors of opportunity...
-spell.ancientspellcraft\:hellgate.desc.aw=TODO
 spell.ancientspellcraft\:tameanimal=Tame Animal
 spell.ancientspellcraft\:tameanimal.name=Tame Animal
 spell.ancientspellcraft\:tameanimal.desc=You must follow me, said the Earth Wizard, and the animals of the forest obeyed.
-spell.ancientspellcraft\:tameanimal.desc.aw=TODO
 spell.ancientspellcraft\:extinguish=Extinguish Flames
 spell.ancientspellcraft\:extinguish.name=Extinguish Flames
 spell.ancientspellcraft\:extinguish.desc=Extinguishes nearly burning blocks and entities, including the caster. Grants a temporary fire resistance for the caster if burning. Radius increases with wand Blast Upgrades.
@@ -145,11 +144,11 @@ spell.ancientspellcraft\:cryostasis.desc=Encases the caster in a nigh impenetrab
 
 spell.ancientspellcraft\:arcane_magnetism=Arcane Magnetism
 spell.ancientspellcraft\:arcane_magnetism.name=Arcane Magnetism
-spell.ancientspellcraft\:arcane_magnetism.desc=Pulls all the items towards the caster
+spell.ancientspellcraft\:arcane_magnetism.desc=Pulls all nearby items towards the caster
 
 spell.ancientspellcraft\:summon_boat=Summon Boat
 spell.ancientspellcraft\:summon_boat.name=Summon Boat
-spell.ancientspellcraft\:summon_boat.desc=Summon Boat
+spell.ancientspellcraft\:summon_boat.desc=Summon a boat where the caster is pointing
 
 spell.ancientspellcraft\:celerity=Chant of Celerity
 spell.ancientspellcraft\:celerity.name=Chant of Haste
@@ -159,14 +158,17 @@ spell.ancientspellcraft\:summon_spirit_bear=Summon Spirit Bear
 spell.ancientspellcraft\:summon_spirit_bear.name=Summon Spirit Bear
 spell.ancientspellcraft\:summon_spirit_bear.desc=Summons a permanent Spirit Bear companion. The Spirit Bear will only disappear if it is killed, or you can dismiss it by shift-right-clicking on it with any wand.
 
-spell.ancientspellcraft\:knowledge_transfer=Knowledge Transfer
-spell.ancientspellcraft\:knowledge_transfer.name=Knowledge Transfer
-spell.ancientspellcraft\:knowledge_transfer.desc=Allows transferring experience and mana between wands. Sneak for experience
-spell.ancientspellcraft\:knowledge_transfer.no_wand=Requires a wand in both hands.
+spell.ancientspellcraft\:regrowth=Regrowth
+spell.ancientspellcraft\:regrowth.desc=Imbues yourself or the target (sneak cast) with a natural regenerative energy
 
-spell.ancientspellcraft\:venus_fly_trap=Venus Fly Trap
-spell.ancientspellcraft\:venus_fly_trap.name=Venus Fly Trap
-spell.ancientspellcraft\:venus_fly_trap.desc=TODO
+spell.ancientspellcraft\:conduit=Conduit
+spell.ancientspellcraft\:conduit.name=Conduit
+spell.ancientspellcraft\:conduit.desc=Allows transferring Mana between wands. Requires the target wand to be in the offhand
+spell.ancientspellcraft\:conduit.no_wand=Requires a wand in both hands.
+
+#spell.ancientspellcraft\:venus_fly_trap=Venus Fly Trap
+#spell.ancientspellcraft\:venus_fly_trap.name=Venus Fly Trap
+#spell.ancientspellcraft\:venus_fly_trap.desc=TODO
 
 spell.ancientspellcraft\:conjure_shadow_blade=Conjure Shadow Blade
 spell.ancientspellcraft\:conjure_shadow_blade.name=Conjure Shadow Blade
@@ -178,146 +180,104 @@ spell.ancientspellcraft\:candlelight.desc=Conjures a flickering candlelight abov
 
 spell.ancientspellcraft\:magelight=Magelight
 spell.ancientspellcraft\:magelight.name=Magelight
-spell.ancientspellcraft\:magelight.desc=TODO
+spell.ancientspellcraft\:magelight.desc=Conjures a hovering light source above the caster
 
 
 spell.ancientspellcraft\:conjure_fishing_rod=Conjure Fishing Rod
-spell.ancientspellcraft\:conjure_fishing_rod.name=Conjure Fishing Rod
-spell.ancientspellcraft\:conjure_fishing_rod.desc=TODO
+spell.ancientspellcraft\:conjure_fishing_rod.desc=Conjures a Spectral Fishing rod. Potency increases the level and number of enchantments it has
 
 spell.ancientspellcraft\:curse_ward=Curse Ward
-spell.ancientspellcraft\:curse_ward.name=Curse Ward
 spell.ancientspellcraft\:curse_ward.desc=Casts a magical ward on the caster for two minutes which can absorb curses. Absorbing a curse halves the remaning duration of the ward.
 
 spell.ancientspellcraft\:arcane_beam=Arcane Beam
-spell.ancientspellcraft\:arcane_beam.name=Arcane Beam
 spell.ancientspellcraft\:arcane_beam.desc=Channels an instant beam of highly intense magical energy
 
 spell.ancientspellcraft\:ice_shield=Ice Shield
-spell.ancientspellcraft\:ice_shield.name=Ice Shield
 spell.ancientspellcraft\:ice_shield.desc=Creates a shield of enchanted ice which applies a Frostbite effect to attackers and explodes when it breaks, freezing enemies
 
 spell.ancientspellcraft\:curse_of_death=Curse of Death
-spell.ancientspellcraft\:curse_of_death.name=Curse of Death
-spell.ancientspellcraft\:curse_of_death.desc=TODO
+spell.ancientspellcraft\:curse_of_death.desc=Invoke Death, pure demise,\neliminate any foe on third sunrise
 
 spell.ancientspellcraft\:attire_alteration=Attire Alteration
-spell.ancientspellcraft\:attire_alteration.name=Attire Alteration
 spell.ancientspellcraft\:attire_alteration.desc=Stores your current armor set in a magical pocket and allows quickly swapping armor
 
 
 spell.ancientspellcraft\:time_knot=Time Knot
-spell.ancientspellcraft\:time_knot.name=Time Knot
 spell.ancientspellcraft\:time_knot.desc=The end is the beginning and the beginning is the end
 
 spell.ancientspellcraft\:curse_temporal_casualty=Temporal Casualty
-spell.ancientspellcraft\:curse_temporal_casualty.name=Temporal Casualty
-spell.ancientspellcraft\:curse_temporal_casualty.desc=TODO
+spell.ancientspellcraft\:curse_temporal_casualty.desc=Imprisoned in time the warlock sits,\nfrozen in fear, of the Reset\n those who test a sorcerers might, will experience temporal blight, shall go back to where and when they\n stood, once the sun begins to set
 
 spell.ancientspellcraft\:eye_of_the_storm=Eye of The Storm
-spell.ancientspellcraft\:eye_of_the_storm.name=Eye of The Storm
 spell.ancientspellcraft\:eye_of_the_storm.desc=Ride the storm to overcome your enemies
 
 spell.ancientspellcraft\:feather_fall=Feather Fall
-spell.ancientspellcraft\:feather_fall.name=Feather Fall
 spell.ancientspellcraft\:feather_fall.desc=Slows down your falling speed by charging the air below you with magical energy
 
 spell.ancientspellcraft\:water_walking=Water Walking
-spell.ancientspellcraft\:water_walking.name=Water Walking
 spell.ancientspellcraft\:water_walking.desc=Allows the caster and nearby entitites (if not sneak-casted) to move across any liquid surfaces as if they were solid
 
 spell.ancientspellcraft\:dispel_lesser_magic=Dispel Lesser Magic
-spell.ancientspellcraft\:dispel_lesser_magic.name=Dispel Lesser Magic
-spell.ancientspellcraft\:dispel_lesser_magic.desc=TODO
+spell.ancientspellcraft\:dispel_lesser_magic.desc=Dispels weaker magical constructs and projectiles up to Apprentice tier, or a beneficial buff when hitting an enemy
+
+spell.ancientspellcraft\:dispel_greater_magic=Dispel Greater Magic
+spell.ancientspellcraft\:dispel_greater_magic.desc=Dispels greater magical constructs and rojectiles up to Advanced tier, banishes summons and removes all beneficial effects from an enemy
 
 spell.ancientspellcraft\:arcane_augmentation=Arcane Augmentation
-spell.ancientspellcraft\:arcane_augmentation.name=Arcane Augmentation
-spell.ancientspellcraft\:arcane_augmentation.desc=TODO
+spell.ancientspellcraft\:arcane_augmentation.desc=Increases the blast and range of your next non-metamagic spell by channelling a greater amount of magical force into it
 
 spell.ancientspellcraft\:intensifying_focus=Intensifying Focus
-spell.ancientspellcraft\:intensifying_focus.name=Intensifying Focus
-spell.ancientspellcraft\:intensifying_focus.desc=TODO
+spell.ancientspellcraft\:intensifying_focus.desc=By channelling a greater amount of magical energy and focusing it to a smaller scale, increases your next spell's Potency
 
 spell.ancientspellcraft\:continuity_charm=Continuity Charm
-spell.ancientspellcraft\:continuity_charm.name=Continuity Charm
-spell.ancientspellcraft\:continuity_charm.desc=TODO
+spell.ancientspellcraft\:continuity_charm.desc=Increases the duration of your next non-metamagic spell
 
 spell.ancientspellcraft\:mana_flare=Mana Flare
-spell.ancientspellcraft\:mana_flare.name=Mana Flare
-spell.ancientspellcraft\:mana_flare.desc=TODO
-
+spell.ancientspellcraft\:mana_flare.desc=Channels your wand with the target's, burning out mana from both.
+spell.ancientspellcraft\:essence_extraction=Essence Extraction
+spell.ancientspellcraft\:essence_extraction.desc=Channel a magically potent object to drain the arcane essence out of it. Powerful objects require an Astral Diamond as a vessel
+spell.ancientspellcraft\:essence_extraction.no_diamond=Extracting the magical essence from this block will require an Astral Diamond in my offhand
 spell.ancientspellcraft\:projectile_ward=Projectile Ward
-spell.ancientspellcraft\:projectile_ward.name=Projectile Ward
 spell.ancientspellcraft\:projectile_ward.desc=Casts a protective ward on the caster which has some chance deflect physical projectiles. Requires to hold a wand with mana
-
 spell.ancientspellcraft\:bulwark=Bulwark
-spell.ancientspellcraft\:bulwark.name=Bulwark
 spell.ancientspellcraft\:bulwark.desc=Casts a protective ward on the caster which has a greater chance to deflect physical and magical projectiles. Requires to hold a wand with mana
-
 spell.ancientspellcraft\:arcane_aegis=Arcane Aegis
-spell.ancientspellcraft\:arcane_aegis.name=Arcane Aegis
 spell.ancientspellcraft\:arcane_aegis.desc=The complete incantation of the shielding ward, deflects most projectiles. Requires to hold a wand with mana
-
 spell.ancientspellcraft\:forcefend=Forcefend
-spell.ancientspellcraft\:forcefend.name=Forcefend
 spell.ancientspellcraft\:forcefend.desc=Redirects approaching projectiles at enemies
 #spell.ancientspellcraft\:arcane_aegis.desc=The greatest form of shielding wards, deflects most projectiles. Requires to hold a wand with mana
-
 spell.ancientspellcraft\:skull_sentinel=Skull Sentinel
-spell.ancientspellcraft\:skull_sentinel.name=Skull Sentinel
-spell.ancientspellcraft\:skull_sentinel.desc=TODO
+spell.ancientspellcraft\:skull_sentinel.desc=Enchants a skull on the ground to ward an area. The skull shrieks if an entity enters the area
 #spell.ancientspellcraft\:arcane_aegis.desc=The greatest form of shielding wards, deflects most projectiles. Requires to hold a wand with mana
-
 spell.ancientspellcraft\:silencing_sigil=Silencing Sigil
-spell.ancientspellcraft\:silencing_sigil.name=Silencing Sigil
-spell.ancientspellcraft\:silencing_sigil.desc=TODO
-
+spell.ancientspellcraft\:silencing_sigil.desc=Places a sigil which magically silences all sound around it in a 5 block radius
 spell.ancientspellcraft\:antimagic_field=Anti-magic Field
-spell.ancientspellcraft\:antimagic_field.name=Anti-magic Field
-spell.ancientspellcraft\:antimagic_field.desc=TODO
-
+spell.ancientspellcraft\:antimagic_field.desc=Creates an anti-magic field which disturbs any spellcasts
 spell.ancientspellcraft\:transference=Transference
-spell.ancientspellcraft\:transference.name=Transference
 spell.ancientspellcraft\:transference.desc=Transfers a random positive potion effect to the target. Potency increases the number of effects that are transferred.
-
 spell.ancientspellcraft\:fire_ant_swarm=Fire Ant Swarm
-spell.ancientspellcraft\:fire_ant_swarm.name=Fire Ant Swarm
 spell.ancientspellcraft\:fire_ant_swarm.desc=Summons a Fire Ant Volcano from the Nether
-
 spell.ancientspellcraft\:firewall=Firewall
-spell.ancientspellcraft\:firewall.name=Firewall
 spell.ancientspellcraft\:firewall.desc=Conjures a wall of flame where the caster is pointing.
-
 spell.ancientspellcraft\:harvest=Harvest
-spell.ancientspellcraft\:harvest.name=Harvest
 spell.ancientspellcraft\:harvest.desc=Harvests all grown crops near the caster. Also attempts to plant them if the player has seeds.
-
 spell.ancientspellcraft\:aspect_hunter=Aspect of the Hunter
-spell.ancientspellcraft\:aspect_hunter.name=Aspect of the Hunter
 spell.ancientspellcraft\:aspect_hunter.desc=Magically imbues your arrows to fly further and deal more damage.
-
 spell.ancientspellcraft\:static_charge=Static Charge
-spell.ancientspellcraft\:static_charge.name=Static Charge
 spell.ancientspellcraft\:static_charge.desc=Charges your weapon with the power of lightning, dealing shock damage to your enemies
-
 spell.ancientspellcraft\:pyrokinesis=Pyrokinesis
-spell.ancientspellcraft\:pyrokinesis.name=Pyrokinesis
 spell.ancientspellcraft\:pyrokinesis.desc=Conjure flames inside your enemy by focusing your will at it.
-
 spell.ancientspellcraft\:conflagration=Conflagration
-spell.ancientspellcraft\:conflagration.name=Conflagration
 spell.ancientspellcraft\:conflagration.desc=Burn them all...!
-
 spell.ancientspellcraft\:pocket_dimension=Pocket Dimension
-spell.ancientspellcraft\:pocket_dimension.name=Pocket Dimension
 spell.ancientspellcraft\:pocket_dimension.desc=After channeling for 3 seconds, teleports the caster to its own pocket dimension.
-
-spell.ancientspellcraft\:warp_wood=Warp Wood
-spell.ancientspellcraft\:warp_wood.name=Warp Wood
-spell.ancientspellcraft\:warp_wood.desc=TODO
-
+#spell.ancientspellcraft\:warp_wood=Warp Wood
+#spell.ancientspellcraft\:warp_wood.desc=TODO
 spell.ancientspellcraft\:frost_nova=Frost Nova
 spell.ancientspellcraft\:frost_nova.desc=Releases a ring of ice shards after two seconds of channeling
+
+spell.ancientspellcraft\:hand_of_gaia=Hand of Gaia
+spell.ancientspellcraft\:hand_of_gaia.desc=TODO
 
 #potions
 potion.ancientspellcraft\:curse_of_ender=Curse of Ender
@@ -385,33 +345,78 @@ item.ancientspellcraft\:ring_poison_arrow.desc=Grants a 20%% chance to poison yo
 item.ancientspellcraft\:ring_berserker.name=Ring of The Berserker
 item.ancientspellcraft\:ring_berserker.desc=Getting critically wounded sends you into a battle rage, enhancing your strength
 
-item.ancientspellcraft\:ring_blast.name=Blasting Ring
-item.ancientspellcraft\:ring_blast.desc=Grants +1 Spell Blast modifier
-item.ancientspellcraft\:ring_blast.desc2=Increases mana cost by 25%%
+
+item.ancientspellcraft\:ring_mana_transfer.name=Ring of Dagorim
+item.ancientspellcraft\:ring_mana_transfer.desc=Allows the wearer to transfer mana to another player's wand while sneak-casting Knowledge Transfer
 
 item.ancientspellcraft\:ring_range.name=Loop of Reach
 item.ancientspellcraft\:ring_range.desc=Grants +1 Spell Range modifier
 item.ancientspellcraft\:ring_range.desc2=Increases mana cost by 25%%
 
+item.ancientspellcraft\:ring_blast.name=Blasting Ring
+item.ancientspellcraft\:ring_blast.desc=Grants +1 Spell Blast modifier
+item.ancientspellcraft\:ring_blast.desc2=Increases mana cost by 25%%
+
 item.ancientspellcraft\:ring_focus_crystal.name=Focus Crystal Ring
-item.ancientspellcraft\:ring_focus_crystal.desc=The focus crystal in the ring intensifies the Arcane Beam, causing it to pass through its target and hit a secondary enemy
+item.ancientspellcraft\:ring_focus_crystal.desc=The ring's crystal intensifies the Arcane Beam, causing it to pass through its target and hit a secondary enemy
+
+item.ancientspellcraft\:ring_prismarine.name=Prismarine Ring
+item.ancientspellcraft\:ring_prismarine.desc=Extinguishes its holder if it is burning.
 
 item.ancientspellcraft\:charm_knowledge_orb.name=Orb of Knowledge
 item.ancientspellcraft\:charm_knowledge_orb.desc=Wand progression experience from casting spells with master wands is transferred to other hotbar non-master wands
 
+item.ancientspellcraft\:charm_experience_orb.name=Orb TODO
+item.ancientspellcraft\:charm_experience_orb.desc=Orb TODO
+
+item.ancientspellcraft\:charm_progression_orb.name=Orb of Progression
+item.ancientspellcraft\:charm_progression_orb.desc=Knowledge Transfer transfers wand Progression experience from the source wand instead of Mana
+
 item.ancientspellcraft\:charm_mana_orb.name=Tranquil Crystal Orb
 item.ancientspellcraft\:charm_mana_orb.desc=Reduces mana costs by 15%%
 
+item.ancientspellcraft\:charm_earth_orb.name=Orb of Clay
+item.ancientspellcraft\:charm_earth_orb.desc=Increases Earth spell Potency by 30%%, reduces other element's spell Potency by 50%%
+item.ancientspellcraft\:charm_earth_orb.desc2=Active Ability: Shaking the orb releases a cataclysmic earthquake
+
+item.ancientspellcraft\:charm_fire_orb.name=Orb of Raging Fire
+item.ancientspellcraft\:charm_fire_orb.desc=Increases Fire spell Potency by 30%%, reduces other element's spell Potency by 50%%
+item.ancientspellcraft\:charm_fire_orb.desc2=Active Ability: Conjures a violent firestorm
+
+item.ancientspellcraft\:charm_healing_orb.name=Orb of Radiant Light
+item.ancientspellcraft\:charm_healing_orb.desc=Increases Healing spell Potency by 30%%, reduces other element's spell Potency by 50%%
+item.ancientspellcraft\:charm_healing_orb.desc2=Active Ability: Raising up the orb shields its holder and blinds nearby enemies
+
+item.ancientspellcraft\:charm_lightning_orb.name=Orb of the Thundering Skies
+item.ancientspellcraft\:charm_lightning_orb.desc=Increases Lightning spell Potency by 30%%, reduces other element's spell Potency by 50%%
+item.ancientspellcraft\:charm_lightning_orb.desc2=Active Ability: Shake the orb to call forth a tremendous thunderstorm
+
+item.ancientspellcraft\:charm_ice_orb.name=Orb of the Fimbulwinter
+item.ancientspellcraft\:charm_ice_orb.desc=Increases Ice spell Potency by 30%%, reduces other element's spell Potency by 50%%
+item.ancientspellcraft\:charm_ice_orb.desc2=Active Ability: Freeze the world around you
+
+item.ancientspellcraft\:charm_sorcery_orb.name=Orb of Spectral Quintessence
+item.ancientspellcraft\:charm_sorcery_orb.desc=Increases Sorcery spell Potency by 30%%, reduces other element's spell Potency by 50%%
+item.ancientspellcraft\:charm_sorcery_orb.desc2=Active Ability: Shaking the orb releases a powerful shockwave
+
+item.ancientspellcraft\:charm_necromancy_orb.name=Orb of Impenetrable Darknessor
+item.ancientspellcraft\:charm_necromancy_orb.desc=Increases Necromancy spell Potency by 30%%, reduces other element's spell Potency by 50%%
+item.ancientspellcraft\:charm_necromancy_orb.desc2=Active Ability: Holding up the orb releases a deadly plague
+
 item.ancientspellcraft\:charm_bucket_coal.name=Bottomless Coal Bucket
-item.ancientspellcraft\:charm_bucket_coal.desc=TODO
+item.ancientspellcraft\:charm_bucket_coal.desc=This magically enchanted bucket refills itself with coal daily
 item.ancientspellcraft\:charm_bucket_coal.empty=You search through the bucket but it was empty..
+
+item.ancientspellcraft\:cornucopia.name=Cornucopia
+item.ancientspellcraft\:cornucopia.desc=This magically horn of plenty refills itself with food each day
+item.ancientspellcraft\:cornucopia.empty=You've checked the Cornucopia but it was empty
 
 item.ancientspellcraft\:charm_gold_bag.name=Everfull Bag of Gold
 item.ancientspellcraft\:charm_gold_bag.desc=This magically enhanced coin bag refills itself with 3-8 gold nuggets each day
 item.ancientspellcraft\:charm_gold_bag.empty=You search through the bag but it was empty..
 
 item.ancientspellcraft\:charm_evergrowing_crystal.name=Evergrowing Crystal
-item.ancientspellcraft\:charm_evergrowing_crystal.desc=TODO
+item.ancientspellcraft\:charm_evergrowing_crystal.desc=These magical crystals are constantly growing by accumulating ambient magic
 item.ancientspellcraft\:charm_evergrowing_crystal.empty=The crystal is too small to chip off a piece of it..
 
 item.ancientspellcraft\:amulet_mana.name=Crystal Pendant
@@ -442,6 +447,14 @@ item.ancientspellcraft\:charm_wand_upgrade.success_text=The Quill prevented the 
 item.ancientspellcraft\:charm_enchanted_needle.name=Enchanted Needle
 item.ancientspellcraft\:charm_enchanted_needle.desc=Slowly repairs and imbues your wizard robes with mana while they are in the magical pocket of Attire Alteration
 
+item.ancientspellcraft\:charm_omnicron.name=The Omnicron
+item.ancientspellcraft\:charm_omnicron.desc=This object of unknown origin is said to contain an archive about all spells created to date
+item.ancientspellcraft\:charm_omnicron.discover=Tapping into the knowledge of the Omnicron has revealed the spell - %1$s!
+item.ancientspellcraft\:charm_omnicron.wrong_item=Requires an unknown spell in the offhand
+item.ancientspellcraft\:charm_omnicron.wrong_hand=I should hold the cube in my main hand...
+item.ancientspellcraft\:charm_omnicron.no_mana=The cube doesn't have enough mana (%1$s required)
+
+
 item.ancientspellcraft\:stone_tablet_small.name=Small Stone Tablet
 item.ancientspellcraft\:stone_tablet.name=Stone Tablet
 item.ancientspellcraft\:stone_tablet_large.name=Large Stone Tablet
@@ -449,7 +462,7 @@ item.ancientspellcraft\:stone_tablet_grand.name=Grand Stone Tablet
 item.ancientspellcraft\:ancient_mana_flask.name=Ancient Mana Flask
 item.ancientspellcraft\:ancient_bound_stone.name=Ancient Bound Stone
 
-item.ancientspellcraft\:stone_tablet.desc=DESC TODO
+#item.ancientspellcraft\:stone_tablet.desc=DESC TODO
 item.ancientspellcraft\:stone_tablet_small.desc=A small stone tablet, containing text written in a long forgotten language
 item.ancientspellcraft\:stone_tablet_large.desc=What knowledge may it have?
 item.ancientspellcraft\:ancient_mana_flask.desc=Seems to have a rune carved into it
@@ -469,6 +482,9 @@ item.ancientspellcraft\:ice_shield.desc1=Applies a Frostbite effect to attackers
 item.ancientspellcraft\:ice_shield.desc2=Explodes when it breaks
 item.ancientspellcraft\:spectral_fishing_rod.name=Spectral Fishing Rod
 
+item.ancientspellcraft\:astral_diamond_shard.name=Astral Diamond Shard
+item.ancientspellcraft\:astral_diamond_charged.name=Charged Astral Diamond
+
 item.ancientspellcraft\:crystal_shard_fire.name=Fiery Crystal Shard
 item.ancientspellcraft\:crystal_shard_ice.name=Icy Crystal Shard
 item.ancientspellcraft\:crystal_shard_lightning.name=Stormy Crystal Shard
@@ -476,6 +492,8 @@ item.ancientspellcraft\:crystal_shard_necromancy.name=Dark Crystal Shard
 item.ancientspellcraft\:crystal_shard_earth.name=Verdant Crystal Shard
 item.ancientspellcraft\:crystal_shard_sorcery.name=Mystical Crystal Shard
 item.ancientspellcraft\:crystal_shard_healing.name=Radiant Crystal Shard
+
+item.ancientspellcraft\:ancient_spell_book.name=Ancient Spell Book
 
 ##artefact sets
 item.ancientspellcraft\:ring_power.name=Ring of Power
@@ -491,9 +509,13 @@ item.ancientspellcraft\:charm_power_orb.desc=Grants +20%% spell potency for all 
 set.ancientspellcraft\:set_name_with_count=%s (%s of %s)
 set.ancientspellcraft\:set_bonus=Artefact Set Bonus: %s
 
+set.ancientspellcraft\:elemental_orbs=Orbs of the Elements
+
 #block
 block.ancientspellcraft\:dimension_boundary=Dimension Boundary
 block.ancientspellcraft\:dimension_focus=Dimension Focus
+
+block.ancientspellcraft\:imbuement_altar_ruined=Ruined Imbuement Altar
 
 block.ancientspellcraft\:crystal_shard_fire.name=Fiery Crystal Ore
 block.ancientspellcraft\:crystal_shard_ice.name=Icy Crystal Ore
@@ -518,6 +540,10 @@ tile.ancientspellcraft\:leaves_crystal_tree.name=Crystal Tree Leaves
 tile.ancientspellcraft\:artefact_pensive.name=Pensive
 tile.ancientspellcraft\:sphere_cognizance.name=Sphere of Cognizance
 tile.ancientspellcraft\:sphere_cognizance.desc=Desc
+
+tile.ancientspellcraft\:scribing_desk.button.write=Write Spellbook
+tile.ancientspellcraft\:scribing_desk.button.missing=Missing Requirements
+
 tile.ancientspellcraft\:skull_watch.name=Skull Watch
 tile.ancientspellcraft\:scribing_desk.name=Scribing Desk
 
@@ -707,3 +733,21 @@ itemGroup.ancientspellcraftgear=Ancient Spellcraft Gear
 
 # enchant
 enchantment.ancientspellcraft\:static_charge=Static Charge
+
+#advancement
+advancement.ancientspellcraft\:root=Ancient Spellcraft
+advancement.ancientspellcraft\:root.desc=A new chapter in the wizard's journey
+advancement.ancientspellcraft\:relics=More Archaeology!
+advancement.ancientspellcraft\:relics.desc=Find a stone tablet
+advancement.ancientspellcraft\:crystal_shards=Shiny Stones
+advancement.ancientspellcraft\:crystal_shards.desc=Mine an elemental crystal shard
+advancement.ancientspellcraft\:grand_stone_tablet=50 Pounds Of Pure Knowledge
+advancement.ancientspellcraft\:grand_stone_tablet.desc=Find a Grand Stone Tablet
+advancement.ancientspellcraft\:ancient_book=Lost Knowledge
+advancement.ancientspellcraft\:ancient_book.desc=Craft an Ancient Spell Book at the Scribing Table
+advancement.ancientspellcraft\:scribing_desk=Bring Your Own Chair
+advancement.ancientspellcraft\:scribing_desk.desc=Create a spell Scribing Desk
+advancement.ancientspellcraft\:sphere_of_cognizance=A Look Into The Unknown
+advancement.ancientspellcraft\:sphere_of_cognizance.desc=Create a Sphere of Cognizance
+advancement.ancientspellcraft\:relic_research=Lithic Literature
+advancement.ancientspellcraft\:relic_research.desc=Research a Stone Tablet with the Sphere of Cognizance

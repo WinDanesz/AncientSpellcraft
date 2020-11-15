@@ -7,10 +7,10 @@ import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.integration.DamageSafetyChecker;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.ImbueWeapon;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.IElementalDamage;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -67,7 +67,7 @@ public class ASEventHandler {
 
 				for (Iterator<UUID> iterator = Martyr.getMartyrBoundEntities(data).iterator(); iterator.hasNext(); ) {
 
-					Entity entity = WizardryUtilities.getEntityByUUID(player.world, iterator.next()); // the target who will take the damage instead
+					Entity entity = EntityUtils.getEntityByUUID(player.world, iterator.next()); // the target who will take the damage instead
 
 					if (entity == null)
 						iterator.remove();

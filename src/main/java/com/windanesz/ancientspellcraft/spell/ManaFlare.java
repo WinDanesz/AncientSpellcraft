@@ -4,13 +4,13 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.item.IManaStoringItem;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 public class ManaFlare extends SpellRay {
 
 	public ManaFlare() {
-		super(AncientSpellcraft.MODID, "mana_flare", true, EnumAction.BLOCK);
+		super(AncientSpellcraft.MODID, "mana_flare", SpellActions.POINT, true);
 		this.particleVelocity(-0.5);
 		this.particleSpacing(0.4);
 	}
@@ -74,9 +74,9 @@ public class ManaFlare extends SpellRay {
 	@Override
 	protected void spawnParticle(World world, double x, double y, double z, double vx, double vy, double vz) {
 		if (world.rand.nextInt(5) == 0)
-			ParticleBuilder.create(ParticleBuilder.Type.DARK_MAGIC).pos(x, y, z).clr(1, 1, 0.65f).fade(0.7f, 0, 1).spawn(world);
+			ParticleBuilder.create(ParticleBuilder.Type.DUST).pos(x, y, z).clr(1, 1, 0.65f).fade(0.7f, 0, 1).spawn(world);
 		// This used to multiply the velocity by the distance from the caster
-		ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x, y, z).vel(vx, vy, vz).time(8 + world.rand.nextInt(6))
+		ParticleBuilder.create(ParticleBuilder.Type.DUST).pos(x, y, z).vel(vx, vy, vz).time(8 + world.rand.nextInt(6))
 				.clr(1, 1, 0.65f).fade(0.7f, 0, 1).spawn(world);
 	}
 
@@ -87,6 +87,6 @@ public class ManaFlare extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book;  // No scroll!
+		return item == AncientSpellcraftItems.ancient_spell_book;  // No scroll!
 	}
 }

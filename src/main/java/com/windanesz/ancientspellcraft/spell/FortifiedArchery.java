@@ -2,8 +2,8 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.potion.PotionMagicEffectAS;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -29,7 +29,7 @@ public class FortifiedArchery extends PotionMagicEffectAS {
 	@Override
 	public void performEffect(EntityLivingBase entity, int amplifier) {
 		// Decreases the timer by the amount it should have been decreased while the bow was in use.
-		List<EntityArrow> projectiles = WizardryUtilities.getEntitiesWithinRadius(3.5, entity.posX, entity.posY, entity.posZ, entity.world, EntityArrow.class);
+		List<EntityArrow> projectiles = EntityUtils.getEntitiesWithinRadius(3.5, entity.posX, entity.posY, entity.posZ, entity.world, EntityArrow.class);
 
 		// grants +0,5 speed multiplier per amplifier lvl: amplifier lvl 0 grants * 1.5 speed, amplifier lvl 1 grants *2.0 speed, etc...
 		//		float multiplier = 1 + ((amplifier + 1) / 2f);

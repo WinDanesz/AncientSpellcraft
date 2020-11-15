@@ -40,10 +40,10 @@ public class WillOWisp extends Spell {
 
 		ItemStack offhand = caster.getHeldItemOffhand();
 
-		if (data.hasSpellBeenDiscovered(this) && caster.getEntityWorld().provider.getDimension() == 0) {
+		if (caster.getEntityWorld().provider.getDimension() == 0) {
 			if (!offhand.isEmpty() && offhand.getItem() instanceof ItemEnchantedNameTag) {
 				if (!offhand.hasTagCompound()) {
-					if (!world.isRemote && data.hasSpellBeenDiscovered(this))
+					if (!world.isRemote)
 						caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:will_o_wisp.tag_has_no_name"), true);
 					return false;
 				}
@@ -52,7 +52,7 @@ public class WillOWisp extends Spell {
 					nameTag = caster.getHeldItemOffhand().getTagCompound().getCompoundTag("display").getString("Name");
 				}
 				catch (Exception e) {
-					if (!world.isRemote && data.hasSpellBeenDiscovered(this))
+					if (!world.isRemote)
 						caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:will_o_wisp.tag_has_no_name"), true);
 					return false;
 				}
@@ -64,7 +64,7 @@ public class WillOWisp extends Spell {
 				}
 				if (ASUtils.isBiomeNameRegistered(nameTag)) { // biome id found
 					// get biome res name
-					if (!world.isRemote && data.hasSpellBeenDiscovered(this))
+					if (!world.isRemote)
 						caster.sendStatusMessage(new TextComponentTranslation("Searching for biome ..."), true);
 					ResourceLocation biomeResourceLocation = ASUtils.getBiomeRegistryNameFromName(nameTag);
 					// get biome pos

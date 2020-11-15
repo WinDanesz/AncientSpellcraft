@@ -10,9 +10,9 @@ import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellConstruct;
 import electroblob.wizardry.spell.SpellConstructRanged;
 import electroblob.wizardry.spell.Transportation;
+import electroblob.wizardry.util.GeometryUtils;
 import electroblob.wizardry.util.Location;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -60,27 +60,27 @@ public class TransportationPortal extends SpellConstructRanged<EntityTransportat
 			return super.cast(world, caster, hand, ticksInUse, modifiers);
 		}
 
-//		if (!hasTargetDestination(caster, modifiers)) {
-//			//return false; TODO UNDO COMMENTING
-//		}
+		//		if (!hasTargetDestination(caster, modifiers)) {
+		//			//return false; TODO UNDO COMMENTING
+		//		}
 		// spawn portal entity
 		//		return super.cast(world, caster, hand, ticksInUse, modifiers);
 
 		double range = getProperty(RANGE).doubleValue() * modifiers.get(WizardryItems.range_upgrade);
 		if (!world.isRemote) {
-//			System.out.println("hello");
+			//			System.out.println("hello");
 			Vec3d look = caster.getLookVec();
 
 			double x = caster.posX + look.x * range;
 			double y = caster.getEntityBoundingBox().minY;
 			double z = caster.posZ + look.z * range;
 			if (!world.isAirBlock(new BlockPos(x, y, z)) || !world.isAirBlock(new BlockPos(caster.posX + look.x * range / 2, y, caster.posZ + look.z * range / 2))) {
-//				System.out.println("not air block");
+				//				System.out.println("not air block");
 				x = caster.posX;
 				z = caster.posZ;
 			}
 
-//			System.out.println("x, y, z: " + x + ", " + y + ", " + z);
+			//			System.out.println("x, y, z: " + x + ", " + y + ", " + z);
 			if (!spawnConstruct(world, x, y, z, EnumFacing.UP, caster, modifiers))
 				return false;
 		}
@@ -101,40 +101,40 @@ public class TransportationPortal extends SpellConstructRanged<EntityTransportat
 		return false;
 	}
 
-//		private boolean hasTargetDestination(EntityLivingBase entityLivingBaseCaster, SpellModifiers modifiers) {
-//			if (entityLivingBaseCaster instanceof EntityPlayer) {
-//				EntityPlayer caster = (EntityPlayer) entityLivingBaseCaster;
-//				WizardData data = WizardData.get(caster);
-//
-//				// Only works when the caster is in the same dimension.
-//				if (data != null) {
-//
-//					List<Location> locations = data.getVariable(Transportation.LOCATION_KEY);
-//
-//					if (locations != null && locations.isEmpty()) {
-//						if (!caster.world.isRemote)
-//							caster.sendStatusMessage(new TextComponentTranslation("spell.ebwizardry:transportation.undefined"), true);
-//						return false;
-//					}
-//
-//					Location destination = locations.get(locations.size() - 1); // The most recent one, or the only one
-//
-//					if (!ItemArtefact.isArtefactActive(caster, AncientSpellcraftItems.charm_rift_bottle) && destination.dimension != caster.dimension) {
-//						caster.sendStatusMessage(new TextComponentTranslation("spell.ebwizardry:transportation.wrongdimension"), true);
-//						return false;
-//					}
-//
-//					if (!testForCircleInDim(caster, destination)) {
-//						if (!caster.world.isRemote)
-//							caster.sendStatusMessage(new TextComponentTranslation("spell.ebwizardry:transportation.missing"), true);
-//						return false;
-//					}
-//					return true;
-//				}
-//			}
-//			return false;
-//
-//		}
+	//		private boolean hasTargetDestination(EntityLivingBase entityLivingBaseCaster, SpellModifiers modifiers) {
+	//			if (entityLivingBaseCaster instanceof EntityPlayer) {
+	//				EntityPlayer caster = (EntityPlayer) entityLivingBaseCaster;
+	//				WizardData data = WizardData.get(caster);
+	//
+	//				// Only works when the caster is in the same dimension.
+	//				if (data != null) {
+	//
+	//					List<Location> locations = data.getVariable(Transportation.LOCATION_KEY);
+	//
+	//					if (locations != null && locations.isEmpty()) {
+	//						if (!caster.world.isRemote)
+	//							caster.sendStatusMessage(new TextComponentTranslation("spell.ebwizardry:transportation.undefined"), true);
+	//						return false;
+	//					}
+	//
+	//					Location destination = locations.get(locations.size() - 1); // The most recent one, or the only one
+	//
+	//					if (!ItemArtefact.isArtefactActive(caster, AncientSpellcraftItems.charm_rift_bottle) && destination.dimension != caster.dimension) {
+	//						caster.sendStatusMessage(new TextComponentTranslation("spell.ebwizardry:transportation.wrongdimension"), true);
+	//						return false;
+	//					}
+	//
+	//					if (!testForCircleInDim(caster, destination)) {
+	//						if (!caster.world.isRemote)
+	//							caster.sendStatusMessage(new TextComponentTranslation("spell.ebwizardry:transportation.missing"), true);
+	//						return false;
+	//					}
+	//					return true;
+	//				}
+	//			}
+	//			return false;
+	//
+	//		}
 
 	private boolean hasTargetDestination(EntityLivingBase entityLivingBaseCaster, SpellModifiers modifiers) {
 		if (entityLivingBaseCaster instanceof EntityPlayer) {
@@ -204,10 +204,10 @@ public class TransportationPortal extends SpellConstructRanged<EntityTransportat
 
 	public static boolean isLocationAimedAt(EntityPlayer player, BlockPos pos, float partialTicks) {
 		Vec3d origin = player.getPositionEyes(partialTicks);
-		Vec3d centre = WizardryUtilities.getCentre(pos);
+		Vec3d centre = GeometryUtils.getCentre(pos);
 		Vec3d direction = centre.subtract(origin);
 		double distance = direction.length();
-//		System.out.println("isLocationAimedAt:" + (getLookDeviationAngle(player, pos, partialTicks) < getIconSize(distance)));
+		//		System.out.println("isLocationAimedAt:" + (getLookDeviationAngle(player, pos, partialTicks) < getIconSize(distance)));
 
 		return getLookDeviationAngle(player, pos, partialTicks) < getIconSize(distance);
 	}
@@ -216,7 +216,7 @@ public class TransportationPortal extends SpellConstructRanged<EntityTransportat
 
 		Vec3d origin = player.getPositionEyes(partialTicks);
 		Vec3d look = player.getLook(partialTicks);
-		Vec3d centre = WizardryUtilities.getCentre(pos);
+		Vec3d centre = GeometryUtils.getCentre(pos);
 		Vec3d direction = centre.subtract(origin);
 		double distance = direction.length();
 
@@ -234,18 +234,18 @@ public class TransportationPortal extends SpellConstructRanged<EntityTransportat
 		if (ItemArtefact.isArtefactActive(caster, WizardryItems.charm_transportation)) {
 			if (ItemArtefact.isArtefactActive(caster, AncientSpellcraftItems.charm_rift_bottle)) {
 				Location destination = getLocationAimedAt(caster, locations, 1);
-//				System.out.println("desthere= " + destination);
+				//				System.out.println("desthere= " + destination);
 				return destination;
 			} else {
 				List<Location> locationsInDimension = locations.stream().filter(l -> l.dimension == caster.dimension).collect(Collectors.toList());
 				Location destination = getLocationAimedAt(caster, locationsInDimension, 1);
-//				System.out.println(destination);
+				//				System.out.println(destination);
 				return destination;
 			}
 		} else {
 
 			Location destination = locations.get(locations.size() - 1); // The most recent one, or the only one
-//			System.out.println(destination);
+			//			System.out.println(destination);
 			return destination;
 		}
 	}
@@ -262,7 +262,8 @@ public class TransportationPortal extends SpellConstructRanged<EntityTransportat
 		}
 		Location loc = getStoneCircleLocation((EntityPlayer) caster);
 		if (loc.dimension != caster.dimension && !ItemArtefact.isArtefactActive(((EntityPlayer) caster), AncientSpellcraftItems.charm_rift_bottle)) {
-			if(!world.isRemote) ((EntityPlayer) caster).sendStatusMessage(new TextComponentTranslation("spell.ebwizardry:transportation.wrongdimension"), true);
+			if (!world.isRemote)
+				((EntityPlayer) caster).sendStatusMessage(new TextComponentTranslation("spell.ebwizardry:transportation.wrongdimension"), true);
 			return false;
 		}
 
@@ -283,7 +284,7 @@ public class TransportationPortal extends SpellConstructRanged<EntityTransportat
 	@Override
 	protected void addConstructExtras(EntityTransportationPortal construct, EnumFacing side,
 			@Nullable EntityLivingBase caster, SpellModifiers modifiers) {
-//		System.out.println("called");
+		//		System.out.println("called");
 		//		construct.setDestinationLocation(getStoneCircleLocation((EntityPlayer) caster));
 		try {
 			if (getStoneCircleLocation((EntityPlayer) caster).pos != null) {

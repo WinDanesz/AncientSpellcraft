@@ -6,9 +6,9 @@ import com.windanesz.ancientspellcraft.util.SpellTeleporter;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.packet.PacketTransportation;
 import electroblob.wizardry.packet.WizardryPacketHandler;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.ParticleBuilder.Type;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -119,7 +119,7 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 			this.playSound(AncientSpellcraftSounds.ENTITY_TRANSPORTATION_PORTAL_AMBIENT, 0.4f, 1.0f);
 		}
 
-		List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(width, posX, posY, posZ, world);
+		List<EntityLivingBase> targets = EntityUtils.getEntitiesWithinRadius(width, posX, posY, posZ, world, EntityLivingBase.class);
 		if (!targets.isEmpty()) {
 			hasEntityInside = true;
 		} else {hasEntityInside = false;}
@@ -179,7 +179,7 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 						if (targets.get(0).dimension == getTargetDim()) {
 							teleportEntityLiving(targets.get(0), getTargetDim(), getTargetPos());
 							this.playSound(AncientSpellcraftSounds.TRANSPORTATION_PORTAL_TELEPORTS, 0.6f, 1.0f);
-						} else {WizardryUtilities.applyStandardKnockback(this, targets.get(0));}
+						} else {EntityUtils.applyStandardKnockback(this, targets.get(0));}
 					}
 				} else {
 					entityTicker++;
@@ -196,7 +196,7 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 	public void teleportEntity(EntityPlayer player, int targetDim, BlockPos targetPos) {
 		if (player != null) {
 			SpellTeleporter.teleportEntity(targetDim, targetPos.getX(), targetPos.getY(), targetPos.getZ(), true, player);
-			IMessage msg = new PacketTransportation.Message(player.getEntityId());
+			IMessage msg = new PacketTransportation.Message();
 			WizardryPacketHandler.net.sendToDimension(msg, player.world.provider.getDimension());
 		}
 	}

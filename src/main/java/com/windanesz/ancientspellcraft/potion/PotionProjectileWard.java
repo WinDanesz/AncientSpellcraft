@@ -5,8 +5,8 @@ import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.entity.projectile.EntityMagicArrow;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.potion.PotionMagicEffect;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
@@ -44,7 +44,7 @@ public class PotionProjectileWard extends PotionMagicEffect {
 	public void performEffect(EntityLivingBase entity, int strength) {
 		if (entity != null) {
 
-			List<Entity> projectiles = WizardryUtilities.getEntitiesWithinRadius(3.5, entity.posX, entity.posY, entity.posZ, entity.world, Entity.class);
+			List<Entity> projectiles = EntityUtils.getEntitiesWithinRadius(3.5, entity.posX, entity.posY, entity.posZ, entity.world, Entity.class);
 			for (Entity projectile : projectiles) {
 				if (!isProjectileOnGround(projectile)) {
 

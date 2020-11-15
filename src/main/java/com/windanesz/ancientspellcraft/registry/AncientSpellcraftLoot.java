@@ -1,18 +1,22 @@
 package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import electroblob.wizardry.Wizardry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootEntryTable;
 import net.minecraft.world.storage.loot.LootPool;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Class responsible for registering Ancient Spellcraft's loot tables. Also handles loot injection.
@@ -23,6 +27,10 @@ import java.util.Arrays;
  */
 @Mod.EventBusSubscriber
 public class AncientSpellcraftLoot {
+
+	private static LootTable UNCOMMON_ARTEFACTS;
+	private static LootTable RARE_ARTEFACTS;
+	private static LootTable EPIC_ARTEFACTS;
 
 	private AncientSpellcraftLoot() {}
 
@@ -42,16 +50,15 @@ public class AncientSpellcraftLoot {
 		//		LootTableList.register(new ResourceLocation(Wizardry.MODID, "subsets/epic_artefacts"));
 
 		// subsets
+		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/uncommon_artefacts"));
+		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/rare_artefacts"));
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/epic_artefacts"));
 
 		// entities
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "entities/void_creeper"));
 	}
 
-	//	Artefact Loot entries
-	//	LootEntryItem(Item itemIn, int weightIn, int qualityIn, LootFunction[] functionsIn, LootCondition[] conditionsIn, java.lang.String entryName)
 
-	//	private static LootEntry magicShield = new LootEntryItem(AncientSpellcraftItems.magic_shield, 30, 1, new LootFunction[0], new LootCondition[0], AncientSpellcraft.MODID + ":magic_shield");
 
 	@SubscribeEvent
 	public static void onLootTableLoadEvent(LootTableLoadEvent event) {
@@ -59,9 +66,42 @@ public class AncientSpellcraftLoot {
 			event.getTable().addPool(getAdditive(AncientSpellcraft.MODID + ":chests/dungeon_additions", AncientSpellcraft.MODID + "_ancientspellcraft_dungeon_additions"));
 		}
 
-		if (Arrays.asList(AncientSpellcraft.settings.artefactInjectionLocations).contains(event.getName())) {
-			event.getTable().addPool(getAdditive(AncientSpellcraft.MODID + ":subsets/epic_artefacts", AncientSpellcraft.MODID + "_ancientspellcraft_epic_artefacts"));
+		// Fortunately the loot tables of Ancient Spellcraft load before wizardry so we can make a static reference to them and reuse it
+		if (event.getName().toString().equals(AncientSpellcraft.MODID + ":subsets/uncommon_artefacts")) {
+			UNCOMMON_ARTEFACTS = event.getTable();
+		} else if (event.getName().toString().equals(AncientSpellcraft.MODID + ":subsets/rare_artefacts")) {
+			RARE_ARTEFACTS = event.getTable();
+		} else if (event.getName().toString().equals(AncientSpellcraft.MODID + ":subsets/epic_artefacts")) {
+			EPIC_ARTEFACTS = event.getTable();
+		}
 
+		if (Arrays.asList(AncientSpellcraft.settings.artefactInjectionLocations).contains(event.getName())) {
+			if (event.getName().toString().equals(Wizardry.MODID + ":subsets/uncommon_artefacts") && UNCOMMON_ARTEFACTS != null) {
+				LootPool targetPool = event.getTable().getPool("uncommon_artefacts");
+				LootPool sourcePool = UNCOMMON_ARTEFACTS.getPool("main");
+				injectEntries(sourcePool, targetPool);
+			}
+			if (event.getName().toString().equals(Wizardry.MODID + ":subsets/rare_artefacts") && RARE_ARTEFACTS != null) {
+				LootPool targetPool = event.getTable().getPool("rare_artefacts");
+				LootPool sourcePool = RARE_ARTEFACTS.getPool("main");
+
+				injectEntries(sourcePool, targetPool);
+			}
+			if (event.getName().toString().equals(Wizardry.MODID + ":subsets/epic_artefacts") && EPIC_ARTEFACTS != null) {
+				LootPool targetPool = event.getTable().getPool("epic_artefacts");
+				LootPool sourcePool = EPIC_ARTEFACTS.getPool("main");
+				injectEntries(sourcePool, targetPool);
+			}
+
+		}
+	}
+
+	private static void injectEntries(LootPool sourcePool, LootPool targetPool) {
+		// Accessing {@link net.minecraft.world.storage.loot.LootPool.lootEntries}
+		List<LootEntry> lootEntries = ObfuscationReflectionHelper.getPrivateValue(LootPool.class, sourcePool, "field_186453_a");
+
+		for (LootEntry entry : lootEntries) {
+			targetPool.addEntry(entry);
 		}
 	}
 

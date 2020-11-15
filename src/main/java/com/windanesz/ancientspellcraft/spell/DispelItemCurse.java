@@ -36,17 +36,18 @@ public class DispelItemCurse extends SpellBuff {
 				ItemStack offHandItemStack = player.getHeldItemOffhand();
 				if (attemptRemoveCurseFromItemStack(offHandItemStack)) {
 					return true;
-				} else {
-					List<ItemStack> itemStackList = new ArrayList<>();
-					for (ItemStack stack : player.getArmorInventoryList()) {
-						if (!stack.isEmpty()) {
-							itemStackList.add(stack);
-						}
+				}
+			}
+			else {
+				List<ItemStack> itemStackList = new ArrayList<>();
+				for (ItemStack stack : player.getArmorInventoryList()) {
+					if (!stack.isEmpty()) {
+						itemStackList.add(stack);
 					}
-					if (!itemStackList.isEmpty()) {
-						ItemStack stackToDispel = pickRandomStackFromItemStackList(itemStackList);
-						return attemptRemoveCurseFromItemStack(stackToDispel);
-					}
+				}
+				if (!itemStackList.isEmpty()) {
+					ItemStack stackToDispel = pickRandomStackFromItemStackList(itemStackList);
+					return attemptRemoveCurseFromItemStack(stackToDispel);
 				}
 			}
 		}

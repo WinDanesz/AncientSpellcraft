@@ -7,7 +7,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
 public class ItemGoldBag extends ItemDailyArtefact {
-	public static final int MIN_GOLD_AMOUNT = 3;
+	public static final int MIN_GOLD_AMOUNT = 2;
 	public static final int MAX_GOLD_AMOUNT = 8;
 
 	public ItemGoldBag(EnumRarity rarity, Type type) {
@@ -16,9 +16,11 @@ public class ItemGoldBag extends ItemDailyArtefact {
 
 	@Override
 	public void performAction(EntityPlayer player) {
+		if (!player.world.isRemote) {
 		ItemStack stack = new ItemStack(Items.GOLD_NUGGET, ASUtils.randIntBetween(MIN_GOLD_AMOUNT, MAX_GOLD_AMOUNT));
-		if (!player.inventory.addItemStackToInventory(stack)) {
-			player.dropItem(stack, false);
+			if (!player.inventory.addItemStackToInventory(stack)) {
+				player.dropItem(stack, false);
+			}
 		}
 	}
 }

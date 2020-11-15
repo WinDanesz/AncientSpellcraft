@@ -1,0 +1,40 @@
+{
+    "pools": [
+        {
+            "name": "main",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_mana_orb",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_mana",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_poison_resistance",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_bucket_coal",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_seed_bag",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_rabbit",
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}

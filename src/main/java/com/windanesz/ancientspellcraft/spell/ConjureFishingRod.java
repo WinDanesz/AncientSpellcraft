@@ -4,11 +4,12 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.item.IConjuredItem;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+
+import static electroblob.wizardry.util.InventoryUtils.doesPlayerHaveItem;
 
 public class ConjureFishingRod extends SpellConjurationAS {
 
@@ -23,7 +24,7 @@ public class ConjureFishingRod extends SpellConjurationAS {
 	 */
 	@Override
 	protected boolean conjureItem(EntityPlayer caster, SpellModifiers modifiers) {
-		if (WizardryUtilities.doesPlayerHaveItem(caster, item))
+		if (doesPlayerHaveItem(caster, item))
 			return false;
 
 		ItemStack stack = new ItemStack(item);

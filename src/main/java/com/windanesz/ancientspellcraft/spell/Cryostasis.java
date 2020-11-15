@@ -7,10 +7,10 @@ import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.spell.SpellBuff;
 import electroblob.wizardry.util.AllyDesignationSystem;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -19,6 +19,9 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import static electroblob.wizardry.util.BlockUtils.canBlockBeReplaced;
+import static electroblob.wizardry.util.EntityUtils.canDamageBlocks;
 
 public class Cryostasis extends SpellBuff {
 	public static final String ICE_DURATION = "ice_duration";
@@ -33,18 +36,18 @@ public class Cryostasis extends SpellBuff {
 	protected boolean applyEffects(EntityLivingBase caster, SpellModifiers modifiers) {
 		super.applyEffects(caster, modifiers);
 
-		if (!caster.world.isRemote && WizardryUtilities.canDamageBlocks(caster, caster.world)) {
+		if (!caster.world.isRemote && canDamageBlocks(caster, caster.world)) {
 			if (caster.isBurning()) {
 				caster.extinguish();
 			}
 
 			caster.setPositionAndUpdate((caster.getPosition().getX() + 0.5), (int) caster.getPosition().getY(), (int) caster.getPosition().getZ() + 0.5);
 			BlockPos pos = caster.getPosition();
-			for (EntityLivingBase currentTarget : WizardryUtilities.getEntitiesWithinRadius(4, caster.posX, caster.posY, caster.posZ, caster.world)) {
+			for (EntityLivingBase currentTarget : EntityUtils.getEntitiesWithinRadius(4, caster.posX, caster.posY, caster.posZ, caster.world, EntityLivingBase.class)) {
 				if (AllyDesignationSystem.isValidTarget(caster, currentTarget) && !MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, currentTarget)) {
 
-					WizardryUtilities.applyStandardKnockback(caster, currentTarget);
-					WizardryUtilities.applyStandardKnockback(caster, currentTarget);
+					EntityUtils.applyStandardKnockback(caster, currentTarget);
+					EntityUtils.applyStandardKnockback(caster, currentTarget);
 
 					currentTarget.addPotionEffect(new PotionEffect(WizardryPotions.frost, (int) (getProperty(EFFECT_DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade)),
 							getProperty(EFFECT_STRENGTH).intValue() + SpellBuff.getStandardBonusAmplifier(modifiers.get(SpellModifiers.POTENCY))));
@@ -58,7 +61,7 @@ public class Cryostasis extends SpellBuff {
 				}
 				int duration = (int) (getProperty(EFFECT_DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade));
 
-				if (WizardryUtilities.canBlockBeReplaced(caster.world, currPos)) {
+				if (canBlockBeReplaced(caster.world, currPos)) {
 					caster.world.setBlockState(currPos, AncientSpellcraftBlocks.HARD_FROSTED_ICE.getDefaultState());
 					caster.world.scheduleUpdate(currPos.toImmutable(), AncientSpellcraftBlocks.HARD_FROSTED_ICE, duration);
 				}

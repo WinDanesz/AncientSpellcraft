@@ -2,10 +2,11 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.util.BlockUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumAction;
@@ -19,7 +20,7 @@ import java.util.Random;
 
 public class IceWorkbench extends SpellRay {
 	public IceWorkbench(String modID, String name, EnumAction action, boolean isContinuous) {
-		super(modID, name, isContinuous, action);
+		super(modID, name, SpellActions.POINT, false);
 		this.soundValues(0.5f, 1.1f, 0.2f);
 	}
 
@@ -34,14 +35,16 @@ public class IceWorkbench extends SpellRay {
 		pos = pos.offset(side);
 		Random rand = new Random();
 		if (world.isRemote) {
-			for(int i=1; i<4; i++){
+			for (int i = 1; i < 4; i++) {
 				double speed = (rand.nextBoolean() ? 1 : -1) * 0.1;// + 0.01 * rand.nextDouble();
-				ParticleBuilder.create(ParticleBuilder.Type.ICE).pos(pos.getX() +0.8, pos.getY()+ rand.nextDouble() + 0.2, pos.getZ()+ 0.8).vel(0, 0, 0)
+				ParticleBuilder.create(ParticleBuilder.Type.ICE).pos(pos.getX() + 0.8, pos.getY() + rand.nextDouble() + 0.2, pos.getZ() + 0.8).vel(0, 0, 0)
 						.time(30).scale(1).spin(rand.nextDouble() * 1.5, speed).spawn(world);
+
 			}
+			ParticleBuilder.create(ParticleBuilder.Type.FLASH).clr(1f, 1f, 1f).pos(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5).time(30).scale(1.5f).spawn(world);
 		}
 
-		if (WizardryUtilities.canBlockBeReplaced(world, pos)) {
+		if (BlockUtils.canBlockBeReplaced(world, pos)) {
 
 			if (!world.isRemote) {
 

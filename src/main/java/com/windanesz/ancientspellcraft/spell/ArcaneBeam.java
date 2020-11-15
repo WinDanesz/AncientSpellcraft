@@ -3,16 +3,16 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.item.ItemArtefact;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.RayTracer;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -27,10 +27,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
+import static electroblob.wizardry.util.EntityUtils.attackEntityWithoutKnockback;
+
 public class ArcaneBeam extends SpellRay {
 
 	public ArcaneBeam() {
-		super(AncientSpellcraft.MODID, "arcane_beam", true, EnumAction.BOW);
+		super(AncientSpellcraft.MODID, "arcane_beam", SpellActions.POINT, true);
 		addProperties(DAMAGE);
 		this.aimAssist(0.6f);
 		this.particleSpacing = 0.3;
@@ -51,7 +53,7 @@ public class ArcaneBeam extends SpellRay {
 				//			} else if
 				////			(ticksInUse % ((EntityLivingBase) target).maxHurtResistantTime == 1)
 			} else {
-				WizardryUtilities.attackEntityWithoutKnockback(target,
+				attackEntityWithoutKnockback(target,
 						MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.MAGIC),
 						getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY));
 			}
@@ -67,14 +69,18 @@ public class ArcaneBeam extends SpellRay {
 	 * Player and dispenser casting are almost identical so this takes care of the shared stuff. This is mainly for internal use.
 	 */
 	@Override
-	protected boolean shootSpell(World world, Vec3d origin, Vec3d direction, @Nullable EntityPlayer caster, int ticksInUse, SpellModifiers modifiers) {
+	protected boolean shootSpell(World world, Vec3d origin, Vec3d direction, @Nullable EntityLivingBase caster, int ticksInUse, SpellModifiers modifiers) {
+
+		if (!(caster instanceof EntityPlayer)) {
+			return false;
+		}
 
 		double range = getRange(world, origin, direction, caster, ticksInUse, modifiers);
 		Vec3d endpoint = origin.add(direction.scale(range));
 
 		// Change the filter depending on whether living entities are ignored or not
 		RayTraceResult primaryTarget = RayTracer.rayTrace(world, origin, endpoint, aimAssist, hitLiquids,
-				ignoreUncollidables, false, Entity.class, ignoreLivingEntities ? WizardryUtilities::isLiving
+				ignoreUncollidables, false, Entity.class, ignoreLivingEntities ? EntityUtils::isLiving
 						: RayTracer.ignoreEntityFilter(caster));
 
 		boolean flag = false;
@@ -86,10 +92,10 @@ public class ArcaneBeam extends SpellRay {
 				flag = onEntityHit(world, primaryTarget.entityHit, primaryTarget.hitVec, caster, origin, ticksInUse, modifiers);
 				range = origin.distanceTo(primaryTarget.hitVec);
 
-				if (ItemArtefact.isArtefactActive(caster, AncientSpellcraftItems.ring_focus_crystal)) {
+				if (ItemArtefact.isArtefactActive((EntityPlayer)caster, AncientSpellcraftItems.ring_focus_crystal)) {
 
 					RayTraceResult secondaryTarget = RayTracer.rayTrace(world, origin, endpoint, aimAssist, hitLiquids,
-							ignoreUncollidables, false, Entity.class, ignoreLivingEntities ? WizardryUtilities::isLiving
+							ignoreUncollidables, false, Entity.class, ignoreLivingEntities ? EntityUtils::isLiving
 									: ignoreEntityFilterWithCaster(primaryTarget.entityHit, caster));
 
 					if (secondaryTarget != null && secondaryTarget.typeOfHit == RayTraceResult.Type.ENTITY) {
@@ -139,12 +145,12 @@ public class ArcaneBeam extends SpellRay {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public String getDisplayNameWithFormatting(){
-		return TextFormatting.GOLD +  net.minecraft.client.resources.I18n.format(getTranslationKey());
+	public String getDisplayNameWithFormatting() {
+		return TextFormatting.GOLD + net.minecraft.client.resources.I18n.format(getTranslationKey());
 	}
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
 	}
 }

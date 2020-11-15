@@ -10,7 +10,7 @@
         "trades": false,
         "looting": false
     },
-    "tier": "advanced",
+    "tier": "master",
     "element": "magic",
     "type": "utility",
     "cost": 8,

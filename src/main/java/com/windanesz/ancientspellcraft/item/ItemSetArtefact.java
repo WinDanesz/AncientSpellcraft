@@ -79,9 +79,7 @@ public class ItemSetArtefact extends ItemASArtefact {
 			for (ItemArtefact activeArtefact : activeArtefactList) {
 				String setItemRegName = setArtefact.modid + ":" + setItem;
 				if (activeArtefact.getRegistryName().toString().equals(setItemRegName)) {
-					//					System.out.println("its a match");
 					returnStringList.add(activeArtefact.getRegistryName().toString());
-					//					break;
 				}
 			}
 		}

@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "CCC",
+        "CCC",
+        "CCC"
+    ],
+    "key": {
+        "C": {
+            "item": "ancientspellcraft:astral_diamond_shard"
+        }
+    },
+    "result": {
+        "item": "ebwizardry:astral_diamond"
+    }
+}

@@ -1,6 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -17,7 +19,6 @@ import net.minecraft.entity.passive.EntityParrot;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -35,8 +36,8 @@ public class TameAnimal extends SpellRay {
 	EntityPlayer casterPlayer;
 	Random rand = new Random();
 
-	public TameAnimal(String modID, String name, boolean isContinuous, EnumAction action) {
-		super(modID, name, isContinuous, action);
+	public TameAnimal() {
+		super(AncientSpellcraft.MODID, "tameanimal", SpellActions.POINT, false);
 		this.soundValues(0.7F, 1.2F, 0.4F);
 	}
 

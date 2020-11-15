@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.entity.construct;
 
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.ITickableSound;
@@ -56,7 +56,7 @@ public class EntitySilencingSigil extends EntityMagicConstruct {
 		}
 		ISound sound = event.getSound();
 
-		List<EntitySilencingSigil> sigilList = WizardryUtilities.getEntitiesWithinRadius(10, sound.getXPosF(), sound.getYPosF(), sound.getZPosF(), Minecraft.getMinecraft().world, EntitySilencingSigil.class);
+		List<EntitySilencingSigil> sigilList = EntityUtils.getEntitiesWithinRadius(5, sound.getXPosF(), sound.getYPosF(), sound.getZPosF(), Minecraft.getMinecraft().world, EntitySilencingSigil.class);
 		{
 			if (!sigilList.isEmpty()) {
 				event.setResultSound(null);

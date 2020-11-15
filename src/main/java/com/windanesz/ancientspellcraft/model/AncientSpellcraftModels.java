@@ -24,6 +24,7 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.magic_shield);
 		registerItemModel(AncientSpellcraftItems.spectral_shield);
 		registerItemModel(AncientSpellcraftItems.ancient_spellcraft_spell_book);
+		registerItemModel(AncientSpellcraftItems.ancient_spell_book);
 		registerItemModel(AncientSpellcraftItems.ancient_spellcraft_scroll);
 		registerItemModel(AncientSpellcraftItems.enchanted_name_tag);
 		registerItemModel(AncientSpellcraftItems.wizard_hat_ancient);
@@ -35,6 +36,8 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.ring_power);
 		registerItemModel(AncientSpellcraftItems.ring_berserker);
 		registerItemModel(AncientSpellcraftItems.ring_blast);
+		registerItemModel(AncientSpellcraftItems.ring_prismarine);
+		registerItemModel(AncientSpellcraftItems.ring_mana_transfer);
 		registerItemModel(AncientSpellcraftItems.ring_range);
 		registerItemModel(AncientSpellcraftItems.ring_focus_crystal);
 
@@ -52,7 +55,16 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.charm_reanimation);
 		registerItemModel(AncientSpellcraftItems.charm_knowledge_orb);
 		registerItemModel(AncientSpellcraftItems.charm_power_orb);
+		registerItemModel(AncientSpellcraftItems.charm_progression_orb);
+		registerItemModel(AncientSpellcraftItems.charm_lightning_orb);
+		registerItemModel(AncientSpellcraftItems.charm_ice_orb);
+		registerItemModel(AncientSpellcraftItems.charm_earth_orb);
+		registerItemModel(AncientSpellcraftItems.charm_healing_orb);
+		registerItemModel(AncientSpellcraftItems.charm_necromancy_orb);
+		registerItemModel(AncientSpellcraftItems.charm_fire_orb);
+		registerItemModel(AncientSpellcraftItems.charm_sorcery_orb);
 		registerItemModel(AncientSpellcraftItems.charm_mana_orb);
+		registerItemModel(AncientSpellcraftItems.cornucopia);
 		registerItemModel(AncientSpellcraftItems.charm_bucket_coal);
 		registerItemModel(AncientSpellcraftItems.charm_gold_bag);
 		registerItemModel(AncientSpellcraftItems.charm_evergrowing_crystal);
@@ -63,6 +75,7 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.charm_wand_upgrade);
 		registerItemModel(AncientSpellcraftItems.charm_enchanted_needle);
 		registerItemModel(AncientSpellcraftItems.charm_seed_bag);
+		registerItemModel(AncientSpellcraftItems.charm_omnicron);
 
 		// misc
 		registerItemModel(AncientSpellcraftItems.shadow_blade);
@@ -76,6 +89,8 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.ancient_mana_flask);
 		registerItemModel(AncientSpellcraftItems.ancient_bound_stone);
 
+		registerItemModel(AncientSpellcraftItems.astral_diamond_shard);
+		registerItemModel(AncientSpellcraftItems.astral_diamond_charged);
 		registerItemModel(AncientSpellcraftItems.crystal_shard_fire);
 		registerItemModel(AncientSpellcraftItems.crystal_shard_earth);
 		registerItemModel(AncientSpellcraftItems.crystal_shard_healing);
@@ -89,6 +104,7 @@ public final class AncientSpellcraftModels {
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SPHERE_COGNIZANCE));
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SKULL_WATCH));
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SCRIBING_DESK));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.IMBUEMENT_ALTAR_RUINED));
 
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.crystal_ore_fire));
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.crystal_ore_earth));
@@ -98,7 +114,8 @@ public final class AncientSpellcraftModels {
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.crystal_ore_necromancy));
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.crystal_ore_sorcery));
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.log_crystal_tree));
-		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.log_crystal_tree2));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.imbuement_altar_ruined));
+//		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.log_crystal_tree2));
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.leaves_crystal_tree));
 
 	}

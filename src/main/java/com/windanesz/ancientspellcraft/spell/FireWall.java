@@ -2,12 +2,12 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -22,7 +22,7 @@ public class FireWall extends SpellRay {
 	public static final String LENGTH = "length";
 
 	public FireWall() {
-		super(AncientSpellcraft.MODID, "firewall", false, EnumAction.BOW);
+		super(AncientSpellcraft.MODID, "firewall", SpellActions.POINT, false);
 		this.soundValues(0.5f, 1.1f, 0.2f);
 		addProperties(LENGTH);
 

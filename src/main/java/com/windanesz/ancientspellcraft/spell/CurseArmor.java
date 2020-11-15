@@ -3,10 +3,11 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import electroblob.wizardry.item.ItemArtefact;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -31,14 +32,14 @@ import static com.windanesz.ancientspellcraft.util.ASUtils.pickRandomStackFromIt
 public class CurseArmor extends SpellRay {
 
 	public CurseArmor(String modID, String name, EnumAction action, boolean isContinuous) {
-		super(modID, name, isContinuous, action);
+		super(modID, name, SpellActions.THRUST,false);
 		this.soundValues(1, 1.1f, 0.2f);
 	}
 
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 
-		if (WizardryUtilities.isLiving(target)) {
+		if (EntityUtils.isLiving(target)) {
 			if (!world.isRemote) {
 				if (target instanceof EntityLivingBase) {
 					EntityLivingBase livingTarget = (EntityLivingBase) target;

@@ -3,11 +3,13 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.item.ISpellCastingItem;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.ArcaneLock;
 import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.util.BlockUtils;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockSand;
@@ -34,7 +36,7 @@ public class NaturesSprout extends SpellRay {
 	Random rand = new Random();
 
 	public NaturesSprout(String modID, String name, EnumAction action, boolean isContinuous) {
-		super(modID, name, isContinuous, action);
+		super(modID, name, SpellActions.SUMMON, false);
 		this.soundValues(1.0f, 1, 0.4f);
 	}
 
@@ -55,9 +57,9 @@ public class NaturesSprout extends SpellRay {
 			}
 		}
 
-		if (WizardryUtilities.isBlockUnbreakable(world, pos))
+		if (BlockUtils.isBlockUnbreakable(world, pos))
 			return false;
-		if (!(caster instanceof EntityPlayer) && !WizardryUtilities.canDamageBlocks(caster, world))
+		if (!(caster instanceof EntityPlayer) && !EntityUtils.canDamageBlocks(caster, world))
 			return false;
 		if (world.getTileEntity(pos) != null && world.getTileEntity(pos).getTileData().hasUniqueId(ArcaneLock.NBT_KEY))
 			return false;
@@ -70,14 +72,14 @@ public class NaturesSprout extends SpellRay {
 		// 3 blast upgrades: 5x5 without corners or edges
 		float radius = 0.5f + 0.73f * blastUpgradeCount;
 
-		List<BlockPos> sphere = WizardryUtilities.getBlockSphere(pos, radius);
+		List<BlockPos> sphere = BlockUtils.getBlockSphere(pos, radius);
 
 		if (radius <= 1) { // adding the block above to include vegetation too
 			sphere.add(pos.up());
 		}
 
 		for (BlockPos pos1 : sphere) {
-			if (WizardryUtilities.isBlockUnbreakable(world, pos1))
+			if (BlockUtils.isBlockUnbreakable(world, pos1))
 				continue;
 
 			Block block = world.getBlockState(pos1).getBlock();

@@ -2,10 +2,11 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,7 +27,7 @@ public class ChannelPower extends SpellRay {
 	 * The number by which this spell's damage is multiplied for undead entities.
 	 */
 	public ChannelPower(String modID, String name, EnumAction action, boolean isContinuous) {
-		super(modID, name, isContinuous, action);
+		super(modID, name, SpellActions.POINT, true);
 		addProperties(EFFECT_DURATION);
 	}
 
@@ -56,7 +57,7 @@ public class ChannelPower extends SpellRay {
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 		if (!world.isRemote) {
-			if (WizardryUtilities.isLiving(target)) {
+			if (EntityUtils.isLiving(target)) {
 				if (target instanceof EntityLivingBase) {
 					EntityLivingBase entityLivingBase = (EntityLivingBase) target;
 					if (!entityLivingBase.isPotionActive(MobEffects.GLOWING)) {
@@ -99,6 +100,6 @@ public class ChannelPower extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
 	}
 }

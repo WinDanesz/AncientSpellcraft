@@ -1,14 +1,15 @@
 package com.windanesz.ancientspellcraft.spell;
 
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.util.BlockUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -18,8 +19,8 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public class SnowBlock extends SpellRay {
-	public SnowBlock(String modID, String name, EnumAction action, boolean isContinuous) {
-		super(modID, name, isContinuous, action);
+	public SnowBlock() {
+		super(AncientSpellcraft.MODID, "snow_block", SpellActions.POINT, false);
 		this.soundValues(0.5f, 1.1f, 0.2f);
 	}
 
@@ -33,21 +34,21 @@ public class SnowBlock extends SpellRay {
 
 		pos = pos.offset(side);
 
-		if (WizardryUtilities.canBlockBeReplaced(world, pos)) {
+		if (BlockUtils.canBlockBeReplaced(world, pos)) {
 
 			if (!world.isRemote) {
 
 				world.setBlockState(pos, Blocks.SNOW.getDefaultState());
 			}
 
-		Random rand = new Random();
-		if (world.isRemote) {
-			for(int i=1; i<12; i++){
-				double speed = (rand.nextBoolean() ? 1 : -1) * 0.1 + 0.05 * rand.nextDouble();
-				ParticleBuilder.create(ParticleBuilder.Type.SNOW).pos(pos.getX() +0.5, pos.getY()+ rand.nextDouble() * 2, pos.getZ()+ 0.5).vel(0, 0, 0)
-						.time(20).scale(1).spin(rand.nextDouble() * + 1.1, speed).spawn(world);
+			Random rand = new Random();
+			if (world.isRemote) {
+				for (int i = 1; i < 12; i++) {
+					double speed = (rand.nextBoolean() ? 1 : -1) * 0.1 + 0.05 * rand.nextDouble();
+					ParticleBuilder.create(ParticleBuilder.Type.SNOW).pos(pos.getX() + 0.5, pos.getY() + rand.nextDouble() * 2, pos.getZ() + 0.5).vel(0, 0, 0)
+							.time(20).scale(1).spin(rand.nextDouble() * +1.1, speed).spawn(world);
+				}
 			}
-		}
 			return true;
 		}
 

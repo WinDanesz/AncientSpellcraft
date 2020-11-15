@@ -1,0 +1,29 @@
+{
+    "display": {
+        "title": {
+            "translate": "advancement.ancientspellcraft:ancient_book"
+        },
+        "description": {
+            "translate": "advancement.ancientspellcraft:ancient_book.desc"
+        },
+        "show_toast": true,
+        "announce_to_chat": false,
+        "background": "ancientspellcraft:textures/gui/advancement_background.png",
+        "icon": {
+            "item": "ancientspellcraft:ancient_spell_book"
+        }
+    },
+    "parent": "ancientspellcraft:scribing_desk",
+    "criteria": {
+        "ancient_spell_book": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "ancientspellcraft:ancient_spell_book"
+                    }
+                ]
+            }
+        }
+    }
+}

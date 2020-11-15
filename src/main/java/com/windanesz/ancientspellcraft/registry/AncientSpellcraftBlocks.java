@@ -17,9 +17,11 @@ import com.windanesz.ancientspellcraft.block.BlockScribingDesk;
 import com.windanesz.ancientspellcraft.block.BlockSkullWatch;
 import com.windanesz.ancientspellcraft.block.BlockSnowSlab;
 import com.windanesz.ancientspellcraft.block.BlockSphereCognizance;
+import com.windanesz.ancientspellcraft.block.RuinedImbuementAltar;
 import com.windanesz.ancientspellcraft.tileentity.TileArtefactPensive;
 import com.windanesz.ancientspellcraft.tileentity.TileCandleLight;
 import com.windanesz.ancientspellcraft.tileentity.TileMageLight;
+import com.windanesz.ancientspellcraft.tileentity.TileScribingDesk;
 import com.windanesz.ancientspellcraft.tileentity.TileSkullWatch;
 import com.windanesz.ancientspellcraft.tileentity.TileSphereCognizance;
 import electroblob.wizardry.constants.Element;
@@ -60,6 +62,7 @@ public class AncientSpellcraftBlocks {
 	public static final Block DIMENSION_BOUNDARY = placeholder();
 	public static final Block DIMENSION_FOCUS = placeholder();
 	public static final Block SCRIBING_DESK = placeholder();
+	public static final Block IMBUEMENT_ALTAR_RUINED = placeholder();
 
 	public static final Block crystal_ore_fire = placeholder();
 	public static final Block crystal_ore_earth = placeholder();
@@ -70,7 +73,8 @@ public class AncientSpellcraftBlocks {
 	public static final Block crystal_ore_sorcery = placeholder();
 
 	public static final Block log_crystal_tree = placeholder();
-	public static final Block log_crystal_tree2 = placeholder();
+	public static final Block imbuement_altar_ruined = placeholder();
+//	public static final Block log_crystal_tree2 = placeholder();
 	public static final Block leaves_crystal_tree = placeholder();
 
 
@@ -93,7 +97,7 @@ public class AncientSpellcraftBlocks {
 		registerBlock(registry, "hard_frosted_ice", new BlockHardFrostedIce());
 		registerBlock(registry, "artefact_pensive", new BlockArtefactPensive().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR));
 		registerBlock(registry, "sphere_cognizance", new BlockSphereCognizance().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerBlock(registry, "skull_watch", new BlockSkullWatch().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerBlock(registry, "skull_watch", new BlockSkullWatch());
 		registerBlock(registry, "magelight", new BlockMageLight());
 		registerBlock(registry, "candlelight", new BlockCandleLight());
 		registerBlock(registry, "dimension_boundary", new BlockDimensionBoundary());
@@ -110,8 +114,9 @@ public class AncientSpellcraftBlocks {
 
 
 		registerBlock(registry, "log_crystal_tree", new BlockCrystalLog());
-		registerBlock(registry, "log_crystal_tree2", new Block(Material.WOOD).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+//		registerBlock(registry, "log_crystal_tree2", new Block(Material.WOOD).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
 		registerBlock(registry, "leaves_crystal_tree", new BlockCrystalLeaves());
+		registerBlock(registry, "imbuement_altar_ruined", new RuinedImbuementAltar(Material.ROCK));
 	}
 
 	/**
@@ -124,6 +129,7 @@ public class AncientSpellcraftBlocks {
 		GameRegistry.registerTileEntity(TileMageLight.class, new ResourceLocation(AncientSpellcraft.MODID, "magelight"));
 		GameRegistry.registerTileEntity(TileCandleLight.class, new ResourceLocation(AncientSpellcraft.MODID, "candlelight"));
 		GameRegistry.registerTileEntity(TileSkullWatch.class, new ResourceLocation(AncientSpellcraft.MODID, "skull_watch"));
+		GameRegistry.registerTileEntity(TileScribingDesk.class, new ResourceLocation(AncientSpellcraft.MODID, "scribing_desk"));
 	}
 
 }

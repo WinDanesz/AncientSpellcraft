@@ -1,0 +1,100 @@
+{
+    "display": {
+        "title": {
+            "translate": "advancement.ancientspellcraft:crystal_shards"
+        },
+        "description": {
+            "translate": "advancement.ancientspellcraft:crystal_shards.desc"
+        },
+        "show_toast": true,
+        "announce_to_chat": false,
+        "background": "ancientspellcraft:textures/gui/advancement_background.png",
+        "icon": {
+            "item": "ancientspellcraft:crystal_shard_earth"
+        }
+    },
+    "parent": "ancientspellcraft:root",
+    "criteria": {
+        "crystal_shard_fire": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "ancientspellcraft:crystal_shard_fire"
+                    }
+                ]
+            }
+        },
+        "crystal_shard_earth": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "ancientspellcraft:crystal_shard_earth"
+                    }
+                ]
+            }
+        },
+        "crystal_shard_healing": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "ancientspellcraft:crystal_shard_healing"
+                    }
+                ]
+            }
+        },
+        "crystal_shard_ice": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "ancientspellcraft:crystal_shard_ice"
+                    }
+                ]
+            }
+        },
+        "crystal_shard_lightning": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "ancientspellcraft:crystal_shard_lightning"
+                    }
+                ]
+            }
+        },
+        "crystal_shard_necromancy": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "ancientspellcraft:crystal_shard_necromancy"
+                    }
+                ]
+            }
+        },
+        "crystal_shard_sorcery": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "ancientspellcraft:crystal_shard_sorcery"
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "crystal_shard_fire",
+            "crystal_shard_earth",
+            "crystal_shard_healing",
+            "crystal_shard_ice",
+            "crystal_shard_lightning",
+            "crystal_shard_necromancy",
+            "crystal_shard_sorcery"
+        ]
+    ]
+}

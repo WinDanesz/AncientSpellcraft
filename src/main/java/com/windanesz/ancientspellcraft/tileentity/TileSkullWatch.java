@@ -3,7 +3,8 @@ package com.windanesz.ancientspellcraft.tileentity;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
 import electroblob.wizardry.tileentity.TileEntityPlayerSave;
-import electroblob.wizardry.util.WizardryUtilities;
+import electroblob.wizardry.util.AllyDesignationSystem;
+import electroblob.wizardry.util.EntityUtils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -68,13 +69,14 @@ public class TileSkullWatch extends TileEntityPlayerSave implements ITickable {
 		this.skullRotationPrev = this.skullRotation;
 //		EntityPlayer entityplayer = this.world.getClosestPlayer((double) ((float) this.pos.getX() + 0.5F), (double) ((float) this.pos.getY() + 0.5F), (double) ((float) this.pos.getZ() + 0.5F), DETECT_BASE_RADIUS, false);
 
-		List<EntityLivingBase> entities = WizardryUtilities.getEntitiesWithinRadius(DETECT_BASE_RADIUS, this.pos.getX() + 0.5F, this.pos.getY() + 0.5F, this.pos.getZ() + 0.5F, world, EntityLivingBase.class);
+		List<EntityLivingBase> entities = EntityUtils.getEntitiesWithinRadius(DETECT_BASE_RADIUS, this.pos.getX() + 0.5F, this.pos.getY() + 0.5F, this.pos.getZ() + 0.5F, world, EntityLivingBase.class);
 
 		if (!entities.isEmpty()) {
 
 			for (EntityLivingBase entity : entities) {
 
-				if (getCaster() != null && entity.getUniqueID() == getCaster().getUniqueID()) {
+				// doesn't scream for its own owner or allies of the owner
+				if (getCaster() != null && (entity.getUniqueID() == getCaster().getUniqueID() || AllyDesignationSystem.isAllied(getCaster(), entity))) {
 					continue;
 				}
 
@@ -86,7 +88,6 @@ public class TileSkullWatch extends TileEntityPlayerSave implements ITickable {
 			}
 
 		}
-
 
 		if (target != null) {
 			if (world.getTotalWorldTime() % 50 == 0) {

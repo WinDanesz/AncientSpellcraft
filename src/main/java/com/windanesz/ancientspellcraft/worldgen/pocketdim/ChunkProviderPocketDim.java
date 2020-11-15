@@ -18,8 +18,6 @@ public class ChunkProviderPocketDim implements IChunkGenerator {
 	 * Instantiates a new chunk generator.
 	 */
 	public ChunkProviderPocketDim(World worldIn) {
-		System.out.println("Constructing ChunkProviderPocketDim");
-
 		world = worldIn;
 	}
 

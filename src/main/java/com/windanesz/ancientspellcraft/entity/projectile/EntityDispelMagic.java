@@ -1,37 +1,44 @@
 package com.windanesz.ancientspellcraft.entity.projectile;
 
+import com.windanesz.ancientspellcraft.entity.construct.EntitySilencingSigil;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.entity.construct.EntityBlackHole;
-import electroblob.wizardry.entity.construct.EntityDecay;
+import electroblob.wizardry.entity.construct.EntityBoulder;
+import electroblob.wizardry.entity.construct.EntityFireSigil;
 import electroblob.wizardry.entity.construct.EntityForcefield;
+import electroblob.wizardry.entity.construct.EntityFrostSigil;
+import electroblob.wizardry.entity.construct.EntityLightningSigil;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.entity.living.EntitySpiritHorse;
 import electroblob.wizardry.entity.living.EntitySpiritWolf;
 import electroblob.wizardry.entity.living.EntitySummonedCreature;
 import electroblob.wizardry.entity.living.ISummonedCreature;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
+import electroblob.wizardry.potion.Curse;
 import electroblob.wizardry.util.ParticleBuilder;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static electroblob.wizardry.util.WizardryUtilities.getEntitiesWithinRadius;
+import static electroblob.wizardry.util.EntityUtils.getEntitiesWithinRadius;
 
 public class EntityDispelMagic extends EntityMagicProjectile {
-	protected int lifetime = 16;
+	private int lifetime = 16;
+	private Tier tier = Tier.APPRENTICE;
 
 	public EntityDispelMagic(World world) {
 		super(world);
@@ -50,7 +57,6 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 				List<Entity> entitiesWithinRadius = getEntitiesWithinRadius(1, this.posX, this.posY, this.posZ, world, Entity.class);
 				entitiesWithinRadius.remove(this);
 				if (!entitiesWithinRadius.isEmpty()) {
-					System.out.println("test here)");
 					entity = entitiesWithinRadius.get(0);
 				}
 			}
@@ -58,21 +64,19 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 
 				// magic projectile collision, it should delete the projectile entity
 				if (entity instanceof EntityMagicProjectile) {
-					System.out.println("hitting a projectile");
 					((EntityMagicProjectile) entity).setDead();
-					System.out.println("Setting it dead");
 
 					// magic construct collision, it should dispel or rapidly accelerate the timer of the construct,
 					// maybe this should be moved to a status effect
 				} else if (entity instanceof EntityMagicConstruct) {
-					System.out.println("hitting a construct");
+					//					System.out.println("hitting a construct");
 					EntityMagicConstruct construct = ((EntityMagicConstruct) entity);
 					if (construct.lifetime == -1) {
 						construct.setDead();
 					}
-					System.out.println("original lifetime: " + construct.lifetime);
+					//					System.out.println("original lifetime: " + construct.lifetime);
 					construct.lifetime = (int) (construct.lifetime * 0.1);
-					System.out.println("new lifetime: " + construct.lifetime);
+					//					System.out.println("new lifetime: " + construct.lifetime);
 
 					Tier tier = getConstructTier(construct);
 
@@ -80,11 +84,18 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 
 					// living entity, the spell should purge the PotionMagicEffect (except curses and containment) effects
 				} else if (entity instanceof EntityLivingBase) {
+					EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
+
 					System.out.println("hittin a living entity");
 					// magic entity or summon, possibly should be dispelled
 					if ((isMagicEntityOrSummon(entity))) {
-						System.out.println("entity is a summon");
+						if (entity instanceof ISummonedCreature) {
+							((ISummonedCreature) entity).onDespawn();
+						}
+						//						System.out.println("entity is a summon");
+						world.playSound(this.posX, this.posY, this.posZ, AncientSpellcraftSounds.DISPEL_ENTITY, SoundCategory.HOSTILE, 1, 1, false);
 						entity.setDead();
+
 						if (this.world.isRemote) {
 							for (int i = 0; i < 15; i++) {
 								this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + (double) this.rand.nextFloat(),
@@ -92,42 +103,48 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 										this.posZ + (double) this.rand.nextFloat(), 0, 0, 0);
 							}
 						}
+						this.setDead();
+
 					} else {
 
-						Collection<PotionEffect> effects = ((EntityLivingBase) entity).getActivePotionEffects();
+						Collection<PotionEffect> effects = entityLivingBase.getActivePotionEffects();
+						List<Potion> activePotions = new ArrayList<>();
 
-//						for (PotionEffect effect : effects) {
-//							// The PotionEffect version (as opposed to Potion) does not call cleanup callbacks
-//							if (effect.getPotion() instanceof PotionMagicEffect && !(effect.getPotion() instanceof Curse || effect.getPotion() instanceof PotionContainment)) {
-//								System.out.println("duration: " + effect.getDuration());
-//								//								if (effect.getDuration() < 36000) { // half an hour, consider it as permanent
-//								System.out.println("effect should be removed");
-//								if (((EntityLivingBase) entity).isPotionActive(effect.getPotion())) {
-//									((EntityLivingBase) entity).removePotionEffect(effect.getPotion());
-//								}
-//							}
-//						}
+						for (PotionEffect effect : effects) {
+							activePotions.add(effect.getPotion());
+						}
+
+						for (Potion potion : activePotions) {
+							// The PotionEffect version (as opposed to Potion) does not call cleanup callbacks
+							if (potion.isBeneficial() && !(potion instanceof Curse)) {
+								if (entityLivingBase.isPotionActive(potion)) {
+									entityLivingBase.removePotionEffect(potion);
+								}
+							}
+							// Dispel Lesser Magic only dispels one potion effect
+							if (tier != Tier.ADVANCED)
+								break;
+						}
+						world.playSound(this.posX, this.posY, this.posZ, AncientSpellcraftSounds.DISPEL, SoundCategory.HOSTILE, 1, 1, false);
 						this.setDead();
 					}
 
 				}
-			} else {
-				this.setDead();
 			}
 
 			//this.playSound(WizardrySounds.ENTITY_MAGIC_FIREBALL_HIT, 2, 0.8f + rand.nextFloat() * 0.3f);
-
+			world.playSound(this.posX, this.posY, this.posZ, AncientSpellcraftSounds.DISPEL, SoundCategory.HOSTILE, 1, 1, false);
 			this.setDead();
 		}
 	}
 
 	private Tier getConstructTier(EntityMagicConstruct construct) {
-		if (construct instanceof EntityForcefield || construct instanceof EntityDecay) {
-			return Tier.ADVANCED;
-		} else if (construct instanceof EntityBlackHole) {
+		if (construct instanceof EntityBlackHole || construct instanceof EntityBoulder) {
 			return Tier.MASTER;
-		} else {
+		} else if (construct instanceof EntityFireSigil || construct instanceof EntityFrostSigil || construct instanceof EntityLightningSigil || construct instanceof EntitySilencingSigil) {
 			return Tier.APPRENTICE;
+		} else {
+			return Tier.ADVANCED;
 		}
 	}
 
@@ -141,7 +158,7 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 
 		super.onUpdate();
 
-		if (!world.isRemote) {
+		if (!world.isRemote && tier == Tier.ADVANCED) {
 			List<EntityForcefield> test = getEntitiesWithinRadius(5, this.posX, this.posY, this.posZ, world, EntityForcefield.class);
 			if (!test.isEmpty()) {
 				EntityForcefield forcefield = test.get(0);
@@ -149,13 +166,12 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 				double search_border_size = 4;
 				List<EntityDispelMagic> list = getEntitiesWithinRadius(radius + search_border_size, forcefield.posX, forcefield.posY, forcefield.posZ, world, EntityDispelMagic.class);
 				if (!list.isEmpty()) {
-					System.out.println("list not empty, reducing forcefield lifetime");
+					//					System.out.println("list not empty, reducing forcefield lifetime");
 					forcefield.lifetime = (int) (forcefield.lifetime * 0.2);
 					this.setDead();
 				}
 			}
 		}
-		//		TODO
 
 		if (world.isRemote) {
 
@@ -181,17 +197,9 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 						ParticleBuilder.create(ParticleBuilder.Type.FLASH, rand, x, y, z, 0.03, true).clr(255, 255, 255).fade(0, 0, 0)
 								.time(20 + rand.nextInt(10)).spawn(world);
 					}
-
-					//									dx = (rand.nextDouble() - 0.5) * width;
-					//									dy = (rand.nextDouble() - 0.5) * height + this.height / 2 - 0.1;
-					//									dz = (rand.nextDouble() - 0.5) * width;
-					//									ParticleBuilder.create(ParticleBuilder.Type.SCORCH)
-					//											.pos(this.getPositionVector().add(dx - this.motionX, dy, dz - this.motionZ))
-					//											.vel(-v * dx, -v * dy, -v * dz).scale(width * 2).time(10).spawn(world);
 				}
 			}
 		}
-
 	}
 
 	@Override
@@ -204,43 +212,43 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 		return 1.0F;
 	}
 
-	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-
-		if (this.isEntityInvulnerable(source)) {
-			return false;
-
-		} else {
-
-			this.markVelocityChanged();
-
-			if (source.getTrueSource() != null) {
-
-				Vec3d vec3d = source.getTrueSource().getLookVec();
-
-				if (vec3d != null) {
-
-					double speed = MathHelper.sqrt(motionX * motionX + motionY * motionY + motionZ * motionZ);
-
-					this.motionX = vec3d.x * speed;
-					this.motionY = vec3d.y * speed;
-					this.motionZ = vec3d.z * speed;
-
-					this.lifetime = 160;
-
-				}
-
-				if (source.getTrueSource() instanceof EntityLivingBase) {
-					this.setCaster((EntityLivingBase) source.getTrueSource());
-				}
-
-				return true;
-
-			} else {
-				return false;
-			}
-		}
-	}
+	//	@Override
+	//	public boolean attackEntityFrom(DamageSource source, float amount) {
+	//
+	//		if (this.isEntityInvulnerable(source)) {
+	//			return false;
+	//
+	//		} else {
+	//
+	//			this.markVelocityChanged();
+	//
+	//			if (source.getTrueSource() != null) {
+	//
+	//				Vec3d vec3d = source.getTrueSource().getLookVec();
+	//
+	//				if (vec3d != null) {
+	//
+	//					double speed = MathHelper.sqrt(motionX * motionX + motionY * motionY + motionZ * motionZ);
+	//
+	//					this.motionX = vec3d.x * speed;
+	//					this.motionY = vec3d.y * speed;
+	//					this.motionZ = vec3d.z * speed;
+	//
+	//					this.lifetime = 160;
+	//
+	//				}
+	//
+	//				if (source.getTrueSource() instanceof EntityLivingBase) {
+	//					this.setCaster((EntityLivingBase) source.getTrueSource());
+	//				}
+	//
+	//				return true;
+	//
+	//			} else {
+	//				return false;
+	//			}
+	//		}
+	//	}
 
 	public void setLifetime(int lifetime) {
 		this.lifetime = lifetime;
@@ -277,12 +285,21 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 	public void readEntityFromNBT(NBTTagCompound nbttagcompound) {
 		super.readEntityFromNBT(nbttagcompound);
 		lifetime = nbttagcompound.getInteger("lifetime");
+		tier = Tier.fromName(nbttagcompound.getString("tier"));
 	}
 
 	@Override
 	public void writeEntityToNBT(NBTTagCompound nbttagcompound) {
 		super.writeEntityToNBT(nbttagcompound);
 		nbttagcompound.setInteger("lifetime", lifetime);
+		nbttagcompound.setString("tier", tier.getUnlocalisedName());
 	}
 
+	public Tier getTier() {
+		return tier;
+	}
+
+	public void setTier(Tier tier) {
+		this.tier = tier;
+	}
 }

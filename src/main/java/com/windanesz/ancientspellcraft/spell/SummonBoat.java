@@ -2,12 +2,12 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityBoat;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 
 public class SummonBoat extends SpellRay {
 	public SummonBoat() {
-		super(AncientSpellcraft.MODID, "summon_boat", false, EnumAction.BLOCK);
+		super(AncientSpellcraft.MODID, "summon_boat", SpellActions.POINT_UP, false);
 		this.hitLiquids(true);
 		this.ignoreUncollidables(false);
 	}

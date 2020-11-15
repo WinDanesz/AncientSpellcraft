@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.client.gui;
 
 import com.windanesz.ancientspellcraft.item.ItemAncientSpellcraftSpellBook;
+import com.windanesz.ancientspellcraft.tileentity.TileScribingDesk;
 import com.windanesz.ancientspellcraft.tileentity.TileSphereCognizance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -18,6 +19,7 @@ public class GuiHandlerAS implements IGuiHandler {
 	public static final int ICE_CRAFTING_TABLE = nextGuiId++;
 	public static final int SPELL_BOOK_ANCIENT = nextGuiId++;
 	public static final int SPHERE_COGNIZANCE = nextGuiId++;
+	public static final int SCRIBING_DESK = nextGuiId++;
 
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
@@ -26,6 +28,9 @@ public class GuiHandlerAS implements IGuiHandler {
 		} else if (id == SPHERE_COGNIZANCE) {
 			TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
 			return new ContainerSphereCognizance(player, player.inventory, (TileSphereCognizance) tileEntity);
+		} else if (id == SCRIBING_DESK) {
+			TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
+			return new ContainerScribingDesk(player, player.inventory, (TileScribingDesk) tileEntity);
 		}
 		return null;
 	}
@@ -34,11 +39,12 @@ public class GuiHandlerAS implements IGuiHandler {
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
 		if (id == ICE_CRAFTING_TABLE) {
 			return new GuiIceWorkbench(player.inventory, world, new BlockPos(x, y, z));
-		} else if (id == SPELL_BOOK_ANCIENT) {
+		}
+		if (id == SPELL_BOOK_ANCIENT) {
 			if (player.getHeldItemMainhand().getItem() instanceof ItemAncientSpellcraftSpellBook) {
-				return new GuiAncientSpellBook(player.getHeldItemMainhand());
+				return new GuiAncientElementSpellBook(player.getHeldItemMainhand());
 			} else if (player.getHeldItemOffhand().getItem() instanceof ItemAncientSpellcraftSpellBook) {
-				return new GuiAncientSpellBook(player.getHeldItemOffhand());
+				return new GuiAncientElementSpellBook(player.getHeldItemOffhand());
 			}
 		}
 		if (id == SPHERE_COGNIZANCE) {
@@ -46,6 +52,14 @@ public class GuiHandlerAS implements IGuiHandler {
 			if (tileEntity instanceof TileSphereCognizance) {
 				return new GuiSphereCognizance(player, player.inventory,
 						(TileSphereCognizance) tileEntity);
+			}
+
+		}
+		if (id == SCRIBING_DESK) {
+			TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
+			if (tileEntity instanceof TileScribingDesk) {
+				return new GuiScribingDesk(player, player.inventory,
+						(TileScribingDesk) tileEntity);
 			}
 
 		}

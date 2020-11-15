@@ -12,7 +12,6 @@ import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.NBTExtras;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
@@ -437,11 +436,6 @@ public class EntitySkeletonMageMinion extends AbstractSkeleton implements ISpell
 
 	@Override
 	protected SoundEvent getDeathSound() { return SoundEvents.ENTITY_STRAY_DEATH; }
-
-	@Override
-	public int getAimingError(EnumDifficulty difficulty) {
-		return WizardryUtilities.getDefaultAimingError(difficulty);
-	}
 
 	@Override
 	protected boolean processInteract(EntityPlayer player, EnumHand hand) {

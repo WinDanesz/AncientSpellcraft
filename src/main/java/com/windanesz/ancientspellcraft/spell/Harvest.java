@@ -5,8 +5,8 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.BlockUtils;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
@@ -50,7 +50,7 @@ public class Harvest extends Spell {
 
 		boolean flag = false;
 
-		List<BlockPos> sphere = WizardryUtilities.getBlockSphere(caster.getPosition(),
+		List<BlockPos> sphere = BlockUtils.getBlockSphere(caster.getPosition(),
 				getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade));
 
 		HashMap<BlockPos, Block> replantList = new HashMap<>();
@@ -116,6 +116,7 @@ public class Harvest extends Spell {
 						caster.inventory.decrStackSize(i, 1);
 					}
 				}
+				flag = true;
 			}
 
 		}

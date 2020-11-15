@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.block;
 
 import com.windanesz.ancientspellcraft.util.SpellTeleporter;
+import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -43,8 +44,7 @@ public class BlockHellFire extends Block {
 		this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, Integer.valueOf(0)).withProperty(NORTH, Boolean.valueOf(false)).withProperty(EAST, Boolean.valueOf(false)).withProperty(SOUTH, Boolean.valueOf(false)).withProperty(WEST, Boolean.valueOf(false)).withProperty(UPPER, Boolean.valueOf(false)));
 		//		this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, 0));
 		this.setTickRandomly(true);
-//		setRegistryName("NETHER_FIRE");
-		setLightLevel(2F);
+		setLightLevel(1.5F);
 	}
 
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
@@ -148,6 +148,19 @@ public class BlockHellFire extends Block {
 
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+
+		if (rand.nextInt(24) == 0) {
+		ParticleBuilder.create(ParticleBuilder.Type.FLASH)
+					.pos(pos.getX() + 0.5f, pos.getY() + 0.1, pos.getZ() +0.5f)
+					.face(EnumFacing.UP)
+					.clr(145, 6, 55)
+					//					.clr(89, 238, 155)
+					.collide(false)
+					.scale(4.3F)
+					.time(50)
+					.spawn(worldIn);
+		}
+
 		if (rand.nextInt(24) == 0) {
 			worldIn.playSound((double) ((float) pos.getX() + 0.5F), (double) ((float) pos.getY() + 0.5F), (double) ((float) pos.getZ() + 0.5F), SoundEvents.BLOCK_FIRE_AMBIENT, SoundCategory.BLOCKS, 1.0F + rand.nextFloat(), rand.nextFloat() * 0.7F + 0.3F, false);
 		}

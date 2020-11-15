@@ -6,11 +6,12 @@ import electroblob.wizardry.item.IConjuredItem;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellConjuration;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+
+import static electroblob.wizardry.util.InventoryUtils.doesPlayerHaveItem;
 
 public class SpellConjurationAS extends SpellConjuration {
 
@@ -33,7 +34,7 @@ public class SpellConjurationAS extends SpellConjuration {
 		IConjuredItem.setDurationMultiplier(stack, modifiers.get(WizardryItems.duration_upgrade));
 		IConjuredItem.setDamageMultiplier(stack, modifiers.get(SpellModifiers.POTENCY));
 
-		if (WizardryUtilities.doesPlayerHaveItem(caster, item))
+		if (doesPlayerHaveItem(caster, item))
 			return false;
 
 		if (caster.getHeldItemMainhand().isEmpty()) {

@@ -6,13 +6,13 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
@@ -31,7 +31,7 @@ public class TemporalCasualty extends SpellRay {
 	public static final int LOOP_DURATION = 24000;
 
 	public TemporalCasualty() {
-		super(AncientSpellcraft.MODID, "curse_temporal_casualty", false, EnumAction.BLOCK);
+		super(AncientSpellcraft.MODID, "curse_temporal_casualty", SpellActions.POINT, false);
 		WizardData.registerStoredVariables(CURSE_TEMPORAL_CASUALTY_LOOP_START);
 
 	}
@@ -41,7 +41,6 @@ public class TemporalCasualty extends SpellRay {
 			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 		if (target instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) target;
-
 
 			WizardData data = WizardData.get(player);
 			if (data != null) {

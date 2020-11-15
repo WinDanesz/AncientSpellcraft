@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.util.ASUtils;
-import electroblob.wizardry.registry.WizardryItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
@@ -16,17 +16,21 @@ public class ItemEvergrowingCrystal extends ItemDailyArtefact {
 
 	@Override
 	public void performAction(EntityPlayer player) {
-		ItemStack stack;
-		float i = AncientSpellcraft.rand.nextFloat();
-		if (i <= 0.1) {
-			stack = new ItemStack(WizardryItems.astral_diamond, ASUtils.randIntBetween(1, 3));
-		} else if (i <= 0.2) {
-			stack = new ItemStack(Items.DIAMOND, ASUtils.randIntBetween(2, 5));
-		} else {
-			stack = new ItemStack(Items.EMERALD, ASUtils.randIntBetween(5, 10));
-		}
-		if (!player.inventory.addItemStackToInventory(stack)) {
-			player.dropItem(stack, false);
+		if (!player.world.isRemote) {
+			ItemStack stack;
+			float i = AncientSpellcraft.rand.nextFloat();
+			if (i <= 0.1) {
+				stack = new ItemStack(AncientSpellcraftItems.astral_diamond_shard, ASUtils.randIntBetween(1, 3));
+			} else if (i <= 0.20) {
+				stack = new ItemStack(Items.DIAMOND, ASUtils.randIntBetween(1, 1));
+			} else {
+				stack = new ItemStack(Items.EMERALD, ASUtils.randIntBetween(1, 2));
+			}
+
+			if (!player.inventory.addItemStackToInventory(stack)) {
+				player.dropItem(stack, false);
+			}
+
 		}
 	}
 

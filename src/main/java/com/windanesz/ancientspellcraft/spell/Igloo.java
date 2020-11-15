@@ -1,12 +1,13 @@
 package com.windanesz.ancientspellcraft.spell;
 
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -23,8 +24,8 @@ public class Igloo extends SpellRay {
 
 	private static Random rand = new Random();
 
-	public Igloo(String modID, String name, EnumAction action, boolean isContinuous) {
-		super(modID, name, isContinuous, action);
+	public Igloo() {
+		super(AncientSpellcraft.MODID, "create_igloo", SpellActions.SUMMON, false);
 		this.soundValues(0.5f, 1.1f, 0.2f);
 	}
 
@@ -37,6 +38,8 @@ public class Igloo extends SpellRay {
 	@Override
 	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit,
 			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
+		this.playSound(world, caster, ticksInUse, -1, modifiers);
+
 		List<BlockPos> blockPosList = new ArrayList<>();
 		BlockPos layer1Center = pos.offset(EnumFacing.UP);
 		//		blockPosList.add(layer1Center.offset(EnumFacing.NORTH, 2));

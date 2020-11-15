@@ -1,0 +1,75 @@
+{
+    "pools": [
+        {
+            "name": "main",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ring_lodestone",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ring_berserker",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ring_prismarine",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ring_mana_transfer",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ring_blast",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ring_range",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ring_focus_crystal",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_power",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_mana_flask",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_enchanted_needle",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:cornucopia",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_gold_bag",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_magic_light",
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}

@@ -5,9 +5,9 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellBuff;
 import electroblob.wizardry.util.AllyDesignationSystem;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +28,7 @@ public class Celerity extends SpellBuff {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(
+		List<EntityLivingBase> targets = EntityUtils.getEntitiesWithinRadius(
 				getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade),
 				caster.posX, caster.posY, caster.posZ, world, EntityLivingBase.class);
 

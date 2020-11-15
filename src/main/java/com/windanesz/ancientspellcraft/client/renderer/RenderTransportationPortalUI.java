@@ -10,7 +10,6 @@ import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Transportation;
 import electroblob.wizardry.util.Location;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -31,6 +30,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.opengl.GL11;
 
 import java.util.List;
+
+import static electroblob.wizardry.util.GeometryUtils.getCentre;
 
 /**
  * Author: WinDanesz
@@ -108,7 +109,7 @@ public class RenderTransportationPortalUI {
 
 				buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
 
-				Vec3d position = WizardryUtilities.getCentre(location.pos).subtract(origin);
+				Vec3d position = getCentre(location.pos).subtract(origin);
 				double distance = position.length();
 				// The icon lines up perfectly if you render it at actual distance, otherwise view bobbing messes things up
 				// However, if that's outside the render distance it won't render at all! To fudge our way around this

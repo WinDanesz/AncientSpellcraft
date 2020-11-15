@@ -5,15 +5,15 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftEnchantments;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.data.WizardData;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.ImbueWeapon;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.InventoryUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -28,7 +28,7 @@ public class StaticCharge extends Spell {
 	 */
 
 	public StaticCharge() {
-		super(AncientSpellcraft.MODID, "static_charge", EnumAction.BOW, false);
+		super(AncientSpellcraft.MODID, "static_charge", SpellActions.IMBUE, false);
 		addProperties(EFFECT_DURATION);
 	}
 
@@ -39,7 +39,7 @@ public class StaticCharge extends Spell {
 		if (WizardData.get(caster) != null
 				&& WizardData.get(caster).getImbuementDuration(AncientSpellcraftEnchantments.static_charge) <= 0) {
 
-			for (ItemStack stack : WizardryUtilities.getPrioritisedHotbarAndOffhand(caster)) {
+			for (ItemStack stack : InventoryUtils.getPrioritisedHotbarAndOffhand(caster)) {
 
 				if ((ImbueWeapon.isSword(stack))
 						&& !EnchantmentHelper.getEnchantments(stack).containsKey(AncientSpellcraftEnchantments.static_charge)) {

@@ -1,0 +1,12 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "transform": "forge:default-block",
+        "model": "ancientspellcraft:imbuement_altar_ruined",
+        "textures": {"all": "ancientspellcraft:blocks/imbuement_altar_ruined"},
+        "particle": {"all": "ancientspellcraft:blocks/imbuement_altar_ruined"}
+    },
+    "variants": {
+        "normal": { "model": "ancientspellcraft:imbuement_altar_ruined" }
+    }
+}

@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
+import com.google.common.collect.ImmutableMap;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
 import electroblob.wizardry.Wizardry;
@@ -23,14 +24,24 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
+import java.util.Map;
 
 public class ItemAncientSpellcraftSpellBook extends ItemSpellBook {
 
-	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/spell_book_ancient_spellcraft.png");
+	private static final Map<String, ResourceLocation> guiTextures = ImmutableMap.of(
+			"magic", 		new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/spell_book_ancient_element.png"),
+			"non-magic", 	new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/spell_book_ancient_spellcraft.png"));
+
+
+//	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/spell_book_ancient_element.png");
 
 	@Override
 	public ResourceLocation getGuiTexture(Spell spell) {
-		return GUI_TEXTURE;
+		if (spell.getElement() == Element.MAGIC) {
+			return guiTextures.get("magic");
+		} else {
+			return guiTextures.get("non-magic");
+		}
 	}
 
 	@Override

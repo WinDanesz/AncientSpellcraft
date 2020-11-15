@@ -6,47 +6,38 @@
                 "min": 1,
                 "max": 2
             },
+
             "conditions": [
                 {
                     "condition": "random_chance",
-                    "chance": 0.2
+                    "chance": 0.25
                 }
             ],
             "entries": [
                 {
                     "type": "item",
-                    "name": "ancientspellcraft:enchanted_name_tag",
-                    "weight": 5,
-                    "functions": [
-                        {
-                            "function": "minecraft:set_damage",
-                            "damage": 0.0
-                        }
-                    ]
+                    "name": "ancientspellcraft:stone_tablet_small",
+                    "entryName": "stone_tablet_small",
+                    "weight": 10
                 },
                 {
                     "type": "item",
-                    "name": "ancientspellcraft:ancient_spellcraft_spell_book",
-                    "entryName": "ancientspellcraft_spell_book",
-                    "weight": 10,
-                    "functions": [
-                        {
-                            "function": "ebwizardry:random_spell",
-                            "undiscovered_bias": 0.3
-                        }
-                    ]
+                    "name": "ancientspellcraft:stone_tablet",
+                    "entryName": "stone_tablet",
+                    "weight": 6
                 },
                 {
                     "type": "item",
-                    "name": "ancientspellcraft:ancient_spellcraft_scroll",
-                    "entryName": "ancientspellcraft_scroll",
-                    "weight": 20,
-                    "functions": [
-                        {
-                            "function": "ebwizardry:random_spell",
-                            "undiscovered_bias": 0.3
-                        }
-                    ]
+                    "name": "ancientspellcraft:stone_tablet_large",
+                    "entryName": "stone_tablet_large",
+                    "weight": 5
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:stone_tablet_grand",
+                    "entryName": "stone_tablet_grand",
+                    "weight": 3
+
                 }
             ]
         }

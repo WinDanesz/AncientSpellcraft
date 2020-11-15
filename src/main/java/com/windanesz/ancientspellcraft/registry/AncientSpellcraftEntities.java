@@ -11,7 +11,6 @@ import com.windanesz.ancientspellcraft.entity.construct.EntityTransportationPort
 import com.windanesz.ancientspellcraft.entity.construct.EntityVenusFlyTrap;
 import com.windanesz.ancientspellcraft.entity.living.EntityFireAnt;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
-import com.windanesz.ancientspellcraft.entity.living.EntitySpellBook;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
 import com.windanesz.ancientspellcraft.entity.living.EntityVoidCreeper;
 import com.windanesz.ancientspellcraft.entity.living.EntityWolfMinion;
@@ -90,7 +89,7 @@ public class AncientSpellcraftEntities {
 		registry.register(createEntry(EntityVenusFlyTrap.class, "venus_fly_trap", TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());
 		registry.register(createEntry(EntityFireAnt.class, "fire_ant", TrackingType.LIVING).build());
 
-		registry.register(createEntry(EntitySpellBook.class, "rouge_spell_book", TrackingType.LIVING).build());
+//		registry.register(createEntry(EntitySpellBook.class, "rouge_spell_book", TrackingType.LIVING).build());
 
 		// constructs
 		registry.register(createEntry(EntityTransportationPortal.class, "transportation_portal", TrackingType.CONSTRUCT).build());

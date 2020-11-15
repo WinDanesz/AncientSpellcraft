@@ -6,8 +6,8 @@ import electroblob.wizardry.potion.PotionMagicEffect;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -39,8 +39,8 @@ public class EntityAntiMagicField extends EntityMagicConstruct {
 
 		if (!this.world.isRemote) {
 
-			List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(radius, this.posX, this.posY,
-					this.posZ, this.world);
+			List<EntityLivingBase> targets = EntityUtils.getEntitiesWithinRadius(radius, this.posX, this.posY,
+					this.posZ, this.world, EntityLivingBase.class);
 
 			for (EntityLivingBase target : targets) {
 
@@ -57,9 +57,9 @@ public class EntityAntiMagicField extends EntityMagicConstruct {
 
 		} else {
 
-			for(int i=1; i<6; i++){
+			for (int i = 1; i < 6; i++) {
 				float brightness = 0.5f + (rand.nextFloat() * 0.5f);
-//				radius = rand.nextDouble() * 2.0;
+				//				radius = rand.nextDouble() * 2.0;
 				radius = radius * rand.nextDouble();
 
 				ParticleBuilder.create(ParticleBuilder.Type.DUST)
@@ -71,20 +71,19 @@ public class EntityAntiMagicField extends EntityMagicConstruct {
 						.spawn(world);
 			}
 
-
-//			if (this.ticksExisted % 2 == 0) {
-//				int lifetime = 15;
-//				double dx = (this.world.rand.nextDouble() - 0.5D) * 2 * (double) this.width;
-//				double dy = (this.world.rand.nextDouble() - 0.5D) * 2 * (double) this.width;
-//				double dz = (this.world.rand.nextDouble() - 0.5D) * 2 * (double) this.width;
-//				double x = this.posX + dx;
-//				double y = this instanceof IProjectile ? this.posY + dy : this.posY + this.height / 2 + dy;
-//				double z = this.posZ + dz;
-//				ParticleBuilder.create(ParticleBuilder.Type.DUST)
-//						.pos(x, y, z)
-//						.vel(0, -dy / (lifetime * 10), 0)
-//						.clr(0x5be3bb).time(15).spawn(this.world);
-//			}
+			//			if (this.ticksExisted % 2 == 0) {
+			//				int lifetime = 15;
+			//				double dx = (this.world.rand.nextDouble() - 0.5D) * 2 * (double) this.width;
+			//				double dy = (this.world.rand.nextDouble() - 0.5D) * 2 * (double) this.width;
+			//				double dz = (this.world.rand.nextDouble() - 0.5D) * 2 * (double) this.width;
+			//				double x = this.posX + dx;
+			//				double y = this instanceof IProjectile ? this.posY + dy : this.posY + this.height / 2 + dy;
+			//				double z = this.posZ + dz;
+			//				ParticleBuilder.create(ParticleBuilder.Type.DUST)
+			//						.pos(x, y, z)
+			//						.vel(0, -dy / (lifetime * 10), 0)
+			//						.clr(0x5be3bb).time(15).spawn(this.world);
+			//			}
 		}
 	}
 }

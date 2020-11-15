@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -9,10 +10,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityZombieVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -22,26 +21,11 @@ public class CureZombie extends SpellRay {
 	/**
 	 * The number by which this spell's damage is multiplied for undead entities.
 	 */
-	public CureZombie(String modID, String name, EnumAction action, boolean isContinuous) {
-		super(modID, name, isContinuous, action);
+	public CureZombie() {
+		super(AncientSpellcraft.MODID, "cure_zombie", SpellActions.POINT_UP, false);
 	}
 
 	// The following three methods serve as a good example of how to implement continuous spell sounds (hint: it's easy)
-
-	@Override
-	protected SoundEvent[] createSounds() {
-		return this.createContinuousSpellSounds();
-	}
-
-	@Override
-	protected void playSound(World world, EntityLivingBase entity, int ticksInUse, int duration, SpellModifiers modifiers, String... sounds) {
-		this.playSoundLoop(world, entity, ticksInUse);
-	}
-
-	@Override
-	protected void playSound(World world, double x, double y, double z, int ticksInUse, int duration, SpellModifiers modifiers, String... sounds) {
-		this.playSoundLoop(world, x, y, z, ticksInUse, duration);
-	}
 
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {

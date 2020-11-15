@@ -26,6 +26,7 @@ import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.spell.SpellBuff;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WandHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
@@ -38,7 +39,9 @@ import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -47,6 +50,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.lang.reflect.Field;
 import java.util.Iterator;
@@ -119,12 +123,12 @@ public final class ASArtefactHandler {
 						if (!player.world.isRemote) {
 							Iterator<PotionEffect> iterator = player.getActivePotionMap().values().iterator();
 
-//							while (iterator.hasNext()) {
-//								try {
-//									iterator.remove();
-//								}
-//								catch (Exception e) {}
-//							}
+							//							while (iterator.hasNext()) {
+							//								try {
+							//									iterator.remove();
+							//								}
+							//								catch (Exception e) {}
+							//							}
 						}
 					}
 				}
@@ -326,21 +330,21 @@ public final class ASArtefactHandler {
 
 				} else if (artefact == AncientSpellcraftItems.ring_blast) {
 					modifiers.set(SpellModifiers.COST, 1.25f * cost, false);
-//					System.out.println("blast before: " + event.getModifiers().get(WizardryItems.blast_upgrade));
+					//					System.out.println("blast before: " + event.getModifiers().get(WizardryItems.blast_upgrade));
 					event.getModifiers().set(WizardryItems.blast_upgrade, event.getModifiers().get(WizardryItems.blast_upgrade) + 0.25F, true);
-//					System.out.println("blast after: " + event.getModifiers().get(WizardryItems.blast_upgrade));
+					//					System.out.println("blast after: " + event.getModifiers().get(WizardryItems.blast_upgrade));
 
 				} else if (artefact == AncientSpellcraftItems.ring_range) {
 					modifiers.set(SpellModifiers.COST, 1.25f * cost, false);
-//					System.out.println("range_upgrade before: " + event.getModifiers().get(WizardryItems.range_upgrade));
+					//					System.out.println("range_upgrade before: " + event.getModifiers().get(WizardryItems.range_upgrade));
 					event.getModifiers().set(WizardryItems.range_upgrade, event.getModifiers().get(WizardryItems.range_upgrade) + 0.25F, true);
-//					System.out.println("range_upgrade after: " + event.getModifiers().get(WizardryItems.range_upgrade));
+					//					System.out.println("range_upgrade after: " + event.getModifiers().get(WizardryItems.range_upgrade));
 
 				} else if (artefact == AncientSpellcraftItems.charm_elemental_grimoire) {
 					if (event.getSpell().getElement() == Element.FIRE || event.getSpell().getElement() == Element.ICE || event.getSpell().getElement() == Element.LIGHTNING) {
-//						System.out.println("before:" + modifiers.get(SpellModifiers.POTENCY));
+						//						System.out.println("before:" + modifiers.get(SpellModifiers.POTENCY));
 						modifiers.set(SpellModifiers.POTENCY, 0.1f + potency, false);
-//						System.out.println("after:" + modifiers.get(SpellModifiers.POTENCY));
+						//						System.out.println("after:" + modifiers.get(SpellModifiers.POTENCY));
 					}
 				}
 
@@ -411,7 +415,7 @@ public final class ASArtefactHandler {
 						// adapted from ItemWand, to have the same mechanic for displaying level up:
 						// If the wand just gained enough progression to be upgraded...
 						Tier nextTier = Tier.values()[((ItemWand) targetWand.getItem()).tier.ordinal() + 1];
-						int excess = WandHelper.getProgression(targetWand) - nextTier.progression;
+						int excess = WandHelper.getProgression(targetWand) - nextTier.getProgression();
 						if (excess >= 0 && excess < progression) {
 							// ...display a message above the player's hotbar
 							player.playSound(WizardrySounds.ITEM_WAND_LEVELUP, 1.25f, 1);
@@ -470,5 +474,32 @@ public final class ASArtefactHandler {
 		return Spell.byMetadata(stack.getItemDamage());
 	}
 
-}
+	@SubscribeEvent
+	public static void onPlayerTickEvent(TickEvent.PlayerTickEvent event) {
 
+		if (event.phase == TickEvent.Phase.START) {
+
+			EntityPlayer player = event.player;
+
+			for (ItemArtefact artefact : getActiveArtefacts(player)) {
+
+				if (artefact == AncientSpellcraftItems.ring_prismarine) {
+
+					if (player.isBurning()) {
+						float i = player.getCooldownTracker().getCooldown(AncientSpellcraftItems.ring_prismarine, Minecraft.getMinecraft().getRenderPartialTicks());
+						if (i == 0) {
+							player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 120));
+
+								SpellModifiers modifiers = new SpellModifiers();
+								if (AncientSpellcraftSpells.extinguish.cast(player.world, player, EnumHand.MAIN_HAND, 0, modifiers)) {
+
+									MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.SCROLL, AncientSpellcraftSpells.extinguish, player, modifiers));
+									player.getCooldownTracker().setCooldown(AncientSpellcraftItems.ring_prismarine, 1200);
+								}
+						}
+					}
+				}
+			}
+		}
+	}
+}

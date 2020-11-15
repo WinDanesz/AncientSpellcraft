@@ -19,6 +19,6 @@
     "base_properties": {
         "item_lifetime": 1400,
         "damage": 6,
-        "wither_duration": 60
+        "wither_duration": 80
     }
 }

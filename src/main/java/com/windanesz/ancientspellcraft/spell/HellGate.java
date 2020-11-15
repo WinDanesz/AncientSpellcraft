@@ -3,9 +3,10 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftDimensions;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +27,7 @@ public class HellGate extends SpellRay {
 	private Random rand = new Random();
 
 	public HellGate(String modID, String name, EnumAction action, boolean isContinuous) {
-		super(modID, name, isContinuous, action);
+		super(modID, name, SpellActions.POINT, false);
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class HellGate extends SpellRay {
 	@Override
 	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 
-		if (!WizardryUtilities.canDamageBlocks(caster, world))
+		if (!EntityUtils.canDamageBlocks(caster, world))
 			return false;
 
 		pos = pos.offset(side);
@@ -53,7 +54,7 @@ public class HellGate extends SpellRay {
 			return true;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override

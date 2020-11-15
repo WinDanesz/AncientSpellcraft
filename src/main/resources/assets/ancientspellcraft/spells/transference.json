@@ -10,7 +10,7 @@
         "trades": true,
         "looting": true
     },
-    "tier": "advanced",
+    "tier": "apprentice",
     "element": "healing",
     "type": "alteration",
     "cost": 30,

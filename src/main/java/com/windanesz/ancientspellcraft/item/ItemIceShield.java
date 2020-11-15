@@ -6,9 +6,10 @@ import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.BlockUtils;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -38,6 +39,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static electroblob.wizardry.util.BlockUtils.getNearestSurface;
 
 @Mod.EventBusSubscriber
 public class ItemIceShield extends Item implements IConjuredItem {
@@ -147,7 +150,7 @@ public class ItemIceShield extends Item implements IConjuredItem {
 
 				double radius = Spells.ice_charge.getProperty(Spell.EFFECT_RADIUS).floatValue() * 1.5;
 
-				List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(radius, entity.posX, entity.posY,
+				List<EntityLivingBase> targets = EntityUtils.getLivingWithinRadius(radius, entity.posX, entity.posY,
 						entity.posZ, entity.world);
 
 				// Slows targets
@@ -166,8 +169,8 @@ public class ItemIceShield extends Item implements IConjuredItem {
 
 						BlockPos pos = new BlockPos(entity.posX + i, entity.posY, entity.posZ + j);
 
-						Integer y = WizardryUtilities.getNearestSurface(world, pos, EnumFacing.UP, 7, true,
-								WizardryUtilities.SurfaceCriteria.SOLID_LIQUID_TO_AIR);
+						Integer y = getNearestSurface(world, pos, EnumFacing.UP, 7, true,
+								BlockUtils.SurfaceCriteria.SOLID_LIQUID_TO_AIR);
 
 						if (y != null) {
 

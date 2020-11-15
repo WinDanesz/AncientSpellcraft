@@ -1,0 +1,62 @@
+{
+	"credit": "Made by WinDanesz, with Blockbench",
+	"textures": {
+		"1": "ancientspellcraft:blocks/sphere_cognizance",
+		"particle": "ancientspellcraft:blocks/sphere_cognizance"
+	},
+	"elements": [
+		{
+			"name": "middle",
+			"from": [6, 1, 6],
+			"to": [10, 2, 10],
+			"faces": {
+				"north": {"uv": [3, 2, 5, 2.5], "texture": "#1"},
+				"east": {"uv": [3, 2.5, 5, 3], "texture": "#1"},
+				"south": {"uv": [7, 0, 9, 0.5], "texture": "#1"},
+				"west": {"uv": [7, 0.5, 9, 1], "texture": "#1"},
+				"up": {"uv": [5, 5, 3, 3], "texture": "#1"}
+			}
+		},
+		{
+			"name": "bottom",
+			"from": [5, 0, 5],
+			"to": [11, 1, 11],
+			"faces": {
+				"north": {"uv": [5, 4, 8, 4.5], "texture": "#1"},
+				"east": {"uv": [5, 4.5, 8, 5], "texture": "#1"},
+				"south": {"uv": [4, 7, 7, 7.5], "texture": "#1"},
+				"west": {"uv": [7, 7, 10, 7.5], "texture": "#1"},
+				"up": {"uv": [3, 3, 0, 0], "texture": "#1"},
+				"down": {"uv": [3, 3, 0, 6], "texture": "#1", "cullface": "down"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 7.25, 0]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 7.25, 0]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -13, 9],
+			"translation": [0, 8.5, 0]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -13, 9],
+			"translation": [0, 8.5, 0]
+		},
+		"ground": {
+			"translation": [0, 2.25, 0],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"gui": {
+			"rotation": [35, -45, 0],
+			"translation": [0, 6.5, 0],
+			"scale": [1.5, 1.5, 1.5]
+		},
+		"fixed": {
+			"translation": [0, 5.25, 0]
+		}
+	}
+}

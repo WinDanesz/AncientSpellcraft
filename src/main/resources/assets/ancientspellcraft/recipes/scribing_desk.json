@@ -1,0 +1,30 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "CWG",
+        "SSS",
+        "L L"
+    ],
+    "key": {
+        "W": {
+            "item": "minecraft:writable_book"
+        },
+        "G": {
+            "item": "minecraft:glass_bottle"
+        },
+        "C": {
+            "item": "minecraft:bookshelf"
+        },
+        "L": {
+            "type": "forge:ore_dict",
+            "ore": "logWood"
+        },
+        "S": {
+            "type": "forge:ore_dict",
+            "ore": "slabWood"
+        }
+    },
+    "result": {
+        "item": "ancientspellcraft:scribing_desk"
+    }
+}

@@ -1,8 +1,6 @@
 package com.windanesz.ancientspellcraft.util;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import electroblob.wizardry.packet.PacketTransportation;
-import electroblob.wizardry.packet.WizardryPacketHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -20,7 +18,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.util.ITeleporter;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public class SpellTeleporter implements ITeleporter {
 
@@ -94,8 +91,8 @@ public class SpellTeleporter implements ITeleporter {
 
 				// experminental
 //				player.setPositionAndUpdate(x + 0.5, y, z + 0.5);
-				IMessage msg = new PacketTransportation.Message(player.getEntityId());
-				WizardryPacketHandler.net.sendToDimension(msg, player.world.provider.getDimension());
+//				IMessage msg = new PacketTransportation.Message();
+//				WizardryPacketHandler.net.sendToDimension(msg, player.world.provider.getDimension());
 				// experminental
 
 				if (!player.world.isRemote && causeBlindness) {

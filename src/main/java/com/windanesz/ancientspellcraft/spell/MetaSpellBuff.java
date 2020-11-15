@@ -140,12 +140,14 @@ public class MetaSpellBuff extends Spell {
 
 				//				}
 			}
+			this.playSound(world, caster, ticksInUse, -1, modifiers);
 
 			return true;
 		} else {
 			for (Potion potion : potionSet) {
 				boolean active = caster.isPotionActive(potion);
 				if (active) {
+					this.playSound(world, caster, ticksInUse, -1, modifiers);
 					return true;
 				}
 			}
@@ -178,6 +180,6 @@ public class MetaSpellBuff extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
 	}
 }

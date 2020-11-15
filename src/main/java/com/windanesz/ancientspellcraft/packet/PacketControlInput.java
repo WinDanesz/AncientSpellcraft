@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.packet;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.client.gui.ContainerScribingDesk;
 import com.windanesz.ancientspellcraft.client.gui.ContainerSphereCognizance;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -10,7 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 /**
  * <b>[Client -> Server]</b> This packet is for control events such as buttons in GUIs and key presses.
- * Based on electroblob.wizardry.packet.PacketControlInput (author: Electroblob)
+ * Based on {@link electroblob.wizardry.packet.PacketControlInput} (author: Electroblob)
  */
 public class PacketControlInput implements IMessageHandler<PacketControlInput.Message, IMessage> {
 
@@ -38,6 +39,19 @@ public class PacketControlInput implements IMessageHandler<PacketControlInput.Me
 						}
 
 						break;
+
+					case CRAFT_SPELL:
+
+						if (!(player.openContainer instanceof ContainerScribingDesk)) {
+							AncientSpellcraft.logger.warn("Received a PacketControlInput, but the player that sent it was not " +
+									"currently using a scribing desc. This should not happen!");
+						} else {
+							ContainerScribingDesk container = (ContainerScribingDesk) player.openContainer;
+							container.onApplyButtonPressed();
+
+						}
+
+						break;
 				}
 			});
 		}
@@ -46,7 +60,8 @@ public class PacketControlInput implements IMessageHandler<PacketControlInput.Me
 	}
 
 	public enum ControlType {
-		APPLY_BUTTON
+		APPLY_BUTTON,
+		CRAFT_SPELL
 	}
 
 	public static class Message implements IMessage {

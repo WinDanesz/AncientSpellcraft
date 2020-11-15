@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 
 public class ItemCoalBucket extends ItemDailyArtefact {
 	public static int MIN_COAL_AMOUNT = 2;
-	public static int MAX_COAL_AMOUNT = 4;
+	public static int MAX_COAL_AMOUNT = 5;
 
 	public ItemCoalBucket(EnumRarity rarity, Type type) {
 		super(rarity, type);
@@ -16,9 +16,12 @@ public class ItemCoalBucket extends ItemDailyArtefact {
 
 	@Override
 	public void performAction(EntityPlayer player) {
+		if (!player.world.isRemote) {
+
 		ItemStack stack = new ItemStack(Items.COAL, ASUtils.randIntBetween(MIN_COAL_AMOUNT, MAX_COAL_AMOUNT));
-		if (!player.inventory.addItemStackToInventory(stack)) {
-			player.dropItem(stack, false);
+			if (!player.inventory.addItemStackToInventory(stack)) {
+				player.dropItem(stack, false);
+			}
 		}
 	}
 }

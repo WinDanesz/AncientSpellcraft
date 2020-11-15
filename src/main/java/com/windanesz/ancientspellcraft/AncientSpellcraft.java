@@ -9,6 +9,7 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftDimensions;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftLoot;
+import com.windanesz.ancientspellcraft.registry.BookshelfItems;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenCrystalShardOre;
 import electroblob.wizardry.constants.Element;
 import net.minecraftforge.common.MinecraftForge;
@@ -24,8 +25,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
-@Mod(modid = AncientSpellcraft.MODID, name = AncientSpellcraft.NAME, version = AncientSpellcraft.VERSION, acceptedMinecraftVersions = AncientSpellcraft.MC_VERSION, dependencies = "required-after:ebwizardry@[4.2.10,4.3)")
-public class AncientSpellcraft {
+	@Mod(modid = AncientSpellcraft.MODID, name = AncientSpellcraft.NAME, version = AncientSpellcraft.VERSION, acceptedMinecraftVersions = AncientSpellcraft.MC_VERSION, dependencies = "required-after:ebwizardry@[4.3,4.4)")
+	public class AncientSpellcraft {
 
 	public static final String MODID = "ancientspellcraft";
 	public static final String NAME = "Ancient Spellcraft by Dan";
@@ -70,6 +71,8 @@ public class AncientSpellcraft {
 		AncientSpellcraftLoot.preInit();
 		AncientSpellcraftBlocks.registerTileEntities();
 		AncientSpellcraftBiomes.preInit();
+//		WizardryEnumHelper.addElement("ancient", new Style().setColor(TextFormatting.GOLD), I18n.format("ancientspellcraft:element.ancient"), MODID);
+		BookshelfItems.preInitBookShelfModelTextures();
 
 	}
 
@@ -82,7 +85,6 @@ public class AncientSpellcraft {
 //		GameRegistry.registerWorldGenerator(new WorldGenTest(), 5);
 
 		GameRegistry.registerWorldGenerator(new WorldGenCrystalShardOre(), 0);
-
 		AncientSpellcraftItems.registerDispenseBehaviours();
 		MinecraftForge.EVENT_BUS.register(instance); // Since there's already an instance we might as well use it
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandlerAS());
@@ -92,6 +94,7 @@ public class AncientSpellcraft {
 		AncientSpellcraftDimensions.init();
 
 		Knowledge.init();
+		BookshelfItems.InitBookshelfItems();
 		//		AncientSpellcraftWorldGen.registerWorldGenerators();
 		//		AncientSpellcraftBiomes.initBiomeManagerAndDictionary();
 

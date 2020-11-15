@@ -14,7 +14,7 @@
     "element": "magic",
     "type": "attack",
     "cost": 35,
-    "chargeup": 60,
+    "chargeup": 40,
     "cooldown": 40,
     "base_properties": {
         "range": 13,

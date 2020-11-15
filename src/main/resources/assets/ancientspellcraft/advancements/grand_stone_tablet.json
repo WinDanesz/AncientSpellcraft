@@ -1,0 +1,30 @@
+{
+    "display": {
+        "title": {
+            "translate": "advancement.ancientspellcraft:grand_stone_tablet"
+        },
+        "description": {
+            "translate": "advancement.ancientspellcraft:grand_stone_tablet.desc"
+        },
+        "show_toast": true,
+        "announce_to_chat": false,
+        "background": "ancientspellcraft:textures/gui/advancement_background.png",
+        "icon": {
+            "item": "ancientspellcraft:stone_tablet_grand"
+        }
+    },
+    "parent": "ancientspellcraft:relics",
+    "criteria": {
+
+        "stone_tablet_grand": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "ancientspellcraft:stone_tablet_grand"
+                    }
+                ]
+            }
+        }
+    }
+}

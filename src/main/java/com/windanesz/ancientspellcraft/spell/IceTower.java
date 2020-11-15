@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.block.BlockIceDoor;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.block.BlockSlab;
@@ -12,7 +13,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
@@ -32,7 +32,7 @@ public class IceTower extends SpellRay {
 	private static Random rand = new Random();
 
 	public IceTower() {
-		super(AncientSpellcraft.MODID, "ice_tower",false,  EnumAction.BLOCK);
+		super(AncientSpellcraft.MODID, "ice_tower", SpellActions.SUMMON, false);
 		this.soundValues(0.5f, 1.1f, 0.2f); }
 
 	@Override

@@ -6,9 +6,10 @@ import electroblob.wizardry.entity.ICustomHitbox;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.entity.projectile.EntityMagicArrow;
 import electroblob.wizardry.registry.WizardrySounds;
+import electroblob.wizardry.util.EntityUtils;
+import electroblob.wizardry.util.GeometryUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.ParticleBuilder.Type;
-import electroblob.wizardry.util.WizardryUtilities;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -129,7 +130,7 @@ public class EntitySpiritWard extends EntityMagicConstruct implements ICustomHit
 		// If they will be inside the spirit ward next tick, sets their position and velocity such that they appear to
 		// bounce off the spirit ward and creates impact particle effects and sounds where they hit it
 
-		List<Entity> targets = WizardryUtilities.getEntitiesWithinRadius(radius + SEARCH_BORDER_SIZE, posX, posY, posZ, world, Entity.class);
+		List<Entity> targets = EntityUtils.getEntitiesWithinRadius(radius + SEARCH_BORDER_SIZE, posX, posY, posZ, world, Entity.class);
 
 		targets.remove(this);
 		targets.removeIf(t -> t instanceof EntityXPOrb); // Gets annoying since they're attracted to the player
@@ -140,9 +141,9 @@ public class EntitySpiritWard extends EntityMagicConstruct implements ICustomHit
 		for (Entity target : targets) {
 
 			// only prevents undeads from entering the circle
-			if (this.isValidTarget(target) && WizardryUtilities.isLiving(target) && ((EntityLivingBase) target).isEntityUndead()) {
+			if (this.isValidTarget(target) && EntityUtils.isLiving(target) && ((EntityLivingBase) target).isEntityUndead()) {
 
-				Vec3d currentPos = Arrays.stream(WizardryUtilities.getVertices(target.getEntityBoundingBox()))
+				Vec3d currentPos = Arrays.stream(GeometryUtils.getVertices(target.getEntityBoundingBox()))
 						.min(Comparator.comparingDouble(v -> v.distanceTo(this.getPositionVector())))
 						.orElse(target.getPositionVector()); // This will never happen, it's just here to make the compiler happy
 
@@ -155,7 +156,7 @@ public class EntitySpiritWard extends EntityMagicConstruct implements ICustomHit
 
 				boolean flag;
 
-				if (WizardryUtilities.isLiving(target)) {
+				if (EntityUtils.isLiving(target)) {
 					// Non-allied living entities shouldn't be inside at all
 					flag = nextTickDistance <= radius;
 				} else {
@@ -169,7 +170,7 @@ public class EntitySpiritWard extends EntityMagicConstruct implements ICustomHit
 					Vec3d targetRelativePos = currentPos.subtract(this.getPositionVector());
 
 					double nudgeVelocity = this.contains(target) ? -0.1 : 0.1;
-					if (WizardryUtilities.isLiving(target))
+					if (EntityUtils.isLiving(target))
 						nudgeVelocity = 0.25;
 					Vec3d extraVelocity = targetRelativePos.normalize().scale(nudgeVelocity);
 
@@ -230,7 +231,7 @@ public class EntitySpiritWard extends EntityMagicConstruct implements ICustomHit
 	 * Returns true if the given bounding box is completely inside this spirit ward (the surface counts as outside).
 	 */
 	public boolean contains(AxisAlignedBB box) {
-		return Arrays.stream(WizardryUtilities.getVertices(box)).allMatch(this::contains);
+		return Arrays.stream(GeometryUtils.getVertices(box)).allMatch(this::contains);
 	}
 
 	/**

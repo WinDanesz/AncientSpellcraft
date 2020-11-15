@@ -4,10 +4,10 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.MagicDamage.DamageType;
 import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.RayTraceResult;
@@ -54,7 +54,7 @@ public class EntityHeart extends EntityMagicProjectile {
 					if (world.isRemote)
 						ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(posX, posY, posZ).clr(250, 63, 63).spawn(world);
 
-				} else if (WizardryUtilities.isLiving(entityLivingBase)) {
+				} else if (EntityUtils.isLiving(entityLivingBase)) {
 
 					if (entityLivingBase.getHealth() < entityLivingBase.getMaxHealth() && entityLivingBase.getHealth() > 0) {
 

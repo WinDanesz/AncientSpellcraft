@@ -37,6 +37,9 @@ public class PocketDimension extends Spell {
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		// Only return on the server side or the client probably won't spawn particles
+		if (ticksInUse == 0) {
+			this.playSound(world, caster, ticksInUse, -1, modifiers);
+		}
 
 		if (ticksInUse < 60) {
 			//			System.out.println("ticksinuse: " + ticksInUse);
@@ -118,20 +121,20 @@ public class PocketDimension extends Spell {
 			ParticleBuilder.create(Type.SPARKLE)
 					.entity(caster)
 					.clr(50, 168, 72)
-					.pos(0,caster.height / 2,0)
+					.pos(0, caster.height / 2, 0)
 					.vel(dx, dy, dz)
 					.spawn(world);
 
 		}
 
-//		for (int i = 0; i < particleCount; i++) {
-//			double x = caster.posX + world.rand.nextDouble() * 2 - 1;
-//			double y = caster.getEntityBoundingBox().minY + caster.getEyeHeight() - 0.5 + world.rand.nextDouble();
-//			double z = caster.posZ + world.rand.nextDouble() * 2 - 1;
-//			ParticleBuilder.create(Type.SPARKLE).pos(x, y, z).vel(0, 0.1, 0).clr(1, 1, 1).spawn(world);
-//		}
-//
-//		ParticleBuilder.create(Type.BUFF).entity(caster).clr(1, 1, 1).spawn(world);
+		//		for (int i = 0; i < particleCount; i++) {
+		//			double x = caster.posX + world.rand.nextDouble() * 2 - 1;
+		//			double y = caster.getEntityBoundingBox().minY + caster.getEyeHeight() - 0.5 + world.rand.nextDouble();
+		//			double z = caster.posZ + world.rand.nextDouble() * 2 - 1;
+		//			ParticleBuilder.create(Type.SPARKLE).pos(x, y, z).vel(0, 0.1, 0).clr(1, 1, 1).spawn(world);
+		//		}
+		//
+		//		ParticleBuilder.create(Type.BUFF).entity(caster).clr(1, 1, 1).spawn(world);
 	}
 
 	@Override

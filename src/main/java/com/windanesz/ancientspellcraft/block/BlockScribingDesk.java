@@ -1,7 +1,10 @@
 package com.windanesz.ancientspellcraft.block;
 
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
-import net.minecraft.block.Block;
+import com.windanesz.ancientspellcraft.tileentity.TileScribingDesk;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -12,7 +15,9 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -22,7 +27,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockScribingDesk extends Block {
+import javax.annotation.Nullable;
+
+public class BlockScribingDesk extends BlockContainer {
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
 	public BlockScribingDesk() {
@@ -35,6 +42,11 @@ public class BlockScribingDesk extends Block {
 		lightOpacity = 0;
 	}
 
+	public EnumBlockRenderType getRenderType(IBlockState state)
+	{
+		return EnumBlockRenderType.MODEL;
+	}
+
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, new IProperty[] {FACING});
 	}
@@ -43,8 +55,16 @@ public class BlockScribingDesk extends Block {
 	protected static final AxisAlignedBB AABB_E_W = new AxisAlignedBB(0, 0, -0.5, 1, 1.55, 1.5);
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		System.out.println("hello bello clicked trello");
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState block, EntityPlayer player, EnumHand hand,
+			EnumFacing side, float hitX, float hitY, float hitZ) {
+
+		TileEntity tileEntity = world.getTileEntity(pos);
+
+		if (tileEntity == null || player.isSneaking()) {
+			return false;
+		}
+
+		player.openGui(AncientSpellcraft.instance, GuiHandlerAS.SCRIBING_DESK, world, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
 
@@ -67,6 +87,12 @@ public class BlockScribingDesk extends Block {
 		}
 
 		return this.getDefaultState().withProperty(FACING, enumfacing);
+	}
+
+	@Nullable
+	@Override
+	public TileEntity createNewTileEntity(World worldIn, int meta) {
+		return new TileScribingDesk();
 	}
 
 	/**

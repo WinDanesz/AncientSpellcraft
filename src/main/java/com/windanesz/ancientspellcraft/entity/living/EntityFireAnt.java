@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.entity.living;
 
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.entity.living.EntitySpiderMinion;
-import electroblob.wizardry.util.WizardryUtilities;
+import electroblob.wizardry.util.EntityUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -103,7 +103,7 @@ public class EntityFireAnt extends EntitySpiderMinion {
 	@Nullable
 	public EntityLivingBase getOrigCaster() { // Kept despite the above method because it returns an EntityLivingBase
 
-		Entity entity = WizardryUtilities.getEntityByUUID(((Entity) this).world, getOrigCasterUUID());
+		Entity entity = EntityUtils.getEntityByUUID(((Entity) this).world, getOrigCasterUUID());
 
 		if (entity != null && !(entity instanceof EntityLivingBase)) { // Should never happen
 			Wizardry.logger.warn("{} has a non-living owner!", this);

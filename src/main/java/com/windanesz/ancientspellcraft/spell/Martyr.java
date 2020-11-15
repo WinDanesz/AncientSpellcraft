@@ -6,17 +6,17 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.NBTExtras;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.ParticleBuilder.Type;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTUtil;
@@ -43,7 +43,7 @@ public class Martyr extends SpellRay {
 			Persistence.DIMENSION_CHANGE);
 
 	public Martyr() {
-		super(AncientSpellcraft.MODID, "martyr", false, EnumAction.BLOCK);
+		super(AncientSpellcraft.MODID, "martyr", SpellActions.POINT, false);
 		this.soundValues(1, 1.1f, 0.2f);
 		WizardData.registerStoredVariables(MARTYR_BOUND_CREATURES);
 	}
@@ -58,7 +58,7 @@ public class Martyr extends SpellRay {
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 
-		if (WizardryUtilities.isLiving(target) && caster instanceof EntityPlayer) {
+		if (EntityUtils.isLiving(target) && caster instanceof EntityPlayer) {
 			WizardData data = WizardData.get((EntityPlayer) caster);
 			if (data != null) {
 				// Return false if soulbinding failed (e.g. if the target is already soulbound)
@@ -91,8 +91,6 @@ public class Martyr extends SpellRay {
 		ParticleBuilder.create(Type.DARK_MAGIC).pos(x, y, z).clr(0.1f, 0, 0).spawn(world);
 		ParticleBuilder.create(Type.SPARKLE).pos(x, y, z).time(12 + world.rand.nextInt(8)).clr(1, 0.8f, 1).spawn(world);
 	}
-
-
 
 	public static Set<UUID> getMartyrBoundEntities(WizardData data) {
 
