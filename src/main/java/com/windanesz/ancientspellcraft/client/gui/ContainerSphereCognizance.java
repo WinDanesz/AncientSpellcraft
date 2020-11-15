@@ -200,55 +200,6 @@ public class ContainerSphereCognizance extends Container {
 			}
 		}
 	}
-		
-		
-		
-//		super.detectAndSendChanges();
-//
-//		for (int i = 0; i < this.listeners.size(); ++i) {
-//			IContainerListener icontainerlistener = this.listeners.get(i);
-//
-//			if (this.researchProgress != this.tileSphereCognizance.getField(0)) {
-//				//				System.out.println("field was updated");
-//				icontainerlistener.sendWindowProperty(this, 0, this.tileSphereCognizance.getField(0));
-//			}
-//			if (this.researchDuration != this.tileSphereCognizance.getField(1)) {
-//				//				System.out.println("field was updated");
-//				icontainerlistener.sendWindowProperty(this, 1, this.tileSphereCognizance.getField(1));
-//			}
-//
-//			if (this.currentHintTypeId != this.tileSphereCognizance.getField(2)) {
-//								System.out.println("field tileCrystalBallwas updated");
-//				icontainerlistener.sendWindowProperty(this, 2, this.tileSphereCognizance.getField(2));
-//			}
-//
-//			if (this.currentHintId != this.tileSphereCognizance.getField(3)) {
-//								System.out.println("field tileSphereCognizance was updated");
-//				icontainerlistener.sendWindowProperty(this, 3, this.tileSphereCognizance.getField(3));
-//			}
-//			//			if (this.researchButton != this.tileSphereCognizance.getField(2)) {
-//			//				System.out.println("field researchButton was updated");
-//			//				System.out.println("in container researchButton:" + researchButton);
-//			//				System.out.println("in tile researchButton:" + this.tileSphereCognizance.getField(2));
-//			//				this.tileSphereCognizance.setField(2, researchButton);
-//			//				icontainerlistener.sendWindowProperty(this, 2, this.tileSphereCognizance.getField(2));
-//			//			}
-//		}
-
-		//		this.furnaceBurnTime = this.tileSphereCognizance.getField(0);
-		////new
-//
-//		this.researchProgress = this.tileSphereCognizance.getField(0);
-//		this.researchDuration = this.tileSphereCognizance.getField(1);
-//		this.currentHintTypeId = this.tileSphereCognizance.getField(2);
-//		this.currentHintId = this.tileSphereCognizance.getField(3);
-//
-//		System.out.println("currentHintTypeId: " + currentHintTypeId);
-//		System.out.println("currentHintId: " + currentHintId);
-//		//		this.researchButton = this.tileSphereCognizance.getField(2);
-//
-//		////
-//	}
 
 	/**
 	 * Called when the container is closed.
@@ -267,22 +218,9 @@ public class ContainerSphereCognizance extends Container {
 	 * Called (via {@link PacketControlInput PacketControlInput}) when the apply button in
 	 * the sphere of cognizance GUI is pressed.
 	 */
-	// As of 2.1, for the sake of events and neatness of code, this was moved here from TileEntityArcaneWorkbench.
-	// As of 4.2, the spell binding/charging/upgrading code was delegated (via IWorkbenchItem) to the items themselves.
 	@SuppressWarnings("unused")
 	public void onApplyButtonPressed() {
-		//
-		//		Slot centre = this.getSlot(CENTRE_SLOT);
-		//
-		//			Slot[] spellBooks = this.inventorySlots.subList(0, 8).toArray(new Slot[8]);
-		//		System.out.println("this should happen on the server ....");
 		tileSphereCognizance.attemptBeginResearch();
-		//			if(((IWorkbenchItem)centre.getStack().getItem())
-		//					.onApplyButtonPressed(player, centre, this.getSlot(CRYSTAL_SLOT), this.getSlot(UPGRADE_SLOT), spellBooks)){
-
-		//				if(player instanceof EntityPlayerMP){ // TODO advancement maybe
-		//					WizardryAdvancementTriggers.arcane_workbench.trigger((EntityPlayerMP)player, centre.getStack());
-		//				}
 	}
 }
 

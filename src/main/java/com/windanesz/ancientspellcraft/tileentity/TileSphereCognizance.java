@@ -72,8 +72,8 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 	public float flipT;
 	public float flipA;
 	public float bookSpread;
-	public float skullRotation;
-	public float skullRotationPrev;
+	public float sphereRotation;
+	public float sphereRotationPrev;
 	public float tRot;
 
 	//	private static final Random rand = new Random();
@@ -194,7 +194,6 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 
 	private boolean isCurrentBookKnown() {
 		if (getCurrentSpell() != null) {
-			//			System.out.println("current spell is known: " + playerWizardData.hasSpellBeenDiscovered(getCurrentSpell()));
 			return playerWizardData.hasSpellBeenDiscovered(getCurrentSpell());
 		}
 		return false;
@@ -223,25 +222,19 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 
 	@SuppressWarnings("Duplicates")
 	public void update() {
-		//		System.out.println("researchProgress: " + this.researchProgress);
-		this.skullRotationPrev = this.skullRotation;
+		this.sphereRotationPrev = this.sphereRotation;
 		EntityPlayer entityplayer = this.world.getClosestPlayer((double) ((float) this.pos.getX() + 0.5F), (double) ((float) this.pos.getY() + 0.5F), (double) ((float) this.pos.getZ() + 0.5F), 2.5D, false);
-
-		//		if (entityplayer != null && entityplayer.openContainer != null && entityplayer.openContainer instanceof ContainerCrystalBallCognizance &&
-		//				((ContainerCrystalBallCognizance) entityplayer.openContainer).getTileCrystalBall().getPos() == this.getPos()) {
-		//			//			System.out.println("nearest player has the tile gui open ...");
-		//		}
 
 		this.tRot += 0.02F;
 		this.bookSpread -= 0.1F;
 		//		}
 
-		while (this.skullRotation >= (float) Math.PI) {
-			this.skullRotation -= ((float) Math.PI * 2F);
+		while (this.sphereRotation >= (float) Math.PI) {
+			this.sphereRotation -= ((float) Math.PI * 2F);
 		}
 
-		while (this.skullRotation < -(float) Math.PI) {
-			this.skullRotation += ((float) Math.PI * 2F);
+		while (this.sphereRotation < -(float) Math.PI) {
+			this.sphereRotation += ((float) Math.PI * 2F);
 		}
 
 		while (this.tRot >= (float) Math.PI) {
@@ -254,7 +247,7 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 
 		float f2;
 
-		for (f2 = this.tRot - this.skullRotation; f2 >= (float) Math.PI; f2 -= ((float) Math.PI * 2F)) {
+		for (f2 = this.tRot - this.sphereRotation; f2 >= (float) Math.PI; f2 -= ((float) Math.PI * 2F)) {
 			;
 		}
 
@@ -262,23 +255,9 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 			f2 += ((float) Math.PI * 2F);
 		}
 
-		this.skullRotation += f2 * 0.4F;
-		//		this.bookSpread = MathHelper.clamp(this.bookSpread, 0.0F, 1.0F);
-		//		++this.tickCount;
-		//		this.pageFlipPrev = this.pageFlip;
-		//		float f = (this.flipT - this.pageFlip) * 0.4F;
-		//		float f3 = 0.2F;
-		//		f = MathHelper.clamp(f, -0.2F, 0.2F);
-		//		this.flipA += (f - this.flipA) * 0.9F;
-		//		this.pageFlip += this.flipA;
-
-		//		if (researchDuration == 0 && hasBookOrScroll()) {
-		//			System.out.println("setting res duration");
-		//			setResearchDuration();
-		//		}
+		this.sphereRotation += f2 * 0.4F;
 
 		if (getInputStack().isEmpty()) {
-			//			System.out.println("stack empty");
 			researchProgress = 0;
 			setResearchDuration(0);
 		}
@@ -300,9 +279,6 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 				} else {
 					researchProgress = 0;
 				}
-//				if (shouldDisplayHint()) {
-//
-//				}
 			}
 		}
 
@@ -312,7 +288,6 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 	}
 
 	public void setResearchDuration() {
-		//		System.out.println("setResearchDuration() called..");
 		if (getInputStack().getItem() instanceof ItemRelic) {
 			researchDuration = 300;
 		} else {
@@ -327,37 +302,27 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 	}
 
 	public boolean shouldReseach() {
-		//		System.out.println("ch");
 		return (researchProgress != 0 && researchDuration > researchProgress);
 	}
 
 	public void progressResearch() {
-		//		System.out.println("progressResearch()");
 		researchProgress++;
 	}
 
 	public void onResearchComplete() {
 		double special = AncientSpellcraft.rand.nextDouble();
 		boolean spellItem = getInputStack().getItem() instanceof ItemSpellBook || getInputStack().getItem() instanceof ItemScroll;
-//		System.out.println("spellitem:" + spellItem);
 
 		// relic item
 		if (!spellItem) {
 
-			System.out.println("relic item");
-			//			this.currentHintTypeId = ContainerSphereCognizance.HINT_TYPES.indexOf("ancient_knowledge");
 			this.currentHintTypeId = 24;
 			int count = ContainerSphereCognizance.HINTS_COUNT.get("ancient_knowledge");
 			this.currentHintId = ASUtils.randIntBetween(1, count);
 
 			if (currentPlayer != null && !world.isRemote) {
-//				Knowledge.addKnowledgeLevel(currentPlayer, 1, true);
-//				Knowledge.addKnowledge(currentPlayer, 1);
-//				System.out.println("current lvl:" + Knowledge.getKnowledge(currentPlayer));
 				ItemRelic.setResearched(getInputStack());
 				ItemRelic.setRelicContent(getInputStack(), currentPlayer);
-				System.out.println(ItemRelic.getSpellComponentItems(getInputStack()));
-				//				setInventorySlotContents(1, ItemStack.EMPTY);
 			}
 			markDirty();
 
@@ -396,14 +361,10 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 			this.currentHintId = id;
 		} else {
 
-			//		System.out.println("onResearchComplete()");
 			Spell spell = getCurrentSpell();
 			String name = spell.getUnlocalisedName();
 			String type = spell.getType().getUnlocalisedName();
 			String element = spell.getElement().getName();
-			System.out.println("name: " + spell.getUnlocalisedName());
-			System.out.println("type: " + spell.getType().getUnlocalisedName());
-			System.out.println("element: " + spell.getElement().getName());
 
 			boolean t = ContainerSphereCognizance.HINT_TYPES.contains(type);
 			boolean n = ContainerSphereCognizance.HINT_TYPES.contains(name);
@@ -413,17 +374,14 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 
 			if (n) {
 				int i = ContainerSphereCognizance.HINTS_COUNT.get(name);
-				//			System.out.println("count for name: " + i);
 				list.add(name);
 			}
 			if (t) {
 				int i = ContainerSphereCognizance.HINTS_COUNT.get(type);
-				//			System.out.println("count for type: " + i);
 				list.add(type);
 			}
 			if (e) {
 				int i = ContainerSphereCognizance.HINTS_COUNT.get(element);
-				//			System.out.println("count for element: " + i);
 				list.add(element);
 			}
 
@@ -431,7 +389,6 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 			int count = ContainerSphereCognizance.HINTS_COUNT.get(selected);
 			int id = ASUtils.randIntBetween(1, count);
 			String string = "gui.ancientspellcraft:sphere_cognizance.hint." + selected + "." + id;
-			//		System.out.println("this will be the final stuff: " + string);
 			this.currentHintTypeId = ContainerSphereCognizance.HINT_TYPES.indexOf(selected);
 			this.currentHintId = id;
 
@@ -493,14 +450,10 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 			this.currentHintTypeId = 0;
 			this.currentHintId = 1;
 
-			System.out.println("called");
 			researchProgress = 1;
 			if (getInputStack().getItem() instanceof ItemSpellBook || getInputStack().getItem() instanceof ItemScroll) {
 				int researchcost = getResearchCost(getCurrentSpell());
-				System.out.println("cost: " + researchcost);
-				System.out.println("shrink ... ");
 				getCrystalStack().shrink(researchcost);
-				System.out.println("shrinked ... ");
 			} else {
 				// relic item
 				getCrystalStack().shrink(2);
@@ -574,25 +527,15 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 		}
 		if (slot == ContainerSphereCognizance.CRYSTAL_SLOT) {
 			//NOOP
-			//			System.out.println("slot 0 called");
-			//			researchDuration = 0;
 		}
 		if (slot == ContainerSphereCognizance.BOOK_SLOT) {
-			//			System.out.println("findme set res dur");
 			researchProgress = 0;
 			setResearchDuration();
 			this.currentHintId = 0;
 			this.currentHintTypeId = 0;
-			//			System.out.println("slot 1 called");
-			//			researchProgress = 0;
 		}
 
-		if (slot == 2) {
-			//			System.out.println("slot 2 called");
-			//			no slot 2 TODO remove
-		}
 		markDirty();
-		//		}
 	}
 
 	@Override
@@ -608,7 +551,6 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 	 */
 	@Override
 	public void openInventory(EntityPlayer player) {
-		System.out.println("gui opened, setting player and use to true");
 		this.setInUse(true);
 		this.setCurrentPlayer(player);
 		setPlayerWizardData(player);
@@ -620,7 +562,6 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 
 	@Override
 	public void closeInventory(EntityPlayer player) {
-		System.out.println("inventory closed, setting inuse and player to null/false");
 		this.setInUse(false);
 		this.setCurrentPlayer(null);
 	}
@@ -653,18 +594,14 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 	}
 
 	public int getField(int id) {
-		//		System.out.println("getfield called");
 		switch (id) {
 			case 0:
 				return this.researchProgress;
 			case 1:
-				//				System.out.println("case 1: researchduration: " + researchDuration);
 				return this.researchDuration;
 			case 2:
-				//				System.out.println("get currentHintTypeId");
 				return this.currentHintTypeId;
 			case 3:
-				//				System.out.println("get currentHintId");
 				return this.currentHintId;
 			default:
 				return 0;

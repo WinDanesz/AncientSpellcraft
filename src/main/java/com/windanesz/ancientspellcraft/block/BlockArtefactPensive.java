@@ -49,12 +49,9 @@ public class BlockArtefactPensive extends BlockContainer {
 
 		// retrieve XP
 		if (player.isSneaking()) {
-			System.out.println("you re sneaking");
-			System.out.println("adding you xp..");
 			player.addExperience(tilePensive.getStoredXP());
 			tilePensive.setStoredXP(0);
 		} else {
-			System.out.println("depositing XP ... ");
 			int currentPlayerXP = player.experienceTotal;
 			int currentPlayerXPLevel = player.experienceLevel;
 
@@ -67,9 +64,6 @@ public class BlockArtefactPensive extends BlockContainer {
 					tilePensive.setStoredXP(tilePensive.getStoredXP() + maxAmountToAdd);
 					removePlayerXP(player, maxAmountToAdd);
 				}
-				System.out.println("player xp before: " + currentPlayerXP);
-				System.out.println("before in tile: " + tilePensive.getStoredXP());
-				System.out.println("after in tile: " + tilePensive.getStoredXP());
 			}
 		}
 
@@ -101,11 +95,6 @@ public class BlockArtefactPensive extends BlockContainer {
 
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-//		System.out.println("ispresent: " + ASUtils.getTile(world, pos, TileArtefactPensive.class).isPresent());
-//		boolean prop = ((TileArtefactPensive) world.getTileEntity(pos)).isEmpty();
-//		System.out.println("is empty tile check: " + prop);
-//
-//		ASUtils.getTile(world, pos, TileArtefactPensive.class).map(TileArtefactPensive::isEmpty).orElse(false);
 		return super.getActualState(state, world, pos).withProperty(EMPTY, ASUtils.getTile(world, pos, TileArtefactPensive.class)
 				.map(TileArtefactPensive::isEmpty).orElse(true));
 	}

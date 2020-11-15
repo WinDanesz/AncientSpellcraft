@@ -25,9 +25,7 @@ public class AncientSpellcraftDimensions {
 	 * Register world generators.
 	 * Called by {@link AncientSpellcraft#init}
 	 */
-	public static void registerWorldGenerators() {
-		System.out.println("Registering world generators");
-	}
+	public static void registerWorldGenerators() {}
 
 	@Nullable
 	private static Integer findNextFreeDimensionID() {
@@ -37,7 +35,6 @@ public class AncientSpellcraftDimensions {
 
 		for (int i = 2; i < Integer.MAX_VALUE; i++) {
 			if (!DimensionManager.isDimensionRegistered(i)) {
-				System.out.println("Found free dimension ID = " + i);
 				return i;
 			}
 		}

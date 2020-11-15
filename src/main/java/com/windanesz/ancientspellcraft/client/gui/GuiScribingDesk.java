@@ -94,9 +94,6 @@ public class GuiScribingDesk extends GuiContainer {
 		Slot crystalSlot = this.inventorySlots.getSlot(ContainerScribingDesk.CRYSTAL_SLOT);
 		Slot bookSlot = this.inventorySlots.getSlot(ContainerScribingDesk.BOOK_SLOT);
 
-		//		System.out.println("crystalSlot info: " + (crystalSlot.getHasStack() ? crystalSlot.getStack().getItem() : "no item"));
-		//		System.out.println("bookSlot info: " + (bookSlot.getHasStack() ? bookSlot.getStack().getItem() : "no item"));
-
 		if (this.tileSphere.getField(2) == 1) {
 			this.researchButton.enabled = true;
 		} else {
@@ -302,49 +299,12 @@ public class GuiScribingDesk extends GuiContainer {
 	@SuppressWarnings("Duplicates")
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 
-//		try {
-//			this.currentHintTypeId = this.tileSphere.getField(2);
-//			this.currentHintId = this.tileSphere.getField(3);
-//
-//			// failed attemp
-//			if (currentHintTypeId == 1) {
-//				String unlocalizedText = "gui.ancientspellcraft:sphere_cognizance.hint.failed." + currentHintId;
-//				drawMultilineHintText(unlocalizedText);
-//				// discovered spell
-//			} else if (currentHintTypeId == 2 && this.tileSphere.getCurrentSpell() != null) {
-//				String unlocalizedText = "gui.ancientspellcraft:sphere_cognizance.hint.discovered." + currentHintId;
-//				drawMultilineHintText(unlocalizedText, this.tileSphere.getCurrentSpell());
-//
-//			} else if (currentHintTypeId != 0 && currentHintId != 0) { // every other case
-//				//				System.out.println("currentHintTypeId: " + currentHintTypeId);
-//				//				System.out.println("currentHintId: " + currentHintId);
-//				String hintTypeName = ContainerScribingDesk.HINT_TYPES.get(currentHintTypeId);
-//				String unlocalizedText = "gui.ancientspellcraft:sphere_cognizance.hint." + hintTypeName + "." + currentHintId;
-//				drawMultilineHintText(unlocalizedText);
-//			}
-//		}
-//		catch (Exception e) {
-//			e.printStackTrace();
-//		}
-
 		for (GuiButton guibutton : this.buttonList) {
 			if (guibutton.isMouseOver()) {
 				guibutton.drawButtonForegroundLayer(mouseX - this.guiLeft, mouseY - this.guiTop);
 				break;
 			}
 		}
-		//		System.out.println("currentHintTypeId: " + currentHintTypeId);
-		//		System.out.println("currentHintId: " + currentHintId);
-		//		this.currentHintTypeId = this.tileSphere.getField(2); // researchProgress
-		//		this.currentHintId = this.tileSphere.getField(3); // researchDuration
-
-		//		this.currentHintTypeId = this.container
-		////		this.currentHintId  =
-
-		//				this.fontRenderer.drawString(I18n.format("gui.ancientspellcraft:sphere_cognizance.hint.0"), 20, 20, 4210752);      //#404040
-		//				String s = tileSphere.getDisplayName().getUnformattedText();
-		//				this.fontRenderer.drawString(s, 88 - this.fontRenderer.getStringWidth(s) / 2, 6, 4210752);            //#404040
-		//		this.fontRenderer.drawString(this.playerInv.getDisplayName().getUnformattedText(), 8, 72, 4210752);      //#404040
 	}
 
 	@SubscribeEvent
@@ -360,12 +320,6 @@ public class GuiScribingDesk extends GuiContainer {
 		int researchProgress = this.tileSphere.getField(0); // researchProgress
 		int researchDuration = this.tileSphere.getField(1); // researchDuration
 
-		//		int researchDuration2 = this.tileSphere.getField(2); // researchDuration
-
-		//		researchDuration = 100;
-		//		System.out.println("researchProgress: " + researchProgress );
-		//		System.out.println("researchDuration : " + researchDuration  );
-		//		System.out.println("researchDuration2 : " + researchDuration2);
 		return researchDuration != 0 && researchProgress != 0 ? researchProgress * 76 / researchDuration : 0;
 	}
 

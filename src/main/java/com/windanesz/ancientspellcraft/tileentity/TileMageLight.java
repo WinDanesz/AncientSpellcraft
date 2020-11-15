@@ -66,44 +66,6 @@ public class TileMageLight extends TileEntity implements ITickable {
 		}
 	}
 
-	//	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
-	//	public static void onPlayerTickEvent(TickEvent.PlayerTickEvent event) {
-	//		//		System.out.println("method onPlayerTickEvent called");
-	//		if (event.phase == TickEvent.Phase.START && !event.player.world.isRemote) {
-	//			//			System.out.println("step 1");
-	//
-	//			if (event.player.isPotionActive(AncientSpellcraftPotions.magelight)) {
-	//				//				System.out.println("step 2");
-	//
-	//				int blockX = MathHelper.floor(event.player.posX);
-	//				int blockY = MathHelper.floor(event.player.posY - 0.2D - event.player.getYOffset());
-	//				//				int blockY = MathHelper.floor(event.player.posY + 1.2D - event.player.getYOffset());
-	//				//				event.player.getYOffset());
-	//				int blockZ = MathHelper.floor(event.player.posZ);
-	//				// place light at head level
-	//				BlockPos blockLocation = new BlockPos(blockX, blockY, blockZ).up();
-	//				if (event.player.world.getBlockState(blockLocation).getBlock() == Blocks.AIR) {
-	//					//					System.out.println("step 3A");
-	//					event.player.world.setBlockState(
-	//							blockLocation,
-	//							AncientSpellcraftBlocks.MAGELIGHT.getDefaultState());
-	//				} else if (event.player.world.getBlockState(
-	//						blockLocation.add(
-	//								event.player.getLookVec().x,
-	//								event.player.getLookVec().y,
-	//								event.player.getLookVec().z)).getBlock() == Blocks.AIR) {
-	//					event.player.world.setBlockState(
-	//							blockLocation.add(
-	//									event.player.getLookVec().x,
-	//									event.player.getLookVec().y,
-	//									event.player.getLookVec().z),
-	//							AncientSpellcraftBlocks.MAGELIGHT.getDefaultState());
-	//					//					System.out.println("step 3B");
-	//				}
-	//			}
-	//		}
-	//	}
-
 	@Override
 	public void update() {
 		// check if player has moved away from the tile entity

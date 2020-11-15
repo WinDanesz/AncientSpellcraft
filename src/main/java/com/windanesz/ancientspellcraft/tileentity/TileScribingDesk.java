@@ -2,23 +2,18 @@ package com.windanesz.ancientspellcraft.tileentity;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.gui.ContainerScribingDesk;
-import com.windanesz.ancientspellcraft.data.Knowledge;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.data.WizardData;
-import electroblob.wizardry.event.DiscoverSpellEvent;
 import electroblob.wizardry.item.ItemCrystal;
 import electroblob.wizardry.item.ItemScroll;
 import electroblob.wizardry.item.ItemSpellBook;
-import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.NBTExtras;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -27,14 +22,9 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("Duplicates")
@@ -43,7 +33,6 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 
 	private int researchDuration;
 	private int researchProgress;
-	//	private int researchCompleted = 0;
 	public int currentHintId = 0;
 	public int ready = 0;
 
@@ -67,18 +56,7 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 
 	private NonNullList<ItemStack> furnaceItemStacks = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
 
-	public int tickCount;
-	public float pageFlip;
-	public float pageFlipPrev;
-	public float flipT;
-	public float flipA;
-	public float bookSpread;
-	public float skullRotation;
-	public float skullRotationPrev;
-	public float tRot;
-
-	//	private static final Random rand = new Random();
-	//	private String customName;
+	public float rotation;
 
 	public TileScribingDesk() {
 		inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
@@ -158,38 +136,6 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 		return this.writeToNBT(new NBTTagCompound());
 	}
 
-	//	@SideOnly(Side.CLIENT)
-	//	@Override
-	//	public AxisAlignedBB getRenderBoundingBox() {
-	//		AxisAlignedBB bb = INFINITE_EXTENT_AABB;
-	//		Block type = getBlockType();
-	//		if (type == AncientSpellcraftBlocks.SPHERE_COGNIZANCE) {
-	//			bb = new AxisAlignedBB(pos, pos.add(1, 1, 1));
-	//		} else if (type != null) {
-	//			AxisAlignedBB cbb = this.getWorld().getBlockState(pos).getBoundingBox(world, pos);
-	//			if (cbb != null) {
-	//				bb = cbb;
-	//			}
-	//		}
-	//		return bb;
-	//	}
-
-	private boolean canBeginResearch() {
-		return (isResearchFinished() || researchProgress == 0) && hasSomethingToResearch() && hasCrystalForFuel();
-	}
-
-	private boolean isResearchFinished() {
-		return (researchProgress != 0 && researchProgress == researchDuration);
-	}
-
-	private boolean isCurrentBookKnown() {
-		if (getCurrentSpell() != null) {
-			//			System.out.println("current spell is known: " + playerWizardData.hasSpellBeenDiscovered(getCurrentSpell()));
-			return playerWizardData.hasSpellBeenDiscovered(getCurrentSpell());
-		}
-		return false;
-	}
-
 	public Spell getCurrentSpell() {
 		if (getInputStack().getItemDamage() != OreDictionary.WILDCARD_VALUE) {
 			return Spell.byMetadata(getInputStack().getItemDamage());
@@ -205,94 +151,11 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 		return inventory.get(1);
 	}
 
-	// this function indicates whether container texture should be drawn
-	@SideOnly(Side.CLIENT)
-	public static boolean func_174903_a(IInventory parIInventory) {
-		return true;
-	}
-
 	@SuppressWarnings("Duplicates")
 	public void update() {
-		//		System.out.println("researchProgress: " + this.researchProgress);
-		this.skullRotationPrev = this.skullRotation;
-		EntityPlayer entityplayer = this.world.getClosestPlayer((double) ((float) this.pos.getX() + 0.5F), (double) ((float) this.pos.getY() + 0.5F), (double) ((float) this.pos.getZ() + 0.5F), 2.5D, false);
-
-		//		if (entityplayer != null && entityplayer.openContainer != null && entityplayer.openContainer instanceof ContainerCrystalBallCognizance &&
-		//				((ContainerCrystalBallCognizance) entityplayer.openContainer).getTileCrystalBall().getPos() == this.getPos()) {
-		//			//			System.out.println("nearest player has the tile gui open ...");
-		//		}
-
-		this.tRot += 0.02F;
-		this.bookSpread -= 0.1F;
-		//		}
-
-		while (this.skullRotation >= (float) Math.PI) {
-			this.skullRotation -= ((float) Math.PI * 2F);
-		}
-
-		while (this.skullRotation < -(float) Math.PI) {
-			this.skullRotation += ((float) Math.PI * 2F);
-		}
-
-		while (this.tRot >= (float) Math.PI) {
-			this.tRot -= ((float) Math.PI * 2F);
-		}
-
-		while (this.tRot < -(float) Math.PI) {
-			this.tRot += ((float) Math.PI * 2F);
-		}
-
-		float f2;
-
-		for (f2 = this.tRot - this.skullRotation; f2 >= (float) Math.PI; f2 -= ((float) Math.PI * 2F)) {
-			;
-		}
-
-		while (f2 < -(float) Math.PI) {
-			f2 += ((float) Math.PI * 2F);
-		}
-
-		this.skullRotation += f2 * 0.4F;
-		//		this.bookSpread = MathHelper.clamp(this.bookSpread, 0.0F, 1.0F);
-		//		++this.tickCount;
-		//		this.pageFlipPrev = this.pageFlip;
-		//		float f = (this.flipT - this.pageFlip) * 0.4F;
-		//		float f3 = 0.2F;
-		//		f = MathHelper.clamp(f, -0.2F, 0.2F);
-		//		this.flipA += (f - this.flipA) * 0.9F;
-		//		this.pageFlip += this.flipA;
-
-		//		if (researchDuration == 0 && hasBookOrScroll()) {
-		//			System.out.println("setting res duration");
-		//			setResearchDuration();
-		//		}
-
-		if (getInputStack().isEmpty()) {
-			//			System.out.println("stack empty");
-			researchProgress = 0;
-			setResearchDuration(0);
-		}
-
 		if (!world.isRemote) {
 
 			if (inUse && currentPlayer != null) {
-
-				//				if (hasSomethingToResearch()) {
-				//
-				//					if (shouldReseach()) {
-				//						progressResearch();
-				//						if (researchProgress >= researchDuration) {
-				//							onResearchComplete();
-				//						}
-				//						changedResearchState = true;
-				//					}
-				//
-				//				} else {
-				//					researchProgress = 0;
-				//				}
-				//				if (shouldDisplayHint()) {
-				//
-				//				}
 
 				boolean craftBook = false;
 				if (hasCrystalForFuel() && (ItemStack.areItemsEqualIgnoreDurability((inventory.get(ContainerScribingDesk.INK_SLOT)), new ItemStack(Items.DYE, 1, 0))) &&
@@ -320,13 +183,10 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 								if (craftBook && !missing) {
 									isReady = true;
 									ready = 1;
-									//									System.out.println("craftbook: " + craftBook);
 								}
 
 							}
-
 						}
-
 					}
 				}
 				if (craftBook) {
@@ -352,135 +212,6 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 		readFromNBT(pkt.getNbtCompound());
 	}
 
-	public boolean isReady() {
-		return isReady;
-	}
-
-	public void setResearchDuration() {
-		//		System.out.println("setResearchDuration() called..");
-		if (getInputStack().getItem() instanceof ItemRelic) {
-			researchDuration = 60;
-		} else {
-			researchDuration = getResearchDuration(getCurrentSpell());
-		}
-		this.markDirty();
-	}
-
-	public void setResearchDuration(int duration) {
-		researchDuration = duration;
-		this.markDirty();
-	}
-
-	public boolean shouldReseach() {
-		//		System.out.println("ch");
-		return (researchProgress != 0 && researchDuration > researchProgress);
-	}
-
-	public void progressResearch() {
-		//		System.out.println("progressResearch()");
-		researchProgress++;
-	}
-
-	public void onResearchComplete() {
-		double special = AncientSpellcraft.rand.nextDouble();
-		boolean spellItem = getInputStack().getItem() instanceof ItemSpellBook || getInputStack().getItem() instanceof ItemScroll;
-		//		System.out.println("spellitem:" + spellItem);
-
-		// relic item
-		if (!spellItem) {
-
-			System.out.println("relic item");
-			//			this.currentHintTypeId = ContainerScribingDesk.HINT_TYPES.indexOf("ancient_knowledge");
-			this.ready = 24;
-			int count = ContainerScribingDesk.HINTS_COUNT.get("ancient_knowledge");
-			this.currentHintId = ASUtils.randIntBetween(1, count);
-
-			if (currentPlayer != null && !world.isRemote) {
-				//				Knowledge.addKnowledgeLevel(currentPlayer, 1, true);
-				Knowledge.addKnowledge(currentPlayer, 1);
-				System.out.println("current lvl:" + Knowledge.getKnowledge(currentPlayer));
-				ItemRelic.setResearched(getInputStack());
-				//				setInventorySlotContents(1, ItemStack.EMPTY);
-			}
-			markDirty();
-
-			return;
-		}
-
-		if (special < 0.2) {
-			// discover spell
-
-			this.ready = 2; // discovered
-			int count = ContainerScribingDesk.HINTS_COUNT.get("discovered");
-			int id = ASUtils.randIntBetween(1, count);
-			this.currentHintId = id;
-
-			if (!MinecraftForge.EVENT_BUS.post(new DiscoverSpellEvent(getCurrentPlayer(), getCurrentSpell(),
-					DiscoverSpellEvent.Source.OTHER))) {
-				// Identification scrolls give the chat readout in creative mode, otherwise it looks like
-				// nothing happens!
-				if (getPlayerWizardData().discoverSpell(getCurrentSpell()) && !world.isRemote) {
-					playerWizardData.sync();
-				}
-
-				getCurrentPlayer().playSound(WizardrySounds.MISC_DISCOVER_SPELL, 1.25f, 1);
-				if (!world.isRemote)
-					getCurrentPlayer().sendMessage(new TextComponentTranslation("spell.discover",
-							getCurrentSpell().getNameForTranslationFormatted()));
-				setPlayerWizardData(currentPlayer);
-			}
-
-		} else if (special < 0.4) {
-			// failed attempt
-			this.ready = 1; // failed
-			int count = ContainerScribingDesk.HINTS_COUNT.get("failed");
-			int id = ASUtils.randIntBetween(1, count);
-
-			this.currentHintId = id;
-		} else {
-
-			//		System.out.println("onResearchComplete()");
-			Spell spell = getCurrentSpell();
-			String name = spell.getUnlocalisedName();
-			String type = spell.getType().getUnlocalisedName();
-			String element = spell.getElement().getName();
-			System.out.println("name: " + spell.getUnlocalisedName());
-			System.out.println("type: " + spell.getType().getUnlocalisedName());
-			System.out.println("element: " + spell.getElement().getName());
-
-			boolean t = ContainerScribingDesk.HINT_TYPES.contains(type);
-			boolean n = ContainerScribingDesk.HINT_TYPES.contains(name);
-			boolean e = ContainerScribingDesk.HINT_TYPES.contains(element);
-
-			List<String> list = new ArrayList<String>() {};
-
-			if (n) {
-				int i = ContainerScribingDesk.HINTS_COUNT.get(name);
-				//			System.out.println("count for name: " + i);
-				list.add(name);
-			}
-			if (t) {
-				int i = ContainerScribingDesk.HINTS_COUNT.get(type);
-				//			System.out.println("count for type: " + i);
-				list.add(type);
-			}
-			if (e) {
-				int i = ContainerScribingDesk.HINTS_COUNT.get(element);
-				//			System.out.println("count for element: " + i);
-				list.add(element);
-			}
-
-			String selected = ASUtils.getRandomListItem(list);
-			int count = ContainerScribingDesk.HINTS_COUNT.get(selected);
-			int id = ASUtils.randIntBetween(1, count);
-			String string = "gui.ancientspellcraft:sphere_cognizance.hint." + selected + "." + id;
-			//		System.out.println("this will be the final stuff: " + string);
-			this.ready = ContainerScribingDesk.HINT_TYPES.indexOf(selected);
-			this.currentHintId = id;
-
-		}
-	}
-
 	/**
 	 * @return true if there is at least one crystal in the crystal inventory slot
 	 */
@@ -490,12 +221,6 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 			return true;
 		}
 		return false;
-	}
-
-	public boolean hasSomethingToResearch() {
-		Item item = getInputStack().getItem();
-		return (!getInputStack().isEmpty() && ((item instanceof ItemRelic && !ItemRelic.isResearched(getInputStack())) || (item instanceof ItemSpellBook ||
-				item instanceof ItemScroll && !isCurrentBookKnown())));
 	}
 
 	//////////////////////////
@@ -512,21 +237,6 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 				return 2;
 			default:
 				return 1;
-		}
-	}
-
-	public static int getResearchDuration(Spell spell) {
-		switch (spell.getTier()) {
-			case NOVICE:
-				return 10;
-			case APPRENTICE:
-				return 15;
-			case ADVANCED:
-				return 20;
-			case MASTER:
-				return 25;
-			default:
-				return 10;
 		}
 	}
 
@@ -557,10 +267,6 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 			}
 		}
 
-	}
-
-	public boolean shouldDisplayHint() {
-		return researchDuration != 0 && researchDuration == researchProgress;
 	}
 
 	///////////////////////// IInventory field implementations /////////////////////////
@@ -625,25 +331,14 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 		}
 		if (slot == ContainerScribingDesk.CRYSTAL_SLOT) {
 			//NOOP
-			//			System.out.println("slot 0 called");
-			//			researchDuration = 0;
 		}
 		if (slot == ContainerScribingDesk.BOOK_SLOT) {
-			//			System.out.println("findme set res dur");
 			researchProgress = 0;
-			setResearchDuration();
 			this.currentHintId = 0;
 			this.ready = 0;
-			//			System.out.println("slot 1 called");
-			//			researchProgress = 0;
 		}
 
-		if (slot == 2) {
-			//			System.out.println("slot 2 called");
-			//			no slot 2 TODO remove
-		}
 		markDirty();
-		//		}
 	}
 
 	@Override
@@ -659,7 +354,6 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 	 */
 	@Override
 	public void openInventory(EntityPlayer player) {
-		System.out.println("gui opened, setting player and use to true");
 		this.setInUse(true);
 		this.setCurrentPlayer(player);
 		setPlayerWizardData(player);
@@ -671,7 +365,6 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 
 	@Override
 	public void closeInventory(EntityPlayer player) {
-		System.out.println("inventory closed, setting inuse and player to null/false");
 		this.setInUse(false);
 		this.setCurrentPlayer(null);
 	}
@@ -704,15 +397,12 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 	}
 
 	public int getField(int id) {
-		//		System.out.println("getfield called");
 		switch (id) {
 			case 0:
 				return this.researchProgress;
 			case 1:
-				//				System.out.println("case 1: researchduration: " + researchDuration);
 				return this.researchDuration;
 			case 2:
-				//				System.out.println("get currentHintTypeId");
 				return this.ready;
 			default:
 				return 0;

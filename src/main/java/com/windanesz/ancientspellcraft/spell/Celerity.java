@@ -36,7 +36,6 @@ public class Celerity extends SpellBuff {
 			if (AllyDesignationSystem.isAllied(caster, target) || target == caster ||
 					(target instanceof IEntityOwnable && ((IEntityOwnable) target).getOwnerId() == caster.getUniqueID())) {
 
-				System.out.println("current entity:" + target.getDisplayName());
 				this.applyEffects(target, modifiers);
 				if (world.isRemote)
 					this.spawnParticles(world, caster, modifiers);

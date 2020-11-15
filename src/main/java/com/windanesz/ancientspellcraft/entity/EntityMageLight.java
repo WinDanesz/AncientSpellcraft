@@ -77,7 +77,6 @@ public class EntityMageLight extends Entity {
 			if (world.getPlayerEntityByUUID(caster) != null) {
 				BlockPos casterPos = world.getPlayerEntityByUUID(caster).getPosition();
 			} else {
-				System.out.println("setting dead");
 				this.setDead();
 			}
 

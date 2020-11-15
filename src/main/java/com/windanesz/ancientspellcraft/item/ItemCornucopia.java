@@ -17,7 +17,6 @@ public class ItemCornucopia extends ItemDailyArtefact {
 		if (!player.world.isRemote) {
 			ItemStack stack;
 			float i = AncientSpellcraft.rand.nextFloat();
-			System.out.println("i : " + i);
 			if (i <= 0.2) {
 				stack = new ItemStack(Items.BREAD, ASUtils.randIntBetween(1, 2));
 			} else if (i <= 0.4) {

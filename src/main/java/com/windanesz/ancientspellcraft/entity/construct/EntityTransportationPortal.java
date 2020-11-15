@@ -74,7 +74,6 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 
 	private void setParticleColors() {
 		// default (89, 238, 155)
-//		System.out.println("targetdim:" + getTargetDim());
 		switch (getTargetDim()) {
 			case -1: // Nether
 				r = 162;
@@ -104,15 +103,12 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 				g = 238;
 				b = 155;
 		}
-//		System.out.println("particles: r g b: " + r + " " + g + " " + b);
 	}
 
 	@Override
 	public void onUpdate() {
 		if (this.ticksExisted == 3) {
 			setParticleColors();
-//			System.out.println("getTargetDim():" + getTargetDim());
-//			System.out.println("getTargetPos():" + getTargetPos());
 		}
 
 		if ((this.ticksExisted == 20 || this.ticksExisted % 160 == 0)) {
@@ -167,8 +163,6 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 						this.playSound(AncientSpellcraftSounds.TRANSPORTATION_PORTAL_TELEPORTS, 0.6f, 1.0f);
 				}
 				if (entityTicker == 90) {
-//					System.out.println("getTargetDim():" + getTargetDim());
-//					System.out.println("getTargetPos():" + getTargetPos());
 					if (targets.get(0) instanceof EntityPlayer) {
 						EntityPlayer targetPlayer = (EntityPlayer) targets.get(0);
 						// custom teleporter implementation instead of Transportation's teleporter

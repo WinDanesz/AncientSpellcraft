@@ -26,16 +26,11 @@ public class PocketDimUtils {
 			if (compound != null) {
 
 				BlockPos pocketLocation = NBTUtil.getPosFromTag(compound);
-//				System.out.println("moving player to its pocket .... at " + pocketLocation);
 				player.setPositionAndUpdate(pocketLocation.getX(), pocketLocation.getY() + 3, pocketLocation.getZ());
-//				player.setPositionAndUpdate(50, 50, 50);
 
 
 			} else {
-				System.out.println("first cast of pocket dim, location = null");
 				BlockPos pocketLocation = findSuitablePocketPos(pocketWorld);
-
-				System.out.println("loc to TP player to:" + pocketLocation);
 
 				createPocket(pocketLocation, pocketWorld);
 

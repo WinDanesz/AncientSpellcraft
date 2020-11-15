@@ -81,6 +81,11 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public boolean shake_screen = true;
 
+		@Config.Name("Baubles Integration")
+		@Config.Comment("Enable/Disable Baubles integration for the new artefact types (belt, helm, etc).")
+		@Config.RequiresMcRestart
+		public boolean baubles_integration = true;
+
 	}
 
 

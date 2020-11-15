@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft;
 import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
 import com.windanesz.ancientspellcraft.command.CommandListBiomes;
 import com.windanesz.ancientspellcraft.data.Knowledge;
+import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBiomes;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
@@ -25,19 +26,19 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
-	@Mod(modid = AncientSpellcraft.MODID, name = AncientSpellcraft.NAME, version = AncientSpellcraft.VERSION, acceptedMinecraftVersions = AncientSpellcraft.MC_VERSION, dependencies = "required-after:ebwizardry@[4.3,4.4)")
-	public class AncientSpellcraft {
+@Mod(modid = AncientSpellcraft.MODID, name = AncientSpellcraft.NAME, version = AncientSpellcraft.VERSION, acceptedMinecraftVersions = AncientSpellcraft.MC_VERSION, dependencies = "required-after:ebwizardry@[4.3,4.4)")
+public class AncientSpellcraft {
 
 	public static final String MODID = "ancientspellcraft";
 	public static final String NAME = "Ancient Spellcraft by Dan";
-	public static final String VERSION = "1.0.2";
+	public static final String VERSION = "1.1.0";
 	public static final String MC_VERSION = "[1.12.2]";
 
 	public static Element RUNIC;
 
 	public static final Random rand = new Random();
 
-//	public static final WorldGenAS worldGenAS = new WorldGenAS();
+	//	public static final WorldGenAS worldGenAS = new WorldGenAS();
 
 	//	public static final Settings settings = new Settings();
 
@@ -71,18 +72,14 @@ import java.util.Random;
 		AncientSpellcraftLoot.preInit();
 		AncientSpellcraftBlocks.registerTileEntities();
 		AncientSpellcraftBiomes.preInit();
-//		WizardryEnumHelper.addElement("ancient", new Style().setColor(TextFormatting.GOLD), I18n.format("ancientspellcraft:element.ancient"), MODID);
 		BookshelfItems.preInitBookShelfModelTextures();
+
+		ASBaublesIntegration.init();
 
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-
-//		GameRegistry.registerWorldGenerator(new WorldGenCrystalShardOre(), 0);
-//		GameRegistry.registerWorldGenerator(worldGenAS, 0);
-//
-//		GameRegistry.registerWorldGenerator(new WorldGenTest(), 5);
 
 		GameRegistry.registerWorldGenerator(new WorldGenCrystalShardOre(), 0);
 		AncientSpellcraftItems.registerDispenseBehaviours();
@@ -95,8 +92,6 @@ import java.util.Random;
 
 		Knowledge.init();
 		BookshelfItems.InitBookshelfItems();
-		//		AncientSpellcraftWorldGen.registerWorldGenerators();
-		//		AncientSpellcraftBiomes.initBiomeManagerAndDictionary();
 
 	}
 

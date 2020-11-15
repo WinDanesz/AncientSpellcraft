@@ -15,6 +15,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -42,8 +43,7 @@ public class BlockScribingDesk extends BlockContainer {
 		lightOpacity = 0;
 	}
 
-	public EnumBlockRenderType getRenderType(IBlockState state)
-	{
+	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.MODEL;
 	}
 
@@ -138,5 +138,17 @@ public class BlockScribingDesk extends BlockContainer {
 	@SideOnly(Side.CLIENT)
 	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT;
+	}
+
+	@Override
+	public void breakBlock(World world, BlockPos pos, IBlockState block) {
+
+		TileEntity tileentity = world.getTileEntity(pos);
+
+		if (tileentity instanceof TileScribingDesk) {
+			InventoryHelper.dropInventoryItems(world, pos, (TileScribingDesk) tileentity);
+		}
+
+		super.breakBlock(world, pos, block);
 	}
 }

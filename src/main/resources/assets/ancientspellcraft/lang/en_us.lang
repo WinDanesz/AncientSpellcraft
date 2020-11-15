@@ -206,7 +206,7 @@ spell.ancientspellcraft\:time_knot=Time Knot
 spell.ancientspellcraft\:time_knot.desc=The end is the beginning and the beginning is the end
 
 spell.ancientspellcraft\:curse_temporal_casualty=Temporal Casualty
-spell.ancientspellcraft\:curse_temporal_casualty.desc=Imprisoned in time the warlock sits,\nfrozen in fear, of the Reset\n those who test a sorcerers might, will experience temporal blight, shall go back to where and when they\n stood, once the sun begins to set
+spell.ancientspellcraft\:curse_temporal_casualty.desc=Imprisoned in time the warlock sits,\nfrozen in fear, of the Reset. Those who test a sorcerers might, will experience temporal blight, shall go back to where and when they\n stood, once the sun begins to set
 
 spell.ancientspellcraft\:eye_of_the_storm=Eye of The Storm
 spell.ancientspellcraft\:eye_of_the_storm.desc=Ride the storm to overcome your enemies
@@ -453,6 +453,9 @@ item.ancientspellcraft\:charm_omnicron.discover=Tapping into the knowledge of th
 item.ancientspellcraft\:charm_omnicron.wrong_item=Requires an unknown spell in the offhand
 item.ancientspellcraft\:charm_omnicron.wrong_hand=I should hold the cube in my main hand...
 item.ancientspellcraft\:charm_omnicron.no_mana=The cube doesn't have enough mana (%1$s required)
+
+item.ancientspellcraft\:belt_enchanter.name=Belt of The Enchanter
+item.ancientspellcraft\:belt_enchanter.desc=Increases the duration of Buff spells by 20%%
 
 
 item.ancientspellcraft\:stone_tablet_small.name=Small Stone Tablet

@@ -94,31 +94,25 @@ public class MetaSpellBuff extends Spell {
 			for (Potion activePotion : activePotions) {
 				for (Potion potion : potionSet) {
 					if (activePotion instanceof PotionMetamagicEffect && potion != activePotion) {
-						System.out.println("you had a different metamagic effect (" + activePotion.getName() + ") ... this is now removed");
 						caster.removePotionEffect(activePotion);
 					}
 				}
 			}
 
-			System.out.println("potionSet.size(): " + potionSet.size());
 			for (Potion potion : potionSet) {
 				boolean shouldAmplify = false;
 				int currentAmplifier = 0;
 				boolean active = caster.isPotionActive(potion);
 
 				if (active) {
-					System.out.println("was active");
 					currentAmplifier = caster.getActivePotionEffect(potion).getAmplifier();
 
 				}
 
-				System.out.println("currentamplifier: " + currentAmplifier);
 				int bonusAmplifier = active ? currentAmplifier + 1 : 0;
 
-				System.out.println("bonusamplifier: " + bonusAmplifier);
 
 				if (bonusAmplifier > 2) {
-					System.out.println("amplifier bigger than 2, return false");
 					return false;
 				} else {
 					shouldAmplify = true;
@@ -133,8 +127,6 @@ public class MetaSpellBuff extends Spell {
 				if (currentAmplifier == 2) {
 
 					float cooldown = modifiers.get(WizardryItems.cooldown_upgrade);
-					System.out.println("original cd: " + cooldown);
-					System.out.println("reducing CD .. ");
 					modifiers.set(WizardryItems.cooldown_upgrade, cooldown * 0.1F, true);
 				}
 

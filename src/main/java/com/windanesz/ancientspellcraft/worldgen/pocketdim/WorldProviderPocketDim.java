@@ -87,7 +87,6 @@ public class WorldProviderPocketDim extends WorldProvider {
 	 */
 	@Override
 	public void onPlayerAdded(net.minecraft.entity.player.EntityPlayerMP player) {
-		System.out.println("player entered the pocket dim");
 		PocketDimUtils.onPlayerEnteredPocketDim(player, world);
 	}
 
@@ -96,7 +95,6 @@ public class WorldProviderPocketDim extends WorldProvider {
 	 */
 	@Override
 	public void onPlayerRemoved(net.minecraft.entity.player.EntityPlayerMP player) {
-		System.out.println("player left the pocket dim");
 		PocketDimUtils.onPlayerLeftPocketDim(player, world);
 	}
 }

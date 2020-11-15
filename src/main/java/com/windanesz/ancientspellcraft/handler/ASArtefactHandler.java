@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.handler;
 
 import com.windanesz.ancientspellcraft.item.ItemKnowledgeOrb;
+import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
@@ -9,6 +10,7 @@ import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.constants.Element;
+import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
@@ -97,7 +99,6 @@ public final class ASArtefactHandler {
 				//DOSTUFF
 
 				if (ItemArtefact.findMatchingWandAndCast(player, spell)) {
-					System.out.println("casted the thing!");
 				}
 			}
 			if (countdown > 0) {
@@ -200,7 +201,6 @@ public final class ASArtefactHandler {
 						ItemStack pendant = getArtefactItemStack(player, (ItemArtefact) AncientSpellcraftItems.amulet_pendant_of_eternity);
 						Spell spell = getCurrentSpellFromSpellBearingArtefact(AncientSpellcraftItems.amulet_pendant_of_eternity, pendant);
 						if (spell != Spells.none && spell instanceof SpellBuff) {
-							System.out.println("we are here!! its a buff");
 							try {
 								// FIXME: get rid of reflection :(
 								// once the access is public/has getter
@@ -209,24 +209,14 @@ public final class ASArtefactHandler {
 								Field field = ASUtils.ReflectionUtil.getField(obj.getClass(), "potionSet");
 								ASUtils.ReflectionUtil.makeAccessible(field);
 								Set<Potion> potionset = (Set<Potion>) field.get(obj);
-								System.out.println("potionset:" + potionset);
 
 								if (potionset.contains(event.getPotionEffect().getPotion())) {
-									System.out.println("its a potion effect from the spell!!");
 
 									WizardData data = WizardData.get(player);
 									data.setVariable(COUNTDOWN_KEY, 20);
 									data.setVariable(SPELL_ID, spell.metadata());
 
-									//									if (!player.world.isRemote) {
-									//										if (ItemArtefact.findMatchingWandAndCast(player, Spells.water_breathing)) {
-									//											System.out.println("casted the thing!");
-									//
-									//										}
 								}
-								//										if (ItemArtefact.findMatchingWandAndCast(player, spell)) {
-								//											System.out.println("casted the thing!");
-								//										}
 
 							}
 							catch (Exception e) {
@@ -317,6 +307,16 @@ public final class ASArtefactHandler {
 			SpellModifiers modifiers = event.getModifiers();
 
 			int jewelsSetCount = 0;
+
+			/// custom artefact types
+			if (ItemNewArtefact.isNewArtefactActive(player, AncientSpellcraftItems.belt_enchanter)) {
+				if(event.getSpell().getType() == SpellType.BUFF){
+					modifiers.set(WizardryItems.duration_upgrade, modifiers.get(WizardryItems.duration_upgrade) * 1.2f, false);
+				}
+			}
+
+			/// custom artefact types
+
 			for (ItemArtefact artefact : getActiveArtefacts(player)) {
 
 				float potency = modifiers.get(SpellModifiers.POTENCY);
@@ -330,21 +330,57 @@ public final class ASArtefactHandler {
 
 				} else if (artefact == AncientSpellcraftItems.ring_blast) {
 					modifiers.set(SpellModifiers.COST, 1.25f * cost, false);
-					//					System.out.println("blast before: " + event.getModifiers().get(WizardryItems.blast_upgrade));
 					event.getModifiers().set(WizardryItems.blast_upgrade, event.getModifiers().get(WizardryItems.blast_upgrade) + 0.25F, true);
-					//					System.out.println("blast after: " + event.getModifiers().get(WizardryItems.blast_upgrade));
 
 				} else if (artefact == AncientSpellcraftItems.ring_range) {
 					modifiers.set(SpellModifiers.COST, 1.25f * cost, false);
-					//					System.out.println("range_upgrade before: " + event.getModifiers().get(WizardryItems.range_upgrade));
 					event.getModifiers().set(WizardryItems.range_upgrade, event.getModifiers().get(WizardryItems.range_upgrade) + 0.25F, true);
-					//					System.out.println("range_upgrade after: " + event.getModifiers().get(WizardryItems.range_upgrade));
 
 				} else if (artefact == AncientSpellcraftItems.charm_elemental_grimoire) {
 					if (event.getSpell().getElement() == Element.FIRE || event.getSpell().getElement() == Element.ICE || event.getSpell().getElement() == Element.LIGHTNING) {
-						//						System.out.println("before:" + modifiers.get(SpellModifiers.POTENCY));
 						modifiers.set(SpellModifiers.POTENCY, 0.1f + potency, false);
-						//						System.out.println("after:" + modifiers.get(SpellModifiers.POTENCY));
+					}
+				} else if (artefact == AncientSpellcraftItems.charm_earth_orb) {
+					if (event.getSpell().getElement() == Element.EARTH) {
+						modifiers.set(SpellModifiers.POTENCY, 0.3f + potency, false);
+					} else {
+						modifiers.set(SpellModifiers.POTENCY, -0.5f + potency, false);
+					}
+				} else if (artefact == AncientSpellcraftItems.charm_healing_orb) {
+					if (event.getSpell().getElement() == Element.HEALING) {
+						modifiers.set(SpellModifiers.POTENCY, 0.3f + potency, false);
+					} else {
+						modifiers.set(SpellModifiers.POTENCY, -0.5f + potency, false);
+					}
+				} else if (artefact == AncientSpellcraftItems.charm_lightning_orb) {
+					if (event.getSpell().getElement() == Element.LIGHTNING) {
+						modifiers.set(SpellModifiers.POTENCY, 0.3f + potency, false);
+					} else {
+						modifiers.set(SpellModifiers.POTENCY, -0.5f + potency, false);
+					}
+				} else if (artefact == AncientSpellcraftItems.charm_fire_orb) {
+					if (event.getSpell().getElement() == Element.FIRE) {
+						modifiers.set(SpellModifiers.POTENCY, 0.3f + potency, false);
+					} else {
+						modifiers.set(SpellModifiers.POTENCY, -0.5f + potency, false);
+					}
+				} else if (artefact == AncientSpellcraftItems.charm_ice_orb) {
+					if (event.getSpell().getElement() == Element.ICE) {
+						modifiers.set(SpellModifiers.POTENCY, 0.3f + potency, false);
+					} else {
+						modifiers.set(SpellModifiers.POTENCY, -0.5f + potency, false);
+					}
+				} else if (artefact == AncientSpellcraftItems.charm_necromancy_orb) {
+					if (event.getSpell().getElement() == Element.NECROMANCY) {
+						modifiers.set(SpellModifiers.POTENCY, 0.3f + potency, false);
+					} else {
+						modifiers.set(SpellModifiers.POTENCY, -0.5f + potency, false);
+					}
+				} else if (artefact == AncientSpellcraftItems.charm_sorcery_orb) {
+					if (event.getSpell().getElement() == Element.SORCERY) {
+						modifiers.set(SpellModifiers.POTENCY, 0.3f + potency, false);
+					} else {
+						modifiers.set(SpellModifiers.POTENCY, -0.5f + potency, false);
 					}
 				}
 
@@ -371,10 +407,7 @@ public final class ASArtefactHandler {
 			if (jewelsSetCount > 1) {
 				float potency = modifiers.get(SpellModifiers.POTENCY);
 				float potencyBonus = ((jewelsSetCount - 1) * 5f) / 100; // +5% per set piece
-				System.out.println("potency before: " + modifiers.get(SpellModifiers.POTENCY));
 				modifiers.set(SpellModifiers.POTENCY, potencyBonus + potency, false);
-				System.out.println("potencyBOuns: " + potencyBonus);
-				System.out.println("potency after: " + modifiers.get(SpellModifiers.POTENCY));
 
 			}
 		}
@@ -458,8 +491,6 @@ public final class ASArtefactHandler {
 						}
 
 					}
-					System.out.println("(highest) centre slot: " + centre);
-					System.out.println("(highest) upgrade slot: " + upgrade);
 				}
 			}
 		}
@@ -470,7 +501,6 @@ public final class ASArtefactHandler {
 	}
 
 	private static Spell getCurrentSpellFromSpellBearingArtefact(Item item, ItemStack stack) {
-		System.out.println("current spell: " + Spell.byMetadata(stack.getItemDamage()).getRegistryName());
 		return Spell.byMetadata(stack.getItemDamage());
 	}
 
@@ -490,15 +520,19 @@ public final class ASArtefactHandler {
 						if (i == 0) {
 							player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 120));
 
-								SpellModifiers modifiers = new SpellModifiers();
-								if (AncientSpellcraftSpells.extinguish.cast(player.world, player, EnumHand.MAIN_HAND, 0, modifiers)) {
+							SpellModifiers modifiers = new SpellModifiers();
+							if (AncientSpellcraftSpells.extinguish.cast(player.world, player, EnumHand.MAIN_HAND, 0, modifiers)) {
 
-									MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.SCROLL, AncientSpellcraftSpells.extinguish, player, modifiers));
-									player.getCooldownTracker().setCooldown(AncientSpellcraftItems.ring_prismarine, 1200);
-								}
+								MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.SCROLL, AncientSpellcraftSpells.extinguish, player, modifiers));
+								player.getCooldownTracker().setCooldown(AncientSpellcraftItems.ring_prismarine, 1200);
+							}
 						}
 					}
 				}
+			}
+
+			if (player.world.getTotalWorldTime() % player.getHealth() < player.getMaxHealth()) {
+
 			}
 		}
 	}

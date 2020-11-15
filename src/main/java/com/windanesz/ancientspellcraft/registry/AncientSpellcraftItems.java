@@ -17,6 +17,7 @@ import com.windanesz.ancientspellcraft.item.ItemHorn;
 import com.windanesz.ancientspellcraft.item.ItemIceShield;
 import com.windanesz.ancientspellcraft.item.ItemKnowledgeOrb;
 import com.windanesz.ancientspellcraft.item.ItemMagicShield;
+import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.item.ItemOmnicron;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.item.ItemSetArtefact;
@@ -120,6 +121,11 @@ public final class AncientSpellcraftItems {
 	public static final Item charm_enchanted_needle = placeholder();
 	public static final Item charm_seed_bag = placeholder();
 	public static final Item charm_omnicron = placeholder();
+
+	/// now with Belts!
+
+	public static final Item belt_enchanter = placeholder();
+
 
 	/// misc
 	public static final Item magic_shield = placeholder();
@@ -292,6 +298,8 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "charm_wand_upgrade", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_cryostasis", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_omnicron", new ItemOmnicron(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+
+		registerItem(registry, "belt_enchanter", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
 
 		/// misc
 

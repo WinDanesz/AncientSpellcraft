@@ -74,7 +74,6 @@ public class EssenceExtraction extends SpellRay {
 			EntityPlayer player = (EntityPlayer) caster;
 
 			if (world.isRemote && ticksInUse == 0 || ticksInUse % 50 == 0) {
-				System.out.println("ticksinUse: " + ticksInUse);
 				this.playSound(world, caster, ticksInUse, -1, modifiers);
 			}
 

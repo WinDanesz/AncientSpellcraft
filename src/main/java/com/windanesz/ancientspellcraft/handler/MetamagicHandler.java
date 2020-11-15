@@ -20,7 +20,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -145,68 +144,36 @@ public final class MetamagicHandler {
 
 	private static void setCooldown(EntityPlayer player, Spell spell) {
 
-		System.out.println("setCooldown called");
 		List<ItemStack> wands = ASUtils.getAllHotbarWands(player);
 		if (wands != null && !wands.isEmpty()) {
-			System.out.println("test1");
 
 			for (ItemStack wand : wands) {
 				int index = 0;
 
-				//				if (ASUtils.wandHasSpell(wand, spell)) {
-				System.out.println("test2");
 				for (Spell currentSpell : WandHelper.getSpells(wand)) {
-
-					//						continue
-					//					}
-					System.out.println("current index: " + index);
-					System.out.println("wandhelper: ");
-
-					System.out.println("currentSpell (from the wand's list of spells): " + currentSpell);
-					System.out.println("compared to: " + spell);
-					System.out.println("currentSpell == spell: " + (currentSpell == spell));
 
 					int[] cooldowns = WandHelper.getCooldowns(wand);
 
 					if (cooldowns.length == 0) {
-						System.out.println("this was null");
 						int count = WandHelper.getSpells(wand).length - 1;
 						cooldowns = new int[count];
-						System.out.println("now its " + cooldowns.length);
 					}
-
-					System.out.println("cooldowns.length: " + cooldowns.length);
-					//					System.out.println("this cd:  (index: " + index + ") :" + cooldowns[index]);
 
 					if (currentSpell == spell) {
 
 						int[] maxCooldowns = WandHelper.getMaxCooldowns(wand);
 						if (maxCooldowns.length == 0) {
-							System.out.println("this was null");
 							int count = WandHelper.getSpells(wand).length - 1;
 							maxCooldowns = new int[count];
-							System.out.println("now its " + maxCooldowns.length);
 						}
 
-						System.out.println("test3");
-
-						//						int[] cooldowns = WandHelper.getCooldowns(wand);
-						//						int selectedSpell = wand.getTagCompound().getInteger(SELECTED_SPELL_KEY);
-						System.out.println("cooldowns: " + Arrays.toString(cooldowns));
 						cooldowns[index] = 1200;
 						maxCooldowns[index] = 1200;
-						System.out.println("cooldowns after?: " + Arrays.toString(cooldowns));
 						WandHelper.setCooldowns(wand, cooldowns);
 						WandHelper.setMaxCooldowns(wand, maxCooldowns);
-						System.out.println("updated cooldowns");
-
-						//						int[] maxCooldowns = WandHelper.getMaxCooldowns(wand);
-
-						//						}
 					}
 					index++;
 				}
-
 			}
 		}
 	}

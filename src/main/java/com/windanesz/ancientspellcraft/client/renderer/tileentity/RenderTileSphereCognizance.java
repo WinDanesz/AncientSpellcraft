@@ -24,7 +24,7 @@ public class RenderTileSphereCognizance extends TileEntitySpecialRenderer<TileSp
 //		GlStateManager.translate(0.0F, 0.1F + MathHelper.sin(f * 0.1F) * 0.01F, 0.0F);
 		float f1;
 
-		for (f1 = te.skullRotation - te.skullRotationPrev; f1 >= (float) Math.PI; f1 -= ((float) Math.PI * 2F)) {
+		for (f1 = te.sphereRotation - te.sphereRotationPrev; f1 >= (float) Math.PI; f1 -= ((float) Math.PI * 2F)) {
 			;
 		}
 
@@ -32,7 +32,7 @@ public class RenderTileSphereCognizance extends TileEntitySpecialRenderer<TileSp
 			f1 += ((float) Math.PI * 2F);
 		}
 
-		float f2 = te.skullRotationPrev + f1 * partialTicks;
+		float f2 = te.sphereRotationPrev + f1 * partialTicks;
 		GlStateManager.rotate(-f2 * (180F / (float) Math.PI), 0.0F, 1.0F, 0.0F);
 
 		GlStateManager.enableBlend();

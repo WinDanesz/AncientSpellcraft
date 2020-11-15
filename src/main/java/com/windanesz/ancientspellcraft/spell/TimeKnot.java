@@ -190,8 +190,6 @@ public class TimeKnot extends SpellBuff {
 		if (compound != null) {
 			// reset location
 
-			//			System.out.println(player.getRidingEntity().setPosition(););
-
 			int storedDim = compound.getInteger("Dimension");
 			double posX = compound.getDouble("PosX");
 			double posY = compound.getDouble("PosY");
@@ -225,17 +223,11 @@ public class TimeKnot extends SpellBuff {
 			List<Potion> activePotions = new ArrayList<>();
 
 			for (Potion potion : player.getActivePotionMap().keySet()) {
-				//				if (potion.equals(AncientSpellcraftPotions.time_knot)) {
-				//					continue;
-				//				}
-				System.out.println("active potion: " + potion.getName());
-				System.out.println("added to list: " + potion.getName());
 				activePotions.add(potion);
 			}
 
 			if (!activePotions.isEmpty()) {
 				for (Potion activePotion : activePotions) {
-					System.out.println("removing " + activePotion.getName());
 					player.removePotionEffect(activePotion);
 				}
 			}

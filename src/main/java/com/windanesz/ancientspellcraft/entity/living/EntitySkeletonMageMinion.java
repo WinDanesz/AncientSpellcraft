@@ -87,7 +87,6 @@ public class EntitySkeletonMageMinion extends AbstractSkeleton implements ISpell
 	private EntityAINearestAttackableTarget<EntityPlayer> healerTargetingAI = new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, false, true) {
 		@Override
 		protected boolean isSuitableTarget(@Nullable EntityLivingBase target, boolean includeInvincibles) {
-			System.out.println("condition: " + (target instanceof EntityPlayer && ((EntityPlayer) target).getUniqueID() == getOwnerId()));
 			return target instanceof EntityPlayer && ((EntityPlayer) target).getUniqueID() == getOwnerId();
 		}
 	};
@@ -157,23 +156,6 @@ public class EntitySkeletonMageMinion extends AbstractSkeleton implements ISpell
 		this.tasks.addTask(3, new EntityAIWander(this, 0.6D));
 
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
-		//
-		//		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityLivingBase>(this, EntityLivingBase.class, false, false) {
-		//			@Override
-		//			protected boolean isSuitableTarget(@Nullable EntityLivingBase target, boolean includeInvincibles) {
-		//				//				boolean b1 = super.isSuitableTarget(target, includeInvincibles);
-		//				// FIXME: [16:35:31] [Server thread/INFO] [STDOUT]: [com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion:getTargetSelector:181]: /***getTargetSelector
-		//				//[16:35:31] [Server thread/INFO] [STDOUT]: [com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion:getTargetSelector:182]: element:null, MAGIC
-		//				//				if (element == Element.HEALING || getElement() == Element.HEALING) {
-		//				//					System.out.println("healer isSuitableTarget");
-		//				System.out.println("EntityAINearestAttackableTarget - target instanceof EntityPlayer: " + (target instanceof EntityPlayer));
-		//				return target instanceof EntityPlayer;
-		//				//					return  target != null && getOwner() != null && target instanceof EntityPlayer && target.getUniqueID() == getOwnerId();
-		//				//				}
-		//				//				return super.isSuitableTarget(target, includeInvincibles);
-		//				// player is the owner of the healer
-		//			}
-		//		});
 
 		this.setAIMoveSpeed((float) AISpeed);
 	}

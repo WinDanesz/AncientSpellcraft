@@ -77,6 +77,8 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.charm_seed_bag);
 		registerItemModel(AncientSpellcraftItems.charm_omnicron);
 
+		registerItemModel(AncientSpellcraftItems.belt_enchanter);
+
 		// misc
 		registerItemModel(AncientSpellcraftItems.shadow_blade);
 		registerItemModel(AncientSpellcraftItems.spectral_fishing_rod);

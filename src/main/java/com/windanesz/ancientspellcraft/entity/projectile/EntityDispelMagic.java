@@ -69,30 +69,24 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 					// magic construct collision, it should dispel or rapidly accelerate the timer of the construct,
 					// maybe this should be moved to a status effect
 				} else if (entity instanceof EntityMagicConstruct) {
-					//					System.out.println("hitting a construct");
 					EntityMagicConstruct construct = ((EntityMagicConstruct) entity);
 					if (construct.lifetime == -1) {
 						construct.setDead();
 					}
-					//					System.out.println("original lifetime: " + construct.lifetime);
 					construct.lifetime = (int) (construct.lifetime * 0.1);
-					//					System.out.println("new lifetime: " + construct.lifetime);
 
 					Tier tier = getConstructTier(construct);
 
-					System.out.println("construct tier: " + tier);
 
 					// living entity, the spell should purge the PotionMagicEffect (except curses and containment) effects
 				} else if (entity instanceof EntityLivingBase) {
 					EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
 
-					System.out.println("hittin a living entity");
 					// magic entity or summon, possibly should be dispelled
 					if ((isMagicEntityOrSummon(entity))) {
 						if (entity instanceof ISummonedCreature) {
 							((ISummonedCreature) entity).onDespawn();
 						}
-						//						System.out.println("entity is a summon");
 						world.playSound(this.posX, this.posY, this.posZ, AncientSpellcraftSounds.DISPEL_ENTITY, SoundCategory.HOSTILE, 1, 1, false);
 						entity.setDead();
 
@@ -166,7 +160,6 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 				double search_border_size = 4;
 				List<EntityDispelMagic> list = getEntitiesWithinRadius(radius + search_border_size, forcefield.posX, forcefield.posY, forcefield.posZ, world, EntityDispelMagic.class);
 				if (!list.isEmpty()) {
-					//					System.out.println("list not empty, reducing forcefield lifetime");
 					forcefield.lifetime = (int) (forcefield.lifetime * 0.2);
 					this.setDead();
 				}

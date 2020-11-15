@@ -42,7 +42,6 @@ public class PocketDimension extends Spell {
 		}
 
 		if (ticksInUse < 60) {
-			//			System.out.println("ticksinuse: " + ticksInUse);
 			if (world.isRemote)
 				this.spawnParticles(world, caster, modifiers);
 			return true;
@@ -52,7 +51,6 @@ public class PocketDimension extends Spell {
 			return false;
 		}
 
-		//		System.out.println("should teleport now - " + ticksInUse);
 
 		if (!teleportPlayer(caster) && !world.isRemote)
 			return false;
@@ -65,8 +63,6 @@ public class PocketDimension extends Spell {
 
 			EntityPlayer player = (EntityPlayer) caster;
 			WizardData data = WizardData.get(player);
-
-			// TODO: Move player to pocket dim location if it exists
 
 			if (data != null) {
 

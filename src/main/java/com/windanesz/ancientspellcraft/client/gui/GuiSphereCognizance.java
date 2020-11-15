@@ -88,9 +88,6 @@ public class GuiSphereCognizance extends GuiContainer {
 		Slot crystalSlot = this.inventorySlots.getSlot(ContainerSphereCognizance.CRYSTAL_SLOT);
 		Slot bookSlot = this.inventorySlots.getSlot(ContainerSphereCognizance.BOOK_SLOT);
 
-		//		System.out.println("crystalSlot info: " + (crystalSlot.getHasStack() ? crystalSlot.getStack().getItem() : "no item"));
-		//		System.out.println("bookSlot info: " + (bookSlot.getHasStack() ? bookSlot.getStack().getItem() : "no item"));
-
 		this.researchButton.enabled = false;
 		if (!bookSlot.getHasStack()) { // no book to research
 			this.researchButton.enabled = false;
@@ -117,7 +114,6 @@ public class GuiSphereCognizance extends GuiContainer {
 				}
 
 			}
-			//			bookSlot.getStack()
 
 		} else if (bookSlot.getStack().getItem() instanceof ItemRelic) {
 			if (!ItemRelic.isResearched(bookSlot.getStack())) {
@@ -132,8 +128,6 @@ public class GuiSphereCognizance extends GuiContainer {
 			this.researchButton.enabled = false;
 			tooltipLangKey = "no_book";
 		}
-
-		//		this.researchButton.x = this.width / 2 + 64; /// TODO CHECKKKK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	}
 
@@ -209,17 +203,6 @@ public class GuiSphereCognizance extends GuiContainer {
 
 			//			DrawingUtils.drawTexturedRect(this.x, this.y, 176, 7, this.width, this.height, 256, 256);
 			DrawingUtils.drawTexturedRect(this.x, this.y, k, l, this.width, this.height, 256, 256);
-			//			if (this.hovered) {
-			//				if (tooltipLangKey.equals("too_few_crystals")) {
-			////					drawHoveringText(tooltipLangKey + "_" + requiredCrystalAmount, mouseX, mouseY);
-			//					drawHoveringText(I18n.format("gui.ancientspellcraft:sphere_cognizance." + tooltipLangKey, researchCost), mouseX, mouseY);
-			//				} else {
-			////				drawHoveringText(tooltipLangKey, mouseX, mouseY);
-			//				drawHoveringText(I18n.format("gui.ancientspellcraft:sphere_cognizance." + tooltipLangKey), mouseX, mouseY);
-			//					}
-			//			}
-			//this.drawCenteredString(minecraft.fontRenderer, this.displayString, this.x + this.width / 2,
-			//		this.y + (this.height - 8) / 2, colour);
 		}
 
 		/**
@@ -250,23 +233,12 @@ public class GuiSphereCognizance extends GuiContainer {
 
 		if (button.id == 0) { // researchButton
 			if (button.enabled) {
-				//				System.out.println("button pressed");
-				// Packet building
-				//				IMessage msg = new PacketControlInput.Message(PacketControlInput.ControlType.APPLY_BUTTON);
-				//				WizardryPacketHandler.net.sendToServer(msg);
-				//				 Animationk
-				//				animationTimer = 20;
-				//				this.tileSphere.setField(2, 1);
-
-				//				if (button.id == 0) {
 				// Packet building
 				IMessage msg = new PacketControlInput.Message(PacketControlInput.ControlType.APPLY_BUTTON);
 				ASPacketHandler.net.sendToServer(msg);
 				// Sound
 				Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(
 						WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, 1));
-				// Animation
-				//				}
 
 			}
 		}
@@ -295,8 +267,6 @@ public class GuiSphereCognizance extends GuiContainer {
 				drawMultilineHintText(unlocalizedText, this.tileSphere.getCurrentSpell());
 
 			} else if (currentHintTypeId != 0 && currentHintId != 0) { // every other case
-				//				System.out.println("currentHintTypeId: " + currentHintTypeId);
-				//				System.out.println("currentHintId: " + currentHintId);
 				String hintTypeName = ContainerSphereCognizance.HINT_TYPES.get(currentHintTypeId);
 				String unlocalizedText = "gui.ancientspellcraft:sphere_cognizance.hint." + hintTypeName + "." + currentHintId;
 				drawMultilineHintText(unlocalizedText);
@@ -312,18 +282,6 @@ public class GuiSphereCognizance extends GuiContainer {
 				break;
 			}
 		}
-		//		System.out.println("currentHintTypeId: " + currentHintTypeId);
-		//		System.out.println("currentHintId: " + currentHintId);
-		//		this.currentHintTypeId = this.tileSphere.getField(2); // researchProgress
-		//		this.currentHintId = this.tileSphere.getField(3); // researchDuration
-
-		//		this.currentHintTypeId = this.container
-		////		this.currentHintId  =
-
-		//				this.fontRenderer.drawString(I18n.format("gui.ancientspellcraft:sphere_cognizance.hint.0"), 20, 20, 4210752);      //#404040
-		//				String s = tileSphere.getDisplayName().getUnformattedText();
-		//				this.fontRenderer.drawString(s, 88 - this.fontRenderer.getStringWidth(s) / 2, 6, 4210752);            //#404040
-		//		this.fontRenderer.drawString(this.playerInv.getDisplayName().getUnformattedText(), 8, 72, 4210752);      //#404040
 	}
 
 	@SubscribeEvent
@@ -339,12 +297,6 @@ public class GuiSphereCognizance extends GuiContainer {
 		int researchProgress = this.tileSphere.getField(0); // researchProgress
 		int researchDuration = this.tileSphere.getField(1); // researchDuration
 
-		//		int researchDuration2 = this.tileSphere.getField(2); // researchDuration
-
-		//		researchDuration = 100;
-		//		System.out.println("researchProgress: " + researchProgress );
-		//		System.out.println("researchDuration : " + researchDuration  );
-		//		System.out.println("researchDuration2 : " + researchDuration2);
 		return researchDuration != 0 && researchProgress != 0 ? researchProgress * 76 / researchDuration : 0;
 	}
 

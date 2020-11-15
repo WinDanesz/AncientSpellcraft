@@ -43,7 +43,6 @@ public abstract class ItemDailyArtefact extends ItemASArtefact {
 	public static boolean isFullDayBetween(long startTime, long endTime) {
 		//		long fullDay = 24000;
 		long fullDay = 24000;
-		System.out.println("diff: " + (endTime - startTime));
 		return (endTime - startTime) >= fullDay;
 	}
 

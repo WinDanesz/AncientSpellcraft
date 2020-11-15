@@ -41,7 +41,6 @@ public class oldFrostNova {
 //			}
 //
 //			if (world.isRemote) {
-//				System.out.println("bumm! finished charging");
 //				for (int i = 0; i < 50 * modifiers.get(WizardryItems.blast_upgrade); i++) {
 //
 //					//					ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x, y, z).vel(0, 0.03, 0).time(50).clr(157, 168, 249).spawn(world);

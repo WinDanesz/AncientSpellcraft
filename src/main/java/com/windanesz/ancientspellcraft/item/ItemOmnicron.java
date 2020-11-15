@@ -46,7 +46,6 @@ public class ItemOmnicron extends ItemASArtefact implements IWorkbenchItem, IMan
 		}
 
 		ItemStack offhandStack = player.getHeldItemOffhand();
-		System.out.println("hello");
 
 		if (!(offhandStack.getItem() instanceof ItemSpellBook || offhandStack.getItem() instanceof ItemScroll)) {
 			if (!world.isRemote)

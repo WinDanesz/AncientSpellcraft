@@ -33,7 +33,6 @@ public class PotionUnlimitedPower extends PotionMagicEffect {
 	//from EmpoweringPresence.onSpellCastPreEvent()
 	@SubscribeEvent(priority = EventPriority.NORMAL) // Doesn't really matter but there's no point processing it if casting is blocked
 	public static void onSpellCastPreEvent(SpellCastEvent.Pre event) {
-		//		System.out.println("onSpellCastPreEvent");
 		// Unlimited Power stacks extra potency on top of the existing potency.
 		if (event.getCaster() != null && event.getCaster().isPotionActive(AncientSpellcraftPotions.unlimited_power)
 			//			&& !(event.getSpell() instanceof EmpoweringPresence) // Prevent exponential empowerment stacking!
@@ -41,12 +40,6 @@ public class PotionUnlimitedPower extends PotionMagicEffect {
 			int amplifier = event.getCaster().getActivePotionEffect(AncientSpellcraftPotions.unlimited_power).getAmplifier() + 1;
 			float potency = 1 + IF_POTENCY_PER_LEVEL * amplifier;
 			float upgrade_modifier = 1 + IF_MODIFIERS_PER_LEVEL * amplifier;
-			//			System.out.println("upgrade_modifier :" + upgrade_modifier );
-			//			System.out.println("new potency: " + (event.getModifiers().get(SpellModifiers.POTENCY) * upgrade_modifier));
-			//			System.out.println("new blast_upgrade: " + (event.getModifiers().get(WizardryItems.blast_upgrade) * upgrade_modifier));
-			//			System.out.println("new duration_upgrade: " + (event.getModifiers().get(WizardryItems.duration_upgrade) * upgrade_modifier));
-			//			System.out.println("new cooldown_upgrade: " + (event.getModifiers().get(WizardryItems.cooldown_upgrade) * upgrade_modifier));
-			//			System.out.println("new range_upgrade: " + (event.getModifiers().get(WizardryItems.range_upgrade) * upgrade_modifier));
 
 			event.getModifiers()
 					.set(SpellModifiers.POTENCY, event.getModifiers().get(SpellModifiers.POTENCY) * potency, true)
@@ -64,12 +57,7 @@ public class PotionUnlimitedPower extends PotionMagicEffect {
 
 	@Override
 	public void performEffect(EntityLivingBase entitylivingbase, int amplifier) {
-//		System.out.println("performEffect1");
 		if (!entitylivingbase.world.isRemote) {
-			//			System.out.println("performEffect2");
-			//			addActiveEffects(entitylivingbase, amplifier);
-			//			System.out.println("addActiveEffects");
-			//			System.out.println("amplifier: " + amplifier);
 			if (amplifier >= 0) {
 				if (!entitylivingbase.isPotionActive(MobEffects.REGENERATION)) {
 					entitylivingbase.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 60, 1));
@@ -87,8 +75,6 @@ public class PotionUnlimitedPower extends PotionMagicEffect {
 				double dy = (world.rand.nextDouble() * 2 - 1) * 3;
 				double dz = (world.rand.nextDouble() * 2 - 1) * 3;
 				// These particles use the velocity args differently; they behave more like portal particles
-//				world.spawnParticle(EnumParticleTypes.SPELL, entitylivingbase.posX, entitylivingbase.posY + 1, entitylivingbase.posZ, dx, dy, dz);
-//				world.spawnParticle(EnumParticleTypes.PORTAL, entitylivingbase.posX, entitylivingbase.posY + 1, entitylivingbase.posZ, dx, dy, dz);
 				world.spawnParticle(EnumParticleTypes.ENCHANTMENT_TABLE, entitylivingbase.posX, entitylivingbase.posY + 1, entitylivingbase.posZ, dx, dy, dz);
 			}
 		}

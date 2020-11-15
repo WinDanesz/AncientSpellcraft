@@ -63,7 +63,6 @@ public class SummonAnchor extends Spell {
 			summon.setLifetime(summon.getLifetime() + Math.round(duration));
 
 			if (target.getHealth() < target.getMaxHealth() && target.getHealth() > 0) {
-				System.out.println("heal amount:" + getProperty(HEALTH).floatValue() * modifiers.get(SpellModifiers.POTENCY));
 				target.heal(getProperty(HEALTH).floatValue() * modifiers.get(SpellModifiers.POTENCY));
 			}
 			foundSummon = true;

@@ -76,12 +76,6 @@ public class EntityFireAnt extends EntitySpiderMinion {
 	@Override
 	public boolean isValidTarget(Entity target) {
 
-//		System.out.println("target:" + target);
-//		System.out.println("this.getCaster():" + this.getCaster());
-//		System.out.println("this.getCaster() instanceof ISummonedCreature:" +);
-//		if (this.getCaster() != null && this.getCaster() instanceof ISummonedCreature && ((ISummonedCreature) this.getCaster()).getCaster() == target) {
-//			return false;
-//		}
 		if (target == getOrigCaster()) {
 			return false;
 		}

@@ -12,7 +12,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 repositories {
     maven {
-        name 'Curseforge Maven' // Wizardry
+        name 'Curseforge Maven'
         url 'https://minecraft.curseforge.com/api/maven/'
     }
     maven { 
@@ -21,7 +21,7 @@ repositories {
 
 }
 
-version = "1.0.2"
+version = "1.1.0"
 group = "com.windanesz.ancientspellcraft" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "ancientspellcraft"
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -44,6 +44,7 @@ minecraft {
 
 dependencies {
     deobfCompile "electroblobs-wizardry:ElectroblobsWizardry:${wizardry_version}:MC${mc_version}"
+    deobfCompile "baubles:Baubles:${mc_version_short}:${baubles_version}"
     compile "vazkii.patchouli:Patchouli:1.0-21.2"
 }
 
