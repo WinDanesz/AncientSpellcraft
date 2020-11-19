@@ -4,8 +4,6 @@ import com.google.common.base.Optional;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
 import com.windanesz.ancientspellcraft.util.SpellTeleporter;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
-import electroblob.wizardry.packet.PacketTransportation;
-import electroblob.wizardry.packet.WizardryPacketHandler;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.ParticleBuilder.Type;
@@ -20,7 +18,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -190,13 +187,13 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 	public void teleportEntity(EntityPlayer player, int targetDim, BlockPos targetPos) {
 		if (player != null) {
 			SpellTeleporter.teleportEntity(targetDim, targetPos.getX(), targetPos.getY(), targetPos.getZ(), true, player);
-			IMessage msg = new PacketTransportation.Message();
-			WizardryPacketHandler.net.sendToDimension(msg, player.world.provider.getDimension());
+//			IMessage msg = new PacketTransportation.Message();
+//			WizardryPacketHandler.net.sendToDimension(msg, player.world.provider.getDimension());
 		}
 	}
 
 	public void teleportEntityLiving(EntityLivingBase entity, int targetDim, BlockPos targetPos) {
-		if (entity != null) {
+		if (entity != null && !entity.world.isRemote) {
 			SpellTeleporter.teleportEntity(entity, targetDim, targetPos.getX(), targetPos.getY(), targetPos.getZ());
 		}
 	}

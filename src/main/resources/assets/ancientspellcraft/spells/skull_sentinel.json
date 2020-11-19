@@ -4,11 +4,11 @@
         "scroll": true,
         "wands": true,
         "npcs": false,
-        "dispensers": false,
+        "dispensers": true,
         "commands": true,
-        "treasure": true,
-        "trades": true,
-        "looting": true
+        "treasure": false,
+        "trades": false,
+        "looting": false
     },
     "tier": "apprentice",
     "element": "magic",

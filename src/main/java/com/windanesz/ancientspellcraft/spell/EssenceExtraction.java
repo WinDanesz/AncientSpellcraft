@@ -122,11 +122,14 @@ public class EssenceExtraction extends SpellRay {
 				if (block instanceof BlockImbuementAltar) {
 
 					if (extractTicks >= 200) {
+						if (!world.isRemote) {
 						world.createExplosion(null, pos.getX() + 2, pos.getY(), pos.getZ(), (float) 1, true);
 						world.createExplosion(null, pos.getX() - 2, pos.getY(), pos.getZ(), (float) 1, true);
 						world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ() + 2, (float) 1, true);
 						world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ() - 2, (float) 1, true);
 						world.createExplosion(null, pos.getX(), pos.getY() + 1, pos.getZ(), (float) 4, true);
+
+						}
 						data.setVariable(EXTRACT_TICKS, 0);
 						data.setVariable(EXTRACTION_LOCATION, null);
 

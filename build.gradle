@@ -21,7 +21,7 @@ repositories {
 
 }
 
-version = "1.1.0"
+version = "${mod_version}"
 group = "com.windanesz.ancientspellcraft" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "ancientspellcraft"
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -66,12 +66,6 @@ processResources {
         exclude 'mcmod.info'
     }
 
-//    jar {
-//        manifest {
-//            attributes 'FMLAT': 'ancientspellcraft_at.cfg'
-//        }
-//    }
-//    
     // download the sources for wizardry
     task downloadWizardrySources {
         doLast {

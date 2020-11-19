@@ -24,8 +24,8 @@ public class CallOfThePack extends SpellMinion<EntityWolfMinion> {
 		minion.setTamed(true);
 		minion.setOwnerId(caster.getUniqueID());
 		minion.setTamedBy((EntityPlayer) caster);
-		super.addMinionExtras(minion, pos, caster, modifiers, alreadySpawned);
-		minion.setHealth(minion.getMaxHealth());
+//		super.addMinionExtras(minion, pos, caster, modifiers, alreadySpawned);
+//		minion.setHealth(minion.getMaxHealth());
 	}
 
 	@Override

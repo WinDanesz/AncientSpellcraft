@@ -4,7 +4,7 @@
         "scroll": false,
         "wands": true,
         "npcs": false,
-        "dispensers": false,
+        "dispensers": true,
         "commands": true,
         "treasure": false,
         "trades": false,

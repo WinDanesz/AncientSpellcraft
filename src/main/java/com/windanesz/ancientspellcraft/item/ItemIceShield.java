@@ -63,6 +63,7 @@ public class ItemIceShield extends Item implements IConjuredItem {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(I18n.format("item." + this.getRegistryName() + ".desc1"));
 		tooltip.add(I18n.format("item." + this.getRegistryName() + ".desc2"));

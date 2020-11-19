@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.entity.EntityMageLight;
 import com.windanesz.ancientspellcraft.entity.EntityVolcano;
 import com.windanesz.ancientspellcraft.entity.EntityWisp;
@@ -26,6 +27,9 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 //import com.windanesz.ancientspellcraft.entity.EntityMageLight;
 
@@ -81,7 +85,9 @@ public class AncientSpellcraftEntities {
 
 		registry.register(createEntry(EntityVoidCreeper.class, "void_creeper", TrackingType.LIVING)
 				.egg(0x271b3b, 0x7f35fb)
-				.spawn(EnumCreatureType.MONSTER, 20, 3, 5, ForgeRegistries.BIOMES.getValuesCollection()).build());
+				.spawn(EnumCreatureType.MONSTER, Settings.generalSettings.void_creeper_spawn_rate, 1, 1, ForgeRegistries.BIOMES.getValuesCollection().stream()
+						.filter(b -> !Arrays.asList(AncientSpellcraft.settings.voidCreeperBiomeBlacklist).contains(b.getRegistryName()))
+						.collect(Collectors.toSet())).build());
 
 		registry.register(createEntry(EntitySkeletonMageMinion.class, "skeleton_mage_minion", TrackingType.LIVING).build());
 		registry.register(createEntry(EntityWolfMinion.class, "wolf_minion", TrackingType.LIVING).egg(0xcc6f47, 0x676767).build());
@@ -89,7 +95,7 @@ public class AncientSpellcraftEntities {
 		registry.register(createEntry(EntityVenusFlyTrap.class, "venus_fly_trap", TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());
 		registry.register(createEntry(EntityFireAnt.class, "fire_ant", TrackingType.LIVING).build());
 
-//		registry.register(createEntry(EntitySpellBook.class, "rouge_spell_book", TrackingType.LIVING).build());
+		//		registry.register(createEntry(EntitySpellBook.class, "rouge_spell_book", TrackingType.LIVING).build());
 
 		// constructs
 		registry.register(createEntry(EntityTransportationPortal.class, "transportation_portal", TrackingType.CONSTRUCT).build());

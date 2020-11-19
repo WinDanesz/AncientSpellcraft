@@ -39,6 +39,7 @@ public class ItemEnchantedNameTag extends ItemNameTag implements IWorkbenchItem,
 
 	// enchantment glint only if charged
 	@Override
+	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack stack) {
 		return !(isManaEmpty(stack));
 	}

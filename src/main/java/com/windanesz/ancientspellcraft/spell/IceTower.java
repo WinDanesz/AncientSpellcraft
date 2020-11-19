@@ -5,60 +5,50 @@ import com.windanesz.ancientspellcraft.block.BlockIceDoor;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.item.SpellActions;
-import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStainedGlassPane;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import static net.minecraft.block.BlockSlab.HALF;
 
-public class IceTower extends SpellRay {
+public class IceTower extends Spell {
 	private static Random rand = new Random();
 
 	public IceTower() {
 		super(AncientSpellcraft.MODID, "ice_tower", SpellActions.SUMMON, false);
-		this.soundValues(0.5f, 1.1f, 0.2f); }
-
-	@Override
-	protected boolean onEntityHit(World world, Entity target, Vec3d hit,
-			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-		return false;
+		this.soundValues(0.5f, 1.1f, 0.2f);
 	}
 
 	@Override
-	protected boolean onMiss(World world, @Nullable EntityLivingBase caster, Vec3d origin, Vec3d direction, int ticksInUse, SpellModifiers modifiers) {
-		return false;
-	}
+	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		if (!caster.onGround) {
+			return false;
+		}
 
-	@Override
-	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit,
-			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
+		BlockPos pos = caster.getPosition();
 
 		for (BlockPos currTestPos : BlockPos.getAllInBox(caster.getPosition().offset(EnumFacing.SOUTH, 5).offset(EnumFacing.WEST, 5),
 				caster.getPosition().offset(EnumFacing.UP).offset(EnumFacing.NORTH, 5).offset(EnumFacing.EAST, 5))) {
 			if (!world.canSeeSky(currTestPos)) {
 				if (!world.isRemote && caster instanceof EntityPlayer) {
-					((EntityPlayer) caster).sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:ice_tower.no_room"), true);
+					caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:ice_tower.no_room"), true);
 				}
 				return false;
 			}
-
 		}
 
 		List<BlockPos> blockPosList = new ArrayList<>();
@@ -81,7 +71,7 @@ public class IceTower extends SpellRay {
 			blockPosList.add(layer1.offset(EnumFacing.UP, i).offset(EnumFacing.SOUTH, 1).offset(EnumFacing.WEST, 2));
 
 			// floor
-			for (BlockPos currpos : BlockPos.getAllInBox(pos.offset(EnumFacing.DOWN).offset(EnumFacing.NORTH, 2).offset(EnumFacing.WEST,2).add(0, 1, 0), pos.offset(EnumFacing.SOUTH, 2).offset(EnumFacing.WEST,2).add(4, 0, 1))) {
+			for (BlockPos currpos : BlockPos.getAllInBox(pos.offset(EnumFacing.DOWN).offset(EnumFacing.NORTH, 2).offset(EnumFacing.WEST, 2).add(0, 1, 0), pos.offset(EnumFacing.SOUTH, 2).offset(EnumFacing.WEST, 2).add(4, 0, 1))) {
 				blockPosList.add(currpos);
 			}
 			//			blockPosList.add(layer1.offset(EnumFacing.NORTH, 2).offset());
@@ -170,26 +160,26 @@ public class IceTower extends SpellRay {
 
 		roof.add(topcenter.offset(EnumFacing.NORTH));
 		roof.add(topcenter.offset(EnumFacing.NORTH).offset(EnumFacing.EAST));
-		roof.add(topcenter.offset(EnumFacing.NORTH).offset(EnumFacing.EAST,2));
-		roof.add(topcenter.offset(EnumFacing.NORTH).offset(EnumFacing.EAST,3));
-		roof.add(topcenter.offset(EnumFacing.NORTH).offset(EnumFacing.EAST,4));
-		roof.add(topcenter.offset(EnumFacing.EAST,4));
-		roof.add(topcenter.offset(EnumFacing.WEST,1));
-		roof.add(topcenter.offset(EnumFacing.SOUTH,1).offset(EnumFacing.WEST));
-		roof.add(topcenter.offset(EnumFacing.SOUTH,2).offset(EnumFacing.WEST));
-		roof.add(topcenter.offset(EnumFacing.SOUTH,3).offset(EnumFacing.WEST));
-		roof.add(topcenter.offset(EnumFacing.SOUTH,4).offset(EnumFacing.WEST));
+		roof.add(topcenter.offset(EnumFacing.NORTH).offset(EnumFacing.EAST, 2));
+		roof.add(topcenter.offset(EnumFacing.NORTH).offset(EnumFacing.EAST, 3));
+		roof.add(topcenter.offset(EnumFacing.NORTH).offset(EnumFacing.EAST, 4));
+		roof.add(topcenter.offset(EnumFacing.EAST, 4));
+		roof.add(topcenter.offset(EnumFacing.WEST, 1));
+		roof.add(topcenter.offset(EnumFacing.SOUTH, 1).offset(EnumFacing.WEST));
+		roof.add(topcenter.offset(EnumFacing.SOUTH, 2).offset(EnumFacing.WEST));
+		roof.add(topcenter.offset(EnumFacing.SOUTH, 3).offset(EnumFacing.WEST));
+		roof.add(topcenter.offset(EnumFacing.SOUTH, 4).offset(EnumFacing.WEST));
 		roof.add(topcenter.offset(EnumFacing.SOUTH, 5));
-		roof.add(topcenter.offset(EnumFacing.SOUTH,5).offset(EnumFacing.EAST));
-		roof.add(topcenter.offset(EnumFacing.SOUTH,5).offset(EnumFacing.EAST,2));
-		roof.add(topcenter.offset(EnumFacing.SOUTH,5).offset(EnumFacing.EAST,3));
-		roof.add(topcenter.offset(EnumFacing.SOUTH,5).offset(EnumFacing.EAST,4));
-		roof.add(topcenter.offset(EnumFacing.EAST,5));
+		roof.add(topcenter.offset(EnumFacing.SOUTH, 5).offset(EnumFacing.EAST));
+		roof.add(topcenter.offset(EnumFacing.SOUTH, 5).offset(EnumFacing.EAST, 2));
+		roof.add(topcenter.offset(EnumFacing.SOUTH, 5).offset(EnumFacing.EAST, 3));
+		roof.add(topcenter.offset(EnumFacing.SOUTH, 5).offset(EnumFacing.EAST, 4));
+		roof.add(topcenter.offset(EnumFacing.EAST, 5));
 		//exp
-		roof.add(topcenter.offset(EnumFacing.SOUTH,1).offset(EnumFacing.EAST,5));
-		roof.add(topcenter.offset(EnumFacing.SOUTH,2).offset(EnumFacing.EAST,5));
-		roof.add(topcenter.offset(EnumFacing.SOUTH,3).offset(EnumFacing.EAST,5));
-		roof.add(topcenter.offset(EnumFacing.SOUTH,4).offset(EnumFacing.EAST,5));
+		roof.add(topcenter.offset(EnumFacing.SOUTH, 1).offset(EnumFacing.EAST, 5));
+		roof.add(topcenter.offset(EnumFacing.SOUTH, 2).offset(EnumFacing.EAST, 5));
+		roof.add(topcenter.offset(EnumFacing.SOUTH, 3).offset(EnumFacing.EAST, 5));
+		roof.add(topcenter.offset(EnumFacing.SOUTH, 4).offset(EnumFacing.EAST, 5));
 
 		for (BlockPos currpos : BlockPos.getAllInBox(topcenter.offset(EnumFacing.UP).offset(EnumFacing.SOUTH).offset(EnumFacing.EAST).add(0, 1, 0), topcenter.add(3, 3, 3))) {
 			roof.add(currpos);
@@ -197,10 +187,10 @@ public class IceTower extends SpellRay {
 
 		roof.add(topcenter.offset(EnumFacing.UP, 2).offset(EnumFacing.SOUTH, 2));
 		roof.add(topcenter.offset(EnumFacing.UP, 2).offset(EnumFacing.EAST, 2));
-		roof.add(topcenter.offset(EnumFacing.UP, 2).offset(EnumFacing.EAST, 4).offset(EnumFacing.SOUTH,2));
-		roof.add(topcenter.offset(EnumFacing.UP, 2).offset(EnumFacing.EAST, 2).offset(EnumFacing.SOUTH,4));
-		roof.add(topcenter.offset(EnumFacing.UP, 4).offset(EnumFacing.SOUTH,2).offset(EnumFacing.EAST,2));
-		roof.add(topcenter.offset(EnumFacing.UP, 5).offset(EnumFacing.SOUTH,2).offset(EnumFacing.EAST,2));
+		roof.add(topcenter.offset(EnumFacing.UP, 2).offset(EnumFacing.EAST, 4).offset(EnumFacing.SOUTH, 2));
+		roof.add(topcenter.offset(EnumFacing.UP, 2).offset(EnumFacing.EAST, 2).offset(EnumFacing.SOUTH, 4));
+		roof.add(topcenter.offset(EnumFacing.UP, 4).offset(EnumFacing.SOUTH, 2).offset(EnumFacing.EAST, 2));
+		roof.add(topcenter.offset(EnumFacing.UP, 5).offset(EnumFacing.SOUTH, 2).offset(EnumFacing.EAST, 2));
 
 		for (BlockPos currPos : roof) {
 			world.setBlockState(currPos, Blocks.PACKED_ICE.getDefaultState());
@@ -214,10 +204,10 @@ public class IceTower extends SpellRay {
 		}
 
 		//door
-//		world.setBlockState(pos.offset(EnumFacing.UP).offset(EnumFacing.SOUTH, 2), Blocks.AIR.getDefaultState());
+		//		world.setBlockState(pos.offset(EnumFacing.UP).offset(EnumFacing.SOUTH, 2), Blocks.AIR.getDefaultState());
 		world.setBlockState(pos.offset(EnumFacing.UP).offset(EnumFacing.SOUTH, 2), AncientSpellcraftBlocks.ICE_DOOR.getDefaultState().withProperty(BlockIceDoor.HALF, BlockIceDoor.EnumDoorHalf.LOWER));
-//		world.setBlockState(pos.offset(EnumFacing.UP,2).offset(EnumFacing.SOUTH, 2), Blocks.AIR.getDefaultState());
-		world.setBlockState(pos.offset(EnumFacing.UP,2).offset(EnumFacing.SOUTH, 2), AncientSpellcraftBlocks.ICE_DOOR.getDefaultState().withProperty(BlockIceDoor.HALF, BlockIceDoor.EnumDoorHalf.UPPER));
+		//		world.setBlockState(pos.offset(EnumFacing.UP,2).offset(EnumFacing.SOUTH, 2), Blocks.AIR.getDefaultState());
+		world.setBlockState(pos.offset(EnumFacing.UP, 2).offset(EnumFacing.SOUTH, 2), AncientSpellcraftBlocks.ICE_DOOR.getDefaultState().withProperty(BlockIceDoor.HALF, BlockIceDoor.EnumDoorHalf.UPPER));
 
 		// windows
 		List<BlockPos> windows = new ArrayList<>();

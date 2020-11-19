@@ -101,6 +101,9 @@ public class EntityWolfMinion extends EntityWolf implements ISummonedCreature {
 		if(this.world.isRemote){
 			this.spawnAppearParticles();
 		}
+		if (this.getHealth() < this.getMaxHealth()) {
+			this.setHealth(this.getMaxHealth());
+		}
 
 		return livingdata;
 	}
@@ -126,6 +129,8 @@ public class EntityWolfMinion extends EntityWolf implements ISummonedCreature {
 			ParticleBuilder.create(Type.SPARKLE).pos(x, y, z).clr(0,67,0).spawn(world);
 		}
 	}
+
+
 
 	@Override
 	public EntityWolf createChild(EntityAgeable par1EntityAgeable){

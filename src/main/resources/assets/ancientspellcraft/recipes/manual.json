@@ -1,23 +1,16 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "AFA",
-        "CCC",
-        "CCC"
+        "BG"
     ],
     "key": {
-        "A": {
-            "item": "ancientspellcraft:astral_diamond_charged"
-        },
-        "C": {
-            "item": "ebwizardry:crystal_block",
-            "data": 0
-        },
-        "F": {
-            "item": "ebwizardry:large_mana_flask"
-        }
+        "B": { "item": "minecraft:book" },
+        "G": { "item": "ebwizardry:crystal_shard" }
     },
     "result": {
-        "item": "ebwizardry:imbuement_altar"
+        "item": "patchouli:guide_book",
+        "nbt": {
+            "patchouli:book": "ancientspellcraft:manual"
+        }
     }
 }

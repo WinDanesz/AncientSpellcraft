@@ -30,6 +30,7 @@ public class ItemNonBaubleArtefact extends Item {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack stack){
 		return rarity == EnumRarity.EPIC;
 	}

@@ -21,7 +21,7 @@ public class ItemEvergrowingCrystal extends ItemDailyArtefact {
 			float i = AncientSpellcraft.rand.nextFloat();
 			if (i <= 0.1) {
 				stack = new ItemStack(AncientSpellcraftItems.astral_diamond_shard, ASUtils.randIntBetween(1, 3));
-			} else if (i <= 0.20) {
+			} else if (i <= 0.15) {
 				stack = new ItemStack(Items.DIAMOND, ASUtils.randIntBetween(1, 1));
 			} else {
 				stack = new ItemStack(Items.EMERALD, ASUtils.randIntBetween(1, 2));

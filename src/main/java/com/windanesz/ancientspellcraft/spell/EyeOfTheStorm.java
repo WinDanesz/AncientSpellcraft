@@ -24,6 +24,10 @@ public class EyeOfTheStorm extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		if (ticksInUse == 0 || ticksInUse % 30 == 0) {
+
+			this.playSound(world, caster, ticksInUse, -1, modifiers);
+		}
 
 		if (ticksInUse > 1 && ticksInUse % 60 == 0) {
 			if (!world.isRemote) {

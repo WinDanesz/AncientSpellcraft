@@ -201,6 +201,7 @@ public class ItemMagicShield extends Item implements ISpellCastingItem, IManaSto
 
 	// enchantment glint
 	@Override
+	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack stack) {
 		return !(isManaEmpty(stack));
 	}

@@ -23,6 +23,7 @@ import com.windanesz.ancientspellcraft.spell.ConjureFishingRod;
 import com.windanesz.ancientspellcraft.spell.ConjureShadowBlade;
 import com.windanesz.ancientspellcraft.spell.ConjureWater;
 import com.windanesz.ancientspellcraft.spell.ContinuityCharm;
+import com.windanesz.ancientspellcraft.spell.CreateIgloo;
 import com.windanesz.ancientspellcraft.spell.Cryostasis;
 import com.windanesz.ancientspellcraft.spell.CureZombie;
 import com.windanesz.ancientspellcraft.spell.CurseArmor;
@@ -41,7 +42,6 @@ import com.windanesz.ancientspellcraft.spell.Harvest;
 import com.windanesz.ancientspellcraft.spell.HellGate;
 import com.windanesz.ancientspellcraft.spell.IceTower;
 import com.windanesz.ancientspellcraft.spell.IceWorkbench;
-import com.windanesz.ancientspellcraft.spell.Igloo;
 import com.windanesz.ancientspellcraft.spell.IntensifyingFocus;
 import com.windanesz.ancientspellcraft.spell.LavaVision;
 import com.windanesz.ancientspellcraft.spell.Magelight;
@@ -188,7 +188,7 @@ public final class AncientSpellcraftSpells {
 		registry.register(new NaturesSprout(modId, "natures_sprout", EnumAction.BLOCK, false));
 
 		// AS 1.1 Spells
-		registry.register(new Igloo());
+		registry.register(new CreateIgloo());
 		registry.register(new IceTower());
 		registry.register(new IceWorkbench(modId, "ice_workbench", EnumAction.BLOCK, false));
 		registry.register(new SnowBlock());

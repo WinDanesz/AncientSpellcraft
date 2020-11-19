@@ -15,12 +15,20 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.UUID;
 
 public class CureZombie extends SpellRay {
 
-	/**
-	 * The number by which this spell's damage is multiplied for undead entities.
-	 */
+	private static final Method startConverting;
+
+	static {
+		startConverting = ObfuscationReflectionHelper.findMethod(EntityZombieVillager.class, "func_191991_a", void.class, UUID.class, int.class);
+	}
+
 	public CureZombie() {
 		super(AncientSpellcraft.MODID, "cure_zombie", SpellActions.POINT_UP, false);
 	}
@@ -30,9 +38,8 @@ public class CureZombie extends SpellRay {
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 		if (target instanceof EntityZombieVillager && caster instanceof EntityPlayer) {
-			if (!world.isRemote)
-			{
-				((EntityZombieVillager) target).startConverting(caster.getUniqueID(), AncientSpellcraft.rand.nextInt(2401) + 3600);
+			if (!world.isRemote) {
+				StartConverting((EntityZombieVillager) target, caster.getUniqueID(), AncientSpellcraft.rand.nextInt(2401) + 3600);
 				return true;
 			}
 		}
@@ -62,4 +69,14 @@ public class CureZombie extends SpellRay {
 		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
 	}
 
+	public static void StartConverting(EntityZombieVillager zombieVillager, UUID conversionStarterIn, int conversionTimeIn) {
+		try {
+			startConverting.invoke(zombieVillager, conversionStarterIn, conversionTimeIn);
+
+		}
+		catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			AncientSpellcraft.logger.error("Error while reflectively calling EntityZombieVillager#startConverting");
+			e.printStackTrace();
+		}
+	}
 }

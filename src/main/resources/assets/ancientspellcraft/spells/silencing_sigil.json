@@ -3,12 +3,12 @@
         "book": true,
         "scroll": true,
         "wands": true,
-        "npcs": true,
+        "npcs": false,
         "dispensers": true,
         "commands": true,
-        "treasure": true,
-        "trades": true,
-        "looting": true
+        "treasure": false,
+        "trades": false,
+        "looting": false
     },
     "tier": "apprentice",
     "element": "magic",

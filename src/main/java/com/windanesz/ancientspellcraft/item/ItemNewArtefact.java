@@ -71,6 +71,12 @@ public class ItemNewArtefact extends Item {
 	}
 
 	@Override
+	public EnumRarity getRarity(ItemStack stack){
+		return rarity;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack stack) {
 		return rarity == EnumRarity.EPIC;
 	}

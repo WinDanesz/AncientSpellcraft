@@ -31,8 +31,7 @@ public class CurseOfDeath extends SpellRay {
 		if (EntityUtils.isLiving(target) && target instanceof EntityPlayer) {
 
 			if (!world.isRemote)
-				//				((EntityLivingBase) target).addPotionEffect(new PotionEffect(AncientSpellcraftPotions.curse_of_death, 72000, 0));
-				((EntityLivingBase) target).addPotionEffect(new PotionEffect(AncientSpellcraftPotions.curse_of_death, 72, 0));
+				((EntityLivingBase) target).addPotionEffect(new PotionEffect(AncientSpellcraftPotions.curse_of_death, 72000, 0));
 		}
 
 		return true;

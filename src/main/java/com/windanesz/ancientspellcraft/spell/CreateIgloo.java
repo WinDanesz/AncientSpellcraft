@@ -3,42 +3,37 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.item.SpellActions;
-import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Igloo extends SpellRay {
+public class CreateIgloo extends Spell {
 
 	private static Random rand = new Random();
 
-	public Igloo() {
+	public CreateIgloo() {
 		super(AncientSpellcraft.MODID, "create_igloo", SpellActions.SUMMON, false);
 		this.soundValues(0.5f, 1.1f, 0.2f);
 	}
 
 	@Override
-	protected boolean onEntityHit(World world, Entity target, Vec3d hit,
-			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-		return false;
-	}
+	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		if (!caster.onGround) {
+			return false;
+		}
 
-	@Override
-	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit,
-			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-		this.playSound(world, caster, ticksInUse, -1, modifiers);
+		BlockPos pos = caster.getPosition();
 
 		List<BlockPos> blockPosList = new ArrayList<>();
 		BlockPos layer1Center = pos.offset(EnumFacing.UP);
@@ -167,11 +162,6 @@ public class Igloo extends SpellRay {
 		}
 
 		return true;
-	}
-
-	@Override
-	protected boolean onMiss(World world, @Nullable EntityLivingBase caster, Vec3d origin, Vec3d direction, int ticksInUse, SpellModifiers modifiers) {
-		return false;
 	}
 
 	@Override

@@ -135,9 +135,10 @@ public class BlockHellFire extends Block {
 			}
 			worldIn.setBlockToAir(pos); // remove the nether fire block
 
-//			((EntityPlayer) entityIn).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 0));
-
-			SpellTeleporter.teleportEntity((EntityPlayer) entityIn, targetDim, x, pos.getY(), z);
+			//			((EntityPlayer) entityIn).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 0));
+			if (!worldIn.isRemote)
+				//			SpellTeleporter.teleportEntity((EntityPlayer) entityIn, targetDim, x, pos.getY(), z);
+				SpellTeleporter.teleportEntity(targetDim, entityIn.posX, entityIn.posY, entityIn.posZ, true, (EntityPlayer) entityIn);
 		}
 	}
 
@@ -150,8 +151,8 @@ public class BlockHellFire extends Block {
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 
 		if (rand.nextInt(24) == 0) {
-		ParticleBuilder.create(ParticleBuilder.Type.FLASH)
-					.pos(pos.getX() + 0.5f, pos.getY() + 0.1, pos.getZ() +0.5f)
+			ParticleBuilder.create(ParticleBuilder.Type.FLASH)
+					.pos(pos.getX() + 0.5f, pos.getY() + 0.1, pos.getZ() + 0.5f)
 					.face(EnumFacing.UP)
 					.clr(145, 6, 55)
 					//					.clr(89, 238, 155)

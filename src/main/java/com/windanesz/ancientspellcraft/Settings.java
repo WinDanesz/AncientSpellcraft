@@ -7,6 +7,9 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static electroblob.wizardry.Settings.toResourceLocations;
 
 @Config(modid = AncientSpellcraft.MODID, name = "AncientSpellcraft") // No fancy configs here so we can use the annotation, hurrah!
@@ -15,6 +18,10 @@ public class Settings {
 	public ResourceLocation[] lootInjectionLocations = toResourceLocations(generalSettings.DEFAULT_LOOT_INJECTION_LOCATIONS);
 
 	public ResourceLocation[] artefactInjectionLocations = toResourceLocations(generalSettings.EPIC_ARTEFACT_INJECTION_LOCATIONS);
+
+	public ResourceLocation[] voidCreeperBiomeBlacklist = toResourceLocations(generalSettings.void_creeper_biome_blacklist);
+
+	public List<ResourceLocation> test = Arrays.asList(toResourceLocations(generalSettings.void_creeper_biome_blacklist));
 
 	@SuppressWarnings("unused")
 	@Mod.EventBusSubscriber(modid = AncientSpellcraft.MODID)
@@ -85,6 +92,22 @@ public class Settings {
 		@Config.Comment("Enable/Disable Baubles integration for the new artefact types (belt, helm, etc).")
 		@Config.RequiresMcRestart
 		public boolean baubles_integration = true;
+
+		@Config.Name("Void Creeper Spawn Rate")
+		@Config.Comment("Spawn rate for naturally-spawned void creepers; higher numbers mean more void creepers will spawn. Set to 0 do disable spawning entirely")
+		@Config.RequiresMcRestart
+		public int void_creeper_spawn_rate = 5;
+
+		@Config.Name("Void Creeper Biome Blacklist")
+		@Config.Comment("List of Biomes where Void Creepers will never spawn.")
+		@Config.RequiresMcRestart
+		public String[] void_creeper_biome_blacklist = {"mushroom_island", "mushroom_island_shore"};
+
+		@Config.Name("Earth Crystal Shard Biome List")
+		@Config.Comment("List of Biomes where Earth Crystal Shards can spawn.")
+		@Config.RequiresMcRestart
+		public String[] earth_shard_biome_whitelist = {"mushroom_island", "mushroom_island_shore"};
+
 
 	}
 

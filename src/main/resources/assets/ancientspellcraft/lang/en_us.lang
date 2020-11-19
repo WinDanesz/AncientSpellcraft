@@ -47,11 +47,11 @@ spell.ancientspellcraft\:natures_sprout.desc=Deserts, begone!
 
 spell.ancientspellcraft\:create_igloo=Igloo
 spell.ancientspellcraft\:create_igloo.name=Igloo
-spell.ancientspellcraft\:create_igloo.desc=Creates a snow igloo where the caster is pointing.
+spell.ancientspellcraft\:create_igloo.desc=Creates a snow igloo where the caster is pointing. Must be casted downwards
 
 spell.ancientspellcraft\:ice_tower=Ice Tower
 spell.ancientspellcraft\:ice_tower.name=Ice Tower
-spell.ancientspellcraft\:ice_tower.desc=Creates a Tower of Ice of enchanted snow and ice which never melts
+spell.ancientspellcraft\:ice_tower.desc=Creates a Tower of Ice of enchanted snow and ice which never melts. Must be casted downwards
 spell.ancientspellcraft\:ice_tower.no_room=Not enough free space for the ice tower
 
 
@@ -131,7 +131,7 @@ spell.ancientspellcraft\:summon_anchor.desc=Weaken the boundaries between the sp
 
 spell.ancientspellcraft\:blockweaving=Blockweaving
 spell.ancientspellcraft\:blockweaving.name=Blockweaving
-spell.ancientspellcraft\:blockweaving.desc=DESC
+spell.ancientspellcraft\:blockweaving.desc=Magically places block from your offhand by selecting the start position with first cast and end position with second cast
 spell.ancientspellcraft\:blockweaving.forget=Forgot the first position.
 spell.ancientspellcraft\:blockweaving.no_loc=No first position to erase.
 spell.ancientspellcraft\:blockweaving.first_pos_set=Remembered the first position at %s, %s, %s. Cast again to place blocks.
@@ -177,61 +177,41 @@ spell.ancientspellcraft\:conjure_shadow_blade.desc=Conjures a withering Shadow B
 spell.ancientspellcraft\:candlelight=Candlelight
 spell.ancientspellcraft\:candlelight.name=Candlelight
 spell.ancientspellcraft\:candlelight.desc=Conjures a flickering candlelight above the caster, providing a source of light
-
 spell.ancientspellcraft\:magelight=Magelight
 spell.ancientspellcraft\:magelight.name=Magelight
 spell.ancientspellcraft\:magelight.desc=Conjures a hovering light source above the caster
-
-
 spell.ancientspellcraft\:conjure_fishing_rod=Conjure Fishing Rod
 spell.ancientspellcraft\:conjure_fishing_rod.desc=Conjures a Spectral Fishing rod. Potency increases the level and number of enchantments it has
-
 spell.ancientspellcraft\:curse_ward=Curse Ward
 spell.ancientspellcraft\:curse_ward.desc=Casts a magical ward on the caster for two minutes which can absorb curses. Absorbing a curse halves the remaning duration of the ward.
-
 spell.ancientspellcraft\:arcane_beam=Arcane Beam
 spell.ancientspellcraft\:arcane_beam.desc=Channels an instant beam of highly intense magical energy
-
 spell.ancientspellcraft\:ice_shield=Ice Shield
 spell.ancientspellcraft\:ice_shield.desc=Creates a shield of enchanted ice which applies a Frostbite effect to attackers and explodes when it breaks, freezing enemies
-
 spell.ancientspellcraft\:curse_of_death=Curse of Death
 spell.ancientspellcraft\:curse_of_death.desc=Invoke Death, pure demise,\neliminate any foe on third sunrise
-
 spell.ancientspellcraft\:attire_alteration=Attire Alteration
 spell.ancientspellcraft\:attire_alteration.desc=Stores your current armor set in a magical pocket and allows quickly swapping armor
-
-
 spell.ancientspellcraft\:time_knot=Time Knot
 spell.ancientspellcraft\:time_knot.desc=The end is the beginning and the beginning is the end
-
 spell.ancientspellcraft\:curse_temporal_casualty=Temporal Casualty
 spell.ancientspellcraft\:curse_temporal_casualty.desc=Imprisoned in time the warlock sits,\nfrozen in fear, of the Reset. Those who test a sorcerers might, will experience temporal blight, shall go back to where and when they\n stood, once the sun begins to set
-
 spell.ancientspellcraft\:eye_of_the_storm=Eye of The Storm
 spell.ancientspellcraft\:eye_of_the_storm.desc=Ride the storm to overcome your enemies
-
 spell.ancientspellcraft\:feather_fall=Feather Fall
 spell.ancientspellcraft\:feather_fall.desc=Slows down your falling speed by charging the air below you with magical energy
-
 spell.ancientspellcraft\:water_walking=Water Walking
 spell.ancientspellcraft\:water_walking.desc=Allows the caster and nearby entitites (if not sneak-casted) to move across any liquid surfaces as if they were solid
-
 spell.ancientspellcraft\:dispel_lesser_magic=Dispel Lesser Magic
 spell.ancientspellcraft\:dispel_lesser_magic.desc=Dispels weaker magical constructs and projectiles up to Apprentice tier, or a beneficial buff when hitting an enemy
-
 spell.ancientspellcraft\:dispel_greater_magic=Dispel Greater Magic
 spell.ancientspellcraft\:dispel_greater_magic.desc=Dispels greater magical constructs and rojectiles up to Advanced tier, banishes summons and removes all beneficial effects from an enemy
-
 spell.ancientspellcraft\:arcane_augmentation=Arcane Augmentation
 spell.ancientspellcraft\:arcane_augmentation.desc=Increases the blast and range of your next non-metamagic spell by channelling a greater amount of magical force into it
-
 spell.ancientspellcraft\:intensifying_focus=Intensifying Focus
 spell.ancientspellcraft\:intensifying_focus.desc=By channelling a greater amount of magical energy and focusing it to a smaller scale, increases your next spell's Potency
-
 spell.ancientspellcraft\:continuity_charm=Continuity Charm
 spell.ancientspellcraft\:continuity_charm.desc=Increases the duration of your next non-metamagic spell
-
 spell.ancientspellcraft\:mana_flare=Mana Flare
 spell.ancientspellcraft\:mana_flare.desc=Channels your wand with the target's, burning out mana from both.
 spell.ancientspellcraft\:essence_extraction=Essence Extraction
@@ -330,7 +310,7 @@ item.ancientspellcraft\:amulet_time_knot.name=Eye of Foresight
 item.ancientspellcraft\:amulet_time_knot.desc=Your Time Knot loop resets immediately if you die while wearing this amulet
 
 item.ancientspellcraft\:charm_mana_flask.name=Everfull Flask of Mana
-item.ancientspellcraft\:charm_mana_flask.desc=DESC TODO
+item.ancientspellcraft\:charm_mana_flask.desc=This magically enchanted flask always refills itself over time
 item.ancientspellcraft\:charm_mana_flask.invalid_use=Must be used in the offhand, with a mana storing item in the mainhand
 
 item.ancientspellcraft\:charm_reanimation.name=Talisman of Necromancy

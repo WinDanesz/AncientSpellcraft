@@ -15,6 +15,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -64,6 +65,22 @@ public class ArcaneBeam extends SpellRay {
 	public static Predicate<Entity> ignoreEntityFilterWithCaster(Entity entity, Entity caster) {
 		return e -> e == entity || (e instanceof EntityLivingBase && ((EntityLivingBase) e).getHealth() <= 0) || e == caster;
 	}
+
+	@Override
+	protected SoundEvent[] createSounds(){
+		return this.createContinuousSpellSounds();
+	}
+
+	@Override
+	protected void playSound(World world, EntityLivingBase entity, int ticksInUse, int duration, SpellModifiers modifiers, String... sounds){
+		this.playSoundLoop(world, entity, ticksInUse);
+	}
+
+	@Override
+	protected void playSound(World world, double x, double y, double z, int ticksInUse, int duration, SpellModifiers modifiers, String... sounds){
+		this.playSoundLoop(world, x, y, z, ticksInUse, duration);
+	}
+
 
 	/**
 	 * Player and dispenser casting are almost identical so this takes care of the shared stuff. This is mainly for internal use.

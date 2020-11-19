@@ -78,7 +78,7 @@ public class EntitySkeletonMageMinion extends AbstractSkeleton implements ISpell
 
 	private List<Spell> spells = new ArrayList<>(1);
 
-	private EntityAIAttackSpell<EntitySkeletonMageMinion> spellcastingAI = new EntityAIAttackSpell<EntitySkeletonMageMinion>(this, AISpeed, 15f, 40, 0);
+	private EntityAIAttackSpell<EntitySkeletonMageMinion> spellcastingAI = new EntityAIAttackSpell<EntitySkeletonMageMinion>(this, AISpeed, 15f, 25, 0);
 
 	// target AI task for non-healer elements. Uses ISummonedCreature target selector
 	private EntityAINearestAttackableTarget<EntityLivingBase> commonTargetingAI = new EntityAINearestAttackableTarget<EntityLivingBase>(this, EntityLivingBase.class, 0, false, true, this.getTargetSelector());
