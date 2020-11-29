@@ -16,7 +16,5 @@
     "cost": 150,
     "chargeup": 60,
     "cooldown": 200,
-    "base_properties": {
-        "range": 2
-    }
+    "base_properties": {}
 }

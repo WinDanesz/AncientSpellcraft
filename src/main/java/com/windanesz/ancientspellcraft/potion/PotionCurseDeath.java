@@ -12,10 +12,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(Side.SERVER)
 public class PotionCurseDeath extends PotionCurseAS {
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(Wizardry.MODID, "textures/gui/curse_background.png");
 
@@ -25,6 +27,7 @@ public class PotionCurseDeath extends PotionCurseAS {
 
 	// re-adding the timer, without amplifier
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void renderInventoryEffect(int x, int y, PotionEffect effect, Minecraft mc) {
 
 		mc.renderEngine.bindTexture(BACKGROUND);
@@ -57,7 +60,7 @@ public class PotionCurseDeath extends PotionCurseAS {
 	@SubscribeEvent
 	public static void onPotionExpiryEvent(PotionEvent.PotionExpiryEvent event) {
 
-		if (event.getEntity() instanceof EntityPlayer) {
+		if (event.getEntity() instanceof EntityPlayer && !event.getEntity().world.isRemote) {
 
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 

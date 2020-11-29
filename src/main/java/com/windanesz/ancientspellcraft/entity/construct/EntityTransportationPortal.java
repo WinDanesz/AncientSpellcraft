@@ -187,8 +187,6 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 	public void teleportEntity(EntityPlayer player, int targetDim, BlockPos targetPos) {
 		if (player != null) {
 			SpellTeleporter.teleportEntity(targetDim, targetPos.getX(), targetPos.getY(), targetPos.getZ(), true, player);
-//			IMessage msg = new PacketTransportation.Message();
-//			WizardryPacketHandler.net.sendToDimension(msg, player.world.provider.getDimension());
 		}
 	}
 

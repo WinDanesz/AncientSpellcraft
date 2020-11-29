@@ -128,6 +128,10 @@ public final class AncientSpellcraftItems {
 
 	public static final Item belt_enchanter = placeholder();
 
+	/// now with and helm artefacts!
+
+	public static final Item head_curse = placeholder();
+
 
 	/// misc
 	public static final Item magic_shield = placeholder();
@@ -304,6 +308,8 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "charm_omnicron", new ItemOmnicron(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 
 		registerItem(registry, "belt_enchanter", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
+
+		registerItem(registry, "head_curse", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.HEAD));
 
 		/// misc
 

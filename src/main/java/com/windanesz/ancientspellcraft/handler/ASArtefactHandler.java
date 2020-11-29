@@ -59,6 +59,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import static com.windanesz.ancientspellcraft.item.ItemNewArtefact.getActiveNewArtefacts;
 import static electroblob.wizardry.item.ItemArtefact.getActiveArtefacts;
 import static electroblob.wizardry.item.ItemArtefact.isArtefactActive;
 
@@ -310,12 +311,30 @@ public final class ASArtefactHandler {
 
 			/// custom artefact types
 			if (ItemNewArtefact.isNewArtefactActive(player, AncientSpellcraftItems.belt_enchanter)) {
-				if(event.getSpell().getType() == SpellType.BUFF){
+				if (event.getSpell().getType() == SpellType.BUFF) {
 					modifiers.set(WizardryItems.duration_upgrade, modifiers.get(WizardryItems.duration_upgrade) * 1.2f, false);
 				}
 			}
 
 			/// custom artefact types
+
+			for (ItemNewArtefact artefact : getActiveNewArtefacts(player)) {
+
+				if (artefact == AncientSpellcraftItems.head_curse) {
+					float potency = modifiers.get(SpellModifiers.POTENCY);
+					int modifier = 0;
+					for (Potion potion : player.getActivePotionMap().keySet()) {
+						if (potion instanceof Curse) {
+							modifier += 0.1;
+						}
+					}
+
+					if (modifier >= 0) {
+						modifiers.set(SpellModifiers.POTENCY, (1 + modifier) * potency, false);
+					}
+				}
+
+			}
 
 			for (ItemArtefact artefact : getActiveArtefacts(player)) {
 

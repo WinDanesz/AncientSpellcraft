@@ -58,6 +58,18 @@
                 "conjure": 0.875
             },
             "model": "ancientspellcraft:item/spectral_fishing_rod_conjuring_7"
+        },
+        {
+            "predicate": {
+                "cast": 0.0
+            },
+            "model": "ancientspellcraft:item/spectral_fishing_rod"
+        },
+        {
+            "predicate": {
+                "cast": 1
+            },
+            "model": "ancientspellcraft:item/spectral_fishing_rod"
         }
     ]
 }

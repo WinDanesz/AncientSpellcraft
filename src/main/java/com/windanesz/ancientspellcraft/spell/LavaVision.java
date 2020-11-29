@@ -11,8 +11,10 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(Side.CLIENT)
 public class LavaVision extends SpellBuff {
 
 	public LavaVision() {
@@ -21,6 +23,7 @@ public class LavaVision extends SpellBuff {
 	}
 
 	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
 	public static void onFogDensityEvent(EntityViewRenderEvent.FogDensity event) {
 		if (event.getEntity() instanceof EntityPlayer && ((EntityPlayer) event.getEntity()).isPotionActive(AncientSpellcraftPotions.lava_vision)) {
 			if (event.getState().getMaterial() == Material.LAVA) {

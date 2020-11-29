@@ -4,7 +4,6 @@ import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.integration.baubles.WizardryBaublesIntegration;
-import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.util.InventoryUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -19,7 +18,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * New artefact class type to add support for additional Bauble types (e.g. Belt, Head).
@@ -40,6 +41,7 @@ public class ItemNewArtefact extends Item {
 
 	public ItemNewArtefact(EnumRarity rarity, AdditionalType type) {
 		super();
+		setMaxStackSize(1);
 		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
 		this.rarity = rarity;
 		this.type = type;
@@ -99,15 +101,15 @@ public class ItemNewArtefact extends Item {
 	 * when it is equipped in an appropriate bauble slot. If Baubles is not loaded, an artefact is active if it is one
 	 * of the first n of its type on the player's hands/hotbar, where n is the number of bauble slots of that type.
 	 * <p></p>
-	 * {@link ItemArtefact#getActiveArtefacts(EntityPlayer, ItemArtefact.Type...)} cannot be used to query the new types.
+	 * {@link ItemNewArtefact#getActiveNewArtefacts(EntityPlayer, ItemNewArtefact.AdditionalType...)} cannot be used to query the new types.
 	 *
 	 * @param player   The player whose inventory is to be checked.
 	 * @param artefact The artefact to check for.
 	 * @return True if the player has the artefact and it is active, false if not. Always returns false if the given
-	 * item is not an instance of {@code ItemArtefact}.
+	 * item is not an instance of {@code ItemNewArtefact}.
 	 * @throws IllegalArgumentException If the given item is not an artefact.
 	 */
-	// It's cleaner to cast to ItemArtefact here than wherever it is used - items can't be stored as ItemWhatever objects
+	// It's cleaner to cast to ItemNewArtefact here than wherever it is used - items can't be stored as ItemWhatever objects
 	public static boolean isNewArtefactActive(EntityPlayer player, Item artefact) {
 
 		if (!(artefact instanceof ItemNewArtefact))
@@ -129,4 +131,43 @@ public class ItemNewArtefact extends Item {
 			// Note that streaming a list DOES retain the order (unless you call unordered(), obviously)
 		}
 	}
+
+
+	/**
+	 * Returns the currently active artefacts for the given player. If Baubles is loaded, an artefact is active
+	 * when it is equipped in an appropriate bauble slot. If Baubles is not loaded, an artefact is active if it is one
+	 * of the first n of its type on the player's hands/hotbar, where n is the number of bauble slots of that type.
+	 * <p></p>
+	 * This method is more efficient for processing multiple artefact behaviours at once.
+	 *
+	 * @param player The player whose inventory is to be checked.
+	 * @param types The artefact types to check for. If omitted, all artefact types will be checked.
+	 * @return True if the player has the artefact and it is active, false if not. Always returns false if the given
+	 * item is not an instance of {@code ItemNewArtefact}.
+	 */
+	public static List<ItemNewArtefact> getActiveNewArtefacts(EntityPlayer player, ItemNewArtefact.AdditionalType... types){
+
+		if(types.length == 0) types = ItemNewArtefact.AdditionalType.values();
+
+		if(WizardryBaublesIntegration.enabled()){
+			List<ItemNewArtefact> artefacts = ASBaublesIntegration.getEquippedArtefacts(player, types);
+//			artefacts.removeIf(i -> !i.enabled); // Remove artefacts that are disabled in the config
+			return artefacts;
+		}else{
+
+			List<ItemNewArtefact> artefacts = new ArrayList<>();
+
+			for(ItemNewArtefact.AdditionalType type : types){
+				artefacts.addAll(InventoryUtils.getPrioritisedHotbarAndOffhand(player).stream()
+						.filter(s -> s.getItem() instanceof ItemNewArtefact)
+						.map(s -> (ItemNewArtefact)s.getItem())
+						.filter(i -> type == i.type && i.enabled)
+						.limit(type.maxAtOnce)
+						.collect(Collectors.toList()));
+			}
+
+			return artefacts;
+		}
+	}
+
 }

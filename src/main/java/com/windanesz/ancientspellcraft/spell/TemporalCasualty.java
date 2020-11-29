@@ -52,7 +52,7 @@ public class TemporalCasualty extends SpellRay {
 				data.sync();
 
 			} else {
-				return false;
+				return true;
 			}
 
 			if (player.isPotionActive(AncientSpellcraftPotions.time_knot)) {
@@ -63,7 +63,7 @@ public class TemporalCasualty extends SpellRay {
 			//			player.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.curse_temporal_casualty, Integer.MAX_VALUE, 0));
 			return true;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class TemporalCasualty extends SpellRay {
 
 	@Override
 	protected boolean onMiss(World world, @Nullable EntityLivingBase caster, Vec3d origin, Vec3d direction, int ticksInUse, SpellModifiers modifiers) {
-		return false;
+		return true;
 	}
 
 	@Override

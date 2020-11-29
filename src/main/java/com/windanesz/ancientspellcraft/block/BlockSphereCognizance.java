@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft.block;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
 import com.windanesz.ancientspellcraft.tileentity.TileSphereCognizance;
+import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
@@ -17,8 +18,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class BlockSphereCognizance extends BlockContainer {
 
@@ -28,6 +32,17 @@ public class BlockSphereCognizance extends BlockContainer {
 		super(Material.CLAY);
 		this.setLightLevel(0.4f);
 		setHardness(0.5f);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random){
+		if(world.isRemote && random.nextBoolean()){
+			ParticleBuilder.create(ParticleBuilder.Type.SPARKLE)
+					.pos(pos.getX() + random.nextDouble(), pos.getY() + random.nextDouble() / 5 + 0.5, pos.getZ() + random.nextDouble()).vel(0, 0.01, 0)
+					.time(20 + random.nextInt(10)).clr(0.5f + (random.nextFloat() / 5), 0.5f + (random.nextFloat() / 5),
+					0.5f + (random.nextFloat() / 2)).spawn(world);
+		}
 	}
 
 	@Override

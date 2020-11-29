@@ -23,15 +23,45 @@ import net.minecraft.world.World;
 
 public class PocketDimension extends Spell {
 
-	protected float particleCount = 10;
-
 	public static final IStoredVariable<NBTTagCompound> POCKET_DIM_LOCATION = IStoredVariable.StoredVariable.ofNBT("pocket_dim_location", Persistence.ALWAYS).setSynced();
 	public static final IStoredVariable<NBTTagCompound> POCKET_DIM_PREVIOUS_LOCATION = IStoredVariable.StoredVariable.ofNBT("pocket_dim_previous_location", Persistence.ALWAYS).setSynced();
+	protected float particleCount = 10;
 
 	public PocketDimension() {
 		super(AncientSpellcraft.MODID, "pocket_dimension", EnumAction.BLOCK, true);
 		soundValues(1.0f, 1.2f, 0.2f);
 		WizardData.registerStoredVariables(POCKET_DIM_LOCATION, POCKET_DIM_PREVIOUS_LOCATION);
+	}
+
+	public static boolean teleportPlayer(EntityLivingBase caster) {
+		if (caster instanceof EntityPlayer && !caster.world.isRemote) {
+
+			EntityPlayer player = (EntityPlayer) caster;
+			WizardData data = WizardData.get(player);
+
+			if (data != null) {
+
+				if (((EntityPlayer) caster).dimension == AncientSpellcraftDimensions.POCKET_DIM_ID) {
+					if (data.getVariable(POCKET_DIM_PREVIOUS_LOCATION) != null) {
+
+						BlockPos oldpos = NBTUtil.getPosFromTag(data.getVariable(POCKET_DIM_PREVIOUS_LOCATION));
+						SpellTeleporter.teleportEntity(0, oldpos.getX(), oldpos.getY() + 1, oldpos.getZ(), true, player);
+						return true;
+					}
+				}
+
+				NBTTagCompound nbt = NBTUtil.createPosTag(player.getPosition());
+				data.setVariable(POCKET_DIM_PREVIOUS_LOCATION, nbt);
+
+				if (!player.world.isRemote) {
+					data.sync();
+					SpellTeleporter.teleportEntity(AncientSpellcraftDimensions.POCKET_DIM_ID, 0, 3, 0, true, player);
+				}
+
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -51,58 +81,11 @@ public class PocketDimension extends Spell {
 			return false;
 		}
 
-
 		if (!teleportPlayer(caster) && !world.isRemote)
 			return false;
 		this.playSound(world, caster, ticksInUse, -1, modifiers);
 		return true;
 	}
-
-	public static boolean teleportPlayer(EntityLivingBase caster) {
-		if (caster instanceof EntityPlayer) {
-
-			EntityPlayer player = (EntityPlayer) caster;
-			WizardData data = WizardData.get(player);
-
-			if (data != null) {
-
-				if (((EntityPlayer) caster).dimension == AncientSpellcraftDimensions.POCKET_DIM_ID) {
-					if (data.getVariable(POCKET_DIM_PREVIOUS_LOCATION) != null) {
-
-						BlockPos oldpos = NBTUtil.getPosFromTag(data.getVariable(POCKET_DIM_PREVIOUS_LOCATION));
-						SpellTeleporter.teleportEntity(0, oldpos.getX(), oldpos.getY() + 1, oldpos.getZ(), true, player);
-						return true;
-					}
-				}
-
-				NBTTagCompound nbt = NBTUtil.createPosTag(player.getPosition());
-				data.setVariable(POCKET_DIM_PREVIOUS_LOCATION, nbt);
-
-				if (!player.world.isRemote)
-					data.sync();
-
-				SpellTeleporter.teleportEntity(AncientSpellcraftDimensions.POCKET_DIM_ID, 0, 3, 0, true, player);
-
-				return true;
-				//				}
-			}
-		}
-		return false;
-	}
-	//
-	//	protected void spawnParticles(World world, EntityLivingBase caster, SpellModifiers modifiers) {
-	//
-	//		super.spawnParticles(world, caster, modifiers);
-	//
-	//		for (int i = 0; i < particleCount * 2; i++) {
-	//			double x = caster.posX + world.rand.nextDouble() * 2 - 1;
-	//			double y = caster.getEntityBoundingBox().minY + caster.getEyeHeight() - 0.5 + world.rand.nextDouble();
-	//			double z = caster.posZ + world.rand.nextDouble() * 2 - 1;
-	//			ParticleBuilder.create(Type.SPARKLE).pos(x, y, z).vel(0, 0.14, 0).clr(0x0f001b)
-	//					.time(20 + world.rand.nextInt(12)).spawn(world);
-	//			ParticleBuilder.create(Type.DARK_MAGIC).pos(x, y, z).clr(0x0f001b).spawn(world);
-	//		}
-	//	}
 
 	/**
 	 * Spawns buff particles around the caster. Override to add a custom particle effect. Only called client-side.
@@ -122,15 +105,6 @@ public class PocketDimension extends Spell {
 					.spawn(world);
 
 		}
-
-		//		for (int i = 0; i < particleCount; i++) {
-		//			double x = caster.posX + world.rand.nextDouble() * 2 - 1;
-		//			double y = caster.getEntityBoundingBox().minY + caster.getEyeHeight() - 0.5 + world.rand.nextDouble();
-		//			double z = caster.posZ + world.rand.nextDouble() * 2 - 1;
-		//			ParticleBuilder.create(Type.SPARKLE).pos(x, y, z).vel(0, 0.1, 0).clr(1, 1, 1).spawn(world);
-		//		}
-		//
-		//		ParticleBuilder.create(Type.BUFF).entity(caster).clr(1, 1, 1).spawn(world);
 	}
 
 	@Override

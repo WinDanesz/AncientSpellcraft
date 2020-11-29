@@ -135,6 +135,7 @@ public class SpellTeleporter implements ITeleporter {
 	}
 
 	/**
+	 * This method is based on the work of Zarathul and licensed under the MIT license
 	 * Author: Zarathul
 	 * License: MIT License - https://github.com/Zarathul/simpleportals/blob/1.12.2/LICENSE.md
 	 * https://github.com/Zarathul/simpleportals/blob/1.12.2/src/main/java/net/zarathul/simpleportals/common/Utils.java

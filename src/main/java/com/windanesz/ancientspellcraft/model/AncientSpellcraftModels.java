@@ -79,6 +79,9 @@ public final class AncientSpellcraftModels {
 
 		registerItemModel(AncientSpellcraftItems.belt_enchanter);
 
+		registerItemModel(AncientSpellcraftItems.head_curse);
+
+
 		// misc
 		registerItemModel(AncientSpellcraftItems.shadow_blade);
 		registerItemModel(AncientSpellcraftItems.spectral_fishing_rod);

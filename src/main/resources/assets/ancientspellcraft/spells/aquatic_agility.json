@@ -11,7 +11,7 @@
         "looting": true
     },
     "tier": "apprentice",
-    "element": "earth",
+    "element": "ice",
     "type": "buff",
     "cost": 30,
     "chargeup": 0,

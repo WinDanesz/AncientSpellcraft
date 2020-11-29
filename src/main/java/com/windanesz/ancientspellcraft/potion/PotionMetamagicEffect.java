@@ -22,6 +22,7 @@ public class PotionMetamagicEffect extends PotionMagicEffect {
 
 	//	 re-adding the timer, without amplifier
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void renderInventoryEffect(int x, int y, PotionEffect effect, Minecraft mc) {
 		mc.renderEngine.bindTexture(BACKGROUND);
 		electroblob.wizardry.client.DrawingUtils.drawTexturedRect(x, y, 0, 0, 140, 32, 256, 256);

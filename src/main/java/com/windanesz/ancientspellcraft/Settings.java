@@ -17,11 +17,17 @@ public class Settings {
 
 	public ResourceLocation[] lootInjectionLocations = toResourceLocations(generalSettings.DEFAULT_LOOT_INJECTION_LOCATIONS);
 
-	public ResourceLocation[] artefactInjectionLocations = toResourceLocations(generalSettings.EPIC_ARTEFACT_INJECTION_LOCATIONS);
+	public ResourceLocation[] artefactInjectionLocations = toResourceLocations(generalSettings.ARTEFACT_INJECTION_LOCATIONS);
 
 	public ResourceLocation[] voidCreeperBiomeBlacklist = toResourceLocations(generalSettings.void_creeper_biome_blacklist);
 
-	public List<ResourceLocation> test = Arrays.asList(toResourceLocations(generalSettings.void_creeper_biome_blacklist));
+	public List<ResourceLocation> shardEarthShardBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.earth_shard_biome_whitelist));
+	public List<ResourceLocation> shardSorceryShardBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.sorcery_shard_biome_whitelist));
+	public List<ResourceLocation> shardNecromancyShardBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.necromancy_shard_biome_whitelist));
+	public List<ResourceLocation> shardHealingBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.healing_shard_biome_whitelist));
+	public List<ResourceLocation> shardLightningBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.lightning_shard_biome_whitelist));
+	public List<ResourceLocation> shardFireBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.fire_shard_biome_whitelist));
+	public List<ResourceLocation> shardIceBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.ice_shard_biome_whitelist));
 
 	@SuppressWarnings("unused")
 	@Mod.EventBusSubscriber(modid = AncientSpellcraft.MODID)
@@ -75,9 +81,9 @@ public class Settings {
 				"minecraft:chests/woodland_mansion",
 				"minecraft:chests/end_city_treasure"};
 
-		@Config.Name("Artefact Inject locations Crystal Ore Shards")
+		@Config.Name("Artefact Inject locations")
 		@Config.Comment("List of loot tables to inject Ancient Spellcraft artefacts into.")
-		private String[] EPIC_ARTEFACT_INJECTION_LOCATIONS = {
+		private String[] ARTEFACT_INJECTION_LOCATIONS = {
 				"ebwizardry:subsets/uncommon_artefacts",
 				"ebwizardry:subsets/rare_artefacts",
 				"ebwizardry:subsets/epic_artefacts"
@@ -103,11 +109,40 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public String[] void_creeper_biome_blacklist = {"mushroom_island", "mushroom_island_shore"};
 
-		@Config.Name("Earth Crystal Shard Biome List")
+		@Config.Name("Elemental Fire Crystal Shard Biome List")
+		@Config.Comment("List of Biomes where Fire Crystal Shards can spawn.")
+		@Config.RequiresMcRestart
+		public String[] fire_shard_biome_whitelist = {"desert", "desert_hills", "mutated_desert"};
+
+		@Config.Name("Elemental Earth Crystal Shard Biome List")
 		@Config.Comment("List of Biomes where Earth Crystal Shards can spawn.")
 		@Config.RequiresMcRestart
-		public String[] earth_shard_biome_whitelist = {"mushroom_island", "mushroom_island_shore"};
+		public String[] earth_shard_biome_whitelist = {"forest", "birch_forest", "roofed_forest"};
 
+		@Config.Name("Elemental Sorcery Crystal Shard Biome List")
+		@Config.Comment("List of Biomes where Sorcery Crystal Shards can spawn.")
+		@Config.RequiresMcRestart
+		public String[] sorcery_shard_biome_whitelist = {"plains", "mutated_plains"};
+
+		@Config.Name("Elemental Necromancy Crystal Shard Biome List")
+		@Config.Comment("List of Biomes where Necromancy Crystal Shards can spawn.")
+		@Config.RequiresMcRestart
+		public String[] necromancy_shard_biome_whitelist = {"swampland", "mutated_swampland"};
+
+		@Config.Name("Elemental Healing Crystal Shard Biome List")
+		@Config.Comment("List of Biomes where Healing Crystal Shards can spawn.")
+		@Config.RequiresMcRestart
+		public String[] healing_shard_biome_whitelist = {"jungle", "jungle_hills", "jungle_edge"};
+
+		@Config.Name("Elemental Lightning Crystal Shard Biome List")
+		@Config.Comment("List of Biomes where Lightning Crystal Shards can spawn.")
+		@Config.RequiresMcRestart
+		public String[] lightning_shard_biome_whitelist = {"extreme_hills", "smaller_extreme_hills", "extreme_hills_with_trees", "mutated_extreme_hills", "mutated_extreme_hills_with_trees"};
+
+		@Config.Name("Elemental Ice Crystal Shard Biome List")
+		@Config.Comment("List of Biomes where Ice Crystal Shards can spawn.")
+		@Config.RequiresMcRestart
+		public String[] ice_shard_biome_whitelist = {"taiga", "taiga_hills", "taiga_cold", "taiga_cold_hills", "mutated_taiga", "mutated_taiga_cold"};
 
 	}
 

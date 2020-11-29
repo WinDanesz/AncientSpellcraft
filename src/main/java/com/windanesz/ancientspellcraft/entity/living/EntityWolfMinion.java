@@ -1,16 +1,21 @@
 package com.windanesz.ancientspellcraft.entity.living;
 
+import com.google.common.base.Optional;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.entity.living.ISummonedCreature;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.ParticleBuilder.Type;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIFollowOwner;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILeapAtTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
 import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
 import net.minecraft.entity.ai.EntityAISit;
@@ -19,6 +24,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
@@ -35,22 +41,42 @@ import java.util.UUID;
  */
 public class EntityWolfMinion extends EntityWolf implements ISummonedCreature {
 
-
 	// Field implementations
 	private int lifetime = -1;
 	private UUID casterUUID;
 
-
-	public EntityWolfMinion(World world){
+	public EntityWolfMinion(World world) {
 		super(world);
 		this.experienceValue = 0;
 	}
 
 	// Setter + getter implementations
-	@Override public int getLifetime(){ return lifetime; }
-	@Override public void setLifetime(int lifetime){ this.lifetime = lifetime; }
-	@Override public UUID getOwnerId(){ return casterUUID; }
-	@Override public void setOwnerId(UUID uuid){ this.casterUUID = uuid; }
+	@Override
+	public int getLifetime() { return lifetime; }
+
+	@Override
+	public void setLifetime(int lifetime) { this.lifetime = lifetime; }
+	//	@Override public UUID getOwnerId(){ return casterUUID; }
+	//	@Override public void setOwnerId(UUID uuid){ this.casterUUID = uuid; }
+
+	public void setOwner(EntityLivingBase owner) {
+		this.casterUUID = owner.getUniqueID();
+		this.dataManager.set(OWNER_UNIQUE_ID, Optional.fromNullable(owner.getUniqueID()));
+	}
+
+	@Override
+	public void readSpawnData(ByteBuf buffer) {
+		int id = buffer.readInt();
+		// We're on the client side here, so we can safely use Minecraft.getMinecraft().world via proxies.
+		if (id > -1) {
+			Entity entity = Wizardry.proxy.getTheWorld().getEntityByID(id);
+			if (entity instanceof EntityLivingBase)
+				setOwner((EntityLivingBase) entity);
+			else
+				Wizardry.logger.warn("Received a spawn packet for entity {}, but no living entity matched the supplied ID", this);
+		}
+		setLifetime(buffer.readInt());
+	}
 
 	@Override
 	public void onSpawn() {
@@ -78,7 +104,7 @@ public class EntityWolfMinion extends EntityWolf implements ISummonedCreature {
 	}
 
 	@Override
-	protected void initEntityAI(){
+	protected void initEntityAI() {
 
 		this.aiSit = new EntityAISit(this);
 		this.tasks.addTask(2, this.aiSit);
@@ -91,14 +117,16 @@ public class EntityWolfMinion extends EntityWolf implements ISummonedCreature {
 		this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
 		this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
 		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true, new Class[0]));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<>(this, EntityLivingBase.class,
+				0, false, true, this.getTargetSelector()));
 	}
 
 	@Override
-	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata){
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
 
 		// Adds Particles on spawn. Due to client/server differences this cannot be done
 		// in the item.
-		if(this.world.isRemote){
+		if (this.world.isRemote) {
 			this.spawnAppearParticles();
 		}
 		if (this.getHealth() < this.getMaxHealth()) {
@@ -109,69 +137,82 @@ public class EntityWolfMinion extends EntityWolf implements ISummonedCreature {
 	}
 
 	@Override
-	public void onUpdate(){
+	public void onUpdate() {
 		super.onUpdate();
 		this.updateDelegate();
 	}
 
 	@Override
-	public boolean processInteract(EntityPlayer player, EnumHand hand){
+	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		// In this case, the delegate method determines whether super is called.
 		// Rather handily, we can make use of Java's short-circuiting method of evaluating OR statements.
 		return this.interactDelegate(player, hand) || super.processInteract(player, hand);
 	}
 
-	private void spawnAppearParticles(){
-		for(int i=0; i<15; i++){
+	private void spawnAppearParticles() {
+		for (int i = 0; i < 15; i++) {
 			double x = this.posX - this.width / 2 + this.rand.nextFloat() * width;
 			double y = this.posY + this.height * this.rand.nextFloat() + 0.2f;
 			double z = this.posZ - this.width / 2 + this.rand.nextFloat() * width;
-			ParticleBuilder.create(Type.SPARKLE).pos(x, y, z).clr(0,67,0).spawn(world);
+			ParticleBuilder.create(Type.SPARKLE).pos(x, y, z).clr(0, 67, 0).spawn(world);
 		}
 	}
 
-
-
 	@Override
-	public EntityWolf createChild(EntityAgeable par1EntityAgeable){
+	public EntityWolf createChild(EntityAgeable par1EntityAgeable) {
 		return null;
 	}
 
 	@Override
-	protected int getExperiencePoints(EntityPlayer player){
+	protected int getExperiencePoints(EntityPlayer player) {
 		return 0;
 	}
 
 	@Override
-	protected boolean canDropLoot(){
+	protected boolean canDropLoot() {
 		return false;
 	}
 
 	@Override
-	protected Item getDropItem(){
+	protected Item getDropItem() {
 		return null;
 	}
 
 	@Override
-	protected ResourceLocation getLootTable(){
+	protected ResourceLocation getLootTable() {
 		return null;
 	}
 
 	@Override
-	public ITextComponent getDisplayName(){
-		if(getOwner() != null){
+	public ITextComponent getDisplayName() {
+		if (getOwner() != null) {
 			return new TextComponentTranslation(ISummonedCreature.NAMEPLATE_TRANSLATION_KEY, getOwner().getName(),
 					new TextComponentTranslation("entity." + this.getEntityString() + ".name"));
-		}else{
+		} else {
 			return super.getDisplayName();
 		}
 	}
 
 	@Override
-	public boolean hasCustomName(){
+	public boolean hasCustomName() {
 		// If this returns true, the renderer will show the nameplate when looking
 		// directly at the entity
 		return Wizardry.settings.summonedCreatureNames && getOwner() != null;
 	}
 
+	@Override
+	public void setTamedBy(EntityPlayer player) {
+		super.setTamedBy(player);
+		setCaster(getOwner());
+	}
+
+	@Override
+	public void readEntityFromNBT(NBTTagCompound compound) {
+		super.readEntityFromNBT(compound);
+	}
+
+	@Override
+	public void writeEntityToNBT(NBTTagCompound compound) {
+		super.writeEntityToNBT(compound);
+	}
 }

@@ -1,10 +1,10 @@
 package com.windanesz.ancientspellcraft.entity.living;
 
+import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellImproved;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
-import electroblob.wizardry.entity.living.EntityAIAttackSpell;
 import electroblob.wizardry.entity.living.ISpellCaster;
 import electroblob.wizardry.entity.living.ISummonedCreature;
 import electroblob.wizardry.registry.Spells;
@@ -78,7 +78,7 @@ public class EntitySkeletonMageMinion extends AbstractSkeleton implements ISpell
 
 	private List<Spell> spells = new ArrayList<>(1);
 
-	private EntityAIAttackSpell<EntitySkeletonMageMinion> spellcastingAI = new EntityAIAttackSpell<EntitySkeletonMageMinion>(this, AISpeed, 15f, 25, 0);
+	private EntityAIAttackSpellImproved<EntitySkeletonMageMinion> spellcastingAI = new EntityAIAttackSpellImproved<EntitySkeletonMageMinion>(this, AISpeed, 15f, 25, 0);
 
 	// target AI task for non-healer elements. Uses ISummonedCreature target selector
 	private EntityAINearestAttackableTarget<EntityLivingBase> commonTargetingAI = new EntityAINearestAttackableTarget<EntityLivingBase>(this, EntityLivingBase.class, 0, false, true, this.getTargetSelector());

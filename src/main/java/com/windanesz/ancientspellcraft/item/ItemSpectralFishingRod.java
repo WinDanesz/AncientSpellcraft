@@ -4,21 +4,25 @@ import electroblob.wizardry.item.IConjuredItem;
 import electroblob.wizardry.registry.Spells;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumRarity;
+import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.Objects;
 
 public class ItemSpectralFishingRod extends ItemFishingRod implements IConjuredItem {
@@ -31,6 +35,29 @@ public class ItemSpectralFishingRod extends ItemFishingRod implements IConjuredI
 		setNoRepair();
 		setCreativeTab(null);
 		addAnimationPropertyOverrides();
+		this.addPropertyOverride(new ResourceLocation("cast"), new IItemPropertyGetter()
+		{
+			@SideOnly(Side.CLIENT)
+			public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
+			{
+				if (entityIn == null)
+				{
+					return 0.0F;
+				}
+				else
+				{
+					boolean flag = entityIn.getHeldItemMainhand() == stack;
+					boolean flag1 = entityIn.getHeldItemOffhand() == stack;
+
+					if (entityIn.getHeldItemMainhand().getItem() instanceof ItemSpectralFishingRod)
+					{
+						flag1 = false;
+					}
+
+					return (flag || flag1) && entityIn instanceof EntityPlayer && ((EntityPlayer)entityIn).fishEntity != null ? 1.0F : 0.0F;
+				}
+			}
+		});
 	}
 
 	@Override

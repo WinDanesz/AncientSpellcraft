@@ -45,7 +45,7 @@ public class EntityAntiMagicField extends EntityMagicConstruct {
 			for (EntityLivingBase target : targets) {
 
 				// All entities are slowed, even the caster (except those immune to frost effects)
-				target.addPotionEffect(new PotionEffect(WizardryPotions.arcane_jammer, 20, 0));
+				target.addPotionEffect(new PotionEffect(WizardryPotions.arcane_jammer, 40, 0));
 
 				Map<Potion, PotionEffect> activeEffects = new HashMap<>(target.getActivePotionMap());
 				for (Potion potion : activeEffects.keySet()) {
