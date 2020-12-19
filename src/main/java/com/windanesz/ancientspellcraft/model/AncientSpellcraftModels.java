@@ -76,8 +76,13 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.charm_enchanted_needle);
 		registerItemModel(AncientSpellcraftItems.charm_seed_bag);
 		registerItemModel(AncientSpellcraftItems.charm_omnicron);
+		registerItemModel(AncientSpellcraftItems.charm_book_death);
+		registerItemModel(AncientSpellcraftItems.charm_book_life);
+		registerItemModel(AncientSpellcraftItems.wand_channeling);
 
 		registerItemModel(AncientSpellcraftItems.belt_enchanter);
+		registerItemModel(AncientSpellcraftItems.belt_stone);
+		registerItemModel(AncientSpellcraftItems.belt_druid);
 
 		registerItemModel(AncientSpellcraftItems.head_curse);
 
@@ -86,6 +91,8 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.shadow_blade);
 		registerItemModel(AncientSpellcraftItems.spectral_fishing_rod);
 		registerItemModel(AncientSpellcraftItems.ice_shield);
+		registerItemModel(AncientSpellcraftItems.stone_fist);
+		registerItemModel(AncientSpellcraftItems.advanced_stone_fist);
 
 		registerItemModel(AncientSpellcraftItems.stone_tablet_small);
 		registerItemModel(AncientSpellcraftItems.stone_tablet);
@@ -103,6 +110,9 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.crystal_shard_lightning);
 		registerItemModel(AncientSpellcraftItems.crystal_shard_necromancy);
 		registerItemModel(AncientSpellcraftItems.crystal_shard_sorcery);
+		registerItemModel(AncientSpellcraftItems.sacred_mace);
+
+		registerItemModel(AncientSpellcraftItems.devoritium_ingot);
 
 		// Itemblocks
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.ARTEFACT_PENSIVE));
@@ -122,6 +132,9 @@ public final class AncientSpellcraftModels {
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.imbuement_altar_ruined));
 //		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.log_crystal_tree2));
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.leaves_crystal_tree));
+
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.devoritium_block));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.devoritium_ore));
 
 	}
 
