@@ -26,7 +26,7 @@ public final class AncientSpellcraftTabs {
 		}
 	};
 
-	public static class AncientSpellcraftTab extends CreativeTabs {
+	private static class AncientSpellcraftTab extends CreativeTabs {
 		public AncientSpellcraftTab(String label) {
 			super(label);
 		}

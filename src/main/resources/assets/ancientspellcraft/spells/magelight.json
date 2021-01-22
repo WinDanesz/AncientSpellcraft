@@ -14,7 +14,7 @@
     "element": "magic",
     "type": "buff",
     "cost": 30,
-    "chargeup": 0,
+    "chargeup": 40,
     "cooldown": 120,
     "base_properties": {
         "magelight_duration": 1200,

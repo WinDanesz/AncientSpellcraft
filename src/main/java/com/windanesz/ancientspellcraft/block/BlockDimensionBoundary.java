@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.block;
 
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -18,13 +19,12 @@ public class BlockDimensionBoundary extends Block {
 		this.setResistance(6000000.0F);
 		this.setBlockUnbreakable();
 		this.setSoundType(SoundType.STONE);
+		this.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
 		this.disableStats();
 		setLightLevel(0.8F);
 	}
 
-	/**
-	 * Get the Item that this Block should drop when harvested.
-	 */
+	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
 		return Item.getItemFromBlock(Blocks.STONE);
 	}

@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "BB ",
+        "II ",
+        "BB "
+    ],
+    "key": {
+        "I": {
+            "item": "ancientspellcraft:devoritium_ingot"
+        },
+        "B": {
+            "item": "ancientspellcraft:devoritium_bars"
+        }
+    },
+    "result": {
+        "item": "ancientspellcraft:devoritium_door"
+    }
+}

@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.block;
 
-import com.windanesz.ancientspellcraft.spell.PocketDimension;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftDimensions;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -15,6 +16,8 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
+import static com.windanesz.ancientspellcraft.spell.PocketDimension.teleportPlayer;
+
 public class BlockDimensionFocus extends Block {
 
 	public BlockDimensionFocus() {
@@ -23,6 +26,7 @@ public class BlockDimensionFocus extends Block {
 		this.setResistance(6000001.0F);
 		this.setHardness(6000001.0F);
 		this.disableStats();
+		this.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
 		setLightLevel(0.8F);
 	}
 
@@ -36,6 +40,6 @@ public class BlockDimensionFocus extends Block {
 
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		return PocketDimension.teleportPlayer(playerIn);
+		return playerIn.dimension == AncientSpellcraftDimensions.POCKET_DIM_ID && teleportPlayer(playerIn);
 	}
 }

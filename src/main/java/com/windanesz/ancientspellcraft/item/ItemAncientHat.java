@@ -10,6 +10,7 @@ public class ItemAncientHat extends ItemASWizardArmour{
 
 	public ItemAncientHat(ArmorMaterial material, int renderIndex, EntityEquipmentSlot armourType, Element element) {
 		super(material, renderIndex, armourType, element);
+		setCreativeTab(null);
 	}
 
 	@Override

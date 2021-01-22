@@ -20,30 +20,17 @@ import java.util.List;
 
 public class ContainerSphereCognizance extends Container {
 
-	//	private int cookTime;
-	//	private int totalCookTime;
-	//	private int furnaceBurnTime;
-	//	private int currentItemBurnTime;
-
-	// These store cache values, used by the server to only update the client side tile entity when values have changed
-
-	private int [] cachedFields;
-
+	private int[] cachedFields;
 	private int researchDuration;    // not saved to nbt
 	private int researchProgress;
 	public int currentHintTypeId = 0;
 	public int currentHintId = 0;
-
 
 	public static int CRYSTAL_SLOT = 0;
 	public static int BOOK_SLOT = 1;
 
 	public static List<String> HINT_TYPES = Arrays.asList("none", "failed", "discovered", "heal_ally", "fire", "earth", "ice", "necromancy", "healing", "lightning", "sorcery", "ancient", "buff", "attack", "projectile",
 			"defense", "utility", "construct", "minion", "alteration", "pocket_furnace", "arcane_lock", "remove_curse", "resurrection", "ancient_knowledge");
-
-	//	if ((HINT_TYPES.contains("utility"))) {
-	//		HINT_TYPES.indexOf("utility")}
-	//
 
 	public static final LinkedHashMap<String, Integer> HINTS_COUNT = new LinkedHashMap<String, Integer>() {
 		{
@@ -75,30 +62,13 @@ public class ContainerSphereCognizance extends Container {
 		}
 	};
 
-	//	public static final ResourceLocation EMPTY_SLOT_CRYSTAL = new ResourceLocation(Wizardry.MODID, "gui/empty_slot_crystal");
-	//
-	//	public TileCrystalBallCognizance tileCrystalBallCognizance;
-	//
-	//	public ContainerCrystalBallCognizance(IInventory inventory, TileCrystalBallCognizance tileentity) {
-	//		this.tileCrystalBallCognizance = tileentity;
-	//
-	//		this.addSlotToContainer(new SlotItemList(tileentity, 0, 13, 101, 64,
-	//				WizardryItems.magic_crystal, WizardryItems.crystal_shard, WizardryItems.grand_crystal))
-	//				.setBackgroundName(EMPTY_SLOT_CRYSTAL.toString());
-	//	}
-	//
-
 	private TileSphereCognizance tileSphereCognizance;
 
 	public ContainerSphereCognizance(EntityPlayer player, IInventory playerInv, TileSphereCognizance te) {
 		this.tileSphereCognizance = te;
 		te.openInventory(player);
 
-		// Tile Entity, Slot 0-8, Slot IDs 0-8
-		//		for (int y = 0; y < 3; ++y) {
-		//			for (int x = 0; x < 3; ++x) {
 		// crystal slot
-		//		this.addSlotToContainer(new Slot(te, 0, 14, 100 + 26));
 		this.addSlotToContainer(new SlotItemList(te, 0, 14, 100 + 26, 64, WizardryItems.magic_crystal, WizardryItems.crystal_shard, WizardryItems.grand_crystal));
 
 		/// book
@@ -113,13 +83,10 @@ public class ContainerSphereCognizance extends Container {
 				AncientSpellcraftItems.stone_tablet_grand,
 				AncientSpellcraftItems.ancient_mana_flask,
 				AncientSpellcraftItems.ancient_bound_stone
-				));
-		//			}
-		//		}
+		));
 
 		int n = 75;
 
-		// Player Inventory, Slot 9-35, Slot IDs 9-35
 		for (int y = 0; y < 3; ++y) {
 			for (int x = 0; x < 9; ++x) {
 				this.addSlotToContainer(new Slot(playerInv, x + y * 9 + 9, 8 + x * 18, n + 84 + y * 18));
@@ -178,7 +145,7 @@ public class ContainerSphereCognizance extends Container {
 		super.detectAndSendChanges();
 
 		boolean allFieldsHaveChanged = false;
-		boolean fieldHasChanged [] = new boolean[tileSphereCognizance.getFieldCount()];
+		boolean fieldHasChanged[] = new boolean[tileSphereCognizance.getFieldCount()];
 		if (cachedFields == null) {
 			cachedFields = new int[tileSphereCognizance.getFieldCount()];
 			allFieldsHaveChanged = true;

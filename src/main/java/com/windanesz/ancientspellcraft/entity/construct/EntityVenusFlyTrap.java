@@ -8,6 +8,8 @@ import net.minecraft.world.World;
 
 public class EntityVenusFlyTrap extends EntityEvokerFangs {
 
+	// TODO: unused, to implement
+
 	public EntityVenusFlyTrap(World worldIn) {
 		super(worldIn);
 	}

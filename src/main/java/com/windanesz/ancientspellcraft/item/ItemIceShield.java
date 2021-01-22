@@ -125,8 +125,6 @@ public class ItemIceShield extends Item implements IConjuredItem {
 			// breaks
 			if (entity instanceof EntityPlayer && ((EntityPlayer) entity).getHeldItemOffhand().getItem() instanceof ItemIceShield) {
 				((EntityPlayer) entity).setHeldItem(EnumHand.OFF_HAND, ItemStack.EMPTY);
-			} else {
-				entity.replaceItemInInventory(slot, ItemStack.EMPTY);
 			}
 
 			// adapted from electroblob.wizardry.entity.projectile.EntityIceCharge (author: Electroblob)

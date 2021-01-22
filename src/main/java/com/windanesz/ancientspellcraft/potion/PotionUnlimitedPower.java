@@ -38,8 +38,8 @@ public class PotionUnlimitedPower extends PotionMagicEffect {
 			//			&& !(event.getSpell() instanceof EmpoweringPresence) // Prevent exponential empowerment stacking!
 		) {
 			int amplifier = event.getCaster().getActivePotionEffect(AncientSpellcraftPotions.unlimited_power).getAmplifier() + 1;
-			float potency = 1 + IF_POTENCY_PER_LEVEL * amplifier;
-			float upgrade_modifier = 1 + IF_MODIFIERS_PER_LEVEL * amplifier;
+			float potency = 1 + IF_POTENCY_PER_LEVEL * amplifier * 0.5f;
+			float upgrade_modifier = 1 + IF_MODIFIERS_PER_LEVEL * amplifier * 0.5f;
 
 			event.getModifiers()
 					.set(SpellModifiers.POTENCY, event.getModifiers().get(SpellModifiers.POTENCY) * potency, true)

@@ -1,24 +1,32 @@
 package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.potion.PotionBubbleHead;
 import com.windanesz.ancientspellcraft.potion.PotionCandleLight;
 import com.windanesz.ancientspellcraft.potion.PotionCurseAS;
 import com.windanesz.ancientspellcraft.potion.PotionCurseDeath;
 import com.windanesz.ancientspellcraft.potion.PotionCurseEnder;
 import com.windanesz.ancientspellcraft.potion.PotionCurseWard;
+import com.windanesz.ancientspellcraft.potion.PotionEagleEye;
 import com.windanesz.ancientspellcraft.potion.PotionFeatherFall;
 import com.windanesz.ancientspellcraft.potion.PotionMageLight;
 import com.windanesz.ancientspellcraft.potion.PotionMagicEffectAS;
+import com.windanesz.ancientspellcraft.potion.PotionManaRegeneration;
 import com.windanesz.ancientspellcraft.potion.PotionMetamagicEffect;
 import com.windanesz.ancientspellcraft.potion.PotionProjectileWard;
 import com.windanesz.ancientspellcraft.potion.PotionTimeKnot;
 import com.windanesz.ancientspellcraft.potion.PotionUnlimitedPower;
 import com.windanesz.ancientspellcraft.potion.PotionWaterWalking;
 import com.windanesz.ancientspellcraft.spell.FortifiedArchery;
+import electroblob.wizardry.event.SpellCastEvent;
+import electroblob.wizardry.util.SpellModifiers;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -48,6 +56,7 @@ public class AncientSpellcraftPotions {
 	public static final Potion curse_temporal_casualty = placeholder();
 	public static final Potion feather_fall = placeholder();
 	public static final Potion water_walking = placeholder();
+	public static final Potion eagle_eye = placeholder();
 
 	// metamagic
 	public static final Potion arcane_augmentation = placeholder();
@@ -59,6 +68,16 @@ public class AncientSpellcraftPotions {
 	public static final Potion bulwark = placeholder();
 	public static final Potion arcane_aegis = placeholder();
 	public static final Potion fortified_archery = placeholder();
+	public static final Potion magical_exhaustion = placeholder();
+	public static final Potion bubble_head = placeholder();
+
+	public static final Potion spell_range = placeholder();
+	public static final Potion spell_blast = placeholder();
+	public static final Potion spell_duration = placeholder();
+	public static final Potion spell_cooldown = placeholder();
+	public static final Potion spell_siphon = placeholder();
+	public static final Potion mana_regeneration = placeholder();
+
 
 	public static void registerPotion(IForgeRegistry<Potion> registry, String name, Potion potion) {
 		potion.setRegistryName(AncientSpellcraft.MODID, name);
@@ -127,6 +146,48 @@ public class AncientSpellcraftPotions {
 		registerPotion(registry, "fortified_archery", new FortifiedArchery("fortified_archery", false, 0x166630,
 				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_fortified_archery.png")));
 
+		registerPotion(registry, "eagle_eye", new PotionEagleEye());
+
+		registerPotion(registry, "magical_exhaustion", new PotionMagicEffectAS("magical_exhaustion", true, 0x635a63,
+				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_magical_exhaustion.png")));
+
+		registerPotion(registry, "bubble_head", new PotionBubbleHead());
+
+//		see electroblob.wizardry.WizardryEventHandler.onLivingDeathEvent for siphon upgrade
+		// condensing
+
+		registerPotion(registry, "spell_range", new PotionMagicEffectAS("spell_range", false, 0xc558d6,
+				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_spell_range.png")).setBeneficial());
+		registerPotion(registry, "spell_blast", new PotionMagicEffectAS("spell_blast", false, 0xc558d6,
+				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_spell_blast.png")).setBeneficial());
+		registerPotion(registry, "spell_duration", new PotionMagicEffectAS("spell_duration", false, 0xc558d6,
+				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_spell_duration.png")).setBeneficial());
+		registerPotion(registry, "spell_cooldown", new PotionMagicEffectAS("spell_cooldown", false, 0xc558d6,
+				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_spell_cooldown.png")).setBeneficial());
+		registerPotion(registry, "spell_siphon", new PotionMagicEffectAS("spell_siphon", false, 0xc558d6,
+				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_spell_siphon.png")).setBeneficial());
+		registerPotion(registry, "mana_regeneration", new PotionManaRegeneration());
+
+	}
+
+	// Stuffing this here temporarily, TODO: unify these SpellCastEvent.Pre events to save a minor performance
+	@SubscribeEvent(priority = EventPriority.HIGHEST) // processing after electroblob.wizardry.item.ItemArtefact.onSpellCastPreEvent (EventPriority.LOW)
+	public static void onSpellCastPreEvent(SpellCastEvent.Pre event) {
+		float POTENCY_DECREASE_PER_LEVEL = 0.3f;
+
+		if (event.getCaster() != null && event.getCaster().isPotionActive(magical_exhaustion)) {
+			int level = event.getCaster().getActivePotionEffect(magical_exhaustion).getAmplifier() + 1;
+
+			SpellModifiers modifiers = event.getModifiers();
+			float potency = modifiers.get(SpellModifiers.POTENCY);
+			if (level >= 3) {
+				if (event.getCaster() instanceof EntityPlayer && !event.getCaster().getEntityWorld().isRemote)
+					((EntityPlayer) event.getCaster()).sendStatusMessage(new TextComponentTranslation("potion.ancientspellcraft:magical_exhaustion.failed_cast"), true);
+				event.setCanceled(true);
+			} else {
+				modifiers.set(SpellModifiers.POTENCY, potency - (level * POTENCY_DECREASE_PER_LEVEL), false);
+			}
+		}
 	}
 
 }

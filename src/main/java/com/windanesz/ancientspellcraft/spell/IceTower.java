@@ -11,6 +11,7 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStainedGlassPane;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
@@ -39,7 +40,7 @@ public class IceTower extends Spell {
 			return false;
 		}
 
-		BlockPos pos = caster.getPosition();
+		BlockPos pos = caster.getPosition().down();
 
 		for (BlockPos currTestPos : BlockPos.getAllInBox(caster.getPosition().offset(EnumFacing.SOUTH, 5).offset(EnumFacing.WEST, 5),
 				caster.getPosition().offset(EnumFacing.UP).offset(EnumFacing.NORTH, 5).offset(EnumFacing.EAST, 5))) {

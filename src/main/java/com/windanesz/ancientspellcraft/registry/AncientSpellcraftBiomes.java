@@ -13,6 +13,9 @@ public class AncientSpellcraftBiomes {
 		pocket = new BiomePocket();
 
 		ForgeRegistries.BIOMES.register(pocket);
+//		Biome.registerBiome(Settings.generalSettings.pocket_biome_registry_id == 168 ? ForgeRegistries.BIOMES.getKeys().size() :
+//				Settings.generalSettings.pocket_biome_registry_id, "pocket", pocket);
+
 		BiomeDictionary.addTypes(pocket, BiomeDictionary.Type.MAGICAL);
 	}
 }

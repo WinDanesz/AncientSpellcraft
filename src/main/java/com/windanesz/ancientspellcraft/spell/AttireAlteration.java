@@ -92,7 +92,7 @@ public class AttireAlteration extends Spell {
 
 			if (ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.charm_enchanted_needle)) {
 
-				if (stack.getItem() instanceof IManaStoringItem) {
+				if (stack != null && stack != ItemStack.EMPTY && stack.getItem() instanceof IManaStoringItem) {
 					((IManaStoringItem) stack.getItem()).rechargeMana(stack, 2);
 				}
 			}

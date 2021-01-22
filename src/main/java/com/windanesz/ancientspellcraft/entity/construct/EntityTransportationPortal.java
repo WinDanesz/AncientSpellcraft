@@ -1,6 +1,5 @@
 package com.windanesz.ancientspellcraft.entity.construct;
 
-import com.google.common.base.Optional;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
 import com.windanesz.ancientspellcraft.util.SpellTeleporter;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
@@ -11,9 +10,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -24,54 +20,32 @@ import java.util.List;
 
 public class EntityTransportationPortal extends EntityMagicConstruct {
 
-	private static final DataParameter<Integer> TARGET_DIM = EntityDataManager.createKey(EntityTransportationPortal.class, DataSerializers.VARINT);
-	private static final DataParameter<Optional<BlockPos>> ATTACHED_BLOCK_POS = EntityDataManager.<Optional<BlockPos>>createKey(EntityTransportationPortal.class, DataSerializers.OPTIONAL_BLOCK_POS);
-	//	private int TARGET_DIM;
-	//	private BlockPos ATTACHED_BLOCK_POS;
+	private int targetDim;
+	private BlockPos targetPos;
 
-	//	private Location destinationLocation;
 	private int entityTicker = 0;
 	// the particle colors, based on target dim;
 	private int r = 255;
 	private int g = 255;
 	private int b = 255;
-	private boolean hasEntityInside = false;
 
 	public EntityTransportationPortal(World world) {
 		super(world);
 		this.height = 1.0f;
-		//		this.width = 3.0f;
 		this.width = 2.0f;
-		//		setParticleColors();
 	}
 
-	@Override
-	protected void entityInit() {
-		super.entityInit();
-		this.dataManager.register(TARGET_DIM, Integer.valueOf(0));
-		this.dataManager.register(ATTACHED_BLOCK_POS, Optional.absent());
-	}
+	public void setTargetDim(int dim) { targetDim = dim;}
 
-	public void setTargetDim(int dim) {
-		this.dataManager.set(TARGET_DIM, Integer.valueOf(dim));
-	}
+	public int getTargetDim() { return targetDim; }
 
-	public int getTargetDim() {
-		return ((Integer) this.dataManager.get(TARGET_DIM)).intValue();
-	}
+	public void setTargetPos(@Nullable BlockPos pos) { this.targetPos = pos; }
 
-	@Nullable
-	public BlockPos getTargetPos() {
-		return (BlockPos) ((Optional) this.dataManager.get(ATTACHED_BLOCK_POS)).orNull();
-	}
+	public BlockPos getTargetPos() { return targetPos; }
 
-	public void setTargetPos(@Nullable BlockPos pos) {
-		this.dataManager.set(ATTACHED_BLOCK_POS, Optional.fromNullable(pos));
-	}
-
-	private void setParticleColors() {
+	public void setParticleColors() {
 		// default (89, 238, 155)
-		switch (getTargetDim()) {
+		switch (targetDim) {
 			case -1: // Nether
 				r = 162;
 				g = 54;
@@ -104,36 +78,33 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 
 	@Override
 	public void onUpdate() {
-		if (this.ticksExisted == 3) {
-			setParticleColors();
-		}
+				if (this.ticksExisted == 3) {
+					setParticleColors();
+				}
 
 		if ((this.ticksExisted == 20 || this.ticksExisted % 160 == 0)) {
 			this.playSound(AncientSpellcraftSounds.ENTITY_TRANSPORTATION_PORTAL_AMBIENT, 0.4f, 1.0f);
 		}
 
 		List<EntityLivingBase> targets = EntityUtils.getEntitiesWithinRadius(width, posX, posY, posZ, world, EntityLivingBase.class);
-		if (!targets.isEmpty()) {
-			hasEntityInside = true;
-		} else {hasEntityInside = false;}
+		boolean hasEntityInside = !targets.isEmpty();
 
 		if (this.world.isRemote) {
-			double speed = (rand.nextBoolean() ? 1 : -1) * 0.1;// + 0.01 * rand.nextDouble();
+			double speed = (rand.nextBoolean() ? 1 : -1) * 0.1;
 			double radius = rand.nextDouble() * 2.0;
 			float angle = rand.nextFloat() * (float) Math.PI * 2;
 
-			// horizontal particle, always visible
+			// horizontal particle on the floor, always visible
 			ParticleBuilder.create(Type.FLASH)
 					.pos(this.posX, this.posY + 0.1, this.posZ)
 					.face(EnumFacing.UP)
 					.clr(r, g, b)
-					//					.clr(89, 238, 155)
 					.collide(false)
 					.scale(4.3F)
 					.time(10)
 					.spawn(world);
 			if (!(r == 255 && g == 255 && b == 255)) {
-				// spinning particles
+				// spinning particles when an entity is present
 				if (hasEntityInside) {
 					ParticleBuilder.create(ParticleBuilder.Type.FLASH)
 							.pos(this.posX + radius / 3 * MathHelper.cos(angle), this.posY, this.posZ + radius / 3 * MathHelper.sin(angle))
@@ -155,20 +126,24 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 			}
 
 		} else {
-			if (hasEntityInside && !targets.isEmpty()) {
+			if (hasEntityInside) {
 				if (entityTicker == 50) {
-						this.playSound(AncientSpellcraftSounds.TRANSPORTATION_PORTAL_TELEPORTS, 0.6f, 1.0f);
+					this.playSound(AncientSpellcraftSounds.TRANSPORTATION_PORTAL_TELEPORTS, 0.6f, 1.0f);
 				}
 				if (entityTicker == 90) {
-					if (targets.get(0) instanceof EntityPlayer) {
-						EntityPlayer targetPlayer = (EntityPlayer) targets.get(0);
-						// custom teleporter implementation instead of Transportation's teleporter
-						teleportEntity(targetPlayer, getTargetDim(), getTargetPos());
+					EntityLivingBase target = targets.get(0);
 
+					if (targetPos == null || (targetPos.getX() == 0 && targetPos.getY() == 0 && targetPos.getZ() == 0)) {
+						this.setDead();
+						return;
+					}
+
+					if (target instanceof EntityPlayer) {
+						teleportPlayer((EntityPlayer) target, targetDim, targetPos);
 						// non players
-					} else if (targets.get(0) instanceof EntityLivingBase) {
-						if (targets.get(0).dimension == getTargetDim()) {
-							teleportEntityLiving(targets.get(0), getTargetDim(), getTargetPos());
+					} else {
+						if (target.dimension == getTargetDim()) {
+							teleportEntityLiving(target, targetDim, targetPos);
 							this.playSound(AncientSpellcraftSounds.TRANSPORTATION_PORTAL_TELEPORTS, 0.6f, 1.0f);
 						} else {EntityUtils.applyStandardKnockback(this, targets.get(0));}
 					}
@@ -180,11 +155,10 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 			}
 		}
 
-		// can't call super because EntityMagicConstruct would despawn the entity even if an entity stands in the sigil
 		super.onUpdate();
 	}
 
-	public void teleportEntity(EntityPlayer player, int targetDim, BlockPos targetPos) {
+	public void teleportPlayer(EntityPlayer player, int targetDim, BlockPos targetPos) {
 		if (player != null) {
 			SpellTeleporter.teleportEntity(targetDim, targetPos.getX(), targetPos.getY(), targetPos.getZ(), true, player);
 		}
@@ -203,24 +177,34 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 		if (this.getTargetPos() != null) {
 			nbt.setTag("target_pos", NBTUtil.createPosTag(this.getTargetPos()));
 		}
+		nbt.setInteger("r", r);
+		nbt.setInteger("g", g);
+		nbt.setInteger("b", b);
 	}
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		if (nbt.hasKey("target_dim")) {
-			this.dataManager.set(TARGET_DIM, nbt.getInteger("target_dim"));
+			this.targetDim = nbt.getInteger("target_dim");
 		}
 		if (nbt.hasKey("target_pos")) {
-			this.dataManager.set(ATTACHED_BLOCK_POS, Optional.of(NBTUtil.getPosFromTag(nbt)));
+			this.targetPos = NBTUtil.getPosFromTag(nbt.getCompoundTag("target_pos"));
+		}
+		if (nbt.hasKey("r")) {
+			this.r = nbt.getInteger("r");
+		}
+		if (nbt.hasKey("g")) {
+			this.g = nbt.getInteger("g");
+		}
+		if (nbt.hasKey("b")) {
+			this.b = nbt.getInteger("b");
 		}
 
 	}
 
 	@Override
-	public boolean canRenderOnFire() {
-		return false;
-	}
+	public boolean canRenderOnFire() { return false; }
 
 }
 

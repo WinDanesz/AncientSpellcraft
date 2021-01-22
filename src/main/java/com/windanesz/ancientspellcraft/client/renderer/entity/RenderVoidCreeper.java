@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderVoidCreeper extends RenderCreeper {
-	private static final ResourceLocation CREEPER_TEXTURES = new ResourceLocation("ancientspellcraft:textures/entity/creeper.png");
+	private static final ResourceLocation CREEPER_TEXTURES = new ResourceLocation("ancientspellcraft:textures/entity/void_creeper.png");
 
 	public RenderVoidCreeper(RenderManager renderManagerIn) {
 		super(renderManagerIn);

@@ -14,6 +14,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -34,6 +35,11 @@ public class ChannelPower extends SpellRay {
 	//cant be cast by wizards
 	@Override
 	public boolean canBeCastBy(EntityLiving npc, boolean override) {
+		return false;
+	}
+
+	@Override
+	public boolean canBeCastBy(TileEntityDispenser dispenser) {
 		return false;
 	}
 

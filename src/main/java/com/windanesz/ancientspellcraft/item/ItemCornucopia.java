@@ -8,8 +8,8 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
 public class ItemCornucopia extends ItemDailyArtefact {
-	public ItemCornucopia(EnumRarity rarity, Type type) {
-		super(rarity, type);
+	public ItemCornucopia(EnumRarity rarity) {
+		super(rarity);
 	}
 
 	@Override

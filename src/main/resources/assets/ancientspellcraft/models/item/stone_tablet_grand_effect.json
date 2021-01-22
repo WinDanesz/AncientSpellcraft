@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "ancientspellcraft:items/stone_tablet_grand_effect_highlight",
+        "layer1": "ancientspellcraft:items/stone_tablet_grand_effect"
+    }
+}

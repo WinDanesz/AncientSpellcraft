@@ -29,6 +29,8 @@ public class Settings {
 	public List<ResourceLocation> shardFireBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.fire_shard_biome_whitelist));
 	public List<ResourceLocation> shardIceBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.ice_shard_biome_whitelist));
 
+
+
 	@SuppressWarnings("unused")
 	@Mod.EventBusSubscriber(modid = AncientSpellcraft.MODID)
 	private static class EventHandler {
@@ -55,10 +57,20 @@ public class Settings {
 
 	public static class GeneralSettings {
 
+		@Config.Name("JEI integration")
+		@Config.Comment("Enables or disables the JEI integration of the mod")
+		@Config.RequiresMcRestart
+		public boolean jei_integration = true;
+
 		@Config.Name("Generate Crystal Ore Shards")
 		@Config.Comment("Determines whether to generate elemental crystal shards in the Overworld or not")
 		@Config.RequiresMcRestart
 		public boolean generate_ore_shards = true;
+
+		@Config.Name("Generate Devoritium Ore")
+		@Config.Comment("Determines whether to generate devoritium ore blocks in the Overworld or not")
+		@Config.RequiresMcRestart
+		public boolean generate_devoritium_ore = true;
 
 		@Config.Name("Sphere Spell Identify Chance")
 		@Config.Comment("The chance of identifying unknown spells when researching them with the Sphere of Cognizance. This doesn't affects the other hint texts given by the Sphere. 0 = never identify a spell, 1.0 = always")
@@ -95,14 +107,20 @@ public class Settings {
 		public boolean shake_screen = true;
 
 		@Config.Name("Baubles Integration")
-		@Config.Comment("Enable/Disable Baubles integration for the new artefact types (belt, helm, etc).")
+		@Config.Comment("Enable/Disable Baubles integration for the new artefact types (belt, helm, etc). This does NOT affect Electroblob's Wizardry's own Baubles support implementation (ring, amulet, charm)!")
 		@Config.RequiresMcRestart
 		public boolean baubles_integration = true;
 
 		@Config.Name("Void Creeper Spawn Rate")
 		@Config.Comment("Spawn rate for naturally-spawned void creepers; higher numbers mean more void creepers will spawn. Set to 0 do disable spawning entirely")
 		@Config.RequiresMcRestart
-		public int void_creeper_spawn_rate = 5;
+		public int void_creeper_spawn_rate = 2;
+
+		@Config.Name("Orb Artefact Potency Percent Bonus")
+		@Config.Comment("Determines the potency bonus of the elemental orb artefacts in a percentage value")
+		@Config.RequiresMcRestart
+		@Config.RangeInt(min = 0, max = 100)
+		public int orb_artefact_potency_bonus = 30;
 
 		@Config.Name("Void Creeper Biome Blacklist")
 		@Config.Comment("List of Biomes where Void Creepers will never spawn.")
@@ -143,6 +161,11 @@ public class Settings {
 		@Config.Comment("List of Biomes where Ice Crystal Shards can spawn.")
 		@Config.RequiresMcRestart
 		public String[] ice_shard_biome_whitelist = {"taiga", "taiga_hills", "taiga_cold", "taiga_cold_hills", "mutated_taiga", "mutated_taiga_cold"};
+
+		@Config.Name("Pocket Biome registry ID")
+		@Config.Comment("Allows you to change the pocket biome registry ID if you encounter biome ID conflicts")
+		@Config.RequiresMcRestart
+		public int pocket_biome_registry_id = 168;
 
 	}
 

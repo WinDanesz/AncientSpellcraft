@@ -2,5 +2,13 @@
     "parent": "item/generated",
     "textures": {
         "layer0": "ancientspellcraft:items/stone_tablet_large"
-    }
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "activating": 1.0
+            },
+            "model": "ancientspellcraft:item/stone_tablet_large_effect"
+        }
+    ]
 }

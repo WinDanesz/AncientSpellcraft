@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.client.DrawingUtils;
 import electroblob.wizardry.constants.Constants;
@@ -19,9 +20,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemOmnicron extends ItemASArtefact implements IWorkbenchItem, IManaStoringItem {
 
@@ -29,9 +36,27 @@ public class ItemOmnicron extends ItemASArtefact implements IWorkbenchItem, IMan
 
 	public ItemOmnicron(EnumRarity rarity, Type type) {
 		super(rarity, type);
-
+		setMaxStackSize(1);
+		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
 		setMaxDamage(MAX_MANA);
 		WizardryRecipes.addToManaFlaskCharging(this);
+	}
+
+	@Override
+	public EnumRarity getRarity(ItemStack stack){
+		return EnumRarity.EPIC;
+	}
+
+	@Override
+	public boolean hasEffect(ItemStack stack){
+		return true;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced){
+		Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc");
+		Wizardry.proxy.addMultiLineDescription(tooltip, "tooltip.ancientspellcraft:artefact_use.usage", new Style().setItalic(true));
 	}
 
 	@Override
@@ -57,9 +82,6 @@ public class ItemOmnicron extends ItemASArtefact implements IWorkbenchItem, IMan
 
 			WizardData data = WizardData.get(player);
 
-			//			for (ItemStack stack1 : InventoryUtils.getPrioritisedHotbarAndOffhand(player)) {
-
-//			if (!offhandStack.isEmpty()) {
 				Spell spell = Spell.byMetadata(offhandStack.getItemDamage());
 				if (!data.hasSpellBeenDiscovered(spell)) {
 
@@ -103,9 +125,8 @@ public class ItemOmnicron extends ItemASArtefact implements IWorkbenchItem, IMan
 						return new ActionResult<>(EnumActionResult.SUCCESS, cubeStack);
 					}
 				}
-				//				}
-//			}
-			// If it found nothing to identify, it says so!
+
+			// If it found nothing to identify
 			if (!world.isRemote)
 				player.sendMessage(
 						new TextComponentTranslation("item." + Wizardry.MODID + ":identification_scroll.nothing_to_identify"));

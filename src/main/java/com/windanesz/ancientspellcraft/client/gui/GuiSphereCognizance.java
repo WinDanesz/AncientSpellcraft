@@ -38,10 +38,6 @@ public class GuiSphereCognizance extends GuiContainer {
 
 	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/container/gui_sphere_cognizance.png");
 
-	//	private boolean drawprogress = true;
-
-	//	private int requiredCrystalAmount = 0;
-
 	private String tooltipLangKey = "";
 
 	private int researchCost = 1;
@@ -67,7 +63,6 @@ public class GuiSphereCognizance extends GuiContainer {
 		this.buttonList.clear();
 		this.buttonList.add(this.researchButton = new GuiButtonApply(0, this.width / 2 + 57, this.height / 2 + 6));
 		this.researchButton.enabled = false;
-		//		this.buttonDone = this.addButton(new GuiButton(0, this.width / 2 -30, this.height / 2 - 20 , 60, 20, I18n.format("gui.ancientspellcraft:research")));
 
 	}
 
@@ -147,9 +142,7 @@ public class GuiSphereCognizance extends GuiContainer {
 		int offset = (lineCount - 1) * 7;
 		int i = 0;
 		for (String text : localizedTextList) {
-//			this.drawCenteredString(this.fontRenderer, text, this.guiLeft + 87, this.guiTop + 70 - offset + i, 16777215);
 			this.drawCenteredString(this.fontRenderer, text, 87, 70 - offset + i, 16777215);
-//			fontRenderer.drawString(text, (float) (this.guiLeft + 87 - fontRenderer.getStringWidth(text) / 2), (float) (this.guiTop + 70 - offset + i), 14737632, true);
 			i += 10;
 		}
 	}
@@ -161,16 +154,8 @@ public class GuiSphereCognizance extends GuiContainer {
 		this.mc.getTextureManager().bindTexture(GUI_TEXTURE);
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 
-		/// progress bar
-		//		if (drawprogress) {
-
 		int scale = this.getResearchProgressScaled(76);
-		//			this.drawTexturedModalRect(i + 79, j + 34, 176, 14, scale + 1, 16);
-
-		//			this.drawTexturedModalRect(this.guiLeft + 51, this.guiTop + 106, 171, 0, scale + 1, 5);
 		this.drawTexturedModalRect(this.guiLeft + 51, this.guiTop + 106, 176, 0, scale, 5);
-		//		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-		//		}
 
 	}
 
@@ -287,10 +272,6 @@ public class GuiSphereCognizance extends GuiContainer {
 	@SubscribeEvent
 	public static void onRenderGameOverLayPost(RenderGameOverlayEvent.Post event) {
 
-	}
-
-	private void buttonClicked() {
-		this.tileSphere.setField(2, 1);
 	}
 
 	private int getResearchProgressScaled(int pixels) {

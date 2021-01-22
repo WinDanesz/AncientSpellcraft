@@ -13,8 +13,8 @@
     "tier": "advanced",
     "element": "magic",
     "type": "construct",
-    "cost": 40,
-    "chargeup": 0,
+    "cost": 80,
+    "chargeup": 40,
     "cooldown": 100,
     "base_properties": {
         "duration": 600,

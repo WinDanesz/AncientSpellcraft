@@ -5,6 +5,7 @@ import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.entity.ICustomHitbox;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.entity.projectile.EntityMagicArrow;
+import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.GeometryUtils;
@@ -103,15 +104,6 @@ public class EntitySpiritWard extends EntityMagicConstruct implements ICustomHit
 					.time(10)
 					.spawn(world);
 
-			//			ParticleBuilder.create(Type.FLASH)
-			//					.pos(this.posX + , this.posY + 0.1, this.posZ)
-			//					.face(EnumFacing.UP)
-			//					.clr(93, 12, 174)
-			//					.collide(false)
-			//					.scale(6.0F)
-			//					.time(10)
-			//					.spawn(world);
-
 			for (int i = 1; i < 3; i++) {
 				//				double radius = rand.nextDouble() * 2.0;
 				double radius = 3.2;
@@ -125,10 +117,6 @@ public class EntitySpiritWard extends EntityMagicConstruct implements ICustomHit
 						.spawn(world);
 			}
 		}
-		// New spirit ward repulsion system:
-		// Searches for all entities near the spirit ward and determines where they will be next tick.
-		// If they will be inside the spirit ward next tick, sets their position and velocity such that they appear to
-		// bounce off the spirit ward and creates impact particle effects and sounds where they hit it
 
 		List<Entity> targets = EntityUtils.getEntitiesWithinRadius(radius + SEARCH_BORDER_SIZE, posX, posY, posZ, world, Entity.class);
 
@@ -141,7 +129,7 @@ public class EntitySpiritWard extends EntityMagicConstruct implements ICustomHit
 		for (Entity target : targets) {
 
 			// only prevents undeads from entering the circle
-			if (this.isValidTarget(target) && EntityUtils.isLiving(target) && ((EntityLivingBase) target).isEntityUndead()) {
+			if (EntityUtils.isLiving(target) && ((EntityLivingBase) target).isPotionActive(WizardryPotions.curse_of_undeath) || (this.isValidTarget(target) && ((EntityLivingBase) target).isEntityUndead())) {
 
 				Vec3d currentPos = Arrays.stream(GeometryUtils.getVertices(target.getEntityBoundingBox()))
 						.min(Comparator.comparingDouble(v -> v.distanceTo(this.getPositionVector())))

@@ -4,7 +4,6 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.data.SpellGlyphData;
-import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.IWorkbenchItem;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.spell.Spell;
@@ -40,12 +39,9 @@ public class ItemEternityPendant extends ItemASArtefact implements IWorkbenchIte
 			// only buff type spells can be applied to the pendant
 			if (spell.getType() == SpellType.BUFF) {
 
-				WizardData data = WizardData.get(player);
-
 				// Spells can only be bound to the artefact if the player has already cast them
 				// This restriction does not apply in creative mode
-				if (spell != Spells.none && player.isCreative() || (data != null
-						&& data.hasSpellBeenDiscovered(spell)) && spell.isEnabled(SpellProperties.Context.WANDS)) {
+				if (spell != Spells.none && player.isCreative() || (spell.isEnabled(SpellProperties.Context.WANDS))) {
 					centre.putStack(new ItemStack(AncientSpellcraftItems.amulet_pendant_of_eternity, 1, spell.metadata()));
 
 					// consumes the book

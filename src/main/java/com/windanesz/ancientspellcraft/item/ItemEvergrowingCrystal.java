@@ -10,8 +10,8 @@ import net.minecraft.item.ItemStack;
 
 public class ItemEvergrowingCrystal extends ItemDailyArtefact {
 
-	public ItemEvergrowingCrystal(EnumRarity rarity, Type type) {
-		super(rarity, type);
+	public ItemEvergrowingCrystal(EnumRarity rarity) {
+		super(rarity);
 	}
 
 	@Override

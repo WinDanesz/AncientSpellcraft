@@ -26,39 +26,32 @@ public class WorldGenCrystalShardOre implements IWorldGenerator {
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-				// correct formula 				generateOre(random, chunkX,chunkZ, world, AncientSpellcraftBlocks.crystal_ore_sorcery, BlockMatcher.forBlock(Blocks.STONE), 4, 8, 20, 1, 5, 30);
 
 		if (world.provider.getDimension() == 0 && Settings.generalSettings.generate_ore_shards) {
 			Biome biome = world.getBiome(new BlockPos(chunkX * 16, 0, chunkZ * 16));
 
 			if (AncientSpellcraft.settings.shardFireBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.crystal_ore_fire, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
+				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.CRYSTAL_ORE_FIRE, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
 			}
 			if (AncientSpellcraft.settings.shardNecromancyShardBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.crystal_ore_necromancy, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
+				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.CRYSTAL_ORE_NECROMANCY, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
 			}
 			if (AncientSpellcraft.settings.shardHealingBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.crystal_ore_healing, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
+				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.CRYSTAL_ORE_HEALING, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
 			}
 			if (AncientSpellcraft.settings.shardEarthShardBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.crystal_ore_earth, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
+				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.CRYSTAL_ORE_EARTH, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
 			}
 			if (AncientSpellcraft.settings.shardLightningBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.crystal_ore_lightning, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
+				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.CRYSTAL_ORE_LIGHTNING, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
 			}
 			if (AncientSpellcraft.settings.shardIceBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.crystal_ore_ice, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
+				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.CRYSTAL_ORE_ICE, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
 			}
 			if (AncientSpellcraft.settings.shardSorceryShardBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.crystal_ore_sorcery, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
+				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.CRYSTAL_ORE_SORCERY, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
 			}
 		}
-	}
-
-	public static void generate(Random seed, int chunkX, int chunkZ, World world, int dimension) {
-		generateOre(seed, chunkX, chunkZ, world, AncientSpellcraftBlocks.crystal_ore_lightning, BlockMatcher.forBlock(Blocks.STONE),
-				2, 0, 30,
-				1.0F, 5, 30);
 	}
 
 	private static void generateOre(Random seed, int chunkX, int chunkZ, World world, Block ore,

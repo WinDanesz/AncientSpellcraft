@@ -30,7 +30,7 @@ public class BlockSphereCognizance extends BlockContainer {
 
 	public BlockSphereCognizance() {
 		super(Material.CLAY);
-		this.setLightLevel(0.4f);
+		this.setLightLevel(1.1f);
 		setHardness(0.5f);
 	}
 
@@ -64,7 +64,7 @@ public class BlockSphereCognizance extends BlockContainer {
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
-	} //TODO
+	}
 
 	@Override
 	public boolean isFullCube(IBlockState state) {

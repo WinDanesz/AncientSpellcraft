@@ -1,0 +1,6 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "ancientspellcraft:items/devoritium_axe"
+    }
+}

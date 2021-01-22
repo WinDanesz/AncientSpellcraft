@@ -201,15 +201,15 @@ public class BlockWeaving extends SpellRay {
 	// stops the annoying block placement of the offhand block
 	@SubscribeEvent
 	public static void onRightClickBlockEvent(PlayerInteractEvent.RightClickBlock event) {
-		if (event.getEntity() instanceof EntityPlayer && ((EntityPlayer) event.getEntity()).getHeldItemMainhand().getItem() instanceof ISpellCastingItem) {
-			if (event.getHand() == EnumHand.OFF_HAND) {
-				ItemStack stack = ((EntityPlayer) event.getEntity()).getHeldItemMainhand();
-				Spell spell = ((ISpellCastingItem) stack.getItem()).getCurrentSpell(stack);
-				if (spell == AncientSpellcraftSpells.blockweaving) {
-					event.setCanceled(true);
-				}
-			}
-		}
+//		if (event.getEntity() instanceof EntityPlayer && ((EntityPlayer) event.getEntity()).getHeldItemMainhand().getItem() instanceof ISpellCastingItem) {
+//			if (event.getHand() == EnumHand.OFF_HAND) {
+//				ItemStack stack = ((EntityPlayer) event.getEntity()).getHeldItemMainhand();
+//				Spell spell = ((ISpellCastingItem) stack.getItem()).getCurrentSpell(stack);
+//				if (spell == AncientSpellcraftSpells.blockweaving) {
+//					event.setCanceled(true);
+//				}
+//			}
+//		}
 	}
 
 	@Override

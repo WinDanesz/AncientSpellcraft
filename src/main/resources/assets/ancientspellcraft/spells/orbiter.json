@@ -1,0 +1,22 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": false,
+        "dispensers": false,
+        "commands": true,
+        "treasure": true,
+        "trades": true,
+        "looting": true
+    },
+    "tier": "master",
+    "element": "magic",
+    "type": "alteration",
+    "cost": 50,
+    "chargeup": 60,
+    "cooldown": 30,
+    "base_properties": {
+        "damage": 10
+    }
+}

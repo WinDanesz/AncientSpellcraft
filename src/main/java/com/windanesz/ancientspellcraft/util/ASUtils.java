@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.util;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.item.ItemStoneFist;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.item.IManaStoringItem;
@@ -16,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -118,7 +120,15 @@ public final class ASUtils {
 	 */
 	public static boolean shrinkInventoryStackByOne(EntityPlayer player, ItemStack stackToShrink) {
 		if (player.inventory.hasItemStack(stackToShrink)) {
-			int j = player.inventory.getSlotFor(stackToShrink);
+
+			int j = -1;
+			for (int i = 0; i < player.inventory.mainInventory.size(); ++i) {
+				if (!(player.inventory.mainInventory.get(i).isEmpty()) && stackEqualExact(player.inventory.mainInventory.get(i), stackToShrink)) {
+					j = i;
+					break;
+				}
+			}
+
 			if (j != -1) {
 				player.inventory.getStackInSlot(j).shrink(1);
 				return true;

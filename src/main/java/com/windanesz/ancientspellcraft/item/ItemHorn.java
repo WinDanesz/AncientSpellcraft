@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.EntityUtils;
@@ -17,7 +18,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemHorn extends ItemASArtefact {
@@ -75,6 +79,13 @@ public class ItemHorn extends ItemASArtefact {
 		player.swingArm(handIn);
 		world.playSound(null, player.posX, player.posY, player.posZ, AncientSpellcraftSounds.WAR_HORN, SoundCategory.PLAYERS, 1.0F, 1.0F);
 		return new ActionResult<>(EnumActionResult.SUCCESS, itemstack);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced){
+		super.addInformation(stack, world, tooltip, advanced);
+		Wizardry.proxy.addMultiLineDescription(tooltip, "tooltip.ancientspellcraft:artefact_use.usage");
 	}
 
 }

@@ -1,0 +1,27 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": true,
+        "dispensers": true,
+        "commands": true,
+        "treasure": true,
+        "trades": true,
+        "looting": true
+    },
+    "tier": "apprentice",
+    "element": "ice",
+    "type": "buff",
+    "cost": 30,
+    "chargeup": 0,
+    "cooldown": 250,
+    "base_properties": {
+        "magical_exhaustion_duration": 900,
+        "magical_exhaustion_strength": 0,
+        "health_boost_duration": 900,
+        "health_boost_strength": 1,
+        "strength_duration": 900,
+        "strength_strength": 0
+    }
+}

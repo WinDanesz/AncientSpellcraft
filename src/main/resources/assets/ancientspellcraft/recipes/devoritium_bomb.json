@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "I  ",
+        "SG ",
+        "   "
+    ],
+    "key": {
+        "S": {
+            "item": "minecraft:string"
+        },
+        "G": {
+            "item": "minecraft:gunpowder"
+        },
+        "I": {
+            "item": "ancientspellcraft:devoritium_ingot"
+        }
+    },
+    "result": {
+        "item": "ancientspellcraft:devoritium_bomb",
+        "count": 3
+    }
+}

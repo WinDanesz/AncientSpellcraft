@@ -62,10 +62,6 @@ public class EntitySkeletonMageMinion extends AbstractSkeleton implements ISpell
 	private int particleCount = 1;
 	private float particleSize = 0.7F;
 	private Element element = Element.MAGIC;
-	//	private ResourceLocation particle1;
-	//	private ResourceLocation particle2;
-	//	private ResourceLocation particle1 = ParticleBuilder.Type.MAGIC_FIRE;
-	//	private ResourceLocation particle2 = ParticleBuilder.Type.FLASH;
 
 	/**
 	 * The entity selector passed into the new AI methods.
@@ -73,8 +69,6 @@ public class EntitySkeletonMageMinion extends AbstractSkeleton implements ISpell
 
 	// Data parameter for the skelly's element.
 	private static final DataParameter<Integer> ELEMENT = EntityDataManager.createKey(EntitySkeletonMageMinion.class, DataSerializers.VARINT);
-	//	private static final DataParameter<String> PARTICLE1 = EntityDataManager.createKey(EntitySkeletonMageMinion.class, DataSerializers.STRING);
-	//	private static final DataParameter<String> PARTICLE2 = EntityDataManager.createKey(EntitySkeletonMageMinion.class, DataSerializers.STRING);
 
 	private List<Spell> spells = new ArrayList<>(1);
 
@@ -87,7 +81,7 @@ public class EntitySkeletonMageMinion extends AbstractSkeleton implements ISpell
 	private EntityAINearestAttackableTarget<EntityPlayer> healerTargetingAI = new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, false, true) {
 		@Override
 		protected boolean isSuitableTarget(@Nullable EntityLivingBase target, boolean includeInvincibles) {
-			return target instanceof EntityPlayer && ((EntityPlayer) target).getUniqueID() == getOwnerId();
+			return target instanceof EntityPlayer && ((EntityPlayer) target).getUniqueID() == getOwnerId() && (target.getHealth() < target.getMaxHealth());
 		}
 	};
 
@@ -291,10 +285,9 @@ public class EntitySkeletonMageMinion extends AbstractSkeleton implements ISpell
 				break;
 			case HEALING:
 				spells.add(AncientSpellcraftSpells.healing_heart);
-				//				spells.add(AncientSpellcraftSpells.healing_heart);
 				break;
 			case NECROMANCY:
-				spells.add(Spells.wither);
+				spells.add(Spells.darkness_orb);
 
 				break;
 			default:

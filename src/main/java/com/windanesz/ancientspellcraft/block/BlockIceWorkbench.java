@@ -39,7 +39,6 @@ public class BlockIceWorkbench extends BlockWorkbench {
 			return true;
 		} else {
 			player.openGui(AncientSpellcraft.instance, GuiHandlerAS.ICE_CRAFTING_TABLE, world, pos.getX(), pos.getY(), pos.getZ());
-//			player.addStat(StatList.CRAFTING_TABLE_INTERACTION);
 			return true;
 		}
 	}

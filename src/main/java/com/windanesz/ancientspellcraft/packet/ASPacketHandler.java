@@ -14,6 +14,7 @@ public class ASPacketHandler {
 	public static void initPackets(){
 		net = NetworkRegistry.INSTANCE.newSimpleChannel(AncientSpellcraft.MODID.toUpperCase());
 		registerMessage(PacketControlInput.class, PacketControlInput.Message.class);
+		registerMessage(PacketActivateBauble.class, PacketActivateBauble.Message.class);
 	}
 
 	private static int nextPacketId = 0;

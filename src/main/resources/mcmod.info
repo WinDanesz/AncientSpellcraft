@@ -1,7 +1,7 @@
 [{
     "modid": "ancientspellcraft",
     "name": "Ancient Spellcraft by Dan",
-    "description": "Ancient Spellcraft is an addon mod for Electroblob's Wizardry, adding many new spells and a new 'element' to the game. It adds magical spells, mechanics, blocks and items to the game.",
+    "description": "Ancient Spellcraft is an addon mod for Electroblob's Wizardry, adding many new spells, mechanics, blocks and a new magical element to the game.",
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": "https://www.curseforge.com/minecraft/mc-mods/ancient-spellcraft",

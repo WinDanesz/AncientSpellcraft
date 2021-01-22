@@ -23,8 +23,6 @@ public class BlockMageLight extends Block implements ITileEntityProvider {
 		setDefaultState(blockState.getBaseState());
 		setTickRandomly(false);
 		setLightLevel(0.85F);
-//		setLightLevel(0.75F);
-		setCreativeTab(null);
 	}
 
 	@Nullable

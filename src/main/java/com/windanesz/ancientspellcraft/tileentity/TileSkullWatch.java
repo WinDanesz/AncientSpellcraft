@@ -7,6 +7,8 @@ import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.EntityUtils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityArmorStand;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
@@ -67,7 +69,6 @@ public class TileSkullWatch extends TileEntityPlayerSave implements ITickable {
 
 		this.bookSpreadPrev = this.bookSpread;
 		this.skullRotationPrev = this.skullRotation;
-//		EntityPlayer entityplayer = this.world.getClosestPlayer((double) ((float) this.pos.getX() + 0.5F), (double) ((float) this.pos.getY() + 0.5F), (double) ((float) this.pos.getZ() + 0.5F), DETECT_BASE_RADIUS, false);
 
 		List<EntityLivingBase> entities = EntityUtils.getEntitiesWithinRadius(DETECT_BASE_RADIUS, this.pos.getX() + 0.5F, this.pos.getY() + 0.5F, this.pos.getZ() + 0.5F, world, EntityLivingBase.class);
 
@@ -76,7 +77,7 @@ public class TileSkullWatch extends TileEntityPlayerSave implements ITickable {
 			for (EntityLivingBase entity : entities) {
 
 				// doesn't scream for its own owner or allies of the owner
-				if (getCaster() != null && (entity.getUniqueID() == getCaster().getUniqueID() || AllyDesignationSystem.isAllied(getCaster(), entity))) {
+				if (entity instanceof EntityAnimal || entity instanceof EntityArmorStand || getCaster() != null && (entity.getUniqueID() == getCaster().getUniqueID() || AllyDesignationSystem.isAllied(getCaster(), entity))) {
 					continue;
 				}
 

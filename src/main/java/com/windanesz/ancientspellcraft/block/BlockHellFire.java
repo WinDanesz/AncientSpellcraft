@@ -31,7 +31,6 @@ import java.util.Random;
 
 public class BlockHellFire extends Block {
 
-	public boolean schedTeleport;
 	public static final PropertyInteger AGE = PropertyInteger.create("age", 0, 15);
 	public static final PropertyBool NORTH = PropertyBool.create("north");
 	public static final PropertyBool EAST = PropertyBool.create("east");
@@ -42,7 +41,6 @@ public class BlockHellFire extends Block {
 	public BlockHellFire() {
 		super(Material.FIRE);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, Integer.valueOf(0)).withProperty(NORTH, Boolean.valueOf(false)).withProperty(EAST, Boolean.valueOf(false)).withProperty(SOUTH, Boolean.valueOf(false)).withProperty(WEST, Boolean.valueOf(false)).withProperty(UPPER, Boolean.valueOf(false)));
-		//		this.setDefaultState(this.blockState.getBaseState().withProperty(AGE, 0));
 		this.setTickRandomly(true);
 		setLightLevel(1.5F);
 	}
@@ -124,20 +122,12 @@ public class BlockHellFire extends Block {
 
 			if (currDim == -1) { // coming from nether to overworld
 				targetDim = 0;
-				// calc distance multiplier
-				x = (int) (x * 8);
-				z = (int) (z * 8);
 			} else {  // going to nether from overworld
 				targetDim = -1;
-				// calc distance multiplier
-				x = (int) (x / 8);
-				z = (int) (z / 8);
 			}
 			worldIn.setBlockToAir(pos); // remove the nether fire block
 
-			//			((EntityPlayer) entityIn).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 0));
 			if (!worldIn.isRemote)
-				//			SpellTeleporter.teleportEntity((EntityPlayer) entityIn, targetDim, x, pos.getY(), z);
 				SpellTeleporter.teleportEntity(targetDim, entityIn.posX, entityIn.posY, entityIn.posZ, true, (EntityPlayer) entityIn);
 		}
 	}
@@ -175,10 +165,10 @@ public class BlockHellFire extends Block {
 			worldIn.spawnParticle(EnumParticleTypes.PORTAL, d0, d1, d2, 0.0D, 0.0D, 0.0D);
 		}
 		for (int i = 0; i < 4; ++i) {
-			double d0 = (double) ((float) pos.getX() + rand.nextFloat());
+			double d0;
 			double d1 = (double) ((float) pos.getY() + rand.nextFloat());
 			double d2 = (double) ((float) pos.getZ() + rand.nextFloat());
-			double d3 = ((double) rand.nextFloat() - 0.5D) * 0.5D;
+			double d3;
 			double d4 = ((double) rand.nextFloat() - 0.5D) * 0.5D;
 			double d5 = ((double) rand.nextFloat() - 0.5D) * 0.5D;
 			int j = rand.nextInt(2) * 2 - 1;

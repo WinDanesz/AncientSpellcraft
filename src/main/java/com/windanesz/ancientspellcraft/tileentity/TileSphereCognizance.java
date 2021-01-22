@@ -5,6 +5,7 @@ import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.client.gui.ContainerSphereCognizance;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.event.DiscoverSpellEvent;
@@ -289,7 +290,7 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 
 	public void setResearchDuration() {
 		if (getInputStack().getItem() instanceof ItemRelic) {
-			researchDuration = 300;
+			researchDuration = 20;
 		} else {
 			researchDuration = getResearchDuration(getCurrentSpell());
 		}
@@ -321,8 +322,8 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 			this.currentHintId = ASUtils.randIntBetween(1, count);
 
 			if (currentPlayer != null && !world.isRemote) {
-				ItemRelic.setResearched(getInputStack());
-				ItemRelic.setRelicContent(getInputStack(), currentPlayer);
+				//				ItemRelic.setResearchedTag(getInputStack());
+				ItemRelic.setRandomContentType(getInputStack(), currentPlayer);
 			}
 			markDirty();
 
@@ -408,7 +409,9 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 
 	public boolean hasSomethingToResearch() {
 		Item item = getInputStack().getItem();
-		return (!getInputStack().isEmpty() && ((item instanceof ItemRelic && !ItemRelic.isResearched(getInputStack())) || (item instanceof ItemSpellBook ||
+		return (!getInputStack().isEmpty() && (((item == AncientSpellcraftItems.stone_tablet_small || item == AncientSpellcraftItems.stone_tablet ||
+				item == AncientSpellcraftItems.stone_tablet_large || item == AncientSpellcraftItems.stone_tablet_grand)
+				&& !ItemRelic.isResearched(getInputStack())) || (item instanceof ItemSpellBook ||
 				item instanceof ItemScroll && !isCurrentBookKnown())));
 	}
 

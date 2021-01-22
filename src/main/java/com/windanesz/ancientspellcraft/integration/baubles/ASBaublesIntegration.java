@@ -6,6 +6,7 @@ import baubles.api.IBauble;
 import baubles.api.cap.BaublesCapabilities;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
+import electroblob.wizardry.item.ItemArtefact;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -30,6 +31,7 @@ public final class ASBaublesIntegration {
 
 	public static final String BAUBLES_MOD_ID = "baubles";
 
+	private static final Map<ItemArtefact.Type, BaubleType> WIZARDRY_ARTEFACT_TYPE_MAP = new EnumMap<>(ItemArtefact.Type.class);
 	private static final Map<ItemNewArtefact.AdditionalType, BaubleType> ARTEFACT_TYPE_MAP = new EnumMap<>(ItemNewArtefact.AdditionalType.class);
 
 	private static boolean baublesLoaded;
@@ -40,8 +42,13 @@ public final class ASBaublesIntegration {
 
 		if(!enabled()) return;
 
+		WIZARDRY_ARTEFACT_TYPE_MAP.put(ItemArtefact.Type.RING, BaubleType.RING);
+		WIZARDRY_ARTEFACT_TYPE_MAP.put(ItemArtefact.Type.AMULET, BaubleType.AMULET);
+		WIZARDRY_ARTEFACT_TYPE_MAP.put(ItemArtefact.Type.CHARM, BaubleType.CHARM);
+
 		ARTEFACT_TYPE_MAP.put(ItemNewArtefact.AdditionalType.BELT, BaubleType.BELT);
 		ARTEFACT_TYPE_MAP.put(ItemNewArtefact.AdditionalType.HEAD, BaubleType.HEAD);
+
 	}
 
 	public static boolean enabled(){
@@ -93,6 +100,27 @@ public final class ASBaublesIntegration {
 			// This lambda expression is an implementation of the entire IBauble interface
 			return capability == BaublesCapabilities.CAPABILITY_ITEM_BAUBLE ? (T)(IBauble)itemStack -> type : null;
 		}
+	}
+
+	public static List<ItemStack> getEquippedArtefactStacks(EntityPlayer player, ItemArtefact.Type... types){
+
+		List<ItemStack> artefacts = new ArrayList<>();
+
+		for(ItemArtefact.Type type : types){
+			for(int slot : WIZARDRY_ARTEFACT_TYPE_MAP.get(type).getValidSlots()){
+				ItemStack stack = BaublesApi.getBaublesHandler(player).getStackInSlot(slot);
+				if(stack.getItem() instanceof ItemArtefact) artefacts.add(stack);
+			}
+		}
+
+		return artefacts;
+	}
+
+	public static void setArtefactToSlot(EntityPlayer player, ItemStack stack, ItemArtefact.Type type){
+		setArtefactToSlot(player, stack, type, 0);
+	}
+	public static void setArtefactToSlot(EntityPlayer player, ItemStack stack, ItemArtefact.Type type, int slotId){
+		BaublesApi.getBaublesHandler(player).setStackInSlot(WIZARDRY_ARTEFACT_TYPE_MAP.get(type).getValidSlots()[slotId], stack);
 	}
 
 }

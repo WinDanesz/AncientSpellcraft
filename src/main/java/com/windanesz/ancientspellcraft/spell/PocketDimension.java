@@ -8,6 +8,8 @@ import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.Location;
+import electroblob.wizardry.util.NBTExtras;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.ParticleBuilder.Type;
 import electroblob.wizardry.util.SpellModifiers;
@@ -16,15 +18,23 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTUtil;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PocketDimension extends Spell {
 
 	public static final IStoredVariable<NBTTagCompound> POCKET_DIM_LOCATION = IStoredVariable.StoredVariable.ofNBT("pocket_dim_location", Persistence.ALWAYS).setSynced();
 	public static final IStoredVariable<NBTTagCompound> POCKET_DIM_PREVIOUS_LOCATION = IStoredVariable.StoredVariable.ofNBT("pocket_dim_previous_location", Persistence.ALWAYS).setSynced();
+
+	// For some reason 'the diamond' doesn't work if I chain methods onto this. Type inference is weird.
+	public static final IStoredVariable<List<Location>> LOCATIONS_KEY = new IStoredVariable.StoredVariable<List<Location>, NBTTagList>("stoneCirclePos",
+			s -> NBTExtras.listToNBT(s, Location::toNBT), t -> new ArrayList<>(NBTExtras.NBTToList(t, Location::fromNBT)), Persistence.ALWAYS).setSynced();
+
+
 	protected float particleCount = 10;
 
 	public PocketDimension() {
@@ -44,14 +54,14 @@ public class PocketDimension extends Spell {
 				if (((EntityPlayer) caster).dimension == AncientSpellcraftDimensions.POCKET_DIM_ID) {
 					if (data.getVariable(POCKET_DIM_PREVIOUS_LOCATION) != null) {
 
-						BlockPos oldpos = NBTUtil.getPosFromTag(data.getVariable(POCKET_DIM_PREVIOUS_LOCATION));
-						SpellTeleporter.teleportEntity(0, oldpos.getX(), oldpos.getY() + 1, oldpos.getZ(), true, player);
+						Location location = Location.fromNBT(data.getVariable(POCKET_DIM_PREVIOUS_LOCATION));
+
+						SpellTeleporter.teleportEntity(location.dimension, location.pos.getX(), location.pos.getY() + 1, location.pos.getZ(), true, player);
 						return true;
 					}
 				}
 
-				NBTTagCompound nbt = NBTUtil.createPosTag(player.getPosition());
-				data.setVariable(POCKET_DIM_PREVIOUS_LOCATION, nbt);
+				data.setVariable(POCKET_DIM_PREVIOUS_LOCATION, new Location(player.getPosition(), player.dimension).toNBT());
 
 				if (!player.world.isRemote) {
 					data.sync();

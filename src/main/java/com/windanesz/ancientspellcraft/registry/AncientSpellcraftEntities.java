@@ -11,12 +11,17 @@ import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
 import com.windanesz.ancientspellcraft.entity.construct.EntityTransportationPortal;
 import com.windanesz.ancientspellcraft.entity.construct.EntityVenusFlyTrap;
 import com.windanesz.ancientspellcraft.entity.living.EntityFireAnt;
+import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonHorseMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
 import com.windanesz.ancientspellcraft.entity.living.EntityVoidCreeper;
 import com.windanesz.ancientspellcraft.entity.living.EntityWolfMinion;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityDevoritiumArrow;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityDevoritiumBomb;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelMagic;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityFlint;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityManaVortex;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.ResourceLocation;
@@ -78,13 +83,16 @@ public class AncientSpellcraftEntities {
 
 		registry.register(createEntry(EntityHeart.class, "healing_heart", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
 		registry.register(createEntry(EntityDispelMagic.class, "dispel_magic", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntityManaVortex.class, "wizard_blast").tracker(160, 3, false).build());
+		registry.register(createEntry(EntityDevoritiumBomb.class, "devoritium_bomb", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
 
+		registry.register(createEntry(EntityDevoritiumArrow.class, "devoritium_arrow", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntityFlint.class, "flint_projectile", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
 		//		registry.register(createEntry(EntitySpectralFishHook.class, "spectral_fish_hook", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
 
 		// mobs
 
-		registry.register(createEntry(EntityVoidCreeper.class, "void_creeper", TrackingType.LIVING)
-				.egg(0x271b3b, 0x7f35fb)
+		registry.register(createEntry(EntityVoidCreeper.class, "void_creeper", TrackingType.LIVING).egg(0x271b3b, 0x7f35fb)
 				.spawn(EnumCreatureType.MONSTER, Settings.generalSettings.void_creeper_spawn_rate, 1, 1, ForgeRegistries.BIOMES.getValuesCollection().stream()
 						.filter(b -> !Arrays.asList(AncientSpellcraft.settings.voidCreeperBiomeBlacklist).contains(b.getRegistryName()))
 						.collect(Collectors.toSet())).build());
@@ -94,6 +102,7 @@ public class AncientSpellcraftEntities {
 		registry.register(createEntry(EntitySpiritBear.class, "spirit_bear", TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());
 		registry.register(createEntry(EntityVenusFlyTrap.class, "venus_fly_trap", TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());
 		registry.register(createEntry(EntityFireAnt.class, "fire_ant", TrackingType.LIVING).build());
+		registry.register(createEntry(EntitySkeletonHorseMinion.class, "skeleton_horse_minion", TrackingType.LIVING).build());
 
 		//		registry.register(createEntry(EntitySpellBook.class, "rouge_spell_book", TrackingType.LIVING).build());
 

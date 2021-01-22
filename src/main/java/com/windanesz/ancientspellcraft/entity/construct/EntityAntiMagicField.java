@@ -1,9 +1,10 @@
 package com.windanesz.ancientspellcraft.entity.construct;
 
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
+import electroblob.wizardry.potion.Curse;
 import electroblob.wizardry.potion.PotionMagicEffect;
-import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.EntityUtils;
@@ -45,11 +46,11 @@ public class EntityAntiMagicField extends EntityMagicConstruct {
 			for (EntityLivingBase target : targets) {
 
 				// All entities are slowed, even the caster (except those immune to frost effects)
-				target.addPotionEffect(new PotionEffect(WizardryPotions.arcane_jammer, 40, 0));
+				target.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, 40, 3));
 
 				Map<Potion, PotionEffect> activeEffects = new HashMap<>(target.getActivePotionMap());
 				for (Potion potion : activeEffects.keySet()) {
-					if (potion instanceof PotionMagicEffect && potion != WizardryPotions.arcane_jammer) {
+					if (potion instanceof PotionMagicEffect && !(potion instanceof Curse) && potion != AncientSpellcraftPotions.magical_exhaustion) {
 						target.removePotionEffect(potion);
 					}
 				}
@@ -70,20 +71,6 @@ public class EntityAntiMagicField extends EntityMagicConstruct {
 						.scale(1F)
 						.spawn(world);
 			}
-
-			//			if (this.ticksExisted % 2 == 0) {
-			//				int lifetime = 15;
-			//				double dx = (this.world.rand.nextDouble() - 0.5D) * 2 * (double) this.width;
-			//				double dy = (this.world.rand.nextDouble() - 0.5D) * 2 * (double) this.width;
-			//				double dz = (this.world.rand.nextDouble() - 0.5D) * 2 * (double) this.width;
-			//				double x = this.posX + dx;
-			//				double y = this instanceof IProjectile ? this.posY + dy : this.posY + this.height / 2 + dy;
-			//				double z = this.posZ + dz;
-			//				ParticleBuilder.create(ParticleBuilder.Type.DUST)
-			//						.pos(x, y, z)
-			//						.vel(0, -dy / (lifetime * 10), 0)
-			//						.clr(0x5be3bb).time(15).spawn(this.world);
-			//			}
 		}
 	}
 }

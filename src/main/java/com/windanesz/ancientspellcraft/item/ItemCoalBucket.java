@@ -10,8 +10,8 @@ public class ItemCoalBucket extends ItemDailyArtefact {
 	public static int MIN_COAL_AMOUNT = 2;
 	public static int MAX_COAL_AMOUNT = 5;
 
-	public ItemCoalBucket(EnumRarity rarity, Type type) {
-		super(rarity, type);
+	public ItemCoalBucket(EnumRarity rarity) {
+		super(rarity);
 	}
 
 	@Override

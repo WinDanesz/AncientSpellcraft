@@ -45,10 +45,6 @@ public class SpellTeleporter implements ITeleporter {
 		entity.motionZ = 0;
 	}
 
-	private static void teleportEntity(int targetDim, double x, double y, double z, EntityPlayer player) {
-		teleportEntity(targetDim, x, y, z, false, player);
-	}
-
 	public static void teleportEntity(int targetDim, double x, double y, double z, boolean causeBlindness, EntityPlayer entity) {
 
 		if (!DimensionManager.isDimensionRegistered(targetDim) || entity == null || entity.isBeingRidden() || entity.isRiding()) {

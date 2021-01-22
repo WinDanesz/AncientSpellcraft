@@ -35,10 +35,8 @@ public class ParticleSoulChain extends ParticleTargeted {
 
 	public ParticleSoulChain(World world, double x, double y, double z) {
 		super(world, x, y, z, CHAIN_TEXTURE);
-		//this.setRBGColorF(1, 1, 1);
 		this.setMaxAge(0);
 		this.particleScale = 1;
-//		this.setRBGColorF(0.5f, 0f, 0.41f);
 	}
 
 	@Override
@@ -56,16 +54,9 @@ public class ParticleSoulChain extends ParticleTargeted {
 
 		float scale = this.particleScale;
 
-		BufferBuilder buffer = tessellator.getBuffer();
-
-		GlStateManager.disableLighting();
+			GlStateManager.disableLighting();
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 
-		// Hmmmm we can't get the texture to tile using OpenGL texture space because it's on a sprite sheet...
-		// Solution: Draw loads of boxes. Simple!
-		// (Since there aren't going to be that many of these particles around we could have not used sprite sheets
-		// and done the OpenGL texture space thing, but this is kinda easier)
-		// Everything is drawn back-to-front so it looks like the vine is growing from the origin, not the endpoint
 		int i = 0;
 		while (i + SEGMENT_LENGTH < length) {
 			drawShearedBox(tessellator, 0, 0, length - i, 0, 0, length - i - SEGMENT_LENGTH, THICKNESS * scale,
@@ -76,41 +67,7 @@ public class ParticleSoulChain extends ParticleTargeted {
 		drawShearedBox(tessellator, 0, 0, length - i, 0, 0, 0, THICKNESS * scale,
 				particleRed, particleGreen, particleBlue, particleAlpha);
 
-		//		for(double l=length; l>0; l-=LEAF_SPACING){
-		//
-		//			GlStateManager.pushMatrix();
-		//
-		//			GlStateManager.rotate(random.nextInt(4) * 90, 0, 0, 1);
-		//
-		//			buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-		//
-		//			TextureAtlasSprite leaf = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(
-		//					LEAF_TEXTURES[random.nextInt(LEAF_TEXTURES.length)].toString());
-		//
-		//			float w = 16 * THICKNESS * scale;
-		//			float u1 = leaf.getMinU();
-		//			float u2 = leaf.getMaxU();
-		//			float v1 = leaf.getMinV();
-		//			float v2 = leaf.getMaxV();
-		//
-		//			float colourVariation = 0.3f;
-		//
-		//			float r = MathHelper.clamp(particleRed + (random.nextFloat() - 0.5f) * colourVariation, 0, 1);
-		//			float g = MathHelper.clamp(particleGreen + (random.nextFloat() - 0.5f) * colourVariation, 0, 1);
-		//			float b = MathHelper.clamp(particleBlue + (random.nextFloat() - 0.5f) * colourVariation, 0, 1);
-		//
-		//			buffer.pos(0, 0, l).tex(u1, v1).color(r, g, b, particleAlpha).endVertex();
-		//			buffer.pos(w, 0, l).tex(u2, v1).color(r, g, b, particleAlpha).endVertex();
-		//			buffer.pos(w, w, l).tex(u2, v2).color(r, g, b, particleAlpha).endVertex();
-		//			buffer.pos(0, w, l).tex(u1, v2).color(r, g, b, particleAlpha).endVertex();
-		//
-		//			tessellator.draw();
-		//
-		//			GlStateManager.popMatrix();
-		//		}
-
-		// Makes the rain go weird
-		//GlStateManager.enableLighting();
+		GlStateManager.enableLighting();
 	}
 
 	/**
@@ -148,12 +105,7 @@ public class ParticleSoulChain extends ParticleTargeted {
 
 	@SubscribeEvent
 	public static void onTextureStitchEvent(TextureStitchEvent.Pre event) {
-
 		event.getMap().registerSprite(CHAIN_TEXTURE);
-
-		//		for(ResourceLocation texture : LEAF_TEXTURES){
-		//			event.getMap().registerSprite(texture);
-		//		}
 	}
 
 }

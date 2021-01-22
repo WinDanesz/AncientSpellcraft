@@ -48,25 +48,28 @@ public class FireWall extends SpellRay {
 	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit,
 			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 
-		pos = pos.offset(EnumFacing.UP);
-		if (world.getBlockState(pos).getBlock().isReplaceable(world, pos)) {
+		if (!world.isRemote) {
 
-			EnumFacing facing = caster.getHorizontalFacing().rotateY();
+			pos = pos.offset(EnumFacing.UP);
+			if (world.getBlockState(pos).getBlock().isReplaceable(world, pos)) {
 
-			List<BlockPos> blockPosList = new ArrayList<>();
-			blockPosList.add(pos);
-			blockPosList.add(pos.offset(facing));
-			blockPosList.add(pos.offset(facing.getOpposite()));
+				EnumFacing facing = caster.getHorizontalFacing().rotateY();
 
-			for (BlockPos currPos : blockPosList) {
-				if (world.getBlockState(currPos).getBlock().isReplaceable(world, currPos)) {
-					world.setBlockState(currPos, Blocks.FIRE.getDefaultState());
+				List<BlockPos> blockPosList = new ArrayList<>();
+				blockPosList.add(pos);
+				blockPosList.add(pos.offset(facing));
+				blockPosList.add(pos.offset(facing.getOpposite()));
+
+				for (BlockPos currPos : blockPosList) {
+					if (world.getBlockState(currPos).getBlock().isReplaceable(world, currPos)) {
+						world.setBlockState(currPos, Blocks.FIRE.getDefaultState());
+					}
 				}
-			}
-			return true;
+				return true;
 
+			}
 		}
-		return false;
+		return true;
 	}
 
 	@Override

@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "  I",
+        " S ",
+        "F  "
+    ],
+    "key": {
+        "I": {
+            "item": "ancientspellcraft:devoritium_ingot"
+        },
+        "S": {
+            "item": "minecraft:stick"
+        },
+        "F": {
+            "item": "minecraft:flint"
+        }
+    },
+    "result": {
+        "item": "ancientspellcraft:devoritium_arrow",
+        "count": 9
+    }
+}

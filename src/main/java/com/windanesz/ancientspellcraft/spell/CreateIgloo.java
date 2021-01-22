@@ -33,7 +33,7 @@ public class CreateIgloo extends Spell {
 			return false;
 		}
 
-		BlockPos pos = caster.getPosition();
+		BlockPos pos = caster.getPosition().down();
 
 		List<BlockPos> blockPosList = new ArrayList<>();
 		BlockPos layer1Center = pos.offset(EnumFacing.UP);

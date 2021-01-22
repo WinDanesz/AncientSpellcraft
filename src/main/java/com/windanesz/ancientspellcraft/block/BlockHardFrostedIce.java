@@ -16,6 +16,7 @@ import java.util.Random;
  * Like {@link BlockFrostedIce) or {@link BlockFrostedIce), but melting does not depend on light level or neighbouring blocks, and it just
  * disappears instead of turning to water. Also has a high blast resistance and breaking resistance, and the breaking is more predictable
  * with a 40 ticks for schedules.
+ * Used by {@link com.windanesz.ancientspellcraft.spell.Cryostasis}
  */
 public class BlockHardFrostedIce extends BlockFrostedIce {
 
@@ -33,7 +34,6 @@ public class BlockHardFrostedIce extends BlockFrostedIce {
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		this.slightlyMelt(worldIn, pos, state, rand, false);
-		//		worldIn.scheduleUpdate(pos, this, 40);
 	}
 
 	@Override

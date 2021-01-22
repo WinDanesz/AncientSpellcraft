@@ -26,6 +26,11 @@ public class AncientSpellcraftSounds {
 	public static final SoundEvent DISPEL = createSound("dispel");
 	public static final SoundEvent DISPEL_ENTITY = createSound("dispel_entity");
 	public static final SoundEvent IMBUEMENT_TABLE_BREAK = createSound("imbuement_table_break");
+	public static final SoundEvent STONE_FIST = createSound("stone_fist");
+	public static final SoundEvent DEVORITIUM_BOMB_HIT = createSound("devoritium_bomb_hit");
+	public static final SoundEvent RELIC_ACTIVATE = createSound("relic_activate");
+	public static final SoundEvent RELIC_ACTIVATE_2 = createSound("relic_activate_2");
+	public static final SoundEvent RELIC_USE_LOOP = createSound("relic_use_loop");
 
 	public static SoundEvent createSound(String name) {
 		return createSound(AncientSpellcraft.MODID, name);
@@ -53,5 +58,10 @@ public class AncientSpellcraftSounds {
 		event.getRegistry().register(DISPEL);
 		event.getRegistry().register(DISPEL_ENTITY);
 		event.getRegistry().register(IMBUEMENT_TABLE_BREAK);
+		event.getRegistry().register(STONE_FIST);
+		event.getRegistry().register(DEVORITIUM_BOMB_HIT);
+		event.getRegistry().register(RELIC_ACTIVATE);
+		event.getRegistry().register(RELIC_USE_LOOP);
+		event.getRegistry().register(RELIC_ACTIVATE_2);
 	}
 }

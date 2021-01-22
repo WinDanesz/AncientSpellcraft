@@ -118,6 +118,21 @@
                     "type": "item",
                     "name": "ancientspellcraft:charm_omnicron",
                     "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_prismatic_spray",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:head_minions",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:head_riftstone",
+                    "weight": 1
                 }
             ]
         }

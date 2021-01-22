@@ -20,8 +20,6 @@ public class GuiAncientElementSpellBook extends GuiSpellInfo {
 
 	public GuiAncientElementSpellBook(ItemStack stack) {
 		super(288, 180);
-//		xSize = 288;
-//		ySize = 180;
 		if (!(stack.getItem() instanceof ItemSpellBook)) {
 			throw new ClassCastException("Cannot create spell book GUI for item that does not extend ItemSpellBook!");
 		}

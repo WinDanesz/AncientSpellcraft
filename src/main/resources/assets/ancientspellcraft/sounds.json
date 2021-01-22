@@ -87,11 +87,18 @@
     "spell.essence_extraction": 			{"category": "spells", "sounds": ["ancientspellcraft:essence_extraction"]},
     "spell.mana_flare": 			{"category": "spells", "sounds": ["ancientspellcraft:essence_extraction"]},
     "spell.attire_alteration": 			{"category": "spells", "sounds": ["ancientspellcraft:magic_effect"]},
+    "spell.prismatic_spray": 			{"category": "spells", "sounds": ["ancientspellcraft:prismatic_spray"]},
+    "spell.horse_whistle": {"category": "spells", "sounds": ["ancientspellcraft:horse_whistle_1", "ancientspellcraft:horse_whistle_2"]},
     "skull_watch_scream": {"category": "player", "sounds": ["ancientspellcraft:skull_watch_scream"]},
     "skull_watch_alarm": {"category": "player", "sounds": ["ancientspellcraft:skull_watch_alarm"]},
+    "relic_use_loop": {"category": "spells", "sounds": ["ancientspellcraft:relic_use_loop"]},
+    "devoritium_bomb_hit": {"category": "player", "sounds": ["ancientspellcraft:devoritium_bomb_hit"]},
     "charm_omnicron": {"category": "player", "sounds": ["ancientspellcraft:charm_omnicron"]},
     "war_horn": {"category": "player", "sounds": ["ancientspellcraft:war_horn"]},
     "dispel": {"category": "spells", "sounds": ["ancientspellcraft:dispel"]},
     "dispel_entity": {"category": "spells", "sounds": ["ancientspellcraft:dispel_entity"]},
-    "imbuement_table_break": {"category": "spells", "sounds": ["ancientspellcraft:imbuement_table_break"]}
+    "imbuement_table_break": {"category": "spells", "sounds": ["ancientspellcraft:imbuement_table_break"]},
+    "stone_fist": {"category": "player", "sounds": ["ancientspellcraft:stone_fist"]},
+    "relic_activate_2": {"category": "spells", "sounds": ["ancientspellcraft:relic_activate_2"]},
+    "relic_activate": {"category": "spells", "sounds": ["ancientspellcraft:relic_activate"]}
 }

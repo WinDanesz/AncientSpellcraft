@@ -21,17 +21,17 @@
                 },
                 {
                     "type": "item",
-                    "name": "ancientspellcraft:charm_bucket_coal",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_seed_bag",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
                     "name": "ancientspellcraft:amulet_rabbit",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:belt_horse",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:belt_druid",
                     "weight": 1
                 }
             ]

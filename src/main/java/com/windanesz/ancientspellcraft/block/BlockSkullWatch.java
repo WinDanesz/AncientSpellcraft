@@ -48,7 +48,7 @@ public class BlockSkullWatch extends BlockContainer {
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
-	} //TODO
+	}
 
 	@Override
 	public boolean isFullCube(IBlockState state) {
@@ -61,23 +61,9 @@ public class BlockSkullWatch extends BlockContainer {
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState block, EntityPlayer player, EnumHand hand,
-			EnumFacing side, float hitX, float hitY, float hitZ) {
-
-		TileEntity tileEntity = world.getTileEntity(pos);
-
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState block, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 		world.playSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), AncientSpellcraftSounds.SKULL_WATCH_SCREAM, SoundCategory.BLOCKS, 0.5F, 1F, false);
 
 		return true;
 	}
-
-	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState block) {
-
-		TileEntity tileentity = world.getTileEntity(pos);
-
-
-		super.breakBlock(world, pos, block);
-	}
-
 }

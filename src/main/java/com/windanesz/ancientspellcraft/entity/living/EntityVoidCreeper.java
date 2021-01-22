@@ -314,4 +314,17 @@ public class EntityVoidCreeper extends EntityCreeper {
 		}
 
 	}
+
+	@Override
+	protected float applyPotionDamageCalculations(DamageSource source, float damage){
+		damage = super.applyPotionDamageCalculations(source, damage);
+		if(source.isMagicDamage()) damage *= 0.25f;
+		return damage;
+	}
+
+	@Override
+	public boolean getCanSpawnHere(){
+		return super.getCanSpawnHere() && this.dimension == 0;
+	}
+
 }

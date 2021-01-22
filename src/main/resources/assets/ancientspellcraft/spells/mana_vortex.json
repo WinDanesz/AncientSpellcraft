@@ -1,0 +1,25 @@
+{
+  "enabled": {
+    "book": true,
+    "scroll": true,
+    "wands": true,
+    "npcs": false,
+    "dispensers": true,
+    "commands": true,
+    "treasure": false,
+	"trades": false,
+    "looting": false
+  },
+  "tier": "advanced",
+  "element": "magic",
+  "type": "attack",
+  "cost": 40,
+  "chargeup": 20,
+  "cooldown": 80,
+  "base_properties": {
+    "duration": 200,
+    "speed": 0.33,
+    "effect_radius": 4,
+    "damage": 5
+  }
+}

@@ -71,7 +71,32 @@
                 },
                 {
                     "type": "item",
+                    "name": "ancientspellcraft:charm_bucket_coal",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_seed_bag",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:head_curse",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
                     "name": "ancientspellcraft:belt_enchanter",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:belt_vortex",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:belt_stone",
                     "weight": 1
                 }
             ]

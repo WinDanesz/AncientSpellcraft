@@ -1,0 +1,12 @@
+{
+	"name": "Ancient Compendium",
+	"subtitle": "of the Arcane Arts",
+	"landing_text": "",
+	"creative_tab": "ancientspellcraft",
+	"show_progress": false,
+	"pause_game": false,
+	"filler_texture": "ancientspellcraft:textures/gui/book_filler.png",
+	"book_texture": "ancientspellcraft:textures/gui/ancient_compendium.png",
+	"model": "ancientspellcraft:ancient_compendium",
+    "nameplate_color" : "b78bbf"
+}

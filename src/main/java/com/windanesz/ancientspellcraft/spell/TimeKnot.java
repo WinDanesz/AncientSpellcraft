@@ -123,6 +123,11 @@ public class TimeKnot extends SpellBuff {
 		compound.setFloat("SaturationLevel", caster.getFoodStats().getSaturationLevel());
 
 		compound.setInteger("AirLevel", caster.getAir()); // current air level (in lungs)
+
+		NBTTagCompound foodStats = new NBTTagCompound();
+		caster.getFoodStats().writeNBT(foodStats);
+		compound.setTag("FoodStats", foodStats);
+
 		compound.setInteger("FoodLevel", caster.getFoodStats().getFoodLevel());
 
 		compound.setBoolean("Burning", caster.isBurning());
@@ -207,6 +212,11 @@ public class TimeKnot extends SpellBuff {
 			// reset properties
 			player.setHealth(compound.getFloat("Health"));
 			player.setAbsorptionAmount(compound.getFloat("AbsorptionAmount"));
+
+			if (!compound.getTag("FoodStats").isEmpty()) {
+				player.getFoodStats().readNBT(compound.getCompoundTag("FoodStats"));
+			}
+
 
 			player.getFoodStats().setFoodSaturationLevel(compound.getFloat("SaturationLevel"));
 			player.getFoodStats().setFoodLevel(compound.getInteger("FoodLevel"));

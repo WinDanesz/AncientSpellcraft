@@ -32,28 +32,14 @@ import java.util.List;
 public class GuiScribingDesk extends GuiContainer {
 
 	private GuiButton researchButton;
-
-	int currentHintId = 0;
-	int currentHintTypeId = 0;
-
 	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/container/gui_scribing_desk.png");
 
-	//	private boolean drawprogress = true;
-
-	//	private int requiredCrystalAmount = 0;
-
-	private String tooltipLangKey = "";
-
-	private int researchCost = 1;
-
 	private TileScribingDesk tileSphere;
-	private IInventory playerInv;
 
 	public GuiScribingDesk(EntityPlayer player, IInventory playerInv, TileScribingDesk te) {
 		super(new ContainerScribingDesk(player, playerInv, te));
 
 		this.tileSphere = te;
-		this.playerInv = playerInv;
 
 		this.xSize = 176;
 		this.ySize = 185;
@@ -67,8 +53,6 @@ public class GuiScribingDesk extends GuiContainer {
 		this.buttonList.clear();
 		this.buttonList.add(this.researchButton = new GuiButtonApply(0, this.width / 2 + 53, this.height / 2 + -30));
 		this.researchButton.enabled = false;
-		//		this.buttonDone = this.addButton(new GuiButton(0, this.width / 2 -30, this.height / 2 - 20 , 60, 20, I18n.format("gui.ancientspellcraft:research")));
-
 	}
 
 	@Override
@@ -86,91 +70,13 @@ public class GuiScribingDesk extends GuiContainer {
 
 		drawIngredientPreviews(mouseX, mouseY, partialTicks);
 
-		//		if (stack != null && this.mc.currentScreen != null)
-		//		{
-		//			this.mc.currentScreen.drawHoveringText(this.mc.currentScreen.getItemToolTip(stack), 50, 50);
-		//		}
-
-		Slot crystalSlot = this.inventorySlots.getSlot(ContainerScribingDesk.CRYSTAL_SLOT);
-		Slot bookSlot = this.inventorySlots.getSlot(ContainerScribingDesk.BOOK_SLOT);
-
 		if (this.tileSphere.getField(2) == 1) {
 			this.researchButton.enabled = true;
 		} else {
 			this.researchButton.enabled = false;
 		}
 
-		int ready = this.tileSphere.getField(2); // researchDuration
-
-
-		//		this.researchButton.enabled = false;
-//		if (!bookSlot.getHasStack()) { // no book to research
-//			this.researchButton.enabled = false;
-//			tooltipLangKey = "no_book";
-//		} else if (!crystalSlot.getHasStack()) { // no crystal
-//			tooltipLangKey = "no_crystal";
-//			this.researchButton.enabled = false;
-//		} else if (bookSlot.getStack().getItem() instanceof ItemSpellBook || bookSlot.getStack().getItem() instanceof ItemScroll) { // has a book and crystal
-//			if (tileSphere.getCurrentSpell() != null && tileSphere.getPlayerWizardData() != null) { // spell & player valid
-//				Spell spell = tileSphere.getCurrentSpell();
-//				if (!tileSphere.getPlayerWizardData().hasSpellBeenDiscovered(spell)) {
-//					researchCost = tileSphere.getResearchCost(spell);
-//					if (crystalSlot.getStack().getCount() >= researchCost) {
-//						this.researchButton.enabled = true;
-//						tooltipLangKey = "research";
-//					} else {
-//						this.researchButton.enabled = false;
-//						tooltipLangKey = "too_few_crystals";
-//					}
-//				} else {
-//					this.researchButton.enabled = false;
-//					tooltipLangKey = "known_book";
-//
-//				}
-//
-//			}
-//			//			bookSlot.getStack()
-//
-//		} else if (bookSlot.getStack().getItem() instanceof ItemRelic) {
-//			if (!ItemRelic.isResearched(bookSlot.getStack())) {
-//				this.researchButton.enabled = true;
-//				tooltipLangKey = "research";
-//			} else {
-//				this.researchButton.enabled = false;
-//				tooltipLangKey = "known_book";
-//			}
-//		} else {
-//			this.researchButton.enabled = false;
-//			tooltipLangKey = "no_book";
-//		}
-
-		//		this.researchButton.x = this.width / 2 + 64; /// TODO CHECKKKK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		//		this.renderHoveredToolTip(mouseX, mouseY);
 		this.renderHoveredToolTip(mouseX, mouseY);
-
-	}
-
-	private void drawMultilineHintText(String unlocalizedText) {
-		drawMultilineHintText(unlocalizedText, null);
-	}
-
-	private void drawMultilineHintText(String unlocalizedText, Spell spell) {
-		List<String> localizedTextList;
-		if (spell == null) {
-			localizedTextList = this.fontRenderer.listFormattedStringToWidth(I18n.format(unlocalizedText), 104);
-		} else {
-			localizedTextList = this.fontRenderer.listFormattedStringToWidth(I18n.format(unlocalizedText, spell.getDisplayName()), 104);
-		}
-		//				text.addAll(this.fontRenderer.listFormattedStringToWidth(description, TOOLTIP_WRAP_WIDTH));
-		int lineCount = localizedTextList.size();
-		int offset = (lineCount - 1) * 7;
-		int i = 0;
-		for (String text : localizedTextList) {
-			//			this.drawCenteredString(this.fontRenderer, text, this.guiLeft + 87, this.guiTop + 70 - offset + i, 16777215);
-			this.drawCenteredString(this.fontRenderer, text, 87, 70 - offset + i, 16777215);
-			//			fontRenderer.drawString(text, (float) (this.guiLeft + 87 - fontRenderer.getStringWidth(text) / 2), (float) (this.guiTop + 70 - offset + i), 14737632, true);
-			i += 10;
-		}
 
 	}
 
@@ -196,17 +102,8 @@ public class GuiScribingDesk extends GuiContainer {
 		GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 		this.mc.getTextureManager().bindTexture(GUI_TEXTURE);
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-
-		/// progress bar
-		//		if (drawprogress) {
-
 		int scale = this.getResearchProgressScaled(76);
-		//			this.drawTexturedModalRect(i + 79, j + 34, 176, 14, scale + 1, 16);
-
-		//			this.drawTexturedModalRect(this.guiLeft + 51, this.guiTop + 106, 171, 0, scale + 1, 5);
 		this.drawTexturedModalRect(this.guiLeft + 51, this.guiTop + 106, 176, 0, scale, 5);
-		//		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-		//		}
 
 	}
 
@@ -237,19 +134,7 @@ public class GuiScribingDesk extends GuiContainer {
 				//colour = 10526880;
 			}
 
-			//			DrawingUtils.drawTexturedRect(this.x, this.y, 176, 7, this.width, this.height, 256, 256);
 			DrawingUtils.drawTexturedRect(this.x, this.y, k, l, this.width, this.height, 256, 256);
-			//			if (this.hovered) {
-			//				if (tooltipLangKey.equals("too_few_crystals")) {
-			////					drawHoveringText(tooltipLangKey + "_" + requiredCrystalAmount, mouseX, mouseY);
-			//					drawHoveringText(I18n.format("gui.ancientspellcraft:sphere_cognizance." + tooltipLangKey, researchCost), mouseX, mouseY);
-			//				} else {
-			////				drawHoveringText(tooltipLangKey, mouseX, mouseY);
-			//				drawHoveringText(I18n.format("gui.ancientspellcraft:sphere_cognizance." + tooltipLangKey), mouseX, mouseY);
-			//					}
-			//			}
-			//this.drawCenteredString(minecraft.fontRenderer, this.displayString, this.x + this.width / 2,
-			//		this.y + (this.height - 8) / 2, colour);
 		}
 
 		/**
@@ -284,9 +169,6 @@ public class GuiScribingDesk extends GuiContainer {
 				// Sound
 				Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(
 						WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, 1));
-				// Animation
-				//				}
-
 			}
 		}
 
@@ -310,10 +192,6 @@ public class GuiScribingDesk extends GuiContainer {
 	@SubscribeEvent
 	public static void onRenderGameOverLayPost(RenderGameOverlayEvent.Post event) {
 
-	}
-
-	private void buttonClicked() {
-		this.tileSphere.setField(2, 1);
 	}
 
 	private int getResearchProgressScaled(int pixels) {

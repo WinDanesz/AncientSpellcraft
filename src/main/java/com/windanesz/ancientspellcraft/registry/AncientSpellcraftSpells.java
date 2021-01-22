@@ -16,6 +16,7 @@ import com.windanesz.ancientspellcraft.spell.BlockWeaving;
 import com.windanesz.ancientspellcraft.spell.CallOfThePack;
 import com.windanesz.ancientspellcraft.spell.Candlelight;
 import com.windanesz.ancientspellcraft.spell.Celerity;
+import com.windanesz.ancientspellcraft.spell.ChannelEffects;
 import com.windanesz.ancientspellcraft.spell.ChannelPower;
 import com.windanesz.ancientspellcraft.spell.Conduit;
 import com.windanesz.ancientspellcraft.spell.Conflagration;
@@ -23,8 +24,10 @@ import com.windanesz.ancientspellcraft.spell.ConjureFishingRod;
 import com.windanesz.ancientspellcraft.spell.ConjureShadowBlade;
 import com.windanesz.ancientspellcraft.spell.ConjureWater;
 import com.windanesz.ancientspellcraft.spell.ContinuityCharm;
+import com.windanesz.ancientspellcraft.spell.Covenant;
 import com.windanesz.ancientspellcraft.spell.CreateIgloo;
 import com.windanesz.ancientspellcraft.spell.Cryostasis;
+import com.windanesz.ancientspellcraft.spell.CrystalMine;
 import com.windanesz.ancientspellcraft.spell.CureZombie;
 import com.windanesz.ancientspellcraft.spell.CurseArmor;
 import com.windanesz.ancientspellcraft.spell.CurseOfDeath;
@@ -32,24 +35,33 @@ import com.windanesz.ancientspellcraft.spell.CurseOfEnder;
 import com.windanesz.ancientspellcraft.spell.CurseWard;
 import com.windanesz.ancientspellcraft.spell.DispelItemCurse;
 import com.windanesz.ancientspellcraft.spell.Drought;
+import com.windanesz.ancientspellcraft.spell.EagleEye;
 import com.windanesz.ancientspellcraft.spell.EssenceExtraction;
 import com.windanesz.ancientspellcraft.spell.Extinguish;
 import com.windanesz.ancientspellcraft.spell.EyeOfTheStorm;
+import com.windanesz.ancientspellcraft.spell.Farsight;
 import com.windanesz.ancientspellcraft.spell.FireWall;
+import com.windanesz.ancientspellcraft.spell.FlintShard;
 import com.windanesz.ancientspellcraft.spell.Forcefend;
 import com.windanesz.ancientspellcraft.spell.FrostNova;
 import com.windanesz.ancientspellcraft.spell.Harvest;
 import com.windanesz.ancientspellcraft.spell.HellGate;
+import com.windanesz.ancientspellcraft.spell.HorseWhistle;
 import com.windanesz.ancientspellcraft.spell.IceTower;
 import com.windanesz.ancientspellcraft.spell.IceWorkbench;
 import com.windanesz.ancientspellcraft.spell.IntensifyingFocus;
 import com.windanesz.ancientspellcraft.spell.LavaVision;
+import com.windanesz.ancientspellcraft.spell.LivingComet;
 import com.windanesz.ancientspellcraft.spell.Magelight;
 import com.windanesz.ancientspellcraft.spell.MagmaStrider;
 import com.windanesz.ancientspellcraft.spell.ManaFlare;
+import com.windanesz.ancientspellcraft.spell.ManaVortex;
 import com.windanesz.ancientspellcraft.spell.Martyr;
+import com.windanesz.ancientspellcraft.spell.MightAndMagic;
 import com.windanesz.ancientspellcraft.spell.NaturesSprout;
 import com.windanesz.ancientspellcraft.spell.PocketDimension;
+import com.windanesz.ancientspellcraft.spell.PrismaticSpray;
+import com.windanesz.ancientspellcraft.spell.PuppetMaster;
 import com.windanesz.ancientspellcraft.spell.Pyrokinesis;
 import com.windanesz.ancientspellcraft.spell.RaiseSkeletonMage;
 import com.windanesz.ancientspellcraft.spell.Regrowth;
@@ -60,10 +72,14 @@ import com.windanesz.ancientspellcraft.spell.SpellBuffAS;
 import com.windanesz.ancientspellcraft.spell.SpellConjurationAS;
 import com.windanesz.ancientspellcraft.spell.SpellWard;
 import com.windanesz.ancientspellcraft.spell.StaticCharge;
+import com.windanesz.ancientspellcraft.spell.StoneFist;
+import com.windanesz.ancientspellcraft.spell.StonePunch;
 import com.windanesz.ancientspellcraft.spell.SummonAnchor;
 import com.windanesz.ancientspellcraft.spell.SummonBoat;
+import com.windanesz.ancientspellcraft.spell.SummonSkeletonHorse;
 import com.windanesz.ancientspellcraft.spell.SummonSpiritBear;
 import com.windanesz.ancientspellcraft.spell.SummonVolcano;
+import com.windanesz.ancientspellcraft.spell.Suppression;
 import com.windanesz.ancientspellcraft.spell.TameAnimal;
 import com.windanesz.ancientspellcraft.spell.TemporalCasualty;
 import com.windanesz.ancientspellcraft.spell.TimeKnot;
@@ -153,6 +169,7 @@ public final class AncientSpellcraftSpells {
 	public static final Spell intensifying_focus = placeholder();
 	public static final Spell silencing_sigil = placeholder();
 	public static final Spell continuity_charm = placeholder();
+	public static final Spell crystal_mine = placeholder();
 	public static final Spell water_walking = placeholder();
 	public static final Spell projectile_ward = placeholder();
 	public static final Spell bulwark = placeholder();
@@ -162,6 +179,17 @@ public final class AncientSpellcraftSpells {
 	public static final Spell conduit = placeholder();
 	public static final Spell hand_of_gaia = placeholder();
 	public static final Spell essence_extraction = placeholder();
+	public static final Spell stone_punch = placeholder();
+	public static final Spell bubble_head = placeholder();
+	public static final Spell prismatic_spray = placeholder();
+	public static final Spell covenant = placeholder();
+	public static final Spell mana_vortex = placeholder();
+	public static final Spell eagle_eye = placeholder();
+	public static final Spell farsight = placeholder();
+	public static final Spell flint_shard = placeholder();
+	public static final Spell living_comet = placeholder();
+	public static final Spell might_and_magic = placeholder();
+	public static final Spell channel_effect = placeholder();
 
 	@SuppressWarnings("unchecked")
 	@SubscribeEvent
@@ -315,7 +343,32 @@ public final class AncientSpellcraftSpells {
 		registry.register(new FrostNova());
 		registry.register(new Regrowth());
 		registry.register(new EssenceExtraction());
-//		registry.register(new HandOfGaia());
+		registry.register(new StonePunch());
+		registry.register(new StoneFist());
+		registry.register(new EagleEye());
+		registry.register(new SpellConjurationAS("sacred_mace", AncientSpellcraftItems.sacred_mace));
+		registry.register(new SpellBuffAS("bubble_head", 52, 195, 235, () -> AncientSpellcraftPotions.bubble_head) {
+			@Override
+			public boolean applicableForItem(Item item) {
+				return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+			}
+		});
+
+		registry.register(new PrismaticSpray());
+		registry.register(new Covenant());
+		registry.register(new ManaVortex());
+		registry.register(new FlintShard());
+		registry.register(new Farsight());
+		registry.register(new CrystalMine());
+		registry.register(new PuppetMaster());
+		registry.register(new SummonSkeletonHorse());
+		registry.register(new HorseWhistle());
+		registry.register(new LivingComet());
+		registry.register(new Suppression());
+		registry.register(new MightAndMagic());
+		registry.register(new ChannelEffects());
+
+		//		registry.register(new HandOfGaia());
 		//		registry.register(new WarpWood());
 	}
 }

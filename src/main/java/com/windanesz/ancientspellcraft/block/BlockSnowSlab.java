@@ -21,16 +21,13 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public abstract class BlockSnowSlab extends BlockSlab
-{
+public abstract class BlockSnowSlab extends BlockSlab {
 	public static final PropertyEnum<BlockSnowSlab.Variant> VARIANT = PropertyEnum.<BlockSnowSlab.Variant>create("variant", BlockSnowSlab.Variant.class);
 
-	public BlockSnowSlab()
-	{
+	public BlockSnowSlab() {
 		super(Material.CRAFTED_SNOW, MapColor.SNOW);
 		IBlockState iblockstate = this.blockState.getBaseState();
-		if (!this.isDouble())
-		{
+		if (!this.isDouble()) {
 			iblockstate = iblockstate.withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM);
 		}
 		this.setLightOpacity(0);
@@ -42,25 +39,21 @@ public abstract class BlockSnowSlab extends BlockSlab
 	/**
 	 * Get the Item that this Block should drop when harvested.
 	 */
-	public Item getItemDropped(IBlockState state, Random rand, int fortune)
-	{
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
 		return Item.getItemFromBlock(Blocks.PURPUR_SLAB);
 	}
 
-	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state)
-	{
+	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
 		return new ItemStack(Blocks.PURPUR_SLAB);
 	}
 
 	/**
 	 * Convert the given metadata into a BlockState for this Block
 	 */
-	public IBlockState getStateFromMeta(int meta)
-	{
+	public IBlockState getStateFromMeta(int meta) {
 		IBlockState iblockstate = this.getDefaultState().withProperty(VARIANT, BlockSnowSlab.Variant.DEFAULT);
 
-		if (!this.isDouble())
-		{
+		if (!this.isDouble()) {
 			iblockstate = iblockstate.withProperty(HALF, (meta & 8) == 0 ? BlockSlab.EnumBlockHalf.BOTTOM : BlockSlab.EnumBlockHalf.TOP);
 		}
 
@@ -70,76 +63,62 @@ public abstract class BlockSnowSlab extends BlockSlab
 	/**
 	 * Convert the BlockState into the correct metadata value
 	 */
-	public int getMetaFromState(IBlockState state)
-	{
+	public int getMetaFromState(IBlockState state) {
 		int i = 0;
 
-		if (!this.isDouble() && state.getValue(HALF) == BlockSlab.EnumBlockHalf.TOP)
-		{
+		if (!this.isDouble() && state.getValue(HALF) == BlockSlab.EnumBlockHalf.TOP) {
 			i |= 8;
 		}
 
 		return i;
 	}
 
-	protected BlockStateContainer createBlockState()
-	{
+	protected BlockStateContainer createBlockState() {
 		return this.isDouble() ? new BlockStateContainer(this, new IProperty[] {VARIANT}) : new BlockStateContainer(this, new IProperty[] {HALF, VARIANT});
 	}
 
 	/**
 	 * Returns the slab block name with the type associated with it
 	 */
-	public String getTranslationKey(int meta)
-	{
+	public String getTranslationKey(int meta) {
 		return super.getTranslationKey();
 	}
 
-	public IProperty<?> getVariantProperty()
-	{
+	public IProperty<?> getVariantProperty() {
 		return VARIANT;
 	}
 
-	public Comparable<?> getTypeForItem(ItemStack stack)
-	{
+	public Comparable<?> getTypeForItem(ItemStack stack) {
 		return BlockSnowSlab.Variant.DEFAULT;
 	}
 
-	public static class Double extends BlockSnowSlab
-	{
-		public boolean isDouble()
-		{
+	public static class Double extends BlockSnowSlab {
+		public boolean isDouble() {
 			return true;
 		}
 	}
 
-	public static class Half extends BlockSnowSlab
-	{
-		public boolean isDouble()
-		{
+	public static class Half extends BlockSnowSlab {
+		public boolean isDouble() {
 			return false;
 		}
 	}
 
-	public static enum Variant implements IStringSerializable
-	{
+	public enum Variant implements IStringSerializable {
 		DEFAULT;
 
-		public String getName()
-		{
+		public String getName() {
 			return "default";
 		}
 	}
 
 	@Override
-	public Block setSoundType(SoundType sound)
-	{
+	public Block setSoundType(SoundType sound) {
 		this.blockSoundType = sound;
 		return this;
 	}
 
-	public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face)
-	{
+	public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face) {
 		return state.isOpaqueCube();
 	}
 }

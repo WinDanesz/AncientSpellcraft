@@ -5,7 +5,11 @@ import com.windanesz.ancientspellcraft.block.BlockArtefactPensive;
 import com.windanesz.ancientspellcraft.block.BlockCandleLight;
 import com.windanesz.ancientspellcraft.block.BlockCrystalLeaves;
 import com.windanesz.ancientspellcraft.block.BlockCrystalLog;
+import com.windanesz.ancientspellcraft.block.BlockCrystalMine;
 import com.windanesz.ancientspellcraft.block.BlockCrystalOre;
+import com.windanesz.ancientspellcraft.block.BlockDevoritium;
+import com.windanesz.ancientspellcraft.block.BlockDevoritiumBars;
+import com.windanesz.ancientspellcraft.block.BlockDevoritiumOre;
 import com.windanesz.ancientspellcraft.block.BlockDimensionBoundary;
 import com.windanesz.ancientspellcraft.block.BlockDimensionFocus;
 import com.windanesz.ancientspellcraft.block.BlockHardFrostedIce;
@@ -13,11 +17,11 @@ import com.windanesz.ancientspellcraft.block.BlockHellFire;
 import com.windanesz.ancientspellcraft.block.BlockIceDoor;
 import com.windanesz.ancientspellcraft.block.BlockIceWorkbench;
 import com.windanesz.ancientspellcraft.block.BlockMageLight;
+import com.windanesz.ancientspellcraft.block.BlockRuinedImbuementAltar;
 import com.windanesz.ancientspellcraft.block.BlockScribingDesk;
 import com.windanesz.ancientspellcraft.block.BlockSkullWatch;
 import com.windanesz.ancientspellcraft.block.BlockSnowSlab;
 import com.windanesz.ancientspellcraft.block.BlockSphereCognizance;
-import com.windanesz.ancientspellcraft.block.RuinedImbuementAltar;
 import com.windanesz.ancientspellcraft.tileentity.TileArtefactPensive;
 import com.windanesz.ancientspellcraft.tileentity.TileCandleLight;
 import com.windanesz.ancientspellcraft.tileentity.TileMageLight;
@@ -64,19 +68,23 @@ public class AncientSpellcraftBlocks {
 	public static final Block SCRIBING_DESK = placeholder();
 	public static final Block IMBUEMENT_ALTAR_RUINED = placeholder();
 
-	public static final Block crystal_ore_fire = placeholder();
-	public static final Block crystal_ore_earth = placeholder();
-	public static final Block crystal_ore_healing = placeholder();
-	public static final Block crystal_ore_ice = placeholder();
-	public static final Block crystal_ore_lightning = placeholder();
-	public static final Block crystal_ore_necromancy = placeholder();
-	public static final Block crystal_ore_sorcery = placeholder();
+	public static final Block CRYSTAL_ORE_FIRE = placeholder();
+	public static final Block CRYSTAL_ORE_EARTH = placeholder();
+	public static final Block CRYSTAL_ORE_HEALING = placeholder();
+	public static final Block CRYSTAL_ORE_ICE = placeholder();
+	public static final Block CRYSTAL_ORE_LIGHTNING = placeholder();
+	public static final Block CRYSTAL_ORE_NECROMANCY = placeholder();
+	public static final Block CRYSTAL_ORE_SORCERY = placeholder();
 
-	public static final Block log_crystal_tree = placeholder();
-	public static final Block imbuement_altar_ruined = placeholder();
+	public static final Block DEVORITIUM_BLOCK = placeholder();
+	public static final Block DEVORITIUM_ORE = placeholder();
+	public static final Block DEVORITIUM_BARS = placeholder();
+	public static final Block DEVORITIUM_DOOR = placeholder();
+
+	public static final Block LOG_CRYSTAL_TREE = placeholder();
 //	public static final Block log_crystal_tree2 = placeholder();
-	public static final Block leaves_crystal_tree = placeholder();
-
+	public static final Block LEAVES_CRYSTAL_TREE = placeholder();
+	public static final Block CRYSTAL_MINE = placeholder();
 
 	public static void registerBlock(IForgeRegistry<Block> registry, String name, Block block) {
 		block.setRegistryName(AncientSpellcraft.MODID, name);
@@ -112,11 +120,16 @@ public class AncientSpellcraftBlocks {
 		registerBlock(registry, "crystal_ore_necromancy", new BlockCrystalOre(Element.NECROMANCY));
 		registerBlock(registry, "crystal_ore_sorcery", new BlockCrystalOre(Element.SORCERY));
 
+		registerBlock(registry, "devoritium_block", new BlockDevoritium());
+		registerBlock(registry, "devoritium_ore", new BlockDevoritiumOre());
+		registerBlock(registry, "devoritium_bars", new BlockDevoritiumBars());
+		registerBlock(registry, "crystal_mine", new BlockCrystalMine());
+
 
 		registerBlock(registry, "log_crystal_tree", new BlockCrystalLog());
 //		registerBlock(registry, "log_crystal_tree2", new Block(Material.WOOD).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
 		registerBlock(registry, "leaves_crystal_tree", new BlockCrystalLeaves());
-		registerBlock(registry, "imbuement_altar_ruined", new RuinedImbuementAltar(Material.ROCK));
+		registerBlock(registry, "imbuement_altar_ruined", new BlockRuinedImbuementAltar(Material.ROCK));
 	}
 
 	/**

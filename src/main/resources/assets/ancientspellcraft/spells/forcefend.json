@@ -13,7 +13,7 @@
     "tier": "master",
     "element": "magic",
     "type": "utility",
-    "cost": 8,
+    "cost": 10,
     "chargeup": 0,
     "cooldown": 0,
     "base_properties": {

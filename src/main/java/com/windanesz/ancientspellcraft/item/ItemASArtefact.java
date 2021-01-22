@@ -10,4 +10,5 @@ public class ItemASArtefact extends ItemArtefact {
 		super(rarity, type);
 		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
 	}
+
 }

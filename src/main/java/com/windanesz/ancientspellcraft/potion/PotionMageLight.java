@@ -51,39 +51,4 @@ public class PotionMageLight extends PotionMagicEffect {
 		Random r = new Random();
 		return r.nextInt((max - min) + 1) + min;
 	}
-	//		super.performEffect(entitylivingbase, strength);
-	//	}
-	//
-	//
-	//	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	//	public void onEvent(PlayerTickEvent event)
-	//	{
-	//		if (event.phase == TickEvent.Phase.START && !event.player.worldObj.isRemote)
-	//		{
-	//			if (event.player.getCurrentEquippedItem() != null)
-	//			{
-	//				if (BlockMovingLightSource.isLightEmittingItem(
-	//						event.player.getCurrentEquippedItem().getItem()))
-	//		{
-	//			int blockX = MathHelper.floor(entity.posX);
-	//			int blockY = MathHelper.floor(entity.posY - 0.2D -
-	//					entity.getYOffset());
-	//			int blockZ = MathHelper.floor(entity.posZ);
-	//
-	//			// place light at head level
-	//			BlockPos blockLocation = new BlockPos(blockX, blockY, blockZ).up();
-	//
-	//			if (entity.world.getBlockState(blockLocation).getBlock() == Blocks.AIR) {
-	//				entity.world.setBlockState(
-	//						blockLocation,
-	//						AncientSpellcraftBlocks.MAGELIGHT.getDefaultState());
-	//			} else if (entity.world.getBlockState(
-	//					blockLocation.add(
-	//							entity.getLookVec().x,
-	//							entity.getLookVec().y,
-	//							entity.getLookVec().z)).getBlock() == Blocks.AIR) {
-	//				entity.world.setBlockState(blockLocation.add(entity.getLookVec().x, entity.getLookVec().y, entity.getLookVec().z),
-	//						AncientSpellcraftBlocks.MAGELIGHT.getDefaultState());
-	//			}
-	//		}
 }
