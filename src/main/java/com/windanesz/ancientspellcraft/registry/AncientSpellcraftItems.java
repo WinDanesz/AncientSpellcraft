@@ -147,7 +147,7 @@ public final class AncientSpellcraftItems {
 
 	public static final Item belt_enchanter = placeholder();
 	public static final Item belt_stone = placeholder();
-	public static final Item belt_druid = placeholder();
+//	public static final Item belt_druid = placeholder();
 	public static final Item belt_vortex = placeholder();
 	public static final Item belt_horse = placeholder();
 
@@ -354,7 +354,7 @@ public final class AncientSpellcraftItems {
 
 		registerItem(registry, "belt_enchanter", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
 		registerItem(registry, "belt_stone", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
-		registerItem(registry, "belt_druid", new ItemNewArtefact(EnumRarity.UNCOMMON, ItemNewArtefact.AdditionalType.BELT));
+//		registerItem(registry, "belt_druid", new ItemNewArtefact(EnumRarity.UNCOMMON, ItemNewArtefact.AdditionalType.BELT));
 		registerItem(registry, "belt_vortex", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
 		registerItem(registry, "belt_horse", new ItemNewArtefact(EnumRarity.UNCOMMON, ItemNewArtefact.AdditionalType.BELT));
 

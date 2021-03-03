@@ -83,7 +83,7 @@ public final class AncientSpellcraftModels {
 
 		registerItemModel(AncientSpellcraftItems.belt_enchanter);
 		registerItemModel(AncientSpellcraftItems.belt_stone);
-		registerItemModel(AncientSpellcraftItems.belt_druid);
+//		registerItemModel(AncientSpellcraftItems.belt_druid);
 		registerItemModel(AncientSpellcraftItems.belt_vortex);
 		registerItemModel(AncientSpellcraftItems.belt_horse);
 
