@@ -128,8 +128,12 @@ public class EntitySpiritWard extends EntityMagicConstruct implements ICustomHit
 
 		for (Entity target : targets) {
 
+			if (!EntityUtils.isLiving(target)) {
+				continue;
+			}
+
 			// only prevents undeads from entering the circle
-			if (EntityUtils.isLiving(target) && ((EntityLivingBase) target).isPotionActive(WizardryPotions.curse_of_undeath) || (this.isValidTarget(target) && ((EntityLivingBase) target).isEntityUndead())) {
+			if (((EntityLivingBase) target).isPotionActive(WizardryPotions.curse_of_undeath) || (this.isValidTarget(target) && ((EntityLivingBase) target).isEntityUndead())) {
 
 				Vec3d currentPos = Arrays.stream(GeometryUtils.getVertices(target.getEntityBoundingBox()))
 						.min(Comparator.comparingDouble(v -> v.distanceTo(this.getPositionVector())))
@@ -144,12 +148,12 @@ public class EntitySpiritWard extends EntityMagicConstruct implements ICustomHit
 
 				boolean flag;
 
-				if (EntityUtils.isLiving(target)) {
-					// Non-allied living entities shouldn't be inside at all
+				if (!EntityUtils.isLiving(target)) {
+				//  Non-allied living entities shouldn't be inside at all
 					flag = nextTickDistance <= radius;
 				} else {
-					// undead entities will bounce off if they hit the spirit ward within the next tick...
-					flag = (currentDistance > radius && nextTickDistance <= radius) // ...from the outside...
+				//  undead entities will bounce off if they hit the spirit ward within the next tick...
+					flag = (currentDistance < radius  && nextTickDistance <= radius) // ...from the outside...
 							|| (currentDistance < radius && nextTickDistance >= radius); // ...or from the inside
 				}
 
