@@ -9,6 +9,7 @@ import com.windanesz.ancientspellcraft.block.BlockCrystalMine;
 import com.windanesz.ancientspellcraft.block.BlockCrystalOre;
 import com.windanesz.ancientspellcraft.block.BlockDevoritium;
 import com.windanesz.ancientspellcraft.block.BlockDevoritiumBars;
+import com.windanesz.ancientspellcraft.block.BlockDevoritiumDoor;
 import com.windanesz.ancientspellcraft.block.BlockDevoritiumOre;
 import com.windanesz.ancientspellcraft.block.BlockDimensionBoundary;
 import com.windanesz.ancientspellcraft.block.BlockDimensionFocus;
@@ -121,6 +122,7 @@ public class AncientSpellcraftBlocks {
 		registerBlock(registry, "crystal_ore_sorcery", new BlockCrystalOre(Element.SORCERY));
 
 		registerBlock(registry, "devoritium_block", new BlockDevoritium());
+		registerBlock(registry, "devoritium_door", new BlockDevoritiumDoor());
 		registerBlock(registry, "devoritium_ore", new BlockDevoritiumOre());
 		registerBlock(registry, "devoritium_bars", new BlockDevoritiumBars());
 		registerBlock(registry, "crystal_mine", new BlockCrystalMine());
