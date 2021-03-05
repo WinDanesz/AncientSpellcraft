@@ -217,9 +217,7 @@ public class TimeKnot extends SpellBuff {
 				player.getFoodStats().readNBT(compound.getCompoundTag("FoodStats"));
 			}
 
-
-			player.getFoodStats().setFoodSaturationLevel(compound.getFloat("SaturationLevel"));
-			player.getFoodStats().setFoodLevel(compound.getInteger("FoodLevel"));
+			player.getFoodStats().addStats(compound.getInteger("FoodLevel"), compound.getFloat("SaturationLevel"));
 
 			player.setAir(compound.getInteger("AirLevel"));
 
