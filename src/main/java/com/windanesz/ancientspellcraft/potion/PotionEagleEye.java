@@ -24,8 +24,8 @@ public class PotionEagleEye extends PotionMagicEffect {
 	@Override
 	public boolean isReady(int duration, int amplifier) {
 		// Execute the effect every tick here as we have access to the duration
-		// enforcing 3rd person view makes the player hand not render
-		Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
+		// enforcing 3rd person view makes the player hand not render // TODO: remove
+		// Minecraft.getMinecraft().gameSettings.thirdPersonView = 1; // TODO: remove
 		return true;
 	}
 
