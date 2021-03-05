@@ -116,8 +116,7 @@ public class ChannelEffects extends SpellRay {
 				return spell.cast(world, (EntityPlayer) target, EnumHand.MAIN_HAND, 0, modifiers);
 			} else if (target instanceof EntityLiving) {
 				EntityLiving npc = (EntityLiving) target;
-				boolean test = spell.cast(world, npc, EnumHand.MAIN_HAND, 0, (EntityLiving) target, modifiers);
-				return test;
+				return spell.cast(world, npc, EnumHand.MAIN_HAND, 0, (EntityLiving) target, modifiers);
 			}
 		}
 		return false;

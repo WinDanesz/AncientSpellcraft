@@ -2,7 +2,6 @@ package com.windanesz.ancientspellcraft.client;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
-import com.windanesz.ancientspellcraft.modules.freecam.FreeCam;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
 import com.windanesz.ancientspellcraft.packet.PacketActivateBauble;
 import electroblob.wizardry.item.ItemArtefact;
@@ -68,10 +67,7 @@ public class ControlHandler {
 	public void KeyInputEvent(InputEvent.KeyInputEvent event) {
 		if (ClientEventHandler.timeout == 0 && GameSettings.isKeyDown(switc)) {
 			ClientEventHandler.timeout = 10;
-			if (ClientEventHandler.enabled)
-				ClientEventHandler.enabled = false;
-			else
-				ClientEventHandler.enabled = true;
+			ClientEventHandler.enabled = !ClientEventHandler.enabled;
 			if (ClientEventHandler.enabled) {
 				ClientEventHandler.x = (int) Minecraft.getMinecraft().player.posX;
 				ClientEventHandler.y = (int) Minecraft.getMinecraft().player.posY;

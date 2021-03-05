@@ -4,7 +4,6 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.item.ItemStoneFist;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.item.IConjuredItem;
-import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellConjuration;
 import electroblob.wizardry.util.InventoryUtils;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -79,7 +78,7 @@ public class StonePunch extends SpellConjuration {
 		if(caster.getHeldItemMainhand().isEmpty()){
 			caster.setHeldItem(EnumHand.MAIN_HAND, stack);
 		}else{
-			if(!caster.inventory.addItemStackToInventory(stack)) return false;
+			return caster.inventory.addItemStackToInventory(stack);
 		}
 
 		return true;

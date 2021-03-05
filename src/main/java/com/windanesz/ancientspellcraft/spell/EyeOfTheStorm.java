@@ -92,10 +92,7 @@ public class EyeOfTheStorm extends Spell {
 				}
 			}
 		}
-		if (ticksInUse > 1 && ticksInUse % 61 == 0) {
-			return false;
-		}
-		return true;
+		return ticksInUse <= 1 || ticksInUse % 61 != 0;
 		//		return true;
 	}
 

@@ -146,7 +146,7 @@ public class EntitySpiritBear extends EntityPolarBear implements IEntityOwnable 
 			double x = this.posX - this.width / 2 + this.rand.nextFloat() * width;
 			double y = this.posY + this.height * this.rand.nextFloat() + 0.2f;
 			double z = this.posZ - this.width / 2 + this.rand.nextFloat() * width;
-			ParticleBuilder.create(ParticleBuilder.Type.DUST).pos(x, y, z).clr(0.8f, 0.8f, 1.0f).shaded(true).spawn(world);
+			ParticleBuilder.create(ParticleBuilder.Type.DUST).pos(x, y, z).clr(0.8f, 0.8f, 1.0f).spawn(world);
 		}
 	}
 

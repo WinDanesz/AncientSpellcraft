@@ -78,7 +78,7 @@ public class StoneFist extends SpellConjuration {
 		if(caster.getHeldItemMainhand().isEmpty()){
 			caster.setHeldItem(EnumHand.MAIN_HAND, stack);
 		}else{
-			if(!caster.inventory.addItemStackToInventory(stack)) return false;
+			return caster.inventory.addItemStackToInventory(stack);
 		}
 
 		return true;

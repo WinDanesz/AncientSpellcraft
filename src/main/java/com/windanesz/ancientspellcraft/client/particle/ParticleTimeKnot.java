@@ -26,7 +26,6 @@ public class ParticleTimeKnot extends ParticleWizardry {
 		this.particleScale *= 2;
 		// Defaults to black (which looks like a 'normal' scorch mark)
 //		this.setRBGColorF(0, 0, 0);
-		this.shaded = false;
 	}
 
 	@Override

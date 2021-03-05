@@ -124,10 +124,7 @@ public class WillOWisp extends Spell {
 
 	public boolean hasCustomName(ItemStack nameTag) {
 		NBTTagCompound tag = nameTag.getTagCompound();
-		if (tag.getString("name").isEmpty()) {
-			return false;
-		} else
-			return true;
+		return !tag.getString("name").isEmpty();
 	}
 
 	public boolean hasEnoughMana(ItemStack nameTag) {

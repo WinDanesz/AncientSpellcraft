@@ -13,8 +13,7 @@ public class ItemDevoritiumArrow extends ItemArrow implements IDevoritium {
 
 	@Override
 	public EntityArrow createArrow(World worldIn, ItemStack stack, EntityLivingBase shooter) {
-		EntityDevoritiumArrow entityDevoritiumArrow = new EntityDevoritiumArrow(worldIn, shooter);
-		return entityDevoritiumArrow;
+		return new EntityDevoritiumArrow(worldIn, shooter);
 	}
 
 	@Override

@@ -196,11 +196,11 @@ public class ItemRelic extends Item {
 	@Override
 	public void onUsingTick(ItemStack itemStack, EntityLivingBase player, int usingTicks) {
 
-		if ( usingTicks % 25  == 0 || usingTicks == 0) {
+		if (usingTicks % 25 == 0 || usingTicks == 0) {
 			RelicType relicType = getRelicType(itemStack);
 
 			if (relicType == RelicType.INCANTATION || relicType == RelicType.ENCHANTMENT || relicType == RelicType.POWER) {
-			player.world.playSound(null, player.posX, player.posY, player.posZ, AncientSpellcraftSounds.RELIC_USE_LOOP, SoundCategory.NEUTRAL, 1.1F, 1F);
+				player.world.playSound(null, player.posX, player.posY, player.posZ, AncientSpellcraftSounds.RELIC_USE_LOOP, SoundCategory.NEUTRAL, 1.1F, 1F);
 			}
 		}
 
@@ -463,10 +463,7 @@ public class ItemRelic extends Item {
 	}
 
 	public boolean hasRelicType(ItemStack stack) {
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("getRelicType")) {
-			return true;
-		}
-		return false;
+		return stack.hasTagCompound() && stack.getTagCompound().hasKey("getRelicType");
 	}
 
 	@Override
@@ -685,8 +682,7 @@ public class ItemRelic extends Item {
 	public static RelicType getRelicType(ItemStack stack) {
 		if (stack.getItem() instanceof ItemRelic) {
 			if ((stack.getTagCompound() != null && stack.getTagCompound().hasKey("relicType"))) {
-				RelicType relicType = RelicType.fromName(stack.getTagCompound().getString("relicType").toLowerCase());
-				return relicType;
+				return RelicType.fromName(stack.getTagCompound().getString("relicType").toLowerCase());
 			}
 		}
 		return null;
@@ -696,8 +692,7 @@ public class ItemRelic extends Item {
 	public static Spell getSpell(ItemStack stack) {
 		if (stack.getItem() instanceof ItemRelic) {
 			if ((stack.getTagCompound() != null && stack.getTagCompound().hasKey(SPELL))) {
-				Spell spell = Spell.get(stack.getTagCompound().getString(SPELL));
-				return spell;
+				return Spell.get(stack.getTagCompound().getString(SPELL));
 			}
 		}
 		return null;

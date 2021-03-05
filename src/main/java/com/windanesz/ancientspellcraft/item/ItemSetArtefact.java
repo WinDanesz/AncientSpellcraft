@@ -64,6 +64,7 @@ public class ItemSetArtefact extends ItemASArtefact {
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
 	public String getSetBonusString(int activePartCount) {
 		return I18n.format("set." + modid + ":" + setName + ".bonus", ((activePartCount - 1) * 5));
 

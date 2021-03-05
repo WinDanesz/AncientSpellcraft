@@ -1,7 +1,6 @@
 package com.windanesz.ancientspellcraft.util;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.item.ItemStoneFist;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.item.IManaStoringItem;
@@ -17,7 +16,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -53,8 +51,7 @@ public final class ASUtils {
 	 * @return A Map with all registered biome names with their corresponding biome Ids.
 	 **/
 	public static Map<String, Integer> getAllBiomes() {
-		Map<String, Integer> biomeMap = ForgeRegistries.BIOMES.getValuesCollection().stream().collect(Collectors.toMap(Biome::getBiomeName, Biome::getIdForBiome));
-		return biomeMap;
+		return ForgeRegistries.BIOMES.getValuesCollection().stream().collect(Collectors.toMap(Biome::getBiomeName, Biome::getIdForBiome));
 	}
 
 	/**
@@ -63,8 +60,7 @@ public final class ASUtils {
 	 * @return A Map with all registered biome names with their corresponding biome registry names.
 	 **/
 	public static Map<String, ResourceLocation> getAllBiomesWithRegnames() {
-		Map<String, ResourceLocation> biomeMap = ForgeRegistries.BIOMES.getValuesCollection().stream().collect(Collectors.toMap(Biome::getBiomeName, Biome::getRegistryName));
-		return biomeMap;
+		return ForgeRegistries.BIOMES.getValuesCollection().stream().collect(Collectors.toMap(Biome::getBiomeName, Biome::getRegistryName));
 	}
 
 	/**

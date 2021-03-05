@@ -139,8 +139,7 @@ public class WarpWood extends SpellRay {
 
 	@Override
 	protected void spawnParticle(World world, double x, double y, double z, double vx, double vy, double vz) {
-		ParticleBuilder.create(Type.LEAF).pos(x, y, z).time(20 + world.rand.nextInt(5)).clr(0.9f, 0.95f, 1)
-				.shaded(false).spawn(world);
+		ParticleBuilder.create(Type.LEAF).pos(x, y, z).time(20 + world.rand.nextInt(5)).clr(0.9f, 0.95f, 1).spawn(world);
 	}
 
 	// Copied from Block, where (for some reason) it's protected

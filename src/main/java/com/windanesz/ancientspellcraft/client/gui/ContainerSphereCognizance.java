@@ -145,7 +145,7 @@ public class ContainerSphereCognizance extends Container {
 		super.detectAndSendChanges();
 
 		boolean allFieldsHaveChanged = false;
-		boolean fieldHasChanged[] = new boolean[tileSphereCognizance.getFieldCount()];
+		boolean[] fieldHasChanged = new boolean[tileSphereCognizance.getFieldCount()];
 		if (cachedFields == null) {
 			cachedFields = new int[tileSphereCognizance.getFieldCount()];
 			allFieldsHaveChanged = true;

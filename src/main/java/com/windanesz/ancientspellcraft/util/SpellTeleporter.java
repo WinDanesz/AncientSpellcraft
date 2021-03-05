@@ -141,7 +141,7 @@ public class SpellTeleporter implements ITeleporter {
 	 * @param destination The position to port to.
 	 * @param yaw         The rotation yaw the entity should have after porting.
 	 */
-	private static final void teleportPlayerToDimension(EntityPlayerMP player, int dimension, BlockPos destination, float yaw) {
+	private static void teleportPlayerToDimension(EntityPlayerMP player, int dimension, BlockPos destination, float yaw) {
 		int startDimension = player.dimension;
 		MinecraftServer server = player.getServer();
 		PlayerList playerList = server.getPlayerList();

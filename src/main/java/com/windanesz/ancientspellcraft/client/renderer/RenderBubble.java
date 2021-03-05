@@ -1,7 +1,6 @@
 package com.windanesz.ancientspellcraft.client.renderer;
 
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
-import electroblob.wizardry.Wizardry;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -9,7 +8,6 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.Mod;

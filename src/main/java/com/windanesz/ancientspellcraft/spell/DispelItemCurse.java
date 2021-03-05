@@ -34,9 +34,7 @@ public class DispelItemCurse extends SpellBuff {
 			EntityPlayer player = (EntityPlayer) caster;
 			if (!player.getHeldItemOffhand().isEmpty()) {
 				ItemStack offHandItemStack = player.getHeldItemOffhand();
-				if (attemptRemoveCurseFromItemStack(offHandItemStack)) {
-					return true;
-				}
+				return attemptRemoveCurseFromItemStack(offHandItemStack);
 			}
 			else {
 				List<ItemStack> itemStackList = new ArrayList<>();

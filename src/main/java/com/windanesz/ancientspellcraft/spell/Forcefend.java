@@ -132,7 +132,6 @@ public class Forcefend extends Spell {
 //						.time(48 + world.rand.nextInt(12))
 //						.spin(1, speed)
 //						.clr(1f, 1f, 1f)
-//						.shaded(true)
 //						.collide(true)
 //						.spawn(world);
 			}

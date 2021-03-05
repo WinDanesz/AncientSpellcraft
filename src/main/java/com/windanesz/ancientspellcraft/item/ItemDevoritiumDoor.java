@@ -19,4 +19,6 @@ public class ItemDevoritiumDoor extends ItemDoor implements IDevoritium {
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		onUpdateDelegate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
+
+
 }

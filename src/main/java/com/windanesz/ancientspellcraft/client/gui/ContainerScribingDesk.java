@@ -15,10 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-
 public class ContainerScribingDesk extends Container {
 
 	private int[] cachedFields;
@@ -123,7 +119,7 @@ public class ContainerScribingDesk extends Container {
 		super.detectAndSendChanges();
 
 		boolean allFieldsHaveChanged = false;
-		boolean fieldHasChanged[] = new boolean[TileScribingDesk.getFieldCount()];
+		boolean[] fieldHasChanged = new boolean[TileScribingDesk.getFieldCount()];
 		if (cachedFields == null) {
 			cachedFields = new int[TileScribingDesk.getFieldCount()];
 			allFieldsHaveChanged = true;
