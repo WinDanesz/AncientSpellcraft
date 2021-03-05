@@ -110,7 +110,7 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 
 						for (Potion potion : activePotions) {
 							// The PotionEffect version (as opposed to Potion) does not call cleanup callbacks
-							if (potion.isBeneficial() && !(potion instanceof Curse)) {
+							if (!(potion instanceof Curse)) {
 								if (entityLivingBase.isPotionActive(potion)) {
 									entityLivingBase.removePotionEffect(potion);
 								}
