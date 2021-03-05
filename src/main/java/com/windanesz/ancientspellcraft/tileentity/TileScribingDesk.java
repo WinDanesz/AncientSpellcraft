@@ -168,26 +168,18 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 
 							List<ItemStack> componentList = ItemRelic.getSpellComponentItems(relic);
 
-							boolean matchSlot1 = false;
-							boolean matchSlot2 = false;
-							boolean matchSlot3 = false;
+							int matches = 0;
 
 							if (componentList != null && !componentList.isEmpty()) {
 								for (int i = 0; i < componentList.size(); i++) {
 									ItemStack stack = componentList.get(i);
 									ItemStack currItem = inventory.get(i);
+
 									if (ItemStack.areItemsEqualIgnoreDurability(currItem, stack)) {
-										if (i == 0) {
-											matchSlot1 = true;
-										} else if (i == 1) {
-											matchSlot2 = true;
-										} else if (i == 2) {
-											matchSlot3 = true;
-										}
+										matches++;
 									}
 								}
-								if (matchSlot1 && matchSlot2 && matchSlot3) {
-									isReady = true;
+								if (componentList.size() == matches) {
 									ready = 1;
 									craftBook = true;
 								}
@@ -196,11 +188,7 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 						}
 					}
 				}
-				if (craftBook) {
-					ready = 1;
-				} else {
-					ready = 0;
-				}
+				ready = craftBook ? 1 : 0;
 			}
 		}
 
