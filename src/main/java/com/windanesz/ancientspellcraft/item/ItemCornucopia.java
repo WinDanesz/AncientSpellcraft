@@ -18,15 +18,15 @@ public class ItemCornucopia extends ItemDailyArtefact {
 			ItemStack stack;
 			float i = AncientSpellcraft.rand.nextFloat();
 			if (i <= 0.2) {
-				stack = new ItemStack(Items.BREAD, ASUtils.randIntBetween(1, 2));
+				stack = new ItemStack(Items.BREAD, ASUtils.randIntBetween(1, 3));
 			} else if (i <= 0.4) {
-				stack = new ItemStack(Items.COOKED_MUTTON, ASUtils.randIntBetween(1, 2));
+				stack = AncientSpellcraft.rand.nextBoolean() ? new ItemStack(Items.COOKED_MUTTON, ASUtils.randIntBetween(1, 2)) : new ItemStack(Items.BAKED_POTATO, ASUtils.randIntBetween(1, 2));
 			} else if (i <= 0.5) {
-				stack = new ItemStack(Items.COOKIE, ASUtils.randIntBetween(1, 3));
+				stack = AncientSpellcraft.rand.nextBoolean() ? new ItemStack(Items.PUMPKIN_PIE, ASUtils.randIntBetween(1, 2)) :  new ItemStack(Items.COOKIE, ASUtils.randIntBetween(1, 3));
 			} else if (i <= 0.6) {
-				stack = new ItemStack(Items.BEETROOT_SOUP, ASUtils.randIntBetween(1, 1));
+				stack = AncientSpellcraft.rand.nextBoolean() ? new ItemStack(Items.BEETROOT, ASUtils.randIntBetween(3, 5)) : new ItemStack(Items.BEETROOT_SOUP, 1 );
 			} else if (i <= 0.7) {
-				stack = new ItemStack(Items.APPLE, ASUtils.randIntBetween(1, 3));
+				stack =  AncientSpellcraft.rand.nextBoolean() ? new ItemStack(Items.MUSHROOM_STEW, 1) : new ItemStack(Items.APPLE, ASUtils.randIntBetween(1, 3));
 			} else if (i <= 0.8) {
 				stack = new ItemStack(Items.COOKED_CHICKEN, ASUtils.randIntBetween(1, 2));
 			} else if (i <= 0.9) {
@@ -34,9 +34,9 @@ public class ItemCornucopia extends ItemDailyArtefact {
 			} else if (i <= 0.95) {
 				stack = new ItemStack(Items.COOKED_PORKCHOP, ASUtils.randIntBetween(1, 2));
 			} else if (i < 0.97 && i < 1){
-				stack = new ItemStack(Items.GOLDEN_APPLE, ASUtils.randIntBetween(1, 1));
+				stack = new ItemStack(Items.GOLDEN_APPLE, 1);
 			} else {
-				stack = new ItemStack(Items.COOKED_BEEF, ASUtils.randIntBetween(1, 1));
+				stack = new ItemStack(Items.COOKED_BEEF, 1);
 
 			}
 
