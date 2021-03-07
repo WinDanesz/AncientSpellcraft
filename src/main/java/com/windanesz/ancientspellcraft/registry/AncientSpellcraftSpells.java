@@ -152,6 +152,7 @@ public final class AncientSpellcraftSpells {
 	public static final Spell blockweaving = placeholder();
 	public static final Spell cryostasis = placeholder();
 	public static final Spell arcane_magnetism = placeholder();
+	public static final Spell time_knot = placeholder();
 	//	public static final Spell venus_fly_trap = placeholder();
 	public static final Spell conjure_shadow_blade = placeholder();
 	public static final Spell magelight = placeholder();

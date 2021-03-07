@@ -8,7 +8,6 @@ import com.windanesz.ancientspellcraft.tileentity.TileScribingDesk;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.client.DrawingUtils;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.spell.Spell;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
@@ -18,7 +17,6 @@ import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -70,11 +68,7 @@ public class GuiScribingDesk extends GuiContainer {
 
 		drawIngredientPreviews(mouseX, mouseY, partialTicks);
 
-		if (this.tileSphere.getField(2) == 1) {
-			this.researchButton.enabled = true;
-		} else {
-			this.researchButton.enabled = false;
-		}
+		this.researchButton.enabled = this.tileSphere.getField(2) == 1;
 
 		this.renderHoveredToolTip(mouseX, mouseY);
 

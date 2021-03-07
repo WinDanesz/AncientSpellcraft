@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
 import com.windanesz.ancientspellcraft.spell.MetaSpellBuff;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.SpellType;
@@ -8,6 +9,7 @@ import electroblob.wizardry.data.SpellGlyphData;
 import electroblob.wizardry.item.IWorkbenchItem;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.spell.SpellBuff;
 import electroblob.wizardry.util.SpellProperties;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
@@ -38,7 +40,7 @@ public class ItemEternityPendant extends ItemASArtefact implements IWorkbenchIte
 			Spell spell = Spell.byMetadata(spellBooks[0].getStack().getItemDamage());
 
 			// only buff type spells can be applied to the pendant
-			if (spell.getType() == SpellType.BUFF && !(spell instanceof MetaSpellBuff)) {
+			if ((spell.getType() == SpellType.BUFF || spell instanceof SpellBuff) && !(spell instanceof MetaSpellBuff) && spell != AncientSpellcraftSpells.time_knot) {
 
 				// Spells can only be bound to the artefact if the player has already cast them
 				// This restriction does not apply in creative mode

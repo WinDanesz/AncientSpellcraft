@@ -104,7 +104,7 @@ public class GuiSphereCognizance extends GuiContainer {
 					}
 				} else {
 					this.researchButton.enabled = false;
-					tooltipLangKey = "known_book";
+					tooltipLangKey = "known_item";
 
 				}
 

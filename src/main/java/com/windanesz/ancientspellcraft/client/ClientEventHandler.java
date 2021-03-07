@@ -57,7 +57,7 @@ public class ClientEventHandler {
 
 	@SubscribeEvent
 	public static void onFOVUpdate(FOVUpdateEvent event) {
-		if (farsightActive && event.getEntity().isHandActive()) {
+		if (farsightActive && event.getEntity() instanceof EntityPlayerSP && event.getEntity().isHandActive()) {
 			event.setNewfov(0.1F);
 		} else {
 			farsightActive = false;
