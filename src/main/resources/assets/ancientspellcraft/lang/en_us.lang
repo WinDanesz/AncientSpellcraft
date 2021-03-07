@@ -156,9 +156,10 @@ spell.ancientspellcraft\:farsight.desc=Magically augments your vision to see far
 spell.ancientspellcraft\:prismatic_spray=Prismatic Spray
 spell.ancientspellcraft\:prismatic_spray.desc=Shoots out 7 different rays of light by splitting magic into its elemental components, each ray has a different effect on targets
 spell.ancientspellcraft\:prismatic_spray.no_target=This spell requires a target
+spell.ancientspellcraft\:crystal_mine=Crystal Mine
 
 # spell desc
-spell.ancientspellcraft\:crystal_mine=Crystal Mine
+spell.ancientspellcraft\:eagle_eye.desc=Allows the caster to get a high altitude view of the nearby area
 spell.ancientspellcraft\:crystal_mine.desc=Conjure a Crystal Mine with the initial cast, detonate it with the second cast.
 spell.ancientspellcraft\:antimagic_field.desc=Creates an anti-magic field which disturbs any spellcasts
 spell.ancientspellcraft\:aquatic_agility.desc=Magically enchant your movement inside water to swim like a fish.
@@ -546,7 +547,7 @@ tile.ancientspellcraft\:scribing_desk.name=Scribing Desk
 gui.ancientspellcraft\:element.magic=Ancient
 gui.ancientspellcraft\:research=Research
 gui.ancientspellcraft\:sphere_cognizance.no_book=Requires something to research
-gui.ancientspellcraft\:sphere_cognizance.known_book=You already know this Spell
+gui.ancientspellcraft\:sphere_cognizance.known_item=You already know this item
 gui.ancientspellcraft\:sphere_cognizance.already_researched=You've already researched this relic
 gui.ancientspellcraft\:sphere_cognizance.no_crystal=Requires Magic Crystals
 gui.ancientspellcraft\:sphere_cognizance.research=Research
