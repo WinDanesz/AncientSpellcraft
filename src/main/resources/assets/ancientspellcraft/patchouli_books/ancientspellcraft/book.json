@@ -1,7 +1,7 @@
 {
 	"name": "Ancient Compendium",
 	"subtitle": "of the Arcane Arts",
-	"landing_text": "",
+	"landing_text": "The $(l)Arcane Compendium$()is your magical book about everything related to Ancient Spellcraft.$(br)As your knowledge advances, more entries will be unlocked in this book.",
 	"creative_tab": "ancientspellcraft",
 	"show_progress": false,
 	"pause_game": false,
