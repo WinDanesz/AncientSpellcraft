@@ -148,6 +148,9 @@ public final class AncientSpellcraftModels {
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.DEVORITIUM_BARS));
 //		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.DEVORITIUM_DOOR));
 
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.DIMENSION_BOUNDARY));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.DIMENSION_FOCUS));
+
 	}
 
 	// below registry methods are courtesy of EB

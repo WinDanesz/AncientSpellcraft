@@ -542,6 +542,8 @@ tile.ancientspellcraft\:scribing_desk.button.write=Write Spellbook
 tile.ancientspellcraft\:scribing_desk.button.missing=Missing Requirements
 tile.ancientspellcraft\:skull_watch.name=Skull Watch
 tile.ancientspellcraft\:scribing_desk.name=Scribing Desk
+tile.ancientspellcraft\:dimension_boundary.name=Pocket Dimension Boundary
+tile.ancientspellcraft\:dimension_focus.name=Pocket Dimension Focus
 
 # gui
 gui.ancientspellcraft\:element.magic=Ancient
