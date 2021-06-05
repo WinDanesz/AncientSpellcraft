@@ -23,7 +23,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.potion.PotionEffect;
@@ -38,14 +37,9 @@ import java.util.List;
 import java.util.Random;
 
 public class ItemShadowBlade extends ItemSword implements IConjuredItem {
-	private EnumRarity rarity = EnumRarity.COMMON;
-
-	private final float attackDamage;
 
 	public static final IVariable<Integer> SHADOW_CHARGE_TIME = new IVariable.Variable<Integer>(Persistence.NEVER).withTicker(ItemShadowBlade::update);
 	public static final IVariable<Boolean> SHADOW_CHARGE_UPWARDS = new IVariable.Variable<>(Persistence.NEVER);
-
-	public static final String CHARGE_SPEED = "charge_speed";
 
 	private static final double EXTRA_HIT_MARGIN = 1;
 
@@ -53,19 +47,17 @@ public class ItemShadowBlade extends ItemSword implements IConjuredItem {
 		super(ToolMaterial.IRON);
 		setMaxDamage(1200);
 		setNoRepair();
-		this.attackDamage = 6.0F;
 		addAnimationPropertyOverrides();
 		setCreativeTab(null);
 	}
 
-
 	@Override
-	public EnumRarity getRarity(ItemStack stack){
-		return rarity;
+	public EnumRarity getRarity(ItemStack stack) {
+		return EnumRarity.COMMON;
 	}
 
 	@Override
-	public int getMaxDamage(ItemStack stack){
+	public int getMaxDamage(ItemStack stack) {
 		return this.getMaxDamageFromNBT(stack, Spells.conjure_sword);
 	}
 
@@ -103,33 +95,6 @@ public class ItemShadowBlade extends ItemSword implements IConjuredItem {
 
 		return super.onItemRightClick(world, player, hand);
 	}
-
-	public Item setRarity(EnumRarity rarity) {
-		this.rarity = rarity;
-		return this;
-	}
-
-	/**
-	 * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
-	 * the damage on the stack.
-	 */
-	//	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-	//		super.hitEntity(stack, target, attacker);
-	//		if(WizardryUtilities.isLiving(target)){
-	//
-	//			// Has no effect on withers or wither skeletons.
-	//			if(MagicDamage.isEntityImmune(MagicDamage.DamageType.WITHER, target)){
-	//				if(!target.world.isRemote && attacker instanceof EntityPlayer) ((EntityPlayer)attacker).sendStatusMessage(
-	//						new TextComponentTranslation("spell.resist", target.getName(), target.getDisplayName()), true);
-	//			}else{
-	//				target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER),
-	//						AncientSpellcraftSpells.shadow_blade.getProperty(DAMAGE).floatValue());
-	//				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.WITHER,
-	//						(int)(AncientSpellcraftSpells.shadow_blade.getProperty(EFFECT_DURATION).floatValue()),
-	//						AncientSpellcraftSpells.shadow_blade.getProperty(AMPLIFIER).intValue()));
-	//			}
-	//		}
-	//	}
 
 	private static int getRandomNumberInRange(int min, int max) {
 		Random r = new Random();
@@ -283,41 +248,3 @@ public class ItemShadowBlade extends ItemSword implements IConjuredItem {
 		return false;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

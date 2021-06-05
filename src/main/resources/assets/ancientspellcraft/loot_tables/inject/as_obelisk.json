@@ -10,7 +10,7 @@
                 {
                     "type": "item",
                     "name": "ancientspellcraft:ancient_spellcraft_spell_book",
-                    "weight": 15,
+                    "weight": 12,
                     "functions": [
                         {
                             "function": "ebwizardry:random_spell",
@@ -70,6 +70,33 @@
                     "entryName": "stone_tablet_grand",
                     "weight": 1
 
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:bartering_scroll",
+                    "entryName": "bartering_scroll",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:transmutation_scroll",
+                    "entryName": "transmutation_scroll",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:blank_rune",
+                    "entryName": "blank_rune",
+                    "weight": 12,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 4
+                            }
+                        }
+                    ]
                 }
             ]
         }

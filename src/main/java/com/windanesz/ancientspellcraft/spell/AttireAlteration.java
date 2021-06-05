@@ -21,12 +21,10 @@ import net.minecraft.world.World;
 
 public class AttireAlteration extends Spell {
 
-	private static final int REPAIR_RATE = 1; // per every 100 tick
-
-	public static final IStoredVariable<ItemStack> HEAD_SLOT = IStoredVariable.StoredVariable.ofItemStack("attire_head_slot", Persistence.ALWAYS).withTicker(AttireAlteration::update);
-	public static final IStoredVariable<ItemStack> CHEST_SLOT = IStoredVariable.StoredVariable.ofItemStack("attire_chest_slot", Persistence.ALWAYS).withTicker(AttireAlteration::update);
-	public static final IStoredVariable<ItemStack> LEGS_SLOT = IStoredVariable.StoredVariable.ofItemStack("attire_legs_slot", Persistence.ALWAYS).withTicker(AttireAlteration::update);
-	public static final IStoredVariable<ItemStack> FEET_SLOT = IStoredVariable.StoredVariable.ofItemStack("attire_feet_slot", Persistence.ALWAYS).withTicker(AttireAlteration::update);
+	private static final IStoredVariable<ItemStack> HEAD_SLOT = IStoredVariable.StoredVariable.ofItemStack("attire_head_slot", Persistence.ALWAYS).withTicker(AttireAlteration::update);
+	private static final IStoredVariable<ItemStack> CHEST_SLOT = IStoredVariable.StoredVariable.ofItemStack("attire_chest_slot", Persistence.ALWAYS).withTicker(AttireAlteration::update);
+	private static final IStoredVariable<ItemStack> LEGS_SLOT = IStoredVariable.StoredVariable.ofItemStack("attire_legs_slot", Persistence.ALWAYS).withTicker(AttireAlteration::update);
+	private static final IStoredVariable<ItemStack> FEET_SLOT = IStoredVariable.StoredVariable.ofItemStack("attire_feet_slot", Persistence.ALWAYS).withTicker(AttireAlteration::update);
 
 	public AttireAlteration() {
 		super(AncientSpellcraft.MODID, "attire_alteration", EnumAction.BLOCK, false);
@@ -35,48 +33,39 @@ public class AttireAlteration extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer player, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+
 		WizardData data = WizardData.get(player);
 
-		// Fixes the sound not playing in first person.
-		if (world.isRemote)
-			this.playSound(world, player, ticksInUse, -1, modifiers);
-
-		// Only works when the caster is in the same dimension.
 		if (data != null) {
 
-			ItemStack storedHead = data.getVariable(HEAD_SLOT);
-			ItemStack storedChest = data.getVariable(CHEST_SLOT);
-			ItemStack storedLegs = data.getVariable(LEGS_SLOT);
-			ItemStack storedFeet = data.getVariable(FEET_SLOT);
+			if (world.isRemote) {
+				this.spawnParticles(world, player, modifiers);
+				this.playSound(world, player, ticksInUse, -1, modifiers);
+			}
+
+			ItemStack storedHead = getStack(HEAD_SLOT, data);
+			ItemStack storedChest = getStack(CHEST_SLOT, data);
+			ItemStack storedLegs = getStack(LEGS_SLOT, data);
+			ItemStack storedFeet = getStack(FEET_SLOT, data);
 
 			data.setVariable(HEAD_SLOT, player.getItemStackFromSlot(EntityEquipmentSlot.HEAD));
 			data.setVariable(CHEST_SLOT, player.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
 			data.setVariable(LEGS_SLOT, player.getItemStackFromSlot(EntityEquipmentSlot.LEGS));
 			data.setVariable(FEET_SLOT, player.getItemStackFromSlot(EntityEquipmentSlot.FEET));
 
-			if (storedHead != null) {
-				player.setItemStackToSlot(EntityEquipmentSlot.HEAD, storedHead);
-
-			}
-			if (storedChest != null) {
-				player.setItemStackToSlot(EntityEquipmentSlot.CHEST, storedChest);
-
-			}
-			if (storedLegs != null) {
-				player.setItemStackToSlot(EntityEquipmentSlot.LEGS, storedLegs);
-
-			}
-			if (storedFeet != null) {
-				player.setItemStackToSlot(EntityEquipmentSlot.FEET, storedFeet);
-
-			}
-
-			if (world.isRemote)
-				this.spawnParticles(world, player, modifiers);
+			player.setItemStackToSlot(EntityEquipmentSlot.HEAD, storedHead);
+			player.setItemStackToSlot(EntityEquipmentSlot.CHEST, storedChest);
+			player.setItemStackToSlot(EntityEquipmentSlot.LEGS, storedLegs);
+			player.setItemStackToSlot(EntityEquipmentSlot.FEET, storedFeet);
 
 		}
 
 		return true;
+	}
+
+	private ItemStack getStack(IStoredVariable<ItemStack> variable, WizardData data) {
+		ItemStack stack = data.getVariable(variable);
+		return stack != null ? stack : ItemStack.EMPTY;
 	}
 
 	/**

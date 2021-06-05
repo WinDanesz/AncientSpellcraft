@@ -13,8 +13,8 @@
     "tier": "novice",
     "element": "magic",
     "type": "alteration",
-    "cost": 1,
-    "chargeup": 60,
+    "cost": 3,
+    "chargeup": 30,
     "cooldown": 0,
     "base_properties": {}
 }

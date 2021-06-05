@@ -2,14 +2,11 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
-import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.item.SpellActions;
-import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.Location;
 import electroblob.wizardry.util.NBTExtras;

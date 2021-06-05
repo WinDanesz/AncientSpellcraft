@@ -109,48 +109,23 @@ public class Forcefend extends Spell {
 				}
 			}
 
-			if (world.isRemote && ticksInUse % 2 == 0) {
-
-				double speed = (world.rand.nextBoolean() ? 1 : 1) * 0.1;// + 0.01 * rand.nextDouble();
-				double radius = world.rand.nextDouble() * 2.0;
-				float angle = world.rand.nextFloat() * (float) Math.PI * 2;
-				ParticleBuilder.create(ParticleBuilder.Type.FLASH)
-						.entity(caster)
-//						.pos(1 * MathHelper.cos(angle), 0, 1  * MathHelper.sin(angle))
-						.vel(0, 0.05, 0)
-						.scale(0.7F)
-						.time(48 + world.rand.nextInt(12))
-						.spin(1, speed)
-						.clr(1f, 1f, 1f)
-						.spawn(world);
-
+//			if (world.isRemote && ticksInUse % 2 == 0) {
+			if (world.isRemote) {
+				ParticleBuilder.create(ParticleBuilder.Type.FLASH).clr(255, 255, 247).fade(0, 0, 0).spin(0.8f, 0.07f).time(20).entity(caster).scale(1.2f).spawn(world);
+				ParticleBuilder.create(ParticleBuilder.Type.FLASH).clr(255, 255, 247).vel(0, 0.1, 0).fade(0, 0, 0).spin(0.8f, 0.07f).time(20).entity(caster).scale(1.2f).spawn(world);
+		}
+//				double speed = (world.rand.nextBoolean() ? 1 : 1) * 0.1;// + 0.01 * rand.nextDouble();
 //				ParticleBuilder.create(ParticleBuilder.Type.FLASH)
 //						.entity(caster)
-////						.pos(1 * MathHelper.cos(angle), 0, 1  * MathHelper.sin(angle))
 //						.vel(0, 0.05, 0)
 //						.scale(0.7F)
 //						.time(48 + world.rand.nextInt(12))
 //						.spin(1, speed)
 //						.clr(1f, 1f, 1f)
-//						.collide(true)
 //						.spawn(world);
+
 			}
-		}
-		//		if (world.isRemote) {
-		//			//			if (ticksInUse % 5 == 0) {
-		//			ParticleBuilder.create(Type.FLASH).entity(caster).clr(255, 255, 235).scale(6).time(5).
-		//					entity(caster).
-		//					pos(caster.getLookVec().x * 1.3, caster.getEyeHeight(), caster.getLookVec().z * 1.3)
-		//					//					pos(caster.posX + caster.getLookVec().x * 0.3,
-		//					//							caster.posY + 1 + caster.getLookVec().y * 0.3,
-		//					//							caster.posZ + caster.getLookVec().z * 0.3)
-		//					.face(caster.rotationYawHead,
-		//							caster.rotationPitch)
-		//					.spawn(world);
-		//			//				ParticleBuilder.create(Type.FLASH).entity(caster).clr(255, 255, 235).scale(4).time(5)
-		//			//						.pos(caster != null ? centre.subtract(caster.getPositionVector()) : centre).spawn(world);
-		//			//			}
-		//		}
+//		}
 	}
 
 	@SideOnly(Side.CLIENT)

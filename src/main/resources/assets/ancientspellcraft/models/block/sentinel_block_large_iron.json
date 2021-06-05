@@ -1,0 +1,7 @@
+{
+	"parent": "ancientspellcraft:block/sentinel_block_large",
+	"textures": {
+		"particle": "ancientspellcraft:blocks/sentinel_block_large_iron",
+		"3": "ancientspellcraft:blocks/sentinel_block_large_iron"
+	}
+}

@@ -62,7 +62,7 @@ public class ItemElementalOrb extends ItemASArtefact implements ISpellCastingIte
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag advanced) {
-		Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc", ((Settings.generalSettings.orb_artefact_potency_bonus * 0.01) + "%"));
+		Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc", Settings.generalSettings.orb_artefact_potency_bonus);
 		Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc2", element.getColour());
 		Wizardry.proxy.addMultiLineDescription(tooltip,  "set.ancientspellcraft:elemental_orbs", new Style().setColor(TextFormatting.GOLD));
 

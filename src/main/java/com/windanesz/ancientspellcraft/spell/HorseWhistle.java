@@ -10,9 +10,12 @@ import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.entity.living.EntitySpiritHorse;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.BlockUtils;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
+import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -23,7 +26,10 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityDispenser;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -57,11 +63,11 @@ public class HorseWhistle extends Spell {
 
 		if (caster.isRiding() && caster.getRidingEntity() instanceof EntityHorse && ItemNewArtefact.isNewArtefactActive(caster, AncientSpellcraftItems.belt_horse)) {
 
-			EntityHorse horse = (EntityHorse)caster.getRidingEntity();
+			EntityHorse horse = (EntityHorse) caster.getRidingEntity();
 			horse.addPotionEffect(new PotionEffect(MobEffects.SPEED, 600, 0));
 
 			if (world.isRemote) {
-				for(int i = 0; i < 4; i++){
+				for (int i = 0; i < 4; i++) {
 					double x = horse.posX + world.rand.nextDouble() * 2 - 1;
 					double y = horse.posY + caster.getEyeHeight() - 0.5 + world.rand.nextDouble();
 					double z = horse.posZ + world.rand.nextDouble() * 2 - 1;
@@ -115,11 +121,13 @@ public class HorseWhistle extends Spell {
 
 	private void callHorse(EntityPlayer caster, EntityHorse horse) {
 		if (!horse.isBeingRidden()) {
-			horse.getNavigator().clearPath();
-			horse.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(100.0D);
-			horse.getNavigator().tryMoveToXYZ(caster.posX, caster.posY, caster.posZ, 1.7);
+			if (horse.getDistance(caster) > 20) {
+				tryTeleportToOwner(horse, caster);
+			}
+				horse.getNavigator().clearPath();
+				horse.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(100.0D);
+				horse.getNavigator().tryMoveToXYZ(caster.posX, caster.posY, caster.posZ, 1.7);
 		}
-
 	}
 
 	@Nullable
@@ -166,6 +174,28 @@ public class HorseWhistle extends Spell {
 				data.setVariable(LAST_HORSE_UUID_KEY, event.getEntityBeingMounted().getUniqueID());
 			}
 		}
+	}
+
+	private static void tryTeleportToOwner(EntityHorse horse, EntityPlayer owner) {
+		if (!horse.getLeashed() && !horse.isRiding()) {
+			BlockPos randomNearbyPos = BlockUtils.findNearbyFloorSpace(owner, 10, 3);
+			int i = MathHelper.floor(randomNearbyPos.getX()) - 2;
+			int j = MathHelper.floor(randomNearbyPos.getZ()) - 2;
+			int k = MathHelper.floor(randomNearbyPos.getY());
+			for (int l = 0; l <= 4; ++l) {
+				for (int i1 = 0; i1 <= 4; ++i1) {
+					if ((l < 1 || i1 < 1 || l > 3 || i1 > 3) && isTeleportFriendlyBlock(i, j, k, l, i1, horse)) {
+						horse.setLocationAndAngles((double) ((float) (i + l) + 0.5F), (double) k, (double) ((float) (j + i1) + 0.5F), horse.rotationYaw, horse.rotationPitch);
+					}
+				}
+			}
+		}
+	}
+
+	private static boolean isTeleportFriendlyBlock(int x, int z, int y, int xOffset, int zOffset, EntityHorse horse) {
+		BlockPos blockpos = new BlockPos(x + xOffset, y - 1, z + zOffset);
+		IBlockState iblockstate = horse.world.getBlockState(blockpos);
+		return iblockstate.getBlockFaceShape(horse.world, blockpos, EnumFacing.DOWN) == BlockFaceShape.SOLID && iblockstate.canEntitySpawn(horse) && horse.world.isAirBlock(blockpos.up()) && horse.world.isAirBlock(blockpos.up(2));
 	}
 
 }

@@ -15,6 +15,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -44,6 +45,33 @@ import static electroblob.wizardry.util.InventoryUtils.getHotbar;
  * @autor Dan (WinDanesz)
  **/
 public final class ASUtils {
+
+	/*
+	public static List<Item> getRegisteredSpellScrolls() {
+		List<Item> scrolls = ForgeRegistries.ITEMS.getValuesCollection().stream().filter(i -> i instanceof ItemScroll).distinct().collect(Collectors.toList());
+		Map<Item, Boolean> scrollsToCheck = new HashMap<>();
+		for (Item scroll : scrolls) {
+			scrollsToCheck.put(scroll, false);
+		}
+
+		List<Item> validScrolls = new ArrayList<>();
+
+		for (Spell spell : Spell.getAllSpells()) {
+
+			for (Item scroll : scrollsToCheck.keySet()) {
+				if (spell.applicableForItem(scroll)) {
+					validScrolls.add(scroll);
+					scrollsToCheck.remove(scroll);
+				}
+			}
+
+			if (scrollsToCheck.isEmpty()) {
+				break;
+			}
+		}
+		return validScrolls;
+	}
+	*/
 
 	/**
 	 * Get a Map of all biomes with their Ids
@@ -316,6 +344,28 @@ public final class ASUtils {
 
 	public static boolean isManaStoringCastingItem(Item item) {
 		return item instanceof ISpellCastingItem && item instanceof IManaStoringItem;
+	}
+
+	/**
+	 * Serializes an ItemStack into an NBTTagCompound with all of the ItemStack's data.
+	 *
+	 * @param stack the ItemStack to serialize
+	 * @return an NBTTagCompound with the ItemStack's data.
+	 */
+	public static NBTTagCompound convertToNBT(ItemStack stack) {
+		NBTTagCompound stackCompound = new NBTTagCompound();
+		return stack.writeToNBT(stackCompound);
+	}
+
+	/**
+	 * Serializes an ItemStack into an NBTTagCompound with all of the ItemStack's data but only as a single stack, ignoring the actual count.
+	 * @param stack the ItemStack to serialize
+	 * @return an NBTTagCompound with the ItemStack's data.
+	 */
+	public static NBTTagCompound convertToNBTSingeCount(ItemStack stack) {
+		ItemStack stack1 = stack.copy();
+		stack1.setCount(1);
+		return convertToNBT(stack1);
 	}
 
 }

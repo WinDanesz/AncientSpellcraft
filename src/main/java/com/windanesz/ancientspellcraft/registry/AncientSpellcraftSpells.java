@@ -1,8 +1,11 @@
 package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.Settings;
+import com.windanesz.ancientspellcraft.entity.EntityAOEProjectile;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelGreaterMagic;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelMagic;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
 import com.windanesz.ancientspellcraft.spell.AntiMagicField;
@@ -10,6 +13,7 @@ import com.windanesz.ancientspellcraft.spell.AquaticAgility;
 import com.windanesz.ancientspellcraft.spell.ArcaneAugmentation;
 import com.windanesz.ancientspellcraft.spell.ArcaneBeam;
 import com.windanesz.ancientspellcraft.spell.ArcaneMagnetism;
+import com.windanesz.ancientspellcraft.spell.Armageddon;
 import com.windanesz.ancientspellcraft.spell.AspectHunter;
 import com.windanesz.ancientspellcraft.spell.AttireAlteration;
 import com.windanesz.ancientspellcraft.spell.BlockWeaving;
@@ -21,8 +25,10 @@ import com.windanesz.ancientspellcraft.spell.ChannelPower;
 import com.windanesz.ancientspellcraft.spell.Conduit;
 import com.windanesz.ancientspellcraft.spell.Conflagration;
 import com.windanesz.ancientspellcraft.spell.ConjureFishingRod;
+import com.windanesz.ancientspellcraft.spell.ConjurePickaxe;
 import com.windanesz.ancientspellcraft.spell.ConjureShadowBlade;
 import com.windanesz.ancientspellcraft.spell.ConjureWater;
+import com.windanesz.ancientspellcraft.spell.Contingency;
 import com.windanesz.ancientspellcraft.spell.ContinuityCharm;
 import com.windanesz.ancientspellcraft.spell.Covenant;
 import com.windanesz.ancientspellcraft.spell.CreateIgloo;
@@ -40,6 +46,7 @@ import com.windanesz.ancientspellcraft.spell.EssenceExtraction;
 import com.windanesz.ancientspellcraft.spell.Extinguish;
 import com.windanesz.ancientspellcraft.spell.EyeOfTheStorm;
 import com.windanesz.ancientspellcraft.spell.Farsight;
+import com.windanesz.ancientspellcraft.spell.Fimbulwinter;
 import com.windanesz.ancientspellcraft.spell.FireWall;
 import com.windanesz.ancientspellcraft.spell.FlintShard;
 import com.windanesz.ancientspellcraft.spell.Forcefend;
@@ -57,8 +64,12 @@ import com.windanesz.ancientspellcraft.spell.MagmaStrider;
 import com.windanesz.ancientspellcraft.spell.ManaFlare;
 import com.windanesz.ancientspellcraft.spell.ManaVortex;
 import com.windanesz.ancientspellcraft.spell.Martyr;
+import com.windanesz.ancientspellcraft.spell.MetamagicProjectile;
 import com.windanesz.ancientspellcraft.spell.MightAndMagic;
+import com.windanesz.ancientspellcraft.spell.MineAS;
 import com.windanesz.ancientspellcraft.spell.NaturesSprout;
+import com.windanesz.ancientspellcraft.spell.Permagrowth;
+import com.windanesz.ancientspellcraft.spell.Permashrink;
 import com.windanesz.ancientspellcraft.spell.PocketDimension;
 import com.windanesz.ancientspellcraft.spell.PrismaticSpray;
 import com.windanesz.ancientspellcraft.spell.PuppetMaster;
@@ -70,6 +81,8 @@ import com.windanesz.ancientspellcraft.spell.SkullSentinel;
 import com.windanesz.ancientspellcraft.spell.SnowBlock;
 import com.windanesz.ancientspellcraft.spell.SpellBuffAS;
 import com.windanesz.ancientspellcraft.spell.SpellConjurationAS;
+import com.windanesz.ancientspellcraft.spell.SpellProjectileAOEPotion;
+import com.windanesz.ancientspellcraft.spell.SpellResizeSelf;
 import com.windanesz.ancientspellcraft.spell.SpellWard;
 import com.windanesz.ancientspellcraft.spell.StaticCharge;
 import com.windanesz.ancientspellcraft.spell.StoneFist;
@@ -88,8 +101,11 @@ import com.windanesz.ancientspellcraft.spell.TransportationPortal;
 import com.windanesz.ancientspellcraft.spell.UnholyAlliance;
 import com.windanesz.ancientspellcraft.spell.WaterWalking;
 import com.windanesz.ancientspellcraft.spell.WillOWisp;
+import com.windanesz.ancientspellcraft.spell.WizardShield;
+import com.windanesz.ancientspellcraft.spell.WordsOfUnbinding;
 import com.windanesz.ancientspellcraft.spell.Zombification;
-import electroblob.wizardry.constants.Tier;
+import electroblob.wizardry.item.SpellActions;
+import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.spell.SpellConstruct;
 import electroblob.wizardry.spell.SpellProjectile;
@@ -106,7 +122,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 @ObjectHolder(AncientSpellcraft.MODID)
 @EventBusSubscriber
@@ -192,6 +207,24 @@ public final class AncientSpellcraftSpells {
 	public static final Spell might_and_magic = placeholder();
 	public static final Spell channel_effect = placeholder();
 
+	public static final Spell metamagic_projectile = placeholder();
+	public static final Spell contingency_fire = placeholder();
+	public static final Spell contingency_fall = placeholder();
+	public static final Spell contingency_damage = placeholder();
+	public static final Spell contingency_hostile_spellcast = placeholder();
+	public static final Spell contingency_critical_health = placeholder();
+	public static final Spell contingency_death = placeholder();
+	public static final Spell contingency_drowning = placeholder();
+	public static final Spell contingency_paralysis = placeholder();
+	public static final Spell wizard_shield = placeholder();
+	public static final Spell armageddon = placeholder();
+	public static final Spell fimbulwinter = placeholder();
+	public static final Spell shrink_self = placeholder();
+	public static final Spell mass_shrink = placeholder();
+	public static final Spell mass_growth = placeholder();
+	public static final Spell permashrink = placeholder();
+	public static final Spell permagrowth = placeholder();
+
 	@SuppressWarnings("unchecked")
 	@SubscribeEvent
 	public static void register(RegistryEvent.Register<Spell> event) {
@@ -270,22 +303,12 @@ public final class AncientSpellcraftSpells {
 			public boolean applicableForItem(Item item) {
 				return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
 			}
-
-			@Override
-			protected void addProjectileExtras(EntityDispelMagic projectile, @Nullable EntityLivingBase caster, SpellModifiers modifiers) {
-				projectile.setTier(Tier.APPRENTICE);
-			}
 		});
 
-		registry.register(new SpellProjectile<EntityDispelMagic>(AncientSpellcraft.MODID, "dispel_greater_magic", EntityDispelMagic::new) {
+		registry.register(new SpellProjectile<EntityDispelGreaterMagic>(AncientSpellcraft.MODID, "dispel_greater_magic", EntityDispelGreaterMagic::new) {
 			@Override
 			public boolean applicableForItem(Item item) {
 				return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
-			}
-
-			@Override
-			protected void addProjectileExtras(EntityDispelMagic projectile, @Nullable EntityLivingBase caster, SpellModifiers modifiers) {
-				projectile.setTier(Tier.ADVANCED);
 			}
 		});
 
@@ -295,11 +318,11 @@ public final class AncientSpellcraftSpells {
 		registry.register(new SpellConjurationAS("ice_shield", AncientSpellcraftItems.ice_shield) {
 			@Override
 			protected void spawnParticles(World world, EntityLivingBase caster, SpellModifiers modifiers) {
-				for(int i=0; i<2; i++){
+				for (int i = 0; i < 2; i++) {
 					double x = caster.posX;
 					double y = caster.posY + caster.getEyeHeight() - 0.5 + world.rand.nextDouble();
 					double z = caster.posZ;
-//					ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(x, y, z).clr(0.7f, 0.9f, 1).spawn(world);
+					//					ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(x, y, z).clr(0.7f, 0.9f, 1).spawn(world);
 					ParticleBuilder.create(ParticleBuilder.Type.FLASH).scale(2f).entity(caster).pos(0, 1.5, 0).clr(168, 255, 255).spawn(world);
 				}
 			}
@@ -368,6 +391,38 @@ public final class AncientSpellcraftSpells {
 		registry.register(new Suppression());
 		registry.register(new MightAndMagic());
 		registry.register(new ChannelEffects());
+
+		// 1.2 spells
+		registry.register(new Contingency("contingency_fire", SpellActions.POINT_UP, 1, 1, 1));
+		registry.register(new Contingency("contingency_fall", SpellActions.POINT_UP, 1, 1, 1));
+		registry.register(new Contingency("contingency_damage", SpellActions.POINT_UP, 1, 1, 1));
+		registry.register(new Contingency("contingency_critical_health", SpellActions.POINT_UP, 1, 1, 1));
+		registry.register(new Contingency("contingency_death", SpellActions.POINT_UP, 1, 1, 1));
+		registry.register(new Contingency("contingency_drowning", SpellActions.POINT_UP, 1, 1, 1));
+		registry.register(new Contingency("contingency_hostile_spellcast", SpellActions.POINT_UP, 1, 1, 1));
+		registry.register(new Contingency("contingency_immobility", SpellActions.POINT_UP, 1, 1, 1));
+		registry.register(new MetamagicProjectile());
+		registry.register(new WizardShield());
+		registry.register(new Armageddon());
+		registry.register(new Fimbulwinter());
+
+		registry.register(new SpellResizeSelf("shrink_self", 173, 80, 172, () -> AncientSpellcraftPotions.shrinkage));
+		registry.register(new SpellResizeSelf("grow_self", 173, 80, 172, () -> AncientSpellcraftPotions.growth));
+		registry.register(new SpellProjectileAOEPotion<>("mass_shrink", EntityAOEProjectile::new, 173, 80, 172, () -> AncientSpellcraftPotions.shrinkage));
+		registry.register(new SpellProjectileAOEPotion<>("mass_growth", EntityAOEProjectile::new, 173, 80, 172, () -> AncientSpellcraftPotions.growth));
+		registry.register(new Permashrink());
+		registry.register(new Permagrowth());
+		registry.register(new WordsOfUnbinding());
+
+		/// BASE SPELL MODIFICATION OVERRIDES  ///
+
+		if (Settings.spellCompatSettings.mineSpellOverride) {
+			registry.register(new MineAS());
+		}
+		if (Settings.spellCompatSettings.conjurePickaxeSpellOverride) {
+			registry.register(new ConjurePickaxe("conjure_pickaxe", WizardryItems.spectral_pickaxe));
+		}
+		/// BASE SPELL MODIFICATION OVERRIDES ///
 
 		//		registry.register(new HandOfGaia());
 		//		registry.register(new WarpWood());

@@ -11,7 +11,6 @@ import electroblob.wizardry.item.ItemSpellBook;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -42,11 +41,6 @@ public class ItemAncientSpellcraftSpellBook extends ItemSpellBook {
 		} else {
 			return guiTextures.get("non-magic");
 		}
-	}
-
-	@Override
-	public EnumRarity getRarity(ItemStack stack) {
-		return EnumRarity.UNCOMMON;
 	}
 
 	// overriding the display tag of Element.MAGIC from none to Arcane

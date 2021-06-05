@@ -31,6 +31,12 @@ public class AncientSpellcraftSounds {
 	public static final SoundEvent RELIC_ACTIVATE = createSound("relic_activate");
 	public static final SoundEvent RELIC_ACTIVATE_2 = createSound("relic_activate_2");
 	public static final SoundEvent RELIC_USE_LOOP = createSound("relic_use_loop");
+	public static final SoundEvent CONTINGENCY = createSound("contingency");
+	public static final SoundEvent SENTINEL_AMBIENT = createSound("sentinel_ambient");
+	public static final SoundEvent CONTINGENCY_ACTIVATE = createSound("contingency_activate");
+	public static final SoundEvent BARTERING_SCROLL = createSound("bartering_scroll");
+	public static final SoundEvent TRANSMUTATION = createSound("transmutation");
+
 
 	public static SoundEvent createSound(String name) {
 		return createSound(AncientSpellcraft.MODID, name);
@@ -63,5 +69,10 @@ public class AncientSpellcraftSounds {
 		event.getRegistry().register(RELIC_ACTIVATE);
 		event.getRegistry().register(RELIC_USE_LOOP);
 		event.getRegistry().register(RELIC_ACTIVATE_2);
+		event.getRegistry().register(CONTINGENCY);
+		event.getRegistry().register(SENTINEL_AMBIENT);
+		event.getRegistry().register(CONTINGENCY_ACTIVATE);
+		event.getRegistry().register(BARTERING_SCROLL);
+		event.getRegistry().register(TRANSMUTATION);
 	}
 }

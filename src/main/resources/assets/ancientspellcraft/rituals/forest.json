@@ -1,0 +1,52 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": true,
+        "dispensers": true,
+        "commands": true,
+        "treasure": true,
+        "trades": true,
+        "looting": true
+    },
+    "tier": "novice",
+    "element": "magic",
+    "type": "utility",
+    "cost": 0,
+    "chargeup": 0,
+    "cooldown": 0,
+    "lifetime": 1600,
+    "size": 3,
+    "base_properties": {},
+    "pattern": [
+        "     ",
+        "  S  ",
+        " ERT ",
+        "  O  ",
+        "  F  "
+    ],
+    "centerpiece": {
+        "item": "ancientspellcraft:rune_raido"
+    },
+    "key": {
+        "F": {
+            "item": "ancientspellcraft:rune_feoh"
+        },
+        "O": {
+            "item": "ancientspellcraft:rune_odal"
+        },
+        "R": {
+            "item": "ancientspellcraft:rune_raido"
+        },
+        "E": {
+            "item": "ancientspellcraft:rune_ehwaz"
+        },
+        "S": {
+            "item": "ancientspellcraft:rune_sowilo"
+        },
+        "T": {
+            "item": "ancientspellcraft:rune_tiwaz"
+        }
+    }
+}

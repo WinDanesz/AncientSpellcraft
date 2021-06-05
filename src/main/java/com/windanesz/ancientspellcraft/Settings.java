@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft;
 
+import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
@@ -7,6 +8,7 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,6 +31,8 @@ public class Settings {
 	public List<ResourceLocation> shardFireBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.fire_shard_biome_whitelist));
 	public List<ResourceLocation> shardIceBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.ice_shard_biome_whitelist));
 
+	@Config.Ignore
+	public static List<Potion> IMMOBILITY_EFFECTS = new ArrayList<>();
 
 
 	@SuppressWarnings("unused")
@@ -47,13 +51,14 @@ public class Settings {
 		}
 	}
 
-//	@Config.Ignore
-//	public static final String ClientAndServerSideNote = "Affect both client and server. These configs should match for client and server.";
-
-
 	@Config.Name("General Settings")
 	@Config.LangKey("settings.ancientspellcraft:general_settings")
 	public static GeneralSettings generalSettings = new GeneralSettings();
+
+
+	@Config.Name("Client Settings")
+	@Config.LangKey("settings.ancientspellcraft:client_settings")
+	public static ClientSettings clientSettings = new ClientSettings();
 
 	public static class GeneralSettings {
 
@@ -61,6 +66,11 @@ public class Settings {
 		@Config.Comment("Enables or disables the JEI integration of the mod")
 		@Config.RequiresMcRestart
 		public boolean jei_integration = true;
+
+		@Config.Name("ArtemisLib integration")
+		@Config.Comment("Enables or disables the ArtemisLib integration of the mod")
+		@Config.RequiresMcRestart
+		public boolean artemislib_integration = true;
 
 		@Config.Name("Generate Crystal Ore Shards")
 		@Config.Comment("Determines whether to generate elemental crystal shards in the Overworld or not")
@@ -127,6 +137,12 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public String[] void_creeper_biome_blacklist = {"mushroom_island", "mushroom_island_shore"};
 
+		@Config.Name("Void Creeper Dimension Whitelist")
+		@Config.Comment("List of Dimensions where Void Creepers are allowed to spawn. Defaults to Overworld only."
+				+ "\n make")
+		@Config.RequiresMcRestart
+		public Integer[] void_creeper_dimension_whitelist = {0};
+
 		@Config.Name("Elemental Fire Crystal Shard Biome List")
 		@Config.Comment("List of Biomes where Fire Crystal Shards can spawn.")
 		@Config.RequiresMcRestart
@@ -162,10 +178,104 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public String[] ice_shard_biome_whitelist = {"taiga", "taiga_hills", "taiga_cold", "taiga_cold_hills", "mutated_taiga", "mutated_taiga_cold"};
 
-		@Config.Name("Pocket Biome registry ID")
+		@Config.Name("[UNUSED] Pocket Biome registry ID")
 		@Config.Comment("Allows you to change the pocket biome registry ID if you encounter biome ID conflicts")
 		@Config.RequiresMcRestart
 		public int pocket_biome_registry_id = 168;
+
+		@Config.Name("Immobility Contingency Spell Trigger Effects")
+		@Config.Comment("List of potion effects which can be considered as an immobilizing effect. Receiving one of these will trigger the stored Contingency - Immobility spell")
+		@Config.RequiresMcRestart
+		public String[] immobility_contingency_effects = {
+				"ebwizardry:paralysis",
+				"ebwizardry:containment",
+				"ebwizardry:slow_time",
+				"ebwizardry:frost",
+				"minecraft:slowness"
+		};
+
+
+		@Config.Name("Wizards Buy Ancient Element Books")
+		@Config.Comment("If true, friendly Wizards will buy ancient element books (the gray ones)")
+		@Config.RequiresMcRestart
+		public boolean wizards_buy_ancient_element_books = true;
+
+		@Config.Name("Wizards Buy Ancient Spellcraft Spell Books")
+		@Config.Comment("If true, friendly Wizards will buy ancient spellcraft element books (the blue/dark books)")
+		@Config.RequiresMcRestart
+		public boolean wizards_buy_ancient_spellcraft_books = true;
+
+		@Config.Name("Wizards Buy Ancient Spellcraft Ritual Books")
+		@Config.Comment("If true, friendly Wizards will buy ancient spellcraft ritual books")
+		@Config.RequiresMcRestart
+		public boolean wizards_buy_ancient_spellcraft_ritual_books = true;
+
+		@Config.Name("Enable Wizard Entity Changes")
+		@Config.Comment("If true, A.S. will alter the wizard entities to inject into their trade list. Disable if you are having issues related to this feature.")
+		@Config.RequiresMcRestart
+		public boolean apply_wizard_entity_changes = true;
+
+	}
+
+	public static class ClientSettings {
+
+		@Config.Name("Show Contingency HUD")
+		@Config.Comment("Whether to show the contingency HUD when there are active spell Contingencies.")
+		@Config.RequiresMcRestart
+		public boolean show_contingency_hud = true;
+
+		@Config.Name("Contingency HUD Left Side Position")
+		@Config.Comment("Whether to show the contingency HUD on the left side of the screen (defaults to right side).")
+		@Config.RequiresMcRestart
+		public boolean contingency_hud_left_side_position = true;
+
+		@Config.Name("Radial Spell Menu Enabled")
+		@Config.Comment("If true, you can open the radial spell selector menu with the configured key.")
+		public boolean radial_menu_enabled = true;
+
+
+		@Config.Name("Release To Swap")
+		@Config.Comment("If true, the hovered spell will be selected when you release the radial GUI button while having the cursor over a spell.")
+		public boolean release_to_swap = true;
+
+		@Config.Name("Does Gui Pause Game")
+		@Config.Comment("(Only has an effect in single player games. If true, opening the radial menu pauses the game")
+		public boolean gui_pause_game = false;
+
+	}
+
+
+	@Config.Name("Spell Compat Settings")
+	@Config.LangKey("settings.ancientspellcraft:spell_compat_settings")
+	public static SpellCompatSettings spellCompatSettings = new SpellCompatSettings();
+
+	public static class SpellCompatSettings {
+
+		@Config.Name("Mine Spell Override")
+		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Mine spell to add compatibility to the Fortune related artefact."
+				+ "Disabling this feature will cause the game to load the default Mine spell class which can be helpful if you are having issues, but it also makes the Circlet of Fortune artefact useless!")
+		@Config.RequiresMcRestart
+		public boolean mineSpellOverride = true;
+
+		@Config.Name("Mine Spell Network ID")
+		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! "
+				+ "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update. "
+				+ "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
+		@Config.RequiresMcRestart
+		public int mineSpellNetworkID = 141;
+
+		@Config.Name("Conjure Pickaxe Spell Override")
+		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Conjure Pickaxe spell to add compatibility to the Fortune related artefact."
+				+ "\nDisabling this feature will cause the game to load the default Conjure Pickaxe spell class which can be helpful if you are having issues, but it also makes the Circlet of Fortune artefact useless!")
+		@Config.RequiresMcRestart
+		public boolean conjurePickaxeSpellOverride = true;
+
+		@Config.Name("Conjure Pickaxe Spell Network ID")
+		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! "
+				+ "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update."
+				+ "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
+		@Config.RequiresMcRestart
+		public int conjurePickaxeSpellNetworkID = 41;
 
 	}
 

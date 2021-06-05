@@ -42,8 +42,8 @@ public class ASJEIIntegration implements IModPlugin {
 
 		// Hide some items from JEI
 		IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
-		blacklist.addIngredientToBlacklist(Item.getItemFromBlock(AncientSpellcraftBlocks.SKULL_WATCH));
-		blacklist.addIngredientToBlacklist(AncientSpellcraftItems.wizard_hat_ancient);
+//		blacklist.addIngredientToBlacklist(Item.getItemFromBlock(AncientSpellcraftBlocks.SKULL_WATCH));
+//		blacklist.addIngredientToBlacklist(AncientSpellcraftItems.wizard_hat_ancient);
 
 		addItemInfo(registry, Item.getItemFromBlock(AncientSpellcraftBlocks.SCRIBING_DESK), ".desc_extended");
 		addItemInfo(registry, Item.getItemFromBlock(AncientSpellcraftBlocks.SPHERE_COGNIZANCE), ".desc_extended");

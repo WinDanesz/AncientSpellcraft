@@ -149,8 +149,7 @@ public class ItemNewArtefact extends Item {
 
 		if(types.length == 0) types = ItemNewArtefact.AdditionalType.values();
 
-		if(WizardryBaublesIntegration.enabled()){
-			//			artefacts.removeIf(i -> !i.enabled); // Remove artefacts that are disabled in the config
+		if(WizardryBaublesIntegration.enabled() && ASBaublesIntegration.enabled()){
 			return ASBaublesIntegration.getEquippedArtefacts(player, types);
 		}else{
 

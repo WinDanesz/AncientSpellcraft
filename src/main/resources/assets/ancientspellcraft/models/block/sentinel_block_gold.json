@@ -1,0 +1,7 @@
+{
+	"parent": "ancientspellcraft:block/sentinel_block",
+	"textures": {
+		"0": "ancientspellcraft:blocks/sentinel_block_gold",
+		"particle": "ancientspellcraft:blocks/sentinel_block_gold"
+	}
+}

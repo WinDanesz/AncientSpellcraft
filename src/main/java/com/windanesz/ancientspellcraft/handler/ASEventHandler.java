@@ -1,15 +1,23 @@
 package com.windanesz.ancientspellcraft.handler;
 
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
+import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
 import com.windanesz.ancientspellcraft.entity.ai.EntitySummonAIFollowOwner;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityContingencyProjectile;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
+import com.windanesz.ancientspellcraft.item.ItemRitualBook;
 import com.windanesz.ancientspellcraft.potion.PotionMetamagicEffect;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftEnchantments;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.ritual.Ritual;
+import com.windanesz.ancientspellcraft.spell.Contingency;
 import com.windanesz.ancientspellcraft.spell.Martyr;
 import com.windanesz.ancientspellcraft.spell.MetaSpellBuff;
+import com.windanesz.ancientspellcraft.spell.MetamagicProjectile;
 import com.windanesz.ancientspellcraft.spell.TimeKnot;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.Wizardry;
@@ -20,12 +28,15 @@ import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
+import electroblob.wizardry.entity.construct.EntityBubble;
 import electroblob.wizardry.entity.living.EntitySkeletonMinion;
 import electroblob.wizardry.entity.living.ISummonedCreature;
+import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.event.SpellBindEvent;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.integration.DamageSafetyChecker;
 import electroblob.wizardry.item.ItemArtefact;
+import electroblob.wizardry.item.ItemScroll;
 import electroblob.wizardry.item.ItemWand;
 import electroblob.wizardry.potion.Curse;
 import electroblob.wizardry.registry.Spells;
@@ -34,6 +45,9 @@ import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.ImbueWeapon;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.spell.SpellBuff;
+import electroblob.wizardry.spell.SpellProjectile;
+import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.IElementalDamage;
 import electroblob.wizardry.util.MagicDamage;
@@ -47,32 +61,40 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -90,13 +112,137 @@ public class ASEventHandler {
 
 	private ASEventHandler() {} // No instances!
 
+	public static final float COST_REDUCTION_PER_ARMOUR = 0.15f;
+
+	@SubscribeEvent
+	public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
+		if (event.getItemStack().getItem() == WizardryItems.identification_scroll && event.getEntityLiving() instanceof EntityPlayer) {
+			EnumHand otherHand = event.getHand() == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
+			ItemStack otherItemStack = event.getEntityLiving().getHeldItem(otherHand);
+			if (otherItemStack.getItem() instanceof ItemRitualBook) {
+				EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+				Ritual ritual = ItemRitualBook.getRitual(otherItemStack);
+				if (!RitualDiscoveryData.hasRitualBeenDiscovered(player, ritual)) {
+					RitualDiscoveryData.addKnownRitual(player, ritual);
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onLivingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
+		if (event.getEntityLiving().isPotionActive(AncientSpellcraftPotions.magma_strider)) {
+			EntityLivingBase entity = event.getEntityLiving();
+			PotionEffect effect = entity.getActivePotionEffect(AncientSpellcraftPotions.magma_strider);
+			if (entity.isInLava() && !(entity instanceof EntityPlayer && (((EntityPlayer) entity).isCreative()))) {
+				entity.motionX *= (1.7f + 0.03 * effect.getAmplifier());
+				entity.motionZ *= (1.7f + 0.03 * effect.getAmplifier());
+
+				if (entity.isSneaking() && entity.motionY < 0 || entity.motionY > 0) {
+					entity.motionY *= (1.7f + 0.03 * effect.getAmplifier());
+				}
+			}
+		}
+
+		if (event.getEntityLiving().isPotionActive(AncientSpellcraftPotions.aquatic_agility)) {
+			PotionEffect effect = event.getEntityLiving().getActivePotionEffect(AncientSpellcraftPotions.aquatic_agility);
+			if (event.getEntityLiving().isInWater()) {
+				event.getEntityLiving().motionX *= (1.1f + 0.025 * effect.getAmplifier());
+				event.getEntityLiving().motionZ *= (1.1f + 0.025 * effect.getAmplifier());
+
+				if (event.getEntityLiving().isSneaking() && event.getEntityLiving().motionY < 0 || event.getEntityLiving().motionY > 0) {
+					event.getEntityLiving().motionY *= (1.1f + 0.025 * effect.getAmplifier());
+				}
+			}
+		}
+
+		if (event.getEntityLiving() instanceof EntityPlayer && !event.getEntityLiving().onGround && event.getEntityLiving().fallDistance >= 4f) {
+
+			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+
+			WizardData data = WizardData.get(player);
+			if (data != null) {
+
+				NBTTagCompound activeContingencies = data.getVariable(Contingency.ACTIVE_CONTINGENCIES);
+				if (activeContingencies != null) {
+
+					// Contingency - Fall
+					if (activeContingencies.hasKey(Contingency.Type.FALL.spellName)) {
+						Contingency.tryCastContingencySpell(player, data, Contingency.Type.FALL);
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onPotionAddedEvent(PotionEvent.PotionAddedEvent event) {
+		if (event.getEntityLiving() instanceof EntityPlayer) {
+			List<Potion> effects = new ArrayList<>();
+			for (String entry : Settings.generalSettings.immobility_contingency_effects) {
+				try {
+					Potion potion = ForgeRegistries.POTIONS.getValue(new ResourceLocation(entry));
+					effects.add(potion);
+				}
+				catch (Exception e) {
+					AncientSpellcraft.logger.warn("No such potion type named as " + entry);
+				}
+			}
+			if (event.getPotionEffect().getPotion() != null && effects.contains(event.getPotionEffect().getPotion())) {
+
+				EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+
+				WizardData data = WizardData.get(player);
+				if (data != null) {
+
+					NBTTagCompound activeContingencies = data.getVariable(Contingency.ACTIVE_CONTINGENCIES);
+					if (activeContingencies != null) {
+
+						// Contingency - Immobility
+						if (activeContingencies.hasKey(Contingency.Type.IMMOBILITY.spellName)) {
+							Contingency.tryCastContingencySpell(player, data, Contingency.Type.IMMOBILITY);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onEntityMountEvent(EntityMountEvent event) {
+		if (event.getEntityBeingMounted() instanceof EntityBubble && event.getEntityMounting() instanceof EntityPlayer && event.isMounting()) {
+
+			EntityPlayer player = (EntityPlayer) event.getEntityMounting();
+
+			WizardData data = WizardData.get(player);
+			if (data != null) {
+
+				NBTTagCompound activeContingencies = data.getVariable(Contingency.ACTIVE_CONTINGENCIES);
+				if (activeContingencies != null) {
+
+					// Contingency - Immobility
+					if (activeContingencies.hasKey(Contingency.Type.IMMOBILITY.spellName)) {
+
+						// A little bonus for this contingency.. allowing the ebwizardry:cure_effects spell to remove these effects
+						String spellName = activeContingencies.getString(Contingency.Type.IMMOBILITY.spellName);
+						Contingency.tryCastContingencySpell(player, data, Contingency.Type.IMMOBILITY);
+						if (spellName.equals(Spells.cure_effects.getUnlocalisedName())) {
+							// TODO not casting because cure effects can only be cased if you have at leats one effect..
+							event.setCanceled(true);
+							event.getEntityBeingMounted().setDead();
+						}
+					}
+				}
+			}
+		}
+	}
+
 	@SubscribeEvent(priority = EventPriority.LOW) // Low priority in case the event gets cancelled at default priority
 	public static void onLivingAttackEvent(LivingAttackEvent event) {
 
 		if (event.getSource() != null && event.getSource().getTrueSource() instanceof EntityLivingBase) {
 
 			EntityLivingBase attacker = (EntityLivingBase) event.getSource().getTrueSource();
-			World world = event.getEntityLiving().world;
 
 			if (!attacker.getHeldItemMainhand().isEmpty() && ImbueWeapon.isSword(attacker.getHeldItemMainhand())) {
 
@@ -199,22 +345,44 @@ public class ASEventHandler {
 
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 
+			if (player.isPotionActive(AncientSpellcraftPotions.wizard_shield)) {
+				PotionEffect effect = player.getActivePotionEffect(AncientSpellcraftPotions.wizard_shield);
+				if (effect != null) {
+					float oldAmount = event.getAmount();
+					int oldTimer = effect.getDuration();
+					int amplifier = effect.getAmplifier();
+
+					player.setArrowCountInEntity(0);
+					int usedUp = (int) (event.getAmount());
+					int newAmplifier = amplifier - usedUp;
+					float newAmount = (int) (event.getAmount()) - (amplifier + 1);
+					if (newAmount < 0) {
+						amplifier = (int) -newAmount;
+						event.setCanceled(true);
+
+					}
+					if (newAmplifier > 0) {
+						if (event.getSource().getImmediateSource() instanceof EntityArrow) {
+							event.getSource().getImmediateSource().setDead();
+						}
+
+						player.removePotionEffect(AncientSpellcraftPotions.wizard_shield);
+						player.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.wizard_shield, oldTimer, newAmplifier));
+
+
+					} else {
+						player.removePotionEffect(AncientSpellcraftPotions.wizard_shield);
+					}
+					event.setAmount(newAmount);
+				}
+			}
+
 			for (ItemArtefact artefact : getActiveArtefacts(player)) {
 
 				if (artefact == AncientSpellcraftItems.amulet_time_knot) {
 					if (player.isPotionActive(AncientSpellcraftPotions.time_knot) && (player.getHealth() - event.getAmount() <= 0F)) {
 						TimeKnot.loopPlayer(player);
 						player.extinguish();
-						if (!player.world.isRemote) {
-							Iterator<PotionEffect> iterator = player.getActivePotionMap().values().iterator();
-
-							//							while (iterator.hasNext()) {
-							//								try {
-							//									iterator.remove();
-							//								}
-							//								catch (Exception e) {}
-							//							}
-						}
 					}
 				}
 
@@ -237,9 +405,38 @@ public class ASEventHandler {
 						if (!player.isPotionActive(MobEffects.WEAKNESS)) {
 							player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 200, 1)); // 10 seconds of weakness
 						}
-						//						if (!player.isPotionActive(WizardryPotions.fear)) { // TODO, add magical weakness
-						//							player.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 200)); // 10 seconds of speed
-						//						}
+					}
+				}
+			}
+
+			// Contingency - Damage
+			if (event.getAmount() >= 0) {
+
+				WizardData data = WizardData.get(player);
+				if (data != null) {
+
+					NBTTagCompound activeContingencies = data.getVariable(Contingency.ACTIVE_CONTINGENCIES);
+					if (activeContingencies != null) {
+
+						if (Contingency.isFireDamageSource(event.getSource()) && activeContingencies.hasKey(Contingency.Type.FIRE.spellName)) {
+							// Contingency - Fire
+							Contingency.tryCastContingencySpell(player, data, Contingency.Type.FIRE);
+						} else if (event.getSource() == DamageSource.DROWN && activeContingencies.hasKey(Contingency.Type.DROWNING.spellName)) {
+							// Contingency - Drowning
+							Contingency.tryCastContingencySpell(player, data, Contingency.Type.DROWNING);
+						} else {
+							// Contingency - Damage
+							if (activeContingencies.hasKey(Contingency.Type.DAMAGE.spellName)) {
+								Contingency.tryCastContingencySpell(player, data, Contingency.Type.DAMAGE);
+							}
+						}
+
+						// Contingency - Critical Health
+						// apply if health is below 25% or health would fall below 25% after taking the damage
+						if ((player.getHealth() <= player.getMaxHealth() * 0.25 || player.getHealth() - event.getAmount() <= player.getMaxHealth() * 0.25) &&
+								activeContingencies.hasKey(Contingency.Type.CRITICAL_HEALTH.spellName)) {
+							Contingency.tryCastContingencySpell(player, data, Contingency.Type.CRITICAL_HEALTH);
+						}
 					}
 				}
 			}
@@ -316,6 +513,10 @@ public class ASEventHandler {
 					}
 				} else if (artefact == AncientSpellcraftItems.amulet_curse_ward) {
 					if (event.getPotionEffect().getPotion() instanceof Curse) {
+						event.setResult(Event.Result.DENY);
+					}
+				} else if (artefact == AncientSpellcraftItems.amulet_persistence) {
+					if (event.getPotionEffect().getPotion() == AncientSpellcraftPotions.shrinkage || event.getPotionEffect().getPotion() == AncientSpellcraftPotions.growth) {
 						event.setResult(Event.Result.DENY);
 					}
 				}
@@ -407,6 +608,23 @@ public class ASEventHandler {
 				}
 			}
 
+		} else if (event.getEntityLiving() instanceof EntityPlayer) {
+
+			// Contingency - Death
+			WizardData data = WizardData.get((EntityPlayer) event.getEntityLiving());
+			if (data != null) {
+				NBTTagCompound activeContingencies = data.getVariable(Contingency.ACTIVE_CONTINGENCIES);
+
+				if (activeContingencies != null && activeContingencies.hasKey(Contingency.Type.DEATH.spellName)) {
+					Contingency.tryCastContingencySpell((EntityPlayer) event.getEntityLiving(), data, Contingency.Type.DEATH);
+				}
+			}
+		}
+		if (event.getEntityLiving().getEntityData().hasKey(Contingency.ACTIVE_LISTENER_TAG)) {
+			NBTTagCompound compound = event.getEntityLiving().getEntityData().getCompoundTag(Contingency.ACTIVE_LISTENER_TAG);
+			if (compound != null && compound.hasKey(Contingency.Type.DEATH.spellName)) {
+				Contingency.tryCastContingencySpellAsMob(event.getEntityLiving(), Contingency.Type.DEATH);
+			}
 		}
 	}
 
@@ -440,8 +658,41 @@ public class ASEventHandler {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOWEST) // processing after electroblob.wizardry.item.ItemArtefact.onSpellCastPreEvent (EventPriority.LOW)
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onSpellCastPreEvent(SpellCastEvent.Pre event) {
+
+		if (event.getSpell().getType() == SpellType.ALTERATION || event.getSpell().getType() == SpellType.ATTACK || event.getSpell().getType() == SpellType.MINION
+				|| event.getSpell().getType() == SpellType.PROJECTILE) {
+
+			List<EntityPlayer> closestPlayers = new ArrayList<>();
+			if (event.getCaster() != null) {
+				closestPlayers = EntityUtils.getEntitiesWithinRadius(20, event.getCaster().posX, event.getCaster().posY, event.getCaster().posZ, event.getWorld(), EntityPlayer.class);
+			}
+
+			if (!closestPlayers.isEmpty()) {
+				for (EntityPlayer player : closestPlayers) {
+
+					if (event.getCaster() != player) {
+
+						if (!AllyDesignationSystem.isAllied(player, event.getCaster())) {
+							WizardData data = WizardData.get(player);
+							if (data != null) {
+
+								NBTTagCompound activeContingencies = data.getVariable(Contingency.ACTIVE_CONTINGENCIES);
+								if (activeContingencies != null) {
+
+									// Contingency - Immobility
+									if (activeContingencies.hasKey(Contingency.Type.HOSTILE_SPELLCAST.spellName)) {
+										Contingency.tryCastContingencySpell(player, data, Contingency.Type.HOSTILE_SPELLCAST);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
 		if (event.getCaster() instanceof EntityPlayer) {
 
 			if (!(event.getSpell() instanceof MetaSpellBuff)) {
@@ -546,7 +797,6 @@ public class ASEventHandler {
 			}
 
 			/// custom artefact types
-
 			for (ItemNewArtefact artefact : getActiveNewArtefacts(player)) {
 
 				if (artefact == AncientSpellcraftItems.head_curse) {
@@ -657,6 +907,100 @@ public class ASEventHandler {
 				float potencyBonus = ((jewelsSetCount - 1) * 5f) / 100; // +5% per set piece
 				modifiers.set(SpellModifiers.POTENCY, potencyBonus + potency, false);
 
+			}
+
+			WizardData data = WizardData.get(player);
+
+			if (data != null && !(event.getSpell() instanceof Contingency)) {
+
+				// casting the spell as a metamagic projectile
+				if (data.getVariable(MetamagicProjectile.METAMAGIC_PROJECTILE) != null && data.getVariable(MetamagicProjectile.METAMAGIC_PROJECTILE).booleanValue()) {
+
+					if (event.getSpell() instanceof MetaSpellBuff || event.getSpell() instanceof SpellRay || event.getSpell() instanceof SpellProjectile ||
+							event.getSpell() instanceof MetamagicProjectile) {
+						return;
+					}
+
+					EntityMetamagicProjectile projectile = new EntityMetamagicProjectile(player.world);
+					projectile.setCaster(player);
+					projectile.setStoredSpell(event.getSpell());
+					projectile.aim(player, calculateVelocity(projectile, modifiers, player.getEyeHeight() - (float) EntityMagicProjectile.LAUNCH_Y_OFFSET));
+					projectile.damageMultiplier = modifiers.get(SpellModifiers.POTENCY);
+
+					// Spawns the projectile in the world
+					if (!player.world.isRemote)
+						player.world.spawnEntity(projectile);
+					data.setVariable(MetamagicProjectile.METAMAGIC_PROJECTILE, null);
+					event.setCanceled(true);
+
+					return;
+				}
+
+				// Contingency
+				NBTTagCompound activeContingencyListener = data.getVariable(Contingency.ACTIVE_CONTINGENCY_LISTENER);
+				if (activeContingencyListener != null && activeContingencyListener.hasKey(Contingency.ACTIVE_LISTENER_TAG)) {
+
+					// casting the contingency as a projectile
+					if (player.isSneaking() && Contingency.Type.fromName(activeContingencyListener.getString(Contingency.ACTIVE_LISTENER_TAG)) == Contingency.Type.DEATH) {
+
+						EntityContingencyProjectile projectile = new EntityContingencyProjectile(player.world);
+						projectile.setCaster(player);
+						projectile.setStoredSpell(event.getSpell());
+						projectile.setContingencyType(Contingency.Type.fromName(activeContingencyListener.getString(Contingency.ACTIVE_LISTENER_TAG)));
+						projectile.aim(player, calculateVelocity(projectile, modifiers, player.getEyeHeight() - (float) EntityMagicProjectile.LAUNCH_Y_OFFSET));
+						projectile.damageMultiplier = modifiers.get(SpellModifiers.POTENCY);
+
+						// Spawns the projectile in the world
+						if (!event.getWorld().isRemote)
+							player.world.spawnEntity(projectile);
+						data.setVariable(Contingency.ACTIVE_CONTINGENCY_LISTENER, null);
+						Contingency.playSound(event.getWorld(), player.getPosition());
+						event.setCanceled(true);
+
+						return;
+					}
+
+					String spellTag = activeContingencyListener.getString(Contingency.ACTIVE_LISTENER_TAG);
+					Spell contingency = Spell.registry.getValue(new ResourceLocation(spellTag));
+
+					// storing the contingency on the player
+					Spell spellToStore = event.getSpell();
+					NBTTagCompound activeContingencies = data.getVariable(Contingency.ACTIVE_CONTINGENCIES);
+					if (activeContingencies == null) {
+						activeContingencies = new NBTTagCompound();
+					}
+					activeContingencies.setString(contingency.getRegistryName().toString(), spellToStore.getRegistryName().toString());
+
+					if (event.getSource() == SpellCastEvent.Source.WAND) {
+						if (player.getHeldItemMainhand().getItem() instanceof ItemWand) {
+							((ItemWand) player.getHeldItemMainhand().getItem()).consumeMana(player.getHeldItemMainhand(), spellToStore.getCost(), player);
+							if (!spellToStore.isContinuous && !player.isCreative()) { // Spells only have a cooldown in survival
+								WandHelper.setCurrentCooldown(player.getHeldItemMainhand(), (int) (spellToStore.getCooldown() * modifiers.get(WizardryItems.cooldown_upgrade)));
+							}
+						} else if (player.getHeldItemOffhand().getItem() instanceof ItemWand) {
+							((ItemWand) player.getHeldItemOffhand().getItem()).consumeMana(player.getHeldItemOffhand(), spellToStore.getCost(), player);
+							if (!spellToStore.isContinuous && !player.isCreative()) { // Spells only have a cooldown in survival
+								WandHelper.setCurrentCooldown(player.getHeldItemOffhand(), (int) (spellToStore.getCooldown() * modifiers.get(WizardryItems.cooldown_upgrade)));
+							}
+						}
+					} else if (event.getSource() == SpellCastEvent.Source.SCROLL) {
+						if (player.getHeldItemMainhand().getItem() instanceof ItemScroll) {
+							player.getHeldItemMainhand().shrink(1);
+							player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), spellToStore.getCooldown());
+						} else if (player.getHeldItemOffhand().getItem() instanceof ItemScroll) {
+							player.getHeldItemOffhand().shrink(1);
+							player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), spellToStore.getCooldown());
+						}
+					}
+					if (event.getWorld().isRemote)
+						Contingency.spawnParticles(event.getWorld(), player, Contingency.Type.fromName(spellTag));
+					Contingency.playSound(event.getWorld(), player.getPosition());
+
+					data.setVariable(Contingency.ACTIVE_CONTINGENCY_LISTENER, null);
+					data.setVariable(Contingency.ACTIVE_CONTINGENCIES, activeContingencies);
+					data.sync();
+					event.setCanceled(true);
+				}
 			}
 		}
 
@@ -792,6 +1136,25 @@ public class ASEventHandler {
 					}
 				}
 			}
+		}
+	}
+
+	protected static float calculateVelocity(EntityMagicProjectile projectile, SpellModifiers modifiers, float launchHeight) {
+		// The required range
+		float range = 20 * modifiers.get(WizardryItems.range_upgrade);
+
+		if (projectile.hasNoGravity()) {
+			// No sensible spell will do this - range is meaningless if the projectile has no gravity or lifetime
+			if (projectile.getLifetime() <= 0)
+				return 1.5f;
+			// Speed = distance/time (trivial, I know, but I've put it here for the sake of completeness)
+			return range / projectile.getLifetime();
+		} else {
+			// It seems that in Minecraft, g is usually* 0.03 - the getter method is protected unfortunately
+			// * Potions and xp bottles seem to have more gravity (because that makes sense...)
+			float g = 0.03f;
+			// Assume horizontal projection
+			return range / MathHelper.sqrt(2 * launchHeight / g);
 		}
 	}
 

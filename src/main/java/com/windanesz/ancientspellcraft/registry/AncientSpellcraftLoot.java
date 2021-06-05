@@ -51,6 +51,7 @@ public class AncientSpellcraftLoot {
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/uncommon_artefacts"));
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/rare_artefacts"));
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/epic_artefacts"));
+		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/ritual_books"));
 
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/ancientspellcraft_books_and_scrolls"));
 

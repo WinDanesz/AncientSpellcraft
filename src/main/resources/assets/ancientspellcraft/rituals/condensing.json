@@ -1,0 +1,58 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": true,
+        "dispensers": true,
+        "commands": true,
+        "treasure": true,
+        "trades": true,
+        "looting": true
+    },
+    "tier": "novice",
+    "element": "magic",
+    "type": "utility",
+    "cost": 0,
+    "chargeup": 0,
+    "cooldown": 0,
+    "lifetime": -1,
+    "size": 5,
+    "base_properties": {},
+    "pattern": [
+        "C O N",
+        " D E ",
+        "  I  ",
+        " S N ",
+        "N   G"
+    ],
+    "centerpiece": {
+        "item": "ancientspellcraft:rune_isaz"
+    },
+    "key": {
+        "C": {
+            "item": "ancientspellcraft:rune_kaunan"
+        },
+        "O": {
+            "item": "ancientspellcraft:rune_odal"
+        },
+        "N": {
+            "item": "ancientspellcraft:rune_naudiz"
+        },
+        "D": {
+            "item": "ancientspellcraft:rune_dagaz"
+        },
+        "E": {
+            "item": "ancientspellcraft:rune_ehwaz"
+        },
+        "G": {
+            "item": "ancientspellcraft:rune_gyfu"
+        },
+        "S": {
+            "item": "ancientspellcraft:rune_sowilo"
+        },
+        "I": {
+            "item": "ancientspellcraft:rune_isaz"
+        }
+    }
+}

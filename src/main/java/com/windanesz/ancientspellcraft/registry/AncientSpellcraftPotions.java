@@ -9,14 +9,17 @@ import com.windanesz.ancientspellcraft.potion.PotionCurseEnder;
 import com.windanesz.ancientspellcraft.potion.PotionCurseWard;
 import com.windanesz.ancientspellcraft.potion.PotionEagleEye;
 import com.windanesz.ancientspellcraft.potion.PotionFeatherFall;
+import com.windanesz.ancientspellcraft.potion.PotionGrowth;
 import com.windanesz.ancientspellcraft.potion.PotionMageLight;
 import com.windanesz.ancientspellcraft.potion.PotionMagicEffectAS;
 import com.windanesz.ancientspellcraft.potion.PotionManaRegeneration;
 import com.windanesz.ancientspellcraft.potion.PotionMetamagicEffect;
 import com.windanesz.ancientspellcraft.potion.PotionProjectileWard;
+import com.windanesz.ancientspellcraft.potion.PotionShrinkage;
 import com.windanesz.ancientspellcraft.potion.PotionTimeKnot;
 import com.windanesz.ancientspellcraft.potion.PotionUnlimitedPower;
 import com.windanesz.ancientspellcraft.potion.PotionWaterWalking;
+import com.windanesz.ancientspellcraft.potion.PotionWizardShield;
 import com.windanesz.ancientspellcraft.spell.FortifiedArchery;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.util.SpellModifiers;
@@ -57,6 +60,7 @@ public class AncientSpellcraftPotions {
 	public static final Potion feather_fall = placeholder();
 	public static final Potion water_walking = placeholder();
 	public static final Potion eagle_eye = placeholder();
+	public static final Potion wizard_shield = placeholder();
 
 	// metamagic
 	public static final Potion arcane_augmentation = placeholder();
@@ -78,6 +82,10 @@ public class AncientSpellcraftPotions {
 	public static final Potion spell_siphon = placeholder();
 	public static final Potion mana_regeneration = placeholder();
 
+	// artemislib potions
+	public static final Potion shrinkage = placeholder();
+	public static final Potion growth = placeholder();
+	// artemislib potions
 
 	public static void registerPotion(IForgeRegistry<Potion> registry, String name, Potion potion) {
 		potion.setRegistryName(AncientSpellcraft.MODID, name);
@@ -167,7 +175,15 @@ public class AncientSpellcraftPotions {
 		registerPotion(registry, "spell_siphon", new PotionMagicEffectAS("spell_siphon", false, 0xc558d6,
 				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_spell_siphon.png")).setBeneficial());
 		registerPotion(registry, "mana_regeneration", new PotionManaRegeneration());
+		registerPotion(registry, "wizard_shield", new PotionWizardShield("wizard_shield", false, 0xc558d6,
+				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_spell_siphon.png")).setBeneficial());
 
+		// ---- Artemislib dependent potions ----
+		registerPotion(registry, "shrinkage", new PotionShrinkage("shrinkage", false, 0xc558d6,
+				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_spell_siphon.png")).setBeneficial());
+		registerPotion(registry, "growth", new PotionGrowth("growth", false, 0xc558d6,
+				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_spell_siphon.png")).setBeneficial());
+		// ---- Artemislib dependent potions ----
 	}
 
 	// Stuffing this here temporarily, TODO: unify these SpellCastEvent.Pre events to save a minor performance

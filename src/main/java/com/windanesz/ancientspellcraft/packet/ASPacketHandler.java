@@ -15,6 +15,9 @@ public class ASPacketHandler {
 		net = NetworkRegistry.INSTANCE.newSimpleChannel(AncientSpellcraft.MODID.toUpperCase());
 		registerMessage(PacketControlInput.class, PacketControlInput.Message.class);
 		registerMessage(PacketActivateBauble.class, PacketActivateBauble.Message.class);
+		registerMessage(PacketSelectRadialItemSpell.class, PacketSelectRadialItemSpell.Message.class);
+		registerMessage(PacketStartRitual.class, PacketStartRitual.Message.class);
+		registerMessage(PacketContinuousRitual.class, PacketContinuousRitual.Message.class);
 	}
 
 	private static int nextPacketId = 0;

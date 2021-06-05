@@ -2,7 +2,6 @@ package com.windanesz.ancientspellcraft.entity.projectile;
 
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
-import electroblob.wizardry.entity.construct.EntityFrostSigil;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.util.EntityUtils;
 import net.minecraft.entity.Entity;

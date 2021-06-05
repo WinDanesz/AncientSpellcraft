@@ -24,6 +24,9 @@ entity.ancientspellcraft\:wolf_minion.name=Wolf Minion
 entity.ancientspellcraft\:spirit_bear.name=Spirit Bear
 entity.ancientspellcraft\:entity_volcano.name=Volcano
 entity.ancientspellcraft\:fire_ant.name=Fire Ant
+entity.ancientspellcraft\:spellcaster_entity.name=Sentinel
+entity.ancientspellcraft\:traveller.prefix=Traveller
+entity.ancientspellcraft\:travelling_wizard.name=Travelling Wizard
 
 # misc
 misc.ancientspellcraft\:the_nether=The Nether
@@ -33,6 +36,7 @@ misc.ancientspellcraft\:potency=Potency
 
 # spell types
 spelltype.metamagic=Metamagic
+spelltype.contingency=Contingency
 
 # spell elements
 element.ancient=Ancient
@@ -47,6 +51,7 @@ set.ancientspellcraft\:set_bonus=Artefact Set Bonus: %s
 # creativetab
 itemGroup.ancientspellcraft=Ancient Spellcraft
 itemGroup.ancientspellcraftgear=Ancient Spellcraft Gear
+itemGroup.ancientspellcraftrituals=Rituals
 
 # enchant
 enchantment.ancientspellcraft\:static_charge=Static Charge
@@ -157,31 +162,51 @@ spell.ancientspellcraft\:prismatic_spray=Prismatic Spray
 spell.ancientspellcraft\:prismatic_spray.desc=Shoots out 7 different rays of light by splitting magic into its elemental components, each ray has a different effect on targets
 spell.ancientspellcraft\:prismatic_spray.no_target=This spell requires a target
 spell.ancientspellcraft\:crystal_mine=Crystal Mine
+spell.ancientspellcraft\:metamagic_projectile=Metamagic - Projectile
+spell.ancientspellcraft\:metamagic_projectile.desc=Changes the shape of your next spell to a projectile form. \nNot every spell can be casted as a projectile
+
+spell.ancientspellcraft\:contingency_fire=Contingency - Fire
+spell.ancientspellcraft\:contingency_fall=Contingency - Fall
+spell.ancientspellcraft\:contingency_damage=Contingency - Damage
+spell.ancientspellcraft\:contingency_critical_health=Contingency - Critical Health
+spell.ancientspellcraft\:contingency_death=Contingency - Death
+spell.ancientspellcraft\:contingency_drowning=Contingency - Drowning
+spell.ancientspellcraft\:contingency_hostile_spellcast=Contingency - Hostile Spellcast
+spell.ancientspellcraft\:contingency_immobility=Contingency - Immobility
+
+spell.ancientspellcraft\:contingency_fire.desc=This Contingency spell causes your next spell to be released when you take fire damage. Cast a spell after the Contingency to store it.
+spell.ancientspellcraft\:contingency_fall.desc=This Contingency spell causes your next spell to be released when you fall from a high place. Cast a spell after the Contingency to store it.
+spell.ancientspellcraft\:contingency_damage.desc=This Contingency spell causes your next spell to be released when you take damage. Cast a spell after the Contingency to store it.
+spell.ancientspellcraft\:contingency_critical_health.desc=This Contingency spell causes your next spell to be released when your health goes below 25%%. Cast a spell after the Contingency to store it.
+spell.ancientspellcraft\:contingency_death.desc=This Contingency spell causes your next spell to be released at death. Cast a spell after the Contingency to store it.
+spell.ancientspellcraft\:contingency_drowning.desc=This Contingency spell causes your next spell to be released when you are drowning. Cast a spell after the Contingency to store it.
+spell.ancientspellcraft\:contingency_hostile_spellcast.desc=This Contingency spell causes your next spell to be released when an enemy casts a hostile spell nearby. Cast a spell after the Contingency to store it.
+spell.ancientspellcraft\:contingency_immobility.desc=This Contingency spell causes your next spell to be released when you are immobilized by a magica effect. Cast a spell after the Contingency to store it.
 
 # spell desc
-spell.ancientspellcraft\:eagle_eye.desc=Allows the caster to get a high altitude view of the nearby area
+spell.ancientspellcraft\:eagle_eye.desc=Allows the caster to get a high altitude view of the nearby area.
 spell.ancientspellcraft\:crystal_mine.desc=Conjure a Crystal Mine with the initial cast, detonate it with the second cast.
-spell.ancientspellcraft\:antimagic_field.desc=Creates an anti-magic field which disturbs any spellcasts
+spell.ancientspellcraft\:antimagic_field.desc=Creates an anti-magic field which disturbs any spellcasts.
 spell.ancientspellcraft\:aquatic_agility.desc=Magically enchant your movement inside water to swim like a fish.
-spell.ancientspellcraft\:arcane_aegis.desc=The complete incantation of the shielding ward, deflects most projectiles. Requires to hold a wand with mana
-spell.ancientspellcraft\:arcane_augmentation.desc=Increases the blast and range of your next non-metamagic spell by channelling a greater amount of magical force into it
-spell.ancientspellcraft\:arcane_beam.desc=Channels an instant beam of highly intense magical energy
-spell.ancientspellcraft\:arcane_magnetism.desc=Pulls all nearby items towards the caster
+spell.ancientspellcraft\:arcane_aegis.desc=The complete incantation of the shielding ward, deflects most projectiles. Requires to hold a wand with mana.
+spell.ancientspellcraft\:arcane_augmentation.desc=Increases the blast and range of your next non-metamagic spell by channelling a greater amount of magical force into it.
+spell.ancientspellcraft\:arcane_beam.desc=Channels an instant beam of highly intense magical energy.
+spell.ancientspellcraft\:arcane_magnetism.desc=Pulls all nearby items towards the caster.
 spell.ancientspellcraft\:aspect_hunter.desc=Magically imbues your arrows to fly further and deal more damage.
-spell.ancientspellcraft\:attire_alteration.desc=Stores your current armor set in a magical pocket and allows quickly swapping armor
-spell.ancientspellcraft\:blockweaving.desc=Magically places block from your offhand by selecting the start position with first cast and end position with second cast
+spell.ancientspellcraft\:attire_alteration.desc=Stores your current armor set in a magical pocket and allows quickly swapping armor.
+spell.ancientspellcraft\:blockweaving.desc=Magically places block from your offhand by selecting the start position with first cast and end position with second cast.
 spell.ancientspellcraft\:blockweaving.first_pos_set=Remembered the first position at %s, %s, %s. Cast again to place blocks.
 spell.ancientspellcraft\:blockweaving.forget=Forgot the first position.
 spell.ancientspellcraft\:blockweaving.no_loc=No first position to erase.
 spell.ancientspellcraft\:blockweaving.offhand_empty=This spell requires a placeable block in the offhand.
-spell.ancientspellcraft\:bulwark.desc=Casts a protective ward on the caster which has a greater chance to deflect physical and magical projectiles. Requires to hold a wand with mana
+spell.ancientspellcraft\:bulwark.desc=Casts a protective ward on the caster which has a greater chance to deflect physical and magical projectiles. Requires to hold a wand with mana.
 spell.ancientspellcraft\:call_of_the_pack.desc=Summon a pack of wolves to aid you in battle.
-spell.ancientspellcraft\:candlelight.desc=Conjures a flickering candlelight above the caster, providing a source of light
+spell.ancientspellcraft\:candlelight.desc=Conjures a flickering candlelight above the caster, providing a source of light.
 spell.ancientspellcraft\:celerity.desc=Grants the caster and all nearby allies increased movement speed for 45 seconds.
 spell.ancientspellcraft\:channel_power.desc=Ancient writings says this technique was used by wizards of older civilizations to unite their powers and perform miracles.
-spell.ancientspellcraft\:conduit.desc=Allows transferring Mana between wands. Requires the target wand to be in the offhand
+spell.ancientspellcraft\:conduit.desc=Allows transferring Mana between wands. Requires the target wand to be in the offhand.
 spell.ancientspellcraft\:conflagration.desc=Burn them all...!
-spell.ancientspellcraft\:conjure_fishing_rod.desc=Conjures a Spectral Fishing rod. Potency increases the level and number of enchantments it has
+spell.ancientspellcraft\:conjure_fishing_rod.desc=Conjures a Spectral Fishing rod. Potency increases the level and number of enchantments it has.
 spell.ancientspellcraft\:conjure_shadow_blade.desc=Conjures a withering Shadow Blade from the Underworld.
 spell.ancientspellcraft\:conjure_shield.desc=Creates spectral shield which can be used for blocking physical attacks. The shield lasts for 60 seconds.
 spell.ancientspellcraft\:conjure_water.desc=Conjures a water source block where the caster targets. Can also fill water bottles and buckets in the offhand.
@@ -205,7 +230,7 @@ spell.ancientspellcraft\:eye_of_the_storm.desc=Ride the storm to overcome your e
 spell.ancientspellcraft\:feather_fall.desc=Slows down your falling speed by charging the air below you with magical energy
 spell.ancientspellcraft\:fire_ant_swarm.desc=Summons a Fire Ant Volcano from the Nether
 spell.ancientspellcraft\:firewall.desc=Conjures a wall of flame where the caster is pointing.
-spell.ancientspellcraft\:forcefend.desc=Redirects approaching projectiles at enemies
+spell.ancientspellcraft\:forcefend.desc=Redirects approaching projectiles at nearby enemies.
 spell.ancientspellcraft\:frost_nova.desc=Releases a ring of ice shards after two seconds of channeling
 spell.ancientspellcraft\:flint_shard.desc=Fires a flint shard in the direction you are pointing which damages its target.
 spell.ancientspellcraft\:harvest.desc=Harvests all grown crops near the caster. Also attempts to plant them if the player has seeds.
@@ -270,18 +295,39 @@ spell.ancientspellcraft\:suppression.desc=Temporarily weakens the magical abilit
 spell.ancientspellcraft\:sacred_mace=Sacred Mace
 spell.ancientspellcraft\:sacred_mace.desc=Allows the caster to summon the legendary Sacred Mace
 spell.ancientspellcraft\:channel_effect=Channel Effect
-spell.ancientspellcraft\:channel_effect.desc=Allows you to act as channel for Buff spells, casting Channel Effect on a target
+spell.ancientspellcraft\:channel_effect.desc=Allows you to cast Buff spells on others instead of yourself. Channel Effect needs to be in your main hand to cast and the Buff needs to be in your offhand.
 spell.ancientspellcraft\:channel_effect.missing_required_item=You must hold a scroll or a wand with a selected spell in your other hand
 spell.ancientspellcraft\:channel_effect.invalid_spell=This spell cannot be channeled
 spell.ancientspellcraft\:channel_effect.not_enough_mana=The spellcasting item doesn't have enough mana
 
 spell.ancientspellcraft\:stone_fist=Stone Fist
 spell.ancientspellcraft\:stone_fist.desc=Transforms the hand of the caster into a more durable variant of stonefist
+spell.ancientspellcraft\:shrink_self=Shrink Self
+spell.ancientspellcraft\:shrink_self.desc=Allows you to become tiny for a short amount of time. Shrinking has various side effects like being immune to fall damage, increased movement speed, reduced attack damage ...
+spell.ancientspellcraft\:grow_self=Grow Self
+spell.ancientspellcraft\:grow_self.desc=Allows you to become a giant for a short amount of time. Growing has various side effects like an increased jump height, attack speed, increased health and damage ...
+spell.ancientspellcraft\:permagrowth=Permagrowth
+spell.ancientspellcraft\:permagrowth.desc=Permanently increases the size of a targeted non-player entity
+spell.ancientspellcraft\:permashrink=Permashrink
+spell.ancientspellcraft\:permashrink.desc=Permanently reduces the size of a targeted non-player entity
+spell.ancientspellcraft\:mass_shrink=Mass Shrink
+spell.ancientspellcraft\:mass_shrink.desc=Shoots a projectile of resizing magic in the direction you are pointing, temporarily reducing the size of all targets where the projectile impacts.
+spell.ancientspellcraft\:mass_growth=Mass Growth
+spell.ancientspellcraft\:mass_growth.desc=Shoots a projectile of resizing magic in the direction you are pointing, temporarily increasing the size of all targets where the projectile impacts.
+spell.ancientspellcraft\:wizard_shield=Wizard Shield
+spell.ancientspellcraft\:wizard_shield.desc=Allows the caster to charge up a potent shield which can deflect any damage. The shield quickly decays while not being charged.
+spell.ancientspellcraft\:words_of_unbinding=Words of Unbinding
+spell.ancientspellcraft\:words_of_unbinding.desc=Removes a random wand upgrade from the wand which casts the spell. You can control which upgrade is being removed if you hold the upgrade's scroll in your offhand.
 spell.ancientspellcraft\:stone_fist.wrong_hand=Must be casted from the offhand!
 spell.ancientspellcraft\:stone_fist.full_hand=Your main hand must be empty!
 
 spell.ancientspellcraft\:bubble_head=Bubble Head
 spell.ancientspellcraft\:bubble_head.desc=Forms a water bubble around the caster's health while underwater, the bubble pops from any source damage
+
+spell.ancientspellcraft\:armageddon=Armageddon
+spell.ancientspellcraft\:armageddon.desc=TODO
+spell.ancientspellcraft\:fimbulwinter=Fimbulwinter
+spell.ancientspellcraft\:fimbulwinter.desc=TODO
 
 spell.ancientspellcraft\:covenant=Covenant
 spell.ancientspellcraft\:covenant.desc=By calling upon the ancient pledge of the wizard order, you can request a wizard to help you in fighting the evil
@@ -323,6 +369,7 @@ potion.ancientspellcraft\:spell_blast=Spell Blast
 potion.ancientspellcraft\:spell_duration=Spell Blast
 potion.ancientspellcraft\:spell_cooldown=Spell Cooldown
 potion.ancientspellcraft\:spell_siphon=Spell Siphoning
+potion.ancientspellcraft\:shrinkage=Shrinkage
 potion.ancientspellcraft\:mana_regeneration=Mana Regeneration
 
 # items
@@ -343,6 +390,8 @@ item.ancientspellcraft\:amulet_rabbit.desc=Grants a 25%% chance to trigger a Spe
 item.ancientspellcraft\:amulet_rabbit.name=Rabbit Foot Amulet
 item.ancientspellcraft\:amulet_time_knot.desc=Your Time Knot loop resets immediately if you die while wearing this amulet
 item.ancientspellcraft\:amulet_time_knot.name=Eye of Foresight
+item.ancientspellcraft\:amulet_persistence.name=Amulet of Persistence
+item.ancientspellcraft\:amulet_persistence.desc=Grants immunity to resizing spells
 item.ancientspellcraft\:ancient_bound_stone.name=Ancient Bound Stone
 item.ancientspellcraft\:ancient_mana_flask.desc=Seems to have a rune carved into it
 item.ancientspellcraft\:ancient_mana_flask.name=Ancient Mana Flask
@@ -390,14 +439,14 @@ item.ancientspellcraft\:charm_healing_orb.desc2=Active Ability: Raising up the o
 item.ancientspellcraft\:charm_healing_orb.desc=Increases Healing spell Potency by %1$s, reduces other element's spell Potency by 50%%
 item.ancientspellcraft\:charm_healing_orb.name=Orb of Radiant Light
 item.ancientspellcraft\:charm_ice_orb.desc2=Active Ability: Freeze the world around you
-item.ancientspellcraft\:charm_ice_orb.desc=Increases Ice spell Potency by %1$s, reduces other element's spell Potency by 50%%
+item.ancientspellcraft\:charm_ice_orb.desc=Increases Ice spell Potency by %1$s%%, reduces other element's spell Potency by 50%%
 item.ancientspellcraft\:charm_ice_orb.name=Orb of the Fimbulwinter
 item.ancientspellcraft\:charm_knowledge_orb.desc=Wand progression experience from casting spells with master wands is transferred to other hotbar non-master wands
 item.ancientspellcraft\:charm_knowledge_orb.name=Orb of Knowledge
 item.ancientspellcraft\:charm_lightning_orb.desc2=Active Ability: Shake the orb to call forth a tremendous thunderstorm
 item.ancientspellcraft\:charm_lightning_orb.desc=Increases Lightning spell Potency by %1$s, reduces other element's spell Potency by 50%%
 item.ancientspellcraft\:charm_lightning_orb.name=Orb of the Thundering Skies
-item.ancientspellcraft\:charm_magic_light.desc=A bottled spark of the everburning flames, said to be inextinguishable
+item.ancientspellcraft\:charm_magic_light.desca=Acts as a mobile light source when in your Charm slot
 item.ancientspellcraft\:charm_magic_light.name=Phial of The Eternal Flame
 item.ancientspellcraft\:charm_mana_flask.desc=This magically enchanted flask always refills itself over time
 item.ancientspellcraft\:charm_mana_flask.invalid_use=Must be used in the offhand, with a mana storing item in the mainhand
@@ -435,6 +484,17 @@ item.ancientspellcraft\:charm_war_horn.desc=The triumphant call of this horn inf
 item.ancientspellcraft\:charm_war_horn.name=Horn of War
 item.ancientspellcraft\:charm_prismatic_spray.name=Perun's Prism
 item.ancientspellcraft\:charm_prismatic_spray.desc=Prismatic Spray can be focused at a single target
+item.ancientspellcraft\:charm_runic_hammer.name=Runic Hammer
+item.ancientspellcraft\:charm_runic_hammer.desc=With this mythic hammer, all of your transmutated artefacts becomes Rings. Armour upgrade items always transmute into Crystal Silver Plating
+item.ancientspellcraft\:charm_fabrikator_toolkit.name=Fabrikator's Toolkit
+item.ancientspellcraft\:charm_fabrikator_toolkit.desc=This equipment which once belonged to a powerful artificer allows you to always transmute artefacts into Charms or Headgear. Armour upgrade items always transmute into Resplendent Thread
+item.ancientspellcraft\:charm_scissors.name=Scissors of the Moirae
+item.ancientspellcraft\:charm_scissors.desc=Touching these scissors gives you the shivers, but its potent magic allows you to always transmute artefacts into Amulets or Belts. Armour upgrade items always transmute into Ethereal Crystalweave
+item.ancientspellcraft\:amulet_arcane_catalyst.name=Amulet of Arcane Catalyst
+item.ancientspellcraft\:amulet_arcane_catalyst.desc=Transmutating spells always results in the same element as the spell being transmuted
+
+
+
 item.ancientspellcraft\:cornucopia.desc=This magical horn of plenty refills itself with food each day
 item.ancientspellcraft\:cornucopia.empty=You've checked the Cornucopia but it was empty
 item.ancientspellcraft\:cornucopia.name=Cornucopia
@@ -476,6 +536,14 @@ item.ancientspellcraft\:ring_prismarine.name=Prismarine Ring
 item.ancientspellcraft\:ring_range.desc2=Increases mana cost by 25%%
 item.ancientspellcraft\:ring_range.desc=Grants +1 Spell Range modifier
 item.ancientspellcraft\:ring_range.name=Loop of Reach
+item.ancientspellcraft\:ring_permanent_growth.desc=Your Grow Self spell's effect is permanent
+item.ancientspellcraft\:ring_permanent_growth.name=Ring of the Colossus
+item.ancientspellcraft\:ring_permanent_shrinkage.desc=Your Shrink Self spell permanently reduces your size
+item.ancientspellcraft\:ring_permanent_shrinkage.name=Ring of the Fairies
+item.ancientspellcraft\:ring_unbinding.desc=Grants a 20%% chance to reclaim the wand upgrade which is being removed by the Words of Unbinding spell
+item.ancientspellcraft\:ring_unbinding.name=Ring of Unbinding
+item.ancientspellcraft\:ring_disenchanter.desc=Words of Unbinding purges the enchantments of the item in your offhand instead of affecting your wand
+item.ancientspellcraft\:ring_disenchanter.name=Ring of the Disenchanter
 item.ancientspellcraft\:shadow_blade.name=Shadow Blade
 item.ancientspellcraft\:spectral_fishing_rod.name=Spectral Fishing Rod
 item.ancientspellcraft\:spectral_shield.name=Spectral Shield
@@ -493,7 +561,13 @@ item.ancientspellcraft\:head_curse.desc=Gain power for each curse you are inflic
 item.ancientspellcraft\:head_minions.name=Circlet of the Overlord
 item.ancientspellcraft\:head_minions.desc=Summoned minions follow their master
 item.ancientspellcraft\:head_riftstone.name=Riftstone Circlet
-item.ancientspellcraft\:head_riftstone.desc=Transportation Portals are permanent
+item.ancientspellcraft\:head_riftstone.desc=Makes your Transportation Portals permanent
+item.ancientspellcraft\:head_fortune.name=Circlet of Fortune
+item.ancientspellcraft\:head_fortune.desc=Empowers your mine spell and the Conjured Pickaxe item with Fortune, based on spell potency
+item.ancientspellcraft\:head_merchant.name=Crown of the Merchant King
+item.ancientspellcraft\:head_merchant.desc=Wizards agree to buy your scrolls
+item.ancientspellcraft\:head_shield.name=Circlet of Shielding
+item.ancientspellcraft\:head_shield.desc=Significantly reduces the decay rate of the Wizard Shield effect
 item.ancientspellcraft\:stone_fist.name=Stone Fist
 item.ancientspellcraft\:advanced_stone_fist.name=Stone Fist
 item.ancientspellcraft\:devoritium_ingot.name=Devoritium Ingot
@@ -505,12 +579,48 @@ item.ancientspellcraft\:devoritium_bomb.name=Devoritium Bomb
 item.ancientspellcraft\:devoritium_door.name=Devoritium Door
 entity.ancientspellcraft\:devoritium_bomb.name=Devoritium Bomb
 
+item.ancientspellcraft\:rune_algiz.name=Algiz Rune
+item.ancientspellcraft\:rune_ansuz.name=Ansuz Rune
+item.ancientspellcraft\:rune_berkanan.name=Berkanan Rune
+item.ancientspellcraft\:rune_dagaz.name=Dagaz Rune
+item.ancientspellcraft\:rune_ehwaz.name=Ehwaz Rune
+item.ancientspellcraft\:rune_feoh.name=Feoh Rune
+item.ancientspellcraft\:rune_gyfu.name=Gyfu Rune
+item.ancientspellcraft\:rune_haglaz.name=Haglaz Rune
+item.ancientspellcraft\:rune_ihwaz.name=Ihwaz Rune
+item.ancientspellcraft\:rune_isaz.name=Isaz Rune
+item.ancientspellcraft\:rune_jera.name=Jera Rune
+item.ancientspellcraft\:rune_kaunan.name=Kaunan Rune
+item.ancientspellcraft\:rune_laguz.name=Laguz Rune
+item.ancientspellcraft\:rune_mannaz.name=Mannaz Rune
+item.ancientspellcraft\:rune_naudiz.name=Naudiz Rune
+item.ancientspellcraft\:rune_odal.name=Odal Rune
+item.ancientspellcraft\:rune_peorth.name=Peorth Rune
+item.ancientspellcraft\:rune_raido.name=Raido Rune
+item.ancientspellcraft\:rune_sowilo.name=Sowilo Rune
+item.ancientspellcraft\:rune_thurisaz.name=Thurisaz Rune
+item.ancientspellcraft\:rune_tiwaz.name=Tiwaz Rune
+item.ancientspellcraft\:rune_uruz.name=Uruz Rune
+item.ancientspellcraft\:rune_wynn.name=Wynn Rune
+item.ancientspellcraft\:rune_yngvi.name=Yngvi Rune
+item.ancientspellcraft\:transmutation_scroll.name=Scroll of Transmutation
+item.ancientspellcraft\:transmutation_scroll.desc=This scroll holds a powerful magic which can transmute many magical items into different objects
+item.ancientspellcraft\:transmutation_scroll.desc_extended=Right-click for 3 seconds while holding this scroll to transmute the item in your offhand into a different object.
+item.ancientspellcraft\:transmutation_scroll.results_in_same_item=This transmutation would result in the same item!
+item.ancientspellcraft\:transmutation_scroll.interrupted=You must cast the scroll for 3 seconds continuously to cast transmutation
+item.ancientspellcraft\:bartering_scroll.name=Scroll of Bartering
+item.ancientspellcraft\:bartering_scroll.desc=This scroll can create a magical beacon which will attract wandering wizards who can trade with you
+item.ancientspellcraft\:bartering_scroll.will_not_summon=No wizard has answered your request for trading. Perhaps try later or elsewhere
+item.ancientspellcraft\:bartering_scroll.beacon_started=The scroll created a signal beacon of light, a wantering wizard might notice it soon...
+item.ancientspellcraft\:bartering_scroll.failed_cast=Failed to cast the scroll, try again elsewhere
+item.ancientspellcraft\:bartering_scroll.must_cast_outdoors=This scroll only works if you can see the sky
+
 tooltip.ancientspellcraft\:artefact_use.usage=Right click to use
-just_test=JUst Test
 
 # block
 block.ancientspellcraft\:dimension_boundary=Dimension Boundary
 block.ancientspellcraft\:dimension_focus=Dimension Focus
+block.ancientspellcraft\:ancientdimension_boundary=Ancient Dimension Boundary
 block.ancientspellcraft\:imbuement_altar_ruined=Ruined Imbuement Altar
 block.ancientspellcraft\:crystal_shard_fire.name=Fiery Crystal Ore
 block.ancientspellcraft\:crystal_shard_ice.name=Icy Crystal Ore
@@ -544,6 +654,13 @@ tile.ancientspellcraft\:skull_watch.name=Skull Watch
 tile.ancientspellcraft\:scribing_desk.name=Scribing Desk
 tile.ancientspellcraft\:dimension_boundary.name=Pocket Dimension Boundary
 tile.ancientspellcraft\:dimension_focus.name=Pocket Dimension Focus
+
+tile.ancientspellcraft\:sentinel_block_iron.name=Iron Sentinel
+tile.ancientspellcraft\:sentinel_block_gold.name=Gold Sentinel
+tile.ancientspellcraft\:sentinel_block_diamond.name=Diamond Sentinel
+tile.ancientspellcraft\:sentinel_block_large_iron.name=Greater Iron Sentinel
+tile.ancientspellcraft\:sentinel_block_large_gold.name=Greater Gold Sentinel
+tile.ancientspellcraft\:sentinel_block_large_diamond.name=Greater Diamond Sentinel
 
 # gui
 gui.ancientspellcraft\:element.magic=Ancient
@@ -677,6 +794,7 @@ gui.ancientspellcraft\:sphere_cognizance.hint.ancient_knowledge.2=By examining t
 gui.ancientspellcraft\:sphere_cognizance.hint.ancient_knowledge.3=The magical properties of the relic have long faded into the past, but the Magic Crystals renewed their power
 gui.ancientspellcraft\:sphere_cognizance.hint.ancient_knowledge.4=For a brief moment you felt like the symbols in the relic glowed
 gui.ancientspellcraft\:ancient_knowledge_increased=Your knowledge of ancient magic increased by %s
+gui.ancientspellcraft:empty_slot=Empty Slot
 
 #integration
 tile.ancientspellcraft\:scribing_desk.desc_extended=You can recreate ancient spells at the Scribing Desk with the help of a researched Stone Tablet if the tablet contains a spell
@@ -715,3 +833,20 @@ relic_type.incantation.instruction=Hold the table for 6 seconds to shatter it an
 relic_type.enchantment.instruction=Hold the table in your main hand and an item in your other hand for 6 seconds to enchant it
 relic_type.power.instruction=Hold the table for 6 seconds to shatter it and release the stored Power
 
+ritual.ancientspellcraft\:forest=Ritual of the Forest
+ritual.ancientspellcraft\:forest.desc=This ritual was worthy of respect from the Druids and Earth Mages of the old ages for being capable of instantly growing large forests where it was performed. The only material component required after drawing the runic pattern is a young sapling of a tree. After dropping the sapling on the center piece rune, a forest of the sapling's wood type emerges from the soil.
+ritual.ancientspellcraft\:rejuvenation=Ritual of Rejuvenation
+ritual.ancientspellcraft\:rejuvenation.desc=The Ritual of Rejuvenation is a powerful restorative spell which can mend even the largest wounds of any living creature in its effect radius within a matter of seconds. The revitalizing effects of the ritual can immediately cure Withering, Poison and Nausea.
+ritual.ancientspellcraft\:bonfire=Ritual of Bonfire
+ritual.ancientspellcraft\:bonfire.desc=This ritual binds the caster's soul to the location where the ritual is performed, causing their future resurrections to happen in that very place.
+ritual.ancientspellcraft\:condensing=Ritual of Arcane Condensing
+ritual.ancientspellcraft\:condensing.desc=Ambient magic is everywhere, but tapping this potent resource is only possible with the most delicate magical rituals. The Ritual of Condensing allows a wizard to condense ambient magic and grow magical crystals and crystal shards. A Wand Condensing Upgrade scroll is required at the centerpiece of the ritual to begin this effect. After that, a Magic Crystal Shard or Magic Crystal can be placed in the center to grow it, but growing crystals can take several days.
+ritual.ancientspellcraft\:arcane_barrier=Ritual of Arcane Barrier
+ritual.ancientspellcraft\:arcane_barrier.desc=TODO
+ritual.ancientspellcraft\:bonfire.new_spawnpoint=Your new spawnpoint is now %1$s, %2$s, %3$s
+item.ancientspellcraft\:ritual_book.name=Ritual Book
+item.ancientspellcraft\:arcane_compound.name=Arcane Compound
+item.ancientspellcraft\:blank_rune.name=Blank Rune
+
+# OVERRIDES
+item.ebwizardry\:identification_scroll.desc=Identifies an unknown spell book, scroll or ritual book

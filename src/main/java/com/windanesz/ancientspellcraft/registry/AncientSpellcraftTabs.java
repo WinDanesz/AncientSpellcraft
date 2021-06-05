@@ -26,6 +26,13 @@ public final class AncientSpellcraftTabs {
 		}
 	};
 
+	public static final CreativeTabs ANCIENTSPELLCRAFT_RITUALS = new AncientSpellcraftTab("ancientspellcraftrituals") {
+		@Override
+		public ItemStack createIcon() {
+			return new ItemStack(AncientSpellcraftItems.ritual_book);
+		}
+	};
+
 	private static class AncientSpellcraftTab extends CreativeTabs {
 		public AncientSpellcraftTab(String label) {
 			super(label);

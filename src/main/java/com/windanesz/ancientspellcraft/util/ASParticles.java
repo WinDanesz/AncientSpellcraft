@@ -8,4 +8,5 @@ public class ASParticles {
 
 	public static final ResourceLocation SOUL_CHAIN = new ResourceLocation(AncientSpellcraft.MODID,"soul_chain");
 	public static final ResourceLocation TIME_KNOT = new ResourceLocation(AncientSpellcraft.MODID,"time_knot");
+	public static final ResourceLocation CONSTANT_BEAM = new ResourceLocation(AncientSpellcraft.MODID,"constant_beam");
 }

@@ -18,7 +18,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-// credit: methods mostly taken from Electroblob's CurseOf.. classes
 public class CurseOfEnder extends SpellRay {
 
 	public CurseOfEnder(String modID, String name, EnumAction action, boolean isContinuous) {

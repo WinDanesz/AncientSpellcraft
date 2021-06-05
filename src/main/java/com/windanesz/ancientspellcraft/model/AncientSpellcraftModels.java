@@ -40,6 +40,10 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.ring_mana_transfer);
 		registerItemModel(AncientSpellcraftItems.ring_range);
 		registerItemModel(AncientSpellcraftItems.ring_focus_crystal);
+		registerItemModel(AncientSpellcraftItems.ring_permanent_shrinkage);
+		registerItemModel(AncientSpellcraftItems.ring_permanent_growth);
+		registerItemModel(AncientSpellcraftItems.ring_unbinding);
+		registerItemModel(AncientSpellcraftItems.ring_disenchanter);
 
 		registerItemModel(AncientSpellcraftItems.amulet_mana);
 		registerItemModel(AncientSpellcraftItems.amulet_rabbit);
@@ -49,6 +53,8 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.amulet_curse_ward);
 		registerItemModel(AncientSpellcraftItems.amulet_pendant_of_eternity);
 		registerItemModel(AncientSpellcraftItems.amulet_time_knot);
+		registerItemModel(AncientSpellcraftItems.amulet_arcane_catalyst);
+		registerItemModel(AncientSpellcraftItems.amulet_persistence);
 
 		registerItemModel(AncientSpellcraftItems.charm_rift_bottle);
 		registerItemModel(AncientSpellcraftItems.charm_mana_flask);
@@ -79,6 +85,10 @@ public final class AncientSpellcraftModels {
 //		registerItemModel(AncientSpellcraftItems.charm_book_death);
 //		registerItemModel(AncientSpellcraftItems.charm_book_life);
 		registerItemModel(AncientSpellcraftItems.charm_prismatic_spray);
+		registerItemModel(AncientSpellcraftItems.charm_runic_hammer);
+		registerItemModel(AncientSpellcraftItems.charm_fabrikator_toolkit);
+		registerItemModel(AncientSpellcraftItems.charm_scissors);
+
 		registerItemModel(AncientSpellcraftItems.wand_channeling);
 
 		registerItemModel(AncientSpellcraftItems.belt_enchanter);
@@ -90,6 +100,9 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.head_curse);
 		registerItemModel(AncientSpellcraftItems.head_minions);
 		registerItemModel(AncientSpellcraftItems.head_riftstone);
+		registerItemModel(AncientSpellcraftItems.head_fortune);
+		registerItemModel(AncientSpellcraftItems.head_merchant);
+		registerItemModel(AncientSpellcraftItems.head_shield);
 
 		// misc
 		registerItemModel(AncientSpellcraftItems.shadow_blade);
@@ -123,9 +136,72 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.devoritium_bomb);
 		registerItemModel(AncientSpellcraftItems.devoritium_door);
 
+		registerItemModel(AncientSpellcraftItems.transmutation_scroll);
+		registerItemModel(AncientSpellcraftItems.bartering_scroll);
+
+		registerItemModel(AncientSpellcraftItems.rune_algiz);
+		registerItemModel(AncientSpellcraftItems.rune_ansuz);
+		registerItemModel(AncientSpellcraftItems.rune_berkanan);
+		registerItemModel(AncientSpellcraftItems.rune_dagaz);
+		registerItemModel(AncientSpellcraftItems.rune_ehwaz);
+		registerItemModel(AncientSpellcraftItems.rune_feoh);
+		registerItemModel(AncientSpellcraftItems.rune_gyfu);
+		registerItemModel(AncientSpellcraftItems.rune_haglaz);
+		registerItemModel(AncientSpellcraftItems.rune_ihwaz);
+		registerItemModel(AncientSpellcraftItems.rune_isaz);
+		registerItemModel(AncientSpellcraftItems.rune_jera);
+		registerItemModel(AncientSpellcraftItems.rune_kaunan);
+		registerItemModel(AncientSpellcraftItems.rune_laguz);
+		registerItemModel(AncientSpellcraftItems.rune_mannaz);
+		registerItemModel(AncientSpellcraftItems.rune_naudiz);
+		registerItemModel(AncientSpellcraftItems.rune_odal);
+		registerItemModel(AncientSpellcraftItems.rune_peorth);
+		registerItemModel(AncientSpellcraftItems.rune_raido);
+		registerItemModel(AncientSpellcraftItems.rune_sowilo);
+		registerItemModel(AncientSpellcraftItems.rune_thurisaz);
+		registerItemModel(AncientSpellcraftItems.rune_tiwaz);
+		registerItemModel(AncientSpellcraftItems.rune_uruz);
+		registerItemModel(AncientSpellcraftItems.rune_wynn);
+		registerItemModel(AncientSpellcraftItems.rune_yngvi);
+
+		registerItemModel(AncientSpellcraftItems.rune_feoh);
+		registerItemModel(AncientSpellcraftItems.rune_uruz);
+		registerItemModel(AncientSpellcraftItems.rune_thurisaz);
+		registerItemModel(AncientSpellcraftItems.rune_ansuz);
+		registerItemModel(AncientSpellcraftItems.rune_raido);
+		registerItemModel(AncientSpellcraftItems.rune_kaunan);
+		registerItemModel(AncientSpellcraftItems.rune_gyfu);
+		registerItemModel(AncientSpellcraftItems.rune_wynn);
+		registerItemModel(AncientSpellcraftItems.rune_haglaz);
+		registerItemModel(AncientSpellcraftItems.rune_naudiz);
+		registerItemModel(AncientSpellcraftItems.rune_isaz);
+		registerItemModel(AncientSpellcraftItems.rune_jera);
+		registerItemModel(AncientSpellcraftItems.rune_ihwaz);
+		registerItemModel(AncientSpellcraftItems.rune_peorth);
+		registerItemModel(AncientSpellcraftItems.rune_algiz);
+		registerItemModel(AncientSpellcraftItems.rune_sowilo);
+		registerItemModel(AncientSpellcraftItems.rune_tiwaz);
+		registerItemModel(AncientSpellcraftItems.rune_berkanan);
+		registerItemModel(AncientSpellcraftItems.rune_ehwaz);
+		registerItemModel(AncientSpellcraftItems.rune_mannaz);
+		registerItemModel(AncientSpellcraftItems.rune_laguz);
+		registerItemModel(AncientSpellcraftItems.rune_yngvi);
+		registerItemModel(AncientSpellcraftItems.rune_odal);
+		registerItemModel(AncientSpellcraftItems.rune_dagaz);
+
+		registerItemModel(AncientSpellcraftItems.ritual_book);
+		registerItemModel(AncientSpellcraftItems.arcane_compound);
+		registerItemModel(AncientSpellcraftItems.blank_rune);
+
 		// Itemblocks
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.ARTEFACT_PENSIVE));
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SPHERE_COGNIZANCE));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SENTINEL_BLOCK_IRON));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SENTINEL_BLOCK_GOLD));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SENTINEL_BLOCK_DIAMOND));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SENTINEL_BLOCK_LARGE_IRON));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SENTINEL_BLOCK_LARGE_GOLD));
+		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SENTINEL_BLOCK_LARGE_DIAMOND));
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SKULL_WATCH));
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SCRIBING_DESK));
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.IMBUEMENT_ALTAR_RUINED));
@@ -150,6 +226,7 @@ public final class AncientSpellcraftModels {
 
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.DIMENSION_BOUNDARY));
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.DIMENSION_FOCUS));
+//		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.ANCIENT_DIMENSION_BOUNDARY));
 
 	}
 

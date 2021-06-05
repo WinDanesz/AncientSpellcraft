@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.entity.living;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.Settings;
 import electroblob.wizardry.entity.construct.EntityBlackHole;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.Entity;
@@ -316,15 +317,21 @@ public class EntityVoidCreeper extends EntityCreeper {
 	}
 
 	@Override
-	protected float applyPotionDamageCalculations(DamageSource source, float damage){
+	protected float applyPotionDamageCalculations(DamageSource source, float damage) {
 		damage = super.applyPotionDamageCalculations(source, damage);
-		if(source.isMagicDamage()) damage *= 0.25f;
+		if (source.isMagicDamage())
+			damage *= 0.25f;
 		return damage;
 	}
 
 	@Override
-	public boolean getCanSpawnHere(){
-		return super.getCanSpawnHere() && this.dimension == 0;
+	public boolean getCanSpawnHere() {
+		for (int i : Settings.generalSettings.void_creeper_dimension_whitelist) {
+			if (super.getCanSpawnHere() && this.dimension == i) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

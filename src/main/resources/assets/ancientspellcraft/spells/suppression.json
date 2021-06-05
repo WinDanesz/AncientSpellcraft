@@ -11,7 +11,7 @@
         "looting": true
     },
     "tier": "master",
-    "element": "necromancy",
+    "element": "magic",
     "type": "alteration",
     "cost": 60,
     "chargeup": 20,

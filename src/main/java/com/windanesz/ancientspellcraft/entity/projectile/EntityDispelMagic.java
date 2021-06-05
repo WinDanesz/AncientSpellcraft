@@ -3,7 +3,9 @@ package com.windanesz.ancientspellcraft.entity.projectile;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySilencingSigil;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.spell.Contingency;
 import electroblob.wizardry.constants.Tier;
+import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.entity.construct.EntityBlackHole;
 import electroblob.wizardry.entity.construct.EntityBoulder;
 import electroblob.wizardry.entity.construct.EntityFireSigil;
@@ -22,6 +24,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityIronGolem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -42,16 +45,28 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 
 	public EntityDispelMagic(World world) {
 		super(world);
-		this.setSize(0.7f, 0.7f);
-
+		this.setSize(0.4f, 0.4f);
 	}
 
 	@Override
 	protected void onImpact(RayTraceResult rayTrace) {
+		Entity entity = rayTrace.entityHit;
+
+		if (tier == Tier.ADVANCED && entity instanceof EntityPlayer) {
+			WizardData data = WizardData.get((EntityPlayer)entity);
+
+			if (data != null) {
+				if (data.getVariable(Contingency.ACTIVE_CONTINGENCY_LISTENER) != null) {
+					data.setVariable(Contingency.ACTIVE_CONTINGENCY_LISTENER, null);
+				}
+				if (data.getVariable(Contingency.ACTIVE_CONTINGENCIES) != null) {
+					data.setVariable(Contingency.ACTIVE_CONTINGENCIES, null);
+				}
+				data.sync();
+			}
+		}
 
 		if (!world.isRemote) {
-
-			Entity entity = rayTrace.entityHit;
 
 			if (entity == null) {
 				List<Entity> entitiesWithinRadius = getEntitiesWithinRadius(1, this.posX, this.posY, this.posZ, world, Entity.class);

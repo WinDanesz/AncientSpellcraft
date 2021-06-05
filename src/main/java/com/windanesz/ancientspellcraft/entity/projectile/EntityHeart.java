@@ -1,6 +1,5 @@
 package com.windanesz.ancientspellcraft.entity.projectile;
 
-import com.windanesz.ancientspellcraft.client.model.ModelSkeletonMage;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;

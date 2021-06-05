@@ -1,6 +1,5 @@
 package com.windanesz.ancientspellcraft.block;
 
-import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks.EnumType;
@@ -25,7 +24,7 @@ public class BlockCrystalLeaves extends BlockLeaves {
 
 	public BlockCrystalLeaves() {
 		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
-		AncientSpellcraft.proxy.setGraphicsLevel(this, true);
+//		AncientSpellcraft.proxy.setGraphicsLevel(this, true);
 		setDefaultState(blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(true)));
 	}
 

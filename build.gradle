@@ -55,6 +55,7 @@ dependencies {
     deobfCompile "electroblobs-wizardry:ElectroblobsWizardry:${wizardry_version}:MC${mc_version}"
     deobfCompile "baubles:Baubles:${mc_version_short}:${baubles_version}"
     compile "vazkii.patchouli:Patchouli:1.0-21.2"
+    compile 'artemislib:ArtemisLib:1.12.2:v1.0.6'
 }
 
 processResources {

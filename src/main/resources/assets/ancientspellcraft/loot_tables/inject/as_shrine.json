@@ -4,14 +4,14 @@
             "name": "ancientspellcraft",
             "rolls": {
                 "min": 1,
-                "max": 1
+                "max": 2
             },
             "entries": [
 
                 {
                     "type": "item",
                     "name": "ancientspellcraft:ancient_spellcraft_spell_book",
-                    "weight": 25,
+                    "weight": 5,
                     "functions": [
                         {
                             "function": "ebwizardry:random_spell",
@@ -22,7 +22,7 @@
                 {
                     "type": "item",
                     "name": "ancientspellcraft:ancient_spellcraft_scroll",
-                    "weight": 10,
+                    "weight": 7,
                     "functions": [
                         {
                             "function": "ebwizardry:random_spell",
@@ -41,7 +41,7 @@
                     "type": "item",
                     "name": "ancientspellcraft:stone_tablet_small",
                     "entryName": "stone_tablet_small",
-                    "weight": 2
+                    "weight": 1
                 },
                 {
                     "type": "item",
@@ -60,7 +60,38 @@
                     "name": "ancientspellcraft:stone_tablet_grand",
                     "entryName": "stone_tablet_grand",
                     "weight": 1
-
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:bartering_scroll",
+                    "entryName": "bartering_scroll",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:transmutation_scroll",
+                    "entryName": "transmutation_scroll",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:blank_rune",
+                    "entryName": "blank_rune",
+                    "weight": 13,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 4
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "loot_table",
+                    "name": "ancientspellcraft:subsets/ritual_books",
+                    "weight": 1
                 }
             ]
         }

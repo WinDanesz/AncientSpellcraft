@@ -20,6 +20,7 @@ import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
@@ -617,7 +618,9 @@ public class ItemRelic extends Item {
 					!enchantment1.getRegistryName().toString().equals("ebwizardry:flaming_weapon") &&
 					!enchantment1.getRegistryName().toString().equals("ebwizardry:freezing_weapon") &&
 					!enchantment1.getRegistryName().toString().equals("ebwizardry:shocking_weapon") &&
-					!enchantment1.getRegistryName().toString().equals("ebwizardry:magic_bow")) {
+					!enchantment1.getRegistryName().toString().equals("ebwizardry:magic_bow")
+			) {
+
 				list.add(enchantment1);
 			}
 		}
@@ -626,6 +629,18 @@ public class ItemRelic extends Item {
 		for (int j = 0; j < count; j++) {
 			enchantment = list.get(player.world.rand.nextInt(list.size()));
 			if (enchantment != null) {
+
+				// filter out the weird ones
+				for (int i = 0; i < 5; i++) {
+					if (enchantment.type == null || !(enchantment.type.canEnchantItem(Items.DIAMOND_HELMET) || enchantment.type.canEnchantItem(Items.DIAMOND_CHESTPLATE)
+							|| enchantment.type.canEnchantItem(Items.DIAMOND_LEGGINGS) || enchantment.type.canEnchantItem(Items.DIAMOND_BOOTS) || enchantment.type.canEnchantItem(Items.DIAMOND_SWORD) ||
+							enchantment.type.canEnchantItem(Items.BOW) || enchantment.type.canEnchantItem(Items.DIAMOND_HOE) || enchantment.type.canEnchantItem(Items.DIAMOND_PICKAXE))) {
+						enchantment = list.get(player.world.rand.nextInt(list.size()));
+					} else {
+						break;
+					}
+				}
+
 				int i = MathHelper.getInt(player.world.rand, Math.min(enchantment.getMinLevel() + (count / 2), enchantment.getMaxLevel()), enchantment.getMaxLevel());
 				ItemEnchantedBook.addEnchantment(stack, new EnchantmentData(enchantment, i));
 			}

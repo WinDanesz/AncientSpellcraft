@@ -1,0 +1,47 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": true,
+        "dispensers": true,
+        "commands": true,
+        "treasure": true,
+        "trades": true,
+        "looting": true
+    },
+    "tier": "novice",
+    "element": "magic",
+    "type": "utility",
+    "cost": 0,
+    "chargeup": 0,
+    "cooldown": 0,
+    "lifetime": 120,
+    "size": 3,
+    "base_properties": {},
+    "pattern": [
+        " S ",
+        "APN",
+        " W "
+    ],
+    "centerpiece": {
+        "item": "ancientspellcraft:rune_peorth"
+    },
+    "key": {
+        "S": {
+            "item": "ancientspellcraft:rune_sowilo"
+        },
+        "P": {
+            "item": "ancientspellcraft:rune_peorth"
+        },
+        "A": {
+            "item": "ancientspellcraft:rune_ansuz"
+        },
+        "W": {
+            "item": "ancientspellcraft:rune_wynn"
+        },
+        "N": {
+            "item": "ancientspellcraft:rune_naudiz"
+        }
+    }
+}

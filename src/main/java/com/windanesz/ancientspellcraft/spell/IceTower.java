@@ -11,7 +11,6 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStainedGlassPane;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;

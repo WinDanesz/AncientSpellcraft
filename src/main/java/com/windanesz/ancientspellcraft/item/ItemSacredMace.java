@@ -1,16 +1,12 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.google.common.collect.Multimap;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
 import com.windanesz.ancientspellcraft.spell.ConjureShadowBlade;
-import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.IConjuredItem;
-import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.MagicDamage;
-import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -21,19 +17,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.util.List;
-import java.util.Random;
 
 public class ItemSacredMace extends ItemSword implements IConjuredItem {
 	private EnumRarity rarity = EnumRarity.EPIC;

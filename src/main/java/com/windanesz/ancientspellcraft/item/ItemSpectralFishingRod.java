@@ -107,13 +107,13 @@ public class ItemSpectralFishingRod extends ItemFishingRod implements IConjuredI
 
 			if (!worldIn.isRemote) {
 				EntityFishHook entityfishhook = new EntityFishHook(worldIn, playerIn);
-				int j = EnchantmentHelper.getFishingSpeedBonus(itemstack);      //   return getEnchantmentLevel(Enchantments.LURE, p_191528_0_);
+				int j = EnchantmentHelper.getFishingSpeedBonus(itemstack);
 
 				if (j > 0) {
 					entityfishhook.setLureSpeed(j);
 				}
 
-				int k = EnchantmentHelper.getFishingLuckBonus(itemstack); // return getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, p_191529_0_);
+				int k = EnchantmentHelper.getFishingLuckBonus(itemstack);
 
 				if (k > 0) {
 					entityfishhook.setLuck(k);

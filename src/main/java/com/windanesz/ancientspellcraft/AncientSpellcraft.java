@@ -2,6 +2,8 @@ package com.windanesz.ancientspellcraft;
 
 import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
 import com.windanesz.ancientspellcraft.command.CommandListBiomes;
+import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
+import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
@@ -11,6 +13,8 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftDimensions;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftLoot;
 import com.windanesz.ancientspellcraft.registry.BookshelfItems;
+import com.windanesz.ancientspellcraft.ritual.Ritual;
+import com.windanesz.ancientspellcraft.util.RitualProperties;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenCrystalShardOre;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenDevoritiumOre;
 import net.minecraft.block.material.MapColor;
@@ -31,12 +35,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
-@Mod(modid = AncientSpellcraft.MODID, name = AncientSpellcraft.NAME, version = AncientSpellcraft.VERSION, acceptedMinecraftVersions = AncientSpellcraft.MC_VERSION, dependencies = "required-after:ebwizardry@[4.3,4.4);after:jei@[4.15.0,)")
+@Mod(modid = AncientSpellcraft.MODID, name = AncientSpellcraft.NAME, version = AncientSpellcraft.VERSION, acceptedMinecraftVersions = AncientSpellcraft.MC_VERSION,
+		dependencies = "required-after:ebwizardry@[4.3.4,4.4);after:jei@[4.15.0,);after:artemislib")
 public class AncientSpellcraft {
 
 	public static final String MODID = "ancientspellcraft";
 	public static final String NAME = "Ancient Spellcraft by Dan";
-	public static final String VERSION = "1.1.3";
+	public static final String VERSION = "1.2.0";
 	public static final String MC_VERSION = "[1.12.2]";
 
 	public static final Random rand = new Random();
@@ -72,7 +77,8 @@ public class AncientSpellcraft {
 		BookshelfItems.preInitBookShelfModelTextures();
 
 		ASBaublesIntegration.init();
-
+		ASArtemisLibIntegration.init();
+		RitualDiscoveryData.init();
 	}
 
 	@EventHandler
@@ -88,10 +94,12 @@ public class AncientSpellcraft {
 
 		AncientSpellcraftDimensions.init();
 
+		Ritual.registry.forEach(Ritual::init);
+		RitualProperties.init();
+
 		proxy.init();
 
 		BookshelfItems.InitBookshelfItems();
-
 	}
 
 	@EventHandler

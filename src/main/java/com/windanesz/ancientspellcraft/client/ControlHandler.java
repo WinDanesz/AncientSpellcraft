@@ -36,19 +36,30 @@ public class ControlHandler {
 
 			EntityPlayer player = Minecraft.getMinecraft().player;
 
-			if (player != null) {
-
-				if (ASBaublesIntegration.enabled()) {
-					if (com.windanesz.ancientspellcraft.client.ClientProxy.KEY_ACTIVATE_CHARM_BAUBLE.isKeyDown() && Minecraft.getMinecraft().inGameHasFocus) {
-						if (!charmKeyPressed) {
-							charmKeyPressed = true;
-							activateBauble(ItemArtefact.Type.CHARM, player);
-						}
-					} else {
-						charmKeyPressed = false;
-					}
-				}
-			}
+//			if (player != null) {
+//				Minecraft mc = Minecraft.getMinecraft();
+//
+////				while (true)
+////				{
+////					System.out.println("hello");
+////					System.out.println("hello");
+//					if (mc.currentScreen == null)
+//					{
+//						ItemStack inHand = mc.player.getHeldItemMainhand();
+//						mc.displayGuiScreen(new GuiRadialMenu());
+//					}
+////				}
+////				if (ASBaublesIntegration.enabled()) {
+//					if (com.windanesz.ancientspellcraft.client.ClientProxy.KEY_ACTIVATE_CHARM_BAUBLE.isKeyDown() && Minecraft.getMinecraft().inGameHasFocus) {
+//						if (!charmKeyPressed) {
+//							charmKeyPressed = true;
+//							activateBauble(ItemArtefact.Type.CHARM, player);
+//						}
+//					} else {
+//						charmKeyPressed = false;
+//					}
+//				}
+//			}
 		}
 	}
 

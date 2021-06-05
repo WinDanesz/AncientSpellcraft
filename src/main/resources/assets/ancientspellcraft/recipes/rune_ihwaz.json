@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "group": "runes",
+    "ingredients": [
+        {
+            "item": "ancientspellcraft:arcane_compound"
+        },
+        {
+            "item": "minecraft:dye",
+            "data": 3
+        },
+        {
+            "item": "ancientspellcraft:blank_rune"
+        }
+    ],
+    "result": {
+        "item": "ancientspellcraft:rune_ihwaz"
+    }
+}

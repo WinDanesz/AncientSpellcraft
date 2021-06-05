@@ -18,20 +18,26 @@ import com.windanesz.ancientspellcraft.block.BlockHellFire;
 import com.windanesz.ancientspellcraft.block.BlockIceDoor;
 import com.windanesz.ancientspellcraft.block.BlockIceWorkbench;
 import com.windanesz.ancientspellcraft.block.BlockMageLight;
+import com.windanesz.ancientspellcraft.block.BlockPlacedRune;
 import com.windanesz.ancientspellcraft.block.BlockRuinedImbuementAltar;
 import com.windanesz.ancientspellcraft.block.BlockScribingDesk;
+import com.windanesz.ancientspellcraft.block.BlockSentinel;
 import com.windanesz.ancientspellcraft.block.BlockSkullWatch;
 import com.windanesz.ancientspellcraft.block.BlockSnowSlab;
 import com.windanesz.ancientspellcraft.block.BlockSphereCognizance;
+import com.windanesz.ancientspellcraft.block.BlockUsedRune;
 import com.windanesz.ancientspellcraft.tileentity.TileArtefactPensive;
 import com.windanesz.ancientspellcraft.tileentity.TileCandleLight;
 import com.windanesz.ancientspellcraft.tileentity.TileMageLight;
+import com.windanesz.ancientspellcraft.tileentity.TileRune;
 import com.windanesz.ancientspellcraft.tileentity.TileScribingDesk;
+import com.windanesz.ancientspellcraft.tileentity.TileSentinel;
 import com.windanesz.ancientspellcraft.tileentity.TileSkullWatch;
 import com.windanesz.ancientspellcraft.tileentity.TileSphereCognizance;
 import electroblob.wizardry.constants.Element;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -61,6 +67,12 @@ public class AncientSpellcraftBlocks {
 	public static final Block HARD_FROSTED_ICE = placeholder();
 	public static final Block ARTEFACT_PENSIVE = placeholder();
 	public static final Block SPHERE_COGNIZANCE = placeholder();
+	public static final Block SENTINEL_BLOCK_IRON = placeholder();
+	public static final Block SENTINEL_BLOCK_GOLD = placeholder();
+	public static final Block SENTINEL_BLOCK_DIAMOND = placeholder();
+	public static final Block SENTINEL_BLOCK_LARGE_IRON = placeholder();
+	public static final Block SENTINEL_BLOCK_LARGE_GOLD = placeholder();
+	public static final Block SENTINEL_BLOCK_LARGE_DIAMOND = placeholder();
 	public static final Block MAGELIGHT = placeholder();
 	public static final Block CANDLELIGHT = placeholder();
 	public static final Block SKULL_WATCH = placeholder();
@@ -83,9 +95,12 @@ public class AncientSpellcraftBlocks {
 	public static final Block DEVORITIUM_DOOR = placeholder();
 
 	public static final Block LOG_CRYSTAL_TREE = placeholder();
-//	public static final Block log_crystal_tree2 = placeholder();
+	//	public static final Block log_crystal_tree2 = placeholder();
 	public static final Block LEAVES_CRYSTAL_TREE = placeholder();
 	public static final Block CRYSTAL_MINE = placeholder();
+//	public static final Block ANCIENT_DIMENSION_BOUNDARY = placeholder();
+	public static final Block PLACED_RUNE = placeholder();
+	public static final Block RUNE_USED = placeholder();
 
 	public static void registerBlock(IForgeRegistry<Block> registry, String name, Block block) {
 		block.setRegistryName(AncientSpellcraft.MODID, name);
@@ -106,6 +121,12 @@ public class AncientSpellcraftBlocks {
 		registerBlock(registry, "hard_frosted_ice", new BlockHardFrostedIce());
 		registerBlock(registry, "artefact_pensive", new BlockArtefactPensive().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR));
 		registerBlock(registry, "sphere_cognizance", new BlockSphereCognizance().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerBlock(registry, "sentinel_block_iron", new BlockSentinel(5, false).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerBlock(registry, "sentinel_block_gold", new BlockSentinel(10, false).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerBlock(registry, "sentinel_block_diamond", new BlockSentinel(20, false).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerBlock(registry, "sentinel_block_large_iron", new BlockSentinel(15, true).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerBlock(registry, "sentinel_block_large_gold", new BlockSentinel(30, true).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerBlock(registry, "sentinel_block_large_diamond", new BlockSentinel(60, true).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
 		registerBlock(registry, "skull_watch", new BlockSkullWatch());
 		registerBlock(registry, "magelight", new BlockMageLight());
 		registerBlock(registry, "candlelight", new BlockCandleLight());
@@ -127,11 +148,13 @@ public class AncientSpellcraftBlocks {
 		registerBlock(registry, "devoritium_bars", new BlockDevoritiumBars());
 		registerBlock(registry, "crystal_mine", new BlockCrystalMine());
 
-
 		registerBlock(registry, "log_crystal_tree", new BlockCrystalLog());
-//		registerBlock(registry, "log_crystal_tree2", new Block(Material.WOOD).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		//		registerBlock(registry, "log_crystal_tree2", new Block(Material.WOOD).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
 		registerBlock(registry, "leaves_crystal_tree", new BlockCrystalLeaves());
 		registerBlock(registry, "imbuement_altar_ruined", new BlockRuinedImbuementAltar(Material.ROCK));
+//		registerBlock(registry, "ancient_dimension_boundary", new BlockDimensionBoundary());
+		registerBlock(registry, "placed_rune", new BlockPlacedRune());
+		registerBlock(registry, "rune_used", new BlockUsedRune(Material.ROCK, MapColor.STONE));
 	}
 
 	/**
@@ -141,10 +164,13 @@ public class AncientSpellcraftBlocks {
 		// Nope, these still don't have their own registry...
 		GameRegistry.registerTileEntity(TileArtefactPensive.class, new ResourceLocation(AncientSpellcraft.MODID, "artefact_pensive"));
 		GameRegistry.registerTileEntity(TileSphereCognizance.class, new ResourceLocation(AncientSpellcraft.MODID, "sphere_cognizance"));
+		GameRegistry.registerTileEntity(TileSentinel.class, new ResourceLocation(AncientSpellcraft.MODID, "sentinel_block"));
+
 		GameRegistry.registerTileEntity(TileMageLight.class, new ResourceLocation(AncientSpellcraft.MODID, "magelight"));
 		GameRegistry.registerTileEntity(TileCandleLight.class, new ResourceLocation(AncientSpellcraft.MODID, "candlelight"));
 		GameRegistry.registerTileEntity(TileSkullWatch.class, new ResourceLocation(AncientSpellcraft.MODID, "skull_watch"));
 		GameRegistry.registerTileEntity(TileScribingDesk.class, new ResourceLocation(AncientSpellcraft.MODID, "scribing_desk"));
+		GameRegistry.registerTileEntity(TileRune.class, new ResourceLocation(AncientSpellcraft.MODID, "placed_rune"));
 	}
 
 }

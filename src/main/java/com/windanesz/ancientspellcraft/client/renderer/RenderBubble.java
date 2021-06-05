@@ -20,7 +20,7 @@ public class RenderBubble {
 
 	// Third person
 	@SubscribeEvent
-	public static void onRenderPlayerEvent(RenderPlayerEvent.Post event){
+	public static void onRenderPlayerEvent(RenderPlayerEvent.Post event) {
 
 		EntityPlayer entity = event.getEntityPlayer();
 
@@ -37,10 +37,10 @@ public class RenderBubble {
 			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 
 			GlStateManager.translate(event.getX(), event.getY() + (entity.isSneaking() ? entity.getEyeHeight() - 0.3d : entity.getEyeHeight()), event.getZ());
-			float latStep = (float)Math.PI/20;
-			float longStep = (float)Math.PI/20;
+			float latStep = (float) Math.PI / 20;
+			float longStep = (float) Math.PI / 20;
 
-			float pulse = MathHelper.sin((entity.ticksExisted + event.getPartialRenderTick())/10f) * 0.1f;
+			float pulse = MathHelper.sin((entity.ticksExisted + event.getPartialRenderTick()) / 10f) * 0.1f;
 
 			float r = 0.35f, g = 0.55f + 0.05f * pulse, b = 1;
 
@@ -57,23 +57,24 @@ public class RenderBubble {
 			GlStateManager.disableBlend();
 
 			GlStateManager.popMatrix();
-
-
 		}
 	}
 
+
+
 	/**
 	 * Draws a sphere (using lat/long triangles) with the given parameters.
-	 * @param radius The radius of the sphere.
-	 * @param latStep The latitude step; smaller is smoother but increases performance cost.
+	 *
+	 * @param radius   The radius of the sphere.
+	 * @param latStep  The latitude step; smaller is smoother but increases performance cost.
 	 * @param longStep The longitude step; smaller is smoother but increases performance cost.
-	 * @param inside Whether to draw the outside or the inside of the sphere.
-	 * @param r The red component of the sphere colour.
-	 * @param g The green component of the sphere colour.
-	 * @param b The blue component of the sphere colour.
-	 * @param a The alpha component of the sphere colour.
+	 * @param inside   Whether to draw the outside or the inside of the sphere.
+	 * @param r        The red component of the sphere colour.
+	 * @param g        The green component of the sphere colour.
+	 * @param b        The blue component of the sphere colour.
+	 * @param a        The alpha component of the sphere colour.
 	 */
-	private static void drawSphere(float radius, float latStep, float longStep, boolean inside, float r, float g, float b, float a){
+	private static void drawSphere(float radius, float latStep, float longStep, boolean inside, float r, float g, float b, float a) {
 
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder buffer = tessellator.getBuffer();
@@ -84,10 +85,10 @@ public class RenderBubble {
 
 		buffer.pos(0, goingUp ? -radius : radius, 0).color(r, g, b, a).endVertex(); // Start at the north pole
 
-		for(float longitude = -(float)Math.PI; longitude <= (float)Math.PI; longitude += longStep){
+		for (float longitude = -(float) Math.PI; longitude <= (float) Math.PI; longitude += longStep) {
 
 			// Leave the poles out since they only have a single point per stack instead of two
-			for(float theta = (float)Math.PI/2 - latStep; theta >= -(float)Math.PI/2 + latStep; theta -= latStep){
+			for (float theta = (float) Math.PI / 2 - latStep; theta >= -(float) Math.PI / 2 + latStep; theta -= latStep) {
 
 				float latitude = goingUp ? -theta : theta;
 
