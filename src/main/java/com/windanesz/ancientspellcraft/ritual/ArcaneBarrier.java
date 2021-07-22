@@ -56,8 +56,6 @@ public class ArcaneBarrier extends Ritual implements IRitualIngredient, IRitualB
 		super.onRitualFinish(world, caster, centerPiece);
 	}
 
-	// todo - determine barrier size by the supporter blocks under it ( e.g. emerald, diamond etc)
-
 	@Override
 	public boolean areContinuousRequirementsMet(World world, TileRune centerPiece) {
 		NBTTagCompound ritualData = centerPiece.getRitualData();

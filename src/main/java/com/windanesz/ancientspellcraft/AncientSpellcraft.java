@@ -8,12 +8,7 @@ import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBiomes;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftDimensions;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftLoot;
-import com.windanesz.ancientspellcraft.registry.BookshelfItems;
+import com.windanesz.ancientspellcraft.registry.*;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
 import com.windanesz.ancientspellcraft.util.RitualProperties;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenCrystalShardOre;
@@ -36,14 +31,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
-@Mod(modid = AncientSpellcraft.MODID, name = AncientSpellcraft.NAME, version = AncientSpellcraft.VERSION, acceptedMinecraftVersions = AncientSpellcraft.MC_VERSION,
-		dependencies = "required-after:ebwizardry@[4.3.4,4.4);after:jei@[4.15.0,);after:artemislib")
+@Mod(modid = AncientSpellcraft.MODID, name = AncientSpellcraft.NAME, version = "@VERSION@", acceptedMinecraftVersions = "[@MCVERSION@]",
+		dependencies = "required-after:ebwizardry@[@WIZARDRY_VERSION@,4.4);after:jei@[4.15.0,);after:artemislib")
 public class AncientSpellcraft {
 
 	public static final String MODID = "ancientspellcraft";
 	public static final String NAME = "Ancient Spellcraft by Dan";
-	public static final String VERSION = "1.2.0";
-	public static final String MC_VERSION = "[1.12.2]";
 
 	public static final Random rand = new Random();
 

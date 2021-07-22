@@ -17,7 +17,7 @@ out
 build
 .gradle
 
-.libraries
+# sources
 libraries
 
 # other
