@@ -4,13 +4,22 @@ import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.Constants;
+
+import java.util.UUID;
 
 public class PotionWizardShield extends PotionMagicEffectAS {
+
+	public static final UUID shieldUUID = UUID.fromString("ad3f15af-1039-470c-9460-9913c70d17d4");
+
 	public PotionWizardShield(String name, boolean isBadEffect, int liquidColour, ResourceLocation texture) {
 		super(name, isBadEffect, liquidColour, texture);
+		this.registerPotionAttributeModifier(SharedMonsterAttributes.KNOCKBACK_RESISTANCE, shieldUUID.toString(), 1.0D, Constants.AttributeModifierOperation.ADD);
 	}
 
 	@Override

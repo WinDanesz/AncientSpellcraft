@@ -13,7 +13,6 @@ public interface IRitualIngredient {
 
 	List<List<ItemStack>> getRequiredIngredients();
 
-
 	default List<EntityItem> getActualIngredients(World world, TileRune centerPiece, int searchRadius) {
 		List<EntityItem> ingredients = new ArrayList<>();
 		List<EntityItem> entityItemList = EntityUtils.getEntitiesWithinRadius(searchRadius, centerPiece.getPos().getX(), centerPiece.getPos().getY(), centerPiece.getPos().getZ(), world, EntityItem.class);
@@ -41,21 +40,25 @@ public interface IRitualIngredient {
 		return ingredients;
 	}
 
-//	default boolean areIngredientsPresent(World world, EntityPlayer caster, TileRune centerPiece) {
-//		List<EntityItem> itemList = EntityUtils.getEntitiesWithinRadius(1, centerPiece.getPos().getX(), centerPiece.getPos().getY(), centerPiece.getPos().getZ(), centerPiece.getWorld(), EntityItem.class);
-//		if (!itemList.isEmpty()) {
-//			NBTTagCompound compound = new NBTTagCompound();
-//			for (EntityItem entityItem : itemList) {
-//				//				Item item = entityItem.getItem().getItem();
-//
-//				if (entityItem.getItem().getItem() == Item.getItemFromBlock(Blocks.SAPLING)) {
-//					compound.setInteger("wood_type", entityItem.getItem().getMetadata());
-//					centerPiece.setRitualData(compound);
-//					centerPiece.markDirty();
-//				}
-//			}
-//		}
-//	}
+	default boolean shouldConsumeIngredients() {
+		return false;
+	}
+
+	//	default boolean areIngredientsPresent(World world, EntityPlayer caster, TileRune centerPiece) {
+	//		List<EntityItem> itemList = EntityUtils.getEntitiesWithinRadius(1, centerPiece.getPos().getX(), centerPiece.getPos().getY(), centerPiece.getPos().getZ(), centerPiece.getWorld(), EntityItem.class);
+	//		if (!itemList.isEmpty()) {
+	//			NBTTagCompound compound = new NBTTagCompound();
+	//			for (EntityItem entityItem : itemList) {
+	//				//				Item item = entityItem.getItem().getItem();
+	//
+	//				if (entityItem.getItem().getItem() == Item.getItemFromBlock(Blocks.SAPLING)) {
+	//					compound.setInteger("wood_type", entityItem.getItem().getMetadata());
+	//					centerPiece.setRitualData(compound);
+	//					centerPiece.markDirty();
+	//				}
+	//			}
+	//		}
+	//	}
 }
 
 

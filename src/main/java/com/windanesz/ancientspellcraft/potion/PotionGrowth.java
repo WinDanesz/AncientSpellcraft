@@ -83,8 +83,8 @@ public class PotionGrowth extends PotionMagicEffectAS {
 				entitylivingbase.removePotionEffect(AncientSpellcraftPotions.growth);
 			}
 
-			entitylivingbase.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 40, strength + 1, true, true));
-			entitylivingbase.addPotionEffect(new PotionEffect(MobEffects.HASTE, 40, 0, true, true));
+			entitylivingbase.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 40, strength + 1, true, false));
+			entitylivingbase.addPotionEffect(new PotionEffect(MobEffects.HASTE, 40, 0, true, false));
 		}
 	}
 }

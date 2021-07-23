@@ -9,16 +9,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.List;
-
-import static com.windanesz.ancientspellcraft.client.ClientProxy.*;
 
 //@SideOnly(Side.CLIENT)
 @Mod.EventBusSubscriber(Side.CLIENT)
@@ -36,30 +34,48 @@ public class ControlHandler {
 
 			EntityPlayer player = Minecraft.getMinecraft().player;
 
-//			if (player != null) {
-//				Minecraft mc = Minecraft.getMinecraft();
-//
-////				while (true)
-////				{
-////					System.out.println("hello");
-////					System.out.println("hello");
-//					if (mc.currentScreen == null)
-//					{
-//						ItemStack inHand = mc.player.getHeldItemMainhand();
-//						mc.displayGuiScreen(new GuiRadialMenu());
-//					}
-////				}
-////				if (ASBaublesIntegration.enabled()) {
-//					if (com.windanesz.ancientspellcraft.client.ClientProxy.KEY_ACTIVATE_CHARM_BAUBLE.isKeyDown() && Minecraft.getMinecraft().inGameHasFocus) {
-//						if (!charmKeyPressed) {
-//							charmKeyPressed = true;
-//							activateBauble(ItemArtefact.Type.CHARM, player);
-//						}
-//					} else {
-//						charmKeyPressed = false;
-//					}
-//				}
-//			}
+			if (player != null) {
+
+				if (ASBaublesIntegration.enabled()) {
+					if (com.windanesz.ancientspellcraft.client.ClientProxy.KEY_ACTIVATE_CHARM_BAUBLE.isKeyDown() && Minecraft.getMinecraft().inGameHasFocus) {
+						if (!charmKeyPressed) {
+							charmKeyPressed = true;
+							activateBauble(ItemArtefact.Type.CHARM, player);
+						}
+					} else {
+						charmKeyPressed = false;
+					}
+				}
+
+				boolean resetTimeout = false;
+				// Astral Travel movement logic
+				if (ClientEventHandler.ASTRAL_TRAVEL_ENABLED && Minecraft.getMinecraft().player != null && ClientEventHandler.astralTravelInputTimeout == 0 &&
+						GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindForward)) {
+					resetTimeout = true;
+					if (Minecraft.getMinecraft().player.getHorizontalFacing() == EnumFacing.SOUTH) {
+						ClientEventHandler.z++;
+					} else if (Minecraft.getMinecraft().player.getHorizontalFacing() == EnumFacing.NORTH) {
+						ClientEventHandler.z--;
+					} else if (Minecraft.getMinecraft().player.getHorizontalFacing() == EnumFacing.EAST) {
+						ClientEventHandler.x++;
+					} else if (Minecraft.getMinecraft().player.getHorizontalFacing() == EnumFacing.WEST) {
+						ClientEventHandler.x--;
+					}
+				}
+				if (ClientEventHandler.ASTRAL_TRAVEL_ENABLED && Minecraft.getMinecraft().player != null && ClientEventHandler.astralTravelInputTimeout == 0 &&
+						GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindJump)) {
+					resetTimeout = true;
+					ClientEventHandler.y++;
+				} else if ((ClientEventHandler.ASTRAL_TRAVEL_ENABLED && Minecraft.getMinecraft().player != null && ClientEventHandler.astralTravelInputTimeout == 0 &&
+						GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak))) {
+					resetTimeout = true;
+					ClientEventHandler.y--;
+
+				}
+				if (resetTimeout) {
+					ClientEventHandler.astralTravelInputTimeout = 1;
+				}
+			}
 		}
 	}
 
@@ -73,48 +89,4 @@ public class ControlHandler {
 			}
 		}
 	}
-
-	@SubscribeEvent
-	public void KeyInputEvent(InputEvent.KeyInputEvent event) {
-		if (ClientEventHandler.timeout == 0 && GameSettings.isKeyDown(switc)) {
-			ClientEventHandler.timeout = 10;
-			ClientEventHandler.enabled = !ClientEventHandler.enabled;
-			if (ClientEventHandler.enabled) {
-				ClientEventHandler.x = (int) Minecraft.getMinecraft().player.posX;
-				ClientEventHandler.y = (int) Minecraft.getMinecraft().player.posY;
-				ClientEventHandler.z = (int) Minecraft.getMinecraft().player.posZ;
-			}
-		}
-		if (ClientEventHandler.timeout == 0 && GameSettings.isKeyDown(reset) && ClientEventHandler.enabled) {
-			ClientEventHandler.timeout = 10;
-			ClientEventHandler.x = (int) Minecraft.getMinecraft().player.posX;
-			ClientEventHandler.y = (int) Minecraft.getMinecraft().player.posY;
-			ClientEventHandler.z = (int) Minecraft.getMinecraft().player.posZ;
-		}
-		if (ClientEventHandler.timeout == 0 && GameSettings.isKeyDown(yt) && ClientEventHandler.enabled) {
-			ClientEventHandler.timeout = 2;
-			ClientEventHandler.y++;
-		}
-		if (ClientEventHandler.timeout == 0 && GameSettings.isKeyDown(yt2) && ClientEventHandler.enabled) {
-			ClientEventHandler.timeout = 2;
-			ClientEventHandler.y--;
-		}
-		if (ClientEventHandler.timeout == 0 && GameSettings.isKeyDown(zt) && ClientEventHandler.enabled) {
-			ClientEventHandler.timeout = 2;
-			ClientEventHandler.z++;
-		}
-		if (ClientEventHandler.timeout == 0 && GameSettings.isKeyDown(zt2) && ClientEventHandler.enabled) {
-			ClientEventHandler.timeout = 2;
-			ClientEventHandler.z--;
-		}
-		if (ClientEventHandler.timeout == 0 && GameSettings.isKeyDown(xt) && ClientEventHandler.enabled) {
-			ClientEventHandler.timeout = 2;
-			ClientEventHandler.x++;
-		}
-		if (ClientEventHandler.timeout == 0 && GameSettings.isKeyDown(xt2) && ClientEventHandler.enabled) {
-			ClientEventHandler.timeout = 2;
-			ClientEventHandler.x--;
-		}
-	}
-
 }

@@ -10,6 +10,7 @@ import electroblob.wizardry.client.DrawingUtils;
 import electroblob.wizardry.registry.WizardrySounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -17,6 +18,7 @@ import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -65,7 +67,6 @@ public class GuiScribingDesk extends GuiContainer {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
-
 		drawIngredientPreviews(mouseX, mouseY, partialTicks);
 
 		this.researchButton.enabled = this.tileSphere.getField(2) == 1;
@@ -74,19 +75,95 @@ public class GuiScribingDesk extends GuiContainer {
 
 	}
 
+	@Override
+	protected void renderHoveredToolTip(int mouseX, int mouseY) {
+
+		// 0 = left slot
+		// 1 = middle slot
+		// 2 = right slot
+		// 4 = stone tablet slot
+
+		int slotIndex = getSlotUnderMouse() != null ? getSlotUnderMouse().slotNumber : -1;
+
+		if (slotIndex == ContainerScribingDesk.INGREDIENT_1_SLOT || slotIndex == ContainerScribingDesk.INGREDIENT_2_SLOT || slotIndex == ContainerScribingDesk.INGREDIENT_3_SLOT) {
+
+			if (this.mc.player.inventory.getItemStack().isEmpty() && getSlotUnderMouse() != null) {
+				Slot slot = this.inventorySlots.getSlot(ContainerScribingDesk.RELIC_SLOT);
+
+				boolean hasSpell = slot != null && slot.getHasStack() && slot.getStack().getItem() instanceof ItemRelic && ItemRelic.getRelicType(slot.getStack()) == ItemRelic.RelicType.SPELL;
+				List<ItemStack> componentList = ItemRelic.getSpellComponentItems(this.inventorySlots.getSlot(ContainerScribingDesk.RELIC_SLOT).getStack());
+
+				if (hasSpell && componentList != null) {
+
+					if (!componentList.isEmpty() && getSlotUnderMouse().slotNumber == ContainerScribingDesk.INGREDIENT_1_SLOT) {
+						if (!componentList.get(0).isEmpty()) {
+							this.renderToolTip(componentList.get(0), mouseX, mouseY);
+						}
+
+					} else if (componentList.size() >= 1 && getSlotUnderMouse().slotNumber == ContainerScribingDesk.INGREDIENT_2_SLOT) {
+						if (!componentList.get(1).isEmpty()) {
+							this.renderToolTip(componentList.get(1), mouseX, mouseY);
+						}
+					} else if (componentList.size() >= 2 && getSlotUnderMouse().slotNumber == ContainerScribingDesk.INGREDIENT_3_SLOT) {
+						if (!componentList.get(2).isEmpty()) {
+							this.renderToolTip(componentList.get(2), mouseX, mouseY);
+						}
+					}
+				} else if (!hasSpell) {
+					GuiScribingDesk.this.drawHoveringText(I18n.format("Spell Component Slot"), mouseX, mouseY);
+				}
+			}
+		}
+
+		if (slotIndex == ContainerScribingDesk.RELIC_SLOT) {
+			Slot slot = this.inventorySlots.getSlot(ContainerScribingDesk.RELIC_SLOT);
+			if (!slot.getHasStack()) {
+				GuiScribingDesk.this.drawHoveringText(I18n.format("Spell Stone Tablet Slot"), mouseX, mouseY);
+			}
+		}
+		if (slotIndex == ContainerScribingDesk.BOOK_SLOT) {
+			Slot slot = this.inventorySlots.getSlot(ContainerScribingDesk.BOOK_SLOT);
+			if (!slot.getHasStack()) {
+				GuiScribingDesk.this.drawHoveringText(I18n.format("Empty Book Slot"), mouseX, mouseY);
+			}
+		}
+		if (slotIndex == ContainerScribingDesk.INK_SLOT) {
+			Slot slot = this.inventorySlots.getSlot(ContainerScribingDesk.INK_SLOT);
+			if (!slot.getHasStack()) {
+				GuiScribingDesk.this.drawHoveringText(I18n.format("Ink Slot"), mouseX, mouseY);
+			}
+		}
+		if (slotIndex == ContainerScribingDesk.CRYSTAL_SLOT) {
+			Slot slot = this.inventorySlots.getSlot(ContainerScribingDesk.CRYSTAL_SLOT);
+			if (!slot.getHasStack()) {
+				GuiScribingDesk.this.drawHoveringText(I18n.format("Magic Crystal Slot"), mouseX, mouseY);
+			}
+		} else {
+			super.renderHoveredToolTip(mouseX, mouseY);
+		}
+	}
+
 	public void drawIngredientPreviews(int mouseX, int mouseY, float partialTicks) {
 
 		List<ItemStack> componentList = ItemRelic.getSpellComponentItems(this.inventorySlots.getSlot(ContainerScribingDesk.RELIC_SLOT).getStack());
 		if (componentList != null && !componentList.isEmpty()) {
 			for (int i = 0; i < componentList.size(); i++) {
+				ItemStack stack = componentList.get(i);
+
 				if (!this.inventorySlots.getSlot(i).getHasStack()) {
-					ItemStack stack = componentList.get(i);
 					RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
 					renderItem.renderItemAndEffectIntoGUI(this.mc.player, stack, width / 2 - 34 + (26 * i), height / 2 - 32);
+					Gui.drawRect(width / 2 - 34 + (26 * i), height / 2 - 32, width / 2 - 34 + (26 * i) + 16, height / 2 - 32 + 16, 822018048);
+				}
 
+				if (this.inventorySlots.getSlot(i).getHasStack()) {
+					if (stack != null && !stack.isEmpty() && !ItemStack.areItemStacksEqual(this.inventorySlots.getSlot(i).getStack(), stack)) {
+						Gui.drawRect(width / 2 - 34 + (26 * i), height / 2 - 32, width / 2 - 34 + (26 * i) + 16, height / 2 - 32 + 16, 822018048);
+					} else if (stack != null && !stack.isEmpty() && ItemStack.areItemsEqualIgnoreDurability(this.inventorySlots.getSlot(i).getStack(), stack)) {
+						Gui.drawRect(width / 2 - 34 + (26 * i), height / 2 - 32, width / 2 - 34 + (26 * i) + 16, height / 2 - 32 + 16, 820037332);
+					}
 				}
 			}
-
 		}
 	}
 
@@ -132,7 +209,7 @@ public class GuiScribingDesk extends GuiContainer {
 		}
 
 		/**
-		 * Draw the hovering text of the button based on the current text of {@link GuiScribingDesk#tooltipLangKey}.
+		 * Draw the hovering text of the button based on the current text of GuiScribingDesk#tooltipLangKey.
 		 * Also displays the researched text...
 		 * Called via {@link GuiScribingDesk#drawGuiContainerForegroundLayer(int, int)} if the button is hovered.
 		 */

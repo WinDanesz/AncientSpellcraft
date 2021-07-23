@@ -5,6 +5,7 @@ import electroblob.wizardry.entity.living.EntitySpiderMinion;
 import electroblob.wizardry.util.EntityUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
@@ -22,15 +23,19 @@ public class EntityFireAnt extends EntitySpiderMinion {
 		this.setSize(0.35F, 0.25F);
 	}
 
-	private void explode()
-	{
-		if (!this.world.isRemote)
-		{
+	private void explode() {
+		if (!this.world.isRemote) {
 			boolean flag = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this);
 			this.dead = true;
 			this.world.createExplosion(this, this.posX, this.posY, this.posZ, (float) 1, flag);
 			this.setDead();
 		}
+	}
+
+	@Override
+	protected void applyEntityAttributes() {
+		super.applyEntityAttributes();
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8.0D);
 	}
 
 	@Override
@@ -50,10 +55,10 @@ public class EntityFireAnt extends EntitySpiderMinion {
 	}
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound tagcompound){
+	public void writeEntityToNBT(NBTTagCompound tagcompound) {
 		super.writeEntityToNBT(tagcompound);
 
-		if(this.getOrigCaster() != null){
+		if (this.getOrigCaster() != null) {
 			tagcompound.setUniqueId("origCasterUUID", this.getOrigCaster().getUniqueID());
 		}
 
@@ -61,7 +66,7 @@ public class EntityFireAnt extends EntitySpiderMinion {
 	}
 
 	@Override
-	public void readEntityFromNBT(NBTTagCompound nbttagcompound){
+	public void readEntityFromNBT(NBTTagCompound nbttagcompound) {
 		super.readEntityFromNBT(nbttagcompound);
 		this.setOrigCasterUUID(nbttagcompound.getUniqueId("origCasterUUID"));
 		this.readNBTDelegate(nbttagcompound);
@@ -72,7 +77,6 @@ public class EntityFireAnt extends EntitySpiderMinion {
 		target.setFire(3);
 	}
 
-
 	@Override
 	public boolean isValidTarget(Entity target) {
 
@@ -82,7 +86,7 @@ public class EntityFireAnt extends EntitySpiderMinion {
 		return super.isValidTarget(target);
 	}
 
-	public void setOrigCaster(@Nullable EntityLivingBase caster){
+	public void setOrigCaster(@Nullable EntityLivingBase caster) {
 		setOrigCasterUUID(caster == null ? null : caster.getUniqueID());
 	}
 

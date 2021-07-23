@@ -18,6 +18,7 @@ public class ASPacketHandler {
 		registerMessage(PacketSelectRadialItemSpell.class, PacketSelectRadialItemSpell.Message.class);
 		registerMessage(PacketStartRitual.class, PacketStartRitual.Message.class);
 		registerMessage(PacketContinuousRitual.class, PacketContinuousRitual.Message.class);
+		registerMessage(PacketMushroomActivation.class, PacketMushroomActivation.Message.class);
 	}
 
 	private static int nextPacketId = 0;

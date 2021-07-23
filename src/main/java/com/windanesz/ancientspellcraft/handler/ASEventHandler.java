@@ -6,8 +6,11 @@ import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
 import com.windanesz.ancientspellcraft.entity.ai.EntitySummonAIFollowOwner;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityContingencyProjectile;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
+import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
+import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
+import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
 import com.windanesz.ancientspellcraft.potion.PotionMetamagicEffect;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftEnchantments;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
@@ -15,6 +18,7 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
 import com.windanesz.ancientspellcraft.spell.Contingency;
+import com.windanesz.ancientspellcraft.spell.DimensionalAnchor;
 import com.windanesz.ancientspellcraft.spell.Martyr;
 import com.windanesz.ancientspellcraft.spell.MetaSpellBuff;
 import com.windanesz.ancientspellcraft.spell.MetamagicProjectile;
@@ -35,13 +39,16 @@ import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.event.SpellBindEvent;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.integration.DamageSafetyChecker;
+import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemScroll;
 import electroblob.wizardry.item.ItemWand;
 import electroblob.wizardry.potion.Curse;
 import electroblob.wizardry.registry.Spells;
+import electroblob.wizardry.registry.WizardryEnchantments;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
+import electroblob.wizardry.spell.FreezingWeapon;
 import electroblob.wizardry.spell.ImbueWeapon;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.spell.SpellBuff;
@@ -50,6 +57,7 @@ import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.IElementalDamage;
+import electroblob.wizardry.util.InventoryUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -76,6 +84,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
@@ -90,6 +101,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
@@ -134,7 +146,7 @@ public class ASEventHandler {
 		if (event.getEntityLiving().isPotionActive(AncientSpellcraftPotions.magma_strider)) {
 			EntityLivingBase entity = event.getEntityLiving();
 			PotionEffect effect = entity.getActivePotionEffect(AncientSpellcraftPotions.magma_strider);
-			if (entity.isInLava() && !(entity instanceof EntityPlayer && (((EntityPlayer) entity).isCreative()))) {
+			if (entity.isInLava() && (entity instanceof EntityPlayer) && !((EntityPlayer) entity).isCreative()) {
 				entity.motionX *= (1.7f + 0.03 * effect.getAmplifier());
 				entity.motionZ *= (1.7f + 0.03 * effect.getAmplifier());
 
@@ -239,6 +251,13 @@ public class ASEventHandler {
 
 	@SubscribeEvent(priority = EventPriority.LOW) // Low priority in case the event gets cancelled at default priority
 	public static void onLivingAttackEvent(LivingAttackEvent event) {
+		if (event.getEntity() instanceof EntityPlayer) {
+			if (((EntityPlayer) event.getEntity()).isPotionActive(AncientSpellcraftPotions.burrow)) {
+				if ("inWall".equals(event.getSource().getDamageType())) {
+					event.setCanceled(true);
+				}
+			}
+		}
 
 		if (event.getSource() != null && event.getSource().getTrueSource() instanceof EntityLivingBase) {
 
@@ -369,7 +388,6 @@ public class ASEventHandler {
 						player.removePotionEffect(AncientSpellcraftPotions.wizard_shield);
 						player.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.wizard_shield, oldTimer, newAmplifier));
 
-
 					} else {
 						player.removePotionEffect(AncientSpellcraftPotions.wizard_shield);
 					}
@@ -382,6 +400,7 @@ public class ASEventHandler {
 				if (artefact == AncientSpellcraftItems.amulet_time_knot) {
 					if (player.isPotionActive(AncientSpellcraftPotions.time_knot) && (player.getHealth() - event.getAmount() <= 0F)) {
 						TimeKnot.loopPlayer(player);
+						event.setCanceled(true);
 						player.extinguish();
 					}
 				}
@@ -405,6 +424,11 @@ public class ASEventHandler {
 						if (!player.isPotionActive(MobEffects.WEAKNESS)) {
 							player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 200, 1)); // 10 seconds of weakness
 						}
+					}
+				} else if (artefact == AncientSpellcraftItems.amulet_shield && !player.getCooldownTracker().hasCooldown(AncientSpellcraftItems.amulet_shield)) {
+					if (event.getAmount() > 1) {
+						player.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.wizard_shield, 100, 15));
+						player.getCooldownTracker().setCooldown(AncientSpellcraftItems.amulet_shield, 3600); // 3 mins cd
 					}
 				}
 			}
@@ -497,6 +521,16 @@ public class ASEventHandler {
 
 	@SubscribeEvent
 	public static void onPotionApplicableEvent(PotionEvent.PotionApplicableEvent event) {
+		if (event.getPotionEffect().getPotion() == AncientSpellcraftPotions.eagle_eye && !(event.getEntityLiving() instanceof EntityPlayer)) {
+			event.setResult(Event.Result.DENY);
+		}
+
+		if (event.getPotionEffect().getPotion() == AncientSpellcraftPotions.shrinkage || event.getPotionEffect().getPotion() == AncientSpellcraftPotions.growth) {
+			if (!ASArtemisLibIntegration.enabled()) {
+				// ArtemisLib-dependent potions are not applicable if ArtemisLib is not loaded
+				event.setResult(Event.Result.DENY);
+			}
+		}
 
 		if (event.getEntity() instanceof EntityPlayer) {
 
@@ -610,21 +644,52 @@ public class ASEventHandler {
 
 		} else if (event.getEntityLiving() instanceof EntityPlayer) {
 
+			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 			// Contingency - Death
-			WizardData data = WizardData.get((EntityPlayer) event.getEntityLiving());
+			WizardData data = WizardData.get(player);
 			if (data != null) {
 				NBTTagCompound activeContingencies = data.getVariable(Contingency.ACTIVE_CONTINGENCIES);
 
 				if (activeContingencies != null && activeContingencies.hasKey(Contingency.Type.DEATH.spellName)) {
-					Contingency.tryCastContingencySpell((EntityPlayer) event.getEntityLiving(), data, Contingency.Type.DEATH);
+					Contingency.tryCastContingencySpell(player, data, Contingency.Type.DEATH);
 				}
 			}
+
+			// Soulbound Wand Upgrade - store items in WizardData
+			ItemSoulboundWandUpgrade.storeSoulboundWands(player);
+
 		}
+
 		if (event.getEntityLiving().getEntityData().hasKey(Contingency.ACTIVE_LISTENER_TAG)) {
 			NBTTagCompound compound = event.getEntityLiving().getEntityData().getCompoundTag(Contingency.ACTIVE_LISTENER_TAG);
 			if (compound != null && compound.hasKey(Contingency.Type.DEATH.spellName)) {
 				Contingency.tryCastContingencySpellAsMob(event.getEntityLiving(), Contingency.Type.DEATH);
 			}
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOWEST) // No siphoning if the event is cancelled, that could be exploited...
+	public static void onLivingDeathEventLowest(LivingDeathEvent event) {
+
+		if (event.getSource().getTrueSource() instanceof EntityPlayer) {
+
+			EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
+
+			if (player.isPotionActive(AncientSpellcraftPotions.spell_siphon)) {
+
+				for (ItemStack stack : InventoryUtils.getPrioritisedHotbarAndOffhand(player)) {
+
+					if (stack.getItem() instanceof IManaStoringItem && !((IManaStoringItem) stack.getItem()).isManaFull(stack)) {
+
+						int mana = 5 * (player.getActivePotionEffect(AncientSpellcraftPotions.spell_siphon).getAmplifier() + 1);
+
+						((IManaStoringItem) stack.getItem()).rechargeMana(stack, mana);
+
+						break; // Only recharge one item per kill
+					}
+				}
+			}
+
 		}
 	}
 
@@ -681,7 +746,7 @@ public class ASEventHandler {
 								NBTTagCompound activeContingencies = data.getVariable(Contingency.ACTIVE_CONTINGENCIES);
 								if (activeContingencies != null) {
 
-									// Contingency - Immobility
+									// Contingency - HOSTILE_SPELLCAST
 									if (activeContingencies.hasKey(Contingency.Type.HOSTILE_SPELLCAST.spellName)) {
 										Contingency.tryCastContingencySpell(player, data, Contingency.Type.HOSTILE_SPELLCAST);
 									}
@@ -1004,6 +1069,11 @@ public class ASEventHandler {
 			}
 		}
 
+		// Dimensional Anchor check
+		if (DimensionalAnchor.shouldPreventSpell(event.getCaster(), event.getWorld(), event.getSpell())) {
+			event.setCanceled(true);
+		}
+
 	}
 
 	@SubscribeEvent
@@ -1118,6 +1188,15 @@ public class ASEventHandler {
 				}
 			}
 		}
+
+		// tick artefacts
+		if (event.phase == TickEvent.Phase.END) {
+			EntityPlayer player = event.player;
+			if (ASBaublesIntegration.enabled()) {
+				ASBaublesIntegration.tickWornArtefacts(player);
+			}
+		}
+
 	}
 
 	@SubscribeEvent
@@ -1137,6 +1216,38 @@ public class ASEventHandler {
 				}
 			}
 		}
+
+		if (!event.getEntity().world.isRemote && event.getEntity() instanceof EntityArrow) {
+
+			EntityArrow arrow = (EntityArrow) event.getEntity();
+
+			if (arrow.shootingEntity instanceof EntityLivingBase) {
+
+				EntityLivingBase archer = (EntityLivingBase) arrow.shootingEntity;
+
+				ItemStack bow = archer.getHeldItemMainhand();
+
+				if (!ImbueWeapon.isBow(bow)) {
+					bow = archer.getHeldItemOffhand();
+					if (!ImbueWeapon.isBow(bow))
+						return;
+				}
+
+				// Taken directly from ItemBow, so it works exactly the same as the power enchantment.
+				int level = EnchantmentHelper.getEnchantmentLevel(AncientSpellcraftEnchantments.degrade_bow, bow);
+
+				if (level > 0) {
+					arrow.setDamage(arrow.getDamage() * (1.5 / (level + 1)));
+				}
+			}
+		}
+
+	}
+
+	@SubscribeEvent
+	public static void onPlayerRespawnEvent(PlayerEvent.PlayerRespawnEvent event) {
+		// Soulbound Wand Upgrade - give back stored items
+		ItemSoulboundWandUpgrade.restoreStoredWandsToInventory(event.player);
 	}
 
 	protected static float calculateVelocity(EntityMagicProjectile projectile, SpellModifiers modifiers, float launchHeight) {

@@ -8,7 +8,7 @@ import java.util.UUID;
 public class DonorPerks {
 
 	private static final ImmutableSet<UUID> DONOR_UUID_MAP = ImmutableSet.<UUID>builder()
-			.add(UUID.fromString("4b29263e-007b-48ef-b3e6-ce86cca989e9"))
+			.add(UUID.fromString("e7ced0cb-c890-4f09-b024-5b1adbf207c0"))
 			.build();
 
 	public static boolean isDonor(EntityPlayer player){

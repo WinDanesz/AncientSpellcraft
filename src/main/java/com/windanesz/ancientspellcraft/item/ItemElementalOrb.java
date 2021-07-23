@@ -33,6 +33,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static electroblob.wizardry.Settings.ARTEFACTS_CATEGORY;
 import static electroblob.wizardry.spell.Spell.EFFECT_DURATION;
 
 public class ItemElementalOrb extends ItemASArtefact implements ISpellCastingItem {
@@ -40,7 +41,7 @@ public class ItemElementalOrb extends ItemASArtefact implements ISpellCastingIte
 	/**
 	 * False if this artefact has been disabled in the config, true otherwise.
 	 */
-	private boolean enabled = true;
+	//	private boolean enabled = true;
 
 	private String spell;
 	private int cooldown;
@@ -64,49 +65,54 @@ public class ItemElementalOrb extends ItemASArtefact implements ISpellCastingIte
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag advanced) {
 		Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc", Settings.generalSettings.orb_artefact_potency_bonus);
 		Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc2", element.getColour());
-		Wizardry.proxy.addMultiLineDescription(tooltip,  "set.ancientspellcraft:elemental_orbs", new Style().setColor(TextFormatting.GOLD));
+		Wizardry.proxy.addMultiLineDescription(tooltip, "set.ancientspellcraft:elemental_orbs", new Style().setColor(TextFormatting.GOLD));
 
-		if (!enabled)
+		if (!Settings.isArtefactEnabled(this)) {
 			tooltip.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":generic.disabled", new Style().setColor(TextFormatting.RED)));
+		}
 	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		ItemStack stack = player.getHeldItem(hand);
 
-		Spell spell = getCurrentSpell(stack);
-		SpellModifiers modifiers = new SpellModifiers();
-		if (element == Element.HEALING) {
-			float f = modifiers.get(EFFECT_DURATION);
-			modifiers.set(EFFECT_DURATION, f / 3, true);
+		if (Wizardry.settings.getConfigCategory(ARTEFACTS_CATEGORY).containsKey(this.getRegistryName().toString()) &&
+				(Wizardry.settings.getConfigCategory(ARTEFACTS_CATEGORY).get(this.getRegistryName().toString()).getBoolean())) {
 
-		}
+			Spell spell = getCurrentSpell(stack);
+			SpellModifiers modifiers = new SpellModifiers();
+			if (element == Element.HEALING) {
+				float f = modifiers.get(EFFECT_DURATION);
+				modifiers.set(EFFECT_DURATION, f / 3, true);
 
-		if (canCast(stack, spell, player, hand, 0, modifiers)) {
-			// Now we can cast continuous spells with scrolls!
-			if (spell.isContinuous) {
-				if (!player.isHandActive()) {
-					player.setActiveHand(hand);
-					// Store the modifiers for use each tick (there aren't any by default but there could be, as above)
-					if (WizardData.get(player) != null)
-						WizardData.get(player).itemCastingModifiers = modifiers;
-					return new ActionResult<>(EnumActionResult.SUCCESS, stack);
-				}
-			} else {
-				if (cast(stack, spell, player, hand, 0, modifiers)) {
+			}
 
-					if (element == Element.HEALING) {
-						player.removePotionEffect(MobEffects.ABSORPTION);
-						player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION,
-								300, 1));
-						spell = Spells.blinding_flash;
-						modifiers = new SpellModifiers();
-						if (cast(stack, spell, player, hand, 0, modifiers)) {
-							return new ActionResult<>(EnumActionResult.SUCCESS, stack);
-						}
+			if (canCast(stack, spell, player, hand, 0, modifiers)) {
+				// Now we can cast continuous spells with scrolls!
+				if (spell.isContinuous) {
+					if (!player.isHandActive()) {
+						player.setActiveHand(hand);
+						// Store the modifiers for use each tick (there aren't any by default but there could be, as above)
+						if (WizardData.get(player) != null)
+							WizardData.get(player).itemCastingModifiers = modifiers;
+						return new ActionResult<>(EnumActionResult.SUCCESS, stack);
 					}
+				} else {
+					if (cast(stack, spell, player, hand, 0, modifiers)) {
 
-					return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+						if (element == Element.HEALING) {
+							player.removePotionEffect(MobEffects.ABSORPTION);
+							player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION,
+									300, 1));
+							spell = Spells.blinding_flash;
+							modifiers = new SpellModifiers();
+							if (cast(stack, spell, player, hand, 0, modifiers)) {
+								return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+							}
+						}
+
+						return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+					}
 				}
 			}
 		}

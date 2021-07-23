@@ -13,41 +13,56 @@ import net.minecraftforge.fml.relauncher.Side;
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientEventHandler {
 	public static int x, y, z;
-	public static int prevx, prevy, prevz;
-	public static float prevyaw, prevpitch;
-	public static boolean enabled = false;
-	public static int timeout = 0;
 
-	public static boolean farsightActive = false;
+	// True when the Eagle Eye potion is active
+	public static boolean EAGLE_EYE_ENABLED = false;
+
+	// True when the Astral Travel potion is active
+	public static boolean ASTRAL_TRAVEL_ENABLED = false;
+
+	private static int previousX, previousY, previousZ;
+	private static float pirevousYaw, previousPitch;
+
+	// timeout variable to limit keyboard input for movement
+	public static int astralTravelInputTimeout = 0;
+
+	// True when the continuous spell Farsight is being casted
+	public static boolean FARSIGHT_ACTIVE = false;
 
 	@SubscribeEvent
 	public static void PlayerTick(TickEvent.PlayerTickEvent event) {
 		if (event.player instanceof EntityPlayerSP) {
-			if (ClientEventHandler.timeout > 0)
-				ClientEventHandler.timeout--;
+			if (ClientEventHandler.astralTravelInputTimeout > 0)
+				ClientEventHandler.astralTravelInputTimeout--;
 
-			if (ClientEventHandler.enabled && !event.player.isPotionActive(AncientSpellcraftPotions.eagle_eye)) {
-				ClientEventHandler.enabled = false;
+			// just to be sure..
+			if (ClientEventHandler.EAGLE_EYE_ENABLED && !event.player.isPotionActive(AncientSpellcraftPotions.eagle_eye)) {
+				ClientEventHandler.EAGLE_EYE_ENABLED = false;
 			}
 
-			if (enabled) {
+			// just to be sure..
+			if (ClientEventHandler.ASTRAL_TRAVEL_ENABLED && !event.player.isPotionActive(AncientSpellcraftPotions.astral_projection)) {
+				ClientEventHandler.ASTRAL_TRAVEL_ENABLED = false;
+			}
+
+			if (EAGLE_EYE_ENABLED || ASTRAL_TRAVEL_ENABLED) {
 
 				ASFakePlayer.FAKE_PLAYER.setLocationAndAngles(x, y, z, Minecraft.getMinecraft().player.rotationYaw,
 						Minecraft.getMinecraft().player.rotationPitch);
 
-				ASFakePlayer.FAKE_PLAYER.prevRotationPitch = prevpitch;
-				ASFakePlayer.FAKE_PLAYER.prevRotationYaw = prevyaw;
+				ASFakePlayer.FAKE_PLAYER.prevRotationPitch = previousPitch;
+				ASFakePlayer.FAKE_PLAYER.prevRotationYaw = pirevousYaw;
 				ASFakePlayer.FAKE_PLAYER.rotationYawHead = Minecraft.getMinecraft().player.rotationYawHead;
-				ASFakePlayer.FAKE_PLAYER.prevPosX = prevx;
-				ASFakePlayer.FAKE_PLAYER.prevPosY = prevy;
-				ASFakePlayer.FAKE_PLAYER.prevPosZ = prevz;
+				ASFakePlayer.FAKE_PLAYER.prevPosX = previousX;
+				ASFakePlayer.FAKE_PLAYER.prevPosY = previousY;
+				ASFakePlayer.FAKE_PLAYER.prevPosZ = previousZ;
 				Minecraft.getMinecraft().setRenderViewEntity(ASFakePlayer.FAKE_PLAYER);
 
-				prevx = x;
-				prevy = y;
-				prevz = z;
-				prevpitch = Minecraft.getMinecraft().player.rotationPitch;
-				prevyaw = Minecraft.getMinecraft().player.rotationYaw;
+				previousX = x;
+				previousY = y;
+				previousZ = z;
+				previousPitch = Minecraft.getMinecraft().player.rotationPitch;
+				pirevousYaw = Minecraft.getMinecraft().player.rotationYaw;
 			} else {
 				Minecraft.getMinecraft().setRenderViewEntity(Minecraft.getMinecraft().player);
 			}
@@ -57,10 +72,10 @@ public class ClientEventHandler {
 
 	@SubscribeEvent
 	public static void onFOVUpdate(FOVUpdateEvent event) {
-		if (farsightActive && event.getEntity() instanceof EntityPlayerSP && event.getEntity().isHandActive()) {
+		if (FARSIGHT_ACTIVE && event.getEntity() instanceof EntityPlayerSP && event.getEntity().isHandActive()) {
 			event.setNewfov(0.1F);
 		} else {
-			farsightActive = false;
+			FARSIGHT_ACTIVE = false;
 		}
 	}
 }

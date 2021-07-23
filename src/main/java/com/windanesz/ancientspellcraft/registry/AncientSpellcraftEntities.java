@@ -5,11 +5,14 @@ import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.entity.EntityAOEProjectile;
 import com.windanesz.ancientspellcraft.entity.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.entity.EntityMageLight;
+import com.windanesz.ancientspellcraft.entity.EntityOrdinarySpiderMinion;
 import com.windanesz.ancientspellcraft.entity.EntityVolcano;
 import com.windanesz.ancientspellcraft.entity.EntityWisp;
 import com.windanesz.ancientspellcraft.entity.EntityWizardAS;
 import com.windanesz.ancientspellcraft.entity.EntityWizardMerchant;
 import com.windanesz.ancientspellcraft.entity.construct.EntityAntiMagicField;
+import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;
+import com.windanesz.ancientspellcraft.entity.construct.EntitySpellTicker;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySentinel;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySilencingSigil;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
@@ -31,7 +34,7 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityFlint;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityManaVortex;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
-import com.windanesz.ancientspellcraft.tileentity.EntityBarter;
+import com.windanesz.ancientspellcraft.entity.construct.EntityBarterConstruct;
 import electroblob.wizardry.Wizardry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
@@ -115,6 +118,7 @@ public class AncientSpellcraftEntities {
 		registry.register(createEntry(EntityVenusFlyTrap.class, "venus_fly_trap", TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());
 		registry.register(createEntry(EntityFireAnt.class, "fire_ant", TrackingType.LIVING).build());
 		registry.register(createEntry(EntitySkeletonHorseMinion.class, "skeleton_horse_minion", TrackingType.LIVING).build());
+		registry.register(createEntry(EntityOrdinarySpiderMinion.class, "ordinary_spider_minion", TrackingType.LIVING).build());
 
 		//		registry.register(createEntry(EntitySpellBook.class, "rouge_spell_book", TrackingType.LIVING).build());
 
@@ -130,6 +134,8 @@ public class AncientSpellcraftEntities {
 
 		registry.register(createEntry(EntitySentinel.class, "sentinel", TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntitySpellCaster.class, "spellcaster_entity", TrackingType.LIVING).build());
+		registry.register(createEntry(EntitySpellTicker.class, "mushroom_forest", TrackingType.LIVING).build());
+		registry.register(createEntry(EntityBuilder.class, "builder_entity", TrackingType.CONSTRUCT).build());
 
 		//// Living Entity Overrides
 
@@ -139,9 +145,9 @@ public class AncientSpellcraftEntities {
 		//		}
 		registry.register(createEntry(EntityWizardMerchant.class, "wizardmerchant", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());
 
-		registry.register(createEntry(EntityBarter.class, "barter_entity", AncientSpellcraft.MODID, TrackingType.CONSTRUCT).build());
+		registry.register(createEntry(EntityBarterConstruct.class, "barter_entity", AncientSpellcraft.MODID, TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntityArcaneBarrier.class, "arcane_barrier", TrackingType.CONSTRUCT).build());
-//		registry.register(createEntry(EntityArcaneBarrierProxy.class, "arcane_barrier_proxy", TrackingType.CONSTRUCT).build());
+		//		registry.register(createEntry(EntityArcaneBarrierProxy.class, "arcane_barrier_proxy", TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntityAOEProjectile.class, "aoe_projectile_entity", TrackingType.PROJECTILE).build());
 
 	}

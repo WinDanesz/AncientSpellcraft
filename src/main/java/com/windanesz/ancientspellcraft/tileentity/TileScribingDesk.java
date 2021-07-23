@@ -38,8 +38,6 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 
 	private boolean changedResearchState = false;
 
-	private boolean isReady = false;
-
 	private boolean inUse = false;
 	private EntityPlayer currentPlayer;
 
@@ -48,11 +46,6 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 	}
 
 	private WizardData playerWizardData;
-
-	/**
-	 * The number of ticks that the furnace will keep burning
-	 */
-	//	private int furnaceBurnTime;
 
 	private NonNullList<ItemStack> furnaceItemStacks = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
 

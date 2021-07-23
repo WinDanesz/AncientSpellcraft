@@ -14,7 +14,7 @@
     "element": "magic",
     "type": "alteration",
     "cost": 3,
-    "chargeup": 30,
+    "chargeup": 10,
     "cooldown": 0,
     "base_properties": {}
 }

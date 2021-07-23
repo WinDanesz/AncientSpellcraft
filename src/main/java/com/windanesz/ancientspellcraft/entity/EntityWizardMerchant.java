@@ -76,7 +76,7 @@ public class EntityWizardMerchant extends EntityWizard {
 	public ITextComponent getDisplayName() {
 		ITextComponent tex = super.getDisplayName();
 		if (!hasCustomName())
-			return (new TextComponentTranslation("entity.ancientspellcraft:traveller.prefix")).appendText(" ").appendSibling(tex);
+			return (new TextComponentTranslation("entity.ancientspellcraft:travelling.prefix")).appendText(" ").appendSibling(tex);
 		return super.getDisplayName();
 	}
 
@@ -182,7 +182,7 @@ public class EntityWizardMerchant extends EntityWizard {
 					ItemStack secondItemToBuy = new ItemStack(WizardryItems.magic_crystal, Tier.APPRENTICE.ordinal() * 3 + 1 + rand.nextInt(4));
 					this.trades.add(new MerchantRecipe(this.getRandomPrice(Tier.APPRENTICE), secondItemToBuy, new ItemStack(tablet), 0, 1));
 				} else {
-					ItemStack secondItemToBuy = new ItemStack(WizardryItems.magic_crystal, Tier.ADVANCED.ordinal() * 3 + 1 + rand.nextInt(4));
+					ItemStack secondItemToBuy = new ItemStack(WizardryItems.magic_crystal, Tier.ADVANCED.ordinal() * 3 + 1 + rand.nextInt(8));
 					this.trades.add(new MerchantRecipe(this.getRandomPrice(Tier.ADVANCED), secondItemToBuy, new ItemStack(tablet), 0, 1));
 
 				}

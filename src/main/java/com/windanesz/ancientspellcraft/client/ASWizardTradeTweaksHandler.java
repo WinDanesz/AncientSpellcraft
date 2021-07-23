@@ -99,6 +99,11 @@ public class ASWizardTradeTweaksHandler {
 			// New spell indicator
 			if (gui.inventorySlots instanceof ContainerMerchant) {
 
+				// TODO: this might just covers a syncing issue, where tradeIndex was out of bounds
+				if (trades.size() <= tradeIndex) {
+					return;
+				}
+
 				// Can't use getCurrentRecipe because that only gets updated when the correct items are given
 				MerchantRecipe recipe = trades.get(tradeIndex);
 

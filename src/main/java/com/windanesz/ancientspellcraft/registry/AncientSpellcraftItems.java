@@ -3,7 +3,10 @@ package com.windanesz.ancientspellcraft.registry;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDevoritiumBomb;
 import com.windanesz.ancientspellcraft.item.ItemASArtefact;
+import com.windanesz.ancientspellcraft.item.ItemASArtemisLibArtefact;
 import com.windanesz.ancientspellcraft.item.ItemAdvancedStoneFist;
+import com.windanesz.ancientspellcraft.item.ItemAlchemicalEssence;
+import com.windanesz.ancientspellcraft.item.ItemAmberMushroomAmulet;
 import com.windanesz.ancientspellcraft.item.ItemAncientHat;
 import com.windanesz.ancientspellcraft.item.ItemAncientSpellcraftSpellBook;
 import com.windanesz.ancientspellcraft.item.ItemBarterScroll;
@@ -24,11 +27,13 @@ import com.windanesz.ancientspellcraft.item.ItemEverfullManaFlask;
 import com.windanesz.ancientspellcraft.item.ItemEvergrowingCrystal;
 import com.windanesz.ancientspellcraft.item.ItemGoldBag;
 import com.windanesz.ancientspellcraft.item.ItemHorn;
+import com.windanesz.ancientspellcraft.item.ItemIceCream;
 import com.windanesz.ancientspellcraft.item.ItemIceShield;
 import com.windanesz.ancientspellcraft.item.ItemKnowledgeOrb;
 import com.windanesz.ancientspellcraft.item.ItemMagicShield;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.item.ItemOmnicron;
+import com.windanesz.ancientspellcraft.item.ItemPhiloshopersStone;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
 import com.windanesz.ancientspellcraft.item.ItemRune;
@@ -37,12 +42,14 @@ import com.windanesz.ancientspellcraft.item.ItemSetArtefact;
 import com.windanesz.ancientspellcraft.item.ItemShadowBlade;
 import com.windanesz.ancientspellcraft.item.ItemSpectralFishingRod;
 import com.windanesz.ancientspellcraft.item.ItemSpectralShield;
+import com.windanesz.ancientspellcraft.item.ItemSpectralShovel;
 import com.windanesz.ancientspellcraft.item.ItemStoneFist;
 import com.windanesz.ancientspellcraft.item.ItemTransmutationScroll;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemScroll;
+import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
 import electroblob.wizardry.misc.BehaviourSpellDispense;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardryTabs;
@@ -106,6 +113,7 @@ public final class AncientSpellcraftItems {
 	public static final Item ring_permanent_growth = placeholder();
 	public static final Item ring_unbinding = placeholder();
 	public static final Item ring_disenchanter = placeholder();
+	public static final Item ring_quicksand = placeholder();
 
 	/// amulet
 	public static final Item charm_cryostasis = placeholder();
@@ -118,6 +126,8 @@ public final class AncientSpellcraftItems {
 	public static final Item amulet_time_knot = placeholder();
 	public static final Item amulet_arcane_catalyst = placeholder();
 	public static final Item amulet_persistence = placeholder();
+	public static final Item amulet_healing_mushroom = placeholder();
+	public static final Item amulet_shield = placeholder();
 
 	/// charm
 	public static final Item charm_rift_bottle = placeholder();
@@ -147,33 +157,36 @@ public final class AncientSpellcraftItems {
 	public static final Item charm_enchanted_needle = placeholder();
 	public static final Item charm_seed_bag = placeholder();
 	public static final Item charm_omnicron = placeholder();
-//	public static final Item charm_book_death = placeholder();
-//	public static final Item charm_book_life = placeholder();
+	public static final Item charm_burrow = placeholder();
+	public static final Item charm_quicksand_walker = placeholder();
+	//	public static final Item charm_book_death = placeholder();
+	//	public static final Item charm_book_life = placeholder();
 	public static final Item charm_prismatic_spray = placeholder();
+	public static final Item charm_ice_cream = placeholder();
 	public static final Item charm_runic_hammer = placeholder();
 	public static final Item charm_fabrikator_toolkit = placeholder();
 	public static final Item charm_scissors = placeholder();
+	public static final Item charm_philosophers_stone = placeholder();
 
-
+	public static final Item alchemical_essence = placeholder();
 	public static final Item wand_channeling = placeholder();
 
 	/// now with Belts!
 
 	public static final Item belt_enchanter = placeholder();
 	public static final Item belt_stone = placeholder();
-//	public static final Item belt_druid = placeholder();
+	//	public static final Item belt_druid = placeholder();
 	public static final Item belt_vortex = placeholder();
 	public static final Item belt_horse = placeholder();
 
-	/// and helm artefacts!
-
+	/// and head slot artefacts!
 	public static final Item head_curse = placeholder();
 	public static final Item head_minions = placeholder();
 	public static final Item head_riftstone = placeholder();
 	public static final Item head_fortune = placeholder();
 	public static final Item head_merchant = placeholder();
 	public static final Item head_shield = placeholder();
-
+	public static final Item head_magelight = placeholder();
 
 	/// misc
 	public static final Item magic_shield = placeholder();
@@ -183,7 +196,6 @@ public final class AncientSpellcraftItems {
 	public static final Item stone_tablet_grand = placeholder();
 	public static final Item ancient_mana_flask = placeholder();
 	public static final Item ancient_bound_stone = placeholder();
-
 
 	public static final Item astral_diamond_shard = placeholder();
 	public static final Item astral_diamond_charged = placeholder();
@@ -201,7 +213,7 @@ public final class AncientSpellcraftItems {
 	public static final Item devoritium_arrow = placeholder();
 	public static final Item devoritium_bomb = placeholder();
 	public static final Item devoritium_door = placeholder();
-	public static final Item transmutation_scroll  = placeholder();
+	public static final Item transmutation_scroll = placeholder();
 	public static final Item bartering_scroll = placeholder();
 
 	/// handheld
@@ -243,7 +255,10 @@ public final class AncientSpellcraftItems {
 	public static final Item rune_dagaz = placeholder();
 	public static final Item ritual_book = placeholder();
 	public static final Item arcane_compound = placeholder();
+	public static final Item ice_cream = placeholder();
 
+	public static final Item soulbound_upgrade = placeholder();
+	public static final Item spectral_shovel = placeholder();
 
 	// below registry methods are courtesy of EB
 	public static void registerItem(IForgeRegistry<Item> registry, String name, Item item) {
@@ -323,7 +338,6 @@ public final class AncientSpellcraftItems {
 		registerItemBlock(registry, AncientSpellcraftBlocks.SENTINEL_BLOCK_LARGE_GOLD, new ItemBlock(AncientSpellcraftBlocks.SENTINEL_BLOCK_LARGE_GOLD));
 		registerItemBlock(registry, AncientSpellcraftBlocks.SENTINEL_BLOCK_LARGE_DIAMOND, new ItemBlock(AncientSpellcraftBlocks.SENTINEL_BLOCK_LARGE_DIAMOND));
 
-
 		registerItemBlock(registry, AncientSpellcraftBlocks.CRYSTAL_ORE_FIRE, new ItemBlock(AncientSpellcraftBlocks.CRYSTAL_ORE_FIRE));
 		registerItemBlock(registry, AncientSpellcraftBlocks.CRYSTAL_ORE_EARTH, new ItemBlock(AncientSpellcraftBlocks.CRYSTAL_ORE_EARTH));
 		registerItemBlock(registry, AncientSpellcraftBlocks.CRYSTAL_ORE_HEALING, new ItemBlock(AncientSpellcraftBlocks.CRYSTAL_ORE_HEALING));
@@ -337,13 +351,12 @@ public final class AncientSpellcraftItems {
 		registerItemBlock(registry, AncientSpellcraftBlocks.DEVORITIUM_BARS, new ItemBlockDevoritiumMaterial(AncientSpellcraftBlocks.DEVORITIUM_BARS));
 
 		registerItemBlock(registry, AncientSpellcraftBlocks.LOG_CRYSTAL_TREE, new ItemBlock(AncientSpellcraftBlocks.LOG_CRYSTAL_TREE));
-//		registerItemBlock(registry, AncientSpellcraftBlocks.log_crystal_tree2, new ItemBlock(AncientSpellcraftBlocks.log_crystal_tree2));
+		//		registerItemBlock(registry, AncientSpellcraftBlocks.log_crystal_tree2, new ItemBlock(AncientSpellcraftBlocks.log_crystal_tree2));
 		registerItemBlock(registry, AncientSpellcraftBlocks.LEAVES_CRYSTAL_TREE, new ItemBlock(AncientSpellcraftBlocks.LEAVES_CRYSTAL_TREE));
-
 
 		registerItemBlock(registry, AncientSpellcraftBlocks.DIMENSION_BOUNDARY, new ItemBlock(AncientSpellcraftBlocks.DIMENSION_BOUNDARY));
 		registerItemBlock(registry, AncientSpellcraftBlocks.DIMENSION_FOCUS, new ItemBlock(AncientSpellcraftBlocks.DIMENSION_FOCUS));
-//		registerItemBlock(registry, AncientSpellcraftBlocks.ANCIENT_DIMENSION_BOUNDARY, new ItemBlock(AncientSpellcraftBlocks.ANCIENT_DIMENSION_BOUNDARY));
+		//		registerItemBlock(registry, AncientSpellcraftBlocks.ANCIENT_DIMENSION_BOUNDARY, new ItemBlock(AncientSpellcraftBlocks.ANCIENT_DIMENSION_BOUNDARY));
 
 		registerItem(registry, "magic_shield", new ItemMagicShield(EnumRarity.EPIC));
 		registerItem(registry, "spectral_shield", new ItemSpectralShield());
@@ -381,10 +394,11 @@ public final class AncientSpellcraftItems {
 			}
 		});
 		registerItem(registry, "ring_focus_crystal", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		registerItem(registry, "ring_permanent_shrinkage", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
-		registerItem(registry, "ring_permanent_growth", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_unbinding", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_disenchanter", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_quicksand", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_permanent_shrinkage", new ItemASArtemisLibArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_permanent_growth", new ItemASArtemisLibArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
 
 		/// amulet
 		registerItem(registry, "amulet_mana", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
@@ -396,14 +410,18 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "amulet_pendant_of_eternity", new ItemEternityPendant(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_time_knot", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_arcane_catalyst", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_healing_mushroom", new ItemAmberMushroomAmulet(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_shield", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 
 		/// charm
 		registerItem(registry, "charm_seed_bag", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_mana_flask", new ItemEverfullManaFlask());
+		registerItem(registry, "charm_ice_cream", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_enchanted_needle", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_bucket_coal", new ItemCoalBucket(EnumRarity.RARE));
 		registerItem(registry, "cornucopia", new ItemCornucopia(EnumRarity.RARE));
 		registerItem(registry, "charm_gold_bag", new ItemGoldBag(EnumRarity.RARE));
+		registerItem(registry, "charm_quicksand_walker", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_magic_light", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_mana_orb", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_knowledge_orb", new ItemKnowledgeOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
@@ -427,17 +445,15 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "charm_wand_upgrade", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_cryostasis", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_omnicron", new ItemOmnicron(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-//		registerItem(registry, "charm_book_death", new ItemOmnicron(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-//		registerItem(registry, "charm_book_life", new ItemOmnicron(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_burrow", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_prismatic_spray", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-
 		registerItem(registry, "charm_runic_hammer", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_fabrikator_toolkit", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_scissors", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_philosophers_stone", new ItemPhiloshopersStone(EnumRarity.EPIC));
 
 		registerItem(registry, "belt_enchanter", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
 		registerItem(registry, "belt_stone", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
-//		registerItem(registry, "belt_druid", new ItemNewArtefact(EnumRarity.UNCOMMON, ItemNewArtefact.AdditionalType.BELT));
 		registerItem(registry, "belt_vortex", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
 		registerItem(registry, "belt_horse", new ItemNewArtefact(EnumRarity.UNCOMMON, ItemNewArtefact.AdditionalType.BELT));
 
@@ -447,6 +463,7 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "head_riftstone", new ItemNewArtefact(EnumRarity.EPIC, ItemNewArtefact.AdditionalType.HEAD));
 		registerItem(registry, "head_fortune", new ItemNewArtefact(EnumRarity.EPIC, ItemNewArtefact.AdditionalType.HEAD));
 		registerItem(registry, "head_shield", new ItemNewArtefact(EnumRarity.EPIC, ItemNewArtefact.AdditionalType.HEAD));
+		registerItem(registry, "head_magelight", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.HEAD));
 
 		/// misc
 
@@ -475,7 +492,7 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "crystal_shard_necromancy", new Item().setMaxDamage(0).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
 		registerItem(registry, "crystal_shard_sorcery", new Item().setMaxDamage(0).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
 
-		registerItem(registry, "wand_channeling", new Item().setMaxDamage(0).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "wand_channeling", new Item().setMaxDamage(0).setCreativeTab(null));
 
 		registerItem(registry, "devoritium_ingot", new ItemDevoritiumIngot());
 		registerItem(registry, "devoritium_sword", new ItemDevoritiumSword());
@@ -516,15 +533,20 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "ritual_book", new ItemRitualBook());
 		registerItem(registry, "arcane_compound", new Item().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT).setMaxStackSize(16));
 
+		registerItem(registry, "soulbound_upgrade", new ItemSoulboundWandUpgrade());
+		registerItem(registry, "spectral_shovel", new ItemSpectralShovel());
+		registerItem(registry, "ice_cream", new ItemIceCream());
+		registerItem(registry, "alchemical_essence", new ItemAlchemicalEssence());
+
+
 	}
 
 	public static void registerDispenseBehaviours() {
 		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(ancient_spellcraft_scroll, new BehaviourSpellDispense());
 
-
-		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(devoritium_bomb, new BehaviorProjectileDispense(){
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(devoritium_bomb, new BehaviorProjectileDispense() {
 			@Override
-			protected IProjectile getProjectileEntity(World world, IPosition position, ItemStack stack){
+			protected IProjectile getProjectileEntity(World world, IPosition position, ItemStack stack) {
 				EntityDevoritiumBomb entity = new EntityDevoritiumBomb(world);
 				entity.setPosition(position.getX(), position.getY(), position.getZ());
 				return entity;
@@ -532,4 +554,5 @@ public final class AncientSpellcraftItems {
 		});
 
 	}
+
 }

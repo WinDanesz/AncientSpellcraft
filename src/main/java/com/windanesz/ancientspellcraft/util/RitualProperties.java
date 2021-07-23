@@ -461,13 +461,13 @@ public final class RitualProperties {
 	private static boolean loadConfigRitualProperties() {
 
 		AncientSpellcraft.logger.info("Loading ritual properties from config folder");
+		// FIXME
+		//File spellJSONDir = new File(Wizardry.configDirectory, "rituals");
 
-		File spellJSONDir = new File(Wizardry.configDirectory, "rituals");
-
-		if (!spellJSONDir.exists())
+		//if (!spellJSONDir.exists())
 			return true; // If there's no global ritual properties folder, do nothing
 
-		return loadRitualPropertiesFromDir(spellJSONDir);
+		//return loadRitualPropertiesFromDir(spellJSONDir);
 	}
 
 	// For crafting recipes, Forge does some stuff behind the scenes to load recipe JSON files from mods' namespaces.

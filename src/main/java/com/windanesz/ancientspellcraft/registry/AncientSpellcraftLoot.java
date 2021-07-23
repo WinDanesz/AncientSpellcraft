@@ -36,6 +36,7 @@ public class AncientSpellcraftLoot {
 	private static LootTable OBELISK;
 	private static LootTable SHRINE;
 	private static LootTable WIZARD_TOWER;
+	private static LootTable WAND_UPGRADES;
 
 	private AncientSpellcraftLoot() {}
 
@@ -52,6 +53,7 @@ public class AncientSpellcraftLoot {
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/rare_artefacts"));
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/epic_artefacts"));
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/ritual_books"));
+		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/wand_upgrades"));
 
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/ancientspellcraft_books_and_scrolls"));
 
@@ -104,6 +106,10 @@ public class AncientSpellcraftLoot {
 		} else if (event.getName().toString().equals(Wizardry.MODID + ":chests/wizard_tower") && WIZARD_TOWER != null) {
 			LootPool targetPool = event.getTable().getPool("wizardry");
 			LootPool sourcePool = WIZARD_TOWER.getPool("ancientspellcraft");
+			injectEntries(sourcePool, targetPool);
+		} else if (event.getName().toString().equals(Wizardry.MODID + ":subsets/wand_upgrades") && WAND_UPGRADES != null) {
+			LootPool targetPool = event.getTable().getPool("upgrades");
+			LootPool sourcePool = WAND_UPGRADES.getPool("ancientspellcraft");
 			injectEntries(sourcePool, targetPool);
 		}
 

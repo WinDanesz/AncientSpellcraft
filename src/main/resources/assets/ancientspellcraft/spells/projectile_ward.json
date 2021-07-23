@@ -13,7 +13,7 @@
     "tier": "novice",
     "element": "magic",
     "type": "buff",
-    "cost": 35,
+    "cost": 30,
     "chargeup": 0,
     "cooldown": 250,
     "base_properties": {

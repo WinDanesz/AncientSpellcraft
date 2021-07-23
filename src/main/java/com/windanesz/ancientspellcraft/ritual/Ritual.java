@@ -211,14 +211,6 @@ public abstract class Ritual extends IForgeRegistryEntry.Impl<Ritual> {
 		}
 	}
 
-	public boolean canStart(World world, EntityPlayer caster, TileRune centerPiece) {
-		if (centerPiece.getRitual() instanceof IRitualIngredient) {
-			return !((IRitualIngredient) centerPiece.getRitual()).getActualIngredients(world, centerPiece, 1).isEmpty();
-		} else {
-			return true;
-		}
-	}
-
 	public boolean isFirstTick(TileRune centerPiece) {
 		return centerPiece.getRitualCurrentLifeTime() == 1;
 	}

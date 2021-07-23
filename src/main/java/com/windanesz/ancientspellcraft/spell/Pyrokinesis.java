@@ -96,21 +96,7 @@ public class Pyrokinesis extends SpellRay {
 							.spawn(world);
 
 				}
-				////					 Sparks
-				//					if(world.rand.nextInt(6) == 0){
-				//						ParticleBuilder.create(Type.FLASH).entity(caster).clr(0xffd8fa).scale(2)
-				//								.pos(caster != null ? centre.subtract(caster.getPositionVector()) : centre).spawn(world);
-				//						ParticleBuilder.create(Type.LIGHTNING).entity(caster).clr(0xff4384).scale(0.5f)
-				//								.pos(caster != null ? centre.subtract(caster.getPositionVector()) : centre)
-				//								.target(centre.add(world.rand.nextDouble() * 2 - 1, world.rand.nextDouble() * 2 - 1,
-				//										world.rand.nextDouble() * 2 - 1)).spawn(world);
-				//					}
-
-				//
-				//				ParticleBuilder.create(Type.SPARKLE, target).vel(0, 0.05, 0).time(15).scale(0.6f).clr(0.2f, 0.6f, 1)
-				//						.fade(1f, 1f, 1f).spawn(world);
 			}
-
 			return true;
 		}
 

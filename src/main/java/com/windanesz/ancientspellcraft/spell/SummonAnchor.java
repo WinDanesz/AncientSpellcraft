@@ -86,7 +86,6 @@ public class SummonAnchor extends Spell {
 						.spawn(world);
 
 			}
-			/// test
 		}
 
 		if (world.isRemote)

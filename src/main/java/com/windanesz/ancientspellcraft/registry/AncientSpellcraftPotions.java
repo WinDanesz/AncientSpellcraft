@@ -1,12 +1,15 @@
 package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.potion.PotionAstralTravel;
 import com.windanesz.ancientspellcraft.potion.PotionBubbleHead;
+import com.windanesz.ancientspellcraft.potion.PotionBurrow;
 import com.windanesz.ancientspellcraft.potion.PotionCandleLight;
 import com.windanesz.ancientspellcraft.potion.PotionCurseAS;
 import com.windanesz.ancientspellcraft.potion.PotionCurseDeath;
 import com.windanesz.ancientspellcraft.potion.PotionCurseEnder;
 import com.windanesz.ancientspellcraft.potion.PotionCurseWard;
+import com.windanesz.ancientspellcraft.potion.PotionDimensionalAnchor;
 import com.windanesz.ancientspellcraft.potion.PotionEagleEye;
 import com.windanesz.ancientspellcraft.potion.PotionFeatherFall;
 import com.windanesz.ancientspellcraft.potion.PotionGrowth;
@@ -16,10 +19,12 @@ import com.windanesz.ancientspellcraft.potion.PotionManaRegeneration;
 import com.windanesz.ancientspellcraft.potion.PotionMetamagicEffect;
 import com.windanesz.ancientspellcraft.potion.PotionProjectileWard;
 import com.windanesz.ancientspellcraft.potion.PotionShrinkage;
+import com.windanesz.ancientspellcraft.potion.PotionSoulScorch;
 import com.windanesz.ancientspellcraft.potion.PotionTimeKnot;
 import com.windanesz.ancientspellcraft.potion.PotionUnlimitedPower;
 import com.windanesz.ancientspellcraft.potion.PotionWaterWalking;
 import com.windanesz.ancientspellcraft.potion.PotionWizardShield;
+import com.windanesz.ancientspellcraft.spell.AstralTravel;
 import com.windanesz.ancientspellcraft.spell.FortifiedArchery;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.util.SpellModifiers;
@@ -60,7 +65,9 @@ public class AncientSpellcraftPotions {
 	public static final Potion feather_fall = placeholder();
 	public static final Potion water_walking = placeholder();
 	public static final Potion eagle_eye = placeholder();
+	public static final Potion astral_projection = placeholder();
 	public static final Potion wizard_shield = placeholder();
+	public static final Potion dimensional_anchor = placeholder();
 
 	// metamagic
 	public static final Potion arcane_augmentation = placeholder();
@@ -81,6 +88,8 @@ public class AncientSpellcraftPotions {
 	public static final Potion spell_cooldown = placeholder();
 	public static final Potion spell_siphon = placeholder();
 	public static final Potion mana_regeneration = placeholder();
+	public static final Potion burrow = placeholder();
+	public static final Potion soul_scorch = placeholder();
 
 	// artemislib potions
 	public static final Potion shrinkage = placeholder();
@@ -155,14 +164,14 @@ public class AncientSpellcraftPotions {
 				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_fortified_archery.png")));
 
 		registerPotion(registry, "eagle_eye", new PotionEagleEye());
+		registerPotion(registry, "astral_projection", new PotionAstralTravel());
 
 		registerPotion(registry, "magical_exhaustion", new PotionMagicEffectAS("magical_exhaustion", true, 0x635a63,
 				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_magical_exhaustion.png")));
 
 		registerPotion(registry, "bubble_head", new PotionBubbleHead());
 
-//		see electroblob.wizardry.WizardryEventHandler.onLivingDeathEvent for siphon upgrade
-		// condensing
+		//		see electroblob.wizardry.WizardryEventHandler.onLivingDeathEvent for siphon upgrade
 
 		registerPotion(registry, "spell_range", new PotionMagicEffectAS("spell_range", false, 0xc558d6,
 				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_spell_range.png")).setBeneficial());
@@ -176,13 +185,19 @@ public class AncientSpellcraftPotions {
 				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_spell_siphon.png")).setBeneficial());
 		registerPotion(registry, "mana_regeneration", new PotionManaRegeneration());
 		registerPotion(registry, "wizard_shield", new PotionWizardShield("wizard_shield", false, 0xc558d6,
-				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_spell_siphon.png")).setBeneficial());
+				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_wizard_shield.png")).setBeneficial());
+		registerPotion(registry, "dimensional_anchor", new PotionDimensionalAnchor("dimensional_anchor", false, 0xc558d6,
+				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_dimensional_anchor.png")));
+		registerPotion(registry, "soul_scorch", new PotionSoulScorch("soul_scorch", false, 0xba3500,
+				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_soul_scorch.png")));
+
+		registerPotion(registry, "burrow", new PotionBurrow());
 
 		// ---- Artemislib dependent potions ----
 		registerPotion(registry, "shrinkage", new PotionShrinkage("shrinkage", false, 0xc558d6,
-				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_spell_siphon.png")).setBeneficial());
+				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_shrinkage.png")).setBeneficial());
 		registerPotion(registry, "growth", new PotionGrowth("growth", false, 0xc558d6,
-				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_spell_siphon.png")).setBeneficial());
+				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_growth.png")).setBeneficial());
 		// ---- Artemislib dependent potions ----
 	}
 

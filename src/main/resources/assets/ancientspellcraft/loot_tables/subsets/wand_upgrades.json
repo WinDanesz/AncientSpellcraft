@@ -1,0 +1,15 @@
+{
+    "pools": [
+        {
+            "name": "ancientspellcraft",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:soulbound_upgrade",
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}

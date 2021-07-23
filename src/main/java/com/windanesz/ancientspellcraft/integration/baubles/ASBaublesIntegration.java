@@ -4,7 +4,9 @@ import baubles.api.BaubleType;
 import baubles.api.BaublesApi;
 import baubles.api.IBauble;
 import baubles.api.cap.BaublesCapabilities;
+import baubles.api.cap.IBaublesItemHandler;
 import com.windanesz.ancientspellcraft.Settings;
+import com.windanesz.ancientspellcraft.item.ITickableArtefact;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import electroblob.wizardry.item.ItemArtefact;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,11 +38,12 @@ public final class ASBaublesIntegration {
 
 	private static boolean baublesLoaded;
 
-	public static void init(){
+	public static void init() {
 
 		baublesLoaded = Loader.isModLoaded(BAUBLES_MOD_ID);
 
-		if(!enabled()) return;
+		if (!enabled())
+			return;
 
 		WIZARDRY_ARTEFACT_TYPE_MAP.put(ItemArtefact.Type.RING, BaubleType.RING);
 		WIZARDRY_ARTEFACT_TYPE_MAP.put(ItemArtefact.Type.AMULET, BaubleType.AMULET);
@@ -51,7 +54,7 @@ public final class ASBaublesIntegration {
 
 	}
 
-	public static boolean enabled(){
+	public static boolean enabled() {
 		return Settings.generalSettings.baubles_integration && baublesLoaded;
 	}
 
@@ -61,19 +64,21 @@ public final class ASBaublesIntegration {
 	 * Returns a list of artefact stacks equipped of the given types. <i>This method does not check whether artefacts
 	 * have been disabled in the config! {ItemNewArtefact#getActiveArtefacts(EntityPlayer, ItemNewArtefact.AdditionalType...)}
 	 * should be used instead of this method in nearly all cases.</i>
+	 *
 	 * @param player The player whose inventory is to be checked.
-	 * @param types Zero or more artefact types to check for. If omitted, searches for all types.
+	 * @param types  Zero or more artefact types to check for. If omitted, searches for all types.
 	 * @return A list of equipped artefact {@code ItemStacks}.
 	 */
 	// This could return all ItemStacks, but if an artefact type is given this doesn't really make sense.
-	public static List<ItemNewArtefact> getEquippedArtefacts(EntityPlayer player, ItemNewArtefact.AdditionalType... types){
+	public static List<ItemNewArtefact> getEquippedArtefacts(EntityPlayer player, ItemNewArtefact.AdditionalType... types) {
 
 		List<ItemNewArtefact> artefacts = new ArrayList<>();
 
-		for(ItemNewArtefact.AdditionalType type : types){
-			for(int slot : ARTEFACT_TYPE_MAP.get(type).getValidSlots()){
+		for (ItemNewArtefact.AdditionalType type : types) {
+			for (int slot : ARTEFACT_TYPE_MAP.get(type).getValidSlots()) {
 				ItemStack stack = BaublesApi.getBaublesHandler(player).getStackInSlot(slot);
-				if(stack.getItem() instanceof ItemNewArtefact) artefacts.add((ItemNewArtefact)stack.getItem());
+				if (stack.getItem() instanceof ItemNewArtefact)
+					artefacts.add((ItemNewArtefact) stack.getItem());
 			}
 		}
 
@@ -86,41 +91,53 @@ public final class ASBaublesIntegration {
 
 		private BaubleType type;
 
-		public ArtefactBaubleProvider(ItemNewArtefact.AdditionalType type){
+		public ArtefactBaubleProvider(ItemNewArtefact.AdditionalType type) {
 			this.type = ARTEFACT_TYPE_MAP.get(type);
 		}
 
 		@Override
-		public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing){
+		public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
 			return capability == BaublesCapabilities.CAPABILITY_ITEM_BAUBLE;
 		}
 
 		@Override
-		public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing){
+		public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
 			// This lambda expression is an implementation of the entire IBauble interface
-			return capability == BaublesCapabilities.CAPABILITY_ITEM_BAUBLE ? (T)(IBauble)itemStack -> type : null;
+			return capability == BaublesCapabilities.CAPABILITY_ITEM_BAUBLE ? (T) (IBauble) itemStack -> type : null;
 		}
 	}
 
-	public static List<ItemStack> getEquippedArtefactStacks(EntityPlayer player, ItemArtefact.Type... types){
+	public static List<ItemStack> getEquippedArtefactStacks(EntityPlayer player, ItemArtefact.Type... types) {
 
 		List<ItemStack> artefacts = new ArrayList<>();
 
-		for(ItemArtefact.Type type : types){
-			for(int slot : WIZARDRY_ARTEFACT_TYPE_MAP.get(type).getValidSlots()){
+		for (ItemArtefact.Type type : types) {
+			for (int slot : WIZARDRY_ARTEFACT_TYPE_MAP.get(type).getValidSlots()) {
 				ItemStack stack = BaublesApi.getBaublesHandler(player).getStackInSlot(slot);
-				if(stack.getItem() instanceof ItemArtefact) artefacts.add(stack);
+				if (stack.getItem() instanceof ItemArtefact)
+					artefacts.add(stack);
 			}
 		}
 
 		return artefacts;
 	}
 
-	public static void setArtefactToSlot(EntityPlayer player, ItemStack stack, ItemArtefact.Type type){
+	public static void setArtefactToSlot(EntityPlayer player, ItemStack stack, ItemArtefact.Type type) {
 		setArtefactToSlot(player, stack, type, 0);
 	}
-	public static void setArtefactToSlot(EntityPlayer player, ItemStack stack, ItemArtefact.Type type, int slotId){
+
+	public static void setArtefactToSlot(EntityPlayer player, ItemStack stack, ItemArtefact.Type type, int slotId) {
 		BaublesApi.getBaublesHandler(player).setStackInSlot(WIZARDRY_ARTEFACT_TYPE_MAP.get(type).getValidSlots()[slotId], stack);
 	}
 
+	public static void tickWornArtefacts(EntityPlayer player) {
+
+		IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
+		for (int i = 0; i < baubles.getSlots(); i++) {
+			ItemStack stack = baubles.getStackInSlot(i);
+			if (stack.getItem() instanceof ITickableArtefact) {
+				((ITickableArtefact) stack.getItem()).onWornTick(stack, player);
+			}
+		}
+	}
 }

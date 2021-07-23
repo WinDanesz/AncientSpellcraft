@@ -109,23 +109,11 @@ public class Forcefend extends Spell {
 				}
 			}
 
-//			if (world.isRemote && ticksInUse % 2 == 0) {
 			if (world.isRemote) {
 				ParticleBuilder.create(ParticleBuilder.Type.FLASH).clr(255, 255, 247).fade(0, 0, 0).spin(0.8f, 0.07f).time(20).entity(caster).scale(1.2f).spawn(world);
 				ParticleBuilder.create(ParticleBuilder.Type.FLASH).clr(255, 255, 247).vel(0, 0.1, 0).fade(0, 0, 0).spin(0.8f, 0.07f).time(20).entity(caster).scale(1.2f).spawn(world);
-		}
-//				double speed = (world.rand.nextBoolean() ? 1 : 1) * 0.1;// + 0.01 * rand.nextDouble();
-//				ParticleBuilder.create(ParticleBuilder.Type.FLASH)
-//						.entity(caster)
-//						.vel(0, 0.05, 0)
-//						.scale(0.7F)
-//						.time(48 + world.rand.nextInt(12))
-//						.spin(1, speed)
-//						.clr(1f, 1f, 1f)
-//						.spawn(world);
-
 			}
-//		}
+		}
 	}
 
 	@SideOnly(Side.CLIENT)

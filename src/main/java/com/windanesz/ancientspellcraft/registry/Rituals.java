@@ -44,7 +44,7 @@ public final class Rituals {
 	// AS 1.4 spells
 	public static final Ritual none = placeholder();
 	public static final Ritual elevation = placeholder();
-	public static final Ritual mark = placeholder();
+	//public static final Ritual mark = placeholder();
 	public static final Ritual forest = placeholder();
 	public static final Ritual bonfire = placeholder();
 	public static final Ritual condensing = placeholder();
@@ -59,7 +59,7 @@ public final class Rituals {
 		// dummy ritual
 		registry.register(new None());
 		registry.register(new Rejuvenation());
-		registry.register(new Mark());
+		//registry.register(new Mark());
 		registry.register(new Forest());
 		registry.register(new Bonfire());
 		registry.register(new Condensing());

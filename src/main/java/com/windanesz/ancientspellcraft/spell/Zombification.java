@@ -37,7 +37,6 @@ public class Zombification extends SpellRay {
 			EntityZombieVillager entityzombievillager = new EntityZombieVillager(world);
 			entityzombievillager.copyLocationAndAnglesFrom(entityvillager);
 			world.removeEntity(entityvillager);
-			//				entityzombievillager.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entityzombievillager)), new EntityZombie.GroupData(false));
 			entityzombievillager.setProfession(entityvillager.getProfession());
 			entityzombievillager.setChild(entityvillager.isChild());
 			entityzombievillager.setNoAI(entityvillager.isAIDisabled());

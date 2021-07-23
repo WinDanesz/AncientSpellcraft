@@ -17,7 +17,7 @@
     "chargeup": 0,
     "cooldown": 40,
     "base_properties": {
-        "range": 18,
+        "range": 10,
         "damage": 2,
         "seeking_strength": 10,
         "health": 2

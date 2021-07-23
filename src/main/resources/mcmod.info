@@ -6,6 +6,9 @@
     "mcversion": "${mcversion}",
     "url": "https://www.curseforge.com/minecraft/mc-mods/ancient-spellcraft",
     "authorList": ["WinDanesz"],
-    "credits": "Electroblob for making his awesome Wizardry mod. Yranic and Bombadil for writing many of the text lines and giving content feedback.",
+    "credits": "
+    Created by WinDanesz
+    Electroblob, for making his awesome Wizardry mod
+    Contributors: Yranic, Bombadil, HatBot for writing many of the lore texts and giving content feedback",
     "logoFile":"assets/ancientspellcraft/textures/gui/logo.png"
 }]

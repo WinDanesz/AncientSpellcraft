@@ -13,9 +13,9 @@
     "tier": "apprentice",
     "element": "fire",
     "type": "attack",
-    "cost": 50,
+    "cost": 20,
     "chargeup": 0,
-    "cooldown": 30,
+    "cooldown": 0,
     "base_properties": {
         "burn_duration": 10,
         "slow_duration": 30,

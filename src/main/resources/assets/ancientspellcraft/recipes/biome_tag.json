@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:name_tag"
+        },
+        {
+            "item": "ancientspellcraft:crystal_shard_earth",
+            "data": 5
+        }
+    ],
+    "result": {
+        "item": "ancientspellcraft:enchanted_name_tag"
+    }
+}

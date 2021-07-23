@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.entity.construct;
 
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
 import com.windanesz.ancientspellcraft.util.SpellTeleporter;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
@@ -139,10 +140,13 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 					}
 
 					if (target instanceof EntityPlayer) {
-						teleportPlayer((EntityPlayer) target, targetDim, targetPos);
+						if (!target.isPotionActive(AncientSpellcraftPotions.dimensional_anchor)) {
+							teleportPlayer((EntityPlayer) target, targetDim, targetPos);
+						}
+
 						// non players
 					} else {
-						if (target.dimension == getTargetDim()) {
+						if (!target.isPotionActive(AncientSpellcraftPotions.dimensional_anchor) && target.dimension == getTargetDim()) {
 							teleportEntityLiving(target, targetDim, targetPos);
 							this.playSound(AncientSpellcraftSounds.TRANSPORTATION_PORTAL_TELEPORTS, 0.6f, 1.0f);
 						} else {EntityUtils.applyStandardKnockback(this, targets.get(0));}

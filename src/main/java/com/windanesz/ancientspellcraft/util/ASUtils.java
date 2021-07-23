@@ -16,6 +16,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -366,6 +367,31 @@ public final class ASUtils {
 		ItemStack stack1 = stack.copy();
 		stack1.setCount(1);
 		return convertToNBT(stack1);
+	}
+
+	public static List<BlockPos> getBlockPosListFromTag(NBTTagCompound listCompound) {
+		List<String> list = new ArrayList<>(listCompound.getKeySet());
+		List<BlockPos> blockPosList = new ArrayList<>();
+		for (String tag : list) {
+			blockPosList.add(NBTUtil.getPosFromTag(listCompound.getCompoundTag(tag)));
+		}
+
+		return blockPosList;
+	}
+
+	public static NBTTagCompound writeBlockPosListToTag(List<BlockPos> posList) {
+		NBTTagCompound posTagList = new NBTTagCompound();
+
+		int i = 0;
+		for (BlockPos pos : posList) {
+			posTagList.setTag(String.valueOf(i), NBTUtil.createPosTag(pos));
+			i++;
+		}
+		return posTagList;
+	}
+
+	public static boolean isInjured(EntityLivingBase entityLivingBase) {
+		return entityLivingBase.getMaxHealth() > entityLivingBase.getHealth();
 	}
 
 }

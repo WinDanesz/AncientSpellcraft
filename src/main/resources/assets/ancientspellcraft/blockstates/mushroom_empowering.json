@@ -1,0 +1,12 @@
+﻿{
+    "variants": {
+        "age=0": { "model": "ancientspellcraft:mushroom_empowering_0" },
+        "age=1": { "model": "ancientspellcraft:mushroom_empowering_1" },
+        "age=2": { "model": "ancientspellcraft:mushroom_empowering_2" },
+        "age=3": { "model": "ancientspellcraft:mushroom_empowering_3" },
+        "age=4": { "model": "ancientspellcraft:mushroom_empowering_4" },
+        "age=5": { "model": "ancientspellcraft:mushroom_empowering_5" },
+        "age=6": { "model": "ancientspellcraft:mushroom_empowering_6" },
+        "age=7": { "model": "ancientspellcraft:mushroom_empowering_7" }
+    }
+}

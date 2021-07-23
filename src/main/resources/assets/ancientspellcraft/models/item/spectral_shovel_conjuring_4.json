@@ -1,0 +1,6 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "ancientspellcraft:items/spectral_shovel_conjuring_4"
+    }
+}

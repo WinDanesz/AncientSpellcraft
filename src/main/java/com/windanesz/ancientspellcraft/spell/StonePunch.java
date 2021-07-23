@@ -37,11 +37,6 @@ public class StonePunch extends SpellConjuration {
 	}
 
 	@Override
-	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
-	}
-
-	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		if (caster.getHeldItemMainhand().getItem() instanceof ItemStoneFist) {
 			return false;
@@ -84,4 +79,8 @@ public class StonePunch extends SpellConjuration {
 		return true;
 	}
 
+	@Override
+	public boolean applicableForItem(Item item) {
+		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+	}
 }

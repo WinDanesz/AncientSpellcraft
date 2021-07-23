@@ -6,6 +6,16 @@
             "entries": [
                 {
                     "type": "item",
+                    "name": "ancientspellcraft:ring_permanent_shrinkage",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ring_permanent_growth",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
                     "name": "ancientspellcraft:magic_shield",
                     "weight": 1
                 },
@@ -22,6 +32,11 @@
                 {
                     "type": "item",
                     "name": "ancientspellcraft:amulet_time_knot",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_arcane_catalyst",
                     "weight": 1
                 },
                 {
@@ -126,6 +141,26 @@
                 },
                 {
                     "type": "item",
+                    "name": "ancientspellcraft:charm_runic_hammer",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_fabrikator_toolkit",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_scissors",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_philosophers_stone",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
                     "name": "ancientspellcraft:head_minions",
                     "weight": 1
                 },
@@ -137,6 +172,11 @@
                 {
                     "type": "item",
                     "name": "ancientspellcraft:head_fortune",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:head_shield",
                     "weight": 1
                 }
             ]

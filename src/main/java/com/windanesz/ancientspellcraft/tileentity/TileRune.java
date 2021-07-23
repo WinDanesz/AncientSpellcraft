@@ -207,7 +207,7 @@ public class TileRune extends TileEntity implements ITickable {
 											List<TileRune> ritualRunes = blockPosList.stream().filter(pos1 -> world.getTileEntity(pos1) instanceof TileRune).map(pos1 -> (TileRune) world.getTileEntity(pos1)).collect(Collectors.toList());
 
 											if (!ritualRunes.contains(rune)) {
-												System.out.println("why?");
+
 											}
 											ritualRunes.forEach(ritual -> setMaster(rune));
 											ritualRunes.forEach(ritual -> connectedRunes = ritualRunes);
@@ -248,6 +248,11 @@ public class TileRune extends TileEntity implements ITickable {
 
 						if (actualIngredients.isEmpty()) {
 							ingredientsOk = false;
+						} else {
+							if (((IRitualIngredient) ritual).shouldConsumeIngredients()) {
+								actualIngredients.forEach(i -> i.setDead());
+							}
+							actualIngredients.stream().forEach(i -> i.getItem().shrink(1));
 						}
 					}
 					if (ritual instanceof IRitualBlockRequirement) {

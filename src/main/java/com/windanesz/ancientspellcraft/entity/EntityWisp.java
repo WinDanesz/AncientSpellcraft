@@ -180,13 +180,13 @@ public class EntityWisp extends Entity {
 			this.setPosition(this.posX, this.posY, this.posZ);
 			++this.despawnTimer;
 
-			if (this.despawnTimer > 80 && !this.world.isRemote) {
+			if (this.despawnTimer > 120 && !this.world.isRemote) {
 				this.playSound(SoundEvents.ENTITY_GHAST_SHOOT, 1.0F, 1.0F);
-				this.setDead();
 
 				ItemStack stack = new ItemStack(AncientSpellcraftItems.enchanted_name_tag, 1, nameTagMana);
 				stack.setTagCompound(nameTag);
 				this.world.spawnEntity(new EntityItem(this.world, this.posX, this.posY, this.posZ, stack));
+				this.setDead();
 			}
 		}
 	}

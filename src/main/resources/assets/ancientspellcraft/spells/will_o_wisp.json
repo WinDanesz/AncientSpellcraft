@@ -17,6 +17,7 @@
     "chargeup": 0,
     "cooldown": 50,
     "base_properties": {
-        "range": 800
+        "range": 1200,
+        "duration": 240
     }
 }

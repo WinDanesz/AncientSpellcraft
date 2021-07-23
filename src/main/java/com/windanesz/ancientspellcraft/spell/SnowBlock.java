@@ -33,26 +33,18 @@ public class SnowBlock extends SpellRay {
 	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 
 		pos = pos.offset(side);
-
-		if (BlockUtils.canBlockBeReplaced(world, pos)) {
-
-			if (!world.isRemote) {
-
+		if (!world.isRemote) {
+			if (BlockUtils.canPlaceBlock(caster, world, pos)) {
 				world.setBlockState(pos, Blocks.SNOW.getDefaultState());
 			}
-
-			Random rand = new Random();
-			if (world.isRemote) {
-				for (int i = 1; i < 12; i++) {
-					double speed = (rand.nextBoolean() ? 1 : -1) * 0.1 + 0.05 * rand.nextDouble();
-					ParticleBuilder.create(ParticleBuilder.Type.SNOW).pos(pos.getX() + 0.5, pos.getY() + rand.nextDouble() * 2, pos.getZ() + 0.5).vel(0, 0, 0)
-							.time(20).scale(1).spin(rand.nextDouble() * +1.1, speed).spawn(world);
-				}
+		} else {
+			for (int i = 1; i < 12; i++) {
+				double speed = (world.rand.nextBoolean() ? 1 : -1) * 0.1 + 0.05 * world.rand.nextDouble();
+				ParticleBuilder.create(ParticleBuilder.Type.SNOW).pos(pos.getX() + 0.5, pos.getY() + world.rand.nextDouble() * 2, pos.getZ() + 0.5).vel(0, 0, 0)
+						.time(20).scale(1).spin(world.rand.nextDouble() * +1.1, speed).spawn(world);
 			}
-			return true;
 		}
-
-		return false;
+		return true;
 	}
 
 	@Override

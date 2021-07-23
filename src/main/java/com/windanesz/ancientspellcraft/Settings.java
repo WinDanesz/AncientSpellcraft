@@ -1,6 +1,8 @@
 package com.windanesz.ancientspellcraft;
 
-import net.minecraft.potion.Potion;
+import electroblob.wizardry.Wizardry;
+import electroblob.wizardry.item.ItemArtefact;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
@@ -8,10 +10,10 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static electroblob.wizardry.Settings.ARTEFACTS_CATEGORY;
 import static electroblob.wizardry.Settings.toResourceLocations;
 
 @Config(modid = AncientSpellcraft.MODID, name = "AncientSpellcraft") // No fancy configs here so we can use the annotation, hurrah!
@@ -31,9 +33,20 @@ public class Settings {
 	public List<ResourceLocation> shardFireBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.fire_shard_biome_whitelist));
 	public List<ResourceLocation> shardIceBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.ice_shard_biome_whitelist));
 
-	@Config.Ignore
-	public static List<Potion> IMMOBILITY_EFFECTS = new ArrayList<>();
+	/**
+	 * Helper method to figure out if an item was disabled in the ebwiz configs, as unfortunately temArtefact#enabled private and has no getter method
+	 * @param artefact to check
+	 * @return true if the item is enabled (or if it has no config)
+	 */
+	public static boolean isArtefactEnabled(Item artefact) {
+		if (artefact instanceof ItemArtefact &&
+				(Wizardry.settings.getConfigCategory(ARTEFACTS_CATEGORY).containsKey(artefact.getRegistryName().toString()))) {
+			return (Wizardry.settings.getConfigCategory(ARTEFACTS_CATEGORY).get(artefact.getRegistryName().toString()).getBoolean());
+		}
 
+		// no setting to control this item so it shouldn't be disabled..
+		return true;
+	}
 
 	@SuppressWarnings("unused")
 	@Mod.EventBusSubscriber(modid = AncientSpellcraft.MODID)
@@ -54,7 +67,6 @@ public class Settings {
 	@Config.Name("General Settings")
 	@Config.LangKey("settings.ancientspellcraft:general_settings")
 	public static GeneralSettings generalSettings = new GeneralSettings();
-
 
 	@Config.Name("Client Settings")
 	@Config.LangKey("settings.ancientspellcraft:client_settings")
@@ -171,7 +183,11 @@ public class Settings {
 		@Config.Name("Elemental Lightning Crystal Shard Biome List")
 		@Config.Comment("List of Biomes where Lightning Crystal Shards can spawn.")
 		@Config.RequiresMcRestart
-		public String[] lightning_shard_biome_whitelist = {"extreme_hills", "smaller_extreme_hills", "extreme_hills_with_trees", "mutated_extreme_hills", "mutated_extreme_hills_with_trees"};
+		public String[] lightning_shard_biome_whitelist = {"extreme_hills",
+				"smaller_extreme_hills",
+				"extreme_hills_with_trees",
+				"mutated_extreme_hills",
+				"mutated_extreme_hills_with_trees"};
 
 		@Config.Name("Elemental Ice Crystal Shard Biome List")
 		@Config.Comment("List of Biomes where Ice Crystal Shards can spawn.")
@@ -193,7 +209,6 @@ public class Settings {
 				"ebwizardry:frost",
 				"minecraft:slowness"
 		};
-
 
 		@Config.Name("Wizards Buy Ancient Element Books")
 		@Config.Comment("If true, friendly Wizards will buy ancient element books (the gray ones)")
@@ -224,26 +239,25 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public boolean show_contingency_hud = true;
 
+		@Config.Name("Clips Mouse To Hud")
+		@Config.Comment("Clips the mouse to the hud, possibly allowing faster spell selection.")
+		@Config.RequiresMcRestart
+		public boolean clip_mouse_to_circle = true;
+
 		@Config.Name("Contingency HUD Left Side Position")
 		@Config.Comment("Whether to show the contingency HUD on the left side of the screen (defaults to right side).")
 		@Config.RequiresMcRestart
 		public boolean contingency_hud_left_side_position = true;
 
 		@Config.Name("Radial Spell Menu Enabled")
-		@Config.Comment("If true, you can open the radial spell selector menu with the configured key.")
+		@Config.Comment("If true, you can open the radial spell selector menu with the configured key. Otherwise you must click on a spell to select it.")
 		public boolean radial_menu_enabled = true;
-
 
 		@Config.Name("Release To Swap")
 		@Config.Comment("If true, the hovered spell will be selected when you release the radial GUI button while having the cursor over a spell.")
 		public boolean release_to_swap = true;
 
-		@Config.Name("Does Gui Pause Game")
-		@Config.Comment("(Only has an effect in single player games. If true, opening the radial menu pauses the game")
-		public boolean gui_pause_game = false;
-
 	}
-
 
 	@Config.Name("Spell Compat Settings")
 	@Config.LangKey("settings.ancientspellcraft:spell_compat_settings")
@@ -278,7 +292,5 @@ public class Settings {
 		public int conjurePickaxeSpellNetworkID = 41;
 
 	}
-
-
 
 }

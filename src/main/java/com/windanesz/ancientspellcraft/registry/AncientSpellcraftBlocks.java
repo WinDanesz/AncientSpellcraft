@@ -18,7 +18,19 @@ import com.windanesz.ancientspellcraft.block.BlockHellFire;
 import com.windanesz.ancientspellcraft.block.BlockIceDoor;
 import com.windanesz.ancientspellcraft.block.BlockIceWorkbench;
 import com.windanesz.ancientspellcraft.block.BlockMageLight;
+import com.windanesz.ancientspellcraft.block.BlockMushroomCleansing;
+import com.windanesz.ancientspellcraft.block.BlockMushroomEmpowering;
+import com.windanesz.ancientspellcraft.block.BlockMushroomExplosive;
+import com.windanesz.ancientspellcraft.block.BlockMushroomFire;
+import com.windanesz.ancientspellcraft.block.BlockMushroomForce;
+import com.windanesz.ancientspellcraft.block.BlockMushroomHeal;
+import com.windanesz.ancientspellcraft.block.BlockMushroomIce;
+import com.windanesz.ancientspellcraft.block.BlockMushroomMind;
+import com.windanesz.ancientspellcraft.block.BlockMushroomPoison;
+import com.windanesz.ancientspellcraft.block.BlockMushroomShock;
+import com.windanesz.ancientspellcraft.block.BlockMushroomWither;
 import com.windanesz.ancientspellcraft.block.BlockPlacedRune;
+import com.windanesz.ancientspellcraft.block.BlockQuickSand;
 import com.windanesz.ancientspellcraft.block.BlockRuinedImbuementAltar;
 import com.windanesz.ancientspellcraft.block.BlockScribingDesk;
 import com.windanesz.ancientspellcraft.block.BlockSentinel;
@@ -28,6 +40,8 @@ import com.windanesz.ancientspellcraft.block.BlockSphereCognizance;
 import com.windanesz.ancientspellcraft.block.BlockUsedRune;
 import com.windanesz.ancientspellcraft.tileentity.TileArtefactPensive;
 import com.windanesz.ancientspellcraft.tileentity.TileCandleLight;
+import com.windanesz.ancientspellcraft.tileentity.TileEntityMagicMushroom;
+import com.windanesz.ancientspellcraft.tileentity.TileEntityRevertingBlock;
 import com.windanesz.ancientspellcraft.tileentity.TileMageLight;
 import com.windanesz.ancientspellcraft.tileentity.TileRune;
 import com.windanesz.ancientspellcraft.tileentity.TileScribingDesk;
@@ -36,6 +50,7 @@ import com.windanesz.ancientspellcraft.tileentity.TileSkullWatch;
 import com.windanesz.ancientspellcraft.tileentity.TileSphereCognizance;
 import electroblob.wizardry.constants.Element;
 import net.minecraft.block.Block;
+import com.windanesz.ancientspellcraft.block.BlockConjuredMagma;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -51,6 +66,7 @@ import javax.annotation.Nonnull;
 @GameRegistry.ObjectHolder(AncientSpellcraft.MODID)
 @Mod.EventBusSubscriber
 public class AncientSpellcraftBlocks {
+
 
 	private AncientSpellcraftBlocks() {} // no instances
 
@@ -98,9 +114,29 @@ public class AncientSpellcraftBlocks {
 	//	public static final Block log_crystal_tree2 = placeholder();
 	public static final Block LEAVES_CRYSTAL_TREE = placeholder();
 	public static final Block CRYSTAL_MINE = placeholder();
-//	public static final Block ANCIENT_DIMENSION_BOUNDARY = placeholder();
+	//	public static final Block ANCIENT_DIMENSION_BOUNDARY = placeholder();
 	public static final Block PLACED_RUNE = placeholder();
 	public static final Block RUNE_USED = placeholder();
+
+	// "elemental" mushrooms
+	public static final Block MUSHROOM_POISON = placeholder();
+	public static final Block MUSHROOM_ICE = placeholder();
+	public static final Block MUSHROOM_FIRE = placeholder();
+	public static final Block MUSHROOM_WITHER = placeholder();
+	public static final Block MUSHROOM_FORCE = placeholder();
+	public static final Block MUSHROOM_HEALING = placeholder();
+	public static final Block MUSHROOM_SHOCKING = placeholder();
+
+	// special mushrooms
+	public static final Block MUSHROOM_MIND = placeholder();
+	public static final Block MUSHROOM_CLEANSING = placeholder();
+	public static final Block MUSHROOM_EXPLOSIVE = placeholder();
+	public static final Block MUSHROOM_EMPOWERING = placeholder();
+
+
+	public static final Block QUICKSAND = placeholder();
+	public static final Block CONJURED_MAGMA = placeholder();
+
 
 	public static void registerBlock(IForgeRegistry<Block> registry, String name, Block block) {
 		block.setRegistryName(AncientSpellcraft.MODID, name);
@@ -152,9 +188,25 @@ public class AncientSpellcraftBlocks {
 		//		registerBlock(registry, "log_crystal_tree2", new Block(Material.WOOD).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
 		registerBlock(registry, "leaves_crystal_tree", new BlockCrystalLeaves());
 		registerBlock(registry, "imbuement_altar_ruined", new BlockRuinedImbuementAltar(Material.ROCK));
-//		registerBlock(registry, "ancient_dimension_boundary", new BlockDimensionBoundary());
+		//		registerBlock(registry, "ancient_dimension_boundary", new BlockDimensionBoundary());
 		registerBlock(registry, "placed_rune", new BlockPlacedRune());
 		registerBlock(registry, "rune_used", new BlockUsedRune(Material.ROCK, MapColor.STONE));
+
+		registerBlock(registry, "mushroom_fire", new BlockMushroomFire());
+		registerBlock(registry, "mushroom_poison", new BlockMushroomPoison());
+		registerBlock(registry, "mushroom_ice", new BlockMushroomIce());
+		registerBlock(registry, "mushroom_wither", new BlockMushroomWither());
+		registerBlock(registry, "mushroom_force", new BlockMushroomForce());
+		registerBlock(registry, "mushroom_healing", new BlockMushroomHeal());
+		registerBlock(registry, "mushroom_shocking", new BlockMushroomShock());
+		registerBlock(registry, "mushroom_mind", new BlockMushroomMind());
+		registerBlock(registry, "mushroom_cleansing", new BlockMushroomCleansing());
+		registerBlock(registry, "mushroom_explosive", new BlockMushroomExplosive());
+		registerBlock(registry, "mushroom_empowering", new BlockMushroomEmpowering());
+
+
+		registerBlock(registry, "quicksand", new BlockQuickSand());
+		registerBlock(registry, "conjured_magma", new BlockConjuredMagma());
 	}
 
 	/**
@@ -171,6 +223,9 @@ public class AncientSpellcraftBlocks {
 		GameRegistry.registerTileEntity(TileSkullWatch.class, new ResourceLocation(AncientSpellcraft.MODID, "skull_watch"));
 		GameRegistry.registerTileEntity(TileScribingDesk.class, new ResourceLocation(AncientSpellcraft.MODID, "scribing_desk"));
 		GameRegistry.registerTileEntity(TileRune.class, new ResourceLocation(AncientSpellcraft.MODID, "placed_rune"));
+		GameRegistry.registerTileEntity(TileEntityMagicMushroom.class, new ResourceLocation(AncientSpellcraft.MODID, "magic_mushroom_tile"));
+
+		GameRegistry.registerTileEntity(TileEntityRevertingBlock.class, new ResourceLocation(AncientSpellcraft.MODID, "reverting_tile"));
 	}
 
 }

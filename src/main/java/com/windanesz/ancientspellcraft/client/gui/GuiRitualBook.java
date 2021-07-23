@@ -197,8 +197,8 @@ public class GuiRitualBook extends GuiScreen {
 
 			// right side
 			if (doublePage && currentPage == 0) {
-				desc = LangUtils.toElderFuthark(getRitual().getDescription());
-				this.fontRenderer.drawSplitString(rightSideDesc, left + 17 + 133, top + 14, 118, 0);
+				desc = LangUtils.toElderFuthark(rightSideDesc);
+				this.fontRenderer.drawSplitString(LangUtils.toElderFuthark(rightSideDesc), left + 17 + 133, top + 14, 118, 0);
 			}
 		}
 

@@ -15,6 +15,6 @@
     "type": "defence",
     "cost": 35,
     "chargeup": 0,
-    "cooldown": 200,
+    "cooldown": 80,
     "base_properties": {}
 }

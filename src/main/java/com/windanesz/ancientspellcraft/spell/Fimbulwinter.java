@@ -67,14 +67,8 @@ public class Fimbulwinter extends SpellAreaEffect {
 			ParticleBuilder.create(ParticleBuilder.Type.ICE).vel(0, 0.1, 0).fade(1f, 1f, 1f).spin(0.8f, -0.03f).time(40).entity(caster).scale(1.2f).spawn(world);
 		}
 
+		this.playSound(world, caster, ticksInUse, -1, modifiers);
 		return f;
-	}
-
-	private static BlockPos getRandomNearbyPos(EntityPlayer caster, World world, int radius) {
-		return caster.getPosition()
-				.offset(world.rand.nextBoolean() ? EnumFacing.EAST : EnumFacing.WEST, (world.rand.nextInt(radius) * (world.rand.nextBoolean() ? 1 : -0)))
-				.offset(world.rand.nextBoolean() ? EnumFacing.NORTH : EnumFacing.SOUTH, (world.rand.nextInt(radius) * (world.rand.nextBoolean() ? 1 : -0)))
-				.add(world.rand.nextDouble(), 10, world.rand.nextDouble());
 	}
 
 	@Override

@@ -1,0 +1,24 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": true,
+        "dispensers": true,
+        "commands": true,
+        "treasure": true,
+        "trades": true,
+        "looting": true
+    },
+    "tier": "apprentice",
+    "element": "fire",
+    "type": "utility",
+    "cost": 25,
+    "chargeup": 0,
+    "cooldown": 10,
+    "base_properties": {
+        "range": 10,
+        "block_lifetime": 900,
+        "effect:duration": 900
+    }
+}

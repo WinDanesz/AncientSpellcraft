@@ -1,0 +1,23 @@
+{
+  "enabled": {
+    "book": true,
+    "scroll": true,
+    "wands": true,
+    "npcs": true,
+    "dispensers": true,
+    "commands": true,
+    "treasure": true,
+	"trades": true,
+    "looting": true
+  },
+  "tier": "novice",
+  "element": "earth",
+  "type": "utility",
+  "cost": 15,
+  "chargeup": 30,
+  "cooldown": 80,
+  "base_properties": {
+    "range": 5,
+    "block_lifetime": 500
+  }
+}

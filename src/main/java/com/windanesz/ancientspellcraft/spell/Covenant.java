@@ -82,6 +82,7 @@ public class Covenant extends SpellRay {
 					if (changeStatus && !isAlreadyFollowing(wizard)) {
 						allyWithWizard(player, wizard);
 						player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:covenant.following", wizard.getDisplayName()), true);
+
 						return true;
 					}
 				}

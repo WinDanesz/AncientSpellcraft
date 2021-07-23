@@ -96,7 +96,7 @@ public class SpellTeleporter implements ITeleporter {
 				}
 
 				for (BlockPos currPos : BlockPos.getAllInBox(blockPos.add(-2, -1, -2), blockPos.add(2, -1, 2))) {
-					if (!player.world.isSideSolid(currPos, EnumFacing.UP)) {
+					if (player.world.isAirBlock(currPos) || player.world.getBlockState(currPos).getBlock() == Blocks.LAVA || player.world.getBlockState(currPos).getBlock() == Blocks.FLOWING_LAVA) {
 						player.world.setBlockState(currPos, Blocks.NETHERRACK.getDefaultState());
 					}
 				}

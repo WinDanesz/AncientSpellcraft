@@ -54,6 +54,8 @@ public class TileSentinel extends TileEntity implements ITickable {
 	private int ticksUntilNextSpell = 60;
 	private SpellModifiers modifiers = new SpellModifiers();
 
+	private int lifetime = -1;
+
 	private EntitySpellCaster spellCaster = null;
 
 	private float spellCasterHealth = 0;
@@ -119,6 +121,9 @@ public class TileSentinel extends TileEntity implements ITickable {
 		}
 		Spell storedSpell = Spell.registry.getValue(new ResourceLocation(compound.getString("spell")));
 		spell = storedSpell == null ? Spells.none : storedSpell;
+		if (compound.hasKey("lifetime")) {
+			this.lifetime = compound.getInteger("lifetime");
+		}
 	}
 
 	@Override
@@ -132,6 +137,12 @@ public class TileSentinel extends TileEntity implements ITickable {
 			compound.setString("owner_id", ownerUUID.toString());
 		}
 		compound.setString("spell", spell.getRegistryName().toString());
+		if (spellCaster != null) {
+			compound.setInteger("lifetime", spellCaster.getLifetime());
+		} else {
+			compound.setInteger("lifetime", lifetime);
+		}
+
 		return compound;
 	}
 
@@ -186,16 +197,7 @@ public class TileSentinel extends TileEntity implements ITickable {
 		}
 
 		if (spellCaster == null) {
-			EntitySpellCaster spellCaster = new EntitySpellCaster(world);
-			spellCaster.setPosition(this.pos.getX() + 0.5f, this.pos.getY(), this.pos.getZ() + 0.5f);
-			spellCaster.setContinuousSpell(spell);
-			spellCaster.setModifiers(modifiers);
-			spellCaster.setOwnerId(this.ownerUUID);
-			spellCaster.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getSpellCasterHealth());
-			spellCaster.setHealth(getSpellCasterHealth());
-			if (!world.isRemote)
-				world.spawnEntity(spellCaster);
-			this.spellCaster = spellCaster;
+			initSpellcaster();
 		} else {
 			this.spellCasterHealth = spellCaster.getHealth();
 		}
@@ -218,6 +220,9 @@ public class TileSentinel extends TileEntity implements ITickable {
 						if (Math.sqrt(distanceSq) <= maxAttackDistance) { // && isVisibleTarget(target)) {
 							if (tryCastSpell(target)) {
 								resetSpellTimer();
+
+								// only attack the first enemy
+								break;
 							}
 						}
 					}
@@ -286,7 +291,7 @@ public class TileSentinel extends TileEntity implements ITickable {
 	}
 
 	private void resetSpellTimer() {
-		ticksUntilNextSpell = spellCastFrequency;
+		ticksUntilNextSpell = (int) (spellCastFrequency * (large ? 0.6 : 1));
 	}
 
 	public boolean isValidTarget(Entity target) {
@@ -367,4 +372,27 @@ public class TileSentinel extends TileEntity implements ITickable {
 		return true;
 	}
 
+	public void setLifeTime(int lifetime) {
+		this.lifetime = lifetime;
+		if (spellCaster == null) {
+			initSpellcaster();
+		}
+		if (spellCaster != null) {
+			spellCaster.setLifetime(lifetime);
+		}
+	}
+
+	private void initSpellcaster() {
+		EntitySpellCaster spellCaster = new EntitySpellCaster(world);
+		spellCaster.setPosition(this.pos.getX() + 0.5f, this.pos.getY(), this.pos.getZ() + 0.5f);
+		spellCaster.setContinuousSpell(spell);
+		spellCaster.setModifiers(modifiers);
+		spellCaster.setOwnerId(this.ownerUUID);
+		spellCaster.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(getSpellCasterHealth());
+		spellCaster.setHealth(getSpellCasterHealth());
+		spellCaster.setLifetime(lifetime);
+		if (!world.isRemote)
+			world.spawnEntity(spellCaster);
+		this.spellCaster = spellCaster;
+	}
 }

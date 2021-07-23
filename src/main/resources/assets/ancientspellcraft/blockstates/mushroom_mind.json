@@ -1,0 +1,12 @@
+﻿{
+    "variants": {
+        "age=0": { "model": "ancientspellcraft:mushroom_mind_0" },
+        "age=1": { "model": "ancientspellcraft:mushroom_mind_1" },
+        "age=2": { "model": "ancientspellcraft:mushroom_mind_2" },
+        "age=3": { "model": "ancientspellcraft:mushroom_mind_3" },
+        "age=4": { "model": "ancientspellcraft:mushroom_mind_4" },
+        "age=5": { "model": "ancientspellcraft:mushroom_mind_5" },
+        "age=6": { "model": "ancientspellcraft:mushroom_mind_6" },
+        "age=7": { "model": "ancientspellcraft:mushroom_mind_7" }
+    }
+}

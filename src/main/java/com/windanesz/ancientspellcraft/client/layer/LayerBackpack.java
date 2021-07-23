@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class LayerBackpack implements LayerRenderer<EntityWizardMerchant> {
-//	private static final ResourceLocation WOLF_COLLAR = ;
+
 	private final RenderMerchantWizard wizardRenderer;
 	private final ModelBackpack sheepModel = new ModelBackpack();
 

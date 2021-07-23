@@ -412,7 +412,7 @@ public class ItemRelic extends Item {
 					tooltip.add(TextFormatting.GOLD + I18n.format("relic_type.spell.required_components"));
 
 					for (ItemStack stack1 : getSpellComponentItems(stack)) {
-						tooltip.add(" " + stack1.getDisplayName());
+						tooltip.add(" - " + stack1.getDisplayName());
 					}
 
 					tooltip.add(I18n.format("relic_type.spell.instruction"));
@@ -494,19 +494,19 @@ public class ItemRelic extends Item {
 
 		float f = player.world.rand.nextFloat();
 
-		if (f <= 0.25f) { // SPELL
+		if (f <= 0.4f) { // SPELL
 			setRelicType(stack, player, RelicType.SPELL);
 			setRandomSpell(player, stack);
 
-		} else if (0.25f < f && f <= 0.5f) { // INCANTATION
+		} else if (0.4f < f && f <= 0.55f) { // INCANTATION
 			setRelicType(stack, player, RelicType.INCANTATION);
 			setRandomIncantation(stack);
 
-		} else if (0.5f < f && f <= 0.75f) { // ENCHANTMENT
+		} else if (0.55f < f && f <= 0.8f) { // ENCHANTMENT
 			setRelicType(stack, player, RelicType.ENCHANTMENT);
 			setRandomEnchantment(stack, player);
 
-		} else if (0.75f < f && f <= 1f) { // POWER
+		} else if (0.8f < f && f <= 1f) { // POWER
 			setRelicType(stack, player, RelicType.POWER);
 			setRandomPower(stack, player);
 		}

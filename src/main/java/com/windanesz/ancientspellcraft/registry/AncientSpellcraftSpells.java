@@ -8,102 +8,7 @@ import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelGreaterMagic;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelMagic;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
-import com.windanesz.ancientspellcraft.spell.AntiMagicField;
-import com.windanesz.ancientspellcraft.spell.AquaticAgility;
-import com.windanesz.ancientspellcraft.spell.ArcaneAugmentation;
-import com.windanesz.ancientspellcraft.spell.ArcaneBeam;
-import com.windanesz.ancientspellcraft.spell.ArcaneMagnetism;
-import com.windanesz.ancientspellcraft.spell.Armageddon;
-import com.windanesz.ancientspellcraft.spell.AspectHunter;
-import com.windanesz.ancientspellcraft.spell.AttireAlteration;
-import com.windanesz.ancientspellcraft.spell.BlockWeaving;
-import com.windanesz.ancientspellcraft.spell.CallOfThePack;
-import com.windanesz.ancientspellcraft.spell.Candlelight;
-import com.windanesz.ancientspellcraft.spell.Celerity;
-import com.windanesz.ancientspellcraft.spell.ChannelEffects;
-import com.windanesz.ancientspellcraft.spell.ChannelPower;
-import com.windanesz.ancientspellcraft.spell.Conduit;
-import com.windanesz.ancientspellcraft.spell.Conflagration;
-import com.windanesz.ancientspellcraft.spell.ConjureFishingRod;
-import com.windanesz.ancientspellcraft.spell.ConjurePickaxe;
-import com.windanesz.ancientspellcraft.spell.ConjureShadowBlade;
-import com.windanesz.ancientspellcraft.spell.ConjureWater;
-import com.windanesz.ancientspellcraft.spell.Contingency;
-import com.windanesz.ancientspellcraft.spell.ContinuityCharm;
-import com.windanesz.ancientspellcraft.spell.Covenant;
-import com.windanesz.ancientspellcraft.spell.CreateIgloo;
-import com.windanesz.ancientspellcraft.spell.Cryostasis;
-import com.windanesz.ancientspellcraft.spell.CrystalMine;
-import com.windanesz.ancientspellcraft.spell.CureZombie;
-import com.windanesz.ancientspellcraft.spell.CurseArmor;
-import com.windanesz.ancientspellcraft.spell.CurseOfDeath;
-import com.windanesz.ancientspellcraft.spell.CurseOfEnder;
-import com.windanesz.ancientspellcraft.spell.CurseWard;
-import com.windanesz.ancientspellcraft.spell.DispelItemCurse;
-import com.windanesz.ancientspellcraft.spell.Drought;
-import com.windanesz.ancientspellcraft.spell.EagleEye;
-import com.windanesz.ancientspellcraft.spell.EssenceExtraction;
-import com.windanesz.ancientspellcraft.spell.Extinguish;
-import com.windanesz.ancientspellcraft.spell.EyeOfTheStorm;
-import com.windanesz.ancientspellcraft.spell.Farsight;
-import com.windanesz.ancientspellcraft.spell.Fimbulwinter;
-import com.windanesz.ancientspellcraft.spell.FireWall;
-import com.windanesz.ancientspellcraft.spell.FlintShard;
-import com.windanesz.ancientspellcraft.spell.Forcefend;
-import com.windanesz.ancientspellcraft.spell.FrostNova;
-import com.windanesz.ancientspellcraft.spell.Harvest;
-import com.windanesz.ancientspellcraft.spell.HellGate;
-import com.windanesz.ancientspellcraft.spell.HorseWhistle;
-import com.windanesz.ancientspellcraft.spell.IceTower;
-import com.windanesz.ancientspellcraft.spell.IceWorkbench;
-import com.windanesz.ancientspellcraft.spell.IntensifyingFocus;
-import com.windanesz.ancientspellcraft.spell.LavaVision;
-import com.windanesz.ancientspellcraft.spell.LivingComet;
-import com.windanesz.ancientspellcraft.spell.Magelight;
-import com.windanesz.ancientspellcraft.spell.MagmaStrider;
-import com.windanesz.ancientspellcraft.spell.ManaFlare;
-import com.windanesz.ancientspellcraft.spell.ManaVortex;
-import com.windanesz.ancientspellcraft.spell.Martyr;
-import com.windanesz.ancientspellcraft.spell.MetamagicProjectile;
-import com.windanesz.ancientspellcraft.spell.MightAndMagic;
-import com.windanesz.ancientspellcraft.spell.MineAS;
-import com.windanesz.ancientspellcraft.spell.NaturesSprout;
-import com.windanesz.ancientspellcraft.spell.Permagrowth;
-import com.windanesz.ancientspellcraft.spell.Permashrink;
-import com.windanesz.ancientspellcraft.spell.PocketDimension;
-import com.windanesz.ancientspellcraft.spell.PrismaticSpray;
-import com.windanesz.ancientspellcraft.spell.PuppetMaster;
-import com.windanesz.ancientspellcraft.spell.Pyrokinesis;
-import com.windanesz.ancientspellcraft.spell.RaiseSkeletonMage;
-import com.windanesz.ancientspellcraft.spell.Regrowth;
-import com.windanesz.ancientspellcraft.spell.SilencingSigil;
-import com.windanesz.ancientspellcraft.spell.SkullSentinel;
-import com.windanesz.ancientspellcraft.spell.SnowBlock;
-import com.windanesz.ancientspellcraft.spell.SpellBuffAS;
-import com.windanesz.ancientspellcraft.spell.SpellConjurationAS;
-import com.windanesz.ancientspellcraft.spell.SpellProjectileAOEPotion;
-import com.windanesz.ancientspellcraft.spell.SpellResizeSelf;
-import com.windanesz.ancientspellcraft.spell.SpellWard;
-import com.windanesz.ancientspellcraft.spell.StaticCharge;
-import com.windanesz.ancientspellcraft.spell.StoneFist;
-import com.windanesz.ancientspellcraft.spell.StonePunch;
-import com.windanesz.ancientspellcraft.spell.SummonAnchor;
-import com.windanesz.ancientspellcraft.spell.SummonBoat;
-import com.windanesz.ancientspellcraft.spell.SummonSkeletonHorse;
-import com.windanesz.ancientspellcraft.spell.SummonSpiritBear;
-import com.windanesz.ancientspellcraft.spell.SummonVolcano;
-import com.windanesz.ancientspellcraft.spell.Suppression;
-import com.windanesz.ancientspellcraft.spell.TameAnimal;
-import com.windanesz.ancientspellcraft.spell.TemporalCasualty;
-import com.windanesz.ancientspellcraft.spell.TimeKnot;
-import com.windanesz.ancientspellcraft.spell.Transference;
-import com.windanesz.ancientspellcraft.spell.TransportationPortal;
-import com.windanesz.ancientspellcraft.spell.UnholyAlliance;
-import com.windanesz.ancientspellcraft.spell.WaterWalking;
-import com.windanesz.ancientspellcraft.spell.WillOWisp;
-import com.windanesz.ancientspellcraft.spell.WizardShield;
-import com.windanesz.ancientspellcraft.spell.WordsOfUnbinding;
-import com.windanesz.ancientspellcraft.spell.Zombification;
+import com.windanesz.ancientspellcraft.spell.*;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
@@ -126,6 +31,7 @@ import javax.annotation.Nonnull;
 @ObjectHolder(AncientSpellcraft.MODID)
 @EventBusSubscriber
 public final class AncientSpellcraftSpells {
+
 
 	private AncientSpellcraftSpells() {} // no instances
 
@@ -206,6 +112,7 @@ public final class AncientSpellcraftSpells {
 	public static final Spell living_comet = placeholder();
 	public static final Spell might_and_magic = placeholder();
 	public static final Spell channel_effect = placeholder();
+	public static final Spell pocket_dimension = placeholder();
 
 	public static final Spell metamagic_projectile = placeholder();
 	public static final Spell contingency_fire = placeholder();
@@ -213,6 +120,7 @@ public final class AncientSpellcraftSpells {
 	public static final Spell contingency_damage = placeholder();
 	public static final Spell contingency_hostile_spellcast = placeholder();
 	public static final Spell contingency_critical_health = placeholder();
+	public static final Spell contingency_immobility = placeholder();
 	public static final Spell contingency_death = placeholder();
 	public static final Spell contingency_drowning = placeholder();
 	public static final Spell contingency_paralysis = placeholder();
@@ -220,10 +128,26 @@ public final class AncientSpellcraftSpells {
 	public static final Spell armageddon = placeholder();
 	public static final Spell fimbulwinter = placeholder();
 	public static final Spell shrink_self = placeholder();
+	public static final Spell grow_self = placeholder();
 	public static final Spell mass_shrink = placeholder();
 	public static final Spell mass_growth = placeholder();
 	public static final Spell permashrink = placeholder();
 	public static final Spell permagrowth = placeholder();
+	public static final Spell words_of_unbinding = placeholder();
+	public static final Spell astral_projection = placeholder();
+	public static final Spell dimensional_anchor = placeholder();
+	public static final Spell conjure_lesser_sentry = placeholder();
+	public static final Spell conjure_greater_sentry = placeholder();
+	public static final Spell fairy_ring = placeholder();
+	public static final Spell mushroom_forest = placeholder();
+	public static final Spell conjure_shovel = placeholder();
+	public static final Spell ice_cream = placeholder();
+	public static final Spell burrow = placeholder();
+	public static final Spell magma_shell = placeholder();
+	public static final Spell summon_fire_ant = placeholder();
+	public static final Spell summon_spider = placeholder();
+	public static final Spell soul_scorch = placeholder();
+	public static final Spell swamp = placeholder();
 
 	@SuppressWarnings("unchecked")
 	@SubscribeEvent
@@ -413,6 +337,29 @@ public final class AncientSpellcraftSpells {
 		registry.register(new Permashrink());
 		registry.register(new Permagrowth());
 		registry.register(new WordsOfUnbinding());
+		registry.register(new AstralTravel());
+		registry.register(new DimensionalAnchor());
+		registry.register(new ConjureSentry("conjure_lesser_sentry", false));
+		registry.register(new ConjureSentry("conjure_greater_sentry", true));
+		registry.register(new FairyRing());
+		registry.register(new MushroomForest());
+		registry.register(new QuicksandRing());
+		registry.register(new SummonQuicksand());
+		registry.register(new WildSporeling());
+		registry.register(new SporelingsAid());
+		registry.register(new Weakness());
+		registry.register(new SpellConjurationAS("conjure_shovel", AncientSpellcraftItems.spectral_shovel));
+		registry.register(new IceCream());
+		registry.register(new Burrow());
+		registry.register(new MagmaShell());
+		registry.register(new SummonFireAnt());
+		registry.register(new SummonSpider());
+		registry.register(new SoulScorch());
+		registry.register(new Swamp());
+		registry.register(new MagmaWall());
+		registry.register(new MoltenEarth());
+
+		//registry.register(new WarpWeapon()); TODO
 
 		/// BASE SPELL MODIFICATION OVERRIDES  ///
 
@@ -422,6 +369,7 @@ public final class AncientSpellcraftSpells {
 		if (Settings.spellCompatSettings.conjurePickaxeSpellOverride) {
 			registry.register(new ConjurePickaxe("conjure_pickaxe", WizardryItems.spectral_pickaxe));
 		}
+
 		/// BASE SPELL MODIFICATION OVERRIDES ///
 
 		//		registry.register(new HandOfGaia());

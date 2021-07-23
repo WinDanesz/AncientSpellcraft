@@ -20,6 +20,7 @@ import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class FrostNova extends Spell {
@@ -34,6 +35,21 @@ public class FrostNova extends Spell {
 	}
 
 	@Override
+	protected SoundEvent[] createSounds(){
+		return this.createContinuousSpellSounds();
+	}
+
+	@Override
+	protected void playSound(World world, EntityLivingBase entity, int ticksInUse, int duration, SpellModifiers modifiers, String... sounds){
+		this.playSoundLoop(world, entity, ticksInUse);
+	}
+
+	@Override
+	protected void playSound(World world, double x, double y, double z, int ticksInUse, int duration, SpellModifiers modifiers, String... sounds){
+		this.playSoundLoop(world, x, y, z, ticksInUse, duration);
+	}
+
+	@Override
 	public boolean canBeCastBy(TileEntityDispenser dispenser) {
 		return false;
 	}
@@ -45,6 +61,7 @@ public class FrostNova extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		this.playSound(world, caster, ticksInUse, -1, modifiers);
 
 		if (ticksInUse < 40) {
 			if (world.isRemote)

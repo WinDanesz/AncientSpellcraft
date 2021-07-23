@@ -58,8 +58,7 @@ public class Condensing extends Ritual implements IRitualIngredient, IHasItemToR
 		super.effect(world, caster, centerPiece);
 
 		// should run once every 9 seconds
-		if (!world.isRemote && world.getTotalWorldTime() % 1 == 0) {
-			//		if (!world.isRemote && world.getTotalWorldTime() % 180 == 0) {
+		if (!world.isRemote && world.getTotalWorldTime() % 180 == 0) {
 			float progress = 0;
 
 			if (centerPiece.getRitualData().hasKey(STORED_ITEM_TAG)) {
@@ -152,10 +151,8 @@ public class Condensing extends Ritual implements IRitualIngredient, IHasItemToR
 
 		return stack;
 	}
-
 	private float incrementGrowthTimer(float currentProgress) {
 		Item item = stack.getItem();
-
 		// 400 cycles to grow a magic crystal into a grand crystal (24000 ticks is a full day, 72000 equals 3 days)
 		if (item == WizardryItems.magic_crystal && stack.getMetadata() == 0) {
 			return currentProgress + 0.25f;
@@ -239,6 +236,11 @@ public class Condensing extends Ritual implements IRitualIngredient, IHasItemToR
 				item == AncientSpellcraftItems.crystal_shard_lightning || item == AncientSpellcraftItems.crystal_shard_ice ||
 				item == AncientSpellcraftItems.crystal_shard_healing || item == AncientSpellcraftItems.crystal_shard_fire ||
 				item == AncientSpellcraftItems.crystal_shard_earth;
+	}
+
+	@Override
+	public boolean shouldConsumeIngredients() {
+		return true;
 	}
 
 	@Override

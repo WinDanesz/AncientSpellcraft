@@ -1,0 +1,12 @@
+﻿{
+    "variants": {
+        "age=0": { "model": "ancientspellcraft:mushroom_poison_0" },
+        "age=1": { "model": "ancientspellcraft:mushroom_poison_1" },
+        "age=2": { "model": "ancientspellcraft:mushroom_poison_2" },
+        "age=3": { "model": "ancientspellcraft:mushroom_poison_3" },
+        "age=4": { "model": "ancientspellcraft:mushroom_poison_4" },
+        "age=5": { "model": "ancientspellcraft:mushroom_poison_5" },
+        "age=6": { "model": "ancientspellcraft:mushroom_poison_6" },
+        "age=7": { "model": "ancientspellcraft:mushroom_poison_7" }
+    }
+}

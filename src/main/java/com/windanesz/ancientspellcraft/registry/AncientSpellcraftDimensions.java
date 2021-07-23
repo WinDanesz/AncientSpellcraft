@@ -38,8 +38,7 @@ public class AncientSpellcraftDimensions {
 				return i;
 			}
 		}
-
-		System.out.println("ERROR: Could not find free dimension ID");
+		AncientSpellcraft.logger.error("ERROR: Could not find free dimension ID");
 		return null;
 	}
 

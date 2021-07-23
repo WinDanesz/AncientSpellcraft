@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.tileentity;
 
+import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
@@ -7,6 +8,7 @@ import electroblob.wizardry.item.ItemArtefact;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -20,6 +22,9 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 @Mod.EventBusSubscriber
 public class TileMageLight extends TileEntity implements ITickable {
 	public TileMageLight() {}
+
+	private int lifeTime = 0;
+	private boolean extended = false;
 
 	/**
 	 * This controls whether the tile entity gets replaced whenever the block state
@@ -69,23 +74,50 @@ public class TileMageLight extends TileEntity implements ITickable {
 	@Override
 	public void update() {
 
-		if (world.getTileEntity(pos.down()) instanceof TileRune) {
-			return;
-		}
+		if (lifeTime > 0) {
+			lifeTime--;
+		} else {
 
-		// check if player has moved away from the tile entity
-		EntityPlayer thePlayer = world.getClosestPlayer(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5, 2.0D, false);
-
-		if (thePlayer == null) {
-			if (world.getBlockState(getPos()).getBlock() ==
-					AncientSpellcraftBlocks.MAGELIGHT) {
-				world.setBlockToAir(this.getPos());
+			if (world.getTileEntity(pos.down()) instanceof TileRune) {
+				return;
 			}
-		} else if (!(thePlayer.isPotionActive(AncientSpellcraftPotions.magelight) || ItemArtefact.isArtefactActive(thePlayer, AncientSpellcraftItems.charm_magic_light))) {
-			if (world.getBlockState(getPos()).getBlock() == AncientSpellcraftBlocks.MAGELIGHT) {
-				world.setBlockToAir(getPos());
+
+			// check if player has moved away from the tile entity
+			EntityPlayer thePlayer = world.getClosestPlayer(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5, 2.0D, false);
+
+			if (thePlayer == null) {
+				if (world.getBlockState(getPos()).getBlock() == AncientSpellcraftBlocks.MAGELIGHT) {
+					world.setBlockToAir(this.getPos());
+				}
+			} else {
+				boolean artefact = ItemNewArtefact.isNewArtefactActive(thePlayer, AncientSpellcraftItems.head_magelight);
+				if (artefact && !extended) {
+					extended = true;
+					lifeTime = 600;
+				}
+				if (!(thePlayer.isPotionActive(AncientSpellcraftPotions.magelight) || ItemArtefact.isArtefactActive(thePlayer, AncientSpellcraftItems.charm_magic_light))) {
+
+
+					if (world.getBlockState(getPos()).getBlock() == AncientSpellcraftBlocks.MAGELIGHT) {
+						world.setBlockToAir(getPos());
+					}
+				}
 			}
 		}
+	}
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		compound.setInteger("lifetime", lifeTime);
+		compound.setBoolean("extended", extended);
+		return super.writeToNBT(compound);
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		lifeTime = compound.getInteger("lifetime");
+		extended = compound.getBoolean("extended");
+		super.readFromNBT(compound);
 	}
 }
 	

@@ -1,0 +1,12 @@
+﻿{
+    "variants": {
+        "age=0": { "model": "ancientspellcraft:mushroom_wither_0" },
+        "age=1": { "model": "ancientspellcraft:mushroom_wither_1" },
+        "age=2": { "model": "ancientspellcraft:mushroom_wither_2" },
+        "age=3": { "model": "ancientspellcraft:mushroom_wither_3" },
+        "age=4": { "model": "ancientspellcraft:mushroom_wither_4" },
+        "age=5": { "model": "ancientspellcraft:mushroom_wither_5" },
+        "age=6": { "model": "ancientspellcraft:mushroom_wither_6" },
+        "age=7": { "model": "ancientspellcraft:mushroom_wither_7" }
+    }
+}

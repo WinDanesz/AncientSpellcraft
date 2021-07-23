@@ -290,7 +290,7 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 
 	public void setResearchDuration() {
 		if (getInputStack().getItem() instanceof ItemRelic) {
-			researchDuration = 20;
+			researchDuration = 80;
 		} else {
 			researchDuration = getResearchDuration(getCurrentSpell());
 		}

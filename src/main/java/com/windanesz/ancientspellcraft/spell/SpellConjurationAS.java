@@ -19,8 +19,6 @@ public class SpellConjurationAS extends SpellConjuration {
 		super(AncientSpellcraft.MODID, name, item);
 	}
 
-
-
 	/**
 	 * Adds this spell's item to the given player's inventory, placing it in the main hand if the main hand is empty.
 	 * Returns true if the item was successfully added to the player's inventory, false if there as no space or if the
@@ -31,11 +29,12 @@ public class SpellConjurationAS extends SpellConjuration {
 
 		ItemStack stack = new ItemStack(item);
 
+		if (doesPlayerHaveItem(caster, item)) return false;
+
 		IConjuredItem.setDurationMultiplier(stack, modifiers.get(WizardryItems.duration_upgrade));
 		IConjuredItem.setDamageMultiplier(stack, modifiers.get(SpellModifiers.POTENCY));
 
-		if (doesPlayerHaveItem(caster, item))
-			return false;
+		addItemExtras(caster, stack, modifiers);
 
 		if (caster.getHeldItemMainhand().isEmpty()) {
 			caster.setHeldItem(EnumHand.MAIN_HAND, stack);

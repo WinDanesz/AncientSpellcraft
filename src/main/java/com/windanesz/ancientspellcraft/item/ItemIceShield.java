@@ -47,7 +47,6 @@ public class ItemIceShield extends Item implements IConjuredItem {
 
 	private EnumRarity rarity = EnumRarity.COMMON;
 
-
 	public ItemIceShield() {
 		setFull3D();
 		this.maxStackSize = 1;
@@ -78,38 +77,37 @@ public class ItemIceShield extends Item implements IConjuredItem {
 		return super.canContinueUsing(oldStack, newStack);
 	}
 
-	public Item setRarity(EnumRarity rarity){
+	public Item setRarity(EnumRarity rarity) {
 		this.rarity = rarity;
 		return this;
 	}
 
 	@Override
-	public EnumRarity getRarity(ItemStack stack){
+	public EnumRarity getRarity(ItemStack stack) {
 		return rarity;
 	}
 
 	@Override
-	public int getMaxDamage(ItemStack stack){
+	public int getMaxDamage(ItemStack stack) {
 		return this.getMaxDamageFromNBT(stack, Spells.conjure_sword);
 	}
-//
-//	@Override
-//	// This method allows the code for the item's timer to be greatly simplified by damaging it directly from
-//	// onUpdate() and removing the workaround that involved WizardData and all sorts of crazy stuff.
-//	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-//
-//		if (!oldStack.isEmpty() || !newStack.isEmpty()) {
-//			// We only care about the situation where we specifically want the animation NOT to play.
-//			if (oldStack.getItem() == newStack.getItem() && !slotChanged)
-//				return false;
-//		}
-//
-//		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
-//	}
+	//
+	//	@Override
+	//	// This method allows the code for the item's timer to be greatly simplified by damaging it directly from
+	//	// onUpdate() and removing the workaround that involved WizardData and all sorts of crazy stuff.
+	//	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+	//
+	//		if (!oldStack.isEmpty() || !newStack.isEmpty()) {
+	//			// We only care about the situation where we specifically want the animation NOT to play.
+	//			if (oldStack.getItem() == newStack.getItem() && !slotChanged)
+	//				return false;
+	//		}
+	//
+	//		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
+	//	}
 
 	@Override
-	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
-	{
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
 		oldStack = oldStack.copy();
 		oldStack.setTagCompound(null);
 		newStack = newStack.copy();
@@ -121,10 +119,12 @@ public class ItemIceShield extends Item implements IConjuredItem {
 	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
 
 		int damage = stack.getItemDamage();
+
 		if (damage > stack.getMaxDamage() || damage < 0) {
 			// breaks
-			if (entity instanceof EntityPlayer && ((EntityPlayer) entity).getHeldItemOffhand().getItem() instanceof ItemIceShield) {
-				((EntityPlayer) entity).setHeldItem(EnumHand.OFF_HAND, ItemStack.EMPTY);
+
+			if (entity instanceof EntityPlayer && ((EntityPlayer) entity).inventory.getStackInSlot(slot).getItem() instanceof ItemIceShield) {
+				((EntityPlayer) entity).inventory.decrStackSize(slot, 1);
 			}
 
 			// adapted from electroblob.wizardry.entity.projectile.EntityIceCharge (author: Electroblob)
@@ -209,8 +209,8 @@ public class ItemIceShield extends Item implements IConjuredItem {
 				}
 			}
 
-			entity.replaceItemInInventory(slot, ItemStack.EMPTY);
 		} else {
+			// decrease shield lifetime
 			stack.setItemDamage(damage + 1);
 		}
 	}

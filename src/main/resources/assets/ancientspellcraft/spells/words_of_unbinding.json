@@ -1,7 +1,7 @@
 {
     "enabled": {
         "book": true,
-        "scroll": true,
+        "scroll": false,
         "wands": true,
         "npcs": false,
         "dispensers": true,
@@ -13,8 +13,8 @@
     "tier": "advanced",
     "element": "magic",
     "type": "alteration",
-    "cost": 200,
+    "cost": 150,
     "chargeup": 80,
-    "cooldown": 0,
+    "cooldown": 100,
     "base_properties": {}
 }

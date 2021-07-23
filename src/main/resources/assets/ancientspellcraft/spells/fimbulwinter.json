@@ -11,7 +11,7 @@
         "looting": true
     },
     "tier": "master",
-    "element": "fire",
+    "element": "ice",
     "type": "attack",
     "cost": 70,
     "chargeup": 60,

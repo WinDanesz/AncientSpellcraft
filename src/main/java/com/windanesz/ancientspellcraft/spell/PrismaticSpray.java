@@ -38,9 +38,7 @@ public class PrismaticSpray extends Spell {
 	public PrismaticSpray() {
 
 		super(AncientSpellcraft.MODID, "prismatic_spray", SpellActions.SUMMON, false);
-		addProperties(BLAST_RADIUS);
-		addProperties(DIRECT_DAMAGE);
-		addProperties(EFFECT_DURATION);
+		addProperties(BLAST_RADIUS, DIRECT_DAMAGE, EFFECT_DURATION);
 		soundValues(1.0f, 1.0f, 0.1f);
 	}
 
@@ -58,7 +56,6 @@ public class PrismaticSpray extends Spell {
 			Random rnd = new Random(42);
 
 			double radius = getProperty(BLAST_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
-
 
 			List<EntityLivingBase> targets = EntityUtils.getEntitiesWithinRadius(radius, caster.posX, caster.posY, caster.posZ, world, EntityLivingBase.class);
 

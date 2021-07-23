@@ -57,21 +57,19 @@ public class WordsOfUnbinding extends Spell {
 				return true;
 			} else {
 				if (!world.isRemote) {
-					caster.sendStatusMessage(new TextComponentTranslation("You should hold an enchanted item in your offhand to disenchant it"), false);
+					caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:words_of_unbinding.disenchanting_no_item"), false);
 				}
 			}
 			return false;
 		}
 
-		if (!(caster.getHeldItemMainhand().getItem() instanceof ItemWand || caster.getHeldItemOffhand().getItem() instanceof ItemWand) ||
-				(!(caster.getHeldItemMainhand().getItem() instanceof ItemWand) && caster.getHeldItemOffhand().getItem() instanceof ItemWand)) {
+		if (caster.getHeldItem(hand).isEmpty() || !(caster.getHeldItem(hand).getItem() instanceof ItemWand)) {
 			if (!world.isRemote)
-				caster.sendStatusMessage(new TextComponentTranslation("You must cast this spell with a Wand."), false);
+				caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:words_of_unbinding.no_wand"), false);
 			return false;
 		}
 
-		if (caster.isHandActive()) {
-			ItemStack stack = caster.getHeldItem(caster.getActiveHand());
+		ItemStack stack = caster.getHeldItem(hand);
 			if (stack.getItem() instanceof ItemWand) {
 				if (WandHelper.getTotalUpgrades(stack) > 0) {
 					if (!world.isRemote) {
@@ -90,23 +88,15 @@ public class WordsOfUnbinding extends Spell {
 							return action;
 						}
 					}
-
 				}
 
 			} else {
 				if (!world.isRemote)
-					caster.sendStatusMessage(new TextComponentTranslation("You must cast this spell with a Wand which has at least one upgrade."), false);
+					caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:words_of_unbinding.no_upgrade_to_remove"), false);
 				return false;
 
 			}
-			System.out.println(caster.getActiveHand());
-			;
 
-		} else {
-			if (!world.isRemote)
-				caster.sendStatusMessage(new TextComponentTranslation("You must cast this spell with a Wand."), false);
-			return false;
-		}
 
 		if (world.isRemote)
 			spawnParticles(world, caster);

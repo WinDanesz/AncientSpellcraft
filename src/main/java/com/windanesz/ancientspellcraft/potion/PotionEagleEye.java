@@ -12,6 +12,7 @@ import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+// Also see com.windanesz.ancientspellcraft.handler.ASEventHandler.onPotionApplicableEvent
 @Mod.EventBusSubscriber()
 public class PotionEagleEye extends PotionMagicEffect {
 
@@ -23,9 +24,6 @@ public class PotionEagleEye extends PotionMagicEffect {
 
 	@Override
 	public boolean isReady(int duration, int amplifier) {
-		// Execute the effect every tick here as we have access to the duration
-		// enforcing 3rd person view makes the player hand not render // TODO: remove
-		// Minecraft.getMinecraft().gameSettings.thirdPersonView = 1; // TODO: remove
 		return true;
 	}
 
@@ -34,13 +32,14 @@ public class PotionEagleEye extends PotionMagicEffect {
 		if (event.getEntity() instanceof EntityPlayer && event.getEntity().world.isRemote && event.getPotionEffect().getPotion() == AncientSpellcraftPotions.eagle_eye) {
 			Wizardry.proxy.playBlinkEffect((EntityPlayer) event.getEntity());
 
-			ClientEventHandler.timeout = 10;
-			ClientEventHandler.enabled = true;
+			ClientEventHandler.astralTravelInputTimeout = 10;
+			ClientEventHandler.EAGLE_EYE_ENABLED = true;
 			ClientEventHandler.x = (int) Minecraft.getMinecraft().player.posX;
 			ClientEventHandler.y = (int) Minecraft.getMinecraft().player.posY + 50;
 			ClientEventHandler.z = (int) Minecraft.getMinecraft().player.posZ;
 		}
 	}
+
 }
 
 

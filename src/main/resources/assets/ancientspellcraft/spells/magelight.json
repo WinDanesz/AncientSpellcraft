@@ -17,7 +17,7 @@
     "chargeup": 40,
     "cooldown": 120,
     "base_properties": {
-        "magelight_duration": 1200,
+        "magelight_duration": 1800,
         "magelight_strength": 0
     }
 }

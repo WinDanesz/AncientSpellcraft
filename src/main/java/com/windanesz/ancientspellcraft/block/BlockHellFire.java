@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.block;
 
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import com.windanesz.ancientspellcraft.util.SpellTeleporter;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.block.Block;
@@ -114,7 +115,8 @@ public class BlockHellFire extends Block {
 	}
 
 	public void teleportPlayer(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-		if (entityIn instanceof EntityPlayer && !entityIn.isRiding() && !entityIn.isBeingRidden() && entityIn.isNonBoss()) {
+		if (entityIn instanceof EntityPlayer && !entityIn.isRiding() && !entityIn.isBeingRidden() && entityIn.isNonBoss()
+				&& !((EntityPlayer) entityIn).isPotionActive(AncientSpellcraftPotions.dimensional_anchor)) {
 			int currDim = entityIn.world.provider.getDimension();
 			int targetDim;
 			int x = pos.getX();

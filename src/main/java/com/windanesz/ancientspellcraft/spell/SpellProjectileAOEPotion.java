@@ -13,11 +13,16 @@ import electroblob.wizardry.spell.SpellProjectile;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -68,6 +73,27 @@ public class SpellProjectileAOEPotion<T extends EntityMagicProjectile> extends S
 	}
 
 	@Override
+	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		if (ASArtemisLibIntegration.enabled()) {
+			return super.cast(world, caster, hand, ticksInUse, modifiers);
+		} else {
+			if (!world.isRemote)
+				caster.sendStatusMessage(new TextComponentTranslation("tooltip.ancientspellcraft:missing_artemislib.disabled_spell"), false);
+			return false;
+		}
+	}
+
+	@Override
+	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
+		return ASArtemisLibIntegration.enabled() && super.cast(world, caster, hand, ticksInUse, target, modifiers);
+	}
+
+	@Override
+	public boolean cast(World world, double x, double y, double z, EnumFacing direction, int ticksInUse, int duration, SpellModifiers modifiers) {
+		return ASArtemisLibIntegration.enabled() && super.cast(world, x, y, z, direction, ticksInUse, duration, modifiers);
+	}
+
+	@Override
 	public void init() {
 		// Loads the potion set
 		this.potionSet = Arrays.stream(effects).map(Supplier::get).collect(Collectors.toSet());
@@ -82,21 +108,6 @@ public class SpellProjectileAOEPotion<T extends EntityMagicProjectile> extends S
 		}
 	}
 
-	public Spell setParticle(ResourceLocation particle) {
-		this.particle = particle;
-		return this;
-	}
-
-	public Spell setDamageType(MagicDamage.DamageType damageType) {
-		this.damageType = damageType;
-		return this;
-	}
-
-	public Spell setMaxAmplifierLevel(int maxLevel) {
-		this.maxLevel = maxLevel;
-		return this;
-	}
-
 	public MagicDamage.DamageType getDamageType() { return damageType; }
 
 	public ResourceLocation getParticle() { return particle; }
@@ -108,13 +119,6 @@ public class SpellProjectileAOEPotion<T extends EntityMagicProjectile> extends S
 	public float getB() { return b; }
 
 	///////////// Standard SpellBuff methods, Author: Electroblob /////////////
-
-	/**
-	 * Returns an unmodifiable view of the set of {@link Potion} objects that this spell applies to its caster.
-	 */
-	public Set<Potion> getPotionSet() {
-		return Collections.unmodifiableSet(potionSet);
-	}
 
 	// Potion-specific equivalent to defining the identifiers as constants
 

@@ -23,10 +23,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemEnchantedNameTag extends ItemNameTag implements IWorkbenchItem, IManaStoringItem {
+public class ItemEnchantedNameTag extends ItemNameTag {
 	public ItemEnchantedNameTag() {
 		this.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
-		this.setMaxDamage(300);
 		this.maxStackSize = 1;
 	}
 
@@ -41,7 +40,7 @@ public class ItemEnchantedNameTag extends ItemNameTag implements IWorkbenchItem,
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean hasEffect(ItemStack stack) {
-		return !(isManaEmpty(stack));
+		return true;
 	}
 
 	@Override
@@ -65,96 +64,13 @@ public class ItemEnchantedNameTag extends ItemNameTag implements IWorkbenchItem,
 		return false;
 	}
 
-	@Override
-	public int getSpellSlotCount(ItemStack stack) {
-		return 0;
-	}
-
-	@Override
-	public boolean onApplyButtonPressed(EntityPlayer player, Slot centre, Slot crystals, Slot upgrade, Slot[] spellBooks) {
-		boolean changed = false;
-		if (crystals.getStack() != ItemStack.EMPTY && !this.isManaFull(centre.getStack())) {
-
-			int chargeDepleted = this.getManaCapacity(centre.getStack()) - this.getMana(centre.getStack());
-
-			if (crystals.getStack().getCount() * Constants.MANA_PER_CRYSTAL < chargeDepleted) {
-				// If there aren't enough crystals to fully charge the name tag
-				this.rechargeMana(centre.getStack(), crystals.getStack().getCount() * Constants.MANA_PER_CRYSTAL);
-				crystals.decrStackSize(crystals.getStack().getCount());
-
-			} else {
-				// If there are excess crystals (or just enough)
-				this.setMana(centre.getStack(), this.getManaCapacity(centre.getStack()));
-				crystals.decrStackSize((int) Math.ceil(((double) chargeDepleted) / Constants.MANA_PER_CRYSTAL));
-			}
-
-			changed = true;
-		}
-
-		return changed;
-	}
-
-	/**
-	 * Returns whether the tooltip (dark grey box) should be drawn when this item is in an arcane workbench. Only
-	 * called client-side.
-	 *
-	 * @param stack The itemstack to query.
-	 * @return True if the workbench tooltip should be shown, false if not.
-	 */
-	@Override
-	public boolean showTooltip(ItemStack stack) {
-		return true;
-	}
-
-	// can place in the workbench middle slot
-	@Override
-	public boolean canPlace(ItemStack stack) {
-		return true;
-	}
-
 	/**
 	 * allows items to add custom lines of information to the mouseover description
 	 */
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
-		if ((isManaEmpty(stack))) { // no mana tooltip
-			Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc_empty");
-		} else { // has mana tooltip
-			Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc_filled");
-		}
-		// TODO: if it is renamed already, display a different tag
-
-		//				We don't want a mana tooltip for this item.
-		if (advanced.isAdvanced()) {
-			// Advanced tooltips for debugging
-			// current mana
-			tooltip.add("\u00A79" + net.minecraft.client.resources.I18n.format("item." + Wizardry.MODID + ":wand.mana",
-					this.getMana(stack), this.getManaCapacity(stack)));
-
-		}
-	}
-
-	@Override
-	public int getMana(ItemStack stack) {
-		return getManaCapacity(stack) - getDamage(stack);
-	}
-
-	@Override
-	public void setDamage(ItemStack stack, int damage) {
-		// Overridden to do nothing to stop repair things from 'repairing' the mana in a wand
-	}
-
-	@Override
-	public void setMana(ItemStack stack, int mana) {
-		// Using super (which can only be done from in here) bypasses the above override
-		super.setDamage(stack, getManaCapacity(stack) - mana);
-	}
-
-
-	@Override
-	public int getManaCapacity(ItemStack stack) {
-		return this.getMaxDamage(stack);
+		Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc_filled");
 	}
 
 	@Override
@@ -162,7 +78,7 @@ public class ItemEnchantedNameTag extends ItemNameTag implements IWorkbenchItem,
 		ItemStack stack = player.getHeldItem(hand);
 		if (hand == EnumHand.MAIN_HAND) {
 			if (!world.isRemote) {
-				player.sendStatusMessage(new TextComponentTranslation("item." + this.getRegistryName() + ".right_click"), true);
+				player.sendStatusMessage(new TextComponentTranslation("item." + this.getRegistryName() + ".right_click"), false);
 				player.sendMessage(new TextComponentTranslation("spell.ancientspellcraft:will_o_wisp.try_listbiomes"));
 			}
 
@@ -174,7 +90,7 @@ public class ItemEnchantedNameTag extends ItemNameTag implements IWorkbenchItem,
 					return new ActionResult<>(EnumActionResult.FAIL, stack);
 				} else {
 					if (!world.isRemote) {
-						player.sendStatusMessage(new TextComponentTranslation("item." + this.getRegistryName() + ".right_click"), true);
+						player.sendStatusMessage(new TextComponentTranslation("item." + this.getRegistryName() + ".right_click"), false);
 						player.sendMessage(new TextComponentTranslation("spell.ancientspellcraft:will_o_wisp.try_listbiomes"));
 
 					}

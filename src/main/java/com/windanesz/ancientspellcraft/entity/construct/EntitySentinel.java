@@ -4,7 +4,7 @@ import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-
+// TODO: this is unused??
 public class EntitySentinel extends EntityMagicConstruct {
 
 	public EntitySentinel(World world) {

@@ -2,7 +2,9 @@ package com.windanesz.ancientspellcraft.client;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.CommonProxy;
+import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.block.BlockCrystalLeaves;
+import com.windanesz.ancientspellcraft.block.BlockMagicMushroom;
 import com.windanesz.ancientspellcraft.client.model.ItemColorizer;
 import com.windanesz.ancientspellcraft.client.particle.ParticleConstantBeam;
 import com.windanesz.ancientspellcraft.client.particle.ParticleSoulChain;
@@ -32,7 +34,10 @@ import com.windanesz.ancientspellcraft.entity.EntityVolcano;
 import com.windanesz.ancientspellcraft.entity.EntityWisp;
 import com.windanesz.ancientspellcraft.entity.EntityWizardMerchant;
 import com.windanesz.ancientspellcraft.entity.construct.EntityAntiMagicField;
+import com.windanesz.ancientspellcraft.entity.construct.EntityBarterConstruct;
+import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySilencingSigil;
+import com.windanesz.ancientspellcraft.entity.construct.EntitySpellTicker;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
 import com.windanesz.ancientspellcraft.entity.construct.EntityTransportationPortal;
 import com.windanesz.ancientspellcraft.entity.living.EntityFireAnt;
@@ -52,9 +57,9 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityManaVortex;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
 import com.windanesz.ancientspellcraft.packet.PacketContinuousRitual;
+import com.windanesz.ancientspellcraft.packet.PacketMushroomActivation;
 import com.windanesz.ancientspellcraft.packet.PacketStartRitual;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
-import com.windanesz.ancientspellcraft.tileentity.EntityBarter;
 import com.windanesz.ancientspellcraft.tileentity.TileRune;
 import com.windanesz.ancientspellcraft.tileentity.TileSentinel;
 import com.windanesz.ancientspellcraft.tileentity.TileSkullWatch;
@@ -69,6 +74,7 @@ import electroblob.wizardry.client.renderer.entity.RenderSigil;
 import electroblob.wizardry.client.renderer.entity.layers.LayerTiledOverlay;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.ISpellCastingItem;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.resources.I18n;
@@ -76,6 +82,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.Style;
@@ -85,6 +92,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.input.Keyboard;
 
@@ -98,16 +106,7 @@ public class ClientProxy extends CommonProxy {
 	public static KeyBinding KEY_ACTIVATE_CHARM_BAUBLE;
 	public static KeyBinding KEY_ACTIVATE_RING1_BAUBLE;
 	public static KeyBinding KEY_ACTIVATE_RING2_BAUBLE;
-	public static KeyBinding keyOpenToolMenu;
-
-	public static KeyBinding yt;
-	public static KeyBinding yt2;
-	public static KeyBinding zt;
-	public static KeyBinding zt2;
-	public static KeyBinding xt;
-	public static KeyBinding xt2;
-	public static KeyBinding reset;
-	public static KeyBinding switc;
+	public static KeyBinding KEY_ACTIVATE_RADIAL_SPELL_MENU;
 
 	@Override
 	public void initialiseLayers() {
@@ -115,9 +114,15 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	public void init() {
+		registerKeybindings();
 
-		ClientRegistry.registerKeyBinding(keyOpenToolMenu =
-				new KeyBinding("key.ancientspellcraft.open", Keyboard.KEY_R, "key.ancientspellcraft.category"));
+		// init colored items
+		ItemColorizer.init();
+	}
+
+	private void registerKeybindings() {
+		// Initializing
+		ClientRegistry.registerKeyBinding(KEY_ACTIVATE_RADIAL_SPELL_MENU = new KeyBinding("key.ancientspellcraft.open_radial_spell_menu", Keyboard.KEY_R, "key.ancientspellcraft.category"));
 		//keyOpenToolMenu.
 
 		KEY_ACTIVATE_CHARM_BAUBLE = new KeyBinding("key.ancientspellcraft.charm_bauble_activate", Keyboard.KEY_K, "key.ancientspellcraft.category");
@@ -128,26 +133,6 @@ public class ClientProxy extends CommonProxy {
 
 		KEY_ACTIVATE_RING2_BAUBLE = new KeyBinding("key.ancientspellcraft.charm_ring_2_activate", Keyboard.KEY_J, "key.ancientspellcraft.category");
 		ClientRegistry.registerKeyBinding(KEY_ACTIVATE_RING2_BAUBLE);
-
-		switc = new KeyBinding("Enable / Disable", Keyboard.KEY_V, "FreeCam");
-		ClientRegistry.registerKeyBinding(switc);
-		reset = new KeyBinding("Reset", Keyboard.KEY_O, "FreeCam");
-		ClientRegistry.registerKeyBinding(reset);
-		yt = new KeyBinding("Up", Keyboard.KEY_SPACE, "FreeCam");
-		ClientRegistry.registerKeyBinding(yt);
-		yt2 = new KeyBinding("Down", Keyboard.KEY_RSHIFT, "FreeCam");
-		ClientRegistry.registerKeyBinding(yt2);
-		zt = new KeyBinding("Right", Keyboard.KEY_RIGHT, "FreeCam");
-		ClientRegistry.registerKeyBinding(zt);
-		zt2 = new KeyBinding("Left", Keyboard.KEY_LEFT, "FreeCam");
-		ClientRegistry.registerKeyBinding(zt2);
-		xt = new KeyBinding("Forward", Keyboard.KEY_UP, "FreeCam");
-		ClientRegistry.registerKeyBinding(xt);
-		xt2 = new KeyBinding("Backward", Keyboard.KEY_DOWN, "FreeCam");
-		ClientRegistry.registerKeyBinding(xt2);
-
-		// init colored items
-		ItemColorizer.init();
 	}
 
 	@SubscribeEvent
@@ -155,7 +140,11 @@ public class ClientProxy extends CommonProxy {
 	{
 		Minecraft mc = Minecraft.getMinecraft();
 
-		while (keyOpenToolMenu.isPressed()) {
+		if (!Settings.clientSettings.radial_menu_enabled) {
+			return;
+		}
+
+		while (KEY_ACTIVATE_RADIAL_SPELL_MENU.isPressed()) {
 			if (mc.currentScreen == null) {
 				ItemStack inHand = mc.player.getHeldItemMainhand();
 				if (inHand.getItem() instanceof ISpellCastingItem) {
@@ -166,13 +155,13 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	static void wipeOpen() {
-		while (keyOpenToolMenu.isPressed()) {
+		while (KEY_ACTIVATE_RADIAL_SPELL_MENU.isPressed()) {
 		}
 	}
 
 	public void registerRenderers() {
 
-		// CREATURES
+		////////// CREATURES //////////
 		RenderingRegistry.registerEntityRenderingHandler(EntityWisp.class, manager -> new RenderWisp(manager, 0.7f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/wisp.png"), true));
 		RenderingRegistry.registerEntityRenderingHandler(EntityMageLight.class, manager -> new RenderEntityMageLight(manager, 0.7f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/wisp.png"), true));
 		RenderingRegistry.registerEntityRenderingHandler(EntityVoidCreeper.class, RenderVoidCreeper::new);
@@ -183,7 +172,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityFireAnt.class, RenderFireSpider::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityVolcano.class, RenderVolcano::new);
 
-		// Throwables and projectiles
+		////////// Throwables and projectiles //////////
 		RenderingRegistry.registerEntityRenderingHandler(EntityDispelMagic.class, manager -> new RenderProjectile(manager, 0.4f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/dispel_magic.png"), false));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDispelGreaterMagic.class, manager -> new RenderProjectile(manager, 0.7f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/dispel_magic.png"), false));
 		RenderingRegistry.registerEntityRenderingHandler(EntityContingencyProjectile.class, manager -> new RenderProjectile(manager, 0.7f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/contingency_projectile.png"), true));
@@ -191,31 +180,32 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityHeart.class, manager -> new RenderProjectile(manager, 0.7f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/healing_heart.png"), false));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDevoritiumBomb.class, manager -> new RenderProjectile(manager, 0.6f, new ResourceLocation(AncientSpellcraft.MODID, "textures/items/devoritium_bomb.png"), false));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlint.class, manager -> new RenderMagicArrow(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/flint_shard.png"), false, 6.0, 1.0, 9, 8, true));
-		RenderingRegistry.registerEntityRenderingHandler(EntityAOEProjectile.class,
-				manager -> new RenderProjectile(manager, 0.7f, new ResourceLocation(Wizardry.MODID, "textures/entity/fireball.png"), false));
+		RenderingRegistry.registerEntityRenderingHandler(EntityAOEProjectile.class, manager -> new RenderProjectile(manager, 0.7f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/aoe_projectile.png"), false));
 
-		// TESRs
+		////////// TESRs //////////
 		ClientRegistry.bindTileEntitySpecialRenderer(TileSphereCognizance.class, new RenderTileSphereCognizance());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileSkullWatch.class, new RenderSkullWatch());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileSentinel.class, new RenderTileSentinel());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileRune.class, new RenderRune());
 
-		// Runes on ground
+		////////// Runes on ground //////////
 		RenderingRegistry.registerEntityRenderingHandler(EntityTransportationPortal.class, manager -> new RenderSigil(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/transportation_portal.png"), 0.0f, false));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpiritWard.class, manager -> new RenderSigil(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/spirit_ward.png"), 0.0f, false));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySilencingSigil.class, manager -> new RenderSigil(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/silencing_sigil.png"), 0.0f, false));
 
-		// NO render
+		////////// NO render //////////
 		RenderingRegistry.registerEntityRenderingHandler(EntityAntiMagicField.class, RenderBlank::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityManaVortex.class, RenderBlank::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityDevoritiumArrow.class, RenderDevoritiumArrow::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellCaster.class, RenderBlank::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityWizardMerchant.class, RenderMerchantWizard::new);
-		RenderingRegistry.registerEntityRenderingHandler(EntityBarter.class, RenderBlank::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityBarterConstruct.class, RenderBlank::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntitySpellTicker.class, RenderBlank::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityBuilder.class, RenderBlank::new);
 
-		// other constructs
+		////////// Other constructs //////////
 		RenderingRegistry.registerEntityRenderingHandler(EntityArcaneBarrier.class, RenderBlank::new);
-//		RenderingRegistry.registerEntityRenderingHandler(EntityArcaneBarrierProxy.class, RenderArcaneBarrierProxy::new);
+		//		RenderingRegistry.registerEntityRenderingHandler(EntityArcaneBarrierProxy.class, RenderArcaneBarrierProxy::new);
 
 	}
 
@@ -308,4 +298,31 @@ public class ClientProxy extends CommonProxy {
 		tooltip.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(translate(key, style, args), TOOLTIP_WRAP_WIDTH));
 	}
 
+	@Override
+	public void handleMushroomActivationPacket(PacketMushroomActivation.Message message) {
+		World world = Minecraft.getMinecraft().world;
+		BlockPos pos = message.pos;
+
+		Block block = world.getBlockState(pos).getBlock();
+		Entity entity = world.getEntityByID(message.activatorEntityID);
+
+		if (block instanceof BlockMagicMushroom && (message.activatorEntityID != -1 && entity != null)) {
+			((BlockMagicMushroom) block).applyEffect(world, block, pos, world.getBlockState(pos), entity);
+		}
+	}
+
+	@Override
+	public String getIceCreamDisplayName(ItemStack stack) {
+		//noinspection ConstantConditions
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("potion")) {
+			String potionString = stack.getTagCompound().getString("potion");
+
+			Potion potion = ForgeRegistries.POTIONS.getValue(new ResourceLocation(potionString));
+			if (potion != null) {
+			String potionDisplayName = I18n.format(potion.getName());
+			return I18n.format("item." + AncientSpellcraft.MODID + ":ice_cream.potion_name", potionDisplayName).trim();
+			}
+		}
+		return net.minecraft.util.text.translation.I18n.translateToLocal("item.ancientspellcraft:ice_cream.name").trim();
+	}
 }

@@ -1,0 +1,25 @@
+{
+  "enabled": {
+    "book": true,
+    "scroll": true,
+    "wands": true,
+    "npcs": true,
+    "dispensers": true,
+    "commands": true,
+    "treasure": true,
+	"trades": true,
+    "looting": true
+  },
+  "tier": "novice",
+  "element": "ice",
+  "type": "utility",
+  "cost": 20,
+  "chargeup": 0,
+  "cooldown": 120,
+  "base_properties": {
+    "item_lifetime": 300,
+    "healing_amount": 2.0,
+    "saturation_amount": 0.8,
+    "hunger_restore_amount": 2.0
+  }
+}

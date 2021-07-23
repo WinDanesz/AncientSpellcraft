@@ -10,39 +10,27 @@ import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.Location;
-import electroblob.wizardry.util.NBTExtras;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.ParticleBuilder.Type;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class PocketDimension extends Spell {
 
 	public static final IStoredVariable<NBTTagCompound> POCKET_DIM_LOCATION = IStoredVariable.StoredVariable.ofNBT("pocket_dim_location", Persistence.ALWAYS).setSynced();
 	public static final IStoredVariable<NBTTagCompound> POCKET_DIM_PREVIOUS_LOCATION = IStoredVariable.StoredVariable.ofNBT("pocket_dim_previous_location", Persistence.ALWAYS).setSynced();
-
-	// For some reason 'the diamond' doesn't work if I chain methods onto this. Type inference is weird.
-	public static final IStoredVariable<List<Location>> LOCATIONS_KEY = new IStoredVariable.StoredVariable<List<Location>, NBTTagList>("stoneCirclePos",
-			s -> NBTExtras.listToNBT(s, Location::toNBT), t -> new ArrayList<>(NBTExtras.NBTToList(t, Location::fromNBT)), Persistence.ALWAYS).setSynced();
-
-	protected float particleCount = 10;
 
 	public PocketDimension() {
 		super(AncientSpellcraft.MODID, "pocket_dimension", EnumAction.BLOCK, true);
@@ -55,37 +43,21 @@ public class PocketDimension extends Spell {
 		// Only return on the server side or the client probably won't spawn particles
 		if (ticksInUse == 0) {
 			this.playSound(world, caster, ticksInUse, -1, modifiers);
-
 			if (!world.isRemote) {
-				MinecraftServer server = caster.getServer();
-				WorldServer destinationWorld = server.getWorld(AncientSpellcraftDimensions.POCKET_DIM_ID);
-				checkOrInitPocketData((EntityPlayerMP) caster, destinationWorld);
+				WorldServer destinationWorld = caster.getServer().getWorld(AncientSpellcraftDimensions.POCKET_DIM_ID);
+
+				checkOrInitPocketData(caster, destinationWorld);
+				return true;
 			}
 		}
 
-		if (ticksInUse < 60) {
-			if (world.isRemote)
-				this.spawnParticles(world, caster, modifiers);
-			return true;
+		if (world.isRemote)
+			this.spawnParticles(world, caster, modifiers);
+
+		if (ticksInUse == 60 && !world.isRemote) {
+			return teleportPlayer(caster);
 		}
 
-		if (ticksInUse > 60) {
-			return false;
-		}
-
-		if (!teleportPlayer(caster) && !world.isRemote)
-			return false;
-
-		//		WizardData data = WizardData.get(caster);
-		//		if (data != null) {
-		//
-		//			NBTTagCompound compound = data.getVariable(POCKET_DIM_LOCATION);
-		//			if (compound != null) {
-		//
-		//				BlockPos pocketLocation = NBTUtil.getPosFromTag(compound);
-		//				caster.setPositionAndUpdate(pocketLocation.getX(), pocketLocation.getY() + 3, pocketLocation.getZ());
-		//			}
-		//		}
 		this.playSound(world, caster, ticksInUse, -1, modifiers);
 		return true;
 	}
@@ -141,11 +113,10 @@ public class PocketDimension extends Spell {
 					.pos(0, caster.height / 2, 0)
 					.vel(dx, dy, dz)
 					.spawn(world);
-
 		}
 	}
 
-	public static void checkOrInitPocketData(EntityPlayerMP player, World pocketWorld) {
+	public static void checkOrInitPocketData(EntityPlayer player, World pocketWorld) {
 
 		WizardData data = WizardData.get(player);
 		if (data != null) {
@@ -156,10 +127,7 @@ public class PocketDimension extends Spell {
 				BlockPos pocketLocation = findSuitablePocketPos(pocketWorld);
 
 				createPocket(pocketLocation, pocketWorld);
-
 				setPocketDimLocation(data, pocketLocation);
-				if (!pocketWorld.isRemote)
-					data.sync();
 
 			}
 		}
@@ -172,10 +140,10 @@ public class PocketDimension extends Spell {
 	}
 
 	public static void createPocket(BlockPos pos, World pocketWorld) {
-		int pocketSize = 60;
-		int pocketHeight = 100;
+		int pocketSize = 6;
+		int pocketHeight = 11;
 		createPlatform(pos, pocketWorld, pocketHeight);
-		createWalls(pos, pocketWorld, pocketSize,pocketHeight);
+		createWalls(pos, pocketWorld, pocketSize, pocketHeight);
 		createPlatform(pos.offset(EnumFacing.UP, pocketHeight + 1), pocketWorld, pocketSize); // roof
 		pocketWorld.setBlockState(pos, AncientSpellcraftBlocks.DIMENSION_FOCUS.getDefaultState());
 	}

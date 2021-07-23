@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.item;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
-import com.windanesz.ancientspellcraft.tileentity.EntityBarter;
+import com.windanesz.ancientspellcraft.entity.construct.EntityBarterConstruct;
 import electroblob.wizardry.registry.WizardrySounds;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -55,13 +55,13 @@ public class ItemBarterScroll extends Item {
 			return new ActionResult<>(EnumActionResult.FAIL, itemstack);
 		}
 
-		if (!world.canSeeSky(player.getPosition())) {
+		if (!world.canSeeSky(player.getPosition()) && !world.isRemote) {
 			player.sendMessage(new TextComponentTranslation("item.ancientspellcraft:bartering_scroll.must_cast_outdoors"));
 			return new ActionResult<>(EnumActionResult.FAIL, itemstack);
 		}
 
 		if (!world.isRemote) {
-			EntityBarter entityBarter = new EntityBarter(world);
+			EntityBarterConstruct entityBarter = new EntityBarterConstruct(world);
 			entityBarter.setPosition(player.posX + 0.1f, player.posY, player.posZ + 0.1f);
 			entityBarter.setCaster(player);
 			world.spawnEntity(entityBarter);
@@ -73,6 +73,7 @@ public class ItemBarterScroll extends Item {
 		world.playSound(player.posX, player.posY, player.posZ, AncientSpellcraftSounds.BARTERING_SCROLL, WizardrySounds.SPELLS, 1, 1, false);
 
 		player.setActiveHand(hand);
+		player.getCooldownTracker().setCooldown(this, 120);
 		return new ActionResult<>(EnumActionResult.SUCCESS, itemstack);
 	}
 

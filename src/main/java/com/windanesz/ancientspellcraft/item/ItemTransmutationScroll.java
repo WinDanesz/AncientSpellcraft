@@ -1,11 +1,14 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
+import com.windanesz.ancientspellcraft.packet.PacketContinuousRitual;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.block.BlockCrystal;
+import electroblob.wizardry.client.DrawingUtils;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.item.ItemArmourUpgrade;
 import electroblob.wizardry.item.ItemArtefact;
@@ -20,6 +23,7 @@ import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellProperties;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
@@ -31,6 +35,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -41,6 +46,7 @@ import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -49,6 +55,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber
@@ -77,19 +84,60 @@ public class ItemTransmutationScroll extends Item {
 		AncientSpellcraft.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc");
 	}
 
+	@Override
+	public void onUsingTick(ItemStack stack, EntityLivingBase entityLiving, int count) {
+		if (!entityLiving.world.isRemote)
+			return;
+
+		World world = entityLiving.world;
+		Random rand = entityLiving.world.rand;
+		double posX = entityLiving.posX;
+		double posY = entityLiving.posY;
+		double posZ = entityLiving.posZ;
+
+		if (world.getTotalWorldTime() % 3 == 0) {
+			ParticleBuilder.create(ParticleBuilder.Type.SPARKLE, rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
+					posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(245, 188, 66)
+					.time(20 + rand.nextInt(50)).spawn(world);
+
+			ParticleBuilder.create(ParticleBuilder.Type.SPARKLE, rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
+					posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(0.3f, 0.3f,0.3f)
+					.time(20 + rand.nextInt(50)).spawn(world);
+
+			ParticleBuilder.create(ParticleBuilder.Type.SPARKLE, rand, posX + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), posY,
+					posZ + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), 0.03, true).spin(0.7, 0.05).vel(0, 0.3, 0).clr(0.4f, 0.4f,0.4f)
+					.time(20 + rand.nextInt(50)).spawn(world);
+		}
+
+		// horizontal particle on the floor, always visible
+		ParticleBuilder.create(ParticleBuilder.Type.FLASH)
+				.pos(entityLiving.posX, entityLiving.posY + 0.101, entityLiving.posZ)
+				.face(EnumFacing.UP)
+				.clr(DrawingUtils.mix(0xf5bc42, 0x6b6a69, 0.5f))
+				.collide(false)
+				.scale(2.3F)
+				.time(10)
+				.spawn(world);
+
+	}
+
 	/**
 	 * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
 	 * the Item before the action is complete.
 	 */
 	@Override
 	public ItemStack onItemUseFinish(ItemStack scrollStack, World world, EntityLivingBase entityLiving) {
+		return onTransmutationFinish(scrollStack, world, entityLiving);
+	}
+
+	public ItemStack onTransmutationFinish(ItemStack scrollStack, World world, EntityLivingBase entityLiving) {
 		if (entityLiving instanceof EntityPlayer) {
 
 			EntityPlayer player = (EntityPlayer) entityLiving;
 			ItemStack offhandStack = player.getHeldItemOffhand();
 
-			if (offhandStack.isEmpty()) {
-				player.sendMessage(new TextComponentTranslation("You must hold an item in your offhand which can be transmuted"));
+			if (offhandStack.isEmpty() && !world.isRemote) {
+				player.sendStatusMessage(new TextComponentTranslation("item.ancientspellcraft:transmutation.no_items_to_transmute"), false);
 				return scrollStack;
 			}
 
@@ -106,7 +154,7 @@ public class ItemTransmutationScroll extends Item {
 								transmuted = true;
 								transmutedItem = new ItemStack(WizardryItems.crystal_silver_plating);
 							} else {
-								player.sendMessage(new TextComponentTranslation("item.ancientspellcraft:transmutation_scroll.results_in_same_item"));
+								player.sendStatusMessage(new TextComponentTranslation("item.ancientspellcraft:transmutation_scroll.results_in_same_item"), false);
 								return scrollStack;
 							}
 						} else if (ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.charm_fabrikator_toolkit)) {
@@ -114,7 +162,7 @@ public class ItemTransmutationScroll extends Item {
 								transmuted = true;
 								transmutedItem = new ItemStack(WizardryItems.resplendent_thread);
 							} else {
-								player.sendMessage(new TextComponentTranslation("item.ancientspellcraft:transmutation_scroll.results_in_same_item"));
+								player.sendStatusMessage(new TextComponentTranslation("item.ancientspellcraft:transmutation_scroll.results_in_same_item"), false);
 								return scrollStack;
 							}
 						} else if (ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.charm_scissors)) {
@@ -122,7 +170,7 @@ public class ItemTransmutationScroll extends Item {
 								transmuted = true;
 								transmutedItem = new ItemStack(WizardryItems.ethereal_crystalweave);
 							} else {
-								player.sendMessage(new TextComponentTranslation("item.ancientspellcraft:transmutation_scroll.results_in_same_item"));
+								player.sendStatusMessage(new TextComponentTranslation("item.ancientspellcraft:transmutation_scroll.results_in_same_item"), false);
 								return scrollStack;
 							}
 						}
@@ -232,10 +280,12 @@ public class ItemTransmutationScroll extends Item {
 						}
 					}
 				}
+			} else {
+				if (!world.isRemote)
+					player.sendStatusMessage(new TextComponentTranslation("item.ancientspellcraft:transmutation.invalid_item"), false);
 			}
 
 			player.getCooldownTracker().setCooldown(this, 60);
-
 		}
 
 		world.playSound(entityLiving.posX, entityLiving.posY, entityLiving.posZ, AncientSpellcraftSounds.TRANSMUTATION, WizardrySounds.SPELLS, 1, 1, false);
@@ -313,7 +363,7 @@ public class ItemTransmutationScroll extends Item {
 
 				Spell oldSpell = Spell.byMetadata(scrollStack.getMetadata());
 
-				if (oldSpell.getRegistryName().getNamespace().equals(AncientSpellcraft.MODID) && oldSpell.getElement() == Element.MAGIC ) {
+				if (oldSpell.getRegistryName().getNamespace().equals(AncientSpellcraft.MODID) && oldSpell.getElement() == Element.MAGIC) {
 					return scrollStack;
 				}
 
@@ -574,7 +624,7 @@ public class ItemTransmutationScroll extends Item {
 			Spell oldSpell = Spell.byMetadata(oldStack.getItemDamage());
 			List<Spell> spells = Spell.getSpells(new Spell.TierElementFilter(oldSpell.getTier(), element, SpellProperties.Context.BOOK));
 			spells.removeIf((new Spell.TierElementFilter(oldSpell.getTier(), element, SpellProperties.Context.LOOTING)).negate());
-//			spells.removeIf(s -> !s.applicableForItem(oldStack.getItem()));
+			//			spells.removeIf(s -> !s.applicableForItem(oldStack.getItem()));
 
 			Spell newSpell = oldSpell;
 			int remainingTries = 30;

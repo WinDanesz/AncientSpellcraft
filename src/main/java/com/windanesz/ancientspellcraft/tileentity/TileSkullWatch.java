@@ -41,9 +41,6 @@ public class TileSkullWatch extends TileEntityPlayerSave implements ITickable {
 	public float skullRotationPrev;
 	public float tRot;
 
-	//	private static final Random rand = new Random();
-	//	private String customName;
-
 	public TileSkullWatch() {
 	}
 

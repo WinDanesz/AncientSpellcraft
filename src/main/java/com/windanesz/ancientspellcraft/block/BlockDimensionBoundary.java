@@ -17,7 +17,6 @@ public class BlockDimensionBoundary extends Block {
 		super(Material.ROCK, MapColor.OBSIDIAN);
 		this.setBlockUnbreakable();
 		this.setResistance(6000000.0F);
-		this.setBlockUnbreakable();
 		this.setSoundType(SoundType.STONE);
 		this.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
 		this.disableStats();

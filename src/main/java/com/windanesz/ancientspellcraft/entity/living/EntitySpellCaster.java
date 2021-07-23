@@ -22,6 +22,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
@@ -33,10 +35,13 @@ import java.util.UUID;
 
 public class EntitySpellCaster extends EntityCreature implements ISpellCaster, IEntityOwnable {
 
+
+
 	private List<Spell> spells = new ArrayList<Spell>(1);
 	private Spell continuousSpell;
 	private SpellModifiers modifiers = new SpellModifiers();
 
+	private int lifetime = -1;
 	private UUID ownerUUID;
 
 	static {
@@ -53,6 +58,14 @@ public class EntitySpellCaster extends EntityCreature implements ISpellCaster, I
 
 	@Override
 	public void onUpdate() {
+
+		if (lifetime != -1) {
+			lifetime--;
+			if (lifetime == 0) {
+				world.setBlockToAir(this.getPosition());
+			}
+		}
+
 		super.onUpdate();
 		if (!world.isRemote && this.ticksExisted > 10) {
 			TileEntity tile = world.getTileEntity(this.getPosition());
@@ -61,6 +74,28 @@ public class EntitySpellCaster extends EntityCreature implements ISpellCaster, I
 			}
 		}
 
+	}
+
+	@Override
+	public ITextComponent getDisplayName() {
+		if (lifetime != -1) {
+			Entity owner = EntityUtils.getEntityByUUID(world, ownerUUID);
+			if (owner != null) {
+				return new TextComponentTranslation("entity.ancientspellcraft:spellcaster_entity.name_conjured", owner.getDisplayName());
+			}
+		}
+		return super.getDisplayName();
+	}
+
+	public int getLifetime() {
+		return lifetime;
+	}
+
+	public void setLifetime(int lifetime) {
+		this.lifetime = lifetime;
+	}
+	public void setSpells(List<Spell> spells) {
+		this.spells = spells;
 	}
 
 	@Nullable

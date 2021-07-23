@@ -27,8 +27,8 @@ public class Farsight extends Spell {
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 
 		if (world.isRemote) {
-			if (!ClientEventHandler.farsightActive) {
-				ClientEventHandler.farsightActive = true;
+			if (!ClientEventHandler.FARSIGHT_ACTIVE) {
+				ClientEventHandler.FARSIGHT_ACTIVE = true;
 			}
 		}
 		return true;
@@ -38,7 +38,7 @@ public class Farsight extends Spell {
 	public void finishCasting(World world,
 			@Nullable EntityLivingBase caster, double x, double y, double z, @Nullable EnumFacing direction, int duration, SpellModifiers modifiers) {
 		if (world.isRemote) {
-			ClientEventHandler.farsightActive = false;
+			ClientEventHandler.FARSIGHT_ACTIVE = false;
 		}
 	}
 

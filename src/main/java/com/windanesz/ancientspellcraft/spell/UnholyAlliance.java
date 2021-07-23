@@ -62,10 +62,6 @@ public class UnholyAlliance extends SpellMinion<EntitySkeletonMageMinion> {
 					pos = BlockUtils.findNearbyFloorSpace(caster, range, range * 2);
 				}
 				i++;
-				//				for (int i = 0; i < getProperty(MINION_COUNT).intValue(); i++) {
-
-				// Try and find a nearby floor space
-				//				BlockPos pos = WizardryUtilities.findNearbyFloorSpace(caster, range, range * 2);
 
 				// If there was no floor around and the entity isn't a flying one, the spell fails.
 				// As per the javadoc for findNearbyFloorSpace, there's no point trying the rest of the minions.

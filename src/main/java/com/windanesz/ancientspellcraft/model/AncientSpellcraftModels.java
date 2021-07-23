@@ -44,6 +44,7 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.ring_permanent_growth);
 		registerItemModel(AncientSpellcraftItems.ring_unbinding);
 		registerItemModel(AncientSpellcraftItems.ring_disenchanter);
+		registerItemModel(AncientSpellcraftItems.ring_quicksand);
 
 		registerItemModel(AncientSpellcraftItems.amulet_mana);
 		registerItemModel(AncientSpellcraftItems.amulet_rabbit);
@@ -55,6 +56,8 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.amulet_time_knot);
 		registerItemModel(AncientSpellcraftItems.amulet_arcane_catalyst);
 		registerItemModel(AncientSpellcraftItems.amulet_persistence);
+		registerItemModel(AncientSpellcraftItems.amulet_healing_mushroom);
+		registerItemModel(AncientSpellcraftItems.amulet_shield);
 
 		registerItemModel(AncientSpellcraftItems.charm_rift_bottle);
 		registerItemModel(AncientSpellcraftItems.charm_mana_flask);
@@ -82,12 +85,17 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.charm_enchanted_needle);
 		registerItemModel(AncientSpellcraftItems.charm_seed_bag);
 		registerItemModel(AncientSpellcraftItems.charm_omnicron);
+		registerItemModel(AncientSpellcraftItems.charm_burrow);
+		registerItemModel(AncientSpellcraftItems.charm_quicksand_walker);
 //		registerItemModel(AncientSpellcraftItems.charm_book_death);
 //		registerItemModel(AncientSpellcraftItems.charm_book_life);
 		registerItemModel(AncientSpellcraftItems.charm_prismatic_spray);
+		registerItemModel(AncientSpellcraftItems.charm_ice_cream);
 		registerItemModel(AncientSpellcraftItems.charm_runic_hammer);
 		registerItemModel(AncientSpellcraftItems.charm_fabrikator_toolkit);
 		registerItemModel(AncientSpellcraftItems.charm_scissors);
+		registerItemModel(AncientSpellcraftItems.charm_philosophers_stone);
+		registerItemModel(AncientSpellcraftItems.alchemical_essence);
 
 		registerItemModel(AncientSpellcraftItems.wand_channeling);
 
@@ -103,6 +111,7 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.head_fortune);
 		registerItemModel(AncientSpellcraftItems.head_merchant);
 		registerItemModel(AncientSpellcraftItems.head_shield);
+		registerItemModel(AncientSpellcraftItems.head_magelight);
 
 		// misc
 		registerItemModel(AncientSpellcraftItems.shadow_blade);
@@ -192,6 +201,9 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.ritual_book);
 		registerItemModel(AncientSpellcraftItems.arcane_compound);
 		registerItemModel(AncientSpellcraftItems.blank_rune);
+		registerItemModel(AncientSpellcraftItems.soulbound_upgrade);
+		registerItemModel(AncientSpellcraftItems.spectral_shovel);
+		registerItemModel(AncientSpellcraftItems.ice_cream);
 
 		// Itemblocks
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.ARTEFACT_PENSIVE));

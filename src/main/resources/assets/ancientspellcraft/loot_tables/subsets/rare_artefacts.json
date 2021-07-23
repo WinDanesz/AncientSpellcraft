@@ -41,7 +41,37 @@
                 },
                 {
                     "type": "item",
+                    "name": "ancientspellcraft:ring_unbinding",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ring_disenchanter",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ring_quicksand",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
                     "name": "ancientspellcraft:amulet_power",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_healing_mushroom",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_persistence",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_shield",
                     "weight": 1
                 },
                 {
@@ -81,7 +111,12 @@
                 },
                 {
                     "type": "item",
-                    "name": "ancientspellcraft:head_curse",
+                    "name": "ancientspellcraft:charm_burrow",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_quicksand_walker",
                     "weight": 1
                 },
                 {
@@ -97,6 +132,21 @@
                 {
                     "type": "item",
                     "name": "ancientspellcraft:belt_stone",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:head_curse",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:head_magelight",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:head_merchant",
                     "weight": 1
                 }
             ]

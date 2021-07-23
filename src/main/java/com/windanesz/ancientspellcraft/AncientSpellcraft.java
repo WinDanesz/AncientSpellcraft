@@ -6,6 +6,7 @@ import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
 import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
+import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBiomes;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
@@ -96,6 +97,8 @@ public class AncientSpellcraft {
 
 		Ritual.registry.forEach(Ritual::init);
 		RitualProperties.init();
+
+		ItemSoulboundWandUpgrade.init();
 
 		proxy.init();
 
