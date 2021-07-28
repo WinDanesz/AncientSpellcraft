@@ -18,6 +18,7 @@ import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.util.BlockUtils;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -122,44 +123,47 @@ public class EssenceExtraction extends SpellRay {
 				if (block instanceof BlockImbuementAltar) {
 
 					if (extractTicks >= 200) {
-						if (!world.isRemote) {
-						world.createExplosion(null, pos.getX() + 2, pos.getY(), pos.getZ(), (float) 1, true);
-						world.createExplosion(null, pos.getX() - 2, pos.getY(), pos.getZ(), (float) 1, true);
-						world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ() + 2, (float) 1, true);
-						world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ() - 2, (float) 1, true);
-						world.createExplosion(null, pos.getX(), pos.getY() + 1, pos.getZ(), (float) 4, true);
 
-						}
-						data.setVariable(EXTRACT_TICKS, 0);
-						data.setVariable(EXTRACTION_LOCATION, null);
+						if (BlockUtils.canBreakBlock(caster, world, pos)) {
+							if (!world.isRemote) {
+								world.createExplosion(null, pos.getX() + 2, pos.getY(), pos.getZ(), (float) 1, true);
+								world.createExplosion(null, pos.getX() - 2, pos.getY(), pos.getZ(), (float) 1, true);
+								world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ() + 2, (float) 1, true);
+								world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ() - 2, (float) 1, true);
+								world.createExplosion(null, pos.getX(), pos.getY() + 1, pos.getZ(), (float) 4, true);
 
-						if (!world.isRemote) {
-							world.playSound(pos.getX(), pos.getY(),pos.getZ(), AncientSpellcraftSounds.IMBUEMENT_TABLE_BREAK, SoundCategory.HOSTILE, 1, 1, false);
-
-							if (player.getHeldItemOffhand().getItem() == WizardryItems.astral_diamond) {
-								player.getHeldItemOffhand().shrink(1);
-								ItemStack newStack = new ItemStack(AncientSpellcraftItems.astral_diamond_charged);
-								if (player.getHeldItemOffhand().isEmpty()) {
-									player.setHeldItem(EnumHand.OFF_HAND, newStack);
-								} else if (!player.inventory.addItemStackToInventory(newStack)) {
-									player.dropItem(newStack, false);
-								}
 							}
+							data.setVariable(EXTRACT_TICKS, 0);
+							data.setVariable(EXTRACTION_LOCATION, null);
 
-							// disabled for now
-							//
-							//							Element[] elements = Element.values();
-							//
-							//							for (int i = 1; i < 7; i++) {
-							//								EntityRemnant remnant = new EntityRemnant(world);
-							//								remnant.setElement(elements[i]);
-							//								remnant.setPosition(pos.getX(), pos.getY(), pos.getZ());
-							//								world.spawnEntity(remnant);
-							//							}
+							if (!world.isRemote) {
+								world.playSound(pos.getX(), pos.getY(), pos.getZ(), AncientSpellcraftSounds.IMBUEMENT_TABLE_BREAK, SoundCategory.HOSTILE, 1, 1, false);
 
+								if (player.getHeldItemOffhand().getItem() == WizardryItems.astral_diamond) {
+									player.getHeldItemOffhand().shrink(1);
+									ItemStack newStack = new ItemStack(AncientSpellcraftItems.astral_diamond_charged);
+									if (player.getHeldItemOffhand().isEmpty()) {
+										player.setHeldItem(EnumHand.OFF_HAND, newStack);
+									} else if (!player.inventory.addItemStackToInventory(newStack)) {
+										player.dropItem(newStack, false);
+									}
+								}
+
+								// disabled for now
+								//
+								//							Element[] elements = Element.values();
+								//
+								//							for (int i = 1; i < 7; i++) {
+								//								EntityRemnant remnant = new EntityRemnant(world);
+								//								remnant.setElement(elements[i]);
+								//								remnant.setPosition(pos.getX(), pos.getY(), pos.getZ());
+								//								world.spawnEntity(remnant);
+								//							}
+
+							}
+							world.setBlockState(pos, AncientSpellcraftBlocks.IMBUEMENT_ALTAR_RUINED.getDefaultState());
 						}
-						world.setBlockState(pos, AncientSpellcraftBlocks.IMBUEMENT_ALTAR_RUINED.getDefaultState());
-						return false;
+						return true;
 					}
 
 				} else if (block instanceof BlockBookshelf) {
@@ -202,8 +206,7 @@ public class EssenceExtraction extends SpellRay {
 
 	@Override
 	protected void spawnParticle(World world, double x, double y, double z, double vx, double vy, double vz) {
-		if (world.rand.nextInt(5) == 0)
-			ParticleBuilder.create(ParticleBuilder.Type.DUST).pos(x, y, z).clr(1, 1, 0.65f).fade(0.7f, 0, 1).spawn(world);
+		if (world.rand.nextInt(5) == 0) { ParticleBuilder.create(ParticleBuilder.Type.DUST).pos(x, y, z).clr(1, 1, 0.65f).fade(0.7f, 0, 1).spawn(world); }
 		// This used to multiply the velocity by the distance from the caster
 		ParticleBuilder.create(ParticleBuilder.Type.FLASH).scale(0.2f).pos(x, y, z).vel(vx, vy, vz).time(8 + world.rand.nextInt(6))
 				.clr(1, 1, 0.65f).fade(0.7f, 0, 1).spawn(world);
