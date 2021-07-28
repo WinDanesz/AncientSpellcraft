@@ -100,11 +100,11 @@ public class GuiScribingDesk extends GuiContainer {
 							this.renderToolTip(componentList.get(0), mouseX, mouseY);
 						}
 
-					} else if (componentList.size() >= 1 && getSlotUnderMouse().slotNumber == ContainerScribingDesk.INGREDIENT_2_SLOT) {
+					} else if (componentList.size() >= 2 && getSlotUnderMouse().slotNumber == ContainerScribingDesk.INGREDIENT_2_SLOT) {
 						if (!componentList.get(1).isEmpty()) {
 							this.renderToolTip(componentList.get(1), mouseX, mouseY);
 						}
-					} else if (componentList.size() >= 2 && getSlotUnderMouse().slotNumber == ContainerScribingDesk.INGREDIENT_3_SLOT) {
+					} else if (componentList.size() >= 3 && getSlotUnderMouse().slotNumber == ContainerScribingDesk.INGREDIENT_3_SLOT) {
 						if (!componentList.get(2).isEmpty()) {
 							this.renderToolTip(componentList.get(2), mouseX, mouseY);
 						}
