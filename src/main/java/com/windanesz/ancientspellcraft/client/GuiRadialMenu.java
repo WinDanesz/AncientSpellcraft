@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.client;
 
 import com.google.common.collect.Lists;
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
 import com.windanesz.ancientspellcraft.packet.PacketSelectRadialItemSpell;
@@ -8,10 +9,10 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.block.BlockReceptacle;
 import electroblob.wizardry.client.DrawingUtils;
 import electroblob.wizardry.constants.Element;
+import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.spell.Spell;
-import electroblob.wizardry.tileentity.TileEntityImbuementAltar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -21,6 +22,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -42,6 +44,8 @@ import java.util.List;
  */
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class GuiRadialMenu extends GuiScreen {
+
+	public static final ResourceLocation UNKNOWN_SPELL_IMAGE = new ResourceLocation(AncientSpellcraft.MODID, "textures/spells/unknown.png");
 
 	private boolean closing;
 	private boolean doneClosing;
@@ -67,8 +71,7 @@ public class GuiRadialMenu extends GuiScreen {
 
 	@SubscribeEvent
 	public static void overlayEvent(RenderGameOverlayEvent.Pre event) {
-		if (event.getType() != RenderGameOverlayEvent.ElementType.CROSSHAIRS)
-			return;
+		if (event.getType() != RenderGameOverlayEvent.ElementType.CROSSHAIRS) { return; }
 
 		if (Minecraft.getMinecraft().currentScreen instanceof GuiRadialMenu) {
 			event.setCanceled(true);
@@ -105,8 +108,7 @@ public class GuiRadialMenu extends GuiScreen {
 	}
 
 	private void processClick() {
-		if (closing)
-			return;
+		if (closing) { return; }
 
 		IMessage msg = new PacketSelectRadialItemSpell.Message(currentIndex);
 		ASPacketHandler.net.sendToServer(msg);
@@ -118,8 +120,7 @@ public class GuiRadialMenu extends GuiScreen {
 
 		int numItems = items.size();
 		numItems++;
-		if (numItems <= 0)
-			return;
+		if (numItems <= 0) { return; }
 
 		animateClose();
 	}
@@ -136,8 +137,7 @@ public class GuiRadialMenu extends GuiScreen {
 
 		int numItems = spellCount;
 		if (numItems <= 0) {
-			if (closing)
-				doneClosing = true;
+			if (closing) { doneClosing = true; }
 			return;
 		}
 
@@ -147,8 +147,7 @@ public class GuiRadialMenu extends GuiScreen {
 				? (float) (1 - ((Minecraft.getMinecraft().world.getTotalWorldTime() + partialTicks - startAnimation) / OPEN_ANIMATION_LENGTH))
 				: (float) ((Minecraft.getMinecraft().world.getTotalWorldTime() + partialTicks - startAnimation) / OPEN_ANIMATION_LENGTH);
 
-		if (closing && openAnimation <= 0)
-			doneClosing = true;
+		if (closing && openAnimation <= 0) { doneClosing = true; }
 
 		float animProgress = MathHelper.clamp(openAnimation, 0, 1);
 		float radiusIn = Math.max(0.1f, 30 * animProgress);
@@ -162,8 +161,7 @@ public class GuiRadialMenu extends GuiScreen {
 		double a = Math.toDegrees(Math.atan2(mouseY - y, mouseX - x));
 		double d = Math.sqrt(Math.pow(mouseX - x, 2) + Math.pow(mouseY - y, 2));
 		float s0 = (((0 - 0.5f) / (float) numItems) + 0.25f) * 360;
-		if (a < s0)
-			a += 360;
+		if (a < s0) { a += 360; }
 
 		GlStateManager.pushMatrix();
 		GlStateManager.disableAlpha();
@@ -198,7 +196,8 @@ public class GuiRadialMenu extends GuiScreen {
 			if (selectedItem == i && i >= 0) {
 				spellOver = spells.get(i);
 				currentIndex = i;
-				int[] colour = BlockReceptacle.PARTICLE_COLOURS.get(spellOver.getElement());
+
+				int[] colour = isKnownSpell(spellOver) ? BlockReceptacle.PARTICLE_COLOURS.get(spellOver.getElement()) : BlockReceptacle.PARTICLE_COLOURS.get(Element.MAGIC);
 				if (spellOver.applicableForItem(AncientSpellcraftItems.ancient_spell_book)) {
 					drawPieArc(buffer, x, y, zLevel, radiusIn, radiusOut, s, e, 219, 180, 72, 64);
 				} else if (spellOver.getElement() == Element.MAGIC) {
@@ -241,25 +240,29 @@ public class GuiRadialMenu extends GuiScreen {
 			GlStateManager.pushMatrix();
 			GlStateManager.scale(0.5, 0.5, 0.5);
 			Spell spell = spells.get(index);
-			Minecraft.getMinecraft().renderEngine.bindTexture(spell.getIcon());
+
+			Minecraft.getMinecraft().renderEngine.bindTexture(isKnownSpell(spell) ? spell.getIcon() : UNKNOWN_SPELL_IMAGE);
 			DrawingUtils.drawTexturedRect(((int) posX) * 2, ((int) posY) * 2, 0, 0, 32, 32, 32, 32);
 			GlStateManager.popMatrix();
 		}
 
 		if (hasMouseOver) {
 			if (spellOver != null && spellOver != Spells.none) {
-				GlStateManager.pushMatrix();
-				drawCenteredString(fontRenderer, spellOver.getDisplayNameWithFormatting(), width / 2, (height - fontRenderer.FONT_HEIGHT) / 2, 0xFFFFFFFF);
-				// reset colors otherwise everything will be colored
-				GlStateManager.color(1.0f, 1.0f, 1.0f);
-				GlStateManager.popMatrix();
+				// should never be false
+
+				if (isKnownSpell(spellOver)) {
+					GlStateManager.pushMatrix();
+					drawCenteredString(fontRenderer, spellOver.getDisplayNameWithFormatting(), width / 2, (height - fontRenderer.FONT_HEIGHT) / 2, 0xFFFFFFFF);
+					// reset colors otherwise everything will be colored
+					GlStateManager.color(1.0f, 1.0f, 1.0f);
+					GlStateManager.popMatrix();
+				}
 			}
 		}
 
 		GlStateManager.popMatrix();
 
-		if (itemMouseOver.getCount() > 0)
-			renderToolTip(itemMouseOver, mouseX, mouseY);
+		if (itemMouseOver.getCount() > 0) { renderToolTip(itemMouseOver, mouseX, mouseY); }
 	}
 
 	private static final float PRECISION = 5;
@@ -294,6 +297,16 @@ public class GuiRadialMenu extends GuiScreen {
 
 	@Override
 	public boolean doesGuiPauseGame() {
+		return false;
+	}
+
+	private boolean isKnownSpell(Spell spell) {
+		if (mc.player != null) {
+			// should never be false
+			WizardData data = WizardData.get(mc.player);
+
+			return data != null && data.hasSpellBeenDiscovered(spell);
+		}
 		return false;
 	}
 }
