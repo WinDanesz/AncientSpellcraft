@@ -40,6 +40,7 @@ import com.windanesz.ancientspellcraft.item.ItemRune;
 import com.windanesz.ancientspellcraft.item.ItemSacredMace;
 import com.windanesz.ancientspellcraft.item.ItemSetArtefact;
 import com.windanesz.ancientspellcraft.item.ItemShadowBlade;
+import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
 import com.windanesz.ancientspellcraft.item.ItemSpectralFishingRod;
 import com.windanesz.ancientspellcraft.item.ItemSpectralShield;
 import com.windanesz.ancientspellcraft.item.ItemSpectralShovel;
@@ -49,7 +50,6 @@ import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemScroll;
-import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
 import electroblob.wizardry.misc.BehaviourSpellDispense;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardryTabs;
@@ -471,8 +471,8 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "stone_tablet", new ItemRelic("stone_tablet", EnumRarity.UNCOMMON));
 		registerItem(registry, "stone_tablet_large", new ItemRelic("stone_tablet_large", EnumRarity.RARE));
 		registerItem(registry, "stone_tablet_grand", new ItemRelic("stone_tablet_grand", EnumRarity.EPIC));
-		registerItem(registry, "ancient_mana_flask", new ItemRelic("ancient_mana_flask", EnumRarity.UNCOMMON));
-		registerItem(registry, "ancient_bound_stone", new ItemRelic("ancient_bound_stone", EnumRarity.EPIC));
+		registerItem(registry, "ancient_mana_flask", new ItemRelic("ancient_mana_flask", EnumRarity.UNCOMMON).setCreativeTab(null));
+		registerItem(registry, "ancient_bound_stone", new ItemRelic("ancient_bound_stone", EnumRarity.EPIC).setCreativeTab(null));
 
 		registerItem(registry, "shadow_blade", new ItemShadowBlade());
 		registerItem(registry, "spectral_fishing_rod", new ItemSpectralFishingRod());
