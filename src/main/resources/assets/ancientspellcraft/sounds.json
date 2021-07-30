@@ -140,7 +140,8 @@
     "spell.summon_fire_ant":                    {"category": "spells", "sounds": ["random/fizz"]},
     "spell.magma_wall":                         {"category": "spells", "sounds": ["ancientspellcraft:conjure_magma"]},
     "spell.molten_earth":                       {"category": "spells", "sounds": ["ancientspellcraft:conjure_magma"]},
-    "spell.magma_shell":                       {"category": "spells", "sounds": ["ancientspellcraft:conjure_magma"]},
+    "spell.magma_shell":                        {"category": "spells", "sounds": ["ancientspellcraft:conjure_magma"]},
+    "spell.ice_cream":                          {"category": "spells", "sounds": ["ebwizardry:ice"]},
 
     "stone_fist":                               {"category": "player", "sounds": ["ancientspellcraft:stone_fist"]},
     "bartering_scroll":                         {"category": "player", "sounds": ["ancientspellcraft:bartering_scroll"]},

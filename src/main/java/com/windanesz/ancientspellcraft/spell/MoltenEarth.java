@@ -10,7 +10,6 @@ import electroblob.wizardry.util.BlockUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.ParticleBuilder.Type;
 import electroblob.wizardry.util.SpellModifiers;
-import net.minecraft.block.BlockPressurePlate;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
@@ -18,9 +17,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import scala.actors.threadpool.Arrays;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,7 +50,7 @@ public class MoltenEarth extends SpellRay {
 			ITemporaryBlock.placeTemporaryBlock(caster, world, AncientSpellcraftBlocks.CONJURED_MAGMA, pos, 600);
 
 			BlockPos finalPos = pos;
-			List<BlockPos> list = BlockUtils.getBlockSphere(pos, getProperty(EFFECT_RADIUS).intValue()).stream().filter(i -> i.getY() == finalPos.getY()).collect(Collectors.toList());
+			List<BlockPos> list = BlockUtils.getBlockSphere(pos, getProperty(EFFECT_RADIUS).intValue()).stream().filter(i -> !world.isAirBlock(i)).filter(i -> i.getY() == finalPos.getY()).collect(Collectors.toList());
 			int blockLifetime = getProperty(BLOCK_LIFETIME).intValue();
 
 			for (int i = 0; i < list.size(); i++) {

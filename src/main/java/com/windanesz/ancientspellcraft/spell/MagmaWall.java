@@ -50,7 +50,7 @@ public class MagmaWall extends SpellRay {
 				world.setBlockToAir(pos);
 			}else{
 				ParticleBuilder.create(Type.FLASH).pos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5).scale(3)
-				.clr(0.75f, 1, 0.85f).spawn(world);
+				.clr(222, 92, 0).spawn(world);
 			}
 			
 			return true;
@@ -60,7 +60,7 @@ public class MagmaWall extends SpellRay {
 		
 		if(world.isRemote){
 			ParticleBuilder.create(Type.FLASH).pos(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5).scale(3)
-			.clr(0.75f, 1, 0.85f).spawn(world);
+			.clr(222, 92, 0).spawn(world);
 		}
 
 		if (!world.isRemote) {
