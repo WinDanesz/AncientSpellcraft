@@ -230,6 +230,10 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public boolean apply_wizard_entity_changes = true;
 
+		@Config.Name("Transportation Portal Teleports Any Entites")
+		@Config.Comment("If true, Transportation Portals can transport non-player entities. If false, only players can use the portal.")
+		public boolean transportation_portal_teleports_any_entites = true;
+
 	}
 
 	public static class ClientSettings {
