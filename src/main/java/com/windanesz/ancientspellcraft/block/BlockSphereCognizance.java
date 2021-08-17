@@ -11,6 +11,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -30,7 +31,7 @@ public class BlockSphereCognizance extends BlockContainer {
 
 	public BlockSphereCognizance() {
 		super(Material.CLAY);
-		this.setLightLevel(1.1f);
+		this.setLightLevel(0.9375F);
 		setHardness(0.5f);
 	}
 
@@ -59,6 +60,12 @@ public class BlockSphereCognizance extends BlockContainer {
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.MODEL;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public BlockRenderLayer getRenderLayer()
+	{
+		return BlockRenderLayer.CUTOUT;
 	}
 
 	@Override
