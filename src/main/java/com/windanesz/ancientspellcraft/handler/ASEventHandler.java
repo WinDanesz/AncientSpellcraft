@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft.handler;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
+import com.windanesz.ancientspellcraft.entity.EntityWizardAS;
 import com.windanesz.ancientspellcraft.entity.ai.EntitySummonAIFollowOwner;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityContingencyProjectile;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
@@ -34,6 +35,7 @@ import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.entity.construct.EntityBubble;
 import electroblob.wizardry.entity.living.EntitySkeletonMinion;
+import electroblob.wizardry.entity.living.EntityWizard;
 import electroblob.wizardry.entity.living.ISummonedCreature;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.event.SpellBindEvent;
@@ -45,10 +47,8 @@ import electroblob.wizardry.item.ItemScroll;
 import electroblob.wizardry.item.ItemWand;
 import electroblob.wizardry.potion.Curse;
 import electroblob.wizardry.registry.Spells;
-import electroblob.wizardry.registry.WizardryEnchantments;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.spell.FreezingWeapon;
 import electroblob.wizardry.spell.ImbueWeapon;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.spell.SpellBuff;
@@ -65,6 +65,7 @@ import electroblob.wizardry.util.WandHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
@@ -84,9 +85,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
@@ -329,8 +327,7 @@ public class ASEventHandler {
 	}
 
 	private static int update(EntityPlayer player, Integer countdown) {
-		if (countdown == null)
-			return 0;
+		if (countdown == null) { return 0; }
 
 		if (!player.world.isRemote) {
 
@@ -338,8 +335,7 @@ public class ASEventHandler {
 
 			Integer spellId = data.getVariable(SPELL_ID);
 
-			if (spellId == null)
-				return 0;
+			if (spellId == null) { return 0; }
 
 			Spell spell = Spell.byMetadata(spellId);
 
@@ -480,8 +476,7 @@ public class ASEventHandler {
 
 						Entity entity = EntityUtils.getEntityByUUID(player.world, iterator.next()); // the target who will take the damage instead
 
-						if (entity == null)
-							iterator.remove();
+						if (entity == null) { iterator.remove(); }
 
 						if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isPotionActive(AncientSpellcraftPotions.martyr)) {
 							// Retaliatory effect
@@ -993,8 +988,7 @@ public class ASEventHandler {
 					projectile.damageMultiplier = modifiers.get(SpellModifiers.POTENCY);
 
 					// Spawns the projectile in the world
-					if (!player.world.isRemote)
-						player.world.spawnEntity(projectile);
+					if (!player.world.isRemote) { player.world.spawnEntity(projectile); }
 					data.setVariable(MetamagicProjectile.METAMAGIC_PROJECTILE, null);
 					event.setCanceled(true);
 
@@ -1016,8 +1010,7 @@ public class ASEventHandler {
 						projectile.damageMultiplier = modifiers.get(SpellModifiers.POTENCY);
 
 						// Spawns the projectile in the world
-						if (!event.getWorld().isRemote)
-							player.world.spawnEntity(projectile);
+						if (!event.getWorld().isRemote) { player.world.spawnEntity(projectile); }
 						data.setVariable(Contingency.ACTIVE_CONTINGENCY_LISTENER, null);
 						Contingency.playSound(event.getWorld(), player.getPosition());
 						event.setCanceled(true);
@@ -1057,8 +1050,7 @@ public class ASEventHandler {
 							player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), spellToStore.getCooldown());
 						}
 					}
-					if (event.getWorld().isRemote)
-						Contingency.spawnParticles(event.getWorld(), player, Contingency.Type.fromName(spellTag));
+					if (event.getWorld().isRemote) { Contingency.spawnParticles(event.getWorld(), player, Contingency.Type.fromName(spellTag)); }
 					Contingency.playSound(event.getWorld(), player.getPosition());
 
 					data.setVariable(Contingency.ACTIVE_CONTINGENCY_LISTENER, null);
@@ -1090,10 +1082,11 @@ public class ASEventHandler {
 					if (((ItemWand) player.getHeldItemMainhand().getItem()).tier.level == Tier.MASTER.level) {
 						flag = true;
 					}
-				} else if ((!player.getHeldItemOffhand().isEmpty() && player.getHeldItemOffhand().getItem() instanceof ItemWand))
+				} else if ((!player.getHeldItemOffhand().isEmpty() && player.getHeldItemOffhand().getItem() instanceof ItemWand)) {
 					if (((ItemWand) player.getHeldItemOffhand().getItem()).tier.level == Tier.MASTER.level) {
 						flag = true;
 					}
+				}
 
 				if (flag) {
 					int progression = (int) (event.getSpell().getCost() * event.getModifiers().get(SpellModifiers.PROGRESSION));
@@ -1109,9 +1102,10 @@ public class ASEventHandler {
 						if (excess >= 0 && excess < progression) {
 							// ...display a message above the player's hotbar
 							player.playSound(WizardrySounds.ITEM_WAND_LEVELUP, 1.25f, 1);
-							if (!player.world.isRemote)
+							if (!player.world.isRemote) {
 								player.sendMessage(new TextComponentTranslation("item." + Wizardry.MODID + ":wand.levelup",
 										targetWand.getItem().getItemStackDisplayName(targetWand), nextTier.getNameForTranslationFormatted()));
+							}
 						}
 					}
 				}
@@ -1202,6 +1196,24 @@ public class ASEventHandler {
 	@SubscribeEvent
 	public static void onCheckSpawnEvent(EntityJoinWorldEvent event) {
 
+		if (event.getEntity() instanceof EntityWizard && !(event.getEntity() instanceof EntityWizardAS) &&
+				Settings.generalSettings.apply_wizard_entity_changes) {
+
+			NBTTagCompound nbt = new NBTTagCompound();
+			event.getEntity().writeToNBT(nbt);
+
+			// fixes the missing id
+			nbt.setString("id", "ebwizardry:wizard");
+
+			EntityWizardAS wizard = (EntityWizardAS) EntityList.createEntityFromNBT(nbt, (event.getWorld()));
+
+			// spawn the new entity
+			if (!event.getWorld().isRemote && wizard != null) {
+				event.getWorld().spawnEntity(wizard);
+			}
+			// prevent spawning the original entity
+			event.setCanceled(true);
+		}
 		// We have no way of checking if it's a spawner in getCanSpawnHere() so this has to be done here instead
 		if (event.getEntity() instanceof ISummonedCreature) {
 			if (event.getEntity() instanceof EntityCreature && ((ISummonedCreature) event.getEntity()).getOwner() != null) {
@@ -1229,8 +1241,7 @@ public class ASEventHandler {
 
 				if (!ImbueWeapon.isBow(bow)) {
 					bow = archer.getHeldItemOffhand();
-					if (!ImbueWeapon.isBow(bow))
-						return;
+					if (!ImbueWeapon.isBow(bow)) { return; }
 				}
 
 				// Taken directly from ItemBow, so it works exactly the same as the power enchantment.
@@ -1256,8 +1267,7 @@ public class ASEventHandler {
 
 		if (projectile.hasNoGravity()) {
 			// No sensible spell will do this - range is meaningless if the projectile has no gravity or lifetime
-			if (projectile.getLifetime() <= 0)
-				return 1.5f;
+			if (projectile.getLifetime() <= 0) { return 1.5f; }
 			// Speed = distance/time (trivial, I know, but I've put it here for the sake of completeness)
 			return range / projectile.getLifetime();
 		} else {
