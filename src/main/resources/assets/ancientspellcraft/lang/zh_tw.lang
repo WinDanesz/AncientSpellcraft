@@ -18,7 +18,7 @@ config.ancientspellcraft.loot_injection_locations=戰利品注入
 config.ancientspellcraft.loot_injection_locations.tooltip=古代咒法的戰利品應該注入的戰利品表列表 (譬如 loot_tables/chests/dungeon_additions.json)
 
 # entities
-entity.ancientspellcraft\:void_creeper.name=虛空爬行者
+entity.ancientspellcraft\:void_creeper.name=虛空苦力怕
 entity.ancientspellcraft\:skeleton_mage_minion.name=骷髏法師
 entity.ancientspellcraft\:wolf_minion.name=狼人
 entity.ancientspellcraft\:spirit_bear.name=靈魂熊
@@ -400,7 +400,7 @@ item.ancientspellcraft\:charm_lightning_orb.name=天雷寶珠
 item.ancientspellcraft\:charm_magic_light.desc=一瓶燃燒不息的火焰，據傳聞無法熄滅
 item.ancientspellcraft\:charm_magic_light.name=永火之瓶
 item.ancientspellcraft\:charm_mana_flask.desc=這瓶神奇的魔力瓶總是隨著時間的推移自動裝滿
-item.ancientspellcraft\:charm_mana_flask.invalid_use=只能在非慣用手使用，慣用手需要持有一個魔力存儲物品
+item.ancientspellcraft\:charm_mana_flask.invalid_use=只能在非慣用手使用，慣用手需要持有一個魔力儲存物品
 item.ancientspellcraft\:charm_mana_flask.name=恆足魔力瓶
 item.ancientspellcraft\:charm_mana_orb.desc=減少魔力消耗 15%%
 item.ancientspellcraft\:charm_mana_orb.name=寧靜水晶寶珠
@@ -690,7 +690,7 @@ item.ancientspellcraft\:crystal_shard_sorcery.desc_extended=這種元素晶體�
 item.ancientspellcraft\:crystal_shard_healing.desc_extended=這種元素晶體小碎片可以組合成一個完整的晶體
 
 item.ancientspellcraft\:devoritium_sword.desc_extended=噬法武器和工具有壓制和吸收魔法的能力，削弱其持用者和命中目標的魔法能力。無法被附魔，附在這種稀有金屬之上的附魔會被立即吸收
-item.ancientspellcraft\:devoritium_bomb.desc_extended=噬法炸彈可以對魔法建築和召喚物造成傷害，並在爆炸後留下滯留型反魔法效果，抑制任何形式的施法
+item.ancientspellcraft\:devoritium_bomb.desc_extended=噬法炸彈可以對魔法建築和召喚物造成傷害，並在爆炸後留下滯留 反魔法效果，抑制任何形式的施法
 item.ancientspellcraft\:devoritium_arrow.desc_extended=箭尖上的噬法會引發暫時的魔法枯竭，削弱甚至停用目標的施法能力，也可以對魔法建築造成傷害
 item.ancientspellcraft\:devoritium_door.desc_extended=實體通過時，噬法門會吸收它們的魔法增益和減益
 item.ancientspellcraft\:devoritium_ingot.desc_extended=這種緻密的金屬似乎可以壓製任何魔法
@@ -709,7 +709,7 @@ relic_type.enchantment=附魔
 relic_type.power=操縱力
 relic_type.spell.required_components=所需組件:
 relic_type.spell.instruction=可以用抄寫台來製作法術
-relic_type.incantation.instruction=握住石板 6 秒，它會粉碎並釋放存儲的法術
+relic_type.incantation.instruction=握住石板 6 秒，它會粉碎並釋放儲存的法術
 relic_type.enchantment.instruction=用你的一隻手握住石板，用另一隻手握住一件物品 6 秒鐘，便可將附魔附加到物品上
 relic_type.power.instruction=握住石板 6 秒鐘，它會粉碎並釋放儲存的能量
 [[]]
