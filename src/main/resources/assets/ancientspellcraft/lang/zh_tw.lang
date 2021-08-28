@@ -38,7 +38,7 @@ set.ancientspellcraft\:set_bonus=人造藝術飾品：%s
 
 # creativetab
 itemGroup.ancientspellcraft=古代咒法
-itemGroup.ancientspellcraftgear=古代巫術裝備
+itemGroup.ancientspellcraftgear=古代咒法｜裝備
 
 # enchant
 enchantment.ancientspellcraft\:static_charge=靜電充能
