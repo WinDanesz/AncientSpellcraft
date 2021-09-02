@@ -12,6 +12,7 @@ public class ItemCoalBucket extends ItemDailyArtefact {
 
 	public ItemCoalBucket(EnumRarity rarity) {
 		super(rarity);
+		addReadinessPropertyOverride();
 	}
 
 	@Override

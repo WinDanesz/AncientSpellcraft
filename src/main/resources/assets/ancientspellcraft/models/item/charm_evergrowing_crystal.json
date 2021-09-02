@@ -1,6 +1,9 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "ancientspellcraft:items/charm_evergrowing_crystal"
-    }
+        "layer0": "ancientspellcraft:items/charm_evergrowing_crystal_ready"
+    },
+    "overrides": [
+        {"predicate": {"ready": 1.0}, "model": "ancientspellcraft:item/charm_evergrowing_crystal_not_ready"}
+    ]
 }

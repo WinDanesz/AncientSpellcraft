@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 public class ItemCornucopia extends ItemDailyArtefact {
 	public ItemCornucopia(EnumRarity rarity) {
 		super(rarity);
+		addReadinessPropertyOverride();
 	}
 
 	@Override

@@ -95,6 +95,7 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.charm_fabrikator_toolkit);
 		registerItemModel(AncientSpellcraftItems.charm_scissors);
 		registerItemModel(AncientSpellcraftItems.charm_philosophers_stone);
+		registerItemModel(AncientSpellcraftItems.charm_cube_phasing);
 		registerItemModel(AncientSpellcraftItems.alchemical_essence);
 
 		registerItemModel(AncientSpellcraftItems.wand_channeling);
@@ -119,6 +120,7 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.ice_shield);
 		registerItemModel(AncientSpellcraftItems.stone_fist);
 		registerItemModel(AncientSpellcraftItems.advanced_stone_fist);
+		registerItemModel(AncientSpellcraftItems.scepter_mind_control);
 
 		registerItemModel(AncientSpellcraftItems.stone_tablet_small);
 		registerItemModel(AncientSpellcraftItems.stone_tablet);
@@ -144,6 +146,7 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.devoritium_arrow);
 		registerItemModel(AncientSpellcraftItems.devoritium_bomb);
 		registerItemModel(AncientSpellcraftItems.devoritium_door);
+		registerItemModel(AncientSpellcraftItems.devoritium_scimitar);
 
 		registerItemModel(AncientSpellcraftItems.transmutation_scroll);
 		registerItemModel(AncientSpellcraftItems.bartering_scroll);

@@ -12,6 +12,7 @@ public class ItemGoldBag extends ItemDailyArtefact {
 
 	public ItemGoldBag(EnumRarity rarity) {
 		super(rarity);
+		addReadinessPropertyOverride();
 	}
 
 	@Override

@@ -14,11 +14,13 @@ import com.windanesz.ancientspellcraft.item.ItemBlockDevoritiumMaterial;
 import com.windanesz.ancientspellcraft.item.ItemChargedAstralDiamond;
 import com.windanesz.ancientspellcraft.item.ItemCoalBucket;
 import com.windanesz.ancientspellcraft.item.ItemCornucopia;
+import com.windanesz.ancientspellcraft.item.ItemCubePhasing;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumArrow;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumAxe;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumBomb;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumDoor;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumIngot;
+import com.windanesz.ancientspellcraft.item.ItemDevoritiumScimitar;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumSword;
 import com.windanesz.ancientspellcraft.item.ItemElementalOrb;
 import com.windanesz.ancientspellcraft.item.ItemEnchantedNameTag;
@@ -33,6 +35,7 @@ import com.windanesz.ancientspellcraft.item.ItemKnowledgeOrb;
 import com.windanesz.ancientspellcraft.item.ItemMagicShield;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.item.ItemOmnicron;
+import com.windanesz.ancientspellcraft.item.ItemOverlordScepter;
 import com.windanesz.ancientspellcraft.item.ItemPhiloshopersStone;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
@@ -167,6 +170,7 @@ public final class AncientSpellcraftItems {
 	public static final Item charm_fabrikator_toolkit = placeholder();
 	public static final Item charm_scissors = placeholder();
 	public static final Item charm_philosophers_stone = placeholder();
+	public static final Item charm_cube_phasing = placeholder();
 
 	public static final Item alchemical_essence = placeholder();
 	public static final Item wand_channeling = placeholder();
@@ -213,6 +217,7 @@ public final class AncientSpellcraftItems {
 	public static final Item devoritium_arrow = placeholder();
 	public static final Item devoritium_bomb = placeholder();
 	public static final Item devoritium_door = placeholder();
+	public static final Item devoritium_scimitar = placeholder();
 	public static final Item transmutation_scroll = placeholder();
 	public static final Item bartering_scroll = placeholder();
 
@@ -224,6 +229,8 @@ public final class AncientSpellcraftItems {
 	public static final Item sacred_mace = placeholder();
 	public static final Item stone_fist = placeholder();
 	public static final Item advanced_stone_fist = placeholder();
+	public static final Item scepter_mind_control = placeholder();
+
 
 	// ====================== Misc ======================
 	public static final Item enchanted_name_tag = placeholder();
@@ -451,6 +458,8 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "charm_fabrikator_toolkit", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_scissors", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_philosophers_stone", new ItemPhiloshopersStone(EnumRarity.EPIC));
+		registerItem(registry, "charm_cube_phasing", new ItemCubePhasing(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "scepter_mind_control", new ItemOverlordScepter());
 
 		registerItem(registry, "belt_enchanter", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
 		registerItem(registry, "belt_stone", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
@@ -500,6 +509,7 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "devoritium_arrow", new ItemDevoritiumArrow().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
 		registerItem(registry, "devoritium_bomb", new ItemDevoritiumBomb());
 		registerItem(registry, "devoritium_door", new ItemDevoritiumDoor(AncientSpellcraftBlocks.DEVORITIUM_DOOR));
+		registerItem(registry, "devoritium_scimitar", new ItemDevoritiumScimitar());
 
 		registerItem(registry, "transmutation_scroll", new ItemTransmutationScroll());
 		registerItem(registry, "bartering_scroll", new ItemBarterScroll());

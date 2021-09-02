@@ -1,6 +1,9 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "ancientspellcraft:items/charm_philosophers_stone"
-    }
+        "layer0": "ancientspellcraft:items/charm_philosophers_stone_ready"
+    },
+    "overrides": [
+        {"predicate": {"ready": 1.0}, "model": "ancientspellcraft:item/charm_philosophers_stone_not_ready"}
+    ]
 }

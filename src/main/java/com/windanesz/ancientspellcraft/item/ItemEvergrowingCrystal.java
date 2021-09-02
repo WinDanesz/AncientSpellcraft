@@ -12,6 +12,7 @@ public class ItemEvergrowingCrystal extends ItemDailyArtefact {
 
 	public ItemEvergrowingCrystal(EnumRarity rarity) {
 		super(rarity);
+		addReadinessPropertyOverride();
 	}
 
 	@Override

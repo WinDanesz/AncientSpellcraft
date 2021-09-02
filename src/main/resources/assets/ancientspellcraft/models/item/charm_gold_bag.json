@@ -1,6 +1,9 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "ancientspellcraft:items/charm_gold_bag"
-    }
+        "layer0": "ancientspellcraft:items/charm_gold_bag_ready"
+    },
+    "overrides": [
+        {"predicate": {"ready": 1}, "model": "ancientspellcraft:item/charm_gold_bag_not_ready"}
+    ]
 }

@@ -1,6 +1,9 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "ancientspellcraft:items/cornucopia"
-    }
+        "layer0": "ancientspellcraft:items/cornucopia_ready"
+    },
+    "overrides": [
+        {"predicate": {"ready": 1.0}, "model": "ancientspellcraft:item/cornucopia_not_ready"}
+    ]
 }

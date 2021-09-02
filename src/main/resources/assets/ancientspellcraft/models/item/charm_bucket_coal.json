@@ -1,6 +1,9 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "ancientspellcraft:items/charm_bucket_coal"
-    }
+        "layer0": "ancientspellcraft:items/charm_bucket_coal_ready"
+    },
+    "overrides": [
+        {"predicate": {"ready": 1.0}, "model": "ancientspellcraft:item/charm_bucket_coal_not_ready"}
+    ]
 }

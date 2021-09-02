@@ -9,6 +9,7 @@ public class ItemPhiloshopersStone extends ItemDailyArtefact {
 
 	public ItemPhiloshopersStone(EnumRarity rarity) {
 		super(rarity);
+		addReadinessPropertyOverride();
 	}
 
 	@Override

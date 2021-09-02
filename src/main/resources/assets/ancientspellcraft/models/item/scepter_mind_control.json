@@ -1,0 +1,6 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "ancientspellcraft:items/scepter_mind_control"
+    }
+}

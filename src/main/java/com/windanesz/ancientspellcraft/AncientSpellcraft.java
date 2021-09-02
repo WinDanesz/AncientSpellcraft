@@ -8,7 +8,12 @@ import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
-import com.windanesz.ancientspellcraft.registry.*;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBiomes;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftDimensions;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftLoot;
+import com.windanesz.ancientspellcraft.registry.BookshelfItems;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
 import com.windanesz.ancientspellcraft.util.RitualProperties;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenCrystalShardOre;
@@ -41,7 +46,7 @@ public class AncientSpellcraft {
 	public static final Random rand = new Random();
 
 	/**
-	 * Static instance of the {@link Settings} object for Wizardry.
+	 * Static instance of the {@link Settings} object for AncientSpellcraft.
 	 */
 	public static Settings settings = new Settings();
 
