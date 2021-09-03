@@ -32,9 +32,10 @@ public class CurseOfEnder extends SpellRay {
 		if (EntityUtils.isLiving(target)) {
 
 			// This will actually run out in the end, but only if you leave Minecraft running for 3.4 years
-			if (!world.isRemote)
-			((EntityLivingBase) target).addPotionEffect(new PotionEffect(AncientSpellcraftPotions.curse_of_ender, Integer.MAX_VALUE,
-					getProperty(EFFECT_STRENGTH).intValue() + SpellBuff.getStandardBonusAmplifier(modifiers.get(SpellModifiers.POTENCY))));
+			if (!world.isRemote) {
+				((EntityLivingBase) target).addPotionEffect(new PotionEffect(AncientSpellcraftPotions.curse_of_ender, Integer.MAX_VALUE,
+						getProperty(EFFECT_STRENGTH).intValue() + SpellBuff.getStandardBonusAmplifier(modifiers.get(SpellModifiers.POTENCY))));
+			}
 		}
 
 		return true;

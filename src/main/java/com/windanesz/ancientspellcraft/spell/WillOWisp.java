@@ -8,7 +8,6 @@ import com.windanesz.ancientspellcraft.util.ASUtils;
 import com.windanesz.ancientspellcraft.util.BiomeLocator;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.registry.WizardryItems;
-import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.spell.SpellConstruct;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.block.state.IBlockState;
@@ -29,7 +28,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class WillOWisp extends SpellConstruct<EntitySpellTicker> implements ISpellTickerConstruct {
 
@@ -51,8 +49,9 @@ public class WillOWisp extends SpellConstruct<EntitySpellTicker> implements ISpe
 		if (caster.getEntityWorld().provider.getDimension() == 0) {
 			if (!offhand.isEmpty() && offhand.getItem() instanceof ItemEnchantedNameTag) {
 				if (!offhand.hasTagCompound()) {
-					if (!world.isRemote)
+					if (!world.isRemote) {
 						caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:will_o_wisp.tag_has_no_name"), false);
+					}
 					return false;
 				}
 				String nameTag;
@@ -60,8 +59,9 @@ public class WillOWisp extends SpellConstruct<EntitySpellTicker> implements ISpe
 					nameTag = caster.getHeldItemOffhand().getTagCompound().getCompoundTag("display").getString("Name");
 				}
 				catch (Exception e) {
-					if (!world.isRemote)
+					if (!world.isRemote) {
 						caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:will_o_wisp.tag_has_no_name"), false);
+					}
 					return false;
 				}
 
@@ -143,43 +143,60 @@ public class WillOWisp extends SpellConstruct<EntitySpellTicker> implements ISpe
 				((EntityPlayer) entitySpellTicker.getCaster()).sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:will_o_wisp.searching"), false);
 			}
 
+			NBTTagCompound compound = entitySpellTicker.getExtraData();
 			if (entitySpellTicker.getExtraData().hasKey("biome")) {
-				String biome = entitySpellTicker.getExtraData().getString("biome");
-				ResourceLocation biomeResourceLocation = ASUtils.getBiomeRegistryNameFromName(biome);
-				BlockPos biomePos = BiomeLocator.spiralOutwardsLookingForBiome(world, ForgeRegistries.BIOMES.getValue(biomeResourceLocation), entitySpellTicker.posX, entitySpellTicker.posZ); // find biome pos
-				NBTTagCompound compound = entitySpellTicker.getExtraData();
-				compound.setTag(BIOME_POS_TAG, NBTUtil.createPosTag(biomePos));
 
-				entitySpellTicker.setExtraData(compound);
+				if (!compound.hasKey("searching")) {
 
-				// biome distance from the casting position
-				double distFromTicker = Math.sqrt(biomePos.distanceSq(entitySpellTicker.posX, entitySpellTicker.posY, entitySpellTicker.posZ));
+					compound.setBoolean("searching", true);
+					entitySpellTicker.setExtraData(compound);
 
-				if (distFromTicker > entitySpellTicker.getExtraData().getDouble("maxRange")) {
-					// biome is too far away
-					if (!world.isRemote && entitySpellTicker.getCaster() != null)
-						((EntityPlayer) entitySpellTicker.getCaster()).sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:will_o_wisp.target_too_far"), false);
-					dropNameTag(entitySpellTicker);
+					String biome = entitySpellTicker.getExtraData().getString("biome");
+					ResourceLocation biomeResourceLocation = ASUtils.getBiomeRegistryNameFromName(biome);
+					BlockPos biomePos = BiomeLocator.spiralOutwardsLookingForBiome(world, ForgeRegistries.BIOMES.getValue(biomeResourceLocation), entitySpellTicker.posX, entitySpellTicker.posZ); // find biome pos
+
+					if (biomePos != null && biomePos != BlockPos.ORIGIN) {
+						compound.setTag(BIOME_POS_TAG, NBTUtil.createPosTag(biomePos));
+
+						entitySpellTicker.setExtraData(compound);
+
+						// biome distance from the casting position
+						double distFromTicker = Math.sqrt(biomePos.distanceSq(entitySpellTicker.posX, entitySpellTicker.posY, entitySpellTicker.posZ));
+
+						if (distFromTicker > entitySpellTicker.getExtraData().getDouble("maxRange")) {
+							// biome is too far away
+							if (!world.isRemote && entitySpellTicker.getCaster() != null) {
+								((EntityPlayer) entitySpellTicker.getCaster()).sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:will_o_wisp.target_too_far"), false);
+							}
+							dropNameTag(entitySpellTicker);
+							entitySpellTicker.setDead();
+							return;
+						}
+					} else {
+						// no target biome...
+						entitySpellTicker.setDead();
+						dropNameTag(entitySpellTicker);
+						return;
+					}
+
+				} else {
+					// no target biome...
 					entitySpellTicker.setDead();
+					dropNameTag(entitySpellTicker);
 					return;
 				}
-
-			} else {
-				// no target biome...
-				entitySpellTicker.setDead();
-				dropNameTag(entitySpellTicker);
-				return;
 			}
 		}
 
-		if (!world.isRemote && entitySpellTicker.ticksExisted > 60 && entitySpellTicker.getExtraData().hasKey(BIOME_POS_TAG)) {
+		if (!world.isRemote && entitySpellTicker.ticksExisted > 80 && entitySpellTicker.getExtraData().hasKey(BIOME_POS_TAG)) {
 			BlockPos pos = NBTUtil.getPosFromTag(entitySpellTicker.getExtraData().getCompoundTag(BIOME_POS_TAG));
 			playSound(world, entitySpellTicker.posX, entitySpellTicker.posY, entitySpellTicker.posZ, 0, 0, entitySpellTicker.getModifiers());
 			createWisp(world, (EntityPlayer) entitySpellTicker.getCaster(), pos, entitySpellTicker.getExtraData().getCompoundTag("nametagCompound"));
 			String biome = entitySpellTicker.getExtraData().getString("biome");
 
-			if (entitySpellTicker.getCaster() != null)
+			if (entitySpellTicker.getCaster() != null) {
 				((EntityPlayer) entitySpellTicker.getCaster()).sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:will_o_wisp.sent_to_biome", biome), false);
+			}
 
 			entitySpellTicker.setDead();
 		}

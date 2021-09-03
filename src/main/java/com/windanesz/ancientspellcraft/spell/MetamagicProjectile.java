@@ -28,8 +28,7 @@ public class MetamagicProjectile extends Spell {
 		if (WizardData.get(caster) != null) {
 			WizardData data = WizardData.get(caster);
 			// Fixes the sound not playing in first person.
-			if (world.isRemote)
-				this.playSound(world, caster, ticksInUse, -1, modifiers);
+			this.playSound(world, caster, ticksInUse, -1, modifiers);
 
 			data.setVariable(METAMAGIC_PROJECTILE, true);
 			if (!world.isRemote)
