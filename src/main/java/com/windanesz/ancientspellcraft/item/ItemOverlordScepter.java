@@ -1,7 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIWizardFollowPlayer;
-import com.windanesz.ancientspellcraft.entity.ai.EntitySummonAIFollowOwner;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.registry.Spells;
@@ -131,8 +130,8 @@ public class ItemOverlordScepter extends Item {
 					if (target instanceof EntityCreature) {
 						EntityCreature creature = (EntityCreature) target;
 						// fixme
-						EntitySummonAIFollowOwner task = new EntitySummonAIFollowOwner(creature, 1.0D, 10.0F, 2.0F);
-						creature.tasks.addTask(5, task);
+//						EntitySummonAIFollowOwner task = new EntitySummonAIFollowOwner(creature, 1.0D, 10.0F, 2.0F);
+//						creature.tasks.addTask(5, task);
 					}
 					storeCurrentlyControlledEntityUUID(stack, target);
 				}
