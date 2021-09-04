@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.entity.ai;
 
+import com.windanesz.ancientspellcraft.data.SpellCategorization;
 import electroblob.wizardry.entity.living.ISpellCaster;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.event.SpellCastEvent.Source;
@@ -12,12 +13,16 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.EnumHand;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * This class is an extended version of Electroblob's {@link electroblob.wizardry.entity.living.EntityAIAttackSpell}
@@ -35,7 +40,7 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 	private boolean strafingClockwise;
 	private boolean strafingBackwards;
 	private int strafingTime = -1;
-
+	private int timeSinceDisengage = 0;
 
 	/**
 	 * The entity the AI instance has been applied to. Thanks to type parameters, methods from both EntityLiving and
@@ -67,6 +72,7 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 	 * The speed that the entity should move when attacking. Only used when passed into the navigator.
 	 */
 	private final double speed;
+
 	/**
 	 * Creates a new spell attack AI with the given parameters.
 	 *
@@ -199,13 +205,20 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 
 					while (!spells.isEmpty()) {
 
-						spell = spells.get(attacker.world.rand.nextInt(spells.size()));
+						spell = selectSpellConditionally(attacker.world, attacker, target, spells);
 
 						SpellModifiers modifiers = attacker.getModifiers();
 
 						if (spell != null && attemptCastSpell(spell, modifiers)) {
 							// The spell worked, so we're done!
 							attacker.rotationYaw = (float) (Math.atan2(dz, dx) * 180.0D / Math.PI) - 90.0F;
+
+							// stay a bit in place if disengage magic or close combat magic was used.
+							SpellCategorization.SpellCategory category = SpellCategorization.getCategoryFor(spell);
+							if (category == SpellCategorization.SpellCategory.CLOSE_COMBAT || category == SpellCategorization.SpellCategory.DISENGAGE) {
+								timeSinceDisengage = 60;
+							}
+
 							return;
 						} else {
 							spells.remove(spell);
@@ -221,72 +234,59 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 
 		// based on {@link net.minecraft.entity.ai.EntityAIAttackRangedBow}
 
-		EntityLivingBase entitylivingbase = this.entity.getAttackTarget();
+		EntityLivingBase target = this.entity.getAttackTarget();
 
-		if (entitylivingbase != null)
-		{
-			double d0 = this.entity.getDistanceSq(entitylivingbase.posX, entitylivingbase.getEntityBoundingBox().minY, entitylivingbase.posZ);
-			boolean flag = this.entity.getEntitySenses().canSee(entitylivingbase);
-			boolean flag1 = this.seeTime > 0;
+		if (timeSinceDisengage == 0) {
+			if (target != null) {
+				double d0 = this.entity.getDistanceSq(target.posX, target.getEntityBoundingBox().minY, target.posZ);
+				boolean flag = this.entity.getEntitySenses().canSee(target);
+				boolean flag1 = this.seeTime > 0;
 
-			if (flag != flag1)
-			{
-				this.seeTime = 0;
-			}
-
-			if (flag)
-			{
-				++this.seeTime;
-			}
-			else
-			{
-				--this.seeTime;
-			}
-
-			if (d0 <= (double)this.maxAttackDistance && this.seeTime >= 20)
-			{
-				this.entity.getNavigator().clearPath();
-				++this.strafingTime;
-			}
-			else
-			{
-				this.entity.getNavigator().tryMoveToEntityLiving(entitylivingbase, this.moveSpeedAmp);
-				this.strafingTime = -1;
-			}
-
-			if (this.strafingTime >= 20)
-			{
-				if ((double)this.entity.getRNG().nextFloat() < 0.3D)
-				{
-					this.strafingClockwise = !this.strafingClockwise;
+				if (flag != flag1) {
+					this.seeTime = 0;
 				}
 
-				if ((double)this.entity.getRNG().nextFloat() < 0.3D)
-				{
-					this.strafingBackwards = !this.strafingBackwards;
+				if (flag) {
+					++this.seeTime;
+				} else {
+					--this.seeTime;
 				}
 
-				this.strafingTime = 0;
-			}
-
-			if (this.strafingTime > -1)
-			{
-				if (d0 > (double)(this.maxAttackDistance * 0.75F))
-				{
-					this.strafingBackwards = false;
-				}
-				else if (d0 < (double)(this.maxAttackDistance * 0.25F))
-				{
-					this.strafingBackwards = true;
+				if (d0 <= ((double) this.maxAttackDistance * 0.5f) && this.seeTime >= 20) {
+					this.entity.getNavigator().clearPath();
+					++this.strafingTime;
+				} else {
+					this.entity.getNavigator().tryMoveToEntityLiving(target, this.moveSpeedAmp);
+					this.strafingTime = -1;
 				}
 
-				this.entity.getMoveHelper().strafe(this.strafingBackwards ? -0.5F : 0.5F, this.strafingClockwise ? 0.5F : -0.5F);
-				this.entity.faceEntity(entitylivingbase, 30.0F, 30.0F);
+				if (this.strafingTime >= 20) {
+					if ((double) this.entity.getRNG().nextFloat() < 0.3D) {
+						this.strafingClockwise = !this.strafingClockwise;
+					}
+
+					if ((double) this.entity.getRNG().nextFloat() < 0.3D) {
+						this.strafingBackwards = !this.strafingBackwards;
+					}
+
+					this.strafingTime = 0;
+				}
+
+				if (this.strafingTime > -1) {
+					if (d0 > (double) (this.maxAttackDistance * 0.75F)) {
+						this.strafingBackwards = false;
+					} else if (d0 < (double) (this.maxAttackDistance * 0.25F)) {
+						this.strafingBackwards = true;
+					}
+
+					this.entity.getMoveHelper().strafe(this.strafingBackwards ? -0.5F : 0.5F, this.strafingClockwise ? 0.3F : -0.3F);
+					this.entity.faceEntity(target, 30.0F, 30.0F);
+				} else {
+					this.entity.getLookHelper().setLookPositionWithEntity(target, 30.0F, 30.0F);
+				}
 			}
-			else
-			{
-				this.entity.getLookHelper().setLookPositionWithEntity(entitylivingbase, 30.0F, 30.0F);
-			}
+		} else {
+			timeSinceDisengage--;
 		}
 	}
 
@@ -312,9 +312,19 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 
 				MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(Source.NPC, spell, attacker, modifiers));
 
-				// For now, the cooldown is just added to the constant base cooldown. I think this
-				// is a reasonable way of doing things; it's certainly better than before.
-				this.cooldown = this.baseCooldown + spell.getCooldown();
+				Queue<SpellCategorization.SpellCategory> spellPreferenceQueue = new LinkedList<>();
+
+				// With critically low HP, spellcasting is more frequent
+				float healthRatio = attacker.getHealth() / attacker.getMaxHealth();
+				if (healthRatio <= 0.5f) {
+					this.cooldown = (int) (this.baseCooldown + (spell.getCooldown() * 0.5));
+				} else if (healthRatio <= 0.25f) {
+					this.cooldown = (int) (this.baseCooldown + (spell.getCooldown()) * 0.1);
+				} else {
+					// For now, the cooldown is just added to the constant base cooldown. I think this
+					// is a reasonable way of doing things; it's certainly better than before.
+					this.cooldown = this.baseCooldown + spell.getCooldown();
+				}
 
 				if (spell.requiresPacket()) {
 					// Sends a packet to all players in dimension to tell them to spawn particles.
@@ -323,10 +333,64 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 					WizardryPacketHandler.net.sendToDimension(msg, attacker.world.provider.getDimension());
 				}
 			}
-
 			return true;
 		}
 
 		return false;
+	}
+
+	public static Spell selectSpellConditionally(World world, EntityLivingBase caster, EntityLivingBase target, List<Spell> spells) {
+		if (!spells.isEmpty()) {
+			Spell spellToPick = Spells.none;
+
+			double closeCombatDistance = 3f;
+			double criticalHealthFactor = 0.45f;
+
+			Queue<SpellCategorization.SpellCategory> spellPreferenceQueue = new LinkedList<>();
+
+			double distanceSq = caster.getDistance(target.posX, target.posY, target.posZ);
+
+			// Critically low HP
+			float t = caster.getHealth() / caster.getMaxHealth();
+			if (t <= criticalHealthFactor) {
+				spellPreferenceQueue.add(SpellCategorization.SpellCategory.LIFE_SAVING);
+			}
+
+			// close combat
+			if (distanceSq <= closeCombatDistance) {
+				spellPreferenceQueue.add(SpellCategorization.SpellCategory.DISENGAGE);
+				spellPreferenceQueue.add(SpellCategorization.SpellCategory.CLOSE_COMBAT);
+			} else {
+				// ranged combat
+				spellPreferenceQueue.add(SpellCategorization.SpellCategory.RANGED_ATTACK);
+			}
+
+			List<Spell> spellList = new ArrayList<>(spells);
+
+			// shuffle the list so we won't always pick the first match
+			Collections.shuffle(spellList);
+
+			while (spellToPick == Spells.none && !spellPreferenceQueue.isEmpty()) {
+
+				SpellCategorization.SpellCategory category = spellPreferenceQueue.remove();
+
+				for (Spell currSpell : spellList) {
+					if (category == SpellCategorization.getCategoryFor(currSpell)) {
+						// its a match!
+						spellToPick = currSpell;
+						break;
+					}
+				}
+			}
+
+			if (spellToPick == Spells.none || spellToPick == Spells.magic_missile && world.rand.nextBoolean()) {
+				// no match - default logic, random picked spell
+				return spells.get(world.rand.nextInt(spells.size()));
+			}
+
+			return spellToPick;
+		}
+		return Spells.none;
+
 	}
 }

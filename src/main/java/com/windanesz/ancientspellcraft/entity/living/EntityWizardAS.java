@@ -1,8 +1,10 @@
-package com.windanesz.ancientspellcraft.entity;
+package com.windanesz.ancientspellcraft.entity.living;
 
 import com.windanesz.ancientspellcraft.Settings;
+import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellImproved;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.entity.living.EntityAIAttackSpell;
 import electroblob.wizardry.entity.living.EntityWizard;
 import electroblob.wizardry.registry.WizardryItems;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,8 +22,12 @@ import java.util.List;
 
 public class EntityWizardAS extends EntityWizard {
 
+	private EntityAIAttackSpellImproved<EntityWizard> spellCastingAIImproved = new EntityAIAttackSpellImproved<>(this, 0.5D, 14.0F, 30, 50);
+
 	public EntityWizardAS(World world) {
 		super(world);
+		this.tasks.taskEntries.removeIf(t -> t.action instanceof EntityAIAttackSpell);
+		this.tasks.addTask(3, this.spellCastingAIImproved);
 	}
 
 	@Override
@@ -40,7 +46,7 @@ public class EntityWizardAS extends EntityWizard {
 			MerchantRecipe ASBooks = new MerchantRecipe(anyASSpellBook, new ItemStack(WizardryItems.magic_crystal, 5));
 			MerchantRecipe ancientElementBooks = new MerchantRecipe(anyAncientSpellBook, new ItemStack(WizardryItems.magic_crystal, 5));
 
-			MerchantRecipe ritualBooks = new MerchantRecipe(ritualBook, new ItemStack(WizardryItems.magic_crystal, 10));
+			MerchantRecipe ritualBooks = new MerchantRecipe(ritualBook, new ItemStack(WizardryItems.magic_crystal, 20));
 
 			if (Settings.generalSettings.wizards_buy_ancient_spellcraft_books && list.stream().noneMatch(i -> i.getItemToBuy().getItem() == AncientSpellcraftItems.ancient_spellcraft_spell_book)) {
 				list.add(ASBooks);

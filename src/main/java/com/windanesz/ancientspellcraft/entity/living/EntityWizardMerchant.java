@@ -1,4 +1,4 @@
-package com.windanesz.ancientspellcraft.entity;
+package com.windanesz.ancientspellcraft.entity.living;
 
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.Wizardry;
@@ -6,7 +6,6 @@ import electroblob.wizardry.block.BlockReceptacle;
 import electroblob.wizardry.client.ClientProxy;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
-import electroblob.wizardry.entity.living.EntityAIAttackSpell;
 import electroblob.wizardry.entity.living.EntityWizard;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.item.ItemSpellBook;
@@ -60,8 +59,7 @@ import java.util.stream.Collectors;
 
 public class EntityWizardMerchant extends EntityWizard {
 
-	private EntityAIAttackSpell<EntityWizard> spellCastingAI = new EntityAIAttackSpell<>(this, 0.5D, 14.0F, 30, 50);
-	private int lifetime = 24000; // a full MC day
+	int lifetime = 24000; // a full MC day
 
 	/**
 	 * The wizard's trades.
@@ -75,8 +73,7 @@ public class EntityWizardMerchant extends EntityWizard {
 	@Override
 	public ITextComponent getDisplayName() {
 		ITextComponent tex = super.getDisplayName();
-		if (!hasCustomName())
-			return (new TextComponentTranslation("entity.ancientspellcraft:travelling.prefix")).appendText(" ").appendSibling(tex);
+		if (!hasCustomName()) { return (new TextComponentTranslation("entity.ancientspellcraft:travelling.prefix")).appendText(" ").appendSibling(tex); }
 		return super.getDisplayName();
 	}
 
@@ -84,26 +81,29 @@ public class EntityWizardMerchant extends EntityWizard {
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		if (ticksExisted == 1) {
-			this.onSpawn(false);
-		}
+		if (lifetime >= 0) {
 
-		if (ticksExisted == 40) {
-			EntityPlayer closestPlayer = world.getClosestPlayerToEntity(this, 120);
-			if (closestPlayer != null) {
-				this.getNavigator().clearPath();
-				this.getNavigator().tryMoveToEntityLiving(closestPlayer, 0.7f);
-				this.faceEntity(closestPlayer, 30F,30F);
+			if (ticksExisted == 1) {
+				this.onSpawn(false);
 			}
-		}
 
-		lifetime--;
+			if (ticksExisted == 40) {
+				EntityPlayer closestPlayer = world.getClosestPlayerToEntity(this, 120);
+				if (closestPlayer != null) {
+					this.getNavigator().clearPath();
+					this.getNavigator().tryMoveToEntityLiving(closestPlayer, 0.7f);
+					this.faceEntity(closestPlayer, 30F, 30F);
+				}
+			}
 
-		// these cowards will teleport away if you try to beat them
-		if (lifetime <= 0) {
-			this.onDespawn(false);
-		} else if (isNearCriticalHealth()) {
-			this.onDespawn(true);
+			lifetime--;
+
+			// these cowards will teleport away if you try to beat them
+			if (lifetime <= 0) {
+				this.onDespawn(false);
+			} else if (isNearCriticalHealth()) {
+				this.onDespawn(true);
+			}
 		}
 	}
 
@@ -117,7 +117,7 @@ public class EntityWizardMerchant extends EntityWizard {
 
 		super.writeEntityToNBT(nbt);
 
-		if(this.trades != null){
+		if (this.trades != null) {
 			NBTExtras.storeTagSafely(nbt, "trades", this.trades.getRecipiesAsTags());
 		}
 
@@ -128,7 +128,7 @@ public class EntityWizardMerchant extends EntityWizard {
 	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 
-		if(nbt.hasKey("trades")){
+		if (nbt.hasKey("trades")) {
 			NBTTagCompound nbttagcompound1 = nbt.getCompoundTag("trades");
 			this.trades = new WildcardTradeList(nbttagcompound1);
 		}
@@ -242,7 +242,7 @@ public class EntityWizardMerchant extends EntityWizard {
 
 				double tierIncreaseChance = 0.5 + 0.04 * (Math.max(this.trades.size(), 0));
 
-				tier =  Tier.APPRENTICE;
+				tier = Tier.APPRENTICE;
 
 				if (rand.nextDouble() < tierIncreaseChance) {
 					tier = Tier.ADVANCED;
@@ -254,22 +254,19 @@ public class EntityWizardMerchant extends EntityWizard {
 				itemToSell = this.getRandomItemOfTier(tier);
 
 				for (Object recipe : merchantrecipelist) {
-					if (ItemStack.areItemStacksEqual(((MerchantRecipe) recipe).getItemToSell(), itemToSell))
-						itemAlreadySold = true;
+					if (ItemStack.areItemStacksEqual(((MerchantRecipe) recipe).getItemToSell(), itemToSell)) { itemAlreadySold = true; }
 				}
 
 				if (this.trades != null) {
 					for (Object recipe : this.trades) {
-						if (ItemStack.areItemStacksEqual(((MerchantRecipe) recipe).getItemToSell(), itemToSell))
-							itemAlreadySold = true;
+						if (ItemStack.areItemStacksEqual(((MerchantRecipe) recipe).getItemToSell(), itemToSell)) { itemAlreadySold = true; }
 					}
 				}
 
 			}
 
 			// Don't know how it can ever be empty here, but it's a failsafe.
-			if (itemToSell.isEmpty())
-				return;
+			if (itemToSell.isEmpty()) { return; }
 
 			ItemStack secondItemToBuy = tier == Tier.MASTER ? new ItemStack(WizardryItems.astral_diamond)
 					: new ItemStack(WizardryItems.magic_crystal, tier.ordinal() * 3 + 1 + rand.nextInt(4));

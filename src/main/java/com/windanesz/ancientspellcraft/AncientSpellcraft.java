@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft;
 import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
 import com.windanesz.ancientspellcraft.command.CommandListBiomes;
 import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
+import com.windanesz.ancientspellcraft.data.SpellCategorization;
 import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
@@ -108,6 +109,7 @@ public class AncientSpellcraft {
 
 		ItemRelic.initEffects();
 		proxy.initialiseLayers();
+		SpellCategorization.init();
 	}
 
 	@EventHandler

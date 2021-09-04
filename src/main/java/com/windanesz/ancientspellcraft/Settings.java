@@ -138,6 +138,11 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public int void_creeper_spawn_rate = 2;
 
+		@Config.Name("Class Armour Evil Wizard Spawn Rate")
+		@Config.Comment("Spawn rate for naturally-spawned class (sage, warlock, battlemage) wizards; higher numbers mean more wizards will spawn. Set to 0 do disable spawning entirely")
+		@Config.RequiresMcRestart
+		public int evil_class_wizard_spawn_rate = 2;
+
 		@Config.Name("Orb Artefact Potency Percent Bonus")
 		@Config.Comment("Determines the potency bonus of the elemental orb artefacts in a percentage value")
 		@Config.RequiresMcRestart

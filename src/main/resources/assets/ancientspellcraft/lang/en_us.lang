@@ -52,6 +52,20 @@ enchantment.ancientspellcraft\:static_charge=Static Charge
 enchantment.ancientspellcraft\:degrade_sword=Degraded
 enchantment.ancientspellcraft\:degrade_bow=Degraded
 
+#classes
+class_element.magic.wizard=Wizard
+class_element.fire.wizard=Pyromancer
+class_element.ice.wizard=Ice
+class_element.lightning.wizard=Storm
+class_element.necromancy.wizard=Necromancer
+class_element.earth.wizard=Earth
+class_element.sorcery.wizard=Sorcerer
+class_element.healing.wizard=Healer
+
+wizard_armour_class.sage=Sage
+wizard_armour_class.battlemage=Battlemage
+wizard_armour_class.warlock=Warlock
+
 #entity
 entity.ancientspellcraft\:devoritium_bomb.name=Devoritium Bomb
 entity.ancientspellcraft\:wizardmerchant.name=Wizard
@@ -67,6 +81,10 @@ entity.ancientspellcraft\:travelling.prefix=Travelling
 entity.ancientspellcraft\:travelling_wizard.name=Travelling Wizard
 entity.ancientspellcraft\:void_creeper.name=Void Creeper
 entity.ancientspellcraft\:wolf_minion.name=Wolf Minion
+entity.ancientspellcraft\:class_wizard.name=Armour Class Wizard
+entity.ancientspellcraft\:evil_class_wizard.name=Armour Class Wizard
+entity.ancientspellcraft\:class_wizard_combined.name=%1$s %2$s
+entity.ancientspellcraft\:evil_class_wizard_combined.name=%1$s %2$s
 
 # gui
 gui.ancientspellcraft:empty_slot=Empty Slot

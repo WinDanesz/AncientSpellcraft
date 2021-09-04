@@ -3,8 +3,10 @@ package com.windanesz.ancientspellcraft.handler;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
-import com.windanesz.ancientspellcraft.entity.living.EntityWizardAS;
 import com.windanesz.ancientspellcraft.entity.ai.EntitySummonAIFollowOwner;
+import com.windanesz.ancientspellcraft.entity.living.EntityEvilWizardAS;
+import com.windanesz.ancientspellcraft.entity.living.EntityWizardAS;
+import com.windanesz.ancientspellcraft.entity.living.EntityWizardMerchant;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityContingencyProjectile;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
 import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
@@ -34,6 +36,7 @@ import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.entity.construct.EntityBubble;
+import electroblob.wizardry.entity.living.EntityEvilWizard;
 import electroblob.wizardry.entity.living.EntitySkeletonMinion;
 import electroblob.wizardry.entity.living.EntityWizard;
 import electroblob.wizardry.entity.living.ISummonedCreature;
@@ -1196,7 +1199,7 @@ public class ASEventHandler {
 	@SubscribeEvent
 	public static void onCheckSpawnEvent(EntityJoinWorldEvent event) {
 
-		if (event.getEntity() instanceof EntityWizard && !(event.getEntity() instanceof EntityWizardAS) &&
+		if (event.getEntity() instanceof EntityWizard && !(event.getEntity() instanceof EntityWizardAS) && !(event.getEntity() instanceof EntityWizardMerchant) &&
 				Settings.generalSettings.apply_wizard_entity_changes) {
 
 			NBTTagCompound nbt = new NBTTagCompound();
@@ -1214,6 +1217,26 @@ public class ASEventHandler {
 			// prevent spawning the original entity
 			event.setCanceled(true);
 		}
+
+		if (event.getEntity() instanceof EntityEvilWizard && !(event.getEntity() instanceof EntityEvilWizardAS) &&
+				Settings.generalSettings.apply_wizard_entity_changes) {
+
+			NBTTagCompound nbt = new NBTTagCompound();
+			event.getEntity().writeToNBT(nbt);
+
+			// fixes the missing id
+			nbt.setString("id", "ebwizardry:evil_wizard");
+
+			EntityEvilWizardAS wizard = (EntityEvilWizardAS) EntityList.createEntityFromNBT(nbt, (event.getWorld()));
+
+			// spawn the new entity
+			if (!event.getWorld().isRemote && wizard != null) {
+				event.getWorld().spawnEntity(wizard);
+			}
+			// prevent spawning the original entity
+			event.setCanceled(true);
+		}
+
 		// We have no way of checking if it's a spawner in getCanSpawnHere() so this has to be done here instead
 		if (event.getEntity() instanceof ISummonedCreature) {
 			if (event.getEntity() instanceof EntityCreature && ((ISummonedCreature) event.getEntity()).getOwner() != null) {
