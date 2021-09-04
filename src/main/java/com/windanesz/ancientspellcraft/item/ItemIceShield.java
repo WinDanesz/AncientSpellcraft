@@ -205,6 +205,7 @@ public class ItemIceShield extends Item implements IConjuredItem {
 						iceshard.setCaster((EntityLivingBase) entity);
 						iceshard.damageMultiplier = 1.3F;
 						world.spawnEntity(iceshard);
+						stack.shrink(1);
 					}
 				}
 			}
