@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.entity.construct;
 
-import com.windanesz.ancientspellcraft.entity.EntityWizardMerchant;
+import com.windanesz.ancientspellcraft.entity.living.EntityWizardMerchant;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.util.ASParticles;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;

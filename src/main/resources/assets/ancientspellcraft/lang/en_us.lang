@@ -54,6 +54,7 @@ enchantment.ancientspellcraft\:degrade_bow=Degraded
 
 #entity
 entity.ancientspellcraft\:devoritium_bomb.name=Devoritium Bomb
+entity.ancientspellcraft\:wizardmerchant.name=Wizard
 entity.ancientspellcraft\:entity_volcano.name=Volcano
 entity.ancientspellcraft\:fire_ant.name=Fire Ant
 entity.ancientspellcraft\:ordinary_spider_minion.name=Spider Minion

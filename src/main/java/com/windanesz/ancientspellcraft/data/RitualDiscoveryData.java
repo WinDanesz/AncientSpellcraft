@@ -20,14 +20,8 @@ public class RitualDiscoveryData {
 
 	private static final String RITUAL_DISCOVERY_DATA_TAG = "ritual_discovery_data";
 	private static final String RITUAL_TAG = "rituals";
-	// For some reason 'the diamond' doesn't work if I chain methods onto this. Type inference is weird.
 
 	public static final IStoredVariable<NBTTagCompound> RITUAL_DISCOVERY_DATA = IStoredVariable.StoredVariable.ofNBT(RITUAL_DISCOVERY_DATA_TAG, Persistence.ALWAYS).setSynced();
-
-	//	public static final IStoredVariable<List<Ritual>> LOCATIONS_KEY = new IStoredVariable.StoredVariable<List<Ritual>, NBTTagList>("stoneCirclePos",
-	//			), Persistence.ALWAYS).setSynced();
-
-	//	public static final IStoredVariable<List<String>> COUNTDOWN_KEY = IStoredVariable.StoredVariable.ofString("tpCountdown", Persistence.ALWAYS).setSynced();
 
 	public static final IStoredVariable<List<Location>> fds = new IStoredVariable.StoredVariable<List<Location>, NBTTagList>("stoneCirclePos",
 			s -> NBTExtras.listToNBT(s, Location::toNBT), t -> new ArrayList<>(NBTExtras.NBTToList(t, Location::fromNBT)), Persistence.ALWAYS);
@@ -55,13 +49,11 @@ public class RitualDiscoveryData {
 			if (compound != null) {
 				if (compound.hasKey(RITUAL_TAG)) {
 					NBTTagList tagList = (NBTTagList) compound.getTag(RITUAL_TAG);
-//					if (!tagList.isEmpty()) {
-						for (int i = 0; i < tagList.tagCount(); i++) {
-							NBTTagCompound tag = tagList.getCompoundTagAt(i);
-							String s = tag.getString("r" + i);
-							stringList.add(s);
-						}
-//					}
+					for (int i = 0; i < tagList.tagCount(); i++) {
+						NBTTagCompound tag = tagList.getCompoundTagAt(i);
+						String s = tag.getString("r" + i);
+						stringList.add(s);
+					}
 				}
 			}
 		}

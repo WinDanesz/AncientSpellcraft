@@ -9,14 +9,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.constants.RitualTier;
 import com.windanesz.ancientspellcraft.registry.Rituals;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
-import electroblob.wizardry.Wizardry;
-import electroblob.wizardry.constants.Element;
-import electroblob.wizardry.constants.SpellType;
-import electroblob.wizardry.spell.Spell;
-import io.netty.buffer.ByteBuf;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.JsonUtils;
@@ -35,11 +29,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -68,103 +57,10 @@ public final class RitualProperties {
 	private static final Gson gson = new Gson();
 
 	/**
-	 * Set of enum constants representing contexts in which a ritual can be enabled/disabled.
-	 */
-	public enum Context {
-
-		/**
-		 * Disabling this context will make a ritual's book unobtainable and unusable.
-		 */
-		BOOK("book"),
-		/**
-		 * Disabling this context will make a ritual's scroll unobtainable and unusable.
-		 */
-		SCROLL("scroll"),
-		/**
-		 * Disabling this context will prevent a ritual from being cast using a wand.
-		 */
-		WANDS("wands"),
-		/**
-		 * Disabling this context will prevent NPCs from casting or dropping a ritual.
-		 */
-		NPCS("npcs"),
-		/**
-		 * Disabling this context will prevent dispensers from casting a spell.
-		 */
-		DISPENSERS("dispensers"),
-		/**
-		 * Disabling this context will prevent a ritual from being cast using commands.
-		 */
-		COMMANDS("commands"),
-		/**
-		 * Disabling this context will prevent a ritual's book or scroll generating in chests.
-		 */
-		TREASURE("treasure"),
-		/**
-		 * Disabling this context will prevent a ritual's book or scroll from being sold by NPCs.
-		 */
-		TRADES("trades"),
-		/**
-		 * Disabling this context will prevent a ritual's book or scroll being dropped by mobs.
-		 */
-		LOOTING("looting");
-
-		/**
-		 * The JSON identifier for this context.
-		 */
-		public final String name;
-
-		Context(String name) {
-			this.name = name;
-		}
-	}
-
-	/**
-	 * A map storing whether each context is enabled for this ritual.
-	 */
-	private final Map<Context, Boolean> enabledContexts;
-	/**
-	 * A map storing the base values for this ritual. These values are defined by the ritual class and cannot be
-	 * changed.
-	 */
-	// We're using Number here because it makes implementors think about what they convert it to.
-	// If we did what attributes do and just use doubles, people (myself included!) might plug them into calculations
-	// without thinking. However, with Number you can't just do that, you have to convert and therefore you have to
-	// decide how to do the conversion. Internally they're handled as floats though.
-	private final Map<String, Number> baseValues;
-
-	// TODO: review if we need all of these
-
-	/**
-	 * The tier this ritual belongs to.
-	 */
-	public final RitualTier tier;
-	/**
-	 * The element this ritual belongs to.
-	 */
-	public final Element element;
-	/**
-	 * The type of ritual this is classified as.
-	 */
-	public final SpellType type;
-	/**
-	 * Mana cost of the ritual. If it is a continuous ritual the cost is per second.
-	 */
-	public final int cost;
-	/**
-	 * The charge-up time of the ritual, in ticks.
-	 */
-	public final int chargeup;
-	/**
-	 * The cooldown time of the ritual, in ticks.
-	 */
-	public final int cooldown;
-	/**
 	 * The lifetime of the ritual's tileentity, in ticks, when all conditions are met.
 	 * Use -1 for infinite lifetime.
 	 */
 	public final int lifetime;
-
 	public final int size;
 
 	public int centerPieceIndex;
@@ -172,17 +68,10 @@ public final class RitualProperties {
 
 	public int width = 0;
 	public int height = 0;
-	/**
-	 * The required ingredients of the ritual.
-	 */
-	//	public ItemStack[] ingredients;
 
 	public NonNullList<Ingredient> pattern;
 
 	public Ingredient centerPiece;
-
-	// Sometimes it just makes more sense to do the JSON parsing in the constructor
-	// It's the only way we're gonna keep the fields final!
 
 	/**
 	 * Parses the given JSON object and constructs a new {@code SpellProperties} from it, setting all the relevant
@@ -194,39 +83,8 @@ public final class RitualProperties {
 	 */
 	private RitualProperties(JsonObject json, Ritual ritual) {
 
-		String[] baseValueNames = ritual.getPropertyKeys();
-		int width = 0;
-		int height = 0;
-		enabledContexts = new EnumMap<>(Context.class);
-		baseValues = new HashMap<>();
-
-		JsonObject enabled = JsonUtils.getJsonObject(json, "enabled");
-
-		// This time we know the exact set of properties so we can iterate over them instead of the json object
-		// In fact, we actually want to throw an exception if any of them are missing
-		for (Context context : Context.values()) {
-			enabledContexts.put(context, JsonUtils.getBoolean(enabled, context.name));
-		}
-
-		try {
-			tier = RitualTier.fromName(JsonUtils.getString(json, "tier"));
-			element = Element.fromName(JsonUtils.getString(json, "element"));
-			type = SpellType.fromName(JsonUtils.getString(json, "type"));
-		}
-		catch (IllegalArgumentException e) {
-			throw new JsonSyntaxException("Incorrect spell property value", e);
-		}
-
-		cost = JsonUtils.getInt(json, "cost");
-		chargeup = JsonUtils.getInt(json, "chargeup");
-		cooldown = JsonUtils.getInt(json, "cooldown");
 		lifetime = JsonUtils.getInt(json, "lifetime");
 		size = JsonUtils.getInt(json, "size");
-		//////////////////////
-
-		///////////////////
-
-		//		String group = JsonUtils.getString(json, "group", "");
 
 		Map<Character, Ingredient> ingMap = Maps.newHashMap();
 		for (Map.Entry<String, JsonElement> entry : JsonUtils.getJsonObject(json, "key").entrySet()) {
@@ -242,16 +100,10 @@ public final class RitualProperties {
 		JsonArray patternJ = JsonUtils.getJsonArray(json, "pattern");
 		if (patternJ.size() == 0)
 			throw new JsonSyntaxException("Invalid pattern: empty pattern not allowed");
-		//		if (patternJ.size() > 3)
-		//			throw new JsonSyntaxException("Invalid pattern: too many rows, 3 is maximum");
 
 		String[] pattern = new String[patternJ.size()];
 		for (int x = 0; x < pattern.length; ++x) {
 			String line = JsonUtils.getString(patternJ.get(x), "pattern[" + x + "]");
-			//			if (line.length() != patternJ.size())
-			//				throw new JsonSyntaxException("Invalid pattern: width does not equals with height");
-			//			if (x > 0 && pattern[0].length() != line.length())
-			//				throw new JsonSyntaxException("Invalid pattern: each row must be the same width");
 			pattern[x] = line;
 			this.width = line.length();
 		}
@@ -274,150 +126,13 @@ public final class RitualProperties {
 		if (!keys.isEmpty())
 			throw new JsonSyntaxException("Key defines symbols that aren't used in pattern: " + keys);
 
-		//		centerPiece =//CraftingHelper.getIngredient(JsonUtils.getJsonObject(json, "centerpiece"), new JsonContext(AncientSpellcraft.MODID));
 		centerPieceIndex = (int) Math.ceil(this.pattern.size() / 2);
 		Ingredient test = this.pattern.get(centerPieceIndex);
 		centerpiece = this.pattern.get(centerPieceIndex).getMatchingStacks().length > 0 ? this.pattern.get(centerPieceIndex).getMatchingStacks()[0].getItem() : null;
-		//	centerPieceIndex = this.pattern.indexOf(centerPiece);
-		//		System.out.println("centerpiece index: " + centerPieceIndex);
-		//				return new ShapedRecipes(group, pattern[0].length(), pattern.length, input, result);
-
-		//////////////////
-
-		// There's not much point specifying the classes of the numbers here because the json getter methods just
-		// perform conversion to the requested type anyway. It therefore makes very little difference whether the
-		// conversion is done during JSON parsing or when we actually use the value - and at least in the latter case,
-		// individual subclasses have control over how it is converted.
-
-		// My case in point: summoning 2.5 spiders is obviously nonsense, but what happens when we cast that with a
-		// modifier of 2? Should we round the base value down to 2 and then apply the x2 modifier to get 4 spiders?
-		// Should we round it up instead? Or should we apply the modifier first and then do the rounding, so with no
-		// modifier we still get 2 spiders but with the x2 modifier we get 5?
-		// The most pragmatic solution is to let the spell class decide for itself.
-		// (Of course, we can only hope that the users aren't jerks and don't try to summon 2 and a half spiders...)
-
-		JsonObject baseValueObject = JsonUtils.getJsonObject(json, "base_properties");
-
-		// If the code requests more values than the JSON file contains, that will cause a JsonSyntaxException here anyway.
-		// If there are redundant values in the JSON file, chances are that a user has misunderstood the system and tried
-		// to add properties that aren't implemented. However, redundant values will also be found if a programmer has
-		// forgotten to call addProperties in their spell constructor (I know I have!), potentially causing a crash at
-		// some random point in the future. Since redundant values aren't a problem by themselves, we shouldn't throw an
-		// exception, but a warning is appropriate.
-
-		int redundantKeys = baseValueObject.size() - baseValueNames.length;
-		if (redundantKeys > 0)
-			AncientSpellcraft.logger.warn("Ritual " + ritual.getRegistryName() + " has " + redundantKeys +
-					" redundant ritual property key(s) defined in its JSON file. Extra values will have no effect! (Modders:" +
-					" make sure you have called addProperties(...) during spell construction)");
-
-		if (baseValueNames.length > 0) {
-
-			for (String baseValueName : baseValueNames) {
-				baseValues.put(baseValueName, JsonUtils.getFloat(baseValueObject, baseValueName));
-			}
-		}
-
 	}
 
 	/**
-	 * Constructs a new SpellProperties object for the given spell, reading its values from the given ByteBuf.
-	 */
-	public RitualProperties(Spell spell, ByteBuf buf) {
-
-		enabledContexts = new EnumMap<>(Context.class);
-		baseValues = new HashMap<>();
-
-		for (Context context : Context.values()) {
-			// Enum maps have a guaranteed iteration order so this works fine
-			enabledContexts.put(context, buf.readBoolean());
-		}
-
-		tier = RitualTier.values()[buf.readShort()];
-		element = Element.values()[buf.readShort()];
-		type = SpellType.values()[buf.readShort()];
-
-		cost = buf.readInt();
-		chargeup = buf.readInt();
-		cooldown = buf.readInt();
-		lifetime = buf.readInt();
-		size = buf.readInt();
-
-		List<String> keys = Arrays.asList(spell.getPropertyKeys());
-		Collections.sort(keys); // Should be the same list of keys in the same order they were written to the ByteBuf
-
-		for (String key : keys) {
-			baseValues.put(key, buf.readFloat());
-		}
-	}
-
-	/**
-	 * Writes this SpellProperties object to the given ByteBuf so it can be sent via packets.
-	 */
-	public void write(ByteBuf buf) {
-
-		for (Context context : Context.values()) {
-			// Enum maps have a guaranteed iteration order so this works fine
-			buf.writeBoolean(enabledContexts.get(context));
-		}
-
-		buf.writeShort(tier.ordinal());
-		buf.writeShort(element.ordinal());
-		buf.writeShort(type.ordinal());
-
-		buf.writeInt(cost);
-		buf.writeInt(chargeup);
-		buf.writeInt(cooldown);
-		buf.writeInt(lifetime);
-		buf.writeInt(size);
-
-		List<String> keys = new ArrayList<>(baseValues.keySet());
-		Collections.sort(keys); // Sort alphabetically (as long as the order is consistent it doesn't matter)
-
-		for (String key : keys) {
-			buf.writeFloat(baseValues.get(key).floatValue());
-		}
-	}
-
-	/**
-	 * Returns whether the spell is enabled in any of the given contexts.
-	 *
-	 * @param contexts The context in which to check if the spell is enabled.
-	 * @return True if the spell is enabled in any of the given contexts, false if not.
-	 */
-	public boolean isEnabled(Context... contexts) {
-		return enabledContexts.entrySet().stream().anyMatch(e -> e.getValue() && Arrays.asList(contexts).contains(e.getKey()));
-	}
-
-	/**
-	 * Returns whether a base value was defined with the given identifier.
-	 *
-	 * @param identifier The string identifier to check for.
-	 * @return True if a base value was defined with the given identifier, false otherwise.
-	 */
-	public boolean hasBaseValue(String identifier) {
-		return baseValues.containsKey(identifier);
-	}
-
-	/**
-	 * Returns the base value for this spell that corresponds to the given identifier. To check whether an identifier
-	 * exists, use {@link RitualProperties#hasBaseValue(String)}.
-	 *
-	 * @param identifier The string identifier to fetch the base value for.
-	 * @return The base value, as a {@code Number}.
-	 * @throws IllegalArgumentException if no base value was defined with the given identifier.
-	 */
-	// Better to throw an exception than make this nullable because the vast majority of uses are for retrieving
-	// specific spells' properties that are known to exist, and IntelliJ would scream at us for not checking
-	public Number getBaseValue(String identifier) {
-		if (!baseValues.containsKey(identifier)) {
-			throw new IllegalArgumentException("Base value with identifier '" + identifier + "' is not defined.");
-		}
-		return baseValues.get(identifier);
-	}
-
-	/**
-	 * Called from preInit() in the main mod class to initialise the spell property system.
+	 * Called from preInit() in the main mod class to initialise the ritual property system.
 	 */
 	// For some reason I had this called from a method in CommonProxy which was overridden to do nothing in
 	// ClientProxy, but that method was never called and instead this one was called directly from the main mod class.
@@ -486,7 +201,7 @@ public final class RitualProperties {
 		// Rituals will be removed from this list as their properties are set
 		// If everything works properly, it should be empty by the end
 		List<Ritual> rituals = Ritual.getRituals(s -> s.getRegistryName().getNamespace().equals(modID));
-		if (modID.equals(Wizardry.MODID))
+		if (modID.equals(AncientSpellcraft.MODID))
 			rituals.add(Rituals.none); // In this particular case we do need the none ritual
 
 		AncientSpellcraft.logger.info("Loading built-in ritual properties for " + rituals.size() + " rituals in mod " + modID);
@@ -675,13 +390,3 @@ public final class RitualProperties {
 	}
 
 }
-
-// We probably could have used the attribute system for all of this, but I am reluctant to do so for a number of
-// reasons:
-// - It's a mess.
-// - Unlike entities and itemstacks, rituals don't have a separate instance for each time they are cast, which might
-// prove problematic.
-// - I'm loading my base properties once and not touching them again, so they're more like block materials than anything
-// else.
-// - Some of the properties aren't numerical, and some of them can't have modifiers applied. In fact, most of them can't!
-// So even if we were to use attributes, we'd still need this class.

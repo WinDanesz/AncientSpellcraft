@@ -124,7 +124,7 @@ dependencies {
 
     implementation fg.deobf("curse.maven:ElectroblobsWizardry-${wizardry_projectid}:${wizardry_fileid}")
     implementation fg.deobf("curse.maven:baubles-${baubles_projectid}:${baubles_fileid}")
-    runtime "curse.maven:jei-${jei_projectid}:${jei_fileid}"
+    //runtime "curse.maven:jei-${jei_projectid}:${jei_fileid}"
     implementation fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}:api")
     implementation fg.deobf("curse.maven:artemislib-${artemislib_projectid}:${artemislib_fileid}")
         

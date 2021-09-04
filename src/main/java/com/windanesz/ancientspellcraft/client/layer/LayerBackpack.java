@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.client.layer;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.model.ModelBackpack;
 import com.windanesz.ancientspellcraft.client.renderer.RenderMerchantWizard;
-import com.windanesz.ancientspellcraft.entity.EntityWizardMerchant;
+import com.windanesz.ancientspellcraft.entity.living.EntityWizardMerchant;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;

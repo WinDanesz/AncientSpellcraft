@@ -32,7 +32,7 @@ import com.windanesz.ancientspellcraft.entity.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.entity.EntityMageLight;
 import com.windanesz.ancientspellcraft.entity.EntityVolcano;
 import com.windanesz.ancientspellcraft.entity.EntityWisp;
-import com.windanesz.ancientspellcraft.entity.EntityWizardMerchant;
+import com.windanesz.ancientspellcraft.entity.living.EntityWizardMerchant;
 import com.windanesz.ancientspellcraft.entity.construct.EntityAntiMagicField;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBarterConstruct;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;

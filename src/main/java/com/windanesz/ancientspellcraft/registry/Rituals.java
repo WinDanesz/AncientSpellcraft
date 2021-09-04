@@ -5,7 +5,6 @@ import com.windanesz.ancientspellcraft.ritual.ArcaneBarrier;
 import com.windanesz.ancientspellcraft.ritual.Bonfire;
 import com.windanesz.ancientspellcraft.ritual.Condensing;
 import com.windanesz.ancientspellcraft.ritual.Forest;
-import com.windanesz.ancientspellcraft.ritual.Mark;
 import com.windanesz.ancientspellcraft.ritual.None;
 import com.windanesz.ancientspellcraft.ritual.Rejuvenation;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
@@ -56,18 +55,14 @@ public final class Rituals {
 
 		IForgeRegistry<Ritual> registry = event.getRegistry();
 
-		// dummy ritual
-		registry.register(new None());
+		registry.register(new None()); // dummy ritual
+
 		registry.register(new Rejuvenation());
 		//registry.register(new Mark());
 		registry.register(new Forest());
 		registry.register(new Bonfire());
 		registry.register(new Condensing());
 		registry.register(new ArcaneBarrier());
-
-
-
-
 	}
 
 }

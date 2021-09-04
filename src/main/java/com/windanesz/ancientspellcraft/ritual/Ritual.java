@@ -1,7 +1,6 @@
 package com.windanesz.ancientspellcraft.ritual;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.constants.RitualTier;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
 import com.windanesz.ancientspellcraft.packet.PacketContinuousRitual;
 import com.windanesz.ancientspellcraft.packet.PacketStartRitual;
@@ -10,7 +9,6 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.Rituals;
 import com.windanesz.ancientspellcraft.tileentity.TileRune;
 import com.windanesz.ancientspellcraft.util.RitualProperties;
-import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.BlockUtils;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,10 +34,10 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * Generic Ritual class for all rituals, implementing a forge registry. Rituals are basically a heavily altered {@link electroblob.wizardry.registry.Spells} class.
+ * Generic Ritual class for all rituals, implementing a forge registry. Based on {@link electroblob.wizardry.registry.Spells}.
  *
  * @author WinDanesz; most of the helper methods are Eletroblob's work
- * @since AncientSpellcraft 1.4
+ * @since AncientSpellcraft 1.2.0
  */
 public abstract class Ritual extends IForgeRegistryEntry.Impl<Ritual> {
 
@@ -98,7 +96,6 @@ public abstract class Ritual extends IForgeRegistryEntry.Impl<Ritual> {
 	 * @param filter A <code>Predicate&ltSpell&gt</code> that the returned rituals must satisfy.
 	 * @return A <b>local, modifiable</b> list of rituals matching the given predicate. <i>Note that this list may be
 	 * empty.</i>
-	 * @see Ritual.TierElementFilter
 	 */
 	public static List<Ritual> getRituals(Predicate<Ritual> filter) {
 		return registry.getValuesCollection().stream().filter(filter.and(s -> s != Rituals.none)).collect(Collectors.toList());
@@ -117,70 +114,15 @@ public abstract class Ritual extends IForgeRegistryEntry.Impl<Ritual> {
 		return "ritual." + unlocalisedName + ".desc";
 	}
 
-	/**
-	 * Predicate which allows all enabled spells of the given tier and element (create an instance of this class each
-	 * time you want to use it). This is somewhat useless now that Wizardry uses Java 8, but it is more readable than a
-	 * lambda expression and you don't need to remember to check that the spell is enabled every time.
-	 */
-	public static class TierElementFilter implements Predicate<Ritual> {
-
-		private RitualTier tier;
-		private Element element;
-		private RitualProperties.Context[] contexts;
-
-		/**
-		 * Creates a new TierElementFilter that checks for the given tier and element. Does not allow spells that have
-		 * been disabled in the config or in their JSON files.
-		 *
-		 * @param tier     The EnumTier to check for. Pass in null to allow all tiers.
-		 * @param element  The EnumElement to check for. Pass in null to allow all elements.
-		 * @param contexts The {@link electroblob.wizardry.util.SpellProperties.Context Context}s in which to check
-		 *                 for enabled spells. The spell must be enabled in at least one of these contexts to pass
-		 *                 the filter. If omitted, defaults to all contexts i.e. only completely disabled spells are
-		 *                 filtered out.
-		 */
-		public TierElementFilter(RitualTier tier, Element element, RitualProperties.Context... contexts) {
-			this.tier = tier;
-			this.element = element;
-			this.contexts = contexts;
-		}
-
-		@Override
-		public boolean test(Ritual ritual) {
-			return ritual.isEnabled(contexts) && (this.tier == null || ritual.getTier() == this.tier)
-					&& (this.element == null || ritual.getElement() == this.element);
-		}
-	}
-
-	/**
-	 * Returns whether the spell is enabled in any of the given {@link electroblob.wizardry.util.SpellProperties.Context Context}s.
-	 * A spell may be disabled globally in the config, or it may be disabled for one or more specific contexts in
-	 * its JSON file using a resource pack. If called with no arguments, defaults to any context, i.e. only returns
-	 * false if the spell is completely disabled in all contexts.
-	 */
-	public final boolean isEnabled(RitualProperties.Context... contexts) {
-		return enabled && (contexts.length == 0 || properties.isEnabled(contexts));
-	}
-
 	// ============================================ Ritual specific methods ==============================================
 
 	/**
 	 * Called only for the first tick of this ritual
-	 *
-	 * @param world
-	 * @param caster
-	 * @param centerPiece
 	 */
-	public void initialEffect(World world, EntityPlayer caster, TileRune centerPiece) {
-
-	}
+	public void initialEffect(World world, EntityPlayer caster, TileRune centerPiece) {}
 
 	/**
 	 * Called continuously after the initial effect
-	 *
-	 * @param world
-	 * @param caster
-	 * @param centerPiece
 	 */
 	public void effect(World world, EntityPlayer caster, TileRune centerPiece) {
 		if (!world.isRemote) {
@@ -217,16 +159,6 @@ public abstract class Ritual extends IForgeRegistryEntry.Impl<Ritual> {
 
 	// ============================================ Getter methods ==============================================
 
-	/**
-	 * Returns the element that this ritual belongs to.
-	 */
-	public final Element getElement() { return properties.element; }
-
-	/**
-	 * Returns the tier that this ritual belongs to.
-	 */
-	public final RitualTier getTier() { return properties.tier; }
-
 	public final NonNullList<Ingredient> getPattern() { return properties.pattern; }
 
 	public final RitualProperties getRitualProperties() { return properties; }
@@ -236,7 +168,7 @@ public abstract class Ritual extends IForgeRegistryEntry.Impl<Ritual> {
 	// ========================================= Initialisation methods ===========================================
 
 	/**
-	 * Called from {@code init()} in the main mod class. Used to initialise spell fields and properties that depend on
+	 * Called from {@code init()} in the main mod class. Used to initialise ritual fields and properties that depend on
 	 * other things being registered (e.g. potions). <i>Always initialise things in the constructor wherever possible.</i>
 	 */
 	public void init() {}

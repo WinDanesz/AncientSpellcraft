@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.handler;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
-import com.windanesz.ancientspellcraft.entity.EntityWizardAS;
+import com.windanesz.ancientspellcraft.entity.living.EntityWizardAS;
 import com.windanesz.ancientspellcraft.entity.ai.EntitySummonAIFollowOwner;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityContingencyProjectile;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
