@@ -27,7 +27,7 @@ public class ItemDevoritiumScimitar extends ItemSword implements IDevoritium {
 
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-		hitEntityDelegate(attacker, target);
+		hitEntityDelegate(attacker, target, 3, 30);
 		// no super call as that would damage the item
 		return true;
 	}

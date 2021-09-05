@@ -47,7 +47,7 @@ public interface IDevoritium {
 		if (target instanceof EntityLivingBase) {
 			EntityLivingBase entityLivingBase = (EntityLivingBase) target;
 			if (!entityLivingBase.isPotionActive(AncientSpellcraftPotions.magical_exhaustion)) {
-				entityLivingBase.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, 30, 0));
+				entityLivingBase.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, 30 + bonusDuration, + bonusAmplifier));
 			} else {
 				int amplifier = entityLivingBase.getActivePotionEffect(AncientSpellcraftPotions.magical_exhaustion).getAmplifier();
 				switch (amplifier) {
