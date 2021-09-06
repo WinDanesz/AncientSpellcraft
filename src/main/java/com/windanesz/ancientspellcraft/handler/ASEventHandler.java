@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
 import com.windanesz.ancientspellcraft.entity.ai.EntitySummonAIFollowOwner;
+import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilWizardAS;
 import com.windanesz.ancientspellcraft.entity.living.EntityWizardAS;
 import com.windanesz.ancientspellcraft.entity.living.EntityWizardMerchant;
@@ -1196,7 +1197,11 @@ public class ASEventHandler {
 
 	}
 
-	@SubscribeEvent
+	/**
+	 *  This event is Cancelable. If this event is canceled, the Entity is not added to the world.
+	 *  This event does not have a result.
+	 */
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void onCheckSpawnEvent(EntityJoinWorldEvent event) {
 
 		if (event.getEntity() instanceof EntityWizard && !(event.getEntity() instanceof EntityWizardAS) && !(event.getEntity() instanceof EntityWizardMerchant) &&
@@ -1218,7 +1223,7 @@ public class ASEventHandler {
 			event.setCanceled(true);
 		}
 
-		if (event.getEntity() instanceof EntityEvilWizard && !(event.getEntity() instanceof EntityEvilWizardAS) &&
+		if (event.getEntity() instanceof EntityEvilWizard && !(event.getEntity() instanceof EntityEvilWizardAS) && !(event.getEntity() instanceof EntityEvilClassWizard) &&
 				Settings.generalSettings.apply_wizard_entity_changes) {
 
 			NBTTagCompound nbt = new NBTTagCompound();
