@@ -12,6 +12,8 @@ import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -279,7 +281,7 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 						this.strafingBackwards = true;
 					}
 
-					this.entity.getMoveHelper().strafe(this.strafingBackwards ? -0.5F : 0.5F, this.strafingClockwise ? 0.3F : -0.3F);
+					this.entity.getMoveHelper().strafe(this.strafingBackwards ? -0.45F : 0.45F, this.strafingClockwise ? 0.3F : -0.3F);
 					this.entity.faceEntity(target, 30.0F, 30.0F);
 				} else {
 					this.entity.getLookHelper().setLookPositionWithEntity(target, 30.0F, 30.0F);
@@ -333,6 +335,8 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 					WizardryPacketHandler.net.sendToDimension(msg, attacker.world.provider.getDimension());
 				}
 			}
+
+			this.attacker.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 30, 3));
 			return true;
 		}
 
