@@ -21,6 +21,7 @@ import com.windanesz.ancientspellcraft.item.ItemDevoritiumBomb;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumDoor;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumIngot;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumScimitar;
+import com.windanesz.ancientspellcraft.item.ItemDevoritiumShield;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumSword;
 import com.windanesz.ancientspellcraft.item.ItemElementalOrb;
 import com.windanesz.ancientspellcraft.item.ItemEnchantedNameTag;
@@ -218,6 +219,7 @@ public final class AncientSpellcraftItems {
 	public static final Item devoritium_bomb = placeholder();
 	public static final Item devoritium_door = placeholder();
 	public static final Item devoritium_scimitar = placeholder();
+	public static final Item devoritium_shield = placeholder();
 	public static final Item transmutation_scroll = placeholder();
 	public static final Item bartering_scroll = placeholder();
 
@@ -510,6 +512,7 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "devoritium_bomb", new ItemDevoritiumBomb());
 		registerItem(registry, "devoritium_door", new ItemDevoritiumDoor(AncientSpellcraftBlocks.DEVORITIUM_DOOR));
 		registerItem(registry, "devoritium_scimitar", new ItemDevoritiumScimitar());
+		registerItem(registry, "devoritium_shield", new ItemDevoritiumShield());
 
 		registerItem(registry, "transmutation_scroll", new ItemTransmutationScroll());
 		registerItem(registry, "bartering_scroll", new ItemBarterScroll());

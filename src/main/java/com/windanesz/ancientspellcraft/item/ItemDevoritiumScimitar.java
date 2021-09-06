@@ -49,6 +49,9 @@ public class ItemDevoritiumScimitar extends ItemSword implements IDevoritium {
 	}
 
 	@Override
+	/**
+	 * This is actually about damaging the item, not the damage the item deals to others!
+	 */
 	public void setDamage(ItemStack stack, int damage) {
 	}
 

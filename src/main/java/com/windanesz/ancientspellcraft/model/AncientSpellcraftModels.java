@@ -147,6 +147,7 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.devoritium_bomb);
 		registerItemModel(AncientSpellcraftItems.devoritium_door);
 		registerItemModel(AncientSpellcraftItems.devoritium_scimitar);
+		registerItemModel(AncientSpellcraftItems.devoritium_shield);
 
 		registerItemModel(AncientSpellcraftItems.transmutation_scroll);
 		registerItemModel(AncientSpellcraftItems.bartering_scroll);
