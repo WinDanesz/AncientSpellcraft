@@ -1211,7 +1211,7 @@ public class ASEventHandler {
 			event.getEntity().writeToNBT(nbt);
 
 			// fixes the missing id
-			nbt.setString("id", "ebwizardry:wizard");
+			nbt.setString("id", "ancientspellcraft:wizard_as");
 
 			EntityWizardAS wizard = (EntityWizardAS) EntityList.createEntityFromNBT(nbt, (event.getWorld()));
 
@@ -1230,7 +1230,7 @@ public class ASEventHandler {
 			event.getEntity().writeToNBT(nbt);
 
 			// fixes the missing id
-			nbt.setString("id", "ebwizardry:evil_wizard");
+			nbt.setString("id", "ancientspellcraft:evil_wizard_as");
 
 			EntityEvilWizardAS wizard = (EntityEvilWizardAS) EntityList.createEntityFromNBT(nbt, (event.getWorld()));
 
