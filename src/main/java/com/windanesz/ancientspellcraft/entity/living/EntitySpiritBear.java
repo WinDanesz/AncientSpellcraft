@@ -57,7 +57,7 @@ public class EntitySpiritBear extends EntityPolarBear implements IEntityOwnable 
 	private int dispelTimer = 0;
 
 	private UUID ownerUUID;
-	protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityTameable.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+	protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntitySpiritBear.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 
 	private static final int DISPEL_TIME = 10;
 

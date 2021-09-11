@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.util.JsonUtils;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -16,20 +17,46 @@ import org.apache.commons.io.IOUtils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SpellCategorization {
 
-	private SpellCategorization(){};
+	private SpellCategorization() {}
+
+	;
 
 	private static final Gson gson = new Gson();
 
 	private static HashMap<Spell, SpellCategory> spellCategoryHashMap = new HashMap<>();
+	private static HashMap<SpellCategory, List<Spell>> categorisedSpells = new HashMap<SpellCategory, List<Spell>>() {{
+		put(SpellCategory.UNCATEGORISED, new ArrayList<>());
+		put(SpellCategory.DISENGAGE, new ArrayList<>());
+		put(SpellCategory.DISABLE, new ArrayList<>());
+		put(SpellCategory.RANGED_ATTACK, new ArrayList<>());
+		put(SpellCategory.CLOSE_COMBAT, new ArrayList<>());
+		put(SpellCategory.CURSE, new ArrayList<>());
+		put(SpellCategory.MINION, new ArrayList<>());
+		put(SpellCategory.BUFF, new ArrayList<>());
+		put(SpellCategory.LIFE_SAVING, new ArrayList<>());
+	}};
 
 	public static SpellCategory getCategoryFor(Spell spell) {
 		return spellCategoryHashMap.getOrDefault(spell, SpellCategory.UNCATEGORISED);
+	}
+
+	public static Spell getRandomSpellForCategory(SpellCategory category) {
+		if (categorisedSpells.get(category).size() > 0) {
+			return categorisedSpells.get(category).get(AncientSpellcraft.rand.nextInt(categorisedSpells.get(category).size()) - 1);
+		}
+		return Spells.none;
+	}
+
+	public static List<Spell> getSpellsForCategory(SpellCategory category) {
+		return new ArrayList<>(categorisedSpells.get(category));
 	}
 
 	public static void init() {
@@ -39,6 +66,7 @@ public class SpellCategorization {
 	public enum SpellCategory {
 		UNCATEGORISED,
 		DISENGAGE,
+		DISABLE,
 		RANGED_ATTACK,
 		CLOSE_COMBAT,
 		CURSE,
@@ -50,7 +78,6 @@ public class SpellCategorization {
 	private static boolean loadSpellData() {
 
 		ModContainer mod = Loader.instance().getModList().stream().filter(m -> m.getModId().equals(AncientSpellcraft.MODID)).findFirst().orElse(null);
-
 
 		// This method is used by Forge to load mod recipes and advancements, so it's a fair bet it's the right one
 		// In the absence of Javadoc, here's what the non-obvious parameters do:
@@ -64,8 +91,9 @@ public class SpellCategorization {
 				(root, file) -> {
 
 					String relative = root.relativize(file).toString();
-					if (!"json".equals(FilenameUtils.getExtension(file.toString())) || relative.startsWith("_"))
+					if (!"json".equals(FilenameUtils.getExtension(file.toString())) || relative.startsWith("_")) {
 						return true; // True or it'll look like it failed just because it found a non-JSON file
+					}
 
 					String name = FilenameUtils.removeExtension(relative).replaceAll("\\\\", "/");
 
@@ -85,7 +113,9 @@ public class SpellCategorization {
 							if (spell != null) {
 								String category = entry.getValue().getAsString();
 								if (Arrays.stream(SpellCategory.values()).anyMatch(v -> v.toString().toLowerCase().equals(category.toLowerCase()))) {
-									spellCategoryHashMap.put(spell, SpellCategory.valueOf(category.toUpperCase()));
+									SpellCategory spellCategory = SpellCategory.valueOf(category.toUpperCase());
+									spellCategoryHashMap.put(spell, spellCategory);
+									categorisedSpells.get(spellCategory).add(spell);
 								}
 							}
 						}

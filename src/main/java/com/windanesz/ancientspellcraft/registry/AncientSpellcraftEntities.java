@@ -144,10 +144,10 @@ public class AncientSpellcraftEntities {
 
 		if (Settings.generalSettings.apply_wizard_entity_changes) {
 			AncientSpellcraft.logger.info("Applying ebwizardry:wizard entity overrides by Ancient Spellcraft");
-			registry.register(createEntry(EntityWizardAS.class, "wizard", Wizardry.MODID, TrackingType.LIVING).build());
+			registry.register(createEntry(EntityWizardAS.class, "wizard_as", AncientSpellcraft.MODID, TrackingType.LIVING).build());
 
 			AncientSpellcraft.logger.info("Applying ebwizardry:evil_wizard entity overrides by Ancient Spellcraft");
-			registry.register(createEntry(EntityEvilWizardAS.class, "evil_wizard", Wizardry.MODID, TrackingType.LIVING).build());
+			registry.register(createEntry(EntityEvilWizardAS.class, "evil_wizard_as", AncientSpellcraft.MODID, TrackingType.LIVING).build());
 		}
 		registry.register(createEntry(EntityWizardMerchant.class, "wizardmerchant", AncientSpellcraft.MODID, TrackingType.LIVING).build());
 		registry.register(createEntry(EntityClassWizard.class, "class_wizard", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());

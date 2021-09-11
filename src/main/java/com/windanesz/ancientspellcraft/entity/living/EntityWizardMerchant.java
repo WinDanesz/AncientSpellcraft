@@ -59,7 +59,7 @@ import java.util.stream.Collectors;
 
 public class EntityWizardMerchant extends EntityWizard {
 
-	int lifetime = 24000; // a full MC day
+	public int lifetime = 24000; // a full MC day
 
 	/**
 	 * The wizard's trades.

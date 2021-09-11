@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.entity.ai;
 
 import com.windanesz.ancientspellcraft.data.SpellCategorization;
+import com.windanesz.ancientspellcraft.entity.ICustomCooldown;
 import electroblob.wizardry.entity.living.ISpellCaster;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.event.SpellCastEvent.Source;
@@ -12,8 +13,6 @@ import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -26,11 +25,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+
 /**
  * This class is an extended version of Electroblob's {@link electroblob.wizardry.entity.living.EntityAIAttackSpell}
  * Author: Electroblob, WinDanesz
  */
-public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> extends EntityAIBase {
+public class EntityAIBattlemageSpellcasting<T extends EntityLiving & ISpellCaster & ICustomCooldown> extends EntityAIBase {
 
 	private final T entity;
 	private final double moveSpeedAmp;
@@ -85,9 +85,9 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 	 *                                attacking, and also the amount that is added to the cooldown of the spell that has just been cast.
 	 * @param continuousSpellDuration The number of ticks that continuous spells will be cast for before cooling down.
 	 */
-	public EntityAIAttackSpellImproved(T attacker, double speed, float maxDistance, int baseCooldown, int continuousSpellDuration) {
-		this.cooldown = -1;
+	public EntityAIBattlemageSpellcasting(T attacker, double speed, float maxDistance, int baseCooldown, int continuousSpellDuration) {
 		this.attacker = attacker;
+		this.attacker.setCooldown(-1);
 		this.baseCooldown = baseCooldown;
 		this.continuousSpellDuration = continuousSpellDuration;
 		this.speed = speed;
@@ -101,9 +101,13 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 	@Override
 	public boolean shouldExecute() {
 
+		if (this.attacker.getCooldown() > 0) {
+			return false;
+		}
+
 		EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
 
-		if (entitylivingbase == null || entitylivingbase.isDead || entitylivingbase.dimension != attacker.dimension) {
+		if (entitylivingbase == null) {
 			return false;
 		} else {
 			this.target = entitylivingbase;
@@ -113,14 +117,15 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 
 	@Override
 	public boolean shouldContinueExecuting() {
-		return this.shouldExecute() || !this.attacker.getNavigator().noPath();
+		// not the same as in EntityAIAttackSpellImproved
+		return (this.shouldExecute() || !this.attacker.getNavigator().noPath()) && (this.target != null) && !(this.attacker.getCooldown() > 0);
 	}
 
 	@Override
 	public void resetTask() {
 		this.target = null;
 		this.seeTime = 0;
-		this.cooldown = -1;
+		//this.attacker.setCooldown(-1);
 		this.setContinuousSpellAndNotify(Spells.none, new SpellModifiers());
 		this.continuousSpellTimer = 0;
 	}
@@ -129,7 +134,7 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 		attacker.setContinuousSpell(spell);
 		WizardryPacketHandler.net.sendToAllAround(
 				new PacketNPCCastSpell.Message(attacker.getEntityId(), target == null ? -1 : target.getEntityId(),
-						EnumHand.MAIN_HAND, spell, modifiers),
+						EnumHand.OFF_HAND, spell, modifiers),
 				// Particles are usually only visible from 16 blocks away, so 128 is more than far enough.
 				// TODO: Why is this one a 128 block radius, whilst the other one is all in dimension?
 				new TargetPoint(attacker.dimension, attacker.posX, attacker.posY, attacker.posZ, 128));
@@ -169,14 +174,14 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 					.post(new SpellCastEvent.Tick(Source.NPC, attacker.getContinuousSpell(), attacker,
 							attacker.getModifiers(), this.continuousSpellDuration - this.continuousSpellTimer))
 					// ...or the spell no longer succeeds...
-					|| !attacker.getContinuousSpell().cast(attacker.world, attacker, EnumHand.MAIN_HAND,
+					|| !attacker.getContinuousSpell().cast(attacker.world, attacker, EnumHand.OFF_HAND,
 					this.continuousSpellDuration - this.continuousSpellTimer, target, attacker.getModifiers())
 					// ...or the time has elapsed...
 					|| this.continuousSpellTimer == 0) {
 
 				// ...reset the continuous spell timer and start the cooldown.
 				this.continuousSpellTimer = 0;
-				this.cooldown = attacker.getContinuousSpell().getCooldown() + this.baseCooldown;
+				attacker.setCooldown(attacker.getContinuousSpell().getCooldown() + this.baseCooldown);
 				setContinuousSpellAndNotify(Spells.none, new SpellModifiers());
 				return;
 
@@ -186,7 +191,7 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 						attacker, attacker.getModifiers()));
 			}
 
-		} else if (--this.cooldown == 0) {
+		} else if (attacker.decrementCooldown() == 0) {
 
 			if (distanceSq > (double) this.maxAttackDistance || !targetIsVisible) {
 				return;
@@ -229,9 +234,9 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 				}
 			}
 
-		} else if (this.cooldown < 0) {
+		} else if (this.attacker.getCooldown() < 0) {
 			// This should only be reached when the entity first starts attacking. Stops it attacking instantly.
-			this.cooldown = this.baseCooldown;
+			this.attacker.setCooldown(this.baseCooldown);
 		}
 
 		// based on {@link net.minecraft.entity.ai.EntityAIAttackRangedBow}
@@ -303,7 +308,7 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 		}
 
 		// This is only called when spell casting starts so ticksInUse is always zero
-		if (spell.cast(attacker.world, attacker, EnumHand.MAIN_HAND, 0, target, modifiers)) {
+		if (spell.cast(attacker.world, attacker, EnumHand.OFF_HAND, 0, target, modifiers)) {
 
 			if (spell.isContinuous) {
 				// -1 because the spell has been cast once already!
@@ -319,24 +324,23 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 				// With critically low HP, spellcasting is more frequent
 				float healthRatio = attacker.getHealth() / attacker.getMaxHealth();
 				if (healthRatio <= 0.5f) {
-					this.cooldown = (int) (this.baseCooldown + (spell.getCooldown() * 0.5));
+					this.attacker.setCooldown((int) (this.baseCooldown + (spell.getCooldown() * 0.5)));
 				} else if (healthRatio <= 0.25f) {
-					this.cooldown = (int) (this.baseCooldown + (spell.getCooldown()) * 0.1);
+					this.attacker.setCooldown((int) (this.baseCooldown + (spell.getCooldown()) * 0.1));
 				} else {
 					// For now, the cooldown is just added to the constant base cooldown. I think this
 					// is a reasonable way of doing things; it's certainly better than before.
-					this.cooldown = this.baseCooldown + spell.getCooldown();
+					this.attacker.setCooldown(this.baseCooldown + spell.getCooldown());
 				}
 
 				if (spell.requiresPacket()) {
 					// Sends a packet to all players in dimension to tell them to spawn particles.
 					IMessage msg = new PacketNPCCastSpell.Message(attacker.getEntityId(), target.getEntityId(),
-							EnumHand.MAIN_HAND, spell, modifiers);
+							EnumHand.OFF_HAND, spell, modifiers);
 					WizardryPacketHandler.net.sendToDimension(msg, attacker.world.provider.getDimension());
 				}
 			}
 
-			this.attacker.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 30, 3));
 			return true;
 		}
 
@@ -362,11 +366,11 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 
 			// close combat
 			if (distanceSq <= closeCombatDistance) {
-				spellPreferenceQueue.add(SpellCategorization.SpellCategory.DISENGAGE);
-				spellPreferenceQueue.add(SpellCategorization.SpellCategory.DISABLE);
 				spellPreferenceQueue.add(SpellCategorization.SpellCategory.CLOSE_COMBAT);
 			} else {
 				// ranged combat
+				spellPreferenceQueue.add(SpellCategorization.SpellCategory.DISABLE);
+				spellPreferenceQueue.add(SpellCategorization.SpellCategory.DISENGAGE);
 				spellPreferenceQueue.add(SpellCategorization.SpellCategory.RANGED_ATTACK);
 			}
 
@@ -388,7 +392,7 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 				}
 			}
 
-			if (spellToPick == Spells.none || spellToPick == Spells.magic_missile && world.rand.nextBoolean()) {
+			if (spellToPick == Spells.none || spellToPick == Spells.magic_missile) {
 				// no match - default logic, random picked spell
 				return spells.get(world.rand.nextInt(spells.size()));
 			}

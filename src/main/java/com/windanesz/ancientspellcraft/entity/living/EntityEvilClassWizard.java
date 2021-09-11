@@ -1,6 +1,9 @@
 package com.windanesz.ancientspellcraft.entity.living;
 
+import com.windanesz.ancientspellcraft.entity.ICustomCooldown;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellImproved;
+import com.windanesz.ancientspellcraft.entity.ai.EntityAIBattlemageMelee;
+import com.windanesz.ancientspellcraft.entity.ai.EntityAIBattlemageSpellcasting;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.entity.living.EntityAIAttackSpell;
@@ -11,9 +14,8 @@ import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.InventoryUtils;
 import electroblob.wizardry.util.NBTExtras;
-import electroblob.wizardry.util.SpellProperties;
+import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WandHelper;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
@@ -34,30 +36,52 @@ import net.minecraftforge.common.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class EntityEvilClassWizard extends EntityEvilWizard {
+public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCooldown, IArmourClassWizard {
+
+	/**
+	 * Decremented each tick while greater than 0. When a spell is cast, this is set to that spell's cooldown plus the
+	 * base cooldown.
+	 */
+	protected int cooldown;
 
 	/**
 	 * Data parameter for the wizard's armour class.
 	 */
-	private static final DataParameter<Integer> ARMOUR_CLASS = EntityDataManager.createKey(EntityClassWizard.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> EVIL_WIZARD_ARMOUR_CLASS = EntityDataManager.createKey(EntityEvilClassWizard.class, DataSerializers.VARINT);
 
 	// Field implementations
 	private List<Spell> spells = new ArrayList<Spell>(4);
 
 	private EntityAIAttackSpellImproved<EntityEvilClassWizard> spellCastingAIImproved = new EntityAIAttackSpellImproved<>(this, 0.5D, 14.0F, 30, 50);
+	private final EntityAIBattlemageMelee entityAIBattlemageMelee = new EntityAIBattlemageMelee(this, 0.6D, false);
+	private final EntityAIBattlemageSpellcasting entityAIBattlemageSpellcasting = new EntityAIBattlemageSpellcasting(this, 0.6D, 14.0F, 90, 50);
+
+	public int getCooldown() { return cooldown; }
+
+	public void setCooldown(int cooldown) { this.cooldown = cooldown; }
+
+	@Override
+	public int incrementCooldown() { return cooldown++; }
+
+	@Override
+	public int decrementCooldown() { return cooldown--; }
 
 	public EntityEvilClassWizard(World world) {
 		super(world);
+		// discard the old AI
 		this.tasks.taskEntries.removeIf(t -> t.action instanceof EntityAIAttackSpell);
+
+		// add the new AI tasks
 		this.tasks.addTask(3, this.spellCastingAIImproved);
+		this.tasks.addTask(3, this.entityAIBattlemageMelee);
+		this.tasks.addTask(3, this.entityAIBattlemageSpellcasting);
 	}
 
 	@Override
 	protected void entityInit() {
 		super.entityInit();
-		this.dataManager.register(ARMOUR_CLASS, ItemWizardArmour.ArmourClass.WIZARD.ordinal());
+		this.dataManager.register(EVIL_WIZARD_ARMOUR_CLASS, 0);
 	}
 
 	@Override
@@ -97,7 +121,7 @@ public class EntityEvilClassWizard extends EntityEvilWizard {
 				spellCount = 4;
 		}
 
-		Tier maxTier = populateSpells(this, spells, element, this.getArmourClass() == ItemWizardArmour.ArmourClass.SAGE, spellCount, rand);
+		Tier maxTier = IArmourClassWizard.populateSpells(this, spells, element, this.getArmourClass() == ItemWizardArmour.ArmourClass.SAGE, spellCount, rand);
 
 		// Now done after the spells so it can take the tier into account.
 		ItemStack wand = new ItemStack(WizardryItems.getWand(maxTier, element));
@@ -110,18 +134,21 @@ public class EntityEvilClassWizard extends EntityEvilWizard {
 			sword.addEnchantment(Enchantments.SHARPNESS, 1);
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, sword);
 			this.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, wand);
+			this.tasks.taskEntries.removeIf(t -> t.action == spellCastingAIImproved);
 		} else {
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, wand);
+			this.tasks.taskEntries.removeIf(t -> t.action == entityAIBattlemageSpellcasting);
+			this.tasks.taskEntries.removeIf(t -> t.action == entityAIBattlemageMelee);
 		}
 		return livingdata;
 	}
 
-	private ItemWizardArmour.ArmourClass getArmourClass() {
-		return ItemWizardArmour.ArmourClass.values()[this.dataManager.get(ARMOUR_CLASS)];
+	public ItemWizardArmour.ArmourClass getArmourClass() {
+		return ItemWizardArmour.ArmourClass.values()[this.dataManager.get(EVIL_WIZARD_ARMOUR_CLASS)];
 	}
 
-	private void setArmourClass(ItemWizardArmour.ArmourClass armourClass) {
-		this.dataManager.set(ARMOUR_CLASS, armourClass.ordinal());
+	public void setArmourClass(ItemWizardArmour.ArmourClass armourClass) {
+		this.dataManager.set(EVIL_WIZARD_ARMOUR_CLASS, armourClass.ordinal());
 	}
 
 	@Override
@@ -136,83 +163,26 @@ public class EntityEvilClassWizard extends EntityEvilWizard {
 			return textcomponentstring;
 		}
 
+		// no-element wizards should only display the class name
+		if (this.getElement() == Element.MAGIC) {
+			return getArmourClassNameFor(this.getArmourClass());
+		}
+
 		ITextComponent wizardName = new TextComponentTranslation("class_element." + getElement().getName() + ".wizard");
 		ITextComponent className = getArmourClassNameFor(this.getArmourClass());
 
 		return new TextComponentTranslation("entity." + this.getEntityString() + "_combined.name", wizardName, className);
 	}
 
-	public static ITextComponent getArmourClassNameFor(ItemWizardArmour.ArmourClass armourClass) {
-		return new TextComponentTranslation("wizard_armour_class." + armourClass.name().toLowerCase());
+	@Override
+	public SpellModifiers getModifiers() {
+		return this.getArmourClass() == ItemWizardArmour.ArmourClass.WARLOCK ? this.getWarlockSpellModifiers() : super.getModifiers();
 	}
 
-	/**
-	 * This method was package private so we had to duplicate it
-	 * <p>
-	 * Adds n random spells to the given list. The spells will be of the given element if possible. Extracted as a
-	 * separate function since it was the same in both EntityWizard and EntityEvilWizard.
-	 *
-	 * @param wizard The wizard whose spells are to be populated.
-	 * @param spells The spell list to be populated.
-	 * @param e      The element that the spells should belong to, or {@link Element#MAGIC} for a random element each time.
-	 * @param master Whether to include master spells.
-	 * @param n      The number of spells to add.
-	 * @param random A random number generator to use.
-	 * @return The tier of the highest-tier spell that was added to the list.
-	 * @author: Electroblob
-	 */
-	static Tier populateSpells(final EntityLiving wizard, List<Spell> spells, Element e, boolean master, int n, Random random) {
-
-		// This is the tier of the highest tier spell added.
-		Tier maxTier = Tier.NOVICE;
-
-		List<Spell> npcSpells = Spell.getSpells(s -> s.canBeCastBy(wizard, false));
-		npcSpells.removeIf(s -> !s.applicableForItem(WizardryItems.spell_book));
-
-		for (int i = 0; i < n; i++) {
-
-			Tier tier;
-			// If the wizard has no element, it picks a random one each time.
-			Element element = e == Element.MAGIC ? Element.values()[random.nextInt(Element.values().length)] : e;
-
-			int randomiser = random.nextInt(20);
-
-			// Uses its own special weighting
-			if (randomiser < 10) {
-				tier = Tier.NOVICE;
-			} else if (randomiser < 16) {
-				tier = Tier.APPRENTICE;
-			} else if (randomiser < 19 || !master) {
-				tier = Tier.ADVANCED;
-			} else {
-				tier = Tier.MASTER;
-			}
-
-			if (tier.ordinal() > maxTier.ordinal()) { maxTier = tier; }
-
-			// Finds all the spells of the chosen tier and element
-			List<Spell> list = Spell.getSpells(new Spell.TierElementFilter(tier, element, SpellProperties.Context.NPCS));
-			// Keeps only spells which can be cast by NPCs
-			list.retainAll(npcSpells);
-			// Removes spells that the wizard already has
-			list.removeAll(spells);
-
-			// Ensures the tier chosen actually has spells in it. (isEmpty() is exactly the same as size() == 0)
-			if (list.isEmpty()) {
-				// If there are no spells applicable, tier and element restrictions are removed to give maximum
-				// possibility of there being an applicable spell.
-				list = npcSpells;
-				// Removes spells that the wizard already has
-				list.removeAll(spells);
-			}
-
-			// If the list is still empty now, there must be less than 3 enabled spells that can be cast by wizards
-			// (excluding magic missile). In this case, having empty slots seems reasonable.
-			if (!list.isEmpty()) { spells.add(list.get(random.nextInt(list.size()))); }
-
-		}
-
-		return maxTier;
+	private SpellModifiers getWarlockSpellModifiers() {
+		SpellModifiers modifiers = new SpellModifiers();
+		modifiers.set(SpellModifiers.POTENCY,1.4f, false);
+		return modifiers;
 	}
 
 	@Override
