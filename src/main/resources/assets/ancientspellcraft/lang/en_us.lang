@@ -81,8 +81,10 @@ entity.ancientspellcraft\:travelling.prefix=Travelling
 entity.ancientspellcraft\:travelling_wizard.name=Travelling Wizard
 entity.ancientspellcraft\:void_creeper.name=Void Creeper
 entity.ancientspellcraft\:wolf_minion.name=Wolf Minion
-entity.ancientspellcraft\:class_wizard.name=Armour Class Wizard
-entity.ancientspellcraft\:evil_class_wizard.name=Armour Class Wizard
+entity.ancientspellcraft\:class_wizard.name=Wizard
+entity.ancientspellcraft\:evil_class_wizard.name=Wizard
+entity.ancientspellcraft\:wizard_as.name=Wizard
+entity.ancientspellcraft\:evil_wizard_as.name=Wizard
 entity.ancientspellcraft\:class_wizard_combined.name=%1$s %2$s
 entity.ancientspellcraft\:evil_class_wizard_combined.name=%1$s %2$s
 
