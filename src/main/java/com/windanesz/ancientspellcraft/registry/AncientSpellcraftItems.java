@@ -10,6 +10,7 @@ import com.windanesz.ancientspellcraft.item.ItemAmberMushroomAmulet;
 import com.windanesz.ancientspellcraft.item.ItemAncientHat;
 import com.windanesz.ancientspellcraft.item.ItemAncientSpellcraftSpellBook;
 import com.windanesz.ancientspellcraft.item.ItemBarterScroll;
+import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import com.windanesz.ancientspellcraft.item.ItemBlockDevoritiumMaterial;
 import com.windanesz.ancientspellcraft.item.ItemChargedAstralDiamond;
 import com.windanesz.ancientspellcraft.item.ItemCoalBucket;
@@ -52,6 +53,7 @@ import com.windanesz.ancientspellcraft.item.ItemStoneFist;
 import com.windanesz.ancientspellcraft.item.ItemTransmutationScroll;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
+import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemScroll;
 import electroblob.wizardry.misc.BehaviourSpellDispense;
@@ -227,12 +229,15 @@ public final class AncientSpellcraftItems {
 	public static final Item shadow_blade = placeholder();
 	public static final Item spectral_fishing_rod = placeholder();
 	public static final Item ice_shield = placeholder();
+	public static final Item battlemage_sword_novice = placeholder();
+	public static final Item battlemage_sword_apprentice = placeholder();
+	public static final Item battlemage_sword_advanced = placeholder();
+	public static final Item battlemage_sword_master = placeholder();
 
 	public static final Item sacred_mace = placeholder();
 	public static final Item stone_fist = placeholder();
 	public static final Item advanced_stone_fist = placeholder();
 	public static final Item scepter_mind_control = placeholder();
-
 
 	// ====================== Misc ======================
 	public static final Item enchanted_name_tag = placeholder();
@@ -551,6 +556,10 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "ice_cream", new ItemIceCream());
 		registerItem(registry, "alchemical_essence", new ItemAlchemicalEssence());
 
+		registerItem(registry, "battlemage_sword_novice", new ItemBattlemageSword(Tier.NOVICE, 3));
+		registerItem(registry, "battlemage_sword_apprentice", new ItemBattlemageSword(Tier.APPRENTICE, 5));
+		registerItem(registry, "battlemage_sword_advanced", new ItemBattlemageSword(Tier.ADVANCED, 7));
+		registerItem(registry, "battlemage_sword_master", new ItemBattlemageSword(Tier.MASTER, 9));
 
 	}
 

@@ -18,7 +18,6 @@
     "cooldown": 10,
     "base_properties": {
         "range": 10,
-        "block_lifetime": 900,
-        "effect:duration": 900
+        "block_lifetime": 900
     }
 }

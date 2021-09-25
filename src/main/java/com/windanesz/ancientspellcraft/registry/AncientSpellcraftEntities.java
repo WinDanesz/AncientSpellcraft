@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
-import com.windanesz.ancientspellcraft.entity.EntityAOEProjectile;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityAOEProjectile;
 import com.windanesz.ancientspellcraft.entity.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.entity.EntityMageLight;
 import com.windanesz.ancientspellcraft.entity.EntityOrdinarySpiderMinion;
@@ -17,6 +17,7 @@ import com.windanesz.ancientspellcraft.entity.construct.EntitySpellTicker;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
 import com.windanesz.ancientspellcraft.entity.construct.EntityTransportationPortal;
 import com.windanesz.ancientspellcraft.entity.construct.EntityVenusFlyTrap;
+import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
 import com.windanesz.ancientspellcraft.entity.living.EntityClassWizard;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilWizardAS;
@@ -38,6 +39,7 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityFlint;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityManaVortex;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
+import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
 import electroblob.wizardry.Wizardry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
@@ -106,6 +108,7 @@ public class AncientSpellcraftEntities {
 
 		registry.register(createEntry(EntityDevoritiumArrow.class, "devoritium_arrow", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
 		registry.register(createEntry(EntityFlint.class, "flint_projectile", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntitySafeIceShard.class, "safe_ice_shard", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
 		//		registry.register(createEntry(EntitySpectralFishHook.class, "spectral_fish_hook", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
 
 		// mobs
@@ -139,6 +142,7 @@ public class AncientSpellcraftEntities {
 		registry.register(createEntry(EntitySpellCaster.class, "spellcaster_entity", TrackingType.LIVING).build());
 		registry.register(createEntry(EntitySpellTicker.class, "mushroom_forest", TrackingType.LIVING).build());
 		registry.register(createEntry(EntityBuilder.class, "builder_entity", TrackingType.CONSTRUCT).build());
+		registry.register(createEntry(EntityAnimatedItem.class, "animated_item", TrackingType.LIVING).build());
 
 		//// Living Entity Overrides
 

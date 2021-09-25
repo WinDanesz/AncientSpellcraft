@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.block.BlockCrystalLeaves;
 import com.windanesz.ancientspellcraft.entity.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.packet.PacketContinuousRitual;
 import com.windanesz.ancientspellcraft.packet.PacketMushroomActivation;
+import com.windanesz.ancientspellcraft.packet.PacketSorcerySwordHit;
 import com.windanesz.ancientspellcraft.packet.PacketStartRitual;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
 import net.minecraft.item.ItemStack;
@@ -89,6 +90,8 @@ public class CommonProxy {
 	public void handleAddBarrier(EntityArcaneBarrier entityArcaneBarrier) {}
 
 	public void handleMushroomActivationPacket(PacketMushroomActivation.Message message) {}
+
+	public void handleSorcerySwordHit(PacketSorcerySwordHit.Message message) {}
 
 	public String getIceCreamDisplayName(ItemStack stack) {
 		return I18n.translateToLocal("item.ancientspellcraft:ice_cream.name").trim();

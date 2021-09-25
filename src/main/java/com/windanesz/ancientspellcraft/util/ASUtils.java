@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.util;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.item.IManaStoringItem;
@@ -17,7 +18,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -32,6 +35,7 @@ import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -119,6 +123,19 @@ public final class ASUtils {
 	public static Element getCrystalElementFromStack(ItemStack crystal) {
 		int metadata = crystal.getMetadata();
 		return Element.values()[metadata];
+	}
+
+	public static Potion getRandomPowerPotion() {
+		List<Potion> potionList = Arrays.asList(
+				AncientSpellcraftPotions.mana_regeneration,
+				AncientSpellcraftPotions.spell_blast,
+				AncientSpellcraftPotions.spell_siphon,
+				AncientSpellcraftPotions.spell_cooldown,
+				AncientSpellcraftPotions.spell_range,
+				AncientSpellcraftPotions.spell_duration
+		);
+
+		return potionList.get(AncientSpellcraft.rand.nextInt(potionList.size()));
 	}
 
 	/**
@@ -343,6 +360,39 @@ public final class ASUtils {
 		return Optional.empty();
 	}
 
+	/**
+	 * Static method to give an itemstack to a player. Handles side checks and null checks, prioritizes the hands.
+	 *
+	 * @param player the player who receives the item
+	 * @param stack  the stack to give
+	 * @return false if failed to give, true if successfully gave the item
+	 */
+	public static boolean giveStackToPlayer(EntityPlayer player, ItemStack stack) {
+		if (player != null && stack != null && !stack.isEmpty()) {
+
+			if (!player.world.isRemote) {
+
+				if (player.getHeldItemMainhand().isEmpty()) {
+					// main hand
+					player.setHeldItem(EnumHand.MAIN_HAND, stack);
+				} else if (player.getHeldItemOffhand().isEmpty()) {
+					// offhand
+					player.setHeldItem(EnumHand.OFF_HAND, stack);
+				} else {
+					// any slot
+					if (!player.inventory.addItemStackToInventory(stack)) {
+						// or just drop the item..
+						player.dropItem(stack, false);
+					}
+				}
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static boolean isManaStoringCastingItem(Item item) {
 		return item instanceof ISpellCastingItem && item instanceof IManaStoringItem;
 	}
@@ -360,6 +410,7 @@ public final class ASUtils {
 
 	/**
 	 * Serializes an ItemStack into an NBTTagCompound with all of the ItemStack's data but only as a single stack, ignoring the actual count.
+	 *
 	 * @param stack the ItemStack to serialize
 	 * @return an NBTTagCompound with the ItemStack's data.
 	 */

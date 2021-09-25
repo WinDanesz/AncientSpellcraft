@@ -209,6 +209,11 @@ public final class AncientSpellcraftModels {
 		registerItemModel(AncientSpellcraftItems.spectral_shovel);
 		registerItemModel(AncientSpellcraftItems.ice_cream);
 
+		registerItemModel(AncientSpellcraftItems.battlemage_sword_novice);
+		registerItemModel(AncientSpellcraftItems.battlemage_sword_apprentice);
+		registerItemModel(AncientSpellcraftItems.battlemage_sword_advanced);
+		registerItemModel(AncientSpellcraftItems.battlemage_sword_master);
+
 		// Itemblocks
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.ARTEFACT_PENSIVE));
 		registerItemModel(Item.getItemFromBlock(AncientSpellcraftBlocks.SPHERE_COGNIZANCE));

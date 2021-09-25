@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.entity.ICustomCooldown;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellImproved;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIBattlemageMelee;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIBattlemageSpellcasting;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.entity.living.EntityAIAttackSpell;
@@ -17,8 +18,6 @@ import electroblob.wizardry.util.NBTExtras;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WandHelper;
 import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -130,8 +129,7 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 		WandHelper.setSpells(wand, list.toArray(new Spell[5]));
 
 		if (getArmourClass() == ItemWizardArmour.ArmourClass.BATTLEMAGE) {
-			ItemStack sword = new ItemStack(Items.GOLDEN_SWORD);
-			sword.addEnchantment(Enchantments.SHARPNESS, 1);
+			ItemStack sword = new ItemStack(AncientSpellcraftItems.battlemage_sword_master);
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, sword);
 			this.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, wand);
 			this.tasks.taskEntries.removeIf(t -> t.action == spellCastingAIImproved);

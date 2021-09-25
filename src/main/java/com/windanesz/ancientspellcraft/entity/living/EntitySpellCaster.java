@@ -35,8 +35,6 @@ import java.util.UUID;
 
 public class EntitySpellCaster extends EntityCreature implements ISpellCaster, IEntityOwnable {
 
-
-
 	private List<Spell> spells = new ArrayList<Spell>(1);
 	private Spell continuousSpell;
 	private SpellModifiers modifiers = new SpellModifiers();

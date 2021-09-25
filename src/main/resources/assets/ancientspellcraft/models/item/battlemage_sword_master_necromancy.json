@@ -1,0 +1,7 @@
+{
+	"parent": "ancientspellcraft:item/battlemage_sword_master",
+	"textures": {
+		"0": "ancientspellcraft:items/battlemage_sword_master_necromancy",
+		"particle": "ancientspellcraft:items/battlemage_sword_master_necromancy"
+	}
+}

@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
-import com.windanesz.ancientspellcraft.entity.EntityAOEProjectile;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityAOEProjectile;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelGreaterMagic;
@@ -148,6 +148,8 @@ public final class AncientSpellcraftSpells {
 	public static final Spell summon_spider = placeholder();
 	public static final Spell soul_scorch = placeholder();
 	public static final Spell swamp = placeholder();
+	public static final Spell animate_weapon = placeholder();
+	public static final Spell dirt_wall = placeholder();
 
 	@SuppressWarnings("unchecked")
 	@SubscribeEvent
@@ -358,6 +360,10 @@ public final class AncientSpellcraftSpells {
 		registry.register(new Swamp());
 		registry.register(new MagmaWall());
 		registry.register(new MoltenEarth());
+		registry.register(new AnimateItem());
+		registry.register(new AnimateWeapon());
+		registry.register(new SpectralArmy());
+		registry.register(new DirtWall());
 
 		//registry.register(new WarpWeapon()); TODO
 

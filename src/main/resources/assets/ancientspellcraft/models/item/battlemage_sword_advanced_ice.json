@@ -1,0 +1,9 @@
+{
+	"parent": "item/handheld",
+	"textures": {
+		"layer0": "ancientspellcraft:items/battlemage_sword_advanced_ice"
+	}
+}
+
+
+

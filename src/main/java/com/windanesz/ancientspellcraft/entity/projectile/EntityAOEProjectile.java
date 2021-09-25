@@ -1,4 +1,4 @@
-package com.windanesz.ancientspellcraft.entity;
+package com.windanesz.ancientspellcraft.entity.projectile;
 
 import com.windanesz.ancientspellcraft.spell.SpellProjectileAOEPotion;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;

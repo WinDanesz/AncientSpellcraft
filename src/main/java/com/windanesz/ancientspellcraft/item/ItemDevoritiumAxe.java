@@ -17,7 +17,7 @@ public class ItemDevoritiumAxe extends ItemAxe implements IDevoritium {
 	@SuppressWarnings("ConstantConditions")
 	public ItemDevoritiumAxe() {
 		super(AncientSpellcraft.DEVORITIUM_TOOL_MATERIAL, DEVORITIUM_TOOL_DAMAGE, DEVORITIUM_TOOL_ATTACK_SPEED);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
 	}
 
 	@Override

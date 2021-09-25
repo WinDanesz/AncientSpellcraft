@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
-import electroblob.wizardry.entity.projectile.EntityIceShard;
+import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
 import electroblob.wizardry.item.IConjuredItem;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardryPotions;
@@ -72,8 +72,7 @@ public class ItemIceShield extends Item implements IConjuredItem {
 	@Override
 	public boolean canContinueUsing(ItemStack oldStack, ItemStack newStack) {
 		// Ignore durability changes
-		if (ItemStack.areItemsEqualIgnoreDurability(oldStack, newStack))
-			return true;
+		if (ItemStack.areItemsEqualIgnoreDurability(oldStack, newStack)) { return true; }
 		return super.canContinueUsing(oldStack, newStack);
 	}
 
@@ -127,92 +126,95 @@ public class ItemIceShield extends Item implements IConjuredItem {
 				((EntityPlayer) entity).inventory.decrStackSize(slot, 1);
 			}
 
-			// adapted from electroblob.wizardry.entity.projectile.EntityIceCharge (author: Electroblob)
-			// Particle effect
-			if (world.isRemote) {
-				world.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, entity.posX, entity.posY + 0.5, entity.posZ, 0, 0, 0);
-				for (int i = 0; i < 30 * 2; i++) {
-
-					ParticleBuilder.create(ParticleBuilder.Type.ICE, world.rand, entity.posX, entity.posY + 0.5, entity.posZ, 2, false)
-							.time(35).gravity(true).spawn(world);
-
-					float brightness = 0.4f + world.rand.nextFloat() * 0.5f;
-					ParticleBuilder.create(ParticleBuilder.Type.DARK_MAGIC, world.rand, entity.posX, entity.posY + 0.5, entity.posZ, 2, false)
-							.clr(brightness, brightness + 0.1f, 1.0f).spawn(world);
-				}
-			}
-
-			if (!world.isRemote) {
-
-				world.playSound(null, entity.getPosition(), WizardrySounds.ENTITY_ICE_CHARGE_SMASH, SoundCategory.PLAYERS, 1.5f, world.rand.nextFloat() * 0.4f + 0.6f);
-				world.playSound(null, entity.getPosition(), WizardrySounds.ENTITY_ICE_CHARGE_ICE, SoundCategory.PLAYERS, 1.2f, world.rand.nextFloat() * 0.4f + 1.2f);
-
-				double radius = Spells.ice_charge.getProperty(Spell.EFFECT_RADIUS).floatValue() * 1.5;
-
-				List<EntityLivingBase> targets = EntityUtils.getLivingWithinRadius(radius, entity.posX, entity.posY,
-						entity.posZ, entity.world);
-
-				// Slows targets
-				for (EntityLivingBase target : targets) {
-					if (target != entity) {
-						if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, target))
-							target.addPotionEffect(new PotionEffect(WizardryPotions.frost,
-									Spells.ice_charge.getProperty(Spell.SPLASH_EFFECT_DURATION).intValue(),
-									Spells.ice_charge.getProperty(Spell.SPLASH_EFFECT_STRENGTH).intValue()));
-					}
-				}
-
-				// Places snow and ice on ground.
-				for (int i = -1; i < 2; i++) {
-					for (int j = -1; j < 2; j++) {
-
-						BlockPos pos = new BlockPos(entity.posX + i, entity.posY, entity.posZ + j);
-
-						Integer y = getNearestSurface(world, pos, EnumFacing.UP, 7, true,
-								BlockUtils.SurfaceCriteria.SOLID_LIQUID_TO_AIR);
-
-						if (y != null) {
-
-							pos = new BlockPos(pos.getX(), y, pos.getZ());
-
-							double dist = entity.getDistance(pos.getX(), pos.getY(), pos.getZ());
-
-							// Randomised with weighting so that the nearer the block the more likely it is to be snowed.
-							if (world.rand.nextInt((int) dist * 2 + 1) < 1 && dist < 2) {
-								if (world.getBlockState(pos.down()).getBlock() == Blocks.WATER) {
-									world.setBlockState(pos.down(), Blocks.ICE.getDefaultState());
-								} else {
-									// Don't need to check whether the block at pos can be replaced since getNearestFloorLevelB
-									// only ever returns floors with air above them.
-									world.setBlockState(pos, Blocks.SNOW_LAYER.getDefaultState());
-								}
-							}
-						}
-					}
-				}
-
-				if (entity instanceof EntityLivingBase) {
-					// Releases shards
-					for (int i = 0; i < 20; i++) {
-						double dx = world.rand.nextDouble() - 0.5;
-						double dy = world.rand.nextDouble() - 0.5;
-						double dz = world.rand.nextDouble() - 0.5;
-						EntityIceShard iceshard = new EntityIceShard(world);
-						iceshard.setPosition(entity.posX + dx, entity.posY + dy + 0.5, entity.posZ + dz);
-						iceshard.motionX = dx * 1.5;
-						iceshard.motionY = dy * 1.5;
-						iceshard.motionZ = dz * 1.5;
-						iceshard.setCaster((EntityLivingBase) entity);
-						iceshard.damageMultiplier = 1.3F;
-						world.spawnEntity(iceshard);
-						stack.shrink(1);
-					}
-				}
+			if (entity instanceof EntityLivingBase) {
+				explodeShield(entity.world, (EntityLivingBase) entity, stack);
 			}
 
 		} else {
 			// decrease shield lifetime
 			stack.setItemDamage(damage + 1);
+		}
+	}
+
+	public static void explodeShield(World world, EntityLivingBase entity, ItemStack shieldStack) {
+		if (!world.isRemote) {
+
+			world.playSound(null, entity.getPosition(), WizardrySounds.ENTITY_ICE_CHARGE_SMASH, SoundCategory.PLAYERS, 1.5f, world.rand.nextFloat() * 0.4f + 0.6f);
+			world.playSound(null, entity.getPosition(), WizardrySounds.ENTITY_ICE_CHARGE_ICE, SoundCategory.PLAYERS, 1.2f, world.rand.nextFloat() * 0.4f + 1.2f);
+
+			double radius = Spells.ice_charge.getProperty(Spell.EFFECT_RADIUS).floatValue() * 1.5;
+
+			List<EntityLivingBase> targets = EntityUtils.getLivingWithinRadius(radius, entity.posX, entity.posY,
+					entity.posZ, entity.world);
+
+			// Slows targets
+			for (EntityLivingBase target : targets) {
+				if (target != entity) {
+					if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, target)) {
+						target.addPotionEffect(new PotionEffect(WizardryPotions.frost,
+								Spells.ice_charge.getProperty(Spell.SPLASH_EFFECT_DURATION).intValue(),
+								Spells.ice_charge.getProperty(Spell.SPLASH_EFFECT_STRENGTH).intValue()));
+					}
+				}
+			}
+
+			// Places snow and ice on ground.
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+
+					BlockPos pos = new BlockPos(entity.posX + i, entity.posY, entity.posZ + j);
+
+					Integer y = getNearestSurface(world, pos, EnumFacing.UP, 7, true,
+							BlockUtils.SurfaceCriteria.SOLID_LIQUID_TO_AIR);
+
+					if (y != null) {
+
+						pos = new BlockPos(pos.getX(), y, pos.getZ());
+
+						double dist = entity.getDistance(pos.getX(), pos.getY(), pos.getZ());
+
+						// Randomised with weighting so that the nearer the block the more likely it is to be snowed.
+						if (world.rand.nextInt((int) dist * 2 + 1) < 1 && dist < 2) {
+							if (world.getBlockState(pos.down()).getBlock() == Blocks.WATER) {
+								world.setBlockState(pos.down(), Blocks.ICE.getDefaultState());
+							} else {
+								// Don't need to check whether the block at pos can be replaced since getNearestFloorLevelB
+								// only ever returns floors with air above them.
+								world.setBlockState(pos, Blocks.SNOW_LAYER.getDefaultState());
+							}
+						}
+					}
+				}
+			}
+
+			// Releases shards
+			for (int i = 0; i < 20; i++) {
+				double dx = world.rand.nextDouble() - 0.5;
+				double dy = world.rand.nextDouble() - 0.5;
+				double dz = world.rand.nextDouble() - 0.5;
+				EntitySafeIceShard iceshard = new EntitySafeIceShard(world);
+				iceshard.setPosition(entity.posX + dx, entity.posY + dy + 1.5, entity.posZ + dz);
+				iceshard.motionX = dx * 1.5;
+				iceshard.motionY = dy * 1.5;
+				iceshard.motionZ = dz * 1.5;
+				iceshard.setCaster((EntityLivingBase) entity);
+				iceshard.damageMultiplier = 1.3F;
+				world.spawnEntity(iceshard);
+				shieldStack.shrink(1);
+			}
+		} else {
+			// adapted from electroblob.wizardry.entity.projectile.EntityIceCharge (author: Electroblob)
+			// Particle effect
+			world.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, entity.posX, entity.posY + 0.5, entity.posZ, 0, 0, 0);
+			for (int i = 0; i < 30 * 2; i++) {
+
+				ParticleBuilder.create(ParticleBuilder.Type.ICE, world.rand, entity.posX, entity.posY + 0.5, entity.posZ, 2, false)
+						.time(35).gravity(true).spawn(world);
+
+				float brightness = 0.4f + world.rand.nextFloat() * 0.5f;
+				ParticleBuilder.create(ParticleBuilder.Type.DARK_MAGIC, world.rand, entity.posX, entity.posY + 0.5, entity.posZ, 2, false)
+						.clr(brightness, brightness + 0.1f, 1.0f).spawn(world);
+			}
 		}
 	}
 

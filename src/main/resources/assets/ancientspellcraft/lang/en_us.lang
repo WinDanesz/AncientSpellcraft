@@ -61,7 +61,10 @@ class_element.necromancy.wizard=Necromancer
 class_element.earth.wizard=Earth
 class_element.sorcery.wizard=Sorcerer
 class_element.healing.wizard=Healer
-
+item.ancientspellcraft\:battlemage_sword_novice.name=Spell Dagger
+item.ancientspellcraft\:battlemage_sword_apprentice.name=Spell Dirk
+item.ancientspellcraft\:battlemage_sword_advanced.name=Spell Sword
+item.ancientspellcraft\:battlemage_sword_master.name=Spell Blade
 wizard_armour_class.sage=Sage
 wizard_armour_class.battlemage=Battlemage
 wizard_armour_class.warlock=Warlock
@@ -87,6 +90,10 @@ entity.ancientspellcraft\:wizard_as.name=Wizard
 entity.ancientspellcraft\:evil_wizard_as.name=Wizard
 entity.ancientspellcraft\:class_wizard_combined.name=%1$s %2$s
 entity.ancientspellcraft\:evil_class_wizard_combined.name=%1$s %2$s
+entity.ancientspellcraft\:animated_item.name=Animated Item
+entity.ancientspellcraft\:animated_item.nameplate=%1$s's Animated %2$s
+entity.ancientspellcraft\:animated_weapon.name=Animated Weapon
+entity.ancientspellcraft\:animated_armour.name=Animated Armour
 
 # gui
 gui.ancientspellcraft:empty_slot=Empty Slot
@@ -613,7 +620,15 @@ set.ancientspellcraft\:set_name_with_count=%s (%s of %s)
 settings.ancientspellcraft:\general_settings=General Settings
 
 # spell
-spell.ancientspellcraft\:antimagic_field.desc=Creates an anti-magic field which disturbs any spellcasts.
+spell.ancientspellcraft\:animate_item=Animate Item
+spell.ancientspellcraft\:animate_item.desc=Animate an item to fight for you in battle. The effect ends after 30 seconds or if it is killed.
+spell.ancientspellcraft\:animate_item.devoritium_item=You cannot animate an item which contains Devoritium
+spell.ancientspellcraft\:animate_item.spell_too_weak=This spell is too weak to animate this item!
+spell.ancientspellcraft\:animate_item.no_item=You must hold the item or a spell that you want to animate in your offhand!
+spell.ancientspellcraft\:animate_weapon=Animate Weapon
+spell.ancientspellcraft\:animate_weapon.desc=Animate a weapon to fight for you in battle. The effect ends after 30 seconds or if it is killed.
+spell.ancientspellcraft\:animate_weapon.no_item=You must hold the item that you want to animate in your offhand!
+spell.ancientspellcraft\:animate_weapon.no_arrow=Without arrows, this bow won't shoot anything
 spell.ancientspellcraft\:antimagic_field=Anti-magic Field
 spell.ancientspellcraft\:aquatic_agility.desc=Magically enchant your movement inside water to swim like a fish.
 spell.ancientspellcraft\:aquatic_agility=Aquatic Agility
@@ -919,6 +934,8 @@ spell.ancientspellcraft\:conjure_lesser_sentry.desc=Conjures a Lesser Sentry whe
 spell.ancientspellcraft\:conjure_lesser_sentry=Conjure Lesser Sentry
 spell.ancientspellcraft\:summon_quicksand.desc=Conjures a patch of quicksand where you are pointing. The quicksand disappears after 45 seconds.
 spell.ancientspellcraft\:summon_quicksand=Summon Quicksand
+spell.ancientspellcraft\:wall_of_dirt.desc=Conjures a wall of dirt where you are pointing. The dirt disappears after 20 seconds.
+spell.ancientspellcraft\:wall_of_dirt=Wall of Dirt
 
 # spell type
 spelltype.contingency=Contingency

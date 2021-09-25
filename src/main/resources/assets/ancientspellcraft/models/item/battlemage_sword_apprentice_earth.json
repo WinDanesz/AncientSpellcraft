@@ -1,0 +1,9 @@
+{
+	"parent": "item/handheld",
+	"textures": {
+		"0": "ancientspellcraft:items/battlemage_sword_apprentice_earth",
+		"particle": "ancientspellcraft:items/battlemage_sword_apprentice_earth"
+	}
+}
+
+

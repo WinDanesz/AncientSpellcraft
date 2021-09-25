@@ -136,6 +136,7 @@ public class AncientSpellcraftBlocks {
 
 	public static final Block QUICKSAND = placeholder();
 	public static final Block CONJURED_MAGMA = placeholder();
+	public static final Block CONJURED_DIRT = placeholder();
 
 
 	public static void registerBlock(IForgeRegistry<Block> registry, String name, Block block) {
@@ -207,6 +208,7 @@ public class AncientSpellcraftBlocks {
 
 		registerBlock(registry, "quicksand", new BlockQuickSand());
 		registerBlock(registry, "conjured_magma", new BlockConjuredMagma());
+		registerBlock(registry, "conjured_dirt", new BlockConjuredMagma());
 	}
 
 	/**

@@ -144,6 +144,37 @@ public class Settings {
 		@Config.RangeInt(min = 0, max = 100)
 		public int evil_class_wizard_spawn_rate = 2;
 
+		@Config.Name("Spellblade base damage")
+		@Config.Comment("The base damage of spellblades, not accounting for the tiers")
+		@Config.RequiresMcRestart
+		@Config.RangeInt(min = 1, max = 32)
+		public int spellblade_base_damage = 2;
+
+		@Config.Name("Spellblade damage increase per tier")
+		@Config.Comment("The damage increase per tier of the spellblade")
+		@Config.RequiresMcRestart
+		@Config.RangeInt(min = 1, max = 6)
+		public int spellblade_damage_increase_per_tier = 1;
+
+		@Config.Name("Spellblade charge progress per spellcast")
+		@Config.Comment("The amount of charge received for each spellcasts with the spellblade")
+		@Config.RequiresMcRestart
+		@Config.RangeInt(min = 0, max = 100)
+		public int spellblade_charge_gain_per_spellcast = 20;
+
+		@Config.Name("Spellblade charge progress per hit")
+		@Config.Comment("The amount of charge received for each hit with the spellblade")
+		@Config.RequiresMcRestart
+		@Config.RangeInt(min = 0, max = 100)
+		public int spellblade_charge_gain_per_hit = 5;
+
+		@Config.Name("Spellblade base hit mana cost per tier")
+		@Config.Comment("The amount of mana required & consumed when the spellblade is used to hit a target, based on the tier of the blade\n"
+				+ "Example: if the cost is 5, a novice blade will consume 5 mana, an apprentice sword will consume 2x5 mana, a master blade will consume 20 mana")
+		@Config.RequiresMcRestart
+		@Config.RangeInt(min = 1, max = 100)
+		public int spellblade_base_mana_cost = 5;
+
 		@Config.Name("Orb Artefact Potency Percent Bonus")
 		@Config.Comment("Determines the potency bonus of the elemental orb artefacts in a percentage value")
 		@Config.RequiresMcRestart

@@ -322,7 +322,6 @@ public abstract class BlockMagicMushroom extends BlockBush implements ITileEntit
 	 */
 	public static boolean tryPlaceMushroom(World world, BlockPos pos, EntityLivingBase caster, BlockMagicMushroom mushroom, int lifetime, SpellModifiers modifiers) {
 
-		//		if (BlockUtils.canBlockBeReplaced(world, pos) && BlockUtils.canBlockBeReplaced(world, pos.up())) {
 		if (BlockUtils.canBlockBeReplaced(world, pos)) {
 
 			if (lifetime == -1) {

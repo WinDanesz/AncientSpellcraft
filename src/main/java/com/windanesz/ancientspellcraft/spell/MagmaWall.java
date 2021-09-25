@@ -6,7 +6,6 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.item.SpellActions;
-import electroblob.wizardry.registry.WizardryBlocks;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -43,7 +42,7 @@ public class MagmaWall extends SpellRay {
 	@Override
 	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers){
 		
-		if(caster.isSneaking() && world.getBlockState(pos).getBlock() == WizardryBlocks.spectral_block){
+		if(caster.isSneaking() && world.getBlockState(pos).getBlock() == AncientSpellcraftBlocks.CONJURED_MAGMA){
 
 			if(!world.isRemote){
 				// Dispelling of blocks
@@ -55,7 +54,7 @@ public class MagmaWall extends SpellRay {
 			
 			return true;
 		}
-		
+
 		pos = pos.offset(side);
 		
 		if(world.isRemote){

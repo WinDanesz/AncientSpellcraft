@@ -11,6 +11,7 @@ import com.windanesz.ancientspellcraft.client.particle.ParticleSoulChain;
 import com.windanesz.ancientspellcraft.client.particle.ParticleTimeKnot;
 import com.windanesz.ancientspellcraft.client.renderer.RenderArcaneBarrierEventBased;
 import com.windanesz.ancientspellcraft.client.renderer.RenderMerchantWizard;
+import com.windanesz.ancientspellcraft.client.renderer.entity.RenderAnimatedItem;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderDevoritiumArrow;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderEntityMageLight;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderFireSpider;
@@ -27,7 +28,7 @@ import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderSkullWat
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderTileSentinel;
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderTileSphereCognizance;
 import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
-import com.windanesz.ancientspellcraft.entity.EntityAOEProjectile;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityAOEProjectile;
 import com.windanesz.ancientspellcraft.entity.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.entity.EntityMageLight;
 import com.windanesz.ancientspellcraft.entity.EntityVolcano;
@@ -39,6 +40,7 @@ import com.windanesz.ancientspellcraft.entity.construct.EntitySilencingSigil;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpellTicker;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
 import com.windanesz.ancientspellcraft.entity.construct.EntityTransportationPortal;
+import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
 import com.windanesz.ancientspellcraft.entity.living.EntityClassWizard;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilWizardAS;
@@ -59,6 +61,7 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityFlint;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityManaVortex;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
+import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
 import com.windanesz.ancientspellcraft.packet.PacketContinuousRitual;
 import com.windanesz.ancientspellcraft.packet.PacketMushroomActivation;
 import com.windanesz.ancientspellcraft.packet.PacketStartRitual;
@@ -186,6 +189,9 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityDevoritiumBomb.class, manager -> new RenderProjectile(manager, 0.6f, new ResourceLocation(AncientSpellcraft.MODID, "textures/items/devoritium_bomb.png"), false));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlint.class, manager -> new RenderMagicArrow(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/flint_shard.png"), false, 6.0, 1.0, 9, 8, true));
 		RenderingRegistry.registerEntityRenderingHandler(EntityAOEProjectile.class, manager -> new RenderProjectile(manager, 0.7f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/aoe_projectile.png"), false));
+		RenderingRegistry.registerEntityRenderingHandler(EntitySafeIceShard.class, manager -> new RenderMagicArrow(manager,
+				new ResourceLocation(Wizardry.MODID, "textures/entity/ice_shard.png"), false, 8.0, 2.0, 16, 5, false));
+
 
 		////////// TESRs //////////
 		ClientRegistry.bindTileEntitySpecialRenderer(TileSphereCognizance.class, new RenderTileSphereCognizance());
@@ -210,6 +216,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityBarterConstruct.class, RenderBlank::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellTicker.class, RenderBlank::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityBuilder.class, RenderBlank::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityAnimatedItem.class, RenderAnimatedItem::new);
 
 		////////// Other constructs //////////
 		RenderingRegistry.registerEntityRenderingHandler(EntityArcaneBarrier.class, RenderBlank::new);

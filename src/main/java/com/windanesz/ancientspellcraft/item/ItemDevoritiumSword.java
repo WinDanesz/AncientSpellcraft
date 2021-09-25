@@ -14,7 +14,7 @@ public class ItemDevoritiumSword extends ItemSword implements IDevoritium {
 	@SuppressWarnings("ConstantConditions")
 	public ItemDevoritiumSword() {
 		super(AncientSpellcraft.DEVORITIUM_TOOL_MATERIAL);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
 	}
 
 	@Override

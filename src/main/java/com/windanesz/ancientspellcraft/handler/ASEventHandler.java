@@ -821,27 +821,28 @@ public class ASEventHandler {
 						}
 
 					}
+					int level = entry.getValue().getAmplifier() + 1;
 
 					if (potion == AncientSpellcraftPotions.spell_blast) {
 						SpellModifiers modifiers = event.getModifiers();
 						float blast = modifiers.get(WizardryItems.blast_upgrade);
-						modifiers.set(WizardryItems.blast_upgrade, blast + BLAST_RADIUS_INCREASE_PER_LEVEL, true);
+						modifiers.set(WizardryItems.blast_upgrade, blast + level * BLAST_RADIUS_INCREASE_PER_LEVEL , true);
 					}
 					if (potion == AncientSpellcraftPotions.spell_range) {
 						SpellModifiers modifiers = event.getModifiers();
 						float range = modifiers.get(WizardryItems.range_upgrade);
-						modifiers.set(WizardryItems.range_upgrade, range + Constants.RANGE_INCREASE_PER_LEVEL, true);
+						modifiers.set(WizardryItems.range_upgrade, range + level * Constants.RANGE_INCREASE_PER_LEVEL, true);
 
 					}
 					if (potion == AncientSpellcraftPotions.spell_cooldown) {
 						SpellModifiers modifiers = event.getModifiers();
 						float cooldown = modifiers.get(WizardryItems.cooldown_upgrade);
-						modifiers.set(WizardryItems.cooldown_upgrade, cooldown - Constants.COOLDOWN_REDUCTION_PER_LEVEL, true);
+						modifiers.set(WizardryItems.cooldown_upgrade, cooldown -  (level * Constants.COOLDOWN_REDUCTION_PER_LEVEL), true);
 					}
 					if (potion == AncientSpellcraftPotions.spell_duration) {
 						SpellModifiers modifiers = event.getModifiers();
 						float duration = modifiers.get(WizardryItems.duration_upgrade);
-						modifiers.set(WizardryItems.duration_upgrade, duration + DURATION_INCREASE_PER_LEVEL, false);
+						modifiers.set(WizardryItems.duration_upgrade, duration +  level * DURATION_INCREASE_PER_LEVEL, false);
 					}
 
 				}

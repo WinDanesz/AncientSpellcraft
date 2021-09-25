@@ -1,9 +1,9 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.entity.projectile.EntityIceCharge;
-import electroblob.wizardry.entity.projectile.EntityIceShard;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellAreaEffect;
@@ -13,7 +13,6 @@ import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -47,7 +46,7 @@ public class Fimbulwinter extends SpellAreaEffect {
 
 				BlockPos currPos = list.get(world.rand.nextInt(list.size()));
 
-				EntityIceShard iceShard = new EntityIceShard(world);
+				EntitySafeIceShard iceShard = new EntitySafeIceShard(world);
 				iceShard.setCaster(caster);
 				iceShard.setPosition(currPos.getX() + world.rand.nextFloat(), currPos.getY() + world.rand.nextFloat(), currPos.getZ() + world.rand.nextFloat());
 				iceShard.motionY = -0.5f;

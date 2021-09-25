@@ -82,39 +82,39 @@ public class ItemSoulboundWandUpgrade extends ItemWandUpgrade {
 	 * @param player the player
 	 */
 	public static void storeSoulboundWands(EntityPlayer player) {
-		List<ItemStack> wandList = new ArrayList<>();
+		List<ItemStack> itemList = new ArrayList<>();
 
 		WizardData data = WizardData.get(player);
 		if (data != null) {
 
 			for (ItemStack stack : player.inventory.mainInventory) {
-				if (stack.getItem() instanceof ItemWand) {
+				if (stack.getItem() instanceof ItemWand || stack.getItem() instanceof IWizardClassWeapon) {
 					boolean hasUpgrade = WandHelper.getUpgradeLevel(stack, AncientSpellcraftItems.soulbound_upgrade) != 0;
 					if (hasUpgrade) {
-						wandList.add(stack.copy());
+						itemList.add(stack.copy());
 						stack.setCount(0);
 					}
 				}
 			}
 
 			for (ItemStack stack : player.inventory.offHandInventory) {
-				if (stack.getItem() instanceof ItemWand) {
+				if (stack.getItem() instanceof ItemWand || stack.getItem() instanceof IWizardClassWeapon) {
 					boolean hasUpgrade = WandHelper.getUpgradeLevel(stack, AncientSpellcraftItems.soulbound_upgrade) != 0;
 					if (hasUpgrade) {
-						wandList.add(stack.copy());
+						itemList.add(stack.copy());
 						stack.setCount(0);
 					}
 				}
 			}
 		}
 
-		if (!wandList.isEmpty()) {
+		if (!itemList.isEmpty()) {
 			// We can just create a new object here because there is no way a player can die twice without getting back the soulbound items first.
 			NBTTagCompound newStoredWandData = new NBTTagCompound();
 
-			for (int i = 0; i < wandList.size(); i++) {
+			for (int i = 0; i < itemList.size(); i++) {
 
-				ItemStack currentWand = wandList.get(i);
+				ItemStack currentWand = itemList.get(i);
 				NBTTagCompound currentWandCompound = new NBTTagCompound();
 				currentWand.writeToNBT(currentWandCompound);
 				newStoredWandData.setTag(String.valueOf(i), currentWandCompound);

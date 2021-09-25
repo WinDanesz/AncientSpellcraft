@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import electroblob.wizardry.entity.projectile.EntityIceShard;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardryPotions;
@@ -76,13 +76,11 @@ public class FrostNova extends Spell {
 
 		if (!world.isRemote) {
 
-			caster.hurtResistantTime = 10;
-
 			for (int i = 0; i < getProperty(SHARD_COUNT).intValue(); i++) {
 				double dx = world.rand.nextDouble() - 0.5;
 				//				double dy = world.rand.nextDouble() - 0.5;
 				double dz = world.rand.nextDouble() - 0.5;
-				EntityIceShard iceshard = new EntityIceShard(world);
+				EntitySafeIceShard iceshard = new EntitySafeIceShard(world);
 				iceshard.setPosition(caster.posX + dx, caster.posY + 1, caster.posZ + dz);
 				iceshard.motionX = dx * 2.5;
 				iceshard.motionY = 0.2;

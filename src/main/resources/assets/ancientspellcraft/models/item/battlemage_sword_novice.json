@@ -1,0 +1,16 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "ancientspellcraft:items/battlemage_sword_novice_magic"
+    },
+    "overrides": [
+        { "predicate": { "element": 0.0 }, "model": "ancientspellcraft:item/battlemage_sword_novice_magic" },
+        { "predicate": { "element": 0.1 }, "model": "ancientspellcraft:item/battlemage_sword_novice_fire" },
+        { "predicate": { "element": 0.2 }, "model": "ancientspellcraft:item/battlemage_sword_novice_ice" },
+        { "predicate": { "element": 0.3 }, "model": "ancientspellcraft:item/battlemage_sword_novice_lightning" },
+        { "predicate": { "element": 0.4 }, "model": "ancientspellcraft:item/battlemage_sword_novice_necromancy" },
+        { "predicate": { "element": 0.5 }, "model": "ancientspellcraft:item/battlemage_sword_novice_earth" },
+        { "predicate": { "element": 0.6 }, "model": "ancientspellcraft:item/battlemage_sword_novice_sorcery" },
+        { "predicate": { "element": 0.7 }, "model": "ancientspellcraft:item/battlemage_sword_novice_healing" }
+    ]
+}

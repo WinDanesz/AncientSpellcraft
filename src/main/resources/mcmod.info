@@ -9,6 +9,8 @@
     "credits": "
     Created by WinDanesz
     Electroblob, for making his awesome Wizardry mod
-    Contributors: Yranic, Bombadil, HatBot for writing many of the lore texts and giving content feedback",
+    Contributors:
+      - Yranic, Bombadil, HatBot for writing/reworking many of the lore texts
+      - Idea contributors: Elso, Kug, OBLIQUE, VasiliySiniy (class weapon ideas)",
     "logoFile":"assets/ancientspellcraft/textures/gui/logo.png"
 }]
