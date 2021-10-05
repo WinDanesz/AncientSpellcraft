@@ -4,6 +4,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.block.BlockMagicMushroom;
+import com.windanesz.ancientspellcraft.data.ClassWeaponData;
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
 import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
@@ -125,23 +126,6 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	 * The number of spell slots a sword has with no attunement upgrades applied.
 	 */
 	public static final int SWORD_BASE_SPELL_SLOTS = 3;
-
-	public static final List<PotionEffect> healingElementApplicablePotionList = Arrays.asList(
-			new PotionEffect(MobEffects.REGENERATION, 100, 1),
-			new PotionEffect(MobEffects.FIRE_RESISTANCE, 200, 1),
-			new PotionEffect(MobEffects.ABSORPTION, 200, 1),
-			new PotionEffect(MobEffects.STRENGTH, 200, 0),
-			new PotionEffect(MobEffects.SPEED, 200, 0),
-			new PotionEffect(MobEffects.HASTE, 200, 0),
-			new PotionEffect(MobEffects.NIGHT_VISION, 200, 0),
-			new PotionEffect(MobEffects.SATURATION, 60, 0),
-			new PotionEffect(WizardryPotions.empowerment, 200, 0),
-			new PotionEffect(WizardryPotions.font_of_mana, 200, 0),
-			new PotionEffect(WizardryPotions.ward, 200, 0),
-			new PotionEffect(AncientSpellcraftPotions.fortified_archery, 200, 0),
-			new PotionEffect(AncientSpellcraftPotions.projectile_ward, 200, 0),
-			new PotionEffect(AncientSpellcraftPotions.wizard_shield, 200, 8)
-	);
 
 	/**
 	 * The maximum number of upgrades that can be applied to a wand of this tier.
@@ -336,6 +320,35 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		// Charge Progression
 		IWizardClassWeapon.addChargeProgress(stack, Settings.generalSettings.spellblade_charge_gain_per_spellcast);
 
+		// Progression
+		if (this.tier.level < Tier.MASTER.level && wielder instanceof EntityPlayer) {
+
+			EntityPlayer player = (EntityPlayer) wielder;
+
+			int recentHits = ClassWeaponData.getRecentHitCount(player, target);
+
+			// only get progression if this entity was hit less than 2 times + tier level
+			if (recentHits <= 2 + this.tier.level) {
+				WandHelper.addProgression(stack, 1);
+			}
+
+			// If the sword just gained enough progression to be upgraded...
+			Tier nextTier = tier.next();
+			int excess = WandHelper.getProgression(stack) - nextTier.getProgression();
+			if (excess >= 0) {
+				// ...display a message above the player's hotbar
+				player.playSound(WizardrySounds.ITEM_WAND_LEVELUP, 1.25f, 1);
+				//	TODO: advancement
+				//	WizardryAdvancementTriggers.wand_levelup.triggerFor(caster);
+				if (!player.world.isRemote) {
+					player.sendMessage(new TextComponentTranslation("item." + Wizardry.MODID + ":wand.levelup",
+							this.getItemStackDisplayName(stack), nextTier.getNameForTranslationFormatted()));
+				}
+			}
+
+			ClassWeaponData.trackRecentEnemy((player), target);
+		}
+
 		return true;
 	}
 
@@ -447,7 +460,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 				if (player != null) { WizardData.get(player).setTierReached(tier); }
 
-				ItemStack newSword = getNextTier(tier);
+				ItemStack newSword = getNextTier(this.tier);
 				newSword.setTagCompound(wand.getTagCompound());
 				// This needs to be done after copying the tag compound so the mana capacity for the new wand
 				// takes storage upgrades into account
@@ -848,31 +861,31 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		level = WandHelper.getUpgradeLevel(stack, WizardryItems.cooldown_upgrade);
 		if (level > 0) { modifiers.set(WizardryItems.cooldown_upgrade, 1.0f - level * Constants.COOLDOWN_REDUCTION_PER_LEVEL, true); }
 
-		float progressionModifier = 1.0f - ((float) WizardData.get(player).countRecentCasts(spell) / WizardData.MAX_RECENT_SPELLS)
-				* MAX_PROGRESSION_REDUCTION;
+		////		float progressionModifier = 1.0f - ((float) WizardData.get(player).countRecentCasts(spell) / WizardData.MAX_RECENT_SPELLS)
+		////				* MAX_PROGRESSION_REDUCTION;
+		//
+		//		Element element = getElement(stack);
+		//
+		//		if (element != Element.MAGIC && element == spell.getElement()) {
+		//			modifiers.set(SpellModifiers.POTENCY, 1.0f + (this.tier.level + 1) * (Constants.POTENCY_INCREASE_PER_TIER / 3), true);
+		//			progressionModifier *= ELEMENTAL_PROGRESSION_MODIFIER;
+		//
+		//		}
+		//
+		//		if (WizardData.get(player) != null) {
+		//
+		//			if (!WizardData.get(player).hasSpellBeenDiscovered(spell)) {
+		//				// Casting an undiscovered spell now grants 5x progression
+		//				progressionModifier *= DISCOVERY_PROGRESSION_MODIFIER;
+		//			}
+		//
+		//			if (!WizardData.get(player).hasReachedTier(this.tier.next())) {
+		//				// 1.5x progression for tiers that have already been reached
+		//				progressionModifier *= SECOND_TIME_PROGRESSION_MODIFIER;
+		//			}
+		//		}
 
-		Element element = getElement(stack);
-
-		if (element != Element.MAGIC && element == spell.getElement()) {
-			modifiers.set(SpellModifiers.POTENCY, 1.0f + (this.tier.level + 1) * (Constants.POTENCY_INCREASE_PER_TIER / 3), true);
-			progressionModifier *= ELEMENTAL_PROGRESSION_MODIFIER;
-
-		}
-
-		if (WizardData.get(player) != null) {
-
-			if (!WizardData.get(player).hasSpellBeenDiscovered(spell)) {
-				// Casting an undiscovered spell now grants 5x progression
-				progressionModifier *= DISCOVERY_PROGRESSION_MODIFIER;
-			}
-
-			if (!WizardData.get(player).hasReachedTier(this.tier.next())) {
-				// 1.5x progression for tiers that have already been reached
-				progressionModifier *= SECOND_TIME_PROGRESSION_MODIFIER;
-			}
-		}
-
-		modifiers.set(SpellModifiers.PROGRESSION, progressionModifier, false);
+		//		modifiers.set(SpellModifiers.PROGRESSION, progressionModifier, false);
 
 		return modifiers;
 	}
@@ -1309,6 +1322,23 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 				List<EntityLivingBase> nearbyEntities = EntityUtils.getEntitiesWithinRadius(16, wielder.posX, wielder.posY, wielder.posZ, wielder.world, EntityLivingBase.class);
 				List<EntityLivingBase> entitiesToBuff = nearbyEntities.stream().filter(e -> AllyDesignationSystem.isAllied(wielder, e)).collect(Collectors.toList());
 
+				List<PotionEffect> healingElementApplicablePotionList = Arrays.asList(
+						new PotionEffect(MobEffects.REGENERATION, 100, 1),
+						new PotionEffect(MobEffects.FIRE_RESISTANCE, 200, 1),
+						new PotionEffect(MobEffects.ABSORPTION, 200, 1),
+						new PotionEffect(MobEffects.STRENGTH, 200, 0),
+						new PotionEffect(MobEffects.SPEED, 200, 0),
+						new PotionEffect(MobEffects.HASTE, 200, 0),
+						new PotionEffect(MobEffects.NIGHT_VISION, 200, 0),
+						new PotionEffect(MobEffects.SATURATION, 60, 0),
+						new PotionEffect(WizardryPotions.empowerment, 200, 0),
+						new PotionEffect(WizardryPotions.font_of_mana, 200, 0),
+						new PotionEffect(WizardryPotions.ward, 200, 0),
+						new PotionEffect(AncientSpellcraftPotions.fortified_archery, 200, 0),
+						new PotionEffect(AncientSpellcraftPotions.projectile_ward, 200, 0),
+						new PotionEffect(AncientSpellcraftPotions.wizard_shield, 200, 8)
+				);
+
 				if (!entitiesToBuff.isEmpty()) {
 					PotionEffect potionToApply = healingElementApplicablePotionList.get(itemRand.nextInt(healingElementApplicablePotionList.size()));
 					entitiesToBuff.forEach(e -> e.addPotionEffect(potionToApply));
@@ -1478,7 +1508,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void LeftClick(PlayerInteractEvent.LeftClickEmpty event) {
-//		TODO: Sorcery extended reach - reserved for a spell or artefact effect
+		//		TODO: Sorcery extended reach - reserved for a spell or artefact effect
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 
 		if (player != null && player.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword) {

@@ -18,6 +18,7 @@ public class BlockConjuredDirt extends Block implements ITileEntityProvider, ITe
 
 	public BlockConjuredDirt() {
 		super(Material.GROUND);
+		setHardness(0.5f);
 		//setTemporaryBlockProperties(this);
 	}
 
