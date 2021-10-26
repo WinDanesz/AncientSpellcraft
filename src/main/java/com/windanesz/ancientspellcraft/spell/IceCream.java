@@ -5,15 +5,13 @@ import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
-import scala.actors.threadpool.Arrays;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-//		registry.register(new SpellConjurationAS("ice_cream", AncientSpellcraftItems.ice_cream));
 
 public class IceCream extends SpellConjurationAS {
 
