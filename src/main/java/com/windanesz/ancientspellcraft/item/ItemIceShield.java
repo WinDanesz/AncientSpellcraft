@@ -302,4 +302,9 @@ public class ItemIceShield extends Item implements IConjuredItem {
 			}
 		}
 	}
+
+	@Override
+	public boolean isShield(ItemStack stack, @Nullable EntityLivingBase entity) {
+		return true;
+	}
 }

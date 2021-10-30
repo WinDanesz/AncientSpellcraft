@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft.entity.construct;
 import com.windanesz.ancientspellcraft.block.ITemporaryBlock;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
+import electroblob.wizardry.util.BlockUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
@@ -23,6 +24,7 @@ public class EntityBuilder extends EntityMagicConstruct {
 	public int buildTickRate = 5;
 	public int batchSize = 1;
 	public int blockLifetime = 200;
+	private boolean ignoreClaims = true;
 
 	public EntityBuilder(World world) {
 		super(world);
@@ -44,7 +46,7 @@ public class EntityBuilder extends EntityMagicConstruct {
 
 						BlockPos currPos = buildList.get(0);
 
-						if (canBlockBeReplaced(world, currPos)) {
+						if (canBlockBeReplaced(world, currPos) && (ignoreClaims || BlockUtils.canPlaceBlock(getCaster(), world, currPos))) {
 
 							if (blockToBuild.getBlock() instanceof ITemporaryBlock) {
 								ITemporaryBlock.placeTemporaryBlock(getCaster(), world, blockToBuild.getBlock(), currPos, blockLifetime);
@@ -82,22 +84,30 @@ public class EntityBuilder extends EntityMagicConstruct {
 		if (nbttagcompound.hasKey("blockToBuild")) {
 			blockToBuild = NBTUtil.readBlockState(nbttagcompound.getCompoundTag("blockToBuild"));
 		}
+
+		if (nbttagcompound.hasKey("ignoreClaims")) {
+			ignoreClaims = nbttagcompound.getBoolean("ignoreClaims");
+		}
 	}
 
 	@Override
-	protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
-		nbttagcompound.setInteger("buildTickRate", buildTickRate);
-		nbttagcompound.setInteger("batchSize", batchSize);
+	protected void writeEntityToNBT(NBTTagCompound nbt) {
+		nbt.setInteger("buildTickRate", buildTickRate);
+		nbt.setInteger("batchSize", batchSize);
 
 		if (buildList != null) {
-			nbttagcompound.setTag("posList", ASUtils.writeBlockPosListToTag(buildList));
+			nbt.setTag("posList", ASUtils.writeBlockPosListToTag(buildList));
 		}
 
 		if (blockToBuild != null) {
-			nbttagcompound.setTag("blockToBuild", NBTUtil.writeBlockState(new NBTTagCompound(), blockToBuild));
+			nbt.setTag("blockToBuild", NBTUtil.writeBlockState(new NBTTagCompound(), blockToBuild));
 		}
+		nbt.setBoolean("ignoreClaims", ignoreClaims);
+		super.writeEntityToNBT(nbt);
+	}
 
-		super.writeEntityToNBT(nbttagcompound);
+	public void setIgnoreClaims(boolean ignoreClaims) {
+		this.ignoreClaims = ignoreClaims;
 	}
 }
 

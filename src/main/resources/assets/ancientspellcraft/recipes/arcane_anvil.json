@@ -1,0 +1,27 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "DPD",
+        "NAN",
+        "NNN"
+    ],
+    "key": {
+        "A": {
+            "item": "minecraft:anvil",
+            "data": 0
+        },
+        "D": {
+            "item": "ebwizardry:spectral_dust",
+            "data": 32767
+        },
+        "P": {
+            "item": "ancientspellcraft:crystal_silver_ingot"
+        },
+        "N": {
+            "item": "ancientspellcraft:crystal_silver_nugget"
+        }
+    },
+    "result": {
+        "item": "ancientspellcraft:arcane_anvil"
+    }
+}

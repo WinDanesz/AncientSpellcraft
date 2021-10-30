@@ -92,6 +92,7 @@ public class DirtWall extends SpellRay {
 			wall.sort(Comparator.comparingInt(Vec3i::getY));
 			builder.setBuildList(wall);
 			builder.setBlockToBuild(AncientSpellcraftBlocks.CONJURED_DIRT.getDefaultState());
+			builder.setIgnoreClaims(false);
 			world.spawnEntity(builder);
 			return true;
 		}

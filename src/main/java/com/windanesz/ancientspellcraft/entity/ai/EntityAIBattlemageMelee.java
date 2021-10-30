@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.entity.ai;
 
 import com.windanesz.ancientspellcraft.entity.ICustomCooldown;
+import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -130,6 +131,9 @@ public class EntityAIBattlemageMelee<T extends EntityLiving & ICustomCooldown> e
 			this.attackTick = 20;
 			this.attacker.swingArm(EnumHand.MAIN_HAND);
 			this.attacker.attackEntityAsMob(enemy);
+			if (this.attacker.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword) {
+				this.attacker.getHeldItemMainhand().getItem().hitEntity(this.attacker.getHeldItemMainhand(), enemy, this.attacker);
+			}
 		}
 	}
 

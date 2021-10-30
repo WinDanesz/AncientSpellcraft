@@ -1,9 +1,11 @@
 package com.windanesz.ancientspellcraft.entity.living;
 
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.ICustomCooldown;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellImproved;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIBattlemageMelee;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIBattlemageSpellcasting;
+import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
@@ -18,6 +20,7 @@ import electroblob.wizardry.util.NBTExtras;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WandHelper;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,6 +29,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.scoreboard.ScorePlayerTeam;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -42,6 +46,12 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 	 * Decremented each tick while greater than 0. When a spell is cast, this is set to that spell's cooldown plus the
 	 * base cooldown.
 	 */
+
+	/**
+	 * The resource location for the evil wizard's loot table.
+	 */
+	private static final ResourceLocation BATTLEMAGE_LOOT_TABLE = new ResourceLocation(AncientSpellcraft.MODID, "entities/evil_battlemage");
+
 	protected int cooldown;
 
 	/**
@@ -54,7 +64,7 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 
 	private EntityAIAttackSpellImproved<EntityEvilClassWizard> spellCastingAIImproved = new EntityAIAttackSpellImproved<>(this, 0.5D, 14.0F, 30, 50);
 	private final EntityAIBattlemageMelee entityAIBattlemageMelee = new EntityAIBattlemageMelee(this, 0.6D, false);
-	private final EntityAIBattlemageSpellcasting entityAIBattlemageSpellcasting = new EntityAIBattlemageSpellcasting(this, 0.6D, 14.0F, 90, 50);
+	private final EntityAIBattlemageSpellcasting entityAIBattlemageSpellcasting = new EntityAIBattlemageSpellcasting(this, 0.6D, 14.0F, 30, 50);
 
 	public int getCooldown() { return cooldown; }
 
@@ -78,6 +88,13 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 	}
 
 	@Override
+	protected ResourceLocation getLootTable() {
+		// TODO debug
+		ResourceLocation loot = getArmourClass() == ItemWizardArmour.ArmourClass.BATTLEMAGE ? BATTLEMAGE_LOOT_TABLE : super.getLootTable();
+		return loot;
+	}
+
+	@Override
 	protected void entityInit() {
 		super.entityInit();
 		this.dataManager.register(EVIL_WIZARD_ARMOUR_CLASS, 0);
@@ -94,7 +111,12 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 			this.setElement(Element.MAGIC);
 		}
 
-		this.setArmourClass(ItemWizardArmour.ArmourClass.values()[rand.nextInt(ItemWizardArmour.ArmourClass.values().length - 1) + 1]);
+		// FIXME: ugly hack which will break when we'll add more types!
+		if (hasStructure) {
+			this.setArmourClass(ItemWizardArmour.ArmourClass.BATTLEMAGE);
+		} else {
+			this.setArmourClass(ItemWizardArmour.ArmourClass.values()[rand.nextInt(ItemWizardArmour.ArmourClass.values().length - 1) + 1]);
+		}
 
 		Element element = this.getElement();
 
@@ -113,7 +135,7 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 		int spellCount;
 		switch (this.getArmourClass()) {
 			case SAGE:
-				spellCount = 8;
+				spellCount = 9;
 			case WARLOCK:
 				spellCount = 6;
 			default: // BATTLEMAGE
@@ -130,15 +152,35 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 
 		if (getArmourClass() == ItemWizardArmour.ArmourClass.BATTLEMAGE) {
 			ItemStack sword = new ItemStack(AncientSpellcraftItems.battlemage_sword_master);
+			NBTTagCompound nbt = sword.getTagCompound();
+			if (nbt == null) {
+				nbt = new NBTTagCompound();
+			}
+			nbt.setString(ItemBattlemageSword.ELEMENT_TAG, element.name());
+			sword.setTagCompound(nbt);
+
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, sword);
 			this.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, wand);
-			this.tasks.taskEntries.removeIf(t -> t.action == spellCastingAIImproved);
+			setAITask(ItemWizardArmour.ArmourClass.BATTLEMAGE);
 		} else {
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, wand);
+			setAITask(ItemWizardArmour.ArmourClass.WIZARD);
+		}
+
+		// Default chance is 0.085f, for reference.
+		for (EntityEquipmentSlot slot : EntityEquipmentSlot.values()) { this.setDropChance(slot, 0.0f); }
+
+		return livingdata;
+	}
+
+	private void setAITask(ItemWizardArmour.ArmourClass armourClass) {
+		if (armourClass == ItemWizardArmour.ArmourClass.BATTLEMAGE) {
+			this.tasks.taskEntries.removeIf(t -> t.action == spellCastingAIImproved);
+
+		} else {
 			this.tasks.taskEntries.removeIf(t -> t.action == entityAIBattlemageSpellcasting);
 			this.tasks.taskEntries.removeIf(t -> t.action == entityAIBattlemageMelee);
 		}
-		return livingdata;
 	}
 
 	public ItemWizardArmour.ArmourClass getArmourClass() {
@@ -179,7 +221,7 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 
 	private SpellModifiers getWarlockSpellModifiers() {
 		SpellModifiers modifiers = new SpellModifiers();
-		modifiers.set(SpellModifiers.POTENCY,1.4f, false);
+		modifiers.set(SpellModifiers.POTENCY, 1.4f, false);
 		return modifiers;
 	}
 
@@ -197,6 +239,13 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 		super.readEntityFromNBT(nbt);
 		this.spells = (List<Spell>) NBTExtras.NBTToList(nbt.getTagList("spells", Constants.NBT.TAG_INT),
 				(NBTTagInt tag) -> Spell.byMetadata(tag.getInt()));
-		this.setArmourClass(ItemWizardArmour.ArmourClass.values()[nbt.getInteger("armour_class")]);
+		ItemWizardArmour.ArmourClass armourClass = ItemWizardArmour.ArmourClass.values()[nbt.getInteger("armour_class")];
+		this.setArmourClass(armourClass);
+		setAITask(armourClass);
+
+		// no wandering for wizards with a tent, or they'll never go back to it
+		if (hasStructure && getArmourClass() == ItemWizardArmour.ArmourClass.BATTLEMAGE) {
+			this.tasks.taskEntries.removeIf(t -> t.action instanceof EntityAIWander);
+		}
 	}
 }

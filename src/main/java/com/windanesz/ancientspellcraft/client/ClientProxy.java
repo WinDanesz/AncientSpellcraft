@@ -14,6 +14,7 @@ import com.windanesz.ancientspellcraft.client.renderer.RenderMerchantWizard;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderAnimatedItem;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderDevoritiumArrow;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderEntityMageLight;
+import com.windanesz.ancientspellcraft.client.renderer.entity.RenderEvilClassWizard;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderFireSpider;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderSkeletonHorseMinion;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderSkeletonMage;
@@ -28,7 +29,6 @@ import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderSkullWat
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderTileSentinel;
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderTileSphereCognizance;
 import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
-import com.windanesz.ancientspellcraft.entity.projectile.EntityAOEProjectile;
 import com.windanesz.ancientspellcraft.entity.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.entity.EntityMageLight;
 import com.windanesz.ancientspellcraft.entity.EntityVolcano;
@@ -36,6 +36,7 @@ import com.windanesz.ancientspellcraft.entity.EntityWisp;
 import com.windanesz.ancientspellcraft.entity.construct.EntityAntiMagicField;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBarterConstruct;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;
+import com.windanesz.ancientspellcraft.entity.construct.EntityHealingSigil;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySilencingSigil;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpellTicker;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
@@ -52,6 +53,7 @@ import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
 import com.windanesz.ancientspellcraft.entity.living.EntityVoidCreeper;
 import com.windanesz.ancientspellcraft.entity.living.EntityWizardMerchant;
 import com.windanesz.ancientspellcraft.entity.living.EntityWolfMinion;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityAOEProjectile;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityContingencyProjectile;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDevoritiumArrow;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDevoritiumBomb;
@@ -62,6 +64,7 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityManaVortex;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
 import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
+import com.windanesz.ancientspellcraft.integration.antiqueatlas.ASAntiqueAtlasIntegration;
 import com.windanesz.ancientspellcraft.packet.PacketContinuousRitual;
 import com.windanesz.ancientspellcraft.packet.PacketMushroomActivation;
 import com.windanesz.ancientspellcraft.packet.PacketStartRitual;
@@ -203,6 +206,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityTransportationPortal.class, manager -> new RenderSigil(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/transportation_portal.png"), 0.0f, false));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpiritWard.class, manager -> new RenderSigil(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/spirit_ward.png"), 0.0f, false));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySilencingSigil.class, manager -> new RenderSigil(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/silencing_sigil.png"), 0.0f, false));
+		RenderingRegistry.registerEntityRenderingHandler(EntityHealingSigil.class, manager -> new RenderSigil(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/healing_sigil.png"), 0.0f, false));
 
 		////////// NO render //////////
 		RenderingRegistry.registerEntityRenderingHandler(EntityAntiMagicField.class, RenderBlank::new);
@@ -212,7 +216,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityWizardMerchant.class, RenderMerchantWizard::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityClassWizard.class, RenderWizard::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityEvilWizardAS.class, RenderEvilWizard::new);
-		RenderingRegistry.registerEntityRenderingHandler(EntityEvilClassWizard.class, RenderEvilWizard::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityEvilClassWizard.class, RenderEvilClassWizard::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityBarterConstruct.class, RenderBlank::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellTicker.class, RenderBlank::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityBuilder.class, RenderBlank::new);
@@ -339,5 +343,9 @@ public class ClientProxy extends CommonProxy {
 			}
 		}
 		return net.minecraft.util.text.translation.I18n.translateToLocal("item.ancientspellcraft:ice_cream.name").trim();
+	}
+
+	public void registerAtlasMarkers(){
+		ASAntiqueAtlasIntegration.registerMarkers();
 	}
 }

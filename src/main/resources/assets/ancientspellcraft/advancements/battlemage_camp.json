@@ -1,0 +1,22 @@
+{
+    "display": {
+        "title": {
+            "translate": "advancement.ancientspellcraft:battlemage_camp"
+        },
+        "description": {
+            "translate": "advancement.ancientspellcraft:battlemage_camp.desc"
+        },
+        "icon": {
+            "item": "ancientspellcraft:battlemage_sword_master"
+        }
+    },
+    "parent": "ebwizardry:arcane_initiate",
+    "criteria": {
+        "criteria_0": {
+            "trigger": "ebwizardry:visit_structure",
+            "conditions": {
+                "structure_type": "battlemage_camp"
+            }
+        }
+    }
+}

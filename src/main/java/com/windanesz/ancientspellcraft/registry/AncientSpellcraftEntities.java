@@ -2,7 +2,6 @@ package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
-import com.windanesz.ancientspellcraft.entity.projectile.EntityAOEProjectile;
 import com.windanesz.ancientspellcraft.entity.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.entity.EntityMageLight;
 import com.windanesz.ancientspellcraft.entity.EntityOrdinarySpiderMinion;
@@ -11,6 +10,7 @@ import com.windanesz.ancientspellcraft.entity.EntityWisp;
 import com.windanesz.ancientspellcraft.entity.construct.EntityAntiMagicField;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBarterConstruct;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;
+import com.windanesz.ancientspellcraft.entity.construct.EntityHealingSigil;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySentinel;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySilencingSigil;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpellTicker;
@@ -20,16 +20,15 @@ import com.windanesz.ancientspellcraft.entity.construct.EntityVenusFlyTrap;
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
 import com.windanesz.ancientspellcraft.entity.living.EntityClassWizard;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
-import com.windanesz.ancientspellcraft.entity.living.EntityEvilWizardAS;
 import com.windanesz.ancientspellcraft.entity.living.EntityFireAnt;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonHorseMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpellCaster;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
 import com.windanesz.ancientspellcraft.entity.living.EntityVoidCreeper;
-import com.windanesz.ancientspellcraft.entity.living.EntityWizardAS;
 import com.windanesz.ancientspellcraft.entity.living.EntityWizardMerchant;
 import com.windanesz.ancientspellcraft.entity.living.EntityWolfMinion;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityAOEProjectile;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityContingencyProjectile;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDevoritiumArrow;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDevoritiumBomb;
@@ -132,6 +131,7 @@ public class AncientSpellcraftEntities {
 		registry.register(createEntry(EntityTransportationPortal.class, "transportation_portal", TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntitySpiritWard.class, "spirit_ward", TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntitySilencingSigil.class, "silencing_sigil", TrackingType.CONSTRUCT).build());
+		registry.register(createEntry(EntityHealingSigil.class, "healing_sigil", TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntityVolcano.class, "entity_volcano", TrackingType.LIVING).build());
 
 		registry.register(createEntry(EntityAntiMagicField.class, "anti_magic_field", TrackingType.CONSTRUCT).build());
@@ -146,13 +146,13 @@ public class AncientSpellcraftEntities {
 
 		//// Living Entity Overrides
 
-		if (Settings.generalSettings.apply_wizard_entity_changes) {
-			AncientSpellcraft.logger.info("Applying ebwizardry:wizard entity overrides by Ancient Spellcraft");
-			registry.register(createEntry(EntityWizardAS.class, "wizard_as", AncientSpellcraft.MODID, TrackingType.LIVING).build());
-
-			AncientSpellcraft.logger.info("Applying ebwizardry:evil_wizard entity overrides by Ancient Spellcraft");
-			registry.register(createEntry(EntityEvilWizardAS.class, "evil_wizard_as", AncientSpellcraft.MODID, TrackingType.LIVING).build());
-		}
+//		if (Settings.generalSettings.apply_wizard_entity_changes) {
+//			AncientSpellcraft.logger.info("Applying ebwizardry:wizard entity overrides by Ancient Spellcraft");
+//			registry.register(createEntry(EntityWizardAS.class, "wizard_as", AncientSpellcraft.MODID, TrackingType.LIVING).build());
+//
+//			AncientSpellcraft.logger.info("Applying ebwizardry:evil_wizard entity overrides by Ancient Spellcraft");
+//			registry.register(createEntry(EntityEvilWizardAS.class, "evil_wizard_as", AncientSpellcraft.MODID, TrackingType.LIVING).build());
+//		}
 		registry.register(createEntry(EntityWizardMerchant.class, "wizardmerchant", AncientSpellcraft.MODID, TrackingType.LIVING).build());
 		registry.register(createEntry(EntityClassWizard.class, "class_wizard", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());
 		registry.register(createEntry(EntityEvilClassWizard.class, 		"evil_class_wizard", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0x290404, 0xee9312)

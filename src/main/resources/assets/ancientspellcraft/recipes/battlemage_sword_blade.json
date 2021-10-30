@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "  N",
+        " N ",
+        "N  "
+    ],
+    "key": {
+        "N": {
+            "item": "ancientspellcraft:crystal_silver_nugget"
+        }
+    },
+    "result": {
+        "item": "ancientspellcraft:battlemage_sword_blade"
+    }
+}

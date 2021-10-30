@@ -86,6 +86,17 @@
                             }
                         }
                     ]
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:crystal_silver_nugget",
+                    "entryName": "crystal_silver_nugget",
+                    "weight": 1
+                },
+                {
+                    "type": "loot_table",
+                    "name": "ancientspellcraft:subsets/ritual_books",
+                    "weight": 1
                 }
             ]
         }

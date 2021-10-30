@@ -2,9 +2,10 @@ package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
-import com.windanesz.ancientspellcraft.entity.projectile.EntityAOEProjectile;
+import com.windanesz.ancientspellcraft.entity.construct.EntityHealingSigil;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityAOEProjectile;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelGreaterMagic;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelMagic;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
@@ -148,8 +149,14 @@ public final class AncientSpellcraftSpells {
 	public static final Spell summon_spider = placeholder();
 	public static final Spell soul_scorch = placeholder();
 	public static final Spell swamp = placeholder();
+	public static final Spell animate_item = placeholder();
 	public static final Spell animate_weapon = placeholder();
+	public static final Spell spectral_army = placeholder();
 	public static final Spell dirt_wall = placeholder();
+	public static final Spell fist_of_wind = placeholder();
+	public static final Spell healing_sigil = placeholder();
+	public static final Spell cauterize = placeholder();
+	//public static final Spell heat_furnace = placeholder();
 
 	@SuppressWarnings("unchecked")
 	@SubscribeEvent
@@ -364,6 +371,12 @@ public final class AncientSpellcraftSpells {
 		registry.register(new AnimateWeapon());
 		registry.register(new SpectralArmy());
 		registry.register(new DirtWall());
+		registry.register(new FistOfWind());
+		registry.register(new SpellConstructRangedAS<>("healing_sigil", EntityHealingSigil::new, true).floor(true).addProperties(Spell.EFFECT_RADIUS, Spell.HEALTH));
+		registry.register(new Cauterize());
+		registry.register(new MetabolismOverdrive());
+
+		// registry.register(new HeatFurnace()); TODO
 
 		//registry.register(new WarpWeapon()); TODO
 

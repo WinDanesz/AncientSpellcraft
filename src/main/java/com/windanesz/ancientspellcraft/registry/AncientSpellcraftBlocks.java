@@ -1,8 +1,11 @@
 package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.block.BlockArcaneAnvil;
 import com.windanesz.ancientspellcraft.block.BlockArtefactPensive;
 import com.windanesz.ancientspellcraft.block.BlockCandleLight;
+import com.windanesz.ancientspellcraft.block.BlockConjuredDirt;
+import com.windanesz.ancientspellcraft.block.BlockConjuredMagma;
 import com.windanesz.ancientspellcraft.block.BlockCrystalLeaves;
 import com.windanesz.ancientspellcraft.block.BlockCrystalLog;
 import com.windanesz.ancientspellcraft.block.BlockCrystalMine;
@@ -38,6 +41,7 @@ import com.windanesz.ancientspellcraft.block.BlockSkullWatch;
 import com.windanesz.ancientspellcraft.block.BlockSnowSlab;
 import com.windanesz.ancientspellcraft.block.BlockSphereCognizance;
 import com.windanesz.ancientspellcraft.block.BlockUsedRune;
+import com.windanesz.ancientspellcraft.tileentity.TileArcaneAnvil;
 import com.windanesz.ancientspellcraft.tileentity.TileArtefactPensive;
 import com.windanesz.ancientspellcraft.tileentity.TileCandleLight;
 import com.windanesz.ancientspellcraft.tileentity.TileEntityMagicMushroom;
@@ -50,7 +54,6 @@ import com.windanesz.ancientspellcraft.tileentity.TileSkullWatch;
 import com.windanesz.ancientspellcraft.tileentity.TileSphereCognizance;
 import electroblob.wizardry.constants.Element;
 import net.minecraft.block.Block;
-import com.windanesz.ancientspellcraft.block.BlockConjuredMagma;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -137,6 +140,8 @@ public class AncientSpellcraftBlocks {
 	public static final Block QUICKSAND = placeholder();
 	public static final Block CONJURED_MAGMA = placeholder();
 	public static final Block CONJURED_DIRT = placeholder();
+	public static final Block CONJURED_SNOW = placeholder();
+	public static final Block ARCANE_ANVIL = placeholder();
 
 
 	public static void registerBlock(IForgeRegistry<Block> registry, String name, Block block) {
@@ -204,11 +209,13 @@ public class AncientSpellcraftBlocks {
 		registerBlock(registry, "mushroom_cleansing", new BlockMushroomCleansing());
 		registerBlock(registry, "mushroom_explosive", new BlockMushroomExplosive());
 		registerBlock(registry, "mushroom_empowering", new BlockMushroomEmpowering());
+		registerBlock(registry, "arcane_anvil", new BlockArcaneAnvil());
 
 
 		registerBlock(registry, "quicksand", new BlockQuickSand());
 		registerBlock(registry, "conjured_magma", new BlockConjuredMagma());
 		registerBlock(registry, "conjured_dirt", new BlockConjuredMagma());
+		registerBlock(registry, "conjured_snow", new BlockConjuredDirt());
 	}
 
 	/**
@@ -228,6 +235,7 @@ public class AncientSpellcraftBlocks {
 		GameRegistry.registerTileEntity(TileEntityMagicMushroom.class, new ResourceLocation(AncientSpellcraft.MODID, "magic_mushroom_tile"));
 
 		GameRegistry.registerTileEntity(TileEntityRevertingBlock.class, new ResourceLocation(AncientSpellcraft.MODID, "reverting_tile"));
+		GameRegistry.registerTileEntity(TileArcaneAnvil.class, new ResourceLocation(AncientSpellcraft.MODID, "arcane_anvil"));
 	}
 
 }

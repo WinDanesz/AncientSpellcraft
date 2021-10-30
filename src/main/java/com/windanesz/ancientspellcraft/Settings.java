@@ -33,6 +33,9 @@ public class Settings {
 	public List<ResourceLocation> shardFireBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.fire_shard_biome_whitelist));
 	public List<ResourceLocation> shardIceBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.ice_shard_biome_whitelist));
 
+	public ResourceLocation[] battlemageCampWithChestFiles = {new ResourceLocation(AncientSpellcraft.MODID, "battlemage_camp_chest_0")};
+	public ResourceLocation[] battlemageKeepWithChestFiles = {new ResourceLocation(AncientSpellcraft.MODID, "battlemage_keep_chest_0")};
+
 	/**
 	 * Helper method to figure out if an item was disabled in the ebwiz configs, as unfortunately temArtefact#enabled private and has no getter method
 	 * @param artefact to check
@@ -83,6 +86,19 @@ public class Settings {
 		@Config.Comment("Enables or disables the ArtemisLib integration of the mod")
 		@Config.RequiresMcRestart
 		public boolean artemislib_integration = true;
+
+		@Config.Name("Antique Atlas Integration")
+		@Config.Comment("Enables or disables the Antique Atlas integration of the mod")
+		@Config.RequiresMcRestart
+		public boolean antique_atlas_integration = true;
+
+		@Config.Name("Battlemage Camp Map Markers")
+		@Config.Comment("[Server-only] Controls whether AS automatically places antique atlas markers at the locations of battlemage camps")
+		public boolean auto_battlemage_camp_markers = true;
+
+		@Config.Name("Battlemage Keep Map Markers")
+		@Config.Comment("[Server-only] Controls whether AS automatically places antique atlas markers at the locations of battlemage keeps")
+		public boolean auto_battlemage_keep_markers = true;
 
 		@Config.Name("Generate Crystal Ore Shards")
 		@Config.Comment("Determines whether to generate elemental crystal shards in the Overworld or not")
@@ -331,6 +347,34 @@ public class Settings {
 				+ "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
 		@Config.RequiresMcRestart
 		public int conjurePickaxeSpellNetworkID = 41;
+
+	}
+
+	@Config.Name("Worldgen Settings")
+	@Config.LangKey("settings.ancientspellcraft:worldgen_settings")
+	public static WorldgenSettings worldgenSettings = new WorldgenSettings();
+
+	public static class WorldgenSettings {
+
+		@Config.Name("Battlemage Camp Dimensions")
+		@Config.Comment("[Server-only] List of dimension ids in which to spawn battlemage camps.")
+		@Config.RequiresMcRestart
+		public int[] battlemageCampDimensions = {0};
+
+		@Config.Name("Battlemage Camp Rarity")
+		@Config.Comment("[Server-only] The rarity of battlemage camps, used by the world generator. Larger numbers are rarer.")
+		@Config.RequiresMcRestart
+		public int battlemageCampRarity = 1800;
+
+		@Config.Name("Battlemage Keep Dimensions")
+		@Config.Comment("[Server-only] List of dimension ids in which to spawn battlemage keeps.")
+		@Config.RequiresMcRestart
+		public int[] battlemageKeepDimensions = {0};
+
+		@Config.Name("Battlemage Keep Rarity")
+		@Config.Comment("[Server-only] The rarity of battlemage keeps, used by the world generator. Larger numbers are rarer.")
+		@Config.RequiresMcRestart
+		public int battlemageKeepRarity = 2000;
 
 	}
 

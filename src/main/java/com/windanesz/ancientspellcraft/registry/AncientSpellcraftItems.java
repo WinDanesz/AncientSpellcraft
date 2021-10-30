@@ -9,6 +9,7 @@ import com.windanesz.ancientspellcraft.item.ItemAlchemicalEssence;
 import com.windanesz.ancientspellcraft.item.ItemAmberMushroomAmulet;
 import com.windanesz.ancientspellcraft.item.ItemAncientHat;
 import com.windanesz.ancientspellcraft.item.ItemAncientSpellcraftSpellBook;
+import com.windanesz.ancientspellcraft.item.ItemArmourUpgradeMaterial;
 import com.windanesz.ancientspellcraft.item.ItemBarterScroll;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import com.windanesz.ancientspellcraft.item.ItemBlockDevoritiumMaterial;
@@ -16,11 +17,12 @@ import com.windanesz.ancientspellcraft.item.ItemChargedAstralDiamond;
 import com.windanesz.ancientspellcraft.item.ItemCoalBucket;
 import com.windanesz.ancientspellcraft.item.ItemCornucopia;
 import com.windanesz.ancientspellcraft.item.ItemCubePhasing;
+import com.windanesz.ancientspellcraft.item.ItemDevoritium;
+import com.windanesz.ancientspellcraft.item.ItemDevoritiumArmour;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumArrow;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumAxe;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumBomb;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumDoor;
-import com.windanesz.ancientspellcraft.item.ItemDevoritiumIngot;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumScimitar;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumShield;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumSword;
@@ -35,6 +37,7 @@ import com.windanesz.ancientspellcraft.item.ItemIceCream;
 import com.windanesz.ancientspellcraft.item.ItemIceShield;
 import com.windanesz.ancientspellcraft.item.ItemKnowledgeOrb;
 import com.windanesz.ancientspellcraft.item.ItemMagicShield;
+import com.windanesz.ancientspellcraft.item.ItemManaRing;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.item.ItemOmnicron;
 import com.windanesz.ancientspellcraft.item.ItemOverlordScepter;
@@ -51,6 +54,7 @@ import com.windanesz.ancientspellcraft.item.ItemSpectralShield;
 import com.windanesz.ancientspellcraft.item.ItemSpectralShovel;
 import com.windanesz.ancientspellcraft.item.ItemStoneFist;
 import com.windanesz.ancientspellcraft.item.ItemTransmutationScroll;
+import com.windanesz.ancientspellcraft.item.ItemWizardTankard;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
@@ -120,6 +124,8 @@ public final class AncientSpellcraftItems {
 	public static final Item ring_unbinding = placeholder();
 	public static final Item ring_disenchanter = placeholder();
 	public static final Item ring_quicksand = placeholder();
+	public static final Item ring_mana_lesser = placeholder();
+	public static final Item ring_mana_greater = placeholder();
 
 	/// amulet
 	public static final Item charm_cryostasis = placeholder();
@@ -162,6 +168,7 @@ public final class AncientSpellcraftItems {
 	public static final Item charm_wand_upgrade = placeholder();
 	public static final Item charm_enchanted_needle = placeholder();
 	public static final Item charm_seed_bag = placeholder();
+	public static final Item charm_wizard_tankard = placeholder();
 	public static final Item charm_omnicron = placeholder();
 	public static final Item charm_burrow = placeholder();
 	public static final Item charm_quicksand_walker = placeholder();
@@ -174,6 +181,8 @@ public final class AncientSpellcraftItems {
 	public static final Item charm_scissors = placeholder();
 	public static final Item charm_philosophers_stone = placeholder();
 	public static final Item charm_cube_phasing = placeholder();
+	public static final Item charm_spectral_army = placeholder();
+	public static final Item charm_spectral_tome = placeholder();
 
 	public static final Item alchemical_essence = placeholder();
 	public static final Item wand_channeling = placeholder();
@@ -222,6 +231,7 @@ public final class AncientSpellcraftItems {
 	public static final Item devoritium_door = placeholder();
 	public static final Item devoritium_scimitar = placeholder();
 	public static final Item devoritium_shield = placeholder();
+	public static final Item devoritium_nugget = placeholder();
 	public static final Item transmutation_scroll = placeholder();
 	public static final Item bartering_scroll = placeholder();
 
@@ -233,6 +243,7 @@ public final class AncientSpellcraftItems {
 	public static final Item battlemage_sword_apprentice = placeholder();
 	public static final Item battlemage_sword_advanced = placeholder();
 	public static final Item battlemage_sword_master = placeholder();
+	public static final Item devoritium_chestplate = placeholder();
 
 	public static final Item sacred_mace = placeholder();
 	public static final Item stone_fist = placeholder();
@@ -273,6 +284,10 @@ public final class AncientSpellcraftItems {
 
 	public static final Item soulbound_upgrade = placeholder();
 	public static final Item spectral_shovel = placeholder();
+	public static final Item battlemage_sword_hilt = placeholder();
+	public static final Item battlemage_sword_blade = placeholder();
+	public static final Item crystal_silver_ingot = placeholder();
+	public static final Item crystal_silver_nugget = placeholder();
 
 	// below registry methods are courtesy of EB
 	public static void registerItem(IForgeRegistry<Item> registry, String name, Item item) {
@@ -370,6 +385,7 @@ public final class AncientSpellcraftItems {
 
 		registerItemBlock(registry, AncientSpellcraftBlocks.DIMENSION_BOUNDARY, new ItemBlock(AncientSpellcraftBlocks.DIMENSION_BOUNDARY));
 		registerItemBlock(registry, AncientSpellcraftBlocks.DIMENSION_FOCUS, new ItemBlock(AncientSpellcraftBlocks.DIMENSION_FOCUS));
+		registerItemBlock(registry, AncientSpellcraftBlocks.ARCANE_ANVIL, new ItemBlock(AncientSpellcraftBlocks.ARCANE_ANVIL));
 		//		registerItemBlock(registry, AncientSpellcraftBlocks.ANCIENT_DIMENSION_BOUNDARY, new ItemBlock(AncientSpellcraftBlocks.ANCIENT_DIMENSION_BOUNDARY));
 
 		registerItem(registry, "magic_shield", new ItemMagicShield(EnumRarity.EPIC));
@@ -414,6 +430,9 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "ring_permanent_shrinkage", new ItemASArtemisLibArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_permanent_growth", new ItemASArtemisLibArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
 
+		registerItem(registry, "ring_mana_lesser", new ItemManaRing(EnumRarity.UNCOMMON, ItemArtefact.Type.RING, 500));
+		registerItem(registry, "ring_mana_greater", new ItemManaRing(EnumRarity.RARE, ItemArtefact.Type.RING, 1000));
+
 		/// amulet
 		registerItem(registry, "amulet_mana", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_rabbit", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
@@ -429,6 +448,7 @@ public final class AncientSpellcraftItems {
 
 		/// charm
 		registerItem(registry, "charm_seed_bag", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_wizard_tankard", new ItemWizardTankard(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_mana_flask", new ItemEverfullManaFlask());
 		registerItem(registry, "charm_ice_cream", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_enchanted_needle", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
@@ -466,6 +486,8 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "charm_scissors", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_philosophers_stone", new ItemPhiloshopersStone(EnumRarity.EPIC));
 		registerItem(registry, "charm_cube_phasing", new ItemCubePhasing(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_spectral_army", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_spectral_tome", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "scepter_mind_control", new ItemOverlordScepter());
 
 		registerItem(registry, "belt_enchanter", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
@@ -507,10 +529,15 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "crystal_shard_lightning", new Item().setMaxDamage(0).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
 		registerItem(registry, "crystal_shard_necromancy", new Item().setMaxDamage(0).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
 		registerItem(registry, "crystal_shard_sorcery", new Item().setMaxDamage(0).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "battlemage_sword_hilt", new Item().setMaxDamage(0).setMaxStackSize(1).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "battlemage_sword_blade", new Item().setMaxDamage(0).setMaxStackSize(1).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "crystal_silver_nugget", new ItemArmourUpgradeMaterial());
+		registerItem(registry, "crystal_silver_ingot", new ItemArmourUpgradeMaterial());
 
 		registerItem(registry, "wand_channeling", new Item().setMaxDamage(0).setCreativeTab(null));
 
-		registerItem(registry, "devoritium_ingot", new ItemDevoritiumIngot());
+		registerItem(registry, "devoritium_ingot", new ItemDevoritium());
+		registerItem(registry, "devoritium_nugget", new ItemDevoritium());
 		registerItem(registry, "devoritium_sword", new ItemDevoritiumSword());
 		registerItem(registry, "devoritium_axe", new ItemDevoritiumAxe());
 		registerItem(registry, "devoritium_arrow", new ItemDevoritiumArrow().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
@@ -560,6 +587,7 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "battlemage_sword_apprentice", new ItemBattlemageSword(Tier.APPRENTICE, 5));
 		registerItem(registry, "battlemage_sword_advanced", new ItemBattlemageSword(Tier.ADVANCED, 7));
 		registerItem(registry, "battlemage_sword_master", new ItemBattlemageSword(Tier.MASTER, 9));
+		registerItem(registry, "devoritium_chestplate", new ItemDevoritiumArmour(AncientSpellcraft.DEVORITIUM_ARMOR_MATERIAL, 0, EntityEquipmentSlot.CHEST));
 
 	}
 

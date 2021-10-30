@@ -6,8 +6,6 @@
         "description": {
             "translate": "advancement.ancientspellcraft:ancient_book.desc"
         },
-        "show_toast": true,
-        "announce_to_chat": false,
         "background": "ancientspellcraft:textures/gui/advancement_background.png",
         "icon": {
             "item": "ancientspellcraft:ancient_spell_book"

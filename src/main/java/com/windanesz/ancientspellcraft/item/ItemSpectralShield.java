@@ -148,4 +148,9 @@ public class ItemSpectralShield extends Item implements IConjuredItem {
 		return false;
 	}
 
+	@Override
+	public boolean isShield(ItemStack stack, @Nullable EntityLivingBase entity) {
+		return true;
+	}
+
 }

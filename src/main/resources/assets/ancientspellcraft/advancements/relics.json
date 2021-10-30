@@ -6,8 +6,6 @@
         "description": {
             "translate": "advancement.ancientspellcraft:relics.desc"
         },
-        "show_toast": true,
-        "announce_to_chat": false,
         "background": "ancientspellcraft:textures/gui/advancement_background.png",
         "icon": {
             "item": "ancientspellcraft:stone_tablet_large"

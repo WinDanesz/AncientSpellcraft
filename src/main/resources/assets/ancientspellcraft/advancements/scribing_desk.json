@@ -6,8 +6,6 @@
         "description": {
             "translate": "advancement.ancientspellcraft:scribing_desk.desc"
         },
-        "show_toast": true,
-        "announce_to_chat": false,
         "background": "ancientspellcraft:textures/gui/advancement_background.png",
         "icon": {
             "item": "ancientspellcraft:scribing_desk"

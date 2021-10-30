@@ -6,8 +6,6 @@
         "description": {
             "translate": "advancement.ancientspellcraft:crystal_shards.desc"
         },
-        "show_toast": true,
-        "announce_to_chat": false,
         "background": "ancientspellcraft:textures/gui/advancement_background.png",
         "icon": {
             "item": "ancientspellcraft:crystal_shard_earth"

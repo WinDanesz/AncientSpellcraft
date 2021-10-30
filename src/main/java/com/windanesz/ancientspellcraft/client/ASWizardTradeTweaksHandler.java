@@ -44,19 +44,19 @@ public class ASWizardTradeTweaksHandler {
 	@SubscribeEvent
 	public static void onActionPerformedPostEvent(ActionPerformedEvent.Post event) {
 
-		if (event.getGui() instanceof GuiMerchant) {
-
-			MerchantRecipeList recipes = ((GuiMerchant) event.getGui()).getMerchant().getRecipes(Minecraft.getMinecraft().player);
-
-			if (recipes == null)
-				return;
-
-			if (event.getButton().id == 1) { // Next
-				tradeIndex = Math.min(tradeIndex + 1, recipes.size());
-			} else if (event.getButton().id == 2) { // Previous
-				tradeIndex = Math.max(tradeIndex - 1, 0);
-			}
-		}
+//		if (event.getGui() instanceof GuiMerchant) {
+//
+//			MerchantRecipeList recipes = ((GuiMerchant) event.getGui()).getMerchant().getRecipes(Minecraft.getMinecraft().player);
+//
+//			if (recipes == null)
+//				return;
+//
+//			if (event.getButton().id == 1) { // Next
+//				tradeIndex = Math.min(tradeIndex + 1, recipes.size());
+//			} else if (event.getButton().id == 2) { // Previous
+//				tradeIndex = Math.max(tradeIndex - 1, 0);
+//			}
+//		}
 	}
 
 	// Brute-force fix for crystals not showing up when a wizard is given a spell book in the trade GUI.

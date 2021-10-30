@@ -178,6 +178,26 @@
                     "type": "item",
                     "name": "ancientspellcraft:head_shield",
                     "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_spectral_tome",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_spectral_army",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:devoritium_scimitar",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_cube_phasing",
+                    "weight": 1
                 }
             ]
         }

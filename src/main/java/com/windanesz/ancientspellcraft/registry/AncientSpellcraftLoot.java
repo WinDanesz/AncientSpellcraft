@@ -65,6 +65,7 @@ public class AncientSpellcraftLoot {
 
 		// entities
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "entities/void_creeper"));
+		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "entities/evil_battlemage"));
 	}
 
 	@SubscribeEvent

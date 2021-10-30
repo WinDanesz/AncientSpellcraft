@@ -58,6 +58,7 @@ public class ConjureSentry extends SpellRay {
 					TileEntity tile = world.getTileEntity(pos);
 					if (tile instanceof TileSentinel) {
 						((TileSentinel) tile).setLifeTime(getProperty(DURATION).intValue());
+						((TileSentinel) tile).getSpellCasterEntity().setOwnerId(caster.getUniqueID());
 					}
 				}
 				return true;

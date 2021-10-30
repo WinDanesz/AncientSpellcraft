@@ -282,4 +282,8 @@ public class ItemMagicShield extends Item implements ISpellCastingItem, IManaSto
 		return false;
 	}
 
+	@Override
+	public boolean isShield(ItemStack stack, @Nullable EntityLivingBase entity) {
+		return true;
+	}
 }

@@ -27,7 +27,7 @@ public class ItemDevoritiumShield extends ItemShield implements IDevoritium {
 	public ItemDevoritiumShield() {
 		super();
 		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
-		this.setMaxDamage(1008);
+		this.setMaxDamage(455);
 	}
 
 	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
@@ -73,5 +73,10 @@ public class ItemDevoritiumShield extends ItemShield implements IDevoritium {
 
 	public String getItemStackDisplayName(ItemStack stack) {
 		return I18n.translateToLocal(this.getUnlocalizedNameInefficiently(stack) + ".name").trim();
+	}
+
+	@Override
+	public boolean isShield(ItemStack stack, @Nullable EntityLivingBase entity) {
+		return true;
 	}
 }

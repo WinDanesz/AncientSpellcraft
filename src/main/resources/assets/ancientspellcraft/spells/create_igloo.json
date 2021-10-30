@@ -13,8 +13,8 @@
     "tier": "apprentice",
     "element": "ice",
     "type": "utility",
-    "cost": 50,
-    "chargeup": 0,
+    "cost": 40,
+    "chargeup": 80,
     "cooldown": 200,
     "base_properties": {}
 }

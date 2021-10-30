@@ -13,6 +13,7 @@ import electroblob.wizardry.entity.living.ISpellCaster;
 import electroblob.wizardry.entity.projectile.EntityFlamecatcherArrow;
 import electroblob.wizardry.item.IConjuredItem;
 import electroblob.wizardry.item.ISpellCastingItem;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemFlamecatcher;
 import electroblob.wizardry.item.ItemFlamingAxe;
 import electroblob.wizardry.item.ItemFrostAxe;
@@ -47,6 +48,7 @@ import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -298,10 +300,19 @@ public class EntityAnimatedItem extends EntitySummonedCreature implements ISpell
 		if (this.getHeldItemMainhand().getItem() instanceof ISpellCastingItem) {
 			Spell spell = (((ISpellCastingItem) this.getHeldItemMainhand().getItem()).getCurrentSpell(this.getHeldItemMainhand()));
 
-			// TODO: artefact to allow using higher or more spells?
-			// only allow up to apprentice spells
+			// normally, only allow up to apprentice spells
+			int maxTier = 1;
+
+			if (getCaster() instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) getCaster(), AncientSpellcraftItems.charm_spectral_tome)) {
+				// allow advanced tier spells with the artefact
+				maxTier += 1;
+			}
+
+			// adding this variable to stop java from complaining about effectively final variables..
+			int finalMaxTier = maxTier;
+
 			return Arrays.stream((((ISpellCastingItem) this.getHeldItemMainhand().getItem()).getSpells(this.getHeldItemMainhand())))
-					.filter(s -> s.getTier().level <= 1).collect(Collectors.toList());
+					.filter(s -> s.getTier().level <= finalMaxTier).collect(Collectors.toList());
 		}
 		return Collections.singletonList(Spells.none);
 	}
@@ -334,7 +345,9 @@ public class EntityAnimatedItem extends EntitySummonedCreature implements ISpell
 
 	@Override
 	public boolean isPotionApplicable(PotionEffect potioneffectIn) {
-		if (potioneffectIn.getPotion() == WizardryPotions.frost) {
+		if (potioneffectIn.getPotion() == WizardryPotions.frost
+				|| potioneffectIn.getPotion() == MobEffects.GLOWING
+				|| potioneffectIn.getPotion() == WizardryPotions.mind_control) {
 			return false;
 		}
 		return super.isPotionApplicable(potioneffectIn);

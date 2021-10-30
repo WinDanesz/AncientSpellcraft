@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.client.gui;
 
 import com.windanesz.ancientspellcraft.item.ItemAncientSpellcraftSpellBook;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
+import com.windanesz.ancientspellcraft.tileentity.TileArcaneAnvil;
 import com.windanesz.ancientspellcraft.tileentity.TileScribingDesk;
 import com.windanesz.ancientspellcraft.tileentity.TileSphereCognizance;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,6 +23,7 @@ public class GuiHandlerAS implements IGuiHandler {
 	public static final int SPHERE_COGNIZANCE = nextGuiId++;
 	public static final int SCRIBING_DESK = nextGuiId++;
 	public static final int RITUAL_BOOK = nextGuiId++;
+	public static final int ARCANE_ANVIL = nextGuiId++;
 
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
@@ -33,6 +35,9 @@ public class GuiHandlerAS implements IGuiHandler {
 		} else if (id == SCRIBING_DESK) {
 			TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
 			return new ContainerScribingDesk(player, player.inventory, (TileScribingDesk) tileEntity);
+		} else if (id == ARCANE_ANVIL) {
+			TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
+			return new ContainerArcaneAnvil(player, player.inventory, (TileArcaneAnvil) tileEntity);
 		}
 		return null;
 	}
@@ -71,6 +76,14 @@ public class GuiHandlerAS implements IGuiHandler {
 				return new GuiRitualBook(player.getHeldItemOffhand());
 			}
 
+		}
+
+		if (id == ARCANE_ANVIL) {
+			TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
+			if (tileEntity instanceof TileArcaneAnvil) {
+				return new GuiArcaneAnvil(player, player.inventory,
+						(TileArcaneAnvil) tileEntity);
+			}
 		}
 		return null;
 	}

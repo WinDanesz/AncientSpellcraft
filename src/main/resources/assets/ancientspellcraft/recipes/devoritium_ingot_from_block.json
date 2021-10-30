@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "devoritium_ingot",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "ancientspellcraft:devoritium_block"
+    }
+  },
+  "result": {
+    "item": "ancientspellcraft:devoritium_ingot",
+    "count": 9
+  }
+}

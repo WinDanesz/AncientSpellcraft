@@ -419,9 +419,6 @@ public class EntityWizardMerchant extends EntityWizard {
 					return new ItemStack(AncientSpellcraftItems.transmutation_scroll, 1);
 				} else if (randomiser < 12) {
 					return new ItemStack(WizardryItems.grand_crystal, 1);
-				} else if (randomiser < 14) {
-					List<Item> upgrades = new ArrayList<>(Arrays.asList(WizardryItems.resplendent_thread, WizardryItems.crystal_silver_plating, WizardryItems.ethereal_crystalweave));
-					return new ItemStack(upgrades.get(rand.nextInt(upgrades.size())), 1);
 				} else {
 					List<Item> upgrades = new ArrayList<Item>(WandHelper.getSpecialUpgrades());
 					randomiser = rand.nextInt(upgrades.size());
@@ -430,7 +427,7 @@ public class EntityWizardMerchant extends EntityWizard {
 
 			case MASTER:
 				// If a regular wizard rolls a master trade, it can only be a simple master wand or a tome of arcana
-				randomiser = this.getElement() != Element.MAGIC ? rand.nextInt(8) : 5 + rand.nextInt(3);
+				randomiser = this.getElement() != Element.MAGIC ? rand.nextInt(10) : 5 + rand.nextInt(3);
 
 				if (randomiser < 5 && this.getElement() != Element.MAGIC && !specialismSpells.isEmpty()) {
 					// Master spells can only be sold by a specialist in that element.
@@ -444,6 +441,9 @@ public class EntityWizardMerchant extends EntityWizard {
 					} else {
 						return new ItemStack(WizardryItems.master_wand);
 					}
+				} else if (randomiser < 8) {
+					List<Item> upgrades = new ArrayList<>(Arrays.asList(WizardryItems.resplendent_thread, WizardryItems.crystal_silver_plating, WizardryItems.ethereal_crystalweave));
+					return new ItemStack(upgrades.get(rand.nextInt(upgrades.size())), 1);
 				} else {
 					return new ItemStack(WizardryItems.arcane_tome, 1, 3);
 				}

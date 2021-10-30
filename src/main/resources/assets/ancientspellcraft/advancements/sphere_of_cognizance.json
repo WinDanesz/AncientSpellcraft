@@ -6,8 +6,6 @@
         "description": {
             "translate": "advancement.ancientspellcraft:sphere_of_cognizance.desc"
         },
-        "show_toast": true,
-        "announce_to_chat": false,
         "background": "ancientspellcraft:textures/gui/advancement_background.png",
         "icon": {
             "item": "ancientspellcraft:sphere_cognizance"

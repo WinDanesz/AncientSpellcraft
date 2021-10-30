@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "   ",
+        " S ",
+        "M  "
+    ],
+    "key": {
+        "S": {
+            "item": "minecraft:stick"
+        },
+        "M": {
+            "item": "ancientspellcraft:crystal_silver_nugget"
+        }
+    },
+    "result": {
+        "item": "ancientspellcraft:battlemage_sword_hilt"
+    }
+}

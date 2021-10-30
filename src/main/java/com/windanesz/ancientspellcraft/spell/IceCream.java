@@ -42,7 +42,6 @@ public class IceCream extends SpellConjurationAS {
 			String potion = effects.get(caster.world.rand.nextInt(effects.size())).getRegistryName().getPath();
 			stack.getTagCompound().setString("potion", potion);
 
-			//
 			heal += 0.5f;
 		}
 

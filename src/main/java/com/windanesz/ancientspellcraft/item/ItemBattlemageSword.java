@@ -8,8 +8,6 @@ import com.windanesz.ancientspellcraft.data.ClassWeaponData;
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
 import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
-import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
-import com.windanesz.ancientspellcraft.packet.PacketSorcerySwordHit;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
@@ -28,7 +26,9 @@ import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.item.IWorkbenchItem;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemWand;
+import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.packet.PacketCastSpell;
 import electroblob.wizardry.packet.WizardryPacketHandler;
 import electroblob.wizardry.registry.Spells;
@@ -47,8 +47,6 @@ import electroblob.wizardry.util.RayTracer;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.SpellProperties;
 import electroblob.wizardry.util.WandHelper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -80,7 +78,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -98,7 +95,7 @@ import java.util.stream.Collectors;
 @Mod.EventBusSubscriber
 public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem, IWorkbenchItem, IWizardClassWeapon, IManaStoringItem {
 
-	private static final String ELEMENT_TAG = "element";
+	public static final String ELEMENT_TAG = "element";
 	private static final String MANA_AVAILABLE_TAG = "mana_available";
 
 	/**
@@ -197,7 +194,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 					powered = true;
 				}
 
-				element = WizardArmourUtils.getFullSetElement(entityLiving);
+				element = WizardArmourUtils.getFullSetElementForClass(entityLiving, ItemWizardArmour.ArmourClass.BATTLEMAGE);
 
 				// Triggering the elemental effect of this sword each tick
 				EnumElementalSwordEffect.onUpdate(element, stack, world, entityLiving, slot, true);
@@ -387,7 +384,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		EntityPlayer player = net.minecraft.client.Minecraft.getMinecraft().player;
 		if (player == null) { return; }
 
-		Element element = WizardArmourUtils.getFullSetElement(player);
+		Element element = WizardArmourUtils.getFullSetElementForClass(player, ItemWizardArmour.ArmourClass.BATTLEMAGE);
 
 		if (element != null && element != Element.MAGIC) {
 			// +0.5f is necessary due to the error in the way floats are calculated.
@@ -419,8 +416,9 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
-		Element element = getElement(stack);
-		return (element != Element.MAGIC ? "" : element.getFormattingCode()) + super.getItemStackDisplayName(stack);
+		//Element element = getElement(stack);
+		return TextFormatting.LIGHT_PURPLE + super.getItemStackDisplayName(stack);
+		//return (element != Element.MAGIC ? "" : element.getFormattingCode()) + super.getItemStackDisplayName(stack);
 	}
 
 	private ItemStack getNextTier(Tier tier) {
@@ -438,41 +436,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	public ItemStack applyUpgrade(@Nullable EntityPlayer player, ItemStack wand, ItemStack upgrade) {
 		// Upgrades wand if necessary. Damage is copied, preserving remaining durability,
 		// and also the entire NBT tag compound.
-		if (upgrade.getItem() == WizardryItems.arcane_tome) {
-
-			Tier tier = Tier.values()[upgrade.getItemDamage()];
-
-			// Checks the wand upgrade is for the tier above the wand's tier, and that either the wand has enough
-			// progression or the player is in creative mode.
-			if ((player == null || player.isCreative() || Wizardry.settings.legacyWandLevelling
-					|| WandHelper.getProgression(wand) >= tier.getProgression())
-					&& tier == this.tier.next() && this.tier != Tier.MASTER) {
-
-				if (Wizardry.settings.legacyWandLevelling) {
-					// Progression has little meaning with legacy upgrade mechanics so just reset it
-					// In theory, you can get 'free' progression when upgrading since progression can't be negative,
-					// so the flipside of that is you lose any excess
-					WandHelper.setProgression(wand, 0);
-				} else {
-					// Carry excess progression over to the new stack
-					WandHelper.setProgression(wand, WandHelper.getProgression(wand) - tier.getProgression());
-				}
-
-				if (player != null) { WizardData.get(player).setTierReached(tier); }
-
-				ItemStack newSword = getNextTier(this.tier);
-				newSword.setTagCompound(wand.getTagCompound());
-				// This needs to be done after copying the tag compound so the mana capacity for the new wand
-				// takes storage upgrades into account
-				// Note the usage of the new wand item and not 'this' to ensure the correct capacity is used
-				((IManaStoringItem) newSword.getItem()).setMana(newSword, this.getMana(wand));
-
-				upgrade.shrink(1);
-
-				return newSword;
-			}
-
-		} else if (WandHelper.isWandUpgrade(upgrade.getItem())) {
+		if (WandHelper.isWandUpgrade(upgrade.getItem())) {
 
 			// Special upgrades
 			Item specialUpgrade = upgrade.getItem();
@@ -628,6 +592,53 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		return new ActionResult<>(EnumActionResult.FAIL, stack);
 	}
 
+	// For continuous spells and spells with a charge-up time. The count argument actually decrements by 1 each tick.
+	// N.B. The first time this gets called is the tick AFTER onItemRightClick is called, not the same tick
+	@Override
+	public void onUsingTick(ItemStack stack, EntityLivingBase user, int count){
+
+		if(user instanceof EntityPlayer){
+
+			EntityPlayer player = (EntityPlayer)user;
+
+			Spell spell = WandHelper.getCurrentSpell(stack);
+
+			SpellModifiers modifiers;
+
+			if(WizardData.get(player) != null){
+				modifiers = WizardData.get(player).itemCastingModifiers;
+			}else{
+				modifiers = this.calculateModifiers(stack, (EntityPlayer)user, spell); // Fallback to the old way, should never be used
+			}
+
+			int useTick = stack.getMaxItemUseDuration() - count;
+			int chargeup = (int)(spell.getChargeup() * modifiers.get(SpellModifiers.CHARGEUP));
+
+			if(spell.isContinuous){
+				// Continuous spell charge-up is simple, just don't do anything until it's charged
+				if(useTick >= chargeup){
+					// castingTick needs to be relative to when the spell actually started
+					int castingTick = useTick - chargeup;
+					// Continuous spells (these must check if they can be cast each tick since the mana changes)
+					// Don't call canCast when castingTick == 0 because we already did it in onItemRightClick - even
+					// with charge-up times, because we don't want to trigger events twice
+					if(castingTick == 0 || canCast(stack, spell, player, player.getActiveHand(), castingTick, modifiers)){
+						cast(stack, spell, player, player.getActiveHand(), castingTick, modifiers);
+					}else{
+						// Stops the casting if it was interrupted, either by events or because the wand ran out of mana
+						player.stopActiveHand();
+					}
+				}
+			}else{
+				// Non-continuous spells need to check they actually have a charge-up since ALL spells call setActiveHand
+				if(chargeup > 0 && useTick == chargeup){
+					// Once the spell is charged, it's exactly the same as in onItemRightClick
+					cast(stack, spell, player, player.getActiveHand(), 0, modifiers);
+				}
+			}
+		}
+	}
+
 	@Override
 	public boolean canCast(ItemStack stack, Spell spell, EntityPlayer caster, EnumHand hand, int castingTick, SpellModifiers modifiers) {
 		EnumHand otherHand = hand == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
@@ -645,11 +656,26 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		if (spell.isContinuous) { cost = getDistributedCost(cost, castingTick); }
 
 		// ...and the wand has enough mana to cast the spell...
-		return cost <= this.getMana(stack, otherHand, caster) // This comes first because it changes over time
+
+//		if (hasManaStorage)
+		boolean hasWandFromMana = cost <= this.getMana(stack, otherHand, caster) // This comes first because it changes over time
 				// ...and the wand is the same tier as the spell or higher...
 				&& spell.getTier().level <= this.tier.level
 				// ...and either the spell is not in cooldown or the player is in creative mode
 				&& (WandHelper.getCurrentCooldown(stack) == 0 || caster.isCreative());
+
+		if (hasWandFromMana) {
+			return hasWandFromMana;
+		} else {
+			boolean test0 = hasManaStorage(stack);
+			int mana = this.getMana(stack);
+			int cooldown = WandHelper.getCurrentCooldown(stack);
+			boolean test = (cost <= mana // ...and the wand is the same tier as the spell or higher...
+					&& spell.getTier().level <= this.tier.level
+					// ...and either the spell is not in cooldown or the player is in creative mode
+					&& ( cooldown == 0 || caster.isCreative()));
+			return test;
+		}
 	}
 
 	/**
@@ -699,8 +725,17 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 				// As of wizardry 4.2 mana cost is only divided over two intervals each second
 				if (spell.isContinuous) { cost = getDistributedCost(cost, castingTick); }
 
-				if (cost > 0) { this.consumeMana(stack, otherHand, caster, cost); }
-
+				if (cost > 0) {
+					// wand
+					if (caster.getHeldItem(otherHand).getItem() instanceof ItemWand) {
+						int mana = ((ItemWand) caster.getHeldItem(otherHand).getItem()).getMana(caster.getHeldItem(otherHand));
+						if (mana >= cost) {
+							this.consumeMana(stack, otherHand, caster, cost);
+						}
+					} else {
+						consumeMana(stack, cost, caster);
+					}
+				}
 			}
 
 			caster.setActiveHand(hand);
@@ -820,7 +855,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	// this is updated in onUpdate each tick, if the player holds the sword
 	public static Element getElement(ItemStack stack) {
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(ELEMENT_TAG)) {
-			return Element.fromName(stack.getTagCompound().getString(ELEMENT_TAG));
+			return Element.fromName(stack.getTagCompound().getString(ELEMENT_TAG).toLowerCase());
 		}
 
 		return Element.MAGIC;
@@ -1044,8 +1079,8 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 			void greaterPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
 
 				// Nether special
-				wielder.addPotionEffect(new PotionEffect(WizardryPotions.fireskin, 100, 0));
-				wielder.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 100, 0));
+				wielder.addPotionEffect(new PotionEffect(WizardryPotions.fireskin, 160, 0));
+				wielder.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 160, 0));
 
 				if (target.isBurning()) {
 					target.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.soul_scorch, 100, 0));
@@ -1070,7 +1105,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 						amplifier = effect.getAmplifier();
 
 						// 20% chance to add to the current amplifier
-						if (target.world.rand.nextDouble() < 0.2) { amplifier++; }
+						if (target.world.rand.nextDouble() < 0.2 && amplifier < 3) { amplifier++; }
 
 					}
 				}
@@ -1193,6 +1228,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 							.entrySet().stream()
 							.filter(p -> p.getKey().isBeneficial()) // filter for beneficial potions
 							.filter(p -> p.getValue().getDuration() <= 12000) // 10 <= minutes
+							.filter(p -> p.getValue().getAmplifier() < 3)
 							.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
 					if (!beneficialPotions.isEmpty()) {
@@ -1224,11 +1260,11 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 					PotionEffect effect = target.getActivePotionEffect(MobEffects.POISON);
 					if (effect != null) {
-						duration = effect.getDuration() + duration;
+						duration = (int) (effect.getDuration() * 0.1 + duration);
 						amplifier = effect.getAmplifier();
 
 						// 20% chance to add to the current amplifier
-						if (target.world.rand.nextDouble() < 0.2 && amplifier <= 2) { amplifier++; }
+						if (target.world.rand.nextDouble() < 0.2 && amplifier < 2) { amplifier++; }
 
 					}
 				}
@@ -1274,10 +1310,16 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 					}
 
 					ItemStack conjured;
+
+					int duration = 100;
+					if (wielder instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) wielder, WizardryItems.ring_conjurer)) {
+						duration += 60;
+					}
 					if (itemRand.nextDouble() < 0.8f) {
 						conjured = Animate.conjureItem(new SpellModifiers(), WizardryItems.spectral_sword);
 					} else {
 						conjured = Animate.conjureItem(new SpellModifiers(), WizardryItems.spectral_bow);
+						duration += 60;
 					}
 
 					BlockPos pos = BlockUtils.findNearbyFloorSpace(wielder, 4, 8);
@@ -1286,7 +1328,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 						EntityAnimatedItem minion = new EntityAnimatedItem(wielder.world);
 						// In this case we don't care whether the minions can fly or not.
 						minion.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-						minion.setLifetime(100);
+						minion.setLifetime(duration);
 						minion.setCaster(wielder);
 						minion.setHeldItem(EnumHand.MAIN_HAND, conjured);
 						//AnimateWeapon.addAnimatedEntityExtras(minion, wielder.getPosition(), wielder, new SpellModifiers());
@@ -1387,6 +1429,19 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 			return EnumElementalSwordEffect.MAGIC;
 		}
+	}
+
+	public static Item getSword(Tier tier) {
+		if (tier == null) { throw new NullPointerException("The given tier cannot be null."); }
+
+		if (tier == Tier.NOVICE) {
+			return AncientSpellcraftItems.battlemage_sword_novice;
+		} else if (tier == Tier.APPRENTICE) {
+			return AncientSpellcraftItems.battlemage_sword_advanced;
+		} else if (tier == Tier.ADVANCED) {
+			return AncientSpellcraftItems.battlemage_sword_master;
+		}
+		return AncientSpellcraftItems.battlemage_sword_master;
 	}
 
 	//--------------------------  Events  --------------------------//
@@ -1505,39 +1560,39 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public static void LeftClick(PlayerInteractEvent.LeftClickEmpty event) {
-		//		TODO: Sorcery extended reach - reserved for a spell or artefact effect
-		EntityPlayerSP player = Minecraft.getMinecraft().player;
-
-		if (player != null && player.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword) {
-			ItemStack stack = player.getHeldItemMainhand();
-
-			// Sorcery
-			if (getElement(stack) == Element.SORCERY && hasManaAvailable(stack)) {
-
-				Vec3d direction = player.getLookVec();
-				Vec3d origin = new Vec3d(player.posX, player.posY + player.getEyeHeight() - 0.25f, player.posZ);
-				if (!Wizardry.proxy.isFirstPerson(player)) {
-					origin = origin.add(direction.scale(1.2));
-				}
-
-				Vec3d endpoint = origin.add(direction.scale(9.0));
-
-				RayTraceResult result = RayTracer.rayTrace(player.world, origin, endpoint, 0.3f, false,
-						true, false, EntityLivingBase.class, RayTracer.ignoreEntityFilter(player));
-
-				if (result != null && result.entityHit != null && result.entityHit.getDistance(player) > 3.5f) {
-					IMessage msg = new PacketSorcerySwordHit.Message(player, result.entityHit);
-					ASPacketHandler.net.sendToServer(msg);
-
-					ParticleBuilder.create(ParticleBuilder.Type.BEAM).entity(player).clr(0x23c268).time(5)
-							.pos(result.entityHit != null ? origin.subtract(player.getPositionVector()) : origin).target(result.entityHit).spawn(player.world);
-
-				}
-			}
-		}
-	}
+//	@SideOnly(Side.CLIENT)
+//	@SubscribeEvent
+//	public static void LeftClick(PlayerInteractEvent.LeftClickEmpty event) {
+//		//		TODO: Sorcery extended reach - reserved for a spell or artefact effect
+//		EntityPlayerSP player = Minecraft.getMinecraft().player;
+//
+//		if (player != null && player.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword) {
+//			ItemStack stack = player.getHeldItemMainhand();
+//
+//			// Sorcery
+//			if (getElement(stack) == Element.SORCERY && hasManaAvailable(stack)) {
+//
+//				Vec3d direction = player.getLookVec();
+//				Vec3d origin = new Vec3d(player.posX, player.posY + player.getEyeHeight() - 0.25f, player.posZ);
+//				if (!Wizardry.proxy.isFirstPerson(player)) {
+//					origin = origin.add(direction.scale(1.2));
+//				}
+//
+//				Vec3d endpoint = origin.add(direction.scale(9.0));
+//
+//				RayTraceResult result = RayTracer.rayTrace(player.world, origin, endpoint, 0.3f, false,
+//						true, false, EntityLivingBase.class, RayTracer.ignoreEntityFilter(player));
+//
+//				if (result != null && result.entityHit != null && result.entityHit.getDistance(player) > 3.5f) {
+//					IMessage msg = new PacketSorcerySwordHit.Message(player, result.entityHit);
+//					ASPacketHandler.net.sendToServer(msg);
+//
+//					ParticleBuilder.create(ParticleBuilder.Type.BEAM).entity(player).clr(0x23c268).time(5)
+//							.pos(result.entityHit != null ? origin.subtract(player.getPositionVector()) : origin).target(result.entityHit).spawn(player.world);
+//
+//				}
+//			}
+//		}
+//	}
 
 }

@@ -7,9 +7,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemDevoritiumIngot extends Item implements IDevoritium {
+public class ItemDevoritium extends Item implements IDevoritium {
 
-	public ItemDevoritiumIngot() {
+	public ItemDevoritium() {
 		setMaxDamage(0);
 		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
 	}

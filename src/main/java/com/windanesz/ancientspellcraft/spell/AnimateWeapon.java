@@ -3,9 +3,11 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
 import com.windanesz.ancientspellcraft.material.IDevoritium;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.item.ISpellCastingItem;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemScroll;
 import electroblob.wizardry.item.ItemSpectralBow;
 import electroblob.wizardry.registry.Spells;
@@ -114,14 +116,24 @@ public class AnimateWeapon extends Animate {
 							e.printStackTrace();
 						}
 					} else {
+						// Spectral Armor spell
+
 						minion.setItemStackToSlot(EntityEquipmentSlot.HEAD, conjureItem(modifiers, WizardryItems.spectral_helmet));
 						minion.setItemStackToSlot(EntityEquipmentSlot.CHEST, conjureItem(modifiers, WizardryItems.spectral_chestplate));
 						minion.setItemStackToSlot(EntityEquipmentSlot.LEGS, conjureItem(modifiers, WizardryItems.spectral_leggings));
 						minion.setItemStackToSlot(EntityEquipmentSlot.FEET, conjureItem(modifiers, WizardryItems.spectral_boots));
 
+
 						// this is just here to trigger the AI task
 						minion.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, conjureItem(modifiers, Items.AIR));
 						minion.setHasArmour(true);
+
+						// artefact effect, gives sword and shield to the conjured mob
+						if (ItemArtefact.isArtefactActive((EntityPlayer) caster, AncientSpellcraftItems.charm_spectral_army)) {
+							minion.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, conjureItem(modifiers, WizardryItems.spectral_sword));
+							minion.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, conjureItem(modifiers, AncientSpellcraftItems.spectral_shield));
+						}
+
 
 						// boosting damage
 						IAttributeInstance attack_damage = minion.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);

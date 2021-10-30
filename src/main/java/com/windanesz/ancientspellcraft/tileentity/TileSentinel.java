@@ -26,7 +26,6 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -255,13 +254,13 @@ public class TileSentinel extends TileEntity implements ITickable {
 			//			ParticleBuilder.create(ParticleBuilder.Type.DUST).pos(this.pos.getX() + 0.5, this.pos.getY()  + 0.5,this.pos.getZ()  + 0.5)
 			//					.vel(x-0.03, 0.02, z-0.03).time(24 + world.rand.nextInt(8)).clr(0xe4c7cd, 0xfeffbe, 0x9d2cf3).fade(0xe4c7cd, 0xfeffbe, 0x9d2cf3).spawn(world);
 
-			for (int i = 0; i < 10; i++) {
-				double dx = (world.rand.nextDouble() * 2 - 1) * 3;
-				double dy = (world.rand.nextDouble() * 2 - 1) * 3;
-				double dz = (world.rand.nextDouble() * 2 - 1) * 3;
-				// These particles use the velocity args differently; they behave more like portal particles
-				world.spawnParticle(EnumParticleTypes.ENCHANTMENT_TABLE, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, dx, dy, dz);
-			}
+//			for (int i = 0; i < 10; i++) {
+//				double dx = (world.rand.nextDouble() * 2 - 1) * 3;
+//				double dy = (world.rand.nextDouble() * 2 - 1) * 3;
+//				double dz = (world.rand.nextDouble() * 2 - 1) * 3;
+//				// These particles use the velocity args differently; they behave more like portal particles
+//				world.spawnParticle(EnumParticleTypes.ENCHANTMENT_TABLE, pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, dx, dy, dz);
+//			}
 
 		}
 	}

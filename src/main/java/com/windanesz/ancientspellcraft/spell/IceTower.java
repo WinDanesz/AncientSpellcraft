@@ -6,6 +6,7 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.BlockUtils;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStainedGlassPane;
@@ -78,7 +79,9 @@ public class IceTower extends Spell {
 		}
 
 		for (BlockPos currPos : blockPosList) {
-			world.setBlockState(currPos, Blocks.SNOW.getDefaultState());
+			if (BlockUtils.canPlaceBlock(caster, world, currPos)) {
+				world.setBlockState(currPos, Blocks.SNOW.getDefaultState());
+			}
 		}
 
 		BlockPos layer2 = layer1.offset(EnumFacing.UP, 10);
@@ -106,11 +109,15 @@ public class IceTower extends Spell {
 		}
 
 		for (BlockPos currPos : blockPosList2) {
-			world.setBlockState(currPos, Blocks.SNOW.getDefaultState());
+			if (BlockUtils.canPlaceBlock(caster, world, currPos)) {
+				world.setBlockState(currPos, Blocks.SNOW.getDefaultState());
+			}
 		}
 
 		for (BlockPos currPos : blockPosList3) {
-			world.setBlockState(currPos, Blocks.PACKED_ICE.getDefaultState());
+			if (BlockUtils.canPlaceBlock(caster, world, currPos)) {
+				world.setBlockState(currPos, Blocks.PACKED_ICE.getDefaultState());
+			}
 		}
 
 		List<BlockPos> blockposListUpper = new ArrayList<>();
@@ -193,7 +200,9 @@ public class IceTower extends Spell {
 		roof.add(topcenter.offset(EnumFacing.UP, 5).offset(EnumFacing.SOUTH, 2).offset(EnumFacing.EAST, 2));
 
 		for (BlockPos currPos : roof) {
-			world.setBlockState(currPos, Blocks.PACKED_ICE.getDefaultState());
+			if (BlockUtils.canPlaceBlock(caster, world, currPos)) {
+				world.setBlockState(currPos, Blocks.PACKED_ICE.getDefaultState());
+			}
 		}
 
 		for (BlockPos currPos : blockposListLower) {

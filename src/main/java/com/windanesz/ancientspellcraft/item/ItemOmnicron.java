@@ -22,6 +22,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
@@ -55,8 +56,16 @@ public class ItemOmnicron extends ItemASArtefact implements IWorkbenchItem, IMan
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced){
-		Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc");
+		tooltip.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":wand.mana", new Style().setColor(TextFormatting.BLUE),
+				this.getMana(stack), this.getManaCapacity(stack)));
+		//Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc");
 		Wizardry.proxy.addMultiLineDescription(tooltip, "tooltip.ancientspellcraft:artefact_use.usage", new Style().setItalic(true));
+		super.addInformation(stack, world, tooltip, advanced);
+	}
+
+	@Override
+	public int getRGBDurabilityForDisplay(ItemStack stack){
+		return DrawingUtils.mix(0xff8bfe, 0x8e2ee4, (float)getDurabilityForDisplay(stack));
 	}
 
 	@Override
@@ -183,10 +192,5 @@ public class ItemOmnicron extends ItemASArtefact implements IWorkbenchItem, IMan
 	@Override
 	public boolean showTooltip(ItemStack stack) {
 		return false;
-	}
-
-	@Override
-	public int getRGBDurabilityForDisplay(ItemStack stack){
-		return DrawingUtils.mix(0xff8bfe, 0x8e2ee4, (float)getDurabilityForDisplay(stack));
 	}
 }

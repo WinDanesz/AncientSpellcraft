@@ -1,9 +1,9 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "I  ",
-        "SG ",
-        "   "
+        "SNN",
+        "NGN",
+        "NNN"
     ],
     "key": {
         "S": {
@@ -12,12 +12,12 @@
         "G": {
             "item": "minecraft:gunpowder"
         },
-        "I": {
-            "item": "ancientspellcraft:devoritium_ingot"
+        "N": {
+            "item": "ancientspellcraft:devoritium_nugget"
         }
     },
     "result": {
         "item": "ancientspellcraft:devoritium_bomb",
-        "count": 3
+        "count": 2
     }
 }

@@ -1,0 +1,27 @@
+{
+    "display": {
+        "title": {
+            "translate": "advancement.ancientspellcraft:novice_spellblade"
+        },
+        "description": {
+            "translate": "advancement.ancientspellcraft:novice_spellblade.desc"
+        },
+        "background": "ancientspellcraft:textures/gui/advancement_background.png",
+        "icon": {
+            "item": "ancientspellcraft:battlemage_sword_novice"
+        }
+    },
+    "parent": "ancientspellcraft:relics",
+    "criteria": {
+        "battlemage_sword_novice": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "ancientspellcraft:battlemage_sword_novice"
+                    }
+                ]
+            }
+        }
+    }
+}

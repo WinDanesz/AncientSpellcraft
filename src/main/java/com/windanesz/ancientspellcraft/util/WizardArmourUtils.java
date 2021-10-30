@@ -46,6 +46,15 @@ public final class WizardArmourUtils {
 		return Element.MAGIC;
 	}
 
+	public static Element getFullSetElementForClass(EntityLivingBase entity, ItemWizardArmour.ArmourClass armourClass) {
+		if (isWearingFullSet(entity, null, armourClass)) {
+			// if it's a full set, we can just check any of the armour pieces
+			ItemStack helmet = entity.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+			return ((ItemWizardArmour) helmet.getItem()).element;
+		}
+		return Element.MAGIC;
+	}
+
 	public static ItemWizardArmour.ArmourClass getArmourClass(EntityLivingBase entity) {
 		if (isWearingFullSet(entity, null, null)) {
 			// if it's a full set, we can just check any of the armour pieces

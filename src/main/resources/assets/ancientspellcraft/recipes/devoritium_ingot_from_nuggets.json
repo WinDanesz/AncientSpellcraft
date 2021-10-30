@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "devoritium_ingot",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "ancientspellcraft:devoritium_nugget"
+    }
+  },
+  "result": {
+    "item": "ancientspellcraft:devoritium_ingot"
+  }
+}

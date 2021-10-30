@@ -60,11 +60,6 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 
 	private WizardData playerWizardData;
 
-	/**
-	 * The number of ticks that the furnace will keep burning
-	 */
-	//	private int furnaceBurnTime;
-
 	private NonNullList<ItemStack> furnaceItemStacks = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
 
 	public int tickCount;
@@ -76,9 +71,6 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 	public float sphereRotation;
 	public float sphereRotationPrev;
 	public float tRot;
-
-	//	private static final Random rand = new Random();
-	//	private String customName;
 
 	public TileSphereCognizance() {
 		inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);

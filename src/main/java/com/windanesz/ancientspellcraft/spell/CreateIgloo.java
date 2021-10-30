@@ -1,20 +1,22 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -36,7 +38,7 @@ public class CreateIgloo extends Spell {
 		BlockPos pos = caster.getPosition().down();
 
 		List<BlockPos> blockPosList = new ArrayList<>();
-		BlockPos layer1Center = pos.offset(EnumFacing.UP);
+				BlockPos layer1Center = pos.offset(EnumFacing.UP);
 		//		blockPosList.add(layer1Center.offset(EnumFacing.NORTH, 2));
 		//		blockPosList.add(layer1Center.offset(EnumFacing.NORTH, 2).offset(EnumFacing.EAST));
 		blockPosList.add(layer1Center.offset(EnumFacing.NORTH, 2).offset(EnumFacing.EAST, 2));
@@ -125,41 +127,72 @@ public class CreateIgloo extends Spell {
 		blockPosList.add(layer4Center.offset(EnumFacing.SOUTH));
 		blockPosList.add(layer4Center.offset(EnumFacing.WEST));
 
-		for (BlockPos currPos : blockPosList) {
-			world.setBlockState(currPos, Blocks.SNOW.getDefaultState());
-			world.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, (double) currPos.getX() + world.rand.nextDouble(), (double) currPos.getY() + world.rand.nextDouble() * 2.5D, (double) currPos.getZ() + world.rand.nextDouble(), 0.0D, 0.0D, 0.0D);
-		}
-		// "snow carpet"
-		List<BlockPos> blockPosFloor = new ArrayList<>();
-		blockPosFloor.add(layer1Center);
-		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH, 2));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.EAST));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.EAST, 2));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH, 2));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH, 3));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH, 4));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH, 4).offset(EnumFacing.EAST));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH, 4).offset(EnumFacing.WEST));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.WEST));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.WEST, 2));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH).offset(EnumFacing.EAST));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH, 2).offset(EnumFacing.EAST));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH).offset(EnumFacing.EAST, 2));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH).offset(EnumFacing.EAST));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH).offset(EnumFacing.EAST, 2));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH, 2).offset(EnumFacing.EAST));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH, 2).offset(EnumFacing.WEST));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH).offset(EnumFacing.WEST));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH).offset(EnumFacing.WEST, 2));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH).offset(EnumFacing.WEST));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH).offset(EnumFacing.WEST, 2));
-		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH, 2).offset(EnumFacing.WEST));
+//		for (BlockPos currPos : blockPosList) {
+//			world.setBlockState(currPos, Blocks.SNOW.getDefaultState());
+//			world.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, (double) currPos.getX() + world.rand.nextDouble(), (double) currPos.getY() + world.rand.nextDouble() * 2.5D, (double) currPos.getZ() + world.rand.nextDouble(), 0.0D, 0.0D, 0.0D);
+//		}
 
-		for (BlockPos currPos : blockPosFloor) {
-			world.setBlockState(currPos, Blocks.SNOW_LAYER.getDefaultState());
-		}
+		EntityBuilder builder = new EntityBuilder(world);
+		builder.setPosition(caster.getPosition().getX(), caster.getPosition().getY(), caster.getPosition().getZ());
+		builder.setCaster(caster);
+		builder.lifetime = 120;
+		builder.blockLifetime = 6000;
+		builder.buildTickRate = 1;
+
+		// builder.batchSize = (int)  (2  * (modifiers.get(SpellModifiers.POTENCY))) + (int) (3 * modifiers.get(WizardryItems.blast_upgrade));
+		blockPosList.sort(Comparator.comparingInt(Vec3i::getY));
+		builder.setBuildList(blockPosList);
+		builder.setBlockToBuild(AncientSpellcraftBlocks.CONJURED_SNOW.getDefaultState());
+		// check claims because we are using the non reverting blocks here...!
+		builder.setIgnoreClaims(false);
+		world.spawnEntity(builder);
+
+		//		// "snow carpet"
+		//		List<BlockPos> blockPosFloor = new ArrayList<>();
+		//		blockPosFloor.add(layer1Center);
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH, 2));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.EAST));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.EAST, 2));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH, 2));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH, 3));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH, 4));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH, 4).offset(EnumFacing.EAST));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH, 4).offset(EnumFacing.WEST));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.WEST));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.WEST, 2));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH).offset(EnumFacing.EAST));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH, 2).offset(EnumFacing.EAST));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH).offset(EnumFacing.EAST, 2));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH).offset(EnumFacing.EAST));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH).offset(EnumFacing.EAST, 2));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH, 2).offset(EnumFacing.EAST));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH, 2).offset(EnumFacing.WEST));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH).offset(EnumFacing.WEST));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.SOUTH).offset(EnumFacing.WEST, 2));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH).offset(EnumFacing.WEST));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH).offset(EnumFacing.WEST, 2));
+		//		blockPosFloor.add(layer1Center.offset(EnumFacing.NORTH, 2).offset(EnumFacing.WEST));
+		//
+		//		for (BlockPos currPos : blockPosFloor) {
+		//			world.setBlockState(currPos, Blocks.SNOW_LAYER.getDefaultState());
+		//		}
+		//
+		//		EntityBuilder builderFloor = new EntityBuilder(world);
+		//		builderFloor.setPosition(caster.getPosition().getX(), caster.getPosition().getY() + 2, caster.getPosition().getZ());
+		//		builderFloor.setCaster(caster);
+		//		builderFloor.lifetime = 40;
+		//		builderFloor.blockLifetime = 600;//(int) ((getProperty(EFFECT_DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade)));
+		//		builderFloor.buildTickRate = 1;
+		//
+		//		builderFloor.batchSize = (int)  (2  * (modifiers.get(SpellModifiers.POTENCY))) + (int) (3 * modifiers.get(WizardryItems.blast_upgrade));
+		//		blockPosList.sort(Comparator.comparingInt(Vec3i::getY));
+		//		builderFloor.setBuildList(blockPosList);
+		//		builderFloor.setBlockToBuild(Blocks.SNOW.getDefaultState());
+		//		// check claims because we are using the non reverting blocks here...!
+		//		builderFloor.setIgnoreClaims(false);
+		//		world.spawnEntity(builderFloor);
 
 		return true;
 	}

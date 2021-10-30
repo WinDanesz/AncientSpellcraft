@@ -4,14 +4,11 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
 import com.windanesz.ancientspellcraft.entity.ai.EntitySummonAIFollowOwner;
-import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
-import com.windanesz.ancientspellcraft.entity.living.EntityEvilWizardAS;
-import com.windanesz.ancientspellcraft.entity.living.EntityWizardAS;
-import com.windanesz.ancientspellcraft.entity.living.EntityWizardMerchant;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityContingencyProjectile;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
 import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
+import com.windanesz.ancientspellcraft.item.ItemManaRing;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
 import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
@@ -37,9 +34,7 @@ import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.entity.construct.EntityBubble;
-import electroblob.wizardry.entity.living.EntityEvilWizard;
 import electroblob.wizardry.entity.living.EntitySkeletonMinion;
-import electroblob.wizardry.entity.living.EntityWizard;
 import electroblob.wizardry.entity.living.ISummonedCreature;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.event.SpellBindEvent;
@@ -69,7 +64,6 @@ import electroblob.wizardry.util.WandHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
@@ -294,28 +288,33 @@ public class ASEventHandler {
 				int index = 0;
 
 				for (Spell currentSpell : WandHelper.getSpells(wand)) {
+					try {
 
-					int[] cooldowns = WandHelper.getCooldowns(wand);
+						int[] cooldowns = WandHelper.getCooldowns(wand);
 
-					if (cooldowns.length == 0) {
-						int count = WandHelper.getSpells(wand).length - 1;
-						cooldowns = new int[count];
-					}
-
-					if (currentSpell == spell) {
-
-						int[] maxCooldowns = WandHelper.getMaxCooldowns(wand);
-						if (maxCooldowns.length == 0) {
+						if (cooldowns.length == 0) {
 							int count = WandHelper.getSpells(wand).length - 1;
-							maxCooldowns = new int[count];
+							cooldowns = new int[count];
 						}
 
-						cooldowns[index] = 1200;
-						maxCooldowns[index] = 1200;
-						WandHelper.setCooldowns(wand, cooldowns);
-						WandHelper.setMaxCooldowns(wand, maxCooldowns);
+						if (currentSpell == spell) {
+
+							int[] maxCooldowns = WandHelper.getMaxCooldowns(wand);
+							if (maxCooldowns.length == 0) {
+								int count = WandHelper.getSpells(wand).length - 1;
+								maxCooldowns = new int[count];
+							}
+
+							cooldowns[index] = 1200;
+							maxCooldowns[index] = 1200;
+							WandHelper.setCooldowns(wand, cooldowns);
+							WandHelper.setMaxCooldowns(wand, maxCooldowns);
+						}
+						index++;
 					}
-					index++;
+					catch (Exception e) {
+						AncientSpellcraft.logger.error("Failed to set a wand cooldown");
+					}
 				}
 			}
 		}
@@ -575,8 +574,10 @@ public class ASEventHandler {
 			for (ItemArtefact artefact : getActiveArtefacts(player)) {
 
 				if (artefact == AncientSpellcraftItems.amulet_pendant_of_eternity) {
-					if (getArtefactItemStack(player, (ItemArtefact) AncientSpellcraftItems.amulet_pendant_of_eternity) != null) {
-						ItemStack pendant = getArtefactItemStack(player, (ItemArtefact) AncientSpellcraftItems.amulet_pendant_of_eternity);
+					List<ItemStack> amuletList = ASBaublesIntegration.enabled() ? ASBaublesIntegration.getEquippedArtefactStacks(player, ItemArtefact.Type.AMULET) : new ArrayList<>();
+					if (!amuletList.isEmpty()) {
+						ItemStack pendant = amuletList.get(0);
+
 						Spell spell = getCurrentSpellFromSpellBearingArtefact(AncientSpellcraftItems.amulet_pendant_of_eternity, pendant);
 						if (spell != Spells.none && spell instanceof SpellBuff) {
 							try {
@@ -603,6 +604,7 @@ public class ASEventHandler {
 
 						}
 					}
+
 				}
 			}
 		}
@@ -725,6 +727,40 @@ public class ASEventHandler {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onSpellCastPreEvent(SpellCastEvent.Pre event) {
 
+		if (event.getCaster() instanceof EntityPlayer && event.getSource() == SpellCastEvent.Source.WAND) {
+
+			EntityPlayer player = (EntityPlayer) event.getCaster();
+
+			int cost = (int) (event.getSpell().getCost() * event.getModifiers().get(SpellModifiers.COST) + 0.1f); // Weird floaty rounding
+			ItemStack wand = event.getCaster().getHeldItemMainhand().getItem() instanceof ItemWand ? event.getCaster().getHeldItemMainhand() :
+					event.getCaster().getHeldItemOffhand();
+
+			if (wand.getItem() instanceof ItemWand) {
+
+				int wandMana = ((ItemWand) wand.getItem()).getMana(wand);
+				if (wandMana < cost) {
+
+					if (ASBaublesIntegration.enabled()) {
+						List<ItemStack> list = ASBaublesIntegration.getEquippedArtefactStacks(player, ItemArtefact.Type.RING);
+
+						if (!list.isEmpty()) {
+							for (ItemStack currentStack : list) {
+								if (currentStack.getItem() instanceof ItemManaRing) {
+									int currMana = ((ItemManaRing) currentStack.getItem()).getMana(currentStack);
+									if (currMana >= cost) {
+										// transfer mana
+										((ItemManaRing) currentStack.getItem()).setMana(currentStack, currMana - cost);
+										((ItemWand) wand.getItem()).setMana(wand, wandMana + cost);
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
 		if (event.getSpell().getType() == SpellType.ALTERATION || event.getSpell().getType() == SpellType.ATTACK || event.getSpell().getType() == SpellType.MINION
 				|| event.getSpell().getType() == SpellType.PROJECTILE) {
 
@@ -826,7 +862,7 @@ public class ASEventHandler {
 					if (potion == AncientSpellcraftPotions.spell_blast) {
 						SpellModifiers modifiers = event.getModifiers();
 						float blast = modifiers.get(WizardryItems.blast_upgrade);
-						modifiers.set(WizardryItems.blast_upgrade, blast + level * BLAST_RADIUS_INCREASE_PER_LEVEL , true);
+						modifiers.set(WizardryItems.blast_upgrade, blast + level * BLAST_RADIUS_INCREASE_PER_LEVEL, true);
 					}
 					if (potion == AncientSpellcraftPotions.spell_range) {
 						SpellModifiers modifiers = event.getModifiers();
@@ -837,12 +873,12 @@ public class ASEventHandler {
 					if (potion == AncientSpellcraftPotions.spell_cooldown) {
 						SpellModifiers modifiers = event.getModifiers();
 						float cooldown = modifiers.get(WizardryItems.cooldown_upgrade);
-						modifiers.set(WizardryItems.cooldown_upgrade, cooldown -  (level * Constants.COOLDOWN_REDUCTION_PER_LEVEL), true);
+						modifiers.set(WizardryItems.cooldown_upgrade, cooldown - (level * Constants.COOLDOWN_REDUCTION_PER_LEVEL), true);
 					}
 					if (potion == AncientSpellcraftPotions.spell_duration) {
 						SpellModifiers modifiers = event.getModifiers();
 						float duration = modifiers.get(WizardryItems.duration_upgrade);
-						modifiers.set(WizardryItems.duration_upgrade, duration +  level * DURATION_INCREASE_PER_LEVEL, false);
+						modifiers.set(WizardryItems.duration_upgrade, duration + level * DURATION_INCREASE_PER_LEVEL, false);
 					}
 
 				}
@@ -1199,49 +1235,49 @@ public class ASEventHandler {
 	}
 
 	/**
-	 *  This event is Cancelable. If this event is canceled, the Entity is not added to the world.
-	 *  This event does not have a result.
+	 * This event is Cancelable. If this event is canceled, the Entity is not added to the world.
+	 * This event does not have a result.
 	 */
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void onCheckSpawnEvent(EntityJoinWorldEvent event) {
 
-		if (event.getEntity() instanceof EntityWizard && !(event.getEntity() instanceof EntityWizardAS) && !(event.getEntity() instanceof EntityWizardMerchant) &&
-				Settings.generalSettings.apply_wizard_entity_changes) {
-
-			NBTTagCompound nbt = new NBTTagCompound();
-			event.getEntity().writeToNBT(nbt);
-
-			// fixes the missing id
-			nbt.setString("id", "ancientspellcraft:wizard_as");
-
-			EntityWizardAS wizard = (EntityWizardAS) EntityList.createEntityFromNBT(nbt, (event.getWorld()));
-
-			// spawn the new entity
-			if (!event.getWorld().isRemote && wizard != null) {
-				event.getWorld().spawnEntity(wizard);
-			}
-			// prevent spawning the original entity
-			event.setCanceled(true);
-		}
-
-		if (event.getEntity() instanceof EntityEvilWizard && !(event.getEntity() instanceof EntityEvilWizardAS) && !(event.getEntity() instanceof EntityEvilClassWizard) &&
-				Settings.generalSettings.apply_wizard_entity_changes) {
-
-			NBTTagCompound nbt = new NBTTagCompound();
-			event.getEntity().writeToNBT(nbt);
-
-			// fixes the missing id
-			nbt.setString("id", "ancientspellcraft:evil_wizard_as");
-
-			EntityEvilWizardAS wizard = (EntityEvilWizardAS) EntityList.createEntityFromNBT(nbt, (event.getWorld()));
-
-			// spawn the new entity
-			if (!event.getWorld().isRemote && wizard != null) {
-				event.getWorld().spawnEntity(wizard);
-			}
-			// prevent spawning the original entity
-			event.setCanceled(true);
-		}
+		//		if (event.getEntity() instanceof EntityWizard && !(event.getEntity() instanceof EntityWizardAS) && !(event.getEntity() instanceof EntityWizardMerchant) &&
+		//				Settings.generalSettings.apply_wizard_entity_changes) {
+		//
+		//			NBTTagCompound nbt = new NBTTagCompound();
+		//			event.getEntity().writeToNBT(nbt);
+		//
+		//			// fixes the missing id
+		//			nbt.setString("id", "ancientspellcraft:wizard_as");
+		//
+		//			EntityWizardAS wizard = (EntityWizardAS) EntityList.createEntityFromNBT(nbt, (event.getWorld()));
+		//
+		//			// spawn the new entity
+		//			if (!event.getWorld().isRemote && wizard != null) {
+		//				event.getWorld().spawnEntity(wizard);
+		//			}
+		//			// prevent spawning the original entity
+		//			event.setCanceled(true);
+		//		}
+		//
+		//		if (event.getEntity() instanceof EntityEvilWizard && !(event.getEntity() instanceof EntityEvilWizardAS) && !(event.getEntity() instanceof EntityEvilClassWizard) &&
+		//				Settings.generalSettings.apply_wizard_entity_changes) {
+		//
+		//			NBTTagCompound nbt = new NBTTagCompound();
+		//			event.getEntity().writeToNBT(nbt);
+		//
+		//			// fixes the missing id
+		//			nbt.setString("id", "ancientspellcraft:evil_wizard_as");
+		//
+		//			EntityEvilWizardAS wizard = (EntityEvilWizardAS) EntityList.createEntityFromNBT(nbt, (event.getWorld()));
+		//
+		//			// spawn the new entity
+		//			if (!event.getWorld().isRemote && wizard != null) {
+		//				event.getWorld().spawnEntity(wizard);
+		//			}
+		//			// prevent spawning the original entity
+		//			event.setCanceled(true);
+		//		}
 
 		// We have no way of checking if it's a spawner in getCanSpawnHere() so this has to be done here instead
 		if (event.getEntity() instanceof ISummonedCreature) {
