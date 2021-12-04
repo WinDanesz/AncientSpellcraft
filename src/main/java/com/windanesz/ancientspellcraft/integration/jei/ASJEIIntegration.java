@@ -22,28 +22,25 @@ import java.util.Locale;
 @JEIPlugin
 public class ASJEIIntegration implements IModPlugin {
 
-	public ASJEIIntegration() {
-	}
-
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registry) {
 
-		if (!Settings.generalSettings.jei_integration)
-			return;
+		if (!Settings.generalSettings.jei_integration) { return; }
 
+		registry.addRecipeCategories(new ArcaneAnvilRecipeCategory(registry));
 	}
 
 	@Override
 	public void register(IModRegistry registry) {
 
-		if (!Wizardry.settings.jeiIntegration)
-			return;
+		if (!Wizardry.settings.jeiIntegration) { return; }
 
+		// Add imbuement altar as the item required to use imbuement altar recipes
+		registry.addRecipeCatalyst(new ItemStack(AncientSpellcraftBlocks.ARCANE_ANVIL), ArcaneAnvilRecipeCategory.UID);
+		registry.addRecipes(ArcaneAnvilRecipeCategory.generateRecipes(), ArcaneAnvilRecipeCategory.UID);
 
 		// Hide some items from JEI
 		IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
-//		blacklist.addIngredientToBlacklist(Item.getItemFromBlock(AncientSpellcraftBlocks.SKULL_WATCH));
-//		blacklist.addIngredientToBlacklist(AncientSpellcraftItems.wizard_hat_ancient);
 
 		addItemInfo(registry, Item.getItemFromBlock(AncientSpellcraftBlocks.SCRIBING_DESK), ".desc_extended");
 		addItemInfo(registry, Item.getItemFromBlock(AncientSpellcraftBlocks.SPHERE_COGNIZANCE), ".desc_extended");
@@ -83,8 +80,7 @@ public class ASJEIIntegration implements IModPlugin {
 	private static void addItemInfo(IModRegistry registry, Item item, String... suffixes) {
 		NonNullList<ItemStack> subItems = NonNullList.create();
 		item.getSubItems(item.getCreativeTab(), subItems);
-		for (ItemStack stack : subItems)
-			addItemInfo(registry, stack, suffixes);
+		for (ItemStack stack : subItems) { addItemInfo(registry, stack, suffixes); }
 	}
 
 	private static void addItemInfo(IModRegistry registry, ItemStack stack, String... suffixes) {
