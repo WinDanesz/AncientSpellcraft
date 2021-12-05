@@ -748,9 +748,19 @@ public class ASEventHandler {
 								if (currentStack.getItem() instanceof ItemManaRing) {
 									int currMana = ((ItemManaRing) currentStack.getItem()).getMana(currentStack);
 									if (currMana >= cost) {
+
 										// transfer mana
 										((ItemManaRing) currentStack.getItem()).setMana(currentStack, currMana - cost);
 										((ItemWand) wand.getItem()).setMana(wand, wandMana + cost);
+
+										// bit of an arbitrary number, but for continuous spells it transfers 50 more mana or the cont spell would be interrupted immediately
+										if (event.getSpell().isContinuous) {
+											currMana = ((ItemManaRing) currentStack.getItem()).getMana(currentStack);
+											if (currMana >= 50) {
+												((ItemManaRing) currentStack.getItem()).setMana(currentStack, currMana - 50);
+												((ItemWand) wand.getItem()).rechargeMana(wand, 50);
+											}
+										}
 										break;
 									}
 								}
