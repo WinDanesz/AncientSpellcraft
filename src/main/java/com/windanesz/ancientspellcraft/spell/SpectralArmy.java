@@ -14,7 +14,9 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
@@ -22,6 +24,14 @@ public class SpectralArmy extends Animate {
 
 	public SpectralArmy() {
 		super(AncientSpellcraft.MODID, "spectral_army");
+	}
+
+	@Override
+	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers){
+
+		if(!this.spawnMinions(world, caster, modifiers, !ItemArtefact.isArtefactActive(caster, AncientSpellcraftItems.charm_spectral_army))) return false;
+		this.playSound(world, caster, ticksInUse, -1, modifiers);
+		return true;
 	}
 
 	@Override
@@ -45,9 +55,9 @@ public class SpectralArmy extends Animate {
 
 		// boosting damage
 		IAttributeInstance attack_damage = minion.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-		if (attack_damage != null) {
+		if (attack_damage != null && (!(caster instanceof EntityPlayer) || (!ItemArtefact.isArtefactActive((EntityPlayer) caster, AncientSpellcraftItems.charm_spectral_army)))) {
 			attack_damage.applyModifier( // Apparently some things don't have an attack damage
-					new AttributeModifier(POTENCY_ATTRIBUTE_MODIFIER, 2, EntityUtils.Operations.MULTIPLY_FLAT));
+					new AttributeModifier(POTENCY_ATTRIBUTE_MODIFIER, 1.2, EntityUtils.Operations.MULTIPLY_FLAT));
 		}
 
 		// nerf speed
@@ -68,4 +78,6 @@ public class SpectralArmy extends Animate {
 		minion.setHealth(minion.getMaxHealth()); // Need to set this because we may have just modified the value
 
 	}
+
+
 }

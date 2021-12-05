@@ -41,13 +41,16 @@ public class AnimateItem extends Animate {
 		if (!caster.getHeldItemOffhand().isEmpty()) {
 			Item item = caster.getHeldItemOffhand().getItem();
 
-			if (item instanceof ISpellCastingItem || item instanceof ItemAxe || item instanceof ItemSword || item.getRegistryName().getPath().matches("sword|waraxe|spear|lance|battleaxe|halberd|mace|katana|dagger")) {
+			if (item instanceof ISpellCastingItem || item instanceof ItemAxe || item instanceof ItemSword || item.getRegistryName().getPath().matches("sword|cestus|bow|waraxe|spear|lance|battleaxe|blade|knife|axe|javelin|rapier|saber|pike|glaive|club|halberd|mace|katana|dagger")) {
 				if(!world.isRemote) caster.sendStatusMessage(new TextComponentTranslation("spell." + this.getUnlocalisedName() + ".spell_too_weak"), true);
 				return false;
 			}
 		}
 
-		return super.cast(world, caster, hand, ticksInUse, modifiers);
+		// same as parent, without potency scaling
+		if(!this.spawnMinions(world, caster, modifiers, false)) return false;
+		this.playSound(world, caster, ticksInUse, -1, modifiers);
+		return true;
 	}
 
 	@Override

@@ -85,10 +85,6 @@ public class AnimateWeapon extends Animate {
 		if (caster instanceof EntityPlayer) {
 
 			// undoing the damage boost
-			IAttributeInstance attribute = minion.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-			if (attribute != null) {
-				attribute.removeAllModifiers();
-			}
 
 			if (caster.getHeldItemOffhand().getItem() instanceof ISpellCastingItem) {
 				Spell spell = ((ISpellCastingItem) caster.getHeldItemOffhand().getItem()).getCurrentSpell(caster.getHeldItemOffhand());
@@ -132,15 +128,6 @@ public class AnimateWeapon extends Animate {
 						if (ItemArtefact.isArtefactActive((EntityPlayer) caster, AncientSpellcraftItems.charm_spectral_army)) {
 							minion.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, conjureItem(modifiers, WizardryItems.spectral_sword));
 							minion.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, conjureItem(modifiers, AncientSpellcraftItems.spectral_shield));
-						}
-
-
-						// boosting damage
-						IAttributeInstance attack_damage = minion.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-						if (attack_damage != null) {
-							attack_damage.removeAllModifiers();
-							attack_damage.applyModifier( // Apparently some things don't have an attack damage
-									new AttributeModifier(POTENCY_ATTRIBUTE_MODIFIER, 2, EntityUtils.Operations.MULTIPLY_FLAT));
 						}
 
 						// nerf speed
