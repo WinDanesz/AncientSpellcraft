@@ -398,9 +398,12 @@ public class ASEventHandler {
 
 				if (artefact == AncientSpellcraftItems.amulet_time_knot) {
 					if (player.isPotionActive(AncientSpellcraftPotions.time_knot) && (player.getHealth() - event.getAmount() <= 0F)) {
-						TimeKnot.loopPlayer(player);
-						event.setCanceled(true);
-						player.extinguish();
+						if (!player.getCooldownTracker().hasCooldown(AncientSpellcraftItems.amulet_time_knot)) {
+							TimeKnot.loopPlayer(player);
+							event.setCanceled(true);
+							player.extinguish();
+							player.getCooldownTracker().setCooldown(AncientSpellcraftItems.amulet_time_knot, 6000);
+						}
 					}
 				}
 
