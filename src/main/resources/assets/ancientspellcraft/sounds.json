@@ -157,7 +157,7 @@
     "spell.sporelings_aid": 					{"category": "spells", "sounds": ["dig/grass1", "dig/grass2", "dig/grass3", "dig/grass4"]},
     "spell.wild_sporeling": 					{"category": "spells", "sounds": ["dig/grass1", "dig/grass2", "dig/grass3", "dig/grass4"]},
     "spell.fairy_ring": 				   	    {"category": "player", "sounds": ["ancientspellcraft:fairy_ring"]},
-    "spell.fist_of_wind": 		    			{"category": "spells", "sounds": ["ebwizardry:ice"]},
+    "spell.wind_blast": 		    			{"category": "spells", "sounds": ["ebwizardry:ice"]},
 
     "stone_fist":                               {"category": "player", "sounds": ["ancientspellcraft:stone_fist"]},
     "bartering_scroll":                         {"category": "player", "sounds": ["ancientspellcraft:bartering_scroll"]},

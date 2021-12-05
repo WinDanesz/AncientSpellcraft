@@ -24,12 +24,12 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class FistOfWind extends SpellRay {
+public class WindBlast extends SpellRay {
 
 	public static final String REPULSION_VELOCITY = "repulsion_velocity";
 
-	public FistOfWind() {
-		super(AncientSpellcraft.MODID, "fist_of_wind", SpellActions.POINT, false);
+	public WindBlast() {
+		super(AncientSpellcraft.MODID, "wind_blast", SpellActions.POINT, false);
 		this.soundValues(0.8f, 0.7f, 0.2f);
 		addProperties(REPULSION_VELOCITY, BLAST_RADIUS);
 	}

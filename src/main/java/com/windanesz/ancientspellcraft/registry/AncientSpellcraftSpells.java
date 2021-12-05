@@ -371,7 +371,7 @@ public final class AncientSpellcraftSpells {
 		registry.register(new AnimateWeapon());
 		registry.register(new SpectralArmy());
 		registry.register(new DirtWall());
-		registry.register(new FistOfWind());
+		registry.register(new WindBlast());
 		registry.register(new SpellConstructRangedAS<>("healing_sigil", EntityHealingSigil::new, true).floor(true).addProperties(Spell.EFFECT_RADIUS, Spell.HEALTH));
 		registry.register(new Cauterize());
 		registry.register(new MetabolismOverdrive());
