@@ -10,10 +10,10 @@
         "trades": true,
         "looting": true
     },
-    "tier": "master",
+    "tier": "advanced",
     "element": "fire",
     "type": "construct",
-    "cost": 100,
+    "cost": 80,
     "chargeup": 0,
     "cooldown": 150,
     "base_properties": {
