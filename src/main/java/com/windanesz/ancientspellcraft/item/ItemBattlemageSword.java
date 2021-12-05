@@ -727,8 +727,8 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 				if (cost > 0) {
 					// wand
-					if (caster.getHeldItem(otherHand).getItem() instanceof ItemWand) {
-						int mana = ((ItemWand) caster.getHeldItem(otherHand).getItem()).getMana(caster.getHeldItem(otherHand));
+					if (caster.getHeldItem(otherHand).getItem() instanceof IManaStoringItem) {
+						int mana = ((IManaStoringItem) caster.getHeldItem(otherHand).getItem()).getMana(caster.getHeldItem(otherHand));
 						if (mana >= cost) {
 							this.consumeMana(stack, otherHand, caster, cost);
 						}
