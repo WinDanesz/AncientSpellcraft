@@ -42,7 +42,7 @@ public class GuiScribingDesk extends GuiContainer {
 		this.tileSphere = te;
 
 		this.xSize = 176;
-		this.ySize = 161;
+		this.ySize = 185;
 	}
 
 	@Override
