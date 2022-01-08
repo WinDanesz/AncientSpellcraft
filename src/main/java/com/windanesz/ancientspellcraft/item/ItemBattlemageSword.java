@@ -201,7 +201,9 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 			}
 
 			// setting the current element type, each tick
-			compound.setString(ELEMENT_TAG, element.getName().toLowerCase());
+			if (element != null) {
+				compound.setString(ELEMENT_TAG, element.getName().toLowerCase());
+			}
 			compound.setBoolean(MANA_AVAILABLE_TAG, powered);
 			stack.setTagCompound(compound);
 		}
