@@ -40,7 +40,7 @@ public class RenderRune extends TileEntitySpecialRenderer<TileRune> {
 		if (!stack.isEmpty()) {
 			GlStateManager.pushMatrix();
 
-			GlStateManager.rotate(180, 0, 180, 180);
+			GlStateManager.rotate(180, 0, 180, -180);
 			GlStateManager.scale(0.85F, 0.85F, 0.85F);
 
 			GlStateManager.color(1, 1, 1, 1);
