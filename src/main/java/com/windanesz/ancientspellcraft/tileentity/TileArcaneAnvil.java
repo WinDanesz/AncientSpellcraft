@@ -3,12 +3,13 @@ package com.windanesz.ancientspellcraft.tileentity;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.gui.ContainerArcaneAnvil;
 import com.windanesz.ancientspellcraft.client.gui.ContainerSphereCognizance;
-import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
+import com.windanesz.ancientspellcraft.item.WizardClassWeaponHelper;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.item.ItemScroll;
 import electroblob.wizardry.item.ItemSpellBook;
+import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.util.NBTExtras;
 import electroblob.wizardry.util.WandHelper;
@@ -231,7 +232,7 @@ public class TileArcaneAnvil extends TileEntity implements IInventory {
 
 			if (progression >= tier.next().getProgression() && stack1.getItem() == AncientSpellcraftItems.crystal_silver_ingot) {
 				ItemStack copy = stack0.copy();
-				ItemStack newSword = new ItemStack(ItemBattlemageSword.getSword(tier.next()));
+				ItemStack newSword = new ItemStack(WizardClassWeaponHelper.getClassItemForTier(tier.next(), ItemWizardArmour.ArmourClass.BATTLEMAGE));
 				newSword.setTagCompound(copy.getTagCompound());
 				return newSword;
 			}

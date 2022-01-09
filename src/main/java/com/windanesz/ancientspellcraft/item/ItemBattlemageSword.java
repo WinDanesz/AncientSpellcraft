@@ -21,7 +21,6 @@ import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.SpellGlyphData;
 import electroblob.wizardry.data.WizardData;
-import electroblob.wizardry.entity.living.ISummonedCreature;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ISpellCastingItem;
@@ -43,12 +42,10 @@ import electroblob.wizardry.util.BlockUtils;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.RayTracer;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.SpellProperties;
 import electroblob.wizardry.util.WandHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -70,7 +67,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -89,13 +85,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber
 public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem, IWorkbenchItem, IWizardClassWeapon, IManaStoringItem {
 
-	public static final String ELEMENT_TAG = "element";
 	private static final String MANA_AVAILABLE_TAG = "mana_available";
 
 	/**
@@ -144,17 +140,17 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		this.attackDamage = Settings.generalSettings.spellblade_base_damage + tier.level * Settings.generalSettings.spellblade_damage_increase_per_tier + bonus;
 		WizardData.registerStoredVariables(LAST_POS);
 
-		this.addPropertyOverride(new ResourceLocation(ELEMENT_TAG), new IItemPropertyGetter() {
+		this.addPropertyOverride(new ResourceLocation(WizardClassWeaponHelper.ELEMENT_TAG), new IItemPropertyGetter() {
 			@SideOnly(Side.CLIENT)
 			public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
-				return (getElement(stack).ordinal() * 0.1f);
+				return (WizardClassWeaponHelper.getElement(stack).ordinal() * 0.1f);
 			}
 		});
 	}
 
 	@Override
 	public boolean hasEffect(ItemStack stack) {
-		return IWizardClassWeapon.isChargeFull(stack);
+		return WizardClassWeaponHelper.isChargeFull(stack);
 	}
 
 	@Override
@@ -202,7 +198,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 			// setting the current element type, each tick
 			if (element != null) {
-				compound.setString(ELEMENT_TAG, element.getName().toLowerCase());
+				compound.setString(WizardClassWeaponHelper.ELEMENT_TAG, element.getName().toLowerCase());
 			}
 			compound.setBoolean(MANA_AVAILABLE_TAG, powered);
 			stack.setTagCompound(compound);
@@ -225,15 +221,16 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		return 0;
 	}
 
-	public static boolean hasPosChanged(EntityPlayer player) {
-		WizardData data = WizardData.get(player);
-		BlockPos pos = data.getVariable(LAST_POS);
-		data.setVariable(LAST_POS, player.getPosition());
-		if (pos == null) {
-			return true;
-		} else {
-			return !pos.equals(player.getPosition());
-		}
+	//	/** Does nothing, use {@link ItemWand#setMana(ItemStack, int)} to modify wand mana. */
+	@Override
+	public void setDamage(ItemStack stack, int damage) {
+		super.setDamage(stack, damage);
+		// Overridden to do nothing to stop repair things from 'repairing' the mana in a wand
+	}
+
+	@Override
+	public boolean getIsRepairable(ItemStack stack, ItemStack material) {
+		return false;
 	}
 
 	@Override
@@ -276,19 +273,11 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		return multimap;
 	}
 
-	public static boolean hasManaStorage(ItemStack stack) {
-		return WandHelper.getUpgradeLevel(stack, WizardryItems.storage_upgrade) > 0;
-	}
-
-	private static boolean hasManaAvailable(ItemStack stack) {
-		return stack.hasTagCompound() && stack.getTagCompound().hasKey(MANA_AVAILABLE_TAG) && stack.getTagCompound().getBoolean(MANA_AVAILABLE_TAG);
-	}
-
 	// Client side effects (particle and sound) are added by electroblob.wizardry.item.ItemWand.onAttackEntityEvent ONLY if the attacker item
 	// is IManaStoringItem WITH enough mana, so that won't trigger for the no storage scenario
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
-		EnumHand otherHand = getOtherHand(stack, wielder);
+		EnumHand otherHand = getOtherHandForSword(stack, wielder);
 		ItemStack otherStack = wielder.getHeldItem(otherHand);
 
 		// base cost, this is consumed for each hit
@@ -298,7 +287,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		int level = WandHelper.getUpgradeLevel(stack, WizardryItems.melee_upgrade);
 
 		// lightning costs 50% more
-		if (getElement(stack) == Element.LIGHTNING) {
+		if (WizardClassWeaponHelper.getElement(stack) == Element.LIGHTNING) {
 			cost = (int) (cost * 1.5);
 		}
 		cost = cost + level * 6;
@@ -312,12 +301,12 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		}
 
 		if (hasManaAvailable(stack) || wielder instanceof EntityEvilClassWizard) {
-			Element element = wielder instanceof EntityEvilClassWizard ? ((EntityEvilClassWizard) wielder).getElement() : getElement(stack);
+			Element element = wielder instanceof EntityEvilClassWizard ? ((EntityEvilClassWizard) wielder).getElement() : WizardClassWeaponHelper.getElement(stack);
 			EnumElementalSwordEffect.hitEntity(element, stack, target, wielder);
 		}
 
 		// Charge Progression
-		IWizardClassWeapon.addChargeProgress(stack, Settings.generalSettings.spellblade_charge_gain_per_spellcast);
+		WizardClassWeaponHelper.addChargeProgress(stack, Settings.generalSettings.spellblade_charge_gain_per_spellcast);
 
 		// Progression
 		if (this.tier.level < Tier.MASTER.level && wielder instanceof EntityPlayer) {
@@ -386,6 +375,8 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		EntityPlayer player = net.minecraft.client.Minecraft.getMinecraft().player;
 		if (player == null) { return; }
 
+		text.add(Wizardry.proxy.translate("item.ancientspellcraft:battlemage_sword_armour_requirements_tooltip"));
+
 		Element element = WizardArmourUtils.getFullSetElementForClass(player, ItemWizardArmour.ArmourClass.BATTLEMAGE);
 
 		if (element != null && element != Element.MAGIC) {
@@ -404,11 +395,20 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 				discovered ? spell.getDisplayNameWithFormatting() : "#" + TextFormatting.BLUE + SpellGlyphData.getGlyphName(spell, player.world)));
 
 		if (advanced.isAdvanced()) {
-			// Advanced tooltips for debugging
 
+			// show innate mana
 			if (hasManaStorage(stack)) {
 				text.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":wand.mana", new Style().setColor(TextFormatting.BLUE),
 						this.getMana(stack), this.getManaCapacity(stack)));
+			} else {
+				Optional<ItemStack> otherSource = WizardClassWeaponHelper.getManaSourceFromOtherHand(stack, player);
+				if (otherSource.isPresent()) {
+				otherSource.ifPresent(itemStack -> text.add(Wizardry.proxy.translate("tooltip.ancientspellcraft:mana_with_eternal_source_name",
+						new Style().setColor(TextFormatting.BLUE), ((IManaStoringItem) otherSource.get().getItem()).getMana(itemStack),
+						((IManaStoringItem) otherSource.get().getItem()).getManaCapacity(itemStack), itemStack.getDisplayName() + new Style().setColor(TextFormatting.BLUE).getFormattingCode())));
+				} else {
+					text.add(Wizardry.proxy.translate("tooltip.ancientspellcraft:no_mana_source", new Style().setColor(TextFormatting.RED)));
+				}
 			}
 
 			text.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":wand.progression", new Style().setColor(TextFormatting.GRAY),
@@ -435,72 +435,6 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	}
 
 	@Override
-	public ItemStack applyUpgrade(@Nullable EntityPlayer player, ItemStack wand, ItemStack upgrade) {
-		// Upgrades wand if necessary. Damage is copied, preserving remaining durability,
-		// and also the entire NBT tag compound.
-		if (WandHelper.isWandUpgrade(upgrade.getItem())) {
-
-			// Special upgrades
-			Item specialUpgrade = upgrade.getItem();
-
-			int maxUpgrades = this.tier.upgradeLimit - 2;
-			//			if(this.element == Element.MAGIC) maxUpgrades += Constants.NON_ELEMENTAL_UPGRADE_BONUS;
-
-			if (WandHelper.getTotalUpgrades(wand) < maxUpgrades
-					&& WandHelper.getUpgradeLevel(wand, specialUpgrade) < Constants.UPGRADE_STACK_LIMIT) {
-
-				// Used to preserve existing mana when upgrading storage rather than creating free mana.
-				int prevMana = this.getMana(wand);
-
-				WandHelper.applyUpgrade(wand, specialUpgrade);
-
-				// Special behaviours for specific upgrades
-				if (specialUpgrade == WizardryItems.storage_upgrade) {
-
-					this.setMana(wand, prevMana);
-
-				} else if (specialUpgrade == WizardryItems.attunement_upgrade) {
-
-					int newSlotCount = SWORD_BASE_SPELL_SLOTS + WandHelper.getUpgradeLevel(wand,
-							WizardryItems.attunement_upgrade);
-
-					Spell[] spells = WandHelper.getSpells(wand);
-					Spell[] newSpells = new Spell[newSlotCount];
-
-					for (int i = 0; i < newSpells.length; i++) {
-						newSpells[i] = i < spells.length && spells[i] != null ? spells[i] : Spells.none;
-					}
-
-					WandHelper.setSpells(wand, newSpells);
-
-					int[] cooldowns = WandHelper.getCooldowns(wand);
-					int[] newCooldowns = new int[newSlotCount];
-
-					if (cooldowns.length > 0) {
-						System.arraycopy(cooldowns, 0, newCooldowns, 0, cooldowns.length);
-					}
-
-					WandHelper.setCooldowns(wand, newCooldowns);
-				}
-
-				upgrade.shrink(1);
-
-				if (player != null) {
-
-					WizardryAdvancementTriggers.special_upgrade.triggerFor(player);
-
-					if (WandHelper.getTotalUpgrades(wand) == Tier.MASTER.upgradeLimit) {
-						WizardryAdvancementTriggers.max_out_wand.triggerFor(player);
-					}
-				}
-
-			}
-		}
-
-		return wand;
-	}
-
-	@Override
 	public EnumAction getItemUseAction(ItemStack itemstack) {
 		return WandHelper.getCurrentSpell(itemstack).action;
 	}
@@ -508,51 +442,6 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	@Override
 	public int getMaxItemUseDuration(ItemStack stack) {
 		return 72000;
-	}
-
-	@Override
-	public Spell getCurrentSpell(ItemStack stack) {
-		return WandHelper.getCurrentSpell(stack);
-	}
-
-	@Override
-	public Spell getNextSpell(ItemStack stack) {
-		return WandHelper.getNextSpell(stack);
-	}
-
-	@Override
-	public Spell getPreviousSpell(ItemStack stack) {
-		return WandHelper.getPreviousSpell(stack);
-	}
-
-	@Override
-	public Spell[] getSpells(ItemStack stack) {
-		return WandHelper.getSpells(stack);
-	}
-
-	@Override
-	public void selectNextSpell(ItemStack stack) {
-		WandHelper.selectNextSpell(stack);
-	}
-
-	@Override
-	public void selectPreviousSpell(ItemStack stack) {
-		WandHelper.selectPreviousSpell(stack);
-	}
-
-	@Override
-	public boolean selectSpell(ItemStack stack, int index) {
-		return WandHelper.selectSpell(stack, index);
-	}
-
-	@Override
-	public int getCurrentCooldown(ItemStack stack) {
-		return WandHelper.getCurrentCooldown(stack);
-	}
-
-	@Override
-	public int getCurrentMaxCooldown(ItemStack stack) {
-		return WandHelper.getCurrentMaxCooldown(stack);
 	}
 
 	// Continuous spells use the onUsingItemTick method instead of this one.
@@ -565,7 +454,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		ItemStack stack = player.getHeldItem(hand);
 
 		// Alternate right-click function; overrides spell casting.
-		if (this.selectMinionTarget(player, world)) { return new ActionResult<>(EnumActionResult.SUCCESS, stack); }
+		if (WizardClassWeaponHelper.selectMinionTarget(player, world)) { return new ActionResult<>(EnumActionResult.SUCCESS, stack); }
 
 		Spell spell = WandHelper.getCurrentSpell(stack);
 		SpellModifiers modifiers = this.calculateModifiers(stack, player, spell);
@@ -641,6 +530,53 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		}
 	}
 
+	//--------------------------  ISpellCastingItem implementation  --------------------------//
+
+	@Override
+	public Spell getCurrentSpell(ItemStack stack) {
+		return WandHelper.getCurrentSpell(stack);
+	}
+
+	@Override
+	public Spell getNextSpell(ItemStack stack) {
+		return WandHelper.getNextSpell(stack);
+	}
+
+	@Override
+	public Spell getPreviousSpell(ItemStack stack) {
+		return WandHelper.getPreviousSpell(stack);
+	}
+
+	@Override
+	public Spell[] getSpells(ItemStack stack) {
+		return WandHelper.getSpells(stack);
+	}
+
+	@Override
+	public void selectNextSpell(ItemStack stack) {
+		WandHelper.selectNextSpell(stack);
+	}
+
+	@Override
+	public void selectPreviousSpell(ItemStack stack) {
+		WandHelper.selectPreviousSpell(stack);
+	}
+
+	@Override
+	public boolean selectSpell(ItemStack stack, int index) {
+		return WandHelper.selectSpell(stack, index);
+	}
+
+	@Override
+	public int getCurrentCooldown(ItemStack stack) {
+		return WandHelper.getCurrentCooldown(stack);
+	}
+
+	@Override
+	public int getCurrentMaxCooldown(ItemStack stack) {
+		return WandHelper.getCurrentMaxCooldown(stack);
+	}
+
 	@Override
 	public boolean canCast(ItemStack stack, Spell spell, EntityPlayer caster, EnumHand hand, int castingTick, SpellModifiers modifiers) {
 		EnumHand otherHand = hand == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
@@ -678,26 +614,6 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 					&& ( cooldown == 0 || caster.isCreative()));
 			return test;
 		}
-	}
-
-	/**
-	 * Distributes the given cost (which should be the per-second cost of a continuous spell) over a second and
-	 * returns the appropriate cost to be applied for the given tick. Currently the cost is distributed over 2
-	 * intervals per second, meaning the returned value is 0 unless {@code castingTick} is a multiple of 10.
-	 */
-	protected static int getDistributedCost(int cost, int castingTick) {
-
-		int partialCost;
-
-		if (castingTick % 20 == 0) { // Whole number of seconds has elapsed
-			partialCost = cost / 2 + cost % 2; // Make sure cost adds up to the correct value by adding the remainder here
-		} else if (castingTick % 10 == 0) { // Something-and-a-half seconds has elapsed
-			partialCost = cost / 2;
-		} else { // Some other number of ticks has elapsed
-			partialCost = 0; // Wands aren't damaged within half-seconds
-		}
-
-		return partialCost;
 	}
 
 	@Override
@@ -773,13 +689,15 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 			}
 
 			// Charge Progression
-			IWizardClassWeapon.addChargeProgress(stack, Settings.generalSettings.spellblade_charge_gain_per_spellcast);
+			WizardClassWeaponHelper.addChargeProgress(stack, Settings.generalSettings.spellblade_charge_gain_per_spellcast);
 
 			return true;
 		}
 
 		return false;
 	}
+
+	//--------------------------  IWorkbenchItem implementation  --------------------------//
 
 	@Override
 	public boolean showSpellHUD(EntityPlayer player, ItemStack stack) {
@@ -789,6 +707,72 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	@Override
 	public int getSpellSlotCount(ItemStack stack) {
 		return SWORD_BASE_SPELL_SLOTS + WandHelper.getUpgradeLevel(stack, WizardryItems.attunement_upgrade);
+	}
+
+	@Override
+	public ItemStack applyUpgrade(@Nullable EntityPlayer player, ItemStack wand, ItemStack upgrade) {
+		// Upgrades wand if necessary. Damage is copied, preserving remaining durability,
+		// and also the entire NBT tag compound.
+		if (WandHelper.isWandUpgrade(upgrade.getItem())) {
+
+			// Special upgrades
+			Item specialUpgrade = upgrade.getItem();
+
+			int maxUpgrades = this.tier.upgradeLimit - 2;
+			//			if(this.element == Element.MAGIC) maxUpgrades += Constants.NON_ELEMENTAL_UPGRADE_BONUS;
+
+			if (WandHelper.getTotalUpgrades(wand) < maxUpgrades
+					&& WandHelper.getUpgradeLevel(wand, specialUpgrade) < Constants.UPGRADE_STACK_LIMIT) {
+
+				// Used to preserve existing mana when upgrading storage rather than creating free mana.
+				int prevMana = this.getMana(wand);
+
+				WandHelper.applyUpgrade(wand, specialUpgrade);
+
+				// Special behaviours for specific upgrades
+				if (specialUpgrade == WizardryItems.storage_upgrade) {
+
+					this.setMana(wand, prevMana);
+
+				} else if (specialUpgrade == WizardryItems.attunement_upgrade) {
+
+					int newSlotCount = SWORD_BASE_SPELL_SLOTS + WandHelper.getUpgradeLevel(wand,
+							WizardryItems.attunement_upgrade);
+
+					Spell[] spells = WandHelper.getSpells(wand);
+					Spell[] newSpells = new Spell[newSlotCount];
+
+					for (int i = 0; i < newSpells.length; i++) {
+						newSpells[i] = i < spells.length && spells[i] != null ? spells[i] : Spells.none;
+					}
+
+					WandHelper.setSpells(wand, newSpells);
+
+					int[] cooldowns = WandHelper.getCooldowns(wand);
+					int[] newCooldowns = new int[newSlotCount];
+
+					if (cooldowns.length > 0) {
+						System.arraycopy(cooldowns, 0, newCooldowns, 0, cooldowns.length);
+					}
+
+					WandHelper.setCooldowns(wand, newCooldowns);
+				}
+
+				upgrade.shrink(1);
+
+				if (player != null) {
+
+					WizardryAdvancementTriggers.special_upgrade.triggerFor(player);
+
+					if (WandHelper.getTotalUpgrades(wand) == Tier.MASTER.upgradeLimit) {
+						WizardryAdvancementTriggers.max_out_wand.triggerFor(player);
+					}
+				}
+
+			}
+		}
+
+		return wand;
 	}
 
 	@Override
@@ -854,34 +838,72 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		return changed;
 	}
 
-	// this is updated in onUpdate each tick, if the player holds the sword
-	public static Element getElement(ItemStack stack) {
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(ELEMENT_TAG)) {
-			return Element.fromName(stack.getTagCompound().getString(ELEMENT_TAG).toLowerCase());
-		}
+	/**
+	 * Returns whether the tooltip (dark grey box) should be drawn when this item is in an arcane workbench. Only
+	 * called client-side.
+	 *
+	 * @param stack The ItemStack to query.
+	 * @return True if the workbench tooltip should be shown, false if not.
+	 */
+	@Override
+	public boolean showTooltip(ItemStack stack) { return true; }
 
-		return Element.MAGIC;
+	//--------------------------  IManaStoringItem implementation  --------------------------//
+
+	@Override
+	public int getMana(ItemStack stack) { return getManaCapacity(stack) - getDamage(stack); }
+
+	@Override
+	public void setMana(ItemStack stack, int mana) {
+		// Using super (which can only be done from in here) bypasses the above override
+		super.setDamage(stack, getManaCapacity(stack) - mana);
 	}
 
 	@Override
-	public boolean showTooltip(ItemStack stack) {
-		return true;
+	public int getManaCapacity(ItemStack stack) {
+		return this.getMaxDamage(stack);
 	}
 
-	//	/** Does nothing, use {@link ItemWand#setMana(ItemStack, int)} to modify wand mana. */
 	@Override
-	public void setDamage(ItemStack stack, int damage) {
-		super.setDamage(stack, damage);
-		// Overridden to do nothing to stop repair things from 'repairing' the mana in a wand
+	public boolean showManaInWorkbench(EntityPlayer player, ItemStack stack) {
+		return hasManaStorage(stack);
 	}
+
+	@Override
+	public void consumeMana(ItemStack stack, int mana, @Nullable EntityLivingBase wielder) {
+		IManaStoringItem.super.consumeMana(stack, mana, wielder);
+	}
+
+	@Override
+	public void rechargeMana(ItemStack stack, int mana) {
+		IManaStoringItem.super.rechargeMana(stack, mana);
+	}
+
+	@Override
+	public boolean isManaFull(ItemStack stack) {
+		return IManaStoringItem.super.isManaFull(stack);
+	}
+
+	@Override
+	public boolean isManaEmpty(ItemStack stack) {
+		return IManaStoringItem.super.isManaEmpty(stack);
+	}
+
+	@Override
+	public float getFullness(ItemStack stack) {
+		return IManaStoringItem.super.getFullness(stack);
+	}
+
+
+	//--------------------------  Helper methods  --------------------------//
 
 	/**
 	 * Returns a SpellModifiers object with the appropriate modifiers applied for the given ItemStack and Spell.
+	 * This is now public because artefacts use it
 	 */
-	// This is now public because artefacts use it
 	public SpellModifiers calculateModifiers(ItemStack stack, EntityPlayer player, Spell spell) {
 
-		EnumHand otherHand = getOtherHand(stack, player);
+		EnumHand otherHand = getOtherHandForSword(stack, player);
 
 		SpellModifiers modifiers = new SpellModifiers();
 
@@ -927,120 +949,54 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		return modifiers;
 	}
 
-	private boolean selectMinionTarget(EntityPlayer player, World world) {
-
-		RayTraceResult rayTrace = RayTracer.standardEntityRayTrace(world, player, 16, false);
-
-		if (rayTrace != null && EntityUtils.isLiving(rayTrace.entityHit)) {
-
-			EntityLivingBase entity = (EntityLivingBase) rayTrace.entityHit;
-
-			// Sets the selected minion's target to the right-clicked entity
-			if (player.isSneaking() && WizardData.get(player) != null && WizardData.get(player).selectedMinion != null) {
-
-				ISummonedCreature minion = WizardData.get(player).selectedMinion.get();
-
-				if (minion instanceof EntityLiving && minion != entity) {
-					// There is now only the new AI! (which greatly improves things)
-					((EntityLiving) minion).setAttackTarget(entity);
-					// Deselects the selected minion
-					WizardData.get(player).selectedMinion = null;
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
-	private static EnumHand getOtherHand(ItemStack stack, EntityLivingBase entity) {
+	private static EnumHand getOtherHandForSword(ItemStack stack, EntityLivingBase entity) {
 		return entity.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
 	}
 
-	@Override
-	public int getMana(ItemStack stack) {
-		return getManaCapacity(stack) - getDamage(stack);
+	public static boolean hasManaStorage(ItemStack stack) {
+		return WandHelper.getUpgradeLevel(stack, WizardryItems.storage_upgrade) > 0;
 	}
 
-	@Override
-	public void setMana(ItemStack stack, int mana) {
-		// Using super (which can only be done from in here) bypasses the above override
-		super.setDamage(stack, getManaCapacity(stack) - mana);
+	private static boolean hasManaAvailable(ItemStack stack) {
+		return stack.hasTagCompound() && stack.getTagCompound().hasKey(MANA_AVAILABLE_TAG) && stack.getTagCompound().getBoolean(MANA_AVAILABLE_TAG);
 	}
 
-	@Override
-	public int getManaCapacity(ItemStack stack) {
-		return this.getMaxDamage(stack);
-	}
+	/**
+	 * Distributes the given cost (which should be the per-second cost of a continuous spell) over a second and
+	 * returns the appropriate cost to be applied for the given tick. Currently the cost is distributed over 2
+	 * intervals per second, meaning the returned value is 0 unless {@code castingTick} is a multiple of 10.
+	 */
+	protected static int getDistributedCost(int cost, int castingTick) {
 
-	@Override
-	public boolean showManaInWorkbench(EntityPlayer player, ItemStack stack) {
-		return hasManaStorage(stack);
-	}
+		int partialCost;
 
-	@Override
-	public void consumeMana(ItemStack stack, int mana, @Nullable EntityLivingBase wielder) {
-		IManaStoringItem.super.consumeMana(stack, mana, wielder);
-	}
-
-	@Override
-	public void rechargeMana(ItemStack stack, int mana) {
-		IManaStoringItem.super.rechargeMana(stack, mana);
-	}
-
-	@Override
-	public boolean isManaFull(ItemStack stack) {
-		return IManaStoringItem.super.isManaFull(stack);
-	}
-
-	@Override
-	public boolean isManaEmpty(ItemStack stack) {
-		return IManaStoringItem.super.isManaEmpty(stack);
-	}
-
-	@Override
-	public float getFullness(ItemStack stack) {
-		return IManaStoringItem.super.getFullness(stack);
-	}
-
-	@Override
-	public boolean getIsRepairable(ItemStack stack, ItemStack material) {
-		return false;
-	}
-
-	public static double getAngleBetweenEntities(Entity first, Entity second) {
-		return Math.atan2(second.posZ - first.posZ, second.posX - first.posX) * (180 / Math.PI) + 90;
-	}
-
-	public static void electrocute(World world, Entity caster, Vec3d origin, Entity target, float damage, int ticksInUse) {
-
-		if (MagicDamage.isEntityImmune(MagicDamage.DamageType.SHOCK, target)) {
-			if (!world.isRemote && ticksInUse == 1 && caster instanceof EntityPlayer) {
-				((EntityPlayer) caster).sendStatusMessage(new TextComponentTranslation("spell.resist", target.getName(),
-						"lightning damage"), true);
-			}
-		} else {
-			if (!world.isRemote) {
-				EntityUtils.attackEntityWithoutKnockback(target,
-						MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.SHOCK), damage);
-			}
+		if (castingTick % 20 == 0) { // Whole number of seconds has elapsed
+			partialCost = cost / 2 + cost % 2; // Make sure cost adds up to the correct value by adding the remainder here
+		} else if (castingTick % 10 == 0) { // Something-and-a-half seconds has elapsed
+			partialCost = cost / 2;
+		} else { // Some other number of ticks has elapsed
+			partialCost = 0; // Wands aren't damaged within half-seconds
 		}
 
-		if (world.isRemote) {
+		return partialCost;
+	}
 
-			ParticleBuilder.create(ParticleBuilder.Type.BEAM).entity(caster).clr(0.2f, 0.6f, 1)
-					.pos(caster != null ? origin.subtract(caster.getPositionVector()) : origin).target(target).spawn(world);
+	/**
+	 * Gets the battlemage sword of the specificed tier
+	 * @param tier to check
+	 * @return item of the tier
+	 */
+	public static Item getSwordForTier(Tier tier) {
+		if (tier == null) { throw new NullPointerException("The given tier cannot be null."); }
 
-			if (ticksInUse % 3 == 0) {
-				ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).entity(caster)
-						.pos(caster != null ? origin.subtract(caster.getPositionVector()) : origin).target(target).spawn(world);
-			}
-
-			// Particle effect
-			for (int i = 0; i < 5; i++) {
-				ParticleBuilder.create(ParticleBuilder.Type.SPARK, target).spawn(world);
-			}
+		if (tier == Tier.NOVICE) {
+			return AncientSpellcraftItems.battlemage_sword_novice;
+		} else if (tier == Tier.APPRENTICE) {
+			return AncientSpellcraftItems.battlemage_sword_apprentice;
+		} else if (tier == Tier.ADVANCED) {
+			return AncientSpellcraftItems.battlemage_sword_advanced;
 		}
+		return AncientSpellcraftItems.battlemage_sword_master;
 	}
 
 	public enum EnumElementalSwordEffect {
@@ -1144,7 +1100,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 					currTarget.addPotionEffect(new PotionEffect(WizardryPotions.frost, 60, 0));
 
-					double angle = (ItemBattlemageSword.getAngleBetweenEntities(wielder, currTarget) + 90) * Math.PI / 180;
+					double angle = (getAngleBetweenEntities(wielder, currTarget) + 90) * Math.PI / 180;
 					double distance = wielder.getDistance(currTarget) - 4;
 					currTarget.motionX += Math.min(1 / (distance * distance), 1) * -1 * Math.cos(angle);
 					currTarget.motionZ += Math.min(1 / (distance * distance), 1) * -1 * Math.sin(angle);
@@ -1157,7 +1113,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 			void onUpdateEffect(ItemStack stack, World world, Entity entity, int slot, boolean isHeld) {
 				if (world.getTotalWorldTime() % 20 == 0 && entity instanceof EntityPlayer) {
 					EntityPlayer player = (EntityPlayer) entity;
-					if (player.onGround && ItemBattlemageSword.hasPosChanged(player)) {
+					if (player.onGround && hasPosChanged(player)) {
 						if (ItemBattlemageSword.hasManaStorage(stack) && !((IManaStoringItem) stack.getItem()).isManaFull(stack)) {
 							((IManaStoringItem) stack.getItem()).rechargeMana(stack, 1);
 						} else if (player.getHeldItemOffhand().getItem() instanceof IManaStoringItem) {
@@ -1179,7 +1135,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 						.filter(e -> AllyDesignationSystem.isValidTarget(wielder, e))
 						.limit(3)
 						.forEach(secondaryTarget -> {
-							ItemBattlemageSword.electrocute(target.world, wielder,
+							electrocute(target.world, wielder,
 									target.getPositionVector().add(0, target.height / 2, 0),
 									secondaryTarget,
 									4,
@@ -1396,6 +1352,8 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 			this.element = element;
 		}
 
+
+
 		abstract void onUpdateEffect(ItemStack stack, World world, Entity entity, int slot, boolean isHeld);
 
 		abstract void lesserPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder, boolean charged);
@@ -1409,14 +1367,14 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		// called by com.windanesz.ancientspellcraft.item.ItemBattlemageSword.hitEntity which is server side only
 		public static void hitEntity(Element element, ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
 			EnumElementalSwordEffect effect = fromElement(element);
-			boolean charged = IWizardClassWeapon.isChargeFull(stack);
+			boolean charged = WizardClassWeaponHelper.isChargeFull(stack);
 
 			// Lesser Power - all hit
 			effect.lesserPowerOnEntityHit(stack, target, wielder, charged);
 
 			if (charged) {
 				effect.greaterPowerOnEntityHit(stack, target, wielder);
-				IWizardClassWeapon.resetChargeProgress(stack);
+				WizardClassWeaponHelper.resetChargeProgress(stack);
 			}
 
 			// Greater Power - charged hit only
@@ -1431,19 +1389,54 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 			return EnumElementalSwordEffect.MAGIC;
 		}
-	}
 
-	public static Item getSword(Tier tier) {
-		if (tier == null) { throw new NullPointerException("The given tier cannot be null."); }
+		//--------------------------  Helper methods  --------------------------//
 
-		if (tier == Tier.NOVICE) {
-			return AncientSpellcraftItems.battlemage_sword_novice;
-		} else if (tier == Tier.APPRENTICE) {
-			return AncientSpellcraftItems.battlemage_sword_advanced;
-		} else if (tier == Tier.ADVANCED) {
-			return AncientSpellcraftItems.battlemage_sword_master;
+		public static boolean hasPosChanged(EntityPlayer player) {
+			WizardData data = WizardData.get(player);
+			BlockPos pos = data.getVariable(LAST_POS);
+			data.setVariable(LAST_POS, player.getPosition());
+			if (pos == null) {
+				return true;
+			} else {
+				return !pos.equals(player.getPosition());
+			}
 		}
-		return AncientSpellcraftItems.battlemage_sword_master;
+
+		public static double getAngleBetweenEntities(Entity first, Entity second) {
+			return Math.atan2(second.posZ - first.posZ, second.posX - first.posX) * (180 / Math.PI) + 90;
+		}
+
+		public static void electrocute(World world, Entity caster, Vec3d origin, Entity target, float damage, int ticksInUse) {
+
+			if (MagicDamage.isEntityImmune(MagicDamage.DamageType.SHOCK, target)) {
+				if (!world.isRemote && ticksInUse == 1 && caster instanceof EntityPlayer) {
+					((EntityPlayer) caster).sendStatusMessage(new TextComponentTranslation("spell.resist", target.getName(),
+							"lightning damage"), true);
+				}
+			} else {
+				if (!world.isRemote) {
+					EntityUtils.attackEntityWithoutKnockback(target,
+							MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.SHOCK), damage);
+				}
+			}
+
+			if (world.isRemote) {
+
+				ParticleBuilder.create(ParticleBuilder.Type.BEAM).entity(caster).clr(0.2f, 0.6f, 1)
+						.pos(caster != null ? origin.subtract(caster.getPositionVector()) : origin).target(target).spawn(world);
+
+				if (ticksInUse % 3 == 0) {
+					ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).entity(caster)
+							.pos(caster != null ? origin.subtract(caster.getPositionVector()) : origin).target(target).spawn(world);
+				}
+
+				// Particle effect
+				for (int i = 0; i < 5; i++) {
+					ParticleBuilder.create(ParticleBuilder.Type.SPARK, target).spawn(world);
+				}
+			}
+		}
 	}
 
 	//--------------------------  Events  --------------------------//
@@ -1451,7 +1444,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	// hitEntity is only called server-side, so we'll have to use events
 	// this event DOES NOT trigger when the conditions are met in electroblob.wizardry.item.ItemWand.onAttackEntityEvent
 	@SubscribeEvent
-	public static void onAttackEntityEvent(AttackEntityEvent event) {
+	public void onAttackEntityEvent(AttackEntityEvent event) {
 
 		EntityPlayer player = event.getEntityPlayer();
 		ItemStack stack = player.getHeldItemMainhand(); // Can't melee with offhand items
@@ -1469,7 +1462,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 				if (player.world.isRemote) {
 
-					Element element = getElement(stack);
+					Element element = WizardClassWeaponHelper.getElement(stack);
 
 					if (element == Element.NECROMANCY) {
 						Vec3d origin = player.getPositionEyes(1);
@@ -1510,7 +1503,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 								.filter(e -> AllyDesignationSystem.isValidTarget(player, e))
 								.limit(3)
 								.forEach(secondaryTarget -> {
-									ItemBattlemageSword.electrocute(event.getTarget().world, player,
+									EnumElementalSwordEffect.electrocute(event.getTarget().world, player,
 											event.getTarget().getPositionVector().add(0, event.getTarget().height / 2, 0),
 											secondaryTarget,
 											4,
@@ -1528,7 +1521,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 									.time(8 + random.nextInt(4)).spawn(player.world);
 						}
 
-						if (IWizardClassWeapon.isChargeFull(stack)) {
+						if (WizardClassWeaponHelper.isChargeFull(stack)) {
 
 							double particleX, particleZ;
 

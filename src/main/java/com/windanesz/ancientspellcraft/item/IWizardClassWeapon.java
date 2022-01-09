@@ -3,14 +3,26 @@ package com.windanesz.ancientspellcraft.item;
 import electroblob.wizardry.item.IManaStoringItem;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 
 import java.util.Optional;
 
 public interface IWizardClassWeapon {
 
-	String CHARGE_PROGRESS = "charge_progress";
+	//	default ItemStack getExternalManaSource(ItemStack manaForItemStack, EntityLivingBase entity) {
+	//
+	//		if (entity != null) {
+	//			entity.getHeldItemOffhand()
+	//		}
+	//
+	//		Optional<ItemStack> manaStoringItem = manaStoringItemStack(manaForItemStack, otherHand, entity);
+	//		return manaStoringItem.map(stack -> ((IManaStoringItem) stack.getItem()).getMana(stack)).orElse(0);
+	//	}
+
+	//	default int getMana(ItemStack weapon, EntityLivingBase entity) {
+	//		Optional<ItemStack> manaStoringItem = manaStoringItemStack(weapon, otherHand, entity);
+	//		return manaStoringItem.map(stack -> ((IManaStoringItem) stack.getItem()).getMana(stack)).orElse(0);
+	//	}
 
 	default int getMana(ItemStack weapon, EnumHand otherHand, EntityLivingBase entity) {
 		Optional<ItemStack> manaStoringItem = manaStoringItemStack(weapon, otherHand, entity);
@@ -59,44 +71,6 @@ public interface IWizardClassWeapon {
 		}
 
 		return Optional.empty();
-	}
-
-	static boolean isChargeFull(ItemStack stack) {
-		if (stack.getItem() instanceof IWizardClassWeapon && stack.hasTagCompound()) {
-			//noinspection ConstantConditions
-			return stack.getTagCompound().hasKey(CHARGE_PROGRESS) && stack.getTagCompound().getInteger(CHARGE_PROGRESS) >= 100;
-		}
-		return false;
-	}
-
-	static int getChargeProgress(ItemStack stack) {
-		if (stack.getItem() instanceof IWizardClassWeapon && stack.hasTagCompound()) {
-			//noinspection ConstantConditions
-			return stack.getTagCompound().hasKey(CHARGE_PROGRESS) ? stack.getTagCompound().getInteger(CHARGE_PROGRESS) : 0;
-		}
-		return 0;
-	}
-
-	static void addChargeProgress(ItemStack stack, int amount) {
-		int progress = getChargeProgress(stack);
-
-		if (stack.getItem() instanceof IWizardClassWeapon) {
-			NBTTagCompound compound = stack.getTagCompound();
-			if (compound == null) { compound = new NBTTagCompound(); }
-
-			compound.setInteger(CHARGE_PROGRESS, Math.min(progress + amount, 100));
-			stack.setTagCompound(compound);
-		}
-	}
-
-	static  void resetChargeProgress(ItemStack stack) {
-		if (stack.getItem() instanceof IWizardClassWeapon && stack.hasTagCompound()) {
-			NBTTagCompound compound = stack.getTagCompound();
-			if (compound == null) { compound = new NBTTagCompound(); }
-
-			compound.setInteger(CHARGE_PROGRESS, 0);
-			stack.setTagCompound(compound);
-		}
 	}
 
 }
