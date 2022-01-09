@@ -27,7 +27,7 @@ public class ItemDevoritiumShield extends ItemShield implements IDevoritium {
 	public ItemDevoritiumShield() {
 		super();
 		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
-		this.setMaxDamage(455);
+		this.setMaxDamage(900);
 	}
 
 	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
