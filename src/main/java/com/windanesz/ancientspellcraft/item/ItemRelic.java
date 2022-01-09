@@ -7,6 +7,7 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
 import com.windanesz.ancientspellcraft.util.ASUtils;
+import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.data.WizardData;
@@ -395,7 +396,9 @@ public class ItemRelic extends Item {
 		boolean researched = isResearched(stack);
 
 		if (advanced.isAdvanced() && !researched) {
-			tooltip.add(TextFormatting.GOLD + "Ancient Relic");
+//			tooltip.add(TextFormatting.GOLD + "Ancient Relic");
+			tooltip.add(Wizardry.proxy.translate("tooltip.ancientspellcraft:ancient_relic_tooltip"));
+			tooltip.add(Wizardry.proxy.translate("tooltip.ancientspellcraft:ancient_relic_research"));
 		}
 
 		if (researched) {
