@@ -3,13 +3,16 @@ package com.windanesz.ancientspellcraft.block;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
 import com.windanesz.ancientspellcraft.tileentity.TileSphereCognizance;
+import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -23,6 +26,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Random;
 
 public class BlockSphereCognizance extends BlockContainer {
@@ -109,4 +113,10 @@ public class BlockSphereCognizance extends BlockContainer {
 		super.breakBlock(world, pos, block);
 	}
 
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag advanced) {
+		if (advanced.isAdvanced()) {
+			tooltip.add(Wizardry.proxy.translate("tile.ancientspellcraft:sphere_cognizance.tooltip"));
+		}
+	}
 }
