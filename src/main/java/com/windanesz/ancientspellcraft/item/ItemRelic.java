@@ -571,6 +571,12 @@ public class ItemRelic extends Item {
 			if (data != null) {
 				Tier tier = getTier(stack);
 				List<Spell> list = SpellComponentList.getSpellListByTier(tier);
+				list.removeIf(spell -> !spell.isEnabled());
+
+				// would only occur if all spells are disabled
+				if (list.isEmpty())
+					return;
+
 				Spell spell = ASUtils.getRandomListItem(list);
 
 				NBTTagCompound nbt;
