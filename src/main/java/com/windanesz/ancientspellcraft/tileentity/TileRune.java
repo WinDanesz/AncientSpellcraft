@@ -250,9 +250,9 @@ public class TileRune extends TileEntity implements ITickable {
 							ingredientsOk = false;
 						} else {
 							if (((IRitualIngredient) ritual).shouldConsumeIngredients()) {
-								actualIngredients.forEach(i -> i.setDead());
+								actualIngredients.stream().forEach(i -> i.getItem().shrink(1));
+//								actualIngredients.forEach(i -> i.setDead());
 							}
-							actualIngredients.stream().forEach(i -> i.getItem().shrink(1));
 						}
 					}
 					if (ritual instanceof IRitualBlockRequirement) {
