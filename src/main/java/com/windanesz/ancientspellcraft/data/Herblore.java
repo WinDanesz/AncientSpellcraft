@@ -5,6 +5,7 @@ import electroblob.wizardry.registry.WizardryPotions;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
 
+// TODO: consider using for sages
 public class Herblore {
 
 	public enum PlantEffect {
@@ -32,9 +33,6 @@ public class Herblore {
 	}
 
 }
-
-
-
 
 			/*
   			SPEED;

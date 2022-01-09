@@ -1,4 +1,4 @@
-package com.windanesz.ancientspellcraft.entity;
+package com.windanesz.ancientspellcraft.entity.construct;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;

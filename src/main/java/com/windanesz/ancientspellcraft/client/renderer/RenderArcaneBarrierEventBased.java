@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.client.renderer;
 
-import com.windanesz.ancientspellcraft.entity.EntityArcaneBarrier;
+import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;

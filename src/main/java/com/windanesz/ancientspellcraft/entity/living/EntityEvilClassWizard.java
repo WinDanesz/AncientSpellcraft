@@ -1,7 +1,6 @@
 package com.windanesz.ancientspellcraft.entity.living;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.entity.ICustomCooldown;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellImproved;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIBattlemageMelee;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIBattlemageSpellcasting;

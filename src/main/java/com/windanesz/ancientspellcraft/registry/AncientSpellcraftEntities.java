@@ -2,10 +2,10 @@ package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
-import com.windanesz.ancientspellcraft.entity.EntityArcaneBarrier;
+import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.entity.EntityMageLight;
-import com.windanesz.ancientspellcraft.entity.EntityOrdinarySpiderMinion;
-import com.windanesz.ancientspellcraft.entity.EntityVolcano;
+import com.windanesz.ancientspellcraft.entity.living.EntityOrdinarySpiderMinion;
+import com.windanesz.ancientspellcraft.entity.living.EntityVolcano;
 import com.windanesz.ancientspellcraft.entity.EntityWisp;
 import com.windanesz.ancientspellcraft.entity.construct.EntityAntiMagicField;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBarterConstruct;

@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.client.renderer.entity;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.model.ModelVolcano;
-import com.windanesz.ancientspellcraft.entity.EntityVolcano;
+import com.windanesz.ancientspellcraft.entity.living.EntityVolcano;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;

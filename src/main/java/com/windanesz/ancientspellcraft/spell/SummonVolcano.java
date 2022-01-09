@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.entity.EntityVolcano;
+import com.windanesz.ancientspellcraft.entity.living.EntityVolcano;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.spell.SpellMinion;
 import net.minecraft.item.Item;

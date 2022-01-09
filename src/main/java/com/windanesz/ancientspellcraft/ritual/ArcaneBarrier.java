@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.ritual;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.entity.EntityArcaneBarrier;
+import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.misc.DonorPerks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.tileentity.TileRune;

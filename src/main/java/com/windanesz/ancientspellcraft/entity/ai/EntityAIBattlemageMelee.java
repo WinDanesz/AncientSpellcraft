@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.entity.ai;
 
-import com.windanesz.ancientspellcraft.entity.ICustomCooldown;
+import com.windanesz.ancientspellcraft.entity.living.ICustomCooldown;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;

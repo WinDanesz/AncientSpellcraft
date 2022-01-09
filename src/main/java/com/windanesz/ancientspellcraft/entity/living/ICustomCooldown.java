@@ -1,4 +1,4 @@
-package com.windanesz.ancientspellcraft.entity;
+package com.windanesz.ancientspellcraft.entity.living;
 
 public interface ICustomCooldown {
 

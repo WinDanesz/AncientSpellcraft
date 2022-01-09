@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft;
 
 import com.windanesz.ancientspellcraft.block.BlockCrystalLeaves;
-import com.windanesz.ancientspellcraft.entity.EntityArcaneBarrier;
+import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.packet.PacketContinuousRitual;
 import com.windanesz.ancientspellcraft.packet.PacketMushroomActivation;
 import com.windanesz.ancientspellcraft.packet.PacketSorcerySwordHit;

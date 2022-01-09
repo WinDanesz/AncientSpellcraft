@@ -1,4 +1,4 @@
-package com.windanesz.ancientspellcraft.entity;
+package com.windanesz.ancientspellcraft.entity.living;
 
 import com.windanesz.ancientspellcraft.entity.living.EntityFireAnt;
 import electroblob.wizardry.entity.living.EntitySummonedCreature;

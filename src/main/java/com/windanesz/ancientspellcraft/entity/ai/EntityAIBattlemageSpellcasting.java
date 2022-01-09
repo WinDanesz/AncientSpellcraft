@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.entity.ai;
 
 import com.windanesz.ancientspellcraft.data.SpellCategorization;
-import com.windanesz.ancientspellcraft.entity.ICustomCooldown;
+import com.windanesz.ancientspellcraft.entity.living.ICustomCooldown;
 import electroblob.wizardry.entity.living.ISpellCaster;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.event.SpellCastEvent.Source;

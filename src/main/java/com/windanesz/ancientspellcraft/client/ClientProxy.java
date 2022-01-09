@@ -29,9 +29,9 @@ import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderSkullWat
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderTileSentinel;
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderTileSphereCognizance;
 import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
-import com.windanesz.ancientspellcraft.entity.EntityArcaneBarrier;
+import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.entity.EntityMageLight;
-import com.windanesz.ancientspellcraft.entity.EntityVolcano;
+import com.windanesz.ancientspellcraft.entity.living.EntityVolcano;
 import com.windanesz.ancientspellcraft.entity.EntityWisp;
 import com.windanesz.ancientspellcraft.entity.construct.EntityAntiMagicField;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBarterConstruct;
