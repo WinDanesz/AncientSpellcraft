@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.potion.PotionAstralTravel;
+import com.windanesz.ancientspellcraft.potion.PotionAstralProjection;
 import com.windanesz.ancientspellcraft.potion.PotionBubbleHead;
 import com.windanesz.ancientspellcraft.potion.PotionBurrow;
 import com.windanesz.ancientspellcraft.potion.PotionCandleLight;
@@ -24,7 +24,6 @@ import com.windanesz.ancientspellcraft.potion.PotionTimeKnot;
 import com.windanesz.ancientspellcraft.potion.PotionUnlimitedPower;
 import com.windanesz.ancientspellcraft.potion.PotionWaterWalking;
 import com.windanesz.ancientspellcraft.potion.PotionWizardShield;
-import com.windanesz.ancientspellcraft.spell.AstralTravel;
 import com.windanesz.ancientspellcraft.spell.FortifiedArchery;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.util.SpellModifiers;
@@ -164,7 +163,7 @@ public class AncientSpellcraftPotions {
 				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_fortified_archery.png")));
 
 		registerPotion(registry, "eagle_eye", new PotionEagleEye());
-		registerPotion(registry, "astral_projection", new PotionAstralTravel());
+		registerPotion(registry, "astral_projection", new PotionAstralProjection());
 
 		registerPotion(registry, "magical_exhaustion", new PotionMagicEffectAS("magical_exhaustion", true, 0x635a63,
 				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_magical_exhaustion.png")));

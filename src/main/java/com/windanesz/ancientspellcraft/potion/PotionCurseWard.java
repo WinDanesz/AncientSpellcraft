@@ -23,21 +23,15 @@ public class PotionCurseWard extends PotionMagicEffect {
 	@SubscribeEvent
 	public static void onPotionApplicableEvent(PotionEvent.PotionApplicableEvent event) {
 
-//		if (!event.getEntityLiving().world.isRemote) {
-			if (event.getEntityLiving().isPotionActive(AncientSpellcraftPotions.curse_ward)) {
-				if (event.getPotionEffect().getPotion() instanceof Curse) {
-					PotionEffect curseWard = event.getEntityLiving().getActivePotionEffect(AncientSpellcraftPotions.curse_ward);
-					int newDuration = (int) (curseWard.getDuration() / 2);
-					event.getEntityLiving().removePotionEffect(AncientSpellcraftPotions.curse_ward);
-					event.getEntityLiving().addPotionEffect(new PotionEffect(AncientSpellcraftPotions.curse_ward, newDuration));
-					event.setResult(Event.Result.DENY);
-					if (event.getEntityLiving().world.isRemote) {
-
-					}
-				}
+		if (event.getEntityLiving().isPotionActive(AncientSpellcraftPotions.curse_ward)) {
+			if (event.getPotionEffect().getPotion() instanceof Curse) {
+				PotionEffect curseWard = event.getEntityLiving().getActivePotionEffect(AncientSpellcraftPotions.curse_ward);
+				int newDuration = (int) (curseWard.getDuration() / 2);
+				event.getEntityLiving().removePotionEffect(AncientSpellcraftPotions.curse_ward);
+				event.getEntityLiving().addPotionEffect(new PotionEffect(AncientSpellcraftPotions.curse_ward, newDuration));
+				event.setResult(Event.Result.DENY);
 			}
-//		}
-
+		}
 	}
 
 }

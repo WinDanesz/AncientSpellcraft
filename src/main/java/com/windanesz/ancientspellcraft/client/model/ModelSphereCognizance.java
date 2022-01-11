@@ -17,7 +17,6 @@ public class ModelSphereCognizance extends ModelBase {
 
 		ball = new ModelRenderer(this);
 		ball.setRotationPoint(0.0F, 0.0F, 0.0F);
-//		ball.setRotationPoint(0.0F, 24.0F, 0.0F);
 		ball.cubeList.add(new ModelBox(ball, 0, 0, -2.0F, -4.0F, -2.0F, 4, 4, 4, 0.0F, false));
 	}
 

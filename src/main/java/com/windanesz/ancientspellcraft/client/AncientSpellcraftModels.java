@@ -1,4 +1,4 @@
-package com.windanesz.ancientspellcraft.model;
+package com.windanesz.ancientspellcraft.client;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import electroblob.wizardry.item.IMultiTexturedItem;

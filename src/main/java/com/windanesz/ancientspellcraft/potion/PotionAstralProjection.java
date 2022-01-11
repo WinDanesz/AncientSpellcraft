@@ -13,11 +13,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 // Also see com.windanesz.ancientspellcraft.handler.ASEventHandler.onPotionApplicableEvent
 @Mod.EventBusSubscriber()
-public class PotionAstralTravel extends PotionMagicEffect {
+public class PotionAstralProjection extends PotionMagicEffect {
 
 	public static final ResourceLocation SHADER = new ResourceLocation(AncientSpellcraft.MODID, "shaders/post/sixth_sense.json");
 
-	public PotionAstralTravel() {
+	public PotionAstralProjection() {
 		super(false, 0xffc800, new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_astral_travel.png"));
 		this.setPotionName("potion." + AncientSpellcraft.MODID + ":astral_travel");
 		this.setBeneficial();

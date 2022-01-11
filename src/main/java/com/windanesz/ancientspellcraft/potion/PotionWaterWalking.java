@@ -25,7 +25,6 @@ public class PotionWaterWalking extends PotionMagicEffect {
 			if (entity.isInWater()) {
 
 				entity.motionY = entity.motionY < 0.0f ? 0.001f : entity.motionY;
-//				((EntityPlayer) entity).setNoGravity(true);
 
 				// increase speed on water
 				entity.motionX *= (1.1f + 0.025 * 1.2);

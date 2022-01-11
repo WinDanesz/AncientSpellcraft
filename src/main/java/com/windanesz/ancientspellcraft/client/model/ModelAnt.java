@@ -1,6 +1,4 @@
-package com.windanesz.ancientspellcraft.client.model;// Made with Blockbench 3.6.6
-// Exported for Minecraft version 1.12
-// Paste this class into your mod and generate all required imports
+package com.windanesz.ancientspellcraft.client.model;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBox;
