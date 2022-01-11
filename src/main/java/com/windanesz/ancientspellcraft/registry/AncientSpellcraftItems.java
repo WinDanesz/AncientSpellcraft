@@ -533,6 +533,7 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "battlemage_sword_blade", new Item().setMaxDamage(0).setMaxStackSize(1).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
 		registerItem(registry, "crystal_silver_nugget", new ItemArmourUpgradeMaterial());
 		registerItem(registry, "crystal_silver_ingot", new ItemArmourUpgradeMaterial());
+		registerItem(registry, "enchanted_filament", new ItemArmourUpgradeMaterial());
 
 		registerItem(registry, "wand_channeling", new Item().setMaxDamage(0).setCreativeTab(null));
 

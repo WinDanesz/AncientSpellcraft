@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "resplendent_thread",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "ancientspellcraft:enchanted_filament"
+    }
+  },
+  "result": {
+    "item": "ebwizardry:resplendent_thread"
+  }
+}
