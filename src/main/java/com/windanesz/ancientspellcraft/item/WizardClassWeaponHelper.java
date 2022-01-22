@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
@@ -17,6 +18,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
@@ -39,6 +41,10 @@ public class WizardClassWeaponHelper {
 	 * @return the class weapon for the given class & tier.
 	 */
 	public static Item getClassItemForTier(Tier tier, ItemWizardArmour.ArmourClass armourClass) {
+		return getClassItemForTier(tier, armourClass, Element.MAGIC);
+	}
+
+	public static Item getClassItemForTier(Tier tier, ItemWizardArmour.ArmourClass armourClass, Element element) {
 		if (tier == null) { throw new NullPointerException("The given tier cannot be null."); }
 		if (armourClass == null) { throw new NullPointerException("The given armourClass cannot be null."); }
 
@@ -57,9 +63,13 @@ public class WizardClassWeaponHelper {
 				}
 				return AncientSpellcraftItems.battlemage_sword_master;
 
+			case SAGE:
+				String registryName = "sage_tome_" +  (tier == Tier.NOVICE && element == Element.MAGIC ? "magic" : tier.getUnlocalisedName());
+				if(element != Element.MAGIC) registryName = registryName + "_" + element.getName();
+				return Item.REGISTRY.getObject(new ResourceLocation(AncientSpellcraft.MODID,  registryName));
+
 			// well, we don't have these yet..
 			case WARLOCK:
-			case SAGE:
 			default:
 				return Items.STICK;
 		}
@@ -186,5 +196,25 @@ public class WizardClassWeaponHelper {
 			}
 		}
 		return Optional.empty();
+	}
+
+	/**
+	 * Distributes the given cost (which should be the per-second cost of a continuous spell) over a second and
+	 * returns the appropriate cost to be applied for the given tick. Currently the cost is distributed over 2
+	 * intervals per second, meaning the returned value is 0 unless {@code castingTick} is a multiple of 10.
+	 */
+	public static int getDistributedCost(int cost, int castingTick) {
+
+		int partialCost;
+
+		if (castingTick % 20 == 0) { // Whole number of seconds has elapsed
+			partialCost = cost / 2 + cost % 2; // Make sure cost adds up to the correct value by adding the remainder here
+		} else if (castingTick % 10 == 0) { // Something-and-a-half seconds has elapsed
+			partialCost = cost / 2;
+		} else { // Some other number of ticks has elapsed
+			partialCost = 0; // Wands aren't damaged within half-seconds
+		}
+
+		return partialCost;
 	}
 }

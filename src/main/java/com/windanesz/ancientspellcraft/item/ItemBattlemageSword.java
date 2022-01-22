@@ -192,9 +192,14 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 				element = WizardArmourUtils.getFullSetElementForClass(entityLiving, ItemWizardArmour.ArmourClass.BATTLEMAGE);
 
+				if (element == null)
+					element = Element.MAGIC;
 				// Triggering the elemental effect of this sword each tick
 				EnumElementalSwordEffect.onUpdate(element, stack, world, entityLiving, slot, true);
 			}
+
+			if (element == null)
+				element = Element.MAGIC;
 
 			// setting the current element type, each tick
 			if (element != null) {
