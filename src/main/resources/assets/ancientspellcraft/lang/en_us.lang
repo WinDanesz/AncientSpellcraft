@@ -545,6 +545,37 @@ item.ancientspellcraft\:wizard_hat_ancient=Ancient Wizard Hat
 item.ancientspellcraft\:scepter_mind_control.name=Scepter of the Overlord
 item.ancientspellcraft\:scepter_mind_control.desc=Hitting a creature with the scepter permanently mind controls the creature\nYou can only charm one creature at a time with this item
 
+item.ancientspellcraft\:sage_tome_novice_fire.name=Novice Sage Tome
+item.ancientspellcraft\:sage_tome_novice_ice.name=Novice Sage Tome
+item.ancientspellcraft\:sage_tome_novice_lightning.name=Novice Sage Tome
+item.ancientspellcraft\:sage_tome_novice_necromancy.name=Novice Sage Tome
+item.ancientspellcraft\:sage_tome_novice_earth.name=Novice Sage Tome
+item.ancientspellcraft\:sage_tome_novice_sorcery.name=Novice Sage Tome
+item.ancientspellcraft\:sage_tome_novice_healing.name=Novice Sage Tome
+
+item.ancientspellcraft\:sage_tome_apprentice_fire.name=Apprentice Sage Tome
+item.ancientspellcraft\:sage_tome_apprentice_ice.name=Apprentice Sage Tome
+item.ancientspellcraft\:sage_tome_apprentice_lightning.name=Apprentice Sage Tome
+item.ancientspellcraft\:sage_tome_apprentice_necromancy.name=Apprentice Sage Tome
+item.ancientspellcraft\:sage_tome_apprentice_earth.name=Apprentice Sage Tome
+item.ancientspellcraft\:sage_tome_apprentice_sorcery.name=Apprentice Sage Tome
+item.ancientspellcraft\:sage_tome_apprentice_healing.name=Apprentice Sage Tome
+
+item.ancientspellcraft\:sage_tome_advanced_fire.name=Advanced Sage Tome
+item.ancientspellcraft\:sage_tome_advanced_ice.name=Advanced Sage Tome
+item.ancientspellcraft\:sage_tome_advanced_lightning.name=Advanced Sage Tome
+item.ancientspellcraft\:sage_tome_advanced_necromancy.name=Advanced Sage Tome
+item.ancientspellcraft\:sage_tome_advanced_earth.name=Advanced Sage Tome
+item.ancientspellcraft\:sage_tome_advanced_sorcery.name=Advanced Sage Tome
+item.ancientspellcraft\:sage_tome_advanced_healing.name=Advanced Sage Tome
+
+item.ancientspellcraft\:sage_tome_master_fire.name=Master Sage Tome
+item.ancientspellcraft\:sage_tome_master_ice.name=Master Sage Tome
+item.ancientspellcraft\:sage_tome_master_lightning.name= Master Sage Tome
+item.ancientspellcraft\:sage_tome_master_necromancy.name=Master Sage Tome
+item.ancientspellcraft\:sage_tome_master_earth.name= Master Sage Tome
+item.ancientspellcraft\:sage_tome_master_sorcery.name=Master Sage Tome
+item.ancientspellcraft\:sage_tome_master_healing.name=Master Sage Tome
 
 item.ebwizardry\:identification_scroll.desc=Identifies an unknown spell book, scroll or ritual book
 
@@ -642,7 +673,7 @@ set.ancientspellcraft\:set_bonus=Artefact Set Bonus: %s
 set.ancientspellcraft\:set_name_with_count=%s (%s of %s)
 
 # setting
-settings.ancientspellcraft:\general_settings=General Settings
+settings.ancientspellcraft\:general_settings=General Settings
 
 # spell
 spell.ancientspellcraft\:animate_item=Animate Item
