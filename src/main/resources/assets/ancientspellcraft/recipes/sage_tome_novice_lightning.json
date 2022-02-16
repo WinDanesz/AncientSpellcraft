@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "LML",
+        "EEE",
+        "LAL"
+    ],
+    "key": {
+        "A": {
+            "item": "ebwizardry:astral_diamond"
+        },
+        "M": {
+            "item": "ebwizardry:magic_crystal",
+            "data": 3
+        },
+        "L": {
+            "item": "minecraft:leather"
+        },
+        "E": {
+            "item": "ancientspellcraft:enchanted_page"
+        }
+    },
+    "result": {
+        "item": "ancientspellcraft:sage_tome_novice_lightning.json"
+    }
+}
