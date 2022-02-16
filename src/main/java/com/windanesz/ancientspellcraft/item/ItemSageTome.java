@@ -14,6 +14,7 @@ import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.item.IWorkbenchItem;
+import electroblob.wizardry.item.ItemWand;
 import electroblob.wizardry.packet.PacketCastSpell;
 import electroblob.wizardry.packet.WizardryPacketHandler;
 import electroblob.wizardry.registry.Spells;
@@ -22,6 +23,7 @@ import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
+import electroblob.wizardry.util.SpellProperties;
 import electroblob.wizardry.util.WandHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -47,11 +49,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static com.windanesz.ancientspellcraft.item.WizardClassWeaponHelper.getDistributedCost;
+
 @Mod.EventBusSubscriber
 public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchItem, IWizardClassWeapon, IManaStoringItem {
 
+	/**
+	 * The number of spell slots a tome has with no attunement upgrades applied.
+	 */
+	public static final int TOME_BASE_SPELL_SLOTS = 3;
+	public static final IStoredVariable<BlockPos> LAST_POS = IStoredVariable.StoredVariable.ofBlockPos("lastPlayerPos", Persistence.NEVER);
 	private static final String MANA_AVAILABLE_TAG = "mana_available";
-
 	/**
 	 * The number of ticks between each time a continuous spell is added to the player's recently-cast spells.
 	 */
@@ -72,30 +80,25 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 	 * The fraction of progression lost when all recently-cast spells are the same as the one being cast.
 	 */
 	private static final float MAX_PROGRESSION_REDUCTION = 0.75f;
-
-	/**
-	 * The number of spell slots a tome has with no attunement upgrades applied.
-	 */
-	public static final int TOME_BASE_SPELL_SLOTS = 3;
-
 	/**
 	 * The maximum number of upgrades that can be applied to a wand of this tier.
 	 */
 	public final int upgradeLimit;
-
 	public Tier tier;
 	public Element element;
-
-	public static final IStoredVariable<BlockPos> LAST_POS = IStoredVariable.StoredVariable.ofBlockPos("lastPlayerPos", Persistence.NEVER);
 
 	public ItemSageTome(Tier tier, Element element) {
 		super();
 		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
 		this.tier = tier;
 		this.element = element;
-
+		setMaxDamage(this.tier.maxCharge);
 		// TODO: expose to settings
 		this.upgradeLimit = this.tier.upgradeLimit;
+	}
+
+	private static EnumHand getOtherHandForSword(ItemStack stack, EntityLivingBase entity) {
+		return entity.getHeldItemMainhand().getItem() instanceof ItemSageTome ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
 	}
 
 	@Override
@@ -108,18 +111,12 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 		WandHelper.decrementCooldowns(stack);
 	}
 
+		// Max damage is modifiable with upgrades.
 	@Override
-	public int getMaxDamage() {
-		return super.getMaxDamage();
-	}
-
-	// Max damage is modifiable with upgrades.
-	@Override
-	public int getMaxDamage(ItemStack stack) {
-			// + 0.5f corrects small float errors rounding down
-			return (int) (super.getMaxDamage(stack) * (1.0f + Constants.STORAGE_INCREASE_PER_LEVEL
-					* WandHelper.getUpgradeLevel(stack, WizardryItems.storage_upgrade)) + 0.5f);
-
+	public int getMaxDamage(ItemStack stack){
+		// + 0.5f corrects small float errors rounding down
+		return (int)(super.getMaxDamage(stack) * (1.0f + Constants.STORAGE_INCREASE_PER_LEVEL
+				* WandHelper.getUpgradeLevel(stack, WizardryItems.storage_upgrade)) + 0.5f);
 	}
 
 	//	/** Does nothing, use {@link ItemWand#setMana(ItemStack, int)} to modify wand mana. */
@@ -221,85 +218,85 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
 		ItemStack stack = player.getHeldItem(hand);
-		//
-		//		// Alternate right-click function; overrides spell casting.
-		//		if (WizardClassWeaponHelper.selectMinionTarget(player, world)) { return new ActionResult<>(EnumActionResult.SUCCESS, stack); }
-		//
-		//		Spell spell = WandHelper.getCurrentSpell(stack);
-		//		SpellModifiers modifiers = this.calculateModifiers(stack, player, spell);
-		//
-		//		if (canCast(stack, spell, player, hand, 0, modifiers)) {
-		//			// Need to account for the modifier since it could be zero even if the original charge-up wasn't
-		//			int chargeup = (int) (spell.getChargeup() * modifiers.get(SpellModifiers.CHARGEUP));
-		//
-		//			if (spell.isContinuous || chargeup > 0) {
-		//				// Spells that need the mouse to be held (continuous, charge-up or both)
-		//				if (!player.isHandActive()) {
-		//					player.setActiveHand(hand);
-		//					// Store the modifiers for use later
-		//					if (WizardData.get(player) != null) { WizardData.get(player).itemCastingModifiers = modifiers; }
-		//					if (chargeup > 0 && world.isRemote) { Wizardry.proxy.playChargeupSound(player); }
-		//					return new ActionResult<>(EnumActionResult.SUCCESS, stack);
-		//				}
-		//			} else {
-		//				// All other (instant) spells
-		//				if (cast(stack, spell, player, hand, 0, modifiers)) {
-		//					return new ActionResult<>(EnumActionResult.SUCCESS, stack);
-		//				}
-		//			}
-		//		}
+
+		// Alternate right-click function; overrides spell casting.
+		if (WizardClassWeaponHelper.selectMinionTarget(player, world)) { return new ActionResult<>(EnumActionResult.SUCCESS, stack); }
+
+		Spell spell = WandHelper.getCurrentSpell(stack);
+		SpellModifiers modifiers = this.calculateModifiers(stack, player, spell);
+
+		if (canCast(stack, spell, player, hand, 0, modifiers)) {
+			// Need to account for the modifier since it could be zero even if the original charge-up wasn't
+			int chargeup = (int) (spell.getChargeup() * modifiers.get(SpellModifiers.CHARGEUP));
+
+			if (spell.isContinuous || chargeup > 0) {
+				// Spells that need the mouse to be held (continuous, charge-up or both)
+				if (!player.isHandActive()) {
+					player.setActiveHand(hand);
+					// Store the modifiers for use later
+					if (WizardData.get(player) != null) { WizardData.get(player).itemCastingModifiers = modifiers; }
+					if (chargeup > 0 && world.isRemote) { Wizardry.proxy.playChargeupSound(player); }
+					return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+				}
+			} else {
+				// All other (instant) spells
+				if (cast(stack, spell, player, hand, 0, modifiers)) {
+					return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+				}
+			}
+		}
 
 		return new ActionResult<>(EnumActionResult.FAIL, stack);
 	}
+
+	//--------------------------  ISpellCastingItem implementation  --------------------------//
 
 	// For continuous spells and spells with a charge-up time. The count argument actually decrements by 1 each tick.
 	// N.B. The first time this gets called is the tick AFTER onItemRightClick is called, not the same tick
 	@Override
 	public void onUsingTick(ItemStack stack, EntityLivingBase user, int count) {
 
-		//		if(user instanceof EntityPlayer){
-		//
-		//			EntityPlayer player = (EntityPlayer)user;
-		//
-		//			Spell spell = WandHelper.getCurrentSpell(stack);
-		//
-		//			SpellModifiers modifiers;
-		//
-		//			if(WizardData.get(player) != null){
-		//				modifiers = WizardData.get(player).itemCastingModifiers;
-		//			}else{
-		//				modifiers = this.calculateModifiers(stack, (EntityPlayer)user, spell); // Fallback to the old way, should never be used
-		//			}
-		//
-		//			int useTick = stack.getMaxItemUseDuration() - count;
-		//			int chargeup = (int)(spell.getChargeup() * modifiers.get(SpellModifiers.CHARGEUP));
-		//
-		//			if(spell.isContinuous){
-		//				// Continuous spell charge-up is simple, just don't do anything until it's charged
-		//				if(useTick >= chargeup){
-		//					// castingTick needs to be relative to when the spell actually started
-		//					int castingTick = useTick - chargeup;
-		//					// Continuous spells (these must check if they can be cast each tick since the mana changes)
-		//					// Don't call canCast when castingTick == 0 because we already did it in onItemRightClick - even
-		//					// with charge-up times, because we don't want to trigger events twice
-		//					if(castingTick == 0 || canCast(stack, spell, player, player.getActiveHand(), castingTick, modifiers)){
-		//						cast(stack, spell, player, player.getActiveHand(), castingTick, modifiers);
-		//					}else{
-		//						// Stops the casting if it was interrupted, either by events or because the wand ran out of mana
-		//						player.stopActiveHand();
-		//					}
-		//				}
-		//			}else{
-		//				// Non-continuous spells need to check they actually have a charge-up since ALL spells call setActiveHand
-		//				if(chargeup > 0 && useTick == chargeup){
-		//					// Once the spell is charged, it's exactly the same as in onItemRightClick
-		//					cast(stack, spell, player, player.getActiveHand(), 0, modifiers);
-		//				}
-		//			}
-		//		}
-	}
+		if(user instanceof EntityPlayer){
 
-	//--------------------------  ISpellCastingItem implementation  --------------------------//
+			EntityPlayer player = (EntityPlayer)user;
+
+			Spell spell = WandHelper.getCurrentSpell(stack);
+
+			SpellModifiers modifiers;
+
+			if(WizardData.get(player) != null){
+				modifiers = WizardData.get(player).itemCastingModifiers;
+			}else{
+				modifiers = this.calculateModifiers(stack, (EntityPlayer)user, spell); // Fallback to the old way, should never be used
+			}
+
+			int useTick = stack.getMaxItemUseDuration() - count;
+			int chargeup = (int)(spell.getChargeup() * modifiers.get(SpellModifiers.CHARGEUP));
+
+			if(spell.isContinuous){
+				// Continuous spell charge-up is simple, just don't do anything until it's charged
+				if(useTick >= chargeup){
+					// castingTick needs to be relative to when the spell actually started
+					int castingTick = useTick - chargeup;
+					// Continuous spells (these must check if they can be cast each tick since the mana changes)
+					// Don't call canCast when castingTick == 0 because we already did it in onItemRightClick - even
+					// with charge-up times, because we don't want to trigger events twice
+					if(castingTick == 0 || canCast(stack, spell, player, player.getActiveHand(), castingTick, modifiers)){
+						cast(stack, spell, player, player.getActiveHand(), castingTick, modifiers);
+					}else{
+						// Stops the casting if it was interrupted, either by events or because the wand ran out of mana
+						player.stopActiveHand();
+					}
+				}
+			}else{
+				// Non-continuous spells need to check they actually have a charge-up since ALL spells call setActiveHand
+				if(chargeup > 0 && useTick == chargeup){
+					// Once the spell is charged, it's exactly the same as in onItemRightClick
+					cast(stack, spell, player, player.getActiveHand(), 0, modifiers);
+				}
+			}
+		}
+	}
 
 	@Override
 	public Spell getCurrentSpell(ItemStack stack) {
@@ -348,8 +345,27 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 
 	@Override
 	public boolean canCast(ItemStack stack, Spell spell, EntityPlayer caster, EnumHand hand, int castingTick, SpellModifiers modifiers) {
-		return false;
+		// Spells can only be cast if the casting events aren't cancelled...
+		if(castingTick == 0){
+			if(MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(SpellCastEvent.Source.WAND, spell, caster, modifiers))) return false;
+		}else{
+			if(MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Tick(SpellCastEvent.Source.WAND, spell, caster, modifiers, castingTick))) return false;
+		}
+
+		int cost = (int)(spell.getCost() * modifiers.get(SpellModifiers.COST) + 0.1f); // Weird floaty rounding
+
+		// As of wizardry 4.2 mana cost is only divided over two intervals each second
+		if(spell.isContinuous) cost = getDistributedCost(cost, castingTick);
+
+		// ...and the wand has enough mana to cast the spell...
+		return cost <= this.getMana(stack) // This comes first because it changes over time
+				// ...and the wand is the same tier as the spell or higher...
+				&& spell.getTier().level <= this.tier.level
+				// ...and either the spell is not in cooldown or the player is in creative mode
+				&& (WandHelper.getCurrentCooldown(stack) == 0 || caster.isCreative());
 	}
+
+	//--------------------------  IWorkbenchItem implementation  --------------------------//
 
 	@Override
 	public boolean cast(ItemStack stack, Spell spell, EntityPlayer caster, EnumHand hand, int castingTick, SpellModifiers modifiers) {
@@ -376,7 +392,7 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 				// Mana cost
 				int cost = (int) (spell.getCost() * modifiers.get(SpellModifiers.COST) + 0.1f); // Weird floaty rounding
 				// As of wizardry 4.2 mana cost is only divided over two intervals each second
-				if (spell.isContinuous) { cost = WizardClassWeaponHelper.getDistributedCost(cost, castingTick); }
+				if (spell.isContinuous) { cost = getDistributedCost(cost, castingTick); }
 
 				if (cost > 0) {
 					// wand
@@ -431,8 +447,6 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 
 		return false;
 	}
-
-	//--------------------------  IWorkbenchItem implementation  --------------------------//
 
 	@Override
 	public boolean showSpellHUD(EntityPlayer player, ItemStack stack) {
@@ -513,65 +527,67 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 	@Override
 	public boolean onApplyButtonPressed(EntityPlayer player, Slot centre, Slot crystals, Slot upgrade, Slot[] spellBooks) {
 
-//		boolean changed = false; // Used for advancements
-//
-//		if (upgrade.getHasStack()) {
-//			ItemStack original = centre.getStack().copy();
-//			centre.putStack(this.applyUpgrade(player, centre.getStack(), upgrade.getStack()));
-//			changed = !ItemStack.areItemStacksEqual(centre.getStack(), original);
-//		}
-//
-//		// Reads NBT spell metadata array to variable, edits this, then writes it back to NBT.
-//		// Original spells are preserved; if a slot is left empty the existing spell binding will remain.
-//		// Accounts for spells which cannot be applied because they are above the sword's tier; these spells
-//		// will not bind but the existing spell in that slot will remain and other applicable spells will
-//		// be bound as normal, along with any upgrades and crystals.
-//		Spell[] spells = WandHelper.getSpells(centre.getStack());
-//
-//		if (spells.length <= 0) {
-//			// Base value here because if the spell array doesn't exist, the sword can't possibly have attunement upgrades
-//			spells = new Spell[TOME_BASE_SPELL_SLOTS];
-//		}
-//
-//		for (int i = 0; i < spells.length; i++) {
-//			if (spellBooks[i].getStack() != ItemStack.EMPTY) {
-//
-//				Spell spell = Spell.byMetadata(spellBooks[i].getStack().getItemDamage());
-//				// If the sword is powerful enough for the spell, it's not already bound to that slot and it's enabled for swords
-//				if (!(spell.getTier().level > this.tier.level) && spells[i] != spell && spell.isEnabled(SpellProperties.Context.WANDS)) {
-//					spells[i] = spell;
-//					changed = true;
-//				}
-//			}
-//		}
-//
-//		WandHelper.setSpells(centre.getStack(), spells);
-//
-//		// Charges wand by appropriate amount
-//		if (hasManaStorage(centre.getStack()) && crystals.getStack() != ItemStack.EMPTY && !this.isManaFull(centre.getStack())) {
-//
-//			int chargeDepleted = this.getManaCapacity(centre.getStack()) - this.getMana(centre.getStack());
-//
-//			int manaPerItem = Constants.MANA_PER_CRYSTAL;
-//			if (crystals.getStack().getItem() == WizardryItems.crystal_shard) { manaPerItem = Constants.MANA_PER_SHARD; }
-//			if (crystals.getStack().getItem() == WizardryItems.grand_crystal) { manaPerItem = Constants.GRAND_CRYSTAL_MANA; }
-//
-//			if (crystals.getStack().getCount() * manaPerItem < chargeDepleted) {
-//				// If there aren't enough crystals to fully charge the wand
-//				this.rechargeMana(centre.getStack(), crystals.getStack().getCount() * manaPerItem);
-//				crystals.decrStackSize(crystals.getStack().getCount());
-//
-//			} else {
-//				// If there are excess crystals (or just enough)
-//				this.setMana(centre.getStack(), this.getManaCapacity(centre.getStack()));
-//				crystals.decrStackSize((int) Math.ceil(((double) chargeDepleted) / manaPerItem));
-//			}
-//
-//			changed = true;
-//		}
+		boolean changed = false; // Used for advancements
 
-		return false;
+		if (upgrade.getHasStack()) {
+			ItemStack original = centre.getStack().copy();
+			centre.putStack(this.applyUpgrade(player, centre.getStack(), upgrade.getStack()));
+			changed = !ItemStack.areItemStacksEqual(centre.getStack(), original);
+		}
+
+		// Reads NBT spell metadata array to variable, edits this, then writes it back to NBT.
+		// Original spells are preserved; if a slot is left empty the existing spell binding will remain.
+		// Accounts for spells which cannot be applied because they are above the wand's tier; these spells
+		// will not bind but the existing spell in that slot will remain and other applicable spells will
+		// be bound as normal, along with any upgrades and crystals.
+		Spell[] spells = WandHelper.getSpells(centre.getStack());
+
+		if (spells.length <= 0) {
+			// Base value here because if the spell array doesn't exist, the wand can't possibly have attunement upgrades
+			spells = new Spell[ItemWand.BASE_SPELL_SLOTS];
+		}
+
+		for (int i = 0; i < spells.length; i++) {
+			if (spellBooks[i].getStack() != ItemStack.EMPTY) {
+
+				Spell spell = Spell.byMetadata(spellBooks[i].getStack().getItemDamage());
+				// If the wand is powerful enough for the spell, it's not already bound to that slot and it's enabled for wands
+				if (!(spell.getTier().level > this.tier.level) && spells[i] != spell && spell.isEnabled(SpellProperties.Context.WANDS)) {
+					spells[i] = spell;
+					changed = true;
+				}
+			}
+		}
+
+		WandHelper.setSpells(centre.getStack(), spells);
+
+		// Charges wand by appropriate amount
+		if (crystals.getStack() != ItemStack.EMPTY && !this.isManaFull(centre.getStack())) {
+
+			int chargeDepleted = this.getManaCapacity(centre.getStack()) - this.getMana(centre.getStack());
+
+			int manaPerItem = Constants.MANA_PER_CRYSTAL;
+			if (crystals.getStack().getItem() == WizardryItems.crystal_shard) { manaPerItem = Constants.MANA_PER_SHARD; }
+			if (crystals.getStack().getItem() == WizardryItems.grand_crystal) { manaPerItem = Constants.GRAND_CRYSTAL_MANA; }
+
+			if (crystals.getStack().getCount() * manaPerItem < chargeDepleted) {
+				// If there aren't enough crystals to fully charge the wand
+				this.rechargeMana(centre.getStack(), crystals.getStack().getCount() * manaPerItem);
+				crystals.decrStackSize(crystals.getStack().getCount());
+
+			} else {
+				// If there are excess crystals (or just enough)
+				this.setMana(centre.getStack(), this.getManaCapacity(centre.getStack()));
+				crystals.decrStackSize((int) Math.ceil(((double) chargeDepleted) / manaPerItem));
+			}
+
+			changed = true;
+		}
+
+		return changed;
 	}
+
+	//--------------------------  IManaStoringItem implementation  --------------------------//
 
 	/**
 	 * Returns whether the tooltip (dark grey box) should be drawn when this item is in an arcane workbench. Only
@@ -583,8 +599,6 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 	@Override
 	public boolean showTooltip(ItemStack stack) { return true; }
 
-	//--------------------------  IManaStoringItem implementation  --------------------------//
-
 	@Override
 	public int getMana(ItemStack stack) { return getManaCapacity(stack) - getDamage(stack); }
 
@@ -595,9 +609,7 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 	}
 
 	@Override
-	public int getManaCapacity(ItemStack stack) {
-		return this.getMaxDamage(stack);
-	}
+	public int getManaCapacity(ItemStack stack) { return this.getMaxDamage(stack); }
 
 	@Override
 	public boolean showManaInWorkbench(EntityPlayer player, ItemStack stack) {
@@ -624,12 +636,12 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 		return IManaStoringItem.super.isManaEmpty(stack);
 	}
 
+	//--------------------------  Helper methods  --------------------------//
+
 	@Override
 	public float getFullness(ItemStack stack) {
 		return IManaStoringItem.super.getFullness(stack);
 	}
-
-	//--------------------------  Helper methods  --------------------------//
 
 	/**
 	 * Returns a SpellModifiers object with the appropriate modifiers applied for the given ItemStack and Spell.
@@ -681,10 +693,6 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 		//		modifiers.set(SpellModifiers.PROGRESSION, progressionModifier, false);
 
 		return modifiers;
-	}
-
-	private static EnumHand getOtherHandForSword(ItemStack stack, EntityLivingBase entity) {
-		return entity.getHeldItemMainhand().getItem() instanceof ItemSageTome ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
 	}
 }
 

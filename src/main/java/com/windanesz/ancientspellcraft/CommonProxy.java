@@ -98,4 +98,6 @@ public class CommonProxy {
 	public String getIceCreamDisplayName(ItemStack stack) {
 		return I18n.translateToLocal("item.ancientspellcraft:ice_cream.name").trim();
 	}
+
+	public void tweakGuiSpellForTomes() {}
 }

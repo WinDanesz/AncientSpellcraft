@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
+import com.windanesz.ancientspellcraft.item.ItemSageTome;
 import com.windanesz.ancientspellcraft.material.IDevoritium;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
@@ -54,6 +55,11 @@ public class AnimateWeapon extends Animate {
 
 		if (caster.getHeldItemOffhand().getItem() instanceof IDevoritium) {
 			if (!world.isRemote) { caster.sendStatusMessage(new TextComponentTranslation("spell." + this.getUnlocalisedName() + ".devoritium_item"), true); }
+		}
+
+		if (caster.getHeldItemOffhand().getItem() instanceof ItemSageTome) {
+			if(!world.isRemote) caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:animate_item.spell_too_weak"), true);
+			return false;
 		}
 
 		return super.cast(world, caster, hand, ticksInUse, modifiers);

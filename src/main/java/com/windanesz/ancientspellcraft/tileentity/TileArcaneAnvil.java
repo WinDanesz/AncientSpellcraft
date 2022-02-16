@@ -197,9 +197,6 @@ public class TileArcaneAnvil extends TileEntity implements IInventory {
 			inventory.set(ContainerArcaneAnvil.RESULT_SLOT, getResultItem());
 		}
 
-		//inventory.set(ContainerArcaneAnvil.INPUT_SLOT_0, ItemStack.EMPTY);
-		//inventory.set(ContainerArcaneAnvil.INPUT_SLOT_1, ItemStack.EMPTY);
-
 		markDirty();
 	}
 

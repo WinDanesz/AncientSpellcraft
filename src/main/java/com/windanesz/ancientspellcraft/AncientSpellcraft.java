@@ -136,4 +136,5 @@ public class AncientSpellcraft {
 	public void serverStarting(FMLServerStartingEvent event) {
 		event.registerServerCommand(new CommandListBiomes());
 	}
+
 }

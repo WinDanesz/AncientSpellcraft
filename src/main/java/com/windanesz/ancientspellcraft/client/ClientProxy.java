@@ -25,15 +25,15 @@ import com.windanesz.ancientspellcraft.client.renderer.entity.RenderWisp;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderWolfMinion;
 import com.windanesz.ancientspellcraft.client.renderer.entity.layers.LayerFire;
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderRune;
+import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderSageLectern;
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderSkullWatch;
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderTileSentinel;
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderTileSphereCognizance;
 import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
-import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.entity.EntityMageLight;
-import com.windanesz.ancientspellcraft.entity.living.EntityVolcano;
 import com.windanesz.ancientspellcraft.entity.EntityWisp;
 import com.windanesz.ancientspellcraft.entity.construct.EntityAntiMagicField;
+import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBarterConstruct;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;
 import com.windanesz.ancientspellcraft.entity.construct.EntityHealingSigil;
@@ -42,15 +42,14 @@ import com.windanesz.ancientspellcraft.entity.construct.EntitySpellTicker;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
 import com.windanesz.ancientspellcraft.entity.construct.EntityTransportationPortal;
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
-import com.windanesz.ancientspellcraft.entity.living.EntityClassWizard;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
-import com.windanesz.ancientspellcraft.entity.living.EntityEvilWizardAS;
 import com.windanesz.ancientspellcraft.entity.living.EntityFireAnt;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonHorseMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpellCaster;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
 import com.windanesz.ancientspellcraft.entity.living.EntityVoidCreeper;
+import com.windanesz.ancientspellcraft.entity.living.EntityVolcano;
 import com.windanesz.ancientspellcraft.entity.living.EntityWizardMerchant;
 import com.windanesz.ancientspellcraft.entity.living.EntityWolfMinion;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityAOEProjectile;
@@ -70,6 +69,7 @@ import com.windanesz.ancientspellcraft.packet.PacketMushroomActivation;
 import com.windanesz.ancientspellcraft.packet.PacketStartRitual;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
 import com.windanesz.ancientspellcraft.tileentity.TileRune;
+import com.windanesz.ancientspellcraft.tileentity.TileSageLectern;
 import com.windanesz.ancientspellcraft.tileentity.TileSentinel;
 import com.windanesz.ancientspellcraft.tileentity.TileSkullWatch;
 import com.windanesz.ancientspellcraft.tileentity.TileSphereCognizance;
@@ -77,11 +77,9 @@ import com.windanesz.ancientspellcraft.util.ASParticles;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.client.particle.ParticleWizardry;
 import electroblob.wizardry.client.renderer.entity.RenderBlank;
-import electroblob.wizardry.client.renderer.entity.RenderEvilWizard;
 import electroblob.wizardry.client.renderer.entity.RenderMagicArrow;
 import electroblob.wizardry.client.renderer.entity.RenderProjectile;
 import electroblob.wizardry.client.renderer.entity.RenderSigil;
-import electroblob.wizardry.client.renderer.entity.RenderWizard;
 import electroblob.wizardry.client.renderer.entity.layers.LayerTiledOverlay;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.ISpellCastingItem;
@@ -201,6 +199,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileSkullWatch.class, new RenderSkullWatch());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileSentinel.class, new RenderTileSentinel());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileRune.class, new RenderRune());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileSageLectern.class, new RenderSageLectern());
 
 		////////// Runes on ground //////////
 		RenderingRegistry.registerEntityRenderingHandler(EntityTransportationPortal.class, manager -> new RenderSigil(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/transportation_portal.png"), 0.0f, false));
@@ -214,8 +213,8 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityDevoritiumArrow.class, RenderDevoritiumArrow::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellCaster.class, RenderBlank::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityWizardMerchant.class, RenderMerchantWizard::new);
-		RenderingRegistry.registerEntityRenderingHandler(EntityClassWizard.class, RenderWizard::new);
-		RenderingRegistry.registerEntityRenderingHandler(EntityEvilWizardAS.class, RenderEvilWizard::new);
+		//RenderingRegistry.registerEntityRenderingHandler(EntityClassWizard.class, RenderWizard::new);
+		//RenderingRegistry.registerEntityRenderingHandler(EntityEvilWizardAS.class, RenderEvilWizard::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityEvilClassWizard.class, RenderEvilClassWizard::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityBarterConstruct.class, RenderBlank::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpellTicker.class, RenderBlank::new);
@@ -347,5 +346,10 @@ public class ClientProxy extends CommonProxy {
 
 	public void registerAtlasMarkers(){
 		ASAntiqueAtlasIntegration.registerMarkers();
+	}
+
+	@Override
+	public void tweakGuiSpellForTomes() {
+		Wizardry.settings.showSpellHUD = false;
 	}
 }

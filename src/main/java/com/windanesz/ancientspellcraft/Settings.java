@@ -287,6 +287,11 @@ public class Settings {
 		@Config.Comment("If true, Transportation Portals can transport non-player entities. If false, only players can use the portal.")
 		public boolean transportation_portal_teleports_any_entites = true;
 
+		@Config.Name("Sage Lectern Allowed Item List")
+		@Config.Comment("List of item registry names that are allowed to be placed on the sage lectern. Each entry has a format of 'modid:item_name', example: antiqueatlas:antique_atlas. All spell books are allowed by default, without listing them."
+				+ "NOTE that this probably won't work with many items as they expect the player to hold the item in their hand to function, so only experiment with this in a testworld.")
+		@Config.RequiresMcRestart
+		public String[] sage_lectern_item_whitelist = {"antiqueatlas:antique_atlas"};
 	}
 
 	public static class ClientSettings {

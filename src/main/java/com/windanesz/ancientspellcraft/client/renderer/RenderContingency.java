@@ -29,7 +29,7 @@ public class RenderContingency {
 
 	private static final int SPELL_ICON_SIZE = 16;
 
-	private static final ResourceLocation CONTIGENCY_ARROW = new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/contingency_arrow.png");
+	private static final ResourceLocation CONTINGENCY_ARROW = new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/contingency_arrow.png");
 
 	@SubscribeEvent
 	public static void draw(RenderGameOverlayEvent.Post event) {
@@ -70,7 +70,7 @@ public class RenderContingency {
 					renderRect(mc, x, y, 0, 0, SPELL_ICON_SIZE, SPELL_ICON_SIZE, SPELL_ICON_SIZE, SPELL_ICON_SIZE, entry.getKey().getIcon());
 
 					// arrow
-					renderRect(mc, x + 16, y, 0, 0, SPELL_ICON_SIZE, SPELL_ICON_SIZE, SPELL_ICON_SIZE, SPELL_ICON_SIZE, CONTIGENCY_ARROW);
+					renderRect(mc, x + 16, y, 0, 0, SPELL_ICON_SIZE, SPELL_ICON_SIZE, SPELL_ICON_SIZE, SPELL_ICON_SIZE, CONTINGENCY_ARROW);
 
 					// stored spell
 					renderRect(mc, x + 32, y, 0, 0, SPELL_ICON_SIZE, SPELL_ICON_SIZE, SPELL_ICON_SIZE, SPELL_ICON_SIZE, entry.getValue().getIcon());

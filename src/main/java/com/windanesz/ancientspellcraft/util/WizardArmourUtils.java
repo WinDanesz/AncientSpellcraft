@@ -21,7 +21,7 @@ public final class WizardArmourUtils {
 	 * Returns whether the given entity is wearing a full set of wizard armour of the given class and element.
 	 *
 	 * @param entity      The entity to query.
-	 * @param element     The element to check, or null to accept any element as long as they are all the same.
+	 * @param element     The element to check, or null to accept any element as long as they are all the same element set.
 	 * @param armourClass The class to check, or null to accept any class as long as they are all the same.
 	 * @return True if the entity is wearing a full set of the given element and class, false otherwise.
 	 * @author: Electroblob

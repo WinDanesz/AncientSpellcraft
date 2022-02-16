@@ -2,12 +2,10 @@ package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
-import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.entity.EntityMageLight;
-import com.windanesz.ancientspellcraft.entity.living.EntityOrdinarySpiderMinion;
-import com.windanesz.ancientspellcraft.entity.living.EntityVolcano;
 import com.windanesz.ancientspellcraft.entity.EntityWisp;
 import com.windanesz.ancientspellcraft.entity.construct.EntityAntiMagicField;
+import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBarterConstruct;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;
 import com.windanesz.ancientspellcraft.entity.construct.EntityHealingSigil;
@@ -18,14 +16,15 @@ import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
 import com.windanesz.ancientspellcraft.entity.construct.EntityTransportationPortal;
 import com.windanesz.ancientspellcraft.entity.construct.EntityVenusFlyTrap;
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
-import com.windanesz.ancientspellcraft.entity.living.EntityClassWizard;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
 import com.windanesz.ancientspellcraft.entity.living.EntityFireAnt;
+import com.windanesz.ancientspellcraft.entity.living.EntityOrdinarySpiderMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonHorseMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpellCaster;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
 import com.windanesz.ancientspellcraft.entity.living.EntityVoidCreeper;
+import com.windanesz.ancientspellcraft.entity.living.EntityVolcano;
 import com.windanesz.ancientspellcraft.entity.living.EntityWizardMerchant;
 import com.windanesz.ancientspellcraft.entity.living.EntityWolfMinion;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityAOEProjectile;
@@ -154,7 +153,7 @@ public class AncientSpellcraftEntities {
 //			registry.register(createEntry(EntityEvilWizardAS.class, "evil_wizard_as", AncientSpellcraft.MODID, TrackingType.LIVING).build());
 //		}
 		registry.register(createEntry(EntityWizardMerchant.class, "wizardmerchant", AncientSpellcraft.MODID, TrackingType.LIVING).build());
-		registry.register(createEntry(EntityClassWizard.class, "class_wizard", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());
+		//registry.register(createEntry(EntityClassWizard.class, "class_wizard", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());
 		registry.register(createEntry(EntityEvilClassWizard.class, 		"evil_class_wizard", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0x290404, 0xee9312)
 				// For reference: 5, 1, 1 are the parameters for the witch in vanilla
 				.spawn(EnumCreatureType.MONSTER, Settings.generalSettings.evil_class_wizard_spawn_rate, 1, 1, ForgeRegistries.BIOMES.getValuesCollection().stream()

@@ -290,40 +290,43 @@ public final class AncientSpellcraftItems {
 	public static final Item crystal_silver_ingot = placeholder();
 	public static final Item crystal_silver_nugget = placeholder();
 
-//	public static final Item sage_tome_novice_fire = placeholder();
-//	public static final Item sage_tome_apprentice_fire = placeholder();
-//	public static final Item sage_tome_advanced_fire = placeholder();
-//	public static final Item sage_tome_master_fire = placeholder();
-//
-//	public static final Item sage_tome_novice_ice = placeholder();
-//	public static final Item sage_tome_apprentice_ice = placeholder();
-//	public static final Item sage_tome_advanced_ice = placeholder();
-//	public static final Item sage_tome_master_ice = placeholder();
-//
-//	public static final Item sage_tome_novice_lightning = placeholder();
-//	public static final Item sage_tome_apprentice_lightning = placeholder();
-//	public static final Item sage_tome_advanced_lightning = placeholder();
-//	public static final Item sage_tome_master_lightning = placeholder();
-//
-//	public static final Item sage_tome_novice_necromancy = placeholder();
-//	public static final Item sage_tome_apprentice_necromancy = placeholder();
-//	public static final Item sage_tome_advanced_necromancy = placeholder();
-//	public static final Item sage_tome_master_necromancy = placeholder();
-//
-//	public static final Item sage_tome_novice_earth = placeholder();
-//	public static final Item sage_tome_apprentice_earth = placeholder();
-//	public static final Item sage_tome_advanced_earth = placeholder();
-//	public static final Item sage_tome_master_earth = placeholder();
-//
-//	public static final Item sage_tome_novice_sorcery = placeholder();
-//	public static final Item sage_tome_apprentice_sorcery = placeholder();
-//	public static final Item sage_tome_advanced_sorcery = placeholder();
-//	public static final Item sage_tome_master_sorcery = placeholder();
-//
-//	public static final Item sage_tome_novice_healing = placeholder();
-//	public static final Item sage_tome_apprentice_healing = placeholder();
-//	public static final Item sage_tome_advanced_healing = placeholder();
-//	public static final Item sage_tome_master_healing = placeholder();
+	public static final Item enchanted_filament = placeholder();
+	public static final Item enchanted_page = placeholder();
+
+	public static final Item sage_tome_novice_fire = placeholder();
+	public static final Item sage_tome_apprentice_fire = placeholder();
+	public static final Item sage_tome_advanced_fire = placeholder();
+	public static final Item sage_tome_master_fire = placeholder();
+
+	public static final Item sage_tome_novice_ice = placeholder();
+	public static final Item sage_tome_apprentice_ice = placeholder();
+	public static final Item sage_tome_advanced_ice = placeholder();
+	public static final Item sage_tome_master_ice = placeholder();
+
+	public static final Item sage_tome_novice_lightning = placeholder();
+	public static final Item sage_tome_apprentice_lightning = placeholder();
+	public static final Item sage_tome_advanced_lightning = placeholder();
+	public static final Item sage_tome_master_lightning = placeholder();
+
+	public static final Item sage_tome_novice_necromancy = placeholder();
+	public static final Item sage_tome_apprentice_necromancy = placeholder();
+	public static final Item sage_tome_advanced_necromancy = placeholder();
+	public static final Item sage_tome_master_necromancy = placeholder();
+
+	public static final Item sage_tome_novice_earth = placeholder();
+	public static final Item sage_tome_apprentice_earth = placeholder();
+	public static final Item sage_tome_advanced_earth = placeholder();
+	public static final Item sage_tome_master_earth = placeholder();
+
+	public static final Item sage_tome_novice_sorcery = placeholder();
+	public static final Item sage_tome_apprentice_sorcery = placeholder();
+	public static final Item sage_tome_advanced_sorcery = placeholder();
+	public static final Item sage_tome_master_sorcery = placeholder();
+
+	public static final Item sage_tome_novice_healing = placeholder();
+	public static final Item sage_tome_apprentice_healing = placeholder();
+	public static final Item sage_tome_advanced_healing = placeholder();
+	public static final Item sage_tome_master_healing = placeholder();
 
 
 	// below registry methods are courtesy of EB
@@ -423,6 +426,7 @@ public final class AncientSpellcraftItems {
 		registerItemBlock(registry, AncientSpellcraftBlocks.DIMENSION_BOUNDARY, new ItemBlock(AncientSpellcraftBlocks.DIMENSION_BOUNDARY));
 		registerItemBlock(registry, AncientSpellcraftBlocks.DIMENSION_FOCUS, new ItemBlock(AncientSpellcraftBlocks.DIMENSION_FOCUS));
 		registerItemBlock(registry, AncientSpellcraftBlocks.ARCANE_ANVIL, new ItemBlock(AncientSpellcraftBlocks.ARCANE_ANVIL));
+		registerItemBlock(registry, AncientSpellcraftBlocks.sage_lectern, new ItemBlock(AncientSpellcraftBlocks.sage_lectern));
 		//		registerItemBlock(registry, AncientSpellcraftBlocks.ANCIENT_DIMENSION_BOUNDARY, new ItemBlock(AncientSpellcraftBlocks.ANCIENT_DIMENSION_BOUNDARY));
 
 		registerItem(registry, "magic_shield", new ItemMagicShield(EnumRarity.EPIC));
@@ -571,6 +575,7 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "crystal_silver_nugget", new ItemArmourUpgradeMaterial());
 		registerItem(registry, "crystal_silver_ingot", new ItemArmourUpgradeMaterial());
 		registerItem(registry, "enchanted_filament", new ItemArmourUpgradeMaterial());
+		registerItem(registry, "enchanted_page", new ItemArmourUpgradeMaterial());
 
 		registerItem(registry, "wand_channeling", new Item().setMaxDamage(0).setCreativeTab(null));
 

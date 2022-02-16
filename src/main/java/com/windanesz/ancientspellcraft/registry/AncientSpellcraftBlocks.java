@@ -35,6 +35,7 @@ import com.windanesz.ancientspellcraft.block.BlockMushroomWither;
 import com.windanesz.ancientspellcraft.block.BlockPlacedRune;
 import com.windanesz.ancientspellcraft.block.BlockQuickSand;
 import com.windanesz.ancientspellcraft.block.BlockRuinedImbuementAltar;
+import com.windanesz.ancientspellcraft.block.BlockSageLectern;
 import com.windanesz.ancientspellcraft.block.BlockScribingDesk;
 import com.windanesz.ancientspellcraft.block.BlockSentinel;
 import com.windanesz.ancientspellcraft.block.BlockSkullWatch;
@@ -48,6 +49,7 @@ import com.windanesz.ancientspellcraft.tileentity.TileEntityMagicMushroom;
 import com.windanesz.ancientspellcraft.tileentity.TileEntityRevertingBlock;
 import com.windanesz.ancientspellcraft.tileentity.TileMageLight;
 import com.windanesz.ancientspellcraft.tileentity.TileRune;
+import com.windanesz.ancientspellcraft.tileentity.TileSageLectern;
 import com.windanesz.ancientspellcraft.tileentity.TileScribingDesk;
 import com.windanesz.ancientspellcraft.tileentity.TileSentinel;
 import com.windanesz.ancientspellcraft.tileentity.TileSkullWatch;
@@ -142,6 +144,7 @@ public class AncientSpellcraftBlocks {
 	public static final Block CONJURED_DIRT = placeholder();
 	public static final Block CONJURED_SNOW = placeholder();
 	public static final Block ARCANE_ANVIL = placeholder();
+	public static final Block sage_lectern = placeholder();
 
 
 	public static void registerBlock(IForgeRegistry<Block> registry, String name, Block block) {
@@ -210,6 +213,7 @@ public class AncientSpellcraftBlocks {
 		registerBlock(registry, "mushroom_explosive", new BlockMushroomExplosive());
 		registerBlock(registry, "mushroom_empowering", new BlockMushroomEmpowering());
 		registerBlock(registry, "arcane_anvil", new BlockArcaneAnvil());
+		registerBlock(registry, "sage_lectern", new BlockSageLectern());
 
 
 		registerBlock(registry, "quicksand", new BlockQuickSand());
@@ -233,6 +237,7 @@ public class AncientSpellcraftBlocks {
 		GameRegistry.registerTileEntity(TileScribingDesk.class, new ResourceLocation(AncientSpellcraft.MODID, "scribing_desk"));
 		GameRegistry.registerTileEntity(TileRune.class, new ResourceLocation(AncientSpellcraft.MODID, "placed_rune"));
 		GameRegistry.registerTileEntity(TileEntityMagicMushroom.class, new ResourceLocation(AncientSpellcraft.MODID, "magic_mushroom_tile"));
+		GameRegistry.registerTileEntity(TileSageLectern.class, new ResourceLocation(AncientSpellcraft.MODID, "sage_lectern"));
 
 		GameRegistry.registerTileEntity(TileEntityRevertingBlock.class, new ResourceLocation(AncientSpellcraft.MODID, "reverting_tile"));
 		GameRegistry.registerTileEntity(TileArcaneAnvil.class, new ResourceLocation(AncientSpellcraft.MODID, "arcane_anvil"));

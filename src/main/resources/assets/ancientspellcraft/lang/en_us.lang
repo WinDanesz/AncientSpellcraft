@@ -77,6 +77,7 @@ item.ancientspellcraft\:battlemage_sword_blade.name=Crystal Silver Blade
 item.ancientspellcraft\:crystal_silver_ingot.name=Crystal Silver Ingot
 item.ancientspellcraft\:crystal_silver_nugget.name=Crystal Silver Nugget
 item.ancientspellcraft\:enchanted_filament.name=Enchanted Filament
+item.ancientspellcraft\:enchanted_page.name=Enchanted Page
 wizard_armour_class.sage=Sage
 wizard_armour_class.battlemage=Battlemage
 wizard_armour_class.warlock=Warlock
@@ -242,7 +243,7 @@ gui.ancientspellcraft\:sphere_cognizance.no_book=Requires something to research
 gui.ancientspellcraft\:sphere_cognizance.no_crystal=Requires Magic Crystals
 gui.ancientspellcraft\:sphere_cognizance.research=Research
 gui.ancientspellcraft\:sphere_cognizance.too_few_crystals=Requires %s Magic Crystals
-
+tile.ancientspellcraft\:sage_lectern.failed_attempt_to_read_tome=A Sage Tome only opens for a true sage
 # item
 item.ancientspellcraft\:advanced_stone_fist.name=Stone Fist
 item.ancientspellcraft\:amulet_arcane_catalyst.desc=Transmutating spells always results in the same element as the spell being transmuted
@@ -1045,6 +1046,7 @@ tile.ancientspellcraft\:sphere_cognizance.desc=Desc
 tile.ancientspellcraft\:sphere_cognizance.name=Sphere of Cognizance
 tile.ancientspellcraft\:sphere_cognizance.tooltip=Can research Stone Tablets and Spell Books
 tile.ancientspellcraft\:sphere_cognizance.known_book=You already know this item
+tile.ancientspellcraft\:sage_lectern.name=Sage Lectern
 
 # tooltip
 tooltip.ancientspellcraft\:artefact_use.usage=Right click to use
@@ -1058,3 +1060,4 @@ tooltip.ancientspellcraft\:no_mana_source=No mana source
 integration.antiqueatlas.marker.ancientspellcraft.battlemage_camp=Battlemage Camp
 integration.antiqueatlas.marker.ancientspellcraft.battlemage_keep=Battlemage Keep
 integration.jei.category.ancientspellcraft\:arcane_anvil=Arcane Anvil
+integration.jei.category.ancientspellcraft\:sage_lectern=Sage Lectern
