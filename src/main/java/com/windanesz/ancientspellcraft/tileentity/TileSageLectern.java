@@ -2,14 +2,18 @@ package com.windanesz.ancientspellcraft.tileentity;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.block.BlockSageLectern;
+import com.windanesz.ancientspellcraft.client.gui.ContainerSageLectern;
 import com.windanesz.ancientspellcraft.item.ItemSageTome;
+import com.windanesz.ancientspellcraft.item.WizardClassWeaponHelper;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.util.WizardArmourUtils;
 import electroblob.wizardry.block.BlockReceptacle;
 import electroblob.wizardry.constants.Element;
+import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.util.NBTExtras;
 import electroblob.wizardry.util.ParticleBuilder;
+import electroblob.wizardry.util.WandHelper;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -136,6 +140,72 @@ public class TileSageLectern extends TileEntity implements ITickable, IInventory
 		return Element.MAGIC;
 	}
 
+	/**
+	 * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
+	 */
+	@Override
+	public void setInventorySlotContents(int slot, ItemStack stack) {
+
+		ItemStack itemstack = inventory.get(slot);
+		boolean flag = !stack.isEmpty() && stack.isItemEqual(itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack);
+		inventory.set(slot, stack);
+
+		if (!stack.isEmpty() && stack.getCount() > getInventoryStackLimit()) {
+			stack.setCount(getInventoryStackLimit());
+		}
+
+		if (slot == 0 || slot == 1) {
+			inventory.set(ContainerSageLectern.RESULT_SLOT, getResultItem());
+		}
+
+		markDirty();
+	}
+
+	private ItemStack getResultItem() {
+		ItemStack stack0 = this.inventory.get(ContainerSageLectern.INPUT_SLOT_0);
+		ItemStack stack1 = this.inventory.get(ContainerSageLectern.INPUT_SLOT_1);
+
+		// tome progression
+		if (stack0.getItem() instanceof ItemSageTome && stack1.getItem() == AncientSpellcraftItems.enchanted_page) {
+
+			Tier tier = ((ItemSageTome) stack0.getItem()).tier;
+
+			if (tier.ordinal() < Tier.MASTER.ordinal()) {
+
+				int progression = WandHelper.getProgression(stack0);
+
+				if (progression >= tier.next().getProgression()) {
+
+				}
+			}
+			// sage tome levelling
+//			if (tierLevel >= 0) {
+//				Tier tier = Tier.values()[tierLevel];
+//
+//			}
+			if (true)
+			throw new IllegalArgumentException("Incomplete feature..");
+
+			return getProgressedTome(stack1);
+		}
+
+		return ItemStack.EMPTY;
+	}
+
+	private ItemStack getProgressedTome(ItemStack tome) {
+		Tier tier = ((ItemSageTome) tome.getItem()).tier;
+		Element element = ((ItemSageTome) tome.getItem()).element;
+		ItemStack copy = tome.copy();
+
+
+
+		// Next tier tome
+		ItemStack progressedTome = new ItemStack(WizardClassWeaponHelper.getClassItemForTier(tier.next(), ItemWizardArmour.ArmourClass.SAGE, element));
+
+		progressedTome.setTagCompound(copy.getTagCompound());
+		return progressedTome;
+	}
+
 	///////////////////////// IInventory field implementations /////////////////////////
 
 	/**
@@ -190,19 +260,19 @@ public class TileSageLectern extends TileEntity implements ITickable, IInventory
 		return ItemStackHelper.getAndRemove(this.inventory, index);
 	}
 
-	/**
-	 * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
-	 */
-	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack) {
-		this.inventory.set(slot, stack);
-
-		if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
-			stack.setCount(this.getInventoryStackLimit());
-		}
-
-		this.markDirty();
-	}
+	//	/**
+	//	 * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
+	//	 */
+	//	@Override
+	//	public void setInventorySlotContents(int slot, ItemStack stack) {
+	//		this.inventory.set(slot, stack);
+	//
+	//		if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
+	//			stack.setCount(this.getInventoryStackLimit());
+	//		}
+	//
+	//		this.markDirty();
+	//	}
 
 	@Override
 	public int getInventoryStackLimit() {
