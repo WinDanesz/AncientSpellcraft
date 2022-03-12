@@ -10,7 +10,7 @@ buildscript {
         maven { url = "https://ajoberstar.org/bintray-backup/" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:5.+'
         classpath 'org.ajoberstar.grgit:grgit-gradle:3.1.1'
     }
     
@@ -90,6 +90,7 @@ repositories {
         // location of the maven that hosts JEI files
         name = "Progwml6 maven"
         url = "http://dvs1.progwml6.com/files/maven"
+        allowInsecureProtocol = true
     }
     flatDir {
         // location for sources
@@ -125,7 +126,7 @@ dependencies {
     implementation fg.deobf("curse.maven:ElectroblobsWizardry-${wizardry_projectid}:${wizardry_fileid}")
     implementation fg.deobf("curse.maven:baubles-${baubles_projectid}:${baubles_fileid}")
     //runtime "curse.maven:jei-${jei_projectid}:${jei_fileid}"
-    implementation fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}:api")
+    implementation fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}")
     implementation fg.deobf("curse.maven:artemislib-${artemislib_projectid}:${artemislib_fileid}")
     implementation fg.deobf("curse.maven:antique-atlas-${antiqueatlas_projectid}:${antiqueatlas_fileid}")
 
@@ -153,13 +154,13 @@ dependencies {
 
 }
 
-// (1.12.2 + FG3) resources issue fix by Gigaherz
-sourceSets {
-    main {
-        output.resourcesDir = file('build/combined')
-        java.outputDir = file('build/combined')
-    }
-}
+//// (1.12.2 + FG3) resources issue fix by Gigaherz
+//sourceSets {
+//    main {
+//        output.resourcesDir = file('build/combined')
+//        java.outputDir = file('build/combined')
+//    }
+//}
 
 //// Project manifest data ////
 
@@ -200,25 +201,25 @@ task sourceJar(type: Jar, dependsOn: classes) {
         ])
     }
 }
-
-processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", version.toString()
-    inputs.property "mcversion", project.mc_version.toString()
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-
-        // replace version and mcversion
-        expand 'version': version.toString(), 'mcversion': project.mc_version.toString()
-    }
-
-    // copy everything else except the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
-}
+//
+//processResources {
+//    // this will ensure that this task is redone when the versions change.
+//    inputs.property "version", version.toString()
+//    inputs.property "mcversion", project.mc_version.toString()
+//
+//    // replace stuff in mcmod.info, nothing else
+//    from(sourceSets.main.resources.srcDirs) {
+//        include 'mcmod.info'
+//
+//        // replace version and mcversion
+//        expand 'version': version.toString(), 'mcversion': project.mc_version.toString()
+//    }
+//
+//    // copy everything else except the mcmod.info
+//    from(sourceSets.main.resources.srcDirs) {
+//        exclude 'mcmod.info'
+//    }
+//}
 
 
 
