@@ -49,7 +49,7 @@ public class EntityHeart extends EntityMagicProjectile {
 
 				if (entityLivingBase.isEntityUndead()) {
 					entityLivingBase.attackEntityFrom(
-							MagicDamage.causeIndirectMagicDamage(this, this.getThrower(), DamageType.RADIANT).setProjectile(),
+							MagicDamage.causeIndirectMagicDamage(this, this.getThrower(), DamageType.MAGIC).setProjectile(),
 							getDamage());
 					playSound(AncientSpellcraftSounds.ENTITY_HEALING_HEALTH_DAMAGES, 0.9F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					if (world.isRemote)
@@ -115,6 +115,6 @@ public class EntityHeart extends EntityMagicProjectile {
 
 	@Override
 	public int getLifetime() {
-		return 80;
+		return 20;
 	}
 }
