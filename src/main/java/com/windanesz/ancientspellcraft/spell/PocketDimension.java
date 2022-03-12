@@ -34,7 +34,7 @@ public class PocketDimension extends Spell {
 
 	public PocketDimension() {
 		super(AncientSpellcraft.MODID, "pocket_dimension", EnumAction.BLOCK, true);
-		soundValues(1.0f, 1.2f, 0.2f);
+		soundValues(0.8f, 1.2f, 0.2f);
 		WizardData.registerStoredVariables(POCKET_DIM_LOCATION, POCKET_DIM_PREVIOUS_LOCATION);
 	}
 
@@ -58,7 +58,7 @@ public class PocketDimension extends Spell {
 			return teleportPlayer(caster);
 		}
 
-		this.playSound(world, caster, ticksInUse, -1, modifiers);
+		//this.playSound(world, caster, ticksInUse, -1, modifiers);
 		return true;
 	}
 
