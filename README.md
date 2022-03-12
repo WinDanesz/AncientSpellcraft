@@ -6,6 +6,6 @@ Ancient Spellcraft is a Minecraft modification which adds magical content to you
 
 **This mod requires the [Electroblob's Wizardry mod](https://www.curseforge.com/minecraft/mc-mods/electroblobs-wizardry) .**
 
-Concent added by this mod includes new entities, [spells](https://github.com/Electroblob77/Wizardry/wiki/Spell-Book), a new [element](https://github.com/Electroblob77/Wizardry/wiki/Elements), rituals, a radial spell casting GUI and many other features.
+Content added by this mod includes new entities, [spells](https://github.com/Electroblob77/Wizardry/wiki/Spell-Book), a new [element](https://github.com/Electroblob77/Wizardry/wiki/Elements), rituals, a radial spell casting GUI and many other features.
 
 
