@@ -1,0 +1,46 @@
+{
+    "pools": [
+        {
+            "name": "shrine_extras",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "ebwizardry:subsets/uncommon_artefacts",
+                    "weight": 5,
+                    "conditions": [
+                        {
+                            "condition": "ancientspellcraft:artefact_condition",
+                            "required_artefact": "ancientspellcraft:charm_clover",
+                            "chance": 0.05
+                        }
+                    ]
+                },
+                {
+                    "type": "loot_table",
+                    "name": "ebwizardry:subsets/rare_artefacts",
+                    "weight": 3,
+                    "conditions": [
+                        {
+                            "condition": "ancientspellcraft:artefact_condition",
+                            "required_artefact": "ancientspellcraft:charm_clover",
+                            "chance": 0.05
+                        }
+                    ]
+                },
+                {
+                    "type": "loot_table",
+                    "name": "ebwizardry:subsets/epic_artefacts",
+                    "weight": 1,
+                    "conditions": [
+                        {
+                            "condition": "ancientspellcraft:artefact_condition",
+                            "required_artefact": "ancientspellcraft:charm_clover",
+                            "chance": 0.05
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

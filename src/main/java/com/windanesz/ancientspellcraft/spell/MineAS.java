@@ -48,6 +48,12 @@ public class MineAS extends Mine {
 		// must use the original networkID of the base spell
 		int id = Settings.spellCompatSettings.mineSpellNetworkID;
 		ObfuscationReflectionHelper.setPrivateValue(Spell.class, this, id, "id");
+
+		// most call this or the networkIDs will be pushed, because calling super() increments the next ID again!
+		int nextSpellId = ObfuscationReflectionHelper.getPrivateValue(Spell.class, this, "nextSpellId");
+		//  decrement it back...
+		nextSpellId--;
+		ObfuscationReflectionHelper.setPrivateValue(Spell.class, this, nextSpellId, "nextSpellId");
 		////// Overrides //////
 
 	}

@@ -156,7 +156,35 @@ public final class AncientSpellcraftSpells {
 	public static final Spell fist_of_wind = placeholder();
 	public static final Spell healing_sigil = placeholder();
 	public static final Spell cauterize = placeholder();
+	public static final Spell turn_undead = placeholder();
+	public static final Spell singe = placeholder();
+	public static final Spell hunger = placeholder();
+	public static final Spell power_siphon = placeholder();
+	public static final Spell starve = placeholder();
+	public static final Spell empowering_link = placeholder();
+	public static final Spell withdraw_life = placeholder();
+	public static final Spell beanstalk = placeholder();
+	public static final Spell conjure_lava = placeholder();
+	public static final Spell lily_pad = placeholder();
+	public static final Spell mass_pyrokinesis = placeholder();
+	public static final Spell fluorescene = placeholder();
+	public static final Spell spring_charge = placeholder();
 	//public static final Spell heat_furnace = placeholder();
+
+
+	// Battlemage Spells (Runewords)
+	public static final Spell runeword_briar = placeholder();
+	public static final Spell runeword_displace = placeholder();
+	public static final Spell runeword_endure = placeholder();
+	public static final Spell runeword_sol = placeholder();
+	public static final Spell runeword_shatter = placeholder();
+	public static final Spell runeword_reach = placeholder();
+	public static final Spell runeword_pull = placeholder();
+	public static final Spell runeword_push = placeholder();
+	public static final Spell runeword_fury = placeholder();
+	public static final Spell runeword_sacrifice = placeholder();
+	public static final Spell runeword_suppress = placeholder();
+
 
 	@SuppressWarnings("unchecked")
 	@SubscribeEvent
@@ -376,8 +404,33 @@ public final class AncientSpellcraftSpells {
 		registry.register(new Cauterize());
 		registry.register(new MetabolismOverdrive());
 
-		// registry.register(new HeatFurnace()); TODO
+		// Runewords (Battlemage)
+		registry.register(new RunewordBriar());
+		registry.register(new RunewordDisplace());
+		registry.register(new RunewordEndure());
+		registry.register(new RunewordSol());
+		registry.register(new Runeword("runeword_shatter", SpellActions.POINT_UP, false).addProperties(Runeword.CHARGES));
+		registry.register(new RunewordBlast());
+		registry.register(new RunewordReach("runeword_pull", SpellActions.POINT_UP, false).setEffect(RunewordReach.Effect.PULL).addProperties(Runeword.CHARGES));
+		registry.register(new RunewordReach("runeword_reach", SpellActions.POINT_UP, false).setEffect(RunewordReach.Effect.NONE).addProperties(Runeword.CHARGES));
+		registry.register(new RunewordReach("runeword_push", SpellActions.POINT_UP, false).setEffect(RunewordReach.Effect.PUSH).addProperties(Runeword.CHARGES));
+		registry.register(new RunewordFury());
+		registry.register(new RunewordSuppress());
+		registry.register(new TurnUndead());
+		registry.register(new Singe());
+		registry.register(new Hunger());
+		registry.register(new PowerSiphon());
+		registry.register(new Starve());
+		registry.register(new EmpoweringLink());
+		registry.register(new WithdrawLife());
+		registry.register(new Beanstalk());
+		registry.register(new ConjureLava());
+		registry.register(new LilyPad());
+		registry.register(new MassPyrokinesis());
+		registry.register(new Fluorescene());
+		registry.register(new SpringCharge());
 
+		// registry.register(new HeatFurnace()); TODO
 		//registry.register(new WarpWeapon()); TODO
 
 		/// BASE SPELL MODIFICATION OVERRIDES  ///
@@ -390,8 +443,5 @@ public final class AncientSpellcraftSpells {
 		}
 
 		/// BASE SPELL MODIFICATION OVERRIDES ///
-
-		//		registry.register(new HandOfGaia());
-		//		registry.register(new WarpWood());
 	}
 }

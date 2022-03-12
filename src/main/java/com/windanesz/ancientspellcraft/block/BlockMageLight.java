@@ -22,13 +22,15 @@ public class BlockMageLight extends Block implements ITileEntityProvider {
 		super(Material.AIR);
 		setDefaultState(blockState.getBaseState());
 		setTickRandomly(false);
-		setLightLevel(0.85F);
+		setLightLevel(1F);
 	}
 
 	@Nullable
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileMageLight();
+		TileMageLight tile = new TileMageLight();
+		tile.setLifeTime(0);
+		return tile;
 	}
 
 	@Override

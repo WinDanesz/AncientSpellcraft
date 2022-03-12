@@ -74,7 +74,7 @@ public class SpellcastUtils {
 
 		} else {
 
-			if (spell.cast(player.world, player, EnumHand.MAIN_HAND, 0, new SpellModifiers())) {
+			if (spell.cast(player.world, player, EnumHand.MAIN_HAND, 0, modifiers)) {
 
 				MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.COMMAND, spell, player, modifiers));
 

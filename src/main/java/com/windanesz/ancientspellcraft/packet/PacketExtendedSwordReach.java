@@ -1,5 +1,7 @@
 package com.windanesz.ancientspellcraft.packet;
 
+import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
+import com.windanesz.ancientspellcraft.spell.RunewordReach;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -13,7 +15,7 @@ import javax.annotation.Nullable;
  * <b>[Client -> Server]</b> This packet is for control events such as buttons in GUIs and key presses.
  * Based on {@link electroblob.wizardry.packet.PacketControlInput} (author: Electroblob)
  */
-public class PacketSorcerySwordHit implements IMessageHandler<PacketSorcerySwordHit.Message, IMessage> {
+public class PacketExtendedSwordReach implements IMessageHandler<PacketExtendedSwordReach.Message, IMessage> {
 
 	@Override
 	public IMessage onMessage(Message message, MessageContext ctx) {
@@ -37,6 +39,12 @@ public class PacketSorcerySwordHit implements IMessageHandler<PacketSorcerySword
 //					projectilePos = projectilePos.add(player.getPositionVector());
 //					projectilePos = projectilePos.add(new Vec3d(0, 0, 1).rotatePitch((float) Math.toRadians(-player.rotationPitch)).rotateYaw((float) Math.toRadians(-player.rotationYawHead)));
 //					projectilePos = projectilePos.add(new Vec3d(0, 0.3, 0));
+					RunewordReach.Effect effect = RunewordReach.Effect.values()[message.effect];
+					effect.apply(player, target);
+
+					ItemBattlemageSword.spendCharge(player.getHeldItemMainhand(), effect.getRuneword(), 1);
+
+
 					player.attackTargetEntityWithCurrentItem(target);
 					//player.setPositionAndUpdate(projectilePos.x,projectilePos.y,projectilePos.z);
 //					player.getWorld().spawnEntity(entityLoc, EntityType.ARMOR_STAND);
@@ -55,13 +63,16 @@ public class PacketSorcerySwordHit implements IMessageHandler<PacketSorcerySword
 
 		public int targetEntityId;
 
+		public int effect;
+
 		// This constructor is required otherwise you'll get errors (used somewhere in fml through reflection)
 		public Message() {
 		}
 
-		public Message(@Nullable Entity attacker, @Nullable Entity target) {
+		public Message(@Nullable Entity attacker, @Nullable Entity target, RunewordReach.Effect effect) {
 			this.attackerEntityId = attacker == null ? -1 : attacker.getEntityId();
 			this.targetEntityId = target == null ? -1 : target.getEntityId();
+			this.effect = effect == null ? 0 : effect.ordinal();
 		}
 
 		@Override
@@ -69,12 +80,14 @@ public class PacketSorcerySwordHit implements IMessageHandler<PacketSorcerySword
 			// The order is important
 			this.attackerEntityId = buf.readInt();
 			this.targetEntityId = buf.readInt();
+			this.effect = buf.readInt();
 		}
 
 		@Override
 		public void toBytes(ByteBuf buf) {
 			buf.writeInt(attackerEntityId);
 			buf.writeInt(targetEntityId);
+			buf.writeInt(effect);
 		}
 	}
 }

@@ -1,0 +1,22 @@
+{
+    "enabled": {
+        "book": false,
+        "scroll": false,
+        "wands": false,
+        "npcs": false,
+        "dispensers": false,
+        "commands": true,
+        "treasure": false,
+        "trades": false,
+        "looting": false
+    },
+    "tier": "advanced",
+    "element": "magic",
+    "type": "alteration",
+    "cost": 35,
+    "chargeup": 0,
+    "cooldown": 600,
+    "base_properties": {
+        "effect_duration": 160
+    }
+}

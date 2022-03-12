@@ -9,13 +9,20 @@ import electroblob.wizardry.item.ItemSpellBook;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMerchant;
+import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ContainerMerchant;
+import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.client.event.GuiContainerEvent;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -57,6 +64,44 @@ public class ASWizardTradeTweaksHandler {
 //				tradeIndex = Math.max(tradeIndex - 1, 0);
 //			}
 //		}
+	}
+
+// WIP overlay for books to show their element with an artefact
+// TODO: this was having a problem of rendering BEHIND the itemstack
+	@SubscribeEvent
+	public static void onDrawScreenPostEvent(GuiScreenEvent.DrawScreenEvent.Post event){
+
+		if (event.getGui() instanceof GuiInventory && ((GuiInventory) event.getGui()).inventorySlots instanceof ContainerPlayer) {
+
+			ContainerPlayer containerPlayer = (ContainerPlayer) ((GuiInventory) event.getGui()).inventorySlots;
+
+			for (Slot slot : containerPlayer.inventorySlots) {
+				int ICON_WIDTH = 8;
+				int ICON_HEIGHT = 8;
+				int ANIMATION_FRAMES = 4;
+				int ANIMATION_FRAME_TIME = 2; // In ticks
+				int ANIMATION_PERIOD = 40; // In frame durations
+
+				if (slot.getHasStack()) {
+					if (slot.getStack() != ItemStack.EMPTY && slot.getStack().getItem() instanceof ItemSpellBook) {
+						int x = slot.xPos + 220;
+						int y = slot.yPos + 96;
+
+						RenderHelper.enableGUIStandardItemLighting();
+						GlStateManager.color(1, 1, 1);
+						Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(Wizardry.MODID, "textures/gui/container/new_spell_indicator.png"));
+						GlStateManager.disableCull();
+						int frame = Math.max(Minecraft.getMinecraft().player.ticksExisted / ANIMATION_FRAME_TIME % ANIMATION_PERIOD - (ANIMATION_PERIOD - ANIMATION_FRAMES), 0);
+						DrawingUtils.drawTexturedRect(x, y, 0, frame * ICON_HEIGHT, ICON_WIDTH, ICON_HEIGHT, ICON_WIDTH, ICON_HEIGHT * ANIMATION_FRAMES);
+
+						GlStateManager.enableCull();
+
+						RenderHelper.disableStandardItemLighting();
+					}
+				}
+			}
+
+		}
 	}
 
 	// Brute-force fix for crystals not showing up when a wizard is given a spell book in the trade GUI.
@@ -117,6 +162,8 @@ public class ASWizardTradeTweaksHandler {
 					}
 				}
 			}
+
+
 		}
 	}
 

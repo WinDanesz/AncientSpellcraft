@@ -12,6 +12,7 @@ import com.windanesz.ancientspellcraft.item.ItemAncientSpellcraftSpellBook;
 import com.windanesz.ancientspellcraft.item.ItemArmourUpgradeMaterial;
 import com.windanesz.ancientspellcraft.item.ItemBarterScroll;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
+import com.windanesz.ancientspellcraft.item.ItemBeltScrollHolder;
 import com.windanesz.ancientspellcraft.item.ItemBlockDevoritiumMaterial;
 import com.windanesz.ancientspellcraft.item.ItemChargedAstralDiamond;
 import com.windanesz.ancientspellcraft.item.ItemCoalBucket;
@@ -31,11 +32,13 @@ import com.windanesz.ancientspellcraft.item.ItemEnchantedNameTag;
 import com.windanesz.ancientspellcraft.item.ItemEternityPendant;
 import com.windanesz.ancientspellcraft.item.ItemEverfullManaFlask;
 import com.windanesz.ancientspellcraft.item.ItemEvergrowingCrystal;
+import com.windanesz.ancientspellcraft.item.ItemGlyphArtefact;
 import com.windanesz.ancientspellcraft.item.ItemGoldBag;
 import com.windanesz.ancientspellcraft.item.ItemHorn;
 import com.windanesz.ancientspellcraft.item.ItemIceCream;
 import com.windanesz.ancientspellcraft.item.ItemIceShield;
 import com.windanesz.ancientspellcraft.item.ItemKnowledgeOrb;
+import com.windanesz.ancientspellcraft.item.ItemKnowledgeScroll;
 import com.windanesz.ancientspellcraft.item.ItemMagicShield;
 import com.windanesz.ancientspellcraft.item.ItemManaRing;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
@@ -45,6 +48,7 @@ import com.windanesz.ancientspellcraft.item.ItemPhiloshopersStone;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
 import com.windanesz.ancientspellcraft.item.ItemRune;
+import com.windanesz.ancientspellcraft.item.ItemRunicPlate;
 import com.windanesz.ancientspellcraft.item.ItemSacredMace;
 import com.windanesz.ancientspellcraft.item.ItemSageTome;
 import com.windanesz.ancientspellcraft.item.ItemSetArtefact;
@@ -127,6 +131,10 @@ public final class AncientSpellcraftItems {
 	public static final Item ring_quicksand = placeholder();
 	public static final Item ring_mana_lesser = placeholder();
 	public static final Item ring_mana_greater = placeholder();
+	public static final Item ring_protector = placeholder();
+	public static final Item ring_devotion = placeholder();
+	public static final Item ring_withdraw_life = placeholder();
+	public static final Item ring_cloudwalker = placeholder();
 
 	/// amulet
 	public static final Item charm_cryostasis = placeholder();
@@ -141,6 +149,7 @@ public final class AncientSpellcraftItems {
 	public static final Item amulet_persistence = placeholder();
 	public static final Item amulet_healing_mushroom = placeholder();
 	public static final Item amulet_shield = placeholder();
+	public static final Item amulet_imbued_marble = placeholder();
 
 	/// charm
 	public static final Item charm_rift_bottle = placeholder();
@@ -195,6 +204,8 @@ public final class AncientSpellcraftItems {
 	//	public static final Item belt_druid = placeholder();
 	public static final Item belt_vortex = placeholder();
 	public static final Item belt_horse = placeholder();
+	public static final Item belt_scroll_holder = placeholder();
+	public static final Item belt_spring_charge = placeholder();
 
 	/// and head slot artefacts!
 	public static final Item head_curse = placeholder();
@@ -327,6 +338,14 @@ public final class AncientSpellcraftItems {
 	public static final Item sage_tome_apprentice_healing = placeholder();
 	public static final Item sage_tome_advanced_healing = placeholder();
 	public static final Item sage_tome_master_healing = placeholder();
+
+	public static final Item runic_plate = placeholder();
+
+	public static final Item charm_glyph_illumination = placeholder();
+	public static final Item charm_glyph_leeching = placeholder();
+	public static final Item charm_glyph_antigravity = placeholder();
+	public static final Item charm_glyph_vitality = placeholder();
+	public static final Item charm_glyph_warden = placeholder();
 
 
 	// below registry methods are courtesy of EB
@@ -473,6 +492,10 @@ public final class AncientSpellcraftItems {
 
 		registerItem(registry, "ring_mana_lesser", new ItemManaRing(EnumRarity.UNCOMMON, ItemArtefact.Type.RING, 500));
 		registerItem(registry, "ring_mana_greater", new ItemManaRing(EnumRarity.RARE, ItemArtefact.Type.RING, 1000));
+		registerItem(registry, "ring_protector", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_devotion", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_withdraw_life", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_cloudwalker", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 
 		/// amulet
 		registerItem(registry, "amulet_mana", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
@@ -486,6 +509,7 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "amulet_arcane_catalyst", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_healing_mushroom", new ItemAmberMushroomAmulet(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_shield", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_imbued_marble", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 
 		/// charm
 		registerItem(registry, "charm_seed_bag", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
@@ -529,12 +553,15 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "charm_cube_phasing", new ItemCubePhasing(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_spectral_army", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_spectral_tome", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_clover", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "scepter_mind_control", new ItemOverlordScepter());
 
 		registerItem(registry, "belt_enchanter", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
 		registerItem(registry, "belt_stone", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
 		registerItem(registry, "belt_vortex", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
 		registerItem(registry, "belt_horse", new ItemNewArtefact(EnumRarity.UNCOMMON, ItemNewArtefact.AdditionalType.BELT));
+		registerItem(registry, "belt_scroll_holder", new ItemBeltScrollHolder(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
+		registerItem(registry, "belt_spring_charge", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
 
 		registerItem(registry, "head_curse", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.HEAD));
 		registerItem(registry, "head_merchant", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.HEAD));
@@ -591,6 +618,7 @@ public final class AncientSpellcraftItems {
 
 		registerItem(registry, "transmutation_scroll", new ItemTransmutationScroll());
 		registerItem(registry, "bartering_scroll", new ItemBarterScroll());
+		registerItem(registry, "knowledge_scroll", new ItemKnowledgeScroll());
 
 		registerItem(registry, "blank_rune", new Item().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT).setMaxStackSize(16));
 		registerItem(registry, "rune_feoh", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
@@ -666,6 +694,14 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "sage_tome_apprentice_healing", new ItemSageTome(Tier.APPRENTICE, Element.HEALING));
 		registerItem(registry, "sage_tome_advanced_healing", new ItemSageTome(Tier.ADVANCED, Element.HEALING));
 		registerItem(registry, "sage_tome_master_healing", new ItemSageTome(Tier.MASTER, Element.HEALING));
+
+		registerItem(registry, "runic_plate", new ItemRunicPlate(), true);
+
+		registerItem(registry, "charm_glyph_illumination", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_leeching", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_antigravity", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_vitality", new ItemGlyphArtefact.ItemGlyphViality(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_warden", new ItemGlyphArtefact.ItemGlyphWarden(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 
 	}
 

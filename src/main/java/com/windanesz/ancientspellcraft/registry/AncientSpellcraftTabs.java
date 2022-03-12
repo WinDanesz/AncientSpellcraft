@@ -1,5 +1,9 @@
 package com.windanesz.ancientspellcraft.registry;
 
+import electroblob.wizardry.item.ItemScroll;
+import electroblob.wizardry.item.ItemSpellBook;
+import electroblob.wizardry.registry.WizardryTabs;
+import electroblob.wizardry.spell.Spell;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
@@ -18,6 +22,27 @@ public final class AncientSpellcraftTabs {
 		}
 	};
 
+	public static final CreativeTabs CLASS_SPELLS = new WizardryTabs.CreativeTabSorted("ancientspellcraftclassspells",
+
+			(stack1, stack2) -> {
+
+				if((stack1.getItem() instanceof ItemSpellBook && stack2.getItem() instanceof ItemSpellBook)
+						|| (stack1.getItem() instanceof ItemScroll && stack2.getItem() instanceof ItemScroll)){
+
+					Spell spell1 = Spell.byMetadata(stack1.getItemDamage());
+					Spell spell2 = Spell.byMetadata(stack2.getItemDamage());
+
+					return spell1.compareTo(spell2);
+
+				}else if(stack1.getItem() instanceof ItemScroll){
+					return 1;
+				}else if(stack2.getItem() instanceof ItemScroll){
+					return -1;
+				}
+				return 0;
+			},
+
+			true);
 
 	public static final CreativeTabs ANCIENTSPELLCRAFT_GEAR = new AncientSpellcraftTab("ancientspellcraftgear") {
 		@Override
@@ -43,4 +68,6 @@ public final class AncientSpellcraftTabs {
 			return new ItemStack(AncientSpellcraftItems.charm_mana_orb);
 		}
 	}
+
+
 }

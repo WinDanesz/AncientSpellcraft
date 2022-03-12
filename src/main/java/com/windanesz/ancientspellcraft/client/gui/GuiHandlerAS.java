@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.client.gui;
 
 import com.windanesz.ancientspellcraft.item.ItemAncientSpellcraftSpellBook;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
+import com.windanesz.ancientspellcraft.item.ItemRunicPlate;
 import com.windanesz.ancientspellcraft.item.ItemSageTome;
 import com.windanesz.ancientspellcraft.tileentity.TileArcaneAnvil;
 import com.windanesz.ancientspellcraft.tileentity.TileSageLectern;
@@ -30,6 +31,7 @@ public class GuiHandlerAS implements IGuiHandler {
 	public static final int ARCANE_ANVIL = nextGuiId++;
 	public static final int SAGE_LECTERN = nextGuiId++;
 	public static final int SPELL_GUI_LECTERN = nextGuiId++;
+	public static final int RUNIC_PLATE = nextGuiId++;
 
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
@@ -118,6 +120,14 @@ public class GuiHandlerAS implements IGuiHandler {
 					return new GuiSageLectern(player, player.inventory, (TileSageLectern) tileEntity);
 				}
 
+			}
+		}
+
+		if (id == RUNIC_PLATE) {
+			if (player.getHeldItemMainhand().getItem() instanceof ItemRunicPlate) {
+				return new GuiRunicPlate(player.getHeldItemMainhand());
+			} else if (player.getHeldItemOffhand().getItem() instanceof ItemRunicPlate) {
+				return new GuiRunicPlate(player.getHeldItemOffhand());
 			}
 		}
 		return null;

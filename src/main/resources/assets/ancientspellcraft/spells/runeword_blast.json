@@ -1,0 +1,22 @@
+{
+    "enabled": {
+        "book": false,
+        "scroll": false,
+        "wands": false,
+        "npcs": false,
+        "dispensers": false,
+        "commands": true,
+        "treasure": false,
+        "trades": false,
+        "looting": false
+    },
+    "tier": "advanced",
+    "element": "magic",
+    "type": "attack",
+    "cost": 40,
+    "chargeup": 0,
+    "cooldown": 60,
+    "base_properties": {
+        "charges": 1
+    }
+}

@@ -8,10 +8,15 @@ buildscript {
         jcenter()
         mavenCentral()
         maven { url = "https://ajoberstar.org/bintray-backup/" }
+        maven {
+            name = 'FancyGradle'
+            url = 'https://gitlab.com/api/v4/projects/26758973/packages/maven'
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:5.+'
         classpath 'org.ajoberstar.grgit:grgit-gradle:3.1.1'
+        classpath group: 'wtf.gofancy.fancygradle', name: 'wtf.gofancy.fancygradle.gradle.plugin', version: '1.1.1-6'
     }
     
     repositories.each {
@@ -26,6 +31,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 apply plugin: org.ajoberstar.grgit.gradle.GrgitPlugin
+apply plugin: 'wtf.gofancy.fancygradle'
 
 
 //// Project Settings ////
@@ -364,4 +370,12 @@ task replaceTokens(type: Sync) {
 
 compileJava {
     source = replaceTokens.outputs
+}
+
+fancyGradle {
+    patches {
+        resources
+        coremods
+        asm
+    }
 }

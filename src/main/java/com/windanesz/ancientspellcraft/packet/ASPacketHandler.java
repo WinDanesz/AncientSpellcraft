@@ -19,7 +19,7 @@ public class ASPacketHandler {
 		registerMessage(PacketStartRitual.class, PacketStartRitual.Message.class);
 		registerMessage(PacketContinuousRitual.class, PacketContinuousRitual.Message.class);
 		registerMessage(PacketMushroomActivation.class, PacketMushroomActivation.Message.class);
-		registerMessage(PacketSorcerySwordHit.class, PacketSorcerySwordHit.Message.class);
+		registerMessage(PacketExtendedSwordReach.class, PacketExtendedSwordReach.Message.class);
 	}
 
 	private static int nextPacketId = 0;

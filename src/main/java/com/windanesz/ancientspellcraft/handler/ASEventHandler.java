@@ -8,6 +8,7 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityContingencyProjec
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
 import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
+import com.windanesz.ancientspellcraft.item.ItemBeltScrollHolder;
 import com.windanesz.ancientspellcraft.item.ItemManaRing;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
@@ -44,6 +45,7 @@ import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemScroll;
 import electroblob.wizardry.item.ItemWand;
+import electroblob.wizardry.item.ItemWandUpgrade;
 import electroblob.wizardry.potion.Curse;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardryItems;
@@ -51,6 +53,7 @@ import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.ImbueWeapon;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.spell.SpellBuff;
+import electroblob.wizardry.spell.SpellMinion;
 import electroblob.wizardry.spell.SpellProjectile;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.AllyDesignationSystem;
@@ -410,6 +413,49 @@ public class ASEventHandler {
 				if (artefact == AncientSpellcraftItems.charm_cryostasis) {
 					if ((player.getHealth() <= 6 || (player.getHealth() - event.getAmount() <= 6)) && player.world.rand.nextFloat() < 0.25f) {
 						AncientSpellcraftSpells.cryostasis.cast(player.world, player, player.getActiveHand(), 0, new SpellModifiers());
+					}
+				} else if (artefact == AncientSpellcraftItems.ring_protector) {
+					if ((player.getHealth() <= 8 || (player.getHealth() - event.getAmount() <= 6)) && player.world.rand.nextFloat() < 0.75f) {
+						boolean shouldContinue = true;
+						for (ItemStack wand : ASUtils.getAllHotbarWands(player)) {
+							if (!shouldContinue) break;
+							Spell[] spells = WandHelper.getSpells(wand);
+							List<Spell> minions =  new ArrayList<>();
+							List<Integer> indexes = new ArrayList<>();
+
+							int index = 0;
+							for (Spell spell : spells) {
+								if (spell instanceof SpellMinion) {
+									minions.add(spell);
+									indexes.add(index);
+								}
+								index++;
+							}
+
+							if (!minions.isEmpty()) {
+								int currIndex = player.world.rand.nextInt(indexes.size() - 1);
+								Spell spell = minions.get(currIndex);
+
+								// get modifiers
+								SpellModifiers modifiers = new SpellModifiers();
+
+								if(WizardData.get(player) != null){
+									modifiers = WizardData.get(player).itemCastingModifiers;
+								}else{
+									modifiers = ((ItemWand) wand.getItem()).calculateModifiers(wand, player, spell); // Fallback to the old way, should never be used
+								}
+
+								int[] cooldowns = WandHelper.getCooldowns(wand);
+								if (cooldowns == null || cooldowns.length == spells.length) {
+									WandHelper.selectSpell(wand, currIndex);
+									shouldContinue = !(((ItemWand) wand.getItem()).cast(wand, spell, player, EnumHand.MAIN_HAND, 0, modifiers));
+									if (!shouldContinue) {
+										WandHelper.setCooldowns(wand, cooldowns);
+
+									}
+								}
+							}
+						}
 					}
 				} else if (artefact == AncientSpellcraftItems.ring_berserker) {
 					if (!player.world.isRemote && (player.getHealth() <= 6 || (player.getHealth() - event.getAmount() <= 6))) {
@@ -924,6 +970,24 @@ public class ASEventHandler {
 
 					if (modifier >= 0) {
 						modifiers.set(SpellModifiers.POTENCY, (1 + modifier) * potency, false);
+					}
+				}
+
+				if (artefact == AncientSpellcraftItems.belt_scroll_holder && ASBaublesIntegration.enabled()) {
+					ItemStack holder = ASBaublesIntegration.getBeltSlotItemStack(player);
+					if (holder.getItem() instanceof ItemBeltScrollHolder) {
+						ItemStack scroll = ItemBeltScrollHolder.getScroll(holder);
+						if (scroll.getItem() instanceof ItemWandUpgrade) {
+							if (scroll.getItem() == WizardryItems.blast_upgrade) {
+								modifiers.set(WizardryItems.blast_upgrade, modifiers.get(WizardryItems.blast_upgrade) + 0.25F, true);
+							} else if (scroll.getItem() == WizardryItems.range_upgrade) {
+								modifiers.set(WizardryItems.range_upgrade, modifiers.get(WizardryItems.range_upgrade) + 0.25F, true);
+							} else if (scroll.getItem() == WizardryItems.duration_upgrade) {
+								modifiers.set(WizardryItems.duration_upgrade, modifiers.get(WizardryItems.duration_upgrade) + 0.25F, true);
+							} else if (scroll.getItem() == WizardryItems.cooldown_upgrade) {
+								modifiers.set(WizardryItems.cooldown_upgrade, modifiers.get(WizardryItems.cooldown_upgrade) - 0.15F, true);
+							}
+						}
 					}
 				}
 

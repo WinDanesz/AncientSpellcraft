@@ -348,8 +348,4 @@ public class ClientProxy extends CommonProxy {
 		ASAntiqueAtlasIntegration.registerMarkers();
 	}
 
-	@Override
-	public void tweakGuiSpellForTomes() {
-		Wizardry.settings.showSpellHUD = false;
-	}
 }

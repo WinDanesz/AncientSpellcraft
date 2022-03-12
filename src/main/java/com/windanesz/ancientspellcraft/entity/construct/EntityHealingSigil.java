@@ -41,7 +41,7 @@ public class EntityHealingSigil extends EntityScaledConstruct {
 
 			for(EntityLivingBase target : targets){
 
-				if(this.getCaster() == null || this.getCaster() != null && AllyDesignationSystem.isAllied(this.getCaster(), target)){
+				if(this.getCaster() == null || (this.getCaster() == target || AllyDesignationSystem.isAllied(this.getCaster(), target))){
 
 					target.heal(AncientSpellcraftSpells.healing_sigil.getProperty(Spell.HEALTH).floatValue() * damageMultiplier);
 					this.playSound(AncientSpellcraftSounds.ENTITY_HEALING_HEATH_HEALS, 1.0f, 1.0f);

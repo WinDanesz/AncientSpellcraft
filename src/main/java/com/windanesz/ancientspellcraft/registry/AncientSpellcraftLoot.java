@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.loot.ArtefactCondition;
 import electroblob.wizardry.Wizardry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootEntry;
@@ -10,6 +11,7 @@ import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
+import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -35,6 +37,7 @@ public class AncientSpellcraftLoot {
 	private static LootTable LIBRARY_RUINS_BOOKSHELF;
 	private static LootTable OBELISK;
 	private static LootTable SHRINE;
+	private static LootTable SHRINE_EXTRAS;
 	private static LootTable WIZARD_TOWER;
 	private static LootTable WAND_UPGRADES;
 
@@ -45,6 +48,8 @@ public class AncientSpellcraftLoot {
 	 */
 
 	public static void preInit() {
+		LootConditionManager.registerCondition(new ArtefactCondition.Serializer());
+
 		// chest
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "chests/dungeon_additions"));
 
@@ -62,6 +67,7 @@ public class AncientSpellcraftLoot {
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "inject/as_obelisk"));
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "inject/as_shrine"));
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "inject/as_wizard_tower"));
+		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "inject/shrine_extras"));
 
 		// entities
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "entities/void_creeper"));
@@ -89,6 +95,8 @@ public class AncientSpellcraftLoot {
 			WIZARD_TOWER = event.getTable();
 		} else if (event.getName().toString().equals(AncientSpellcraft.MODID + ":inject/as_shrine")) {
 			SHRINE = event.getTable();
+		} else if (event.getName().toString().equals(AncientSpellcraft.MODID + ":inject/shrine_extras")) {
+			SHRINE_EXTRAS = event.getTable();
 		}
 
 		// Inject books and scrolls to ebwiz tables
@@ -100,10 +108,15 @@ public class AncientSpellcraftLoot {
 			LootPool targetPool = event.getTable().getPool("high_value");
 			LootPool sourcePool = OBELISK.getPool("ancientspellcraft");
 			injectEntries(sourcePool, targetPool);
-		} else if (event.getName().toString().equals(Wizardry.MODID + ":chests/shrine") && SHRINE != null) {
+		} else if (event.getName().toString().equals(Wizardry.MODID + ":chests/shrine") && SHRINE_EXTRAS != null) {
 			LootPool targetPool = event.getTable().getPool("high_value");
 			LootPool sourcePool = SHRINE.getPool("ancientspellcraft");
 			injectEntries(sourcePool, targetPool);
+
+			// add shrine extras
+			event.getTable().addPool(SHRINE_EXTRAS.getPool("shrine_extras"));
+
+
 		} else if (event.getName().toString().equals(Wizardry.MODID + ":chests/wizard_tower") && WIZARD_TOWER != null) {
 			LootPool targetPool = event.getTable().getPool("wizardry");
 			LootPool sourcePool = WIZARD_TOWER.getPool("ancientspellcraft");

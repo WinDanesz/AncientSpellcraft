@@ -153,6 +153,7 @@
     "spell.quicksand_ring": 				    {"category": "spells", "sounds": ["ancientspellcraft:magic_mud"]},
     "spell.swamp": 				                {"category": "spells", "sounds": ["ancientspellcraft:magic_mud"]},
     "spell.wall_of_dirt": 				        {"category": "spells", "sounds": ["ancientspellcraft:magic_dirt"]},
+    "spell.withdraw_life": 				        {"category": "spells", "sounds": ["ancientspellcraft:fast_spell_necromancy"]},
     "spell.destroy_undead": 				    {"category": "spells", "sounds": ["ancientspellcraft:destroy_undead"]},
     "spell.sporelings_aid": 					{"category": "spells", "sounds": ["dig/grass1", "dig/grass2", "dig/grass3", "dig/grass4"]},
     "spell.wild_sporeling": 					{"category": "spells", "sounds": ["dig/grass1", "dig/grass2", "dig/grass3", "dig/grass4"]},

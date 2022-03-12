@@ -3,15 +3,13 @@ package com.windanesz.ancientspellcraft.item;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.windanesz.ancientspellcraft.Settings;
-import com.windanesz.ancientspellcraft.block.BlockMagicMushroom;
 import com.windanesz.ancientspellcraft.data.ClassWeaponData;
-import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
-import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
-import com.windanesz.ancientspellcraft.spell.Animate;
+import com.windanesz.ancientspellcraft.spell.Runeword;
+import com.windanesz.ancientspellcraft.spell.RunewordFury;
 import com.windanesz.ancientspellcraft.util.WizardArmourUtils;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Constants;
@@ -25,7 +23,6 @@ import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.item.IWorkbenchItem;
-import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemWand;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.packet.PacketCastSpell;
@@ -33,17 +30,12 @@ import electroblob.wizardry.packet.WizardryPacketHandler;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardryAdvancementTriggers;
 import electroblob.wizardry.registry.WizardryItems;
-import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.spell.Disintegration;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.AllyDesignationSystem;
-import electroblob.wizardry.util.BlockUtils;
 import electroblob.wizardry.util.EntityUtils;
-import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.SpellProperties;
 import electroblob.wizardry.util.WandHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -56,10 +48,13 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -82,17 +77,24 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
 
+/**
+ * Monster-sized class that holds all the Spell Blade related code. Brace yourselves.
+ *
+ * Author WinDanesez
+ */
 @Mod.EventBusSubscriber
 public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem, IWorkbenchItem, IWizardClassWeapon, IManaStoringItem {
 
 	private static final String MANA_AVAILABLE_TAG = "mana_available";
+
+	private static final String TEMPORARY_RUNEWORD_DATA_TAG = "temporary_runeword_data";
 
 	/**
 	 * The number of ticks between each time a continuous spell is added to the player's recently-cast spells.
@@ -127,7 +129,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 	private final int attackDamage;
 
-	public Tier tier;
+	public final Tier tier;
 
 	public static final IStoredVariable<BlockPos> LAST_POS = IStoredVariable.StoredVariable.ofBlockPos("lastPlayerPos", Persistence.NEVER);
 
@@ -206,13 +208,47 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 				compound.setString(WizardClassWeaponHelper.ELEMENT_TAG, element.getName().toLowerCase());
 			}
 			compound.setBoolean(MANA_AVAILABLE_TAG, powered);
+
+			// Ticks runewords
+			if (entity instanceof EntityLivingBase) {
+
+				for (Spell spell : getSpells(stack)) {
+					if (spell instanceof Runeword && ((Runeword) spell).isTicking()) {
+						((Runeword) spell).tick((EntityLivingBase) entity, stack);
+					}
+				}
+			}
+
+			// update glyph data
+			if (entity.ticksExisted % 15 == 0 && entity instanceof EntityPlayer) {
+				List<String> glyphs = new ArrayList<>();
+
+				for (Item item : ItemGlyphArtefact.getActiveArtefacts((EntityPlayer) entity)) {
+					if (item instanceof ItemGlyphArtefact) {
+						String name = item.getRegistryName().toString();
+						if (!glyphs.contains(name)) {
+							glyphs.add(name);
+
+							// custom logic
+							if (item == AncientSpellcraftItems.charm_glyph_antigravity && ((EntityPlayer) entity).getHeldItemMainhand().getItem() instanceof ItemBattlemageSword) {
+								((EntityPlayer) entity).addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 40,0));
+								((EntityPlayer) entity).addPotionEffect(new PotionEffect(MobEffects.SPEED, 40,0));
+							}
+						}
+					}
+				}
+
+				if (!glyphs.isEmpty()) {
+					NBTTagList list = new NBTTagList();
+					for (String s : glyphs) {
+						list.appendTag(new NBTTagString(s));
+					}
+					compound.setTag("active_glyphs", list);
+				}
+			}
+
 			stack.setTagCompound(compound);
 		}
-	}
-
-	@Override
-	public int getMaxDamage() {
-		return super.getMaxDamage();
 	}
 
 	// Max damage is modifiable with upgrades.
@@ -270,9 +306,48 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 				damage = this.attackDamage;
 			}
 
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", damage, 0));
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.4000000953674316D, 0));
+			// spell effect
+			if (anyManaAvailable) {
 
+				Spell[] spells = getSpells(stack);
+
+				//				Arrays.stream(spells).(s -> (s instanceof Runeword && ((Runeword) s).isAffectingAttributes()));
+				for (Spell spell : spells) {
+
+					if (spell instanceof Runeword && ((Runeword) spell).isAffectingAttributes()) {
+
+						HashMap<Runeword, NBTTagCompound> data = getTemporaryRunewordData(stack);
+
+						if (spell == AncientSpellcraftSpells.runeword_fury) {
+							if (data.containsKey((Runeword) AncientSpellcraftSpells.runeword_fury)) {
+								int charges = data.get(AncientSpellcraftSpells.runeword_fury).getInteger(RunewordFury.CHARGES_TAG);
+								float modifier = 1 + AncientSpellcraftSpells.runeword_fury.getProperty(RunewordFury.DMG_PERCENT_INCREASE_PER_HIT).floatValue() * charges;
+								damage = damage * modifier;
+							}
+						} else if (spell == AncientSpellcraftSpells.runeword_sacrifice) {
+
+						}
+					}
+				}
+			}
+
+			if (stack.hasTagCompound() && stack.getTagCompound().hasKey("active_glyphs")) {
+				Iterator<NBTBase> iterator = stack.getTagCompound().getTagList("active_glyphs", net.minecraftforge.common.util.Constants.NBT.TAG_STRING).iterator();
+				while (iterator.hasNext()) {
+					String glyph = ((NBTTagString) iterator.next()).getString();
+					if (glyph.equals("ancientspellcraft:charm_glyph_antigravity")) {
+						damage *= 0.7;
+//						multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier",
+//								0.15f, net.minecraftforge.common.util.Constants.AttributeModifierOperation.ADD_MULTIPLE));
+					}
+				}
+
+			}
+
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", damage,
+					net.minecraftforge.common.util.Constants.AttributeModifierOperation.ADD));
+			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.4000000953674316D,
+					net.minecraftforge.common.util.Constants.AttributeModifierOperation.ADD));
 		}
 
 		return multimap;
@@ -488,6 +563,8 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		return new ActionResult<>(EnumActionResult.FAIL, stack);
 	}
 
+
+
 	// For continuous spells and spells with a charge-up time. The count argument actually decrements by 1 each tick.
 	// N.B. The first time this gets called is the tick AFTER onItemRightClick is called, not the same tick
 	@Override
@@ -588,9 +665,9 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 		// Spells can only be cast if the casting events aren't cancelled...
 		if (castingTick == 0) {
-			if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(SpellCastEvent.Source.WAND, spell, caster, modifiers))) { return false; }
+			if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(SpellCastEvent.Source.COMMAND, spell, caster, modifiers))) { return false; }
 		} else {
-			if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Tick(SpellCastEvent.Source.WAND, spell, caster, modifiers, castingTick))) { return false; }
+			if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Tick(SpellCastEvent.Source.COMMAND, spell, caster, modifiers, castingTick))) { return false; }
 		}
 
 		int cost = (int) (spell.getCost() * modifiers.get(SpellModifiers.COST) + 0.1f); // Weird floaty rounding
@@ -632,7 +709,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 		if (spell.cast(world, caster, hand, castingTick, modifiers)) {
 
-			if (castingTick == 0) { MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.WAND, spell, caster, modifiers)); }
+			if (castingTick == 0) { MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.COMMAND, spell, caster, modifiers)); }
 
 			if (!world.isRemote) {
 
@@ -699,6 +776,104 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 			return true;
 		}
 
+		return false;
+	}
+
+	//--------------------------  Helper methods for runewords and glyphs --------------------------//
+	// Methods used to store and retrieve runeword-related data for the swords
+
+	public static HashMap<Runeword, Integer> getActiveRunewords(ItemStack stack) {
+		HashMap<Runeword, Integer> map = new HashMap<>();
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("active_runewords")) {
+			NBTTagCompound compound = stack.getTagCompound().getCompoundTag("active_runewords");
+			for (String key : compound.getKeySet()) {
+				Spell runeword = Spell.get(key);
+				if (runeword instanceof Runeword && compound.getInteger(key) > 0) {
+					map.put((Runeword) runeword, compound.getInteger(key));
+				}
+			}
+		}
+		return map;
+	}
+
+	public static int getRunewordCharges(ItemStack stack, Runeword runeword) {
+		Integer charges = getActiveRunewords(stack).get(runeword);
+		return charges != null ? charges : 0;
+	}
+
+	public static void setActiveRuneword(ItemStack stack, Runeword runeword, int charges) {
+		HashMap<Runeword, Integer> map = getActiveRunewords(stack);
+		map.put(runeword, charges);
+
+		NBTTagCompound compound = stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
+		NBTTagCompound runewords = new NBTTagCompound();
+		for (Map.Entry<Runeword, Integer> e : map.entrySet()) {
+			if (e.getValue() > 0) {
+				//noinspection ConstantConditions
+				runewords.setInteger(e.getKey().getRegistryName().toString(), e.getValue());
+			}
+		}
+		//noinspection ConstantConditions
+		compound.setTag("active_runewords", runewords);
+		stack.setTagCompound(compound);
+	}
+
+	public static void spendCharge(ItemStack stack, Runeword runeword, int amount) {
+		HashMap<Runeword, Integer> map = getActiveRunewords(stack);
+		if (map.containsKey(runeword)) {
+			setActiveRuneword(stack, runeword, map.get(runeword) - amount);
+		}
+	}
+
+	public static HashMap<Runeword, NBTTagCompound> getTemporaryRunewordData(ItemStack stack) {
+		HashMap<Runeword, NBTTagCompound> map = new HashMap<>();
+		//noinspection ConstantConditions
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(TEMPORARY_RUNEWORD_DATA_TAG)) {
+			NBTTagCompound compound = stack.getTagCompound().getCompoundTag(TEMPORARY_RUNEWORD_DATA_TAG);
+			for (String key : compound.getKeySet()) {
+				Spell runeword = Spell.get(key);
+				if (runeword instanceof Runeword) {
+					map.put((Runeword) runeword, compound.getCompoundTag(key));
+				}
+			}
+		}
+		return map;
+	}
+
+
+	public static void setTemporaryRuneWordData(ItemStack sword, Runeword runeword, NBTTagCompound data) {
+		// get the existing stuff
+		HashMap<Runeword, NBTTagCompound> map = getTemporaryRunewordData(sword);
+
+		if (data != null) {
+			// add (or overwrite with) the current runeword
+			map.put(runeword, data);
+		} else {
+			map.remove(runeword);
+		}
+
+		NBTTagCompound compound = sword.hasTagCompound() ? sword.getTagCompound() : new NBTTagCompound();
+		NBTTagCompound runewords = new NBTTagCompound();
+		for (Map.Entry<Runeword, NBTTagCompound> e : map.entrySet()) {
+			runewords.setTag(e.getKey().getRegistryName().toString(), e.getValue());
+		}
+
+		//noinspection ConstantConditions
+		compound.setTag(TEMPORARY_RUNEWORD_DATA_TAG, runewords);
+		sword.setTagCompound(compound);
+	}
+
+	// --------------------------  Runeword-specific stuff  --------------------------//
+	// This must be here and cannot be outsourced to the runeword classes
+
+	@Override
+	public boolean canDisableShield(ItemStack stack, ItemStack shield, EntityLivingBase entity, EntityLivingBase attacker) {
+		if (shield.getItem() instanceof ItemShield) {
+			if (getRunewordCharges(stack, (Runeword) AncientSpellcraftSpells.runeword_shatter) > 0) {
+				spendCharge(stack, (Runeword) AncientSpellcraftSpells.runeword_shatter, 1);
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -808,7 +983,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 				Spell spell = Spell.byMetadata(spellBooks[i].getStack().getItemDamage());
 				// If the sword is powerful enough for the spell, it's not already bound to that slot and it's enabled for swords
-				if (!(spell.getTier().level > this.tier.level) && spells[i] != spell && spell.isEnabled(SpellProperties.Context.WANDS)) {
+				if (!(spell.getTier().level > this.tier.level) && spells[i] != spell && spell.isEnabled()) {
 					spells[i] = spell;
 					changed = true;
 				}
@@ -899,8 +1074,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		return IManaStoringItem.super.getFullness(stack);
 	}
 
-
-	//--------------------------  Helper methods  --------------------------//
+	////////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Returns a SpellModifiers object with the appropriate modifiers applied for the given ItemStack and Spell.
@@ -1004,446 +1178,6 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		return AncientSpellcraftItems.battlemage_sword_master;
 	}
 
-	public enum EnumElementalSwordEffect {
-
-		MAGIC(Element.MAGIC) {
-			@Override
-			void onUpdateEffect(ItemStack stack, World world, Entity entity, int slot, boolean isHeld) {
-
-			}
-
-			@Override
-			void lesserPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder, boolean charged) {
-			}
-
-			@Override
-			void greaterPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
-
-			}
-		},
-
-		FIRE(Element.FIRE) {
-			@Override
-			void onUpdateEffect(ItemStack stack, World world, Entity entity, int slot, boolean isHeld) {
-
-			}
-
-			@Override
-			void lesserPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder, boolean charged) {
-				target.setFire(3);
-
-				// a chance to spawn embers
-				if (itemRand.nextDouble() < 0.2 || target.getHealth() <= 0 && itemRand.nextDouble() < 0.4) {
-					Disintegration.spawnEmbers(target.world, wielder, target, 6);
-				}
-			}
-
-			@Override
-			void greaterPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
-
-				// Nether special
-				wielder.addPotionEffect(new PotionEffect(WizardryPotions.fireskin, 160, 0));
-				wielder.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 160, 0));
-
-				if (target.isBurning()) {
-					target.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.soul_scorch, 100, 0));
-				}
-			}
-		},
-
-		ICE(Element.ICE) {
-			@Override
-			void onUpdateEffect(ItemStack stack, World world, Entity entity, int slot, boolean isHeld) {}
-
-			@Override
-			void lesserPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder, boolean charged) {
-				int duration = 40;
-				int amplifier = 0;
-
-				if (target.isPotionActive(WizardryPotions.frost)) {
-
-					PotionEffect effect = target.getActivePotionEffect(WizardryPotions.frost);
-					if (effect != null) {
-						duration = effect.getDuration() + duration;
-						amplifier = effect.getAmplifier();
-
-						// 20% chance to add to the current amplifier
-						if (target.world.rand.nextDouble() < 0.2 && amplifier < 3) { amplifier++; }
-
-					}
-				}
-
-				if (itemRand.nextDouble() < 0.25f && target.getHealth() == 0f && target.isPotionActive(WizardryPotions.frost)) {
-					for (int i = 0; i < 8; i++) {
-						double dx = itemRand.nextDouble() - 0.5;
-						double dy = itemRand.nextDouble() - 0.5;
-						double dz = itemRand.nextDouble() - 0.5;
-						EntitySafeIceShard iceshard = new EntitySafeIceShard(target.world);
-						iceshard.setPosition(target.posX + dx + Math.signum(dx) * target.width,
-								target.posY + target.height / 2 + dy,
-								target.posZ + dz + Math.signum(dz) * target.width);
-						iceshard.motionX = dx * 1.5;
-						iceshard.motionY = dy * 1.5;
-						iceshard.motionZ = dz * 1.5;
-						iceshard.setCaster(wielder);
-						target.world.spawnEntity(iceshard);
-					}
-				}
-				target.addPotionEffect(new PotionEffect(WizardryPotions.frost, duration, amplifier));
-			}
-
-			@Override
-			void greaterPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
-
-				for (EntityLivingBase currTarget : EntityUtils.getEntitiesWithinRadius(4, target.posX, target.posY, target.posZ, target.world, EntityLivingBase.class)) {
-
-					if (currTarget == wielder || currTarget == target || AllyDesignationSystem.isAllied(wielder, currTarget)) {
-						continue;
-					}
-
-					EntityUtils.attackEntityWithoutKnockback(currTarget, MagicDamage.causeDirectMagicDamage(wielder, MagicDamage.DamageType.FROST), 3.5f);
-
-					currTarget.addPotionEffect(new PotionEffect(WizardryPotions.frost, 60, 0));
-
-					double angle = (getAngleBetweenEntities(wielder, currTarget) + 90) * Math.PI / 180;
-					double distance = wielder.getDistance(currTarget) - 4;
-					currTarget.motionX += Math.min(1 / (distance * distance), 1) * -1 * Math.cos(angle);
-					currTarget.motionZ += Math.min(1 / (distance * distance), 1) * -1 * Math.sin(angle);
-				}
-			}
-		},
-
-		LIGHTNING(Element.LIGHTNING) {
-			@Override
-			void onUpdateEffect(ItemStack stack, World world, Entity entity, int slot, boolean isHeld) {
-				if (world.getTotalWorldTime() % 20 == 0 && entity instanceof EntityPlayer) {
-					EntityPlayer player = (EntityPlayer) entity;
-					if (player.onGround && hasPosChanged(player)) {
-						if (ItemBattlemageSword.hasManaStorage(stack) && !((IManaStoringItem) stack.getItem()).isManaFull(stack)) {
-							((IManaStoringItem) stack.getItem()).rechargeMana(stack, 1);
-						} else if (player.getHeldItemOffhand().getItem() instanceof IManaStoringItem) {
-							((IManaStoringItem) player.getHeldItemOffhand().getItem()).rechargeMana(player.getHeldItemOffhand(), 1);
-						}
-					}
-				}
-			}
-
-			@Override
-			void lesserPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder, boolean charged) {
-				List<EntityLivingBase> secondaryTargets = EntityUtils.getLivingWithinRadius(
-						4, target.posX, target.posY + target.height / 2,
-						target.posZ, wielder.world);
-
-				secondaryTargets.stream()
-						.filter(entity -> !entity.equals(target))
-						.filter(EntityUtils::isLiving)
-						.filter(e -> AllyDesignationSystem.isValidTarget(wielder, e))
-						.limit(3)
-						.forEach(secondaryTarget -> {
-							electrocute(target.world, wielder,
-									target.getPositionVector().add(0, target.height / 2, 0),
-									secondaryTarget,
-									4,
-									0);
-						});
-			}
-
-			@Override
-			void greaterPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
-				int amount = 60;
-				if (ItemBattlemageSword.hasManaStorage(stack) && !((IManaStoringItem) stack.getItem()).isManaFull(stack)) {
-					((IManaStoringItem) stack.getItem()).rechargeMana(stack, amount);
-				} else if (wielder.getHeldItemOffhand().getItem() instanceof IManaStoringItem) {
-					((IManaStoringItem) wielder.getHeldItemOffhand().getItem()).rechargeMana(wielder.getHeldItemOffhand(), amount);
-				}
-			}
-		},
-
-		NECROMANCY(Element.NECROMANCY) {
-			@Override
-			void onUpdateEffect(ItemStack stack, World world, Entity entity, int slot, boolean isHeld) {
-			}
-
-			@Override
-			void lesserPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder, boolean charged) {
-				target.addPotionEffect(new PotionEffect(MobEffects.WITHER, 60, 1));
-				wielder.heal(0.5f);
-				if (target.getHealth() == 0f) {
-
-					wielder.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 200, 0));
-					wielder.addPotionEffect(new PotionEffect(MobEffects.SPEED, 100, 0));
-				}
-			}
-
-			@Override
-			void greaterPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
-
-				EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(wielder, MagicDamage.DamageType.WITHER), 2.5f);
-				wielder.heal(1.5f);
-				if (wielder instanceof EntityPlayer) {
-					((EntityPlayer) wielder).getFoodStats().addStats(2, 0.1F);
-				}
-
-				// TODO: I think this should be moved to an artefact effect
-				if (itemRand.nextDouble() < 0.3) {
-					// get the beneficial effects only and only those which has a rather limited duration as potions with a very long lifetime are usually stuff like abilities and such
-					Map<Potion, PotionEffect> beneficialPotions = target.getActivePotionMap()
-							.entrySet().stream()
-							.filter(p -> p.getKey().isBeneficial()) // filter for beneficial potions
-							.filter(p -> p.getValue().getDuration() <= 12000) // 10 <= minutes
-							.filter(p -> p.getValue().getAmplifier() < 3)
-							.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
-					if (!beneficialPotions.isEmpty()) {
-						// get a random potion
-						List<PotionEffect> effects = new ArrayList<>(beneficialPotions.values());
-
-						if (!effects.isEmpty()) { // this should probably never happen anyways
-							PotionEffect potionToSteal = effects.get(itemRand.nextInt(effects.size()));
-							wielder.addPotionEffect(potionToSteal);
-							target.removePotionEffect(potionToSteal.getPotion());
-						}
-					}
-				}
-			}
-		},
-
-		EARTH(Element.EARTH) {
-			@Override
-			void onUpdateEffect(ItemStack stack, World world, Entity entity, int slot, boolean isHeld) {
-
-			}
-
-			@Override
-			void lesserPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder, boolean charged) {
-				int duration = 80;
-				int amplifier = 0;
-
-				if (target.isPotionActive(MobEffects.POISON)) {
-
-					PotionEffect effect = target.getActivePotionEffect(MobEffects.POISON);
-					if (effect != null) {
-						duration = (int) (effect.getDuration() * 0.1 + duration);
-						amplifier = effect.getAmplifier();
-
-						// 20% chance to add to the current amplifier
-						if (target.world.rand.nextDouble() < 0.2 && amplifier < 2) { amplifier++; }
-
-					}
-				}
-
-				target.addPotionEffect(new PotionEffect(MobEffects.POISON, duration, amplifier));
-
-				// chance to grow a mushroom
-				if (!wielder.world.isRemote && itemRand.nextDouble() < 0.5) {
-					BlockPos pos = BlockUtils.findNearbyFloorSpace(target, 4, 7);
-
-					if (pos != null) {
-						BlockMagicMushroom.tryPlaceMushroom(wielder.world, pos, wielder, BlockMagicMushroom.getRandomMushroom(0.1f, 0.06f), 600);
-					}
-				}
-			}
-
-			@Override
-			void greaterPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
-
-			}
-		},
-
-		SORCERY(Element.SORCERY) {
-			@Override
-			void onUpdateEffect(ItemStack stack, World world, Entity entity, int slot, boolean isHeld) {
-
-			}
-
-			@Override
-			void lesserPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder, boolean charged) {
-				// handled in LefClick event
-
-			}
-
-			@Override
-			void greaterPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
-				if (!wielder.world.isRemote) {
-					double d = itemRand.nextDouble();
-					if (d < 0.2) {
-						target.addPotionEffect(new PotionEffect(WizardryPotions.containment, 60));
-					} else if (d < 0.5) {
-						target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 60));
-					}
-
-					ItemStack conjured;
-
-					int duration = 100;
-					if (wielder instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) wielder, WizardryItems.ring_conjurer)) {
-						duration += 60;
-					}
-					if (itemRand.nextDouble() < 0.8f) {
-						conjured = Animate.conjureItem(new SpellModifiers(), WizardryItems.spectral_sword);
-					} else {
-						conjured = Animate.conjureItem(new SpellModifiers(), WizardryItems.spectral_bow);
-						duration += 60;
-					}
-
-					BlockPos pos = BlockUtils.findNearbyFloorSpace(wielder, 4, 8);
-					if (pos != null && pos != BlockPos.ORIGIN) {
-
-						EntityAnimatedItem minion = new EntityAnimatedItem(wielder.world);
-						// In this case we don't care whether the minions can fly or not.
-						minion.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-						minion.setLifetime(duration);
-						minion.setCaster(wielder);
-						minion.setHeldItem(EnumHand.MAIN_HAND, conjured);
-						//AnimateWeapon.addAnimatedEntityExtras(minion, wielder.getPosition(), wielder, new SpellModifiers());
-						wielder.world.spawnEntity(minion);
-					}
-				}
-			}
-		},
-
-		HEALING(Element.HEALING) {
-			@Override
-			void onUpdateEffect(ItemStack stack, World world, Entity entity, int slot, boolean isHeld) {
-
-			}
-
-			@Override
-			void lesserPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder, boolean charged) {
-				if (target.isEntityUndead() || target.isPotionActive(WizardryPotions.curse_of_undeath)) {
-
-					// sets undeads on fire
-					target.setFire(2);
-
-					// add mark if it was not present
-					if (!target.isPotionActive(WizardryPotions.mark_of_sacrifice)) {
-						target.addPotionEffect(new PotionEffect(WizardryPotions.mark_of_sacrifice, 40, 1));
-					}
-
-				}
-			}
-
-			@Override
-			void greaterPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
-				List<EntityLivingBase> nearbyEntities = EntityUtils.getEntitiesWithinRadius(16, wielder.posX, wielder.posY, wielder.posZ, wielder.world, EntityLivingBase.class);
-				List<EntityLivingBase> entitiesToBuff = nearbyEntities.stream().filter(e -> AllyDesignationSystem.isAllied(wielder, e)).collect(Collectors.toList());
-
-				List<PotionEffect> healingElementApplicablePotionList = Arrays.asList(
-						new PotionEffect(MobEffects.REGENERATION, 100, 1),
-						new PotionEffect(MobEffects.FIRE_RESISTANCE, 200, 1),
-						new PotionEffect(MobEffects.ABSORPTION, 200, 1),
-						new PotionEffect(MobEffects.STRENGTH, 200, 0),
-						new PotionEffect(MobEffects.SPEED, 200, 0),
-						new PotionEffect(MobEffects.HASTE, 200, 0),
-						new PotionEffect(MobEffects.NIGHT_VISION, 200, 0),
-						new PotionEffect(MobEffects.SATURATION, 60, 0),
-						new PotionEffect(WizardryPotions.empowerment, 200, 0),
-						new PotionEffect(WizardryPotions.font_of_mana, 200, 0),
-						new PotionEffect(WizardryPotions.ward, 200, 0),
-						new PotionEffect(AncientSpellcraftPotions.fortified_archery, 200, 0),
-						new PotionEffect(AncientSpellcraftPotions.projectile_ward, 200, 0),
-						new PotionEffect(AncientSpellcraftPotions.wizard_shield, 200, 8)
-				);
-
-				if (!entitiesToBuff.isEmpty()) {
-					PotionEffect potionToApply = healingElementApplicablePotionList.get(itemRand.nextInt(healingElementApplicablePotionList.size()));
-					entitiesToBuff.forEach(e -> e.addPotionEffect(potionToApply));
-				}
-			}
-		};
-
-		private final Element element;
-
-		EnumElementalSwordEffect(Element element) {
-			this.element = element;
-		}
-
-
-
-		abstract void onUpdateEffect(ItemStack stack, World world, Entity entity, int slot, boolean isHeld);
-
-		abstract void lesserPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder, boolean charged);
-
-		abstract void greaterPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder);
-
-		public static void onUpdate(Element element, ItemStack stack, World world, EntityLivingBase entity, int slot, boolean isHeld) {
-			fromElement(element).onUpdateEffect(stack, world, entity, slot, isHeld);
-		}
-
-		// called by com.windanesz.ancientspellcraft.item.ItemBattlemageSword.hitEntity which is server side only
-		public static void hitEntity(Element element, ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
-			EnumElementalSwordEffect effect = fromElement(element);
-			boolean charged = WizardClassWeaponHelper.isChargeFull(stack);
-
-			// Lesser Power - all hit
-			effect.lesserPowerOnEntityHit(stack, target, wielder, charged);
-
-			if (charged) {
-				effect.greaterPowerOnEntityHit(stack, target, wielder);
-				WizardClassWeaponHelper.resetChargeProgress(stack);
-			}
-
-			// Greater Power - charged hit only
-
-		}
-
-		private static EnumElementalSwordEffect fromElement(Element element) {
-
-			for (EnumElementalSwordEffect effect : values()) {
-				if (effect.element == element) { return effect; }
-			}
-
-			return EnumElementalSwordEffect.MAGIC;
-		}
-
-		//--------------------------  Helper methods  --------------------------//
-
-		public static boolean hasPosChanged(EntityPlayer player) {
-			WizardData data = WizardData.get(player);
-			BlockPos pos = data.getVariable(LAST_POS);
-			data.setVariable(LAST_POS, player.getPosition());
-			if (pos == null) {
-				return true;
-			} else {
-				return !pos.equals(player.getPosition());
-			}
-		}
-
-		public static double getAngleBetweenEntities(Entity first, Entity second) {
-			return Math.atan2(second.posZ - first.posZ, second.posX - first.posX) * (180 / Math.PI) + 90;
-		}
-
-		public static void electrocute(World world, Entity caster, Vec3d origin, Entity target, float damage, int ticksInUse) {
-
-			if (MagicDamage.isEntityImmune(MagicDamage.DamageType.SHOCK, target)) {
-				if (!world.isRemote && ticksInUse == 1 && caster instanceof EntityPlayer) {
-					((EntityPlayer) caster).sendStatusMessage(new TextComponentTranslation("spell.resist", target.getName(),
-							"lightning damage"), true);
-				}
-			} else {
-				if (!world.isRemote) {
-					EntityUtils.attackEntityWithoutKnockback(target,
-							MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.SHOCK), damage);
-				}
-			}
-
-			if (world.isRemote) {
-
-				ParticleBuilder.create(ParticleBuilder.Type.BEAM).entity(caster).clr(0.2f, 0.6f, 1)
-						.pos(caster != null ? origin.subtract(caster.getPositionVector()) : origin).target(target).spawn(world);
-
-				if (ticksInUse % 3 == 0) {
-					ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).entity(caster)
-							.pos(caster != null ? origin.subtract(caster.getPositionVector()) : origin).target(target).spawn(world);
-				}
-
-				// Particle effect
-				for (int i = 0; i < 5; i++) {
-					ParticleBuilder.create(ParticleBuilder.Type.SPARK, target).spawn(world);
-				}
-			}
-		}
-	}
-
 	//--------------------------  Events  --------------------------//
 
 	// hitEntity is only called server-side, so we'll have to use events
@@ -1507,13 +1241,11 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 								.filter(EntityUtils::isLiving)
 								.filter(e -> AllyDesignationSystem.isValidTarget(player, e))
 								.limit(3)
-								.forEach(secondaryTarget -> {
-									EnumElementalSwordEffect.electrocute(event.getTarget().world, player,
-											event.getTarget().getPositionVector().add(0, event.getTarget().height / 2, 0),
-											secondaryTarget,
-											4,
-											0);
-								});
+								.forEach(secondaryTarget -> EnumElementalSwordEffect.electrocute(event.getTarget().world, player,
+										event.getTarget().getPositionVector().add(0, event.getTarget().height / 2, 0),
+										secondaryTarget,
+										4,
+										0));
 					} else if (element == Element.ICE) {
 						Vec3d origin = player.getPositionEyes(1);
 						Vec3d hit = origin.add(player.getLookVec().scale(player.getDistance(event.getTarget())));
@@ -1559,40 +1291,5 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 			}
 		}
 	}
-
-//	@SideOnly(Side.CLIENT)
-//	@SubscribeEvent
-//	public static void LeftClick(PlayerInteractEvent.LeftClickEmpty event) {
-//		//		TODO: Sorcery extended reach - reserved for a spell or artefact effect
-//		EntityPlayerSP player = Minecraft.getMinecraft().player;
-//
-//		if (player != null && player.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword) {
-//			ItemStack stack = player.getHeldItemMainhand();
-//
-//			// Sorcery
-//			if (getElement(stack) == Element.SORCERY && hasManaAvailable(stack)) {
-//
-//				Vec3d direction = player.getLookVec();
-//				Vec3d origin = new Vec3d(player.posX, player.posY + player.getEyeHeight() - 0.25f, player.posZ);
-//				if (!Wizardry.proxy.isFirstPerson(player)) {
-//					origin = origin.add(direction.scale(1.2));
-//				}
-//
-//				Vec3d endpoint = origin.add(direction.scale(9.0));
-//
-//				RayTraceResult result = RayTracer.rayTrace(player.world, origin, endpoint, 0.3f, false,
-//						true, false, EntityLivingBase.class, RayTracer.ignoreEntityFilter(player));
-//
-//				if (result != null && result.entityHit != null && result.entityHit.getDistance(player) > 3.5f) {
-//					IMessage msg = new PacketSorcerySwordHit.Message(player, result.entityHit);
-//					ASPacketHandler.net.sendToServer(msg);
-//
-//					ParticleBuilder.create(ParticleBuilder.Type.BEAM).entity(player).clr(0x23c268).time(5)
-//							.pos(result.entityHit != null ? origin.subtract(player.getPositionVector()) : origin).target(result.entityHit).spawn(player.world);
-//
-//				}
-//			}
-//		}
-//	}
 
 }

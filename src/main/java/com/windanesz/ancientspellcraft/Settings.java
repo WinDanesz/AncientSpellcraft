@@ -292,6 +292,21 @@ public class Settings {
 				+ "NOTE that this probably won't work with many items as they expect the player to hold the item in their hand to function, so only experiment with this in a testworld.")
 		@Config.RequiresMcRestart
 		public String[] sage_lectern_item_whitelist = {"antiqueatlas:antique_atlas"};
+
+		@Config.Name("Sage Tome Required Enchanted Pages Per Tier")
+		@Config.Comment("The required amount of Enchanted Pages to progress a Sage Tome to the next tier.")
+		@Config.RequiresMcRestart
+		@Config.RangeInt(min = 1, max = 100)
+		public int sage_tome_enchanted_page_requirement = 2;
+
+		@Config.Name("Sage Tome Required Enchanted Pages Per Tier Multiplier")
+		@Config.Comment("Works in conjunction with \"Sage Tome Required Enchanted Pages Per Tier\"."
+				+ "This is basically a multiplier, to require more and more Enchanted Pages for each tier. If set to 0, all tiers will require the amount of Enchanted Pages defined in \"Sage Tome Required Enchanted Pages Per Tier\"."
+				+ "The formula: (\"Sage Tome Required Enchanted Pages Per Tier\") * (this multiplier) * (tierNumber (1->3, Apprentice->Master))")
+		@Config.RequiresMcRestart
+		@Config.RangeInt(min = 0, max = 10)
+		public int sage_tome_enchanted_page_requirement_multiplier = 2;
+		
 	}
 
 	public static class ClientSettings {

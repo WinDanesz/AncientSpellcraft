@@ -122,6 +122,16 @@ public final class ASBaublesIntegration {
 		return artefacts;
 	}
 
+	public static ItemStack getBeltSlotItemStack(EntityPlayer player) {
+		IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
+		int beltSlot = 3; // from BaubleType.BELT
+		ItemStack stack = baubles.getStackInSlot(beltSlot);
+		if (stack != null) {
+			return stack;
+		}
+		return ItemStack.EMPTY;
+	}
+
 	public static void setArtefactToSlot(EntityPlayer player, ItemStack stack, ItemArtefact.Type type) {
 		setArtefactToSlot(player, stack, type, 0);
 	}

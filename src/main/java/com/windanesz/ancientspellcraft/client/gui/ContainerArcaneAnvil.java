@@ -54,8 +54,6 @@ public class ContainerArcaneAnvil extends Container {
 								}
 		);
 
-		int n = 0;
-
 		for (int y = 0; y < 3; ++y) {
 			for (int x = 0; x < 9; ++x) {
 				this.addSlotToContainer(new Slot(playerInv, x + y * 9 + 9, 8 + x * 18, 79 + y * 18));
