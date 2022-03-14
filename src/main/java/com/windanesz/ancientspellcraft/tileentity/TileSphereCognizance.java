@@ -3,12 +3,14 @@ package com.windanesz.ancientspellcraft.tileentity;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.client.gui.ContainerSphereCognizance;
+import com.windanesz.ancientspellcraft.item.ItemMoonLetterDictionary;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.event.DiscoverSpellEvent;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemCrystal;
 import electroblob.wizardry.item.ItemScroll;
 import electroblob.wizardry.item.ItemSpellBook;
@@ -314,11 +316,14 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 			this.currentHintId = ASUtils.randIntBetween(1, count);
 
 			if (currentPlayer != null && !world.isRemote) {
-				//				ItemRelic.setResearchedTag(getInputStack());
-				ItemRelic.setRandomContentType(getInputStack(), currentPlayer);
-			}
-			markDirty();
 
+				if (ItemArtefact.isArtefactActive(currentPlayer, AncientSpellcraftItems.charm_stone_tablet) && ItemMoonLetterDictionary.isFullMoon(currentPlayer.world)) {
+					ItemRelic.setRelicType(getInputStack(), currentPlayer, ItemRelic.RelicType.SPELL);
+				}
+				ItemRelic.setRandomContentType(getInputStack(), currentPlayer, null);
+			}
+
+			markDirty();
 			return;
 		}
 

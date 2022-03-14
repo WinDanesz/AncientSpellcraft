@@ -263,6 +263,11 @@ public class Settings {
 				"minecraft:slowness"
 		};
 
+		@Config.Name("Duplication Scroll Additonal Items")
+		@Config.Comment("List of registry names (in a 'modid:itemname' format) of additional items that can be duplicated by the Scroll of Duplication")
+		@Config.RequiresMcRestart
+		public String[] duplication_scroll_additional_items = { };
+
 		@Config.Name("Wizards Buy Ancient Element Books")
 		@Config.Comment("If true, friendly Wizards will buy ancient element books (the gray ones)")
 		@Config.RequiresMcRestart
@@ -354,6 +359,19 @@ public class Settings {
 				+ "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
 		@Config.RequiresMcRestart
 		public int mineSpellNetworkID = 141;
+
+		@Config.Name("Charge Spell Network ID")
+		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! "
+				+ "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update. "
+				+ "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
+		@Config.RequiresMcRestart
+		public int chargeSpellNetworkID = 147;
+
+		@Config.Name("Charge Spell Override")
+		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Charge spell to add compatibility for the related artefact."
+				+ "\nDisabling this feature will cause the game to load the default Charge spell class which can be helpful if you are having issues, but it also makes the related artefact useless!")
+		@Config.RequiresMcRestart
+		public boolean chargeSpellOverride = true;
 
 		@Config.Name("Conjure Pickaxe Spell Override")
 		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Conjure Pickaxe spell to add compatibility to the Fortune related artefact."

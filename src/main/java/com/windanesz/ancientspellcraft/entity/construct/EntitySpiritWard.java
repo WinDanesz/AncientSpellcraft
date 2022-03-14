@@ -1,11 +1,13 @@
 package com.windanesz.ancientspellcraft.entity.construct;
 
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.entity.ICustomHitbox;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.entity.projectile.EntityMagicArrow;
-import electroblob.wizardry.registry.WizardryPotions;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.GeometryUtils;
@@ -15,6 +17,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.EnumFacing;
@@ -123,17 +126,20 @@ public class EntitySpiritWard extends EntityMagicConstruct implements ICustomHit
 		targets.remove(this);
 		targets.removeIf(t -> t instanceof EntityXPOrb); // Gets annoying since they're attracted to the player
 
-		// Spirit wards doesn't stop projectiles
-		targets.removeIf(t -> t instanceof EntityMagicArrow || t instanceof EntityThrowable || t instanceof EntityArrow);
+		// remove non-undeads
+		targets.removeIf(t -> t instanceof EntityLivingBase && !ASUtils.isEntityConsideredUndead(t));
+
+		if (!(getCaster() instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) getCaster(), AncientSpellcraftItems.ring_spirit_ward))) {
+		//noinspection ConstantConditions
+		targets.removeIf((
+				t -> t instanceof EntityMagicArrow && ((EntityMagicArrow) t).getCaster() != null &&  ((EntityMagicArrow)t).getCaster().isEntityUndead()
+						|| (t instanceof EntityThrowable  && ((EntityThrowable) t).getThrower() != null && ((EntityThrowable) t).getThrower().isEntityUndead())
+				|| (t instanceof EntityArrow && ((EntityArrow) t).shootingEntity instanceof EntityLivingBase && ((EntityLivingBase) ((EntityArrow) t).shootingEntity).isEntityUndead())));
+		}
 
 		for (Entity target : targets) {
 
-			if (!EntityUtils.isLiving(target)) {
-				continue;
-			}
-
 			// only prevents undeads from entering the circle
-			if (((EntityLivingBase) target).isPotionActive(WizardryPotions.curse_of_undeath) || (this.isValidTarget(target) && ((EntityLivingBase) target).isEntityUndead())) {
 
 				Vec3d currentPos = Arrays.stream(GeometryUtils.getVertices(target.getEntityBoundingBox()))
 						.min(Comparator.comparingDouble(v -> v.distanceTo(this.getPositionVector())))
@@ -210,7 +216,6 @@ public class EntitySpiritWard extends EntityMagicConstruct implements ICustomHit
 						}
 					}
 				}
-			}
 		}
 	}
 

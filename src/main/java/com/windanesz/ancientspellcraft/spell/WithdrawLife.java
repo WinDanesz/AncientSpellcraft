@@ -13,6 +13,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.EnumHand;
@@ -83,4 +84,9 @@ public class WithdrawLife extends Spell {
 
 	@Override
 	public boolean canBeCastBy(TileEntityDispenser dispenser) { return true; }
+
+	@Override
+	public boolean applicableForItem(Item item) {
+		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+	}
 }

@@ -7,6 +7,7 @@ import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.item.ItemWand;
+import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderBiped;
@@ -443,6 +444,10 @@ public final class ASUtils {
 
 	public static boolean isInjured(EntityLivingBase entityLivingBase) {
 		return entityLivingBase.getMaxHealth() > entityLivingBase.getHealth();
+	}
+
+	public static boolean isEntityConsideredUndead(Entity entity) {
+		return entity instanceof EntityLivingBase && (((EntityLivingBase) entity).isEntityUndead() || ((EntityLivingBase) entity).isPotionActive(WizardryPotions.curse_of_undeath));
 	}
 
 }

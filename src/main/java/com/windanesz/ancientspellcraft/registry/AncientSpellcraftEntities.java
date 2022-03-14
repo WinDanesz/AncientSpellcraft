@@ -36,6 +36,7 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelMagic;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityFlint;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityManaVortex;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityMasterBolt;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
 import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
 import electroblob.wizardry.Wizardry;
@@ -142,6 +143,7 @@ public class AncientSpellcraftEntities {
 		registry.register(createEntry(EntitySpellTicker.class, "mushroom_forest", TrackingType.LIVING).build());
 		registry.register(createEntry(EntityBuilder.class, "builder_entity", TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntityAnimatedItem.class, "animated_item", TrackingType.LIVING).build());
+		registry.register(createEntry(EntityMasterBolt.class, 	"master_bolt", 	TrackingType.PROJECTILE).build());
 
 		//// Living Entity Overrides
 

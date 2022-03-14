@@ -20,7 +20,9 @@ import com.windanesz.ancientspellcraft.block.BlockHardFrostedIce;
 import com.windanesz.ancientspellcraft.block.BlockHellFire;
 import com.windanesz.ancientspellcraft.block.BlockIceDoor;
 import com.windanesz.ancientspellcraft.block.BlockIceWorkbench;
+import com.windanesz.ancientspellcraft.block.BlockLightning;
 import com.windanesz.ancientspellcraft.block.BlockMageLight;
+import com.windanesz.ancientspellcraft.block.BlockMasterBolt;
 import com.windanesz.ancientspellcraft.block.BlockMushroomCleansing;
 import com.windanesz.ancientspellcraft.block.BlockMushroomEmpowering;
 import com.windanesz.ancientspellcraft.block.BlockMushroomExplosive;
@@ -45,6 +47,7 @@ import com.windanesz.ancientspellcraft.block.BlockUsedRune;
 import com.windanesz.ancientspellcraft.tileentity.TileArcaneAnvil;
 import com.windanesz.ancientspellcraft.tileentity.TileArtefactPensive;
 import com.windanesz.ancientspellcraft.tileentity.TileCandleLight;
+import com.windanesz.ancientspellcraft.tileentity.TileEntityLightningBlock;
 import com.windanesz.ancientspellcraft.tileentity.TileEntityMagicMushroom;
 import com.windanesz.ancientspellcraft.tileentity.TileEntityRevertingBlock;
 import com.windanesz.ancientspellcraft.tileentity.TileMageLight;
@@ -145,6 +148,8 @@ public class AncientSpellcraftBlocks {
 	public static final Block CONJURED_SNOW = placeholder();
 	public static final Block ARCANE_ANVIL = placeholder();
 	public static final Block sage_lectern = placeholder();
+	public static final Block master_bolt = placeholder();
+	public static final Block lightning_block = placeholder();
 
 
 	public static void registerBlock(IForgeRegistry<Block> registry, String name, Block block) {
@@ -220,6 +225,8 @@ public class AncientSpellcraftBlocks {
 		registerBlock(registry, "conjured_magma", new BlockConjuredMagma());
 		registerBlock(registry, "conjured_dirt", new BlockConjuredMagma());
 		registerBlock(registry, "conjured_snow", new BlockConjuredDirt());
+		registerBlock(registry, "master_bolt", new BlockMasterBolt());
+		registerBlock(registry, "lightning_block", new BlockLightning());
 	}
 
 	/**
@@ -238,6 +245,7 @@ public class AncientSpellcraftBlocks {
 		GameRegistry.registerTileEntity(TileRune.class, new ResourceLocation(AncientSpellcraft.MODID, "placed_rune"));
 		GameRegistry.registerTileEntity(TileEntityMagicMushroom.class, new ResourceLocation(AncientSpellcraft.MODID, "magic_mushroom_tile"));
 		GameRegistry.registerTileEntity(TileSageLectern.class, new ResourceLocation(AncientSpellcraft.MODID, "sage_lectern"));
+		GameRegistry.registerTileEntity(TileEntityLightningBlock.class, new ResourceLocation(AncientSpellcraft.MODID, "lightning_block_tile"));
 
 		GameRegistry.registerTileEntity(TileEntityRevertingBlock.class, new ResourceLocation(AncientSpellcraft.MODID, "reverting_tile"));
 		GameRegistry.registerTileEntity(TileArcaneAnvil.class, new ResourceLocation(AncientSpellcraft.MODID, "arcane_anvil"));

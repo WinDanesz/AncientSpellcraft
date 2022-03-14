@@ -1,5 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.util.BlockUtils;
@@ -7,6 +9,7 @@ import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -35,13 +38,11 @@ public class LilyPad extends SpellRayAS {
 
 		if (caster == null) { return false; }
 
-		if (true) {
+		if (caster instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) caster,AncientSpellcraftItems.ring_lily_flower)) {
 
 			EnumFacing direction = caster.getHorizontalFacing();
 
 			boolean flag = false;
-
-
 
 				// Gets the coordinates of the nearest block intersection to the player's feet.
 				// Remember that a block always takes the coordinates of its northwestern corner.

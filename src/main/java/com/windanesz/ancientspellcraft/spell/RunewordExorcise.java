@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.item.SpellActions;
-import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
@@ -20,7 +20,7 @@ public class RunewordExorcise extends Runeword {
 
 	@Override
 	public boolean onAboutToHitEntity(World world, EntityLivingBase caster, EntityLivingBase target, EnumHand hand, ItemStack sword, SpellModifiers modifiers, boolean charged) {
-		if (target.isEntityUndead() || target.isPotionActive(WizardryPotions.curse_of_undeath)) {
+		if (ASUtils.isEntityConsideredUndead(target)) {
 			target.setFire(getProperty(EFFECT_DURATION).intValue() / 20);
 			target.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, getProperty(EFFECT_DURATION).intValue()));
 		}

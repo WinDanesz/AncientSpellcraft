@@ -59,7 +59,6 @@ public class MoltenEarth extends SpellRay {
 
 			}
 		}
-
 		return true;
 	}
 

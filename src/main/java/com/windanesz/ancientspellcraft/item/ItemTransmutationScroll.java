@@ -59,29 +59,10 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber
-public class ItemTransmutationScroll extends Item {
+public class ItemTransmutationScroll extends ItemRareScroll {
 
 	public ItemTransmutationScroll() {
 		super();
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
-		setMaxStackSize(1);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean hasEffect(ItemStack stack) {
-		return true;
-	}
-
-	@Override
-	public EnumRarity getRarity(ItemStack stack) {
-		return EnumRarity.RARE;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, net.minecraft.client.util.ITooltipFlag flag) {
-		AncientSpellcraft.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc");
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
 import com.windanesz.ancientspellcraft.spell.Animate;
 import com.windanesz.ancientspellcraft.spell.Runeword;
+import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.IManaStoringItem;
@@ -349,7 +350,7 @@ public enum EnumElementalSwordEffect {
 
 		@Override
 		void lesserPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder, boolean charged) {
-			if (target.isEntityUndead() || target.isPotionActive(WizardryPotions.curse_of_undeath)) {
+			if (ASUtils.isEntityConsideredUndead(target)) {
 
 				// sets undeads on fire
 				target.setFire(2);

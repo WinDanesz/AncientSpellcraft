@@ -61,9 +61,11 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelMagic;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityFlint;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityManaVortex;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityMasterBolt;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
 import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
 import com.windanesz.ancientspellcraft.integration.antiqueatlas.ASAntiqueAtlasIntegration;
+import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.packet.PacketContinuousRitual;
 import com.windanesz.ancientspellcraft.packet.PacketMushroomActivation;
 import com.windanesz.ancientspellcraft.packet.PacketStartRitual;
@@ -83,6 +85,8 @@ import electroblob.wizardry.client.renderer.entity.RenderSigil;
 import electroblob.wizardry.client.renderer.entity.layers.LayerTiledOverlay;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.ISpellCastingItem;
+import electroblob.wizardry.item.ItemArtefact;
+import electroblob.wizardry.spell.Spell;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -90,6 +94,8 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
@@ -102,10 +108,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
+import java.util.Collection;
 import java.util.List;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
@@ -116,6 +124,30 @@ public class ClientProxy extends CommonProxy {
 	public static KeyBinding KEY_ACTIVATE_RING1_BAUBLE;
 	public static KeyBinding KEY_ACTIVATE_RING2_BAUBLE;
 	public static KeyBinding KEY_ACTIVATE_RADIAL_SPELL_MENU;
+
+	@SubscribeEvent
+	public static void handleKeys(InputEvent ev) // Not a mistake, I want both kb & mouse events handled.
+	{
+		Minecraft mc = Minecraft.getMinecraft();
+
+		if (!Settings.clientSettings.radial_menu_enabled) {
+			return;
+		}
+
+		while (KEY_ACTIVATE_RADIAL_SPELL_MENU.isPressed()) {
+			if (mc.currentScreen == null) {
+				ItemStack inHand = mc.player.getHeldItemMainhand();
+				if (inHand.getItem() instanceof ISpellCastingItem) {
+					mc.displayGuiScreen(new GuiRadialMenu(inHand));
+				}
+			}
+		}
+	}
+
+	static void wipeOpen() {
+		while (KEY_ACTIVATE_RADIAL_SPELL_MENU.isPressed()) {
+		}
+	}
 
 	@Override
 	public void initialiseLayers() {
@@ -144,30 +176,6 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.registerKeyBinding(KEY_ACTIVATE_RING2_BAUBLE);
 	}
 
-	@SubscribeEvent
-	public static void handleKeys(InputEvent ev) // Not a mistake, I want both kb & mouse events handled.
-	{
-		Minecraft mc = Minecraft.getMinecraft();
-
-		if (!Settings.clientSettings.radial_menu_enabled) {
-			return;
-		}
-
-		while (KEY_ACTIVATE_RADIAL_SPELL_MENU.isPressed()) {
-			if (mc.currentScreen == null) {
-				ItemStack inHand = mc.player.getHeldItemMainhand();
-				if (inHand.getItem() instanceof ISpellCastingItem) {
-					mc.displayGuiScreen(new GuiRadialMenu(inHand));
-				}
-			}
-		}
-	}
-
-	static void wipeOpen() {
-		while (KEY_ACTIVATE_RADIAL_SPELL_MENU.isPressed()) {
-		}
-	}
-
 	public void registerRenderers() {
 
 		////////// CREATURES //////////
@@ -192,7 +200,8 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityAOEProjectile.class, manager -> new RenderProjectile(manager, 0.7f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/aoe_projectile.png"), false));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySafeIceShard.class, manager -> new RenderMagicArrow(manager,
 				new ResourceLocation(Wizardry.MODID, "textures/entity/ice_shard.png"), false, 8.0, 2.0, 16, 5, false));
-
+		RenderingRegistry.registerEntityRenderingHandler(EntityMasterBolt.class, manager -> new RenderMagicArrow(manager,
+				new ResourceLocation(Wizardry.MODID, "textures/entity/lightning_arrow.png"), true, 8.0, 2.0, 16, 5, false));
 
 		////////// TESRs //////////
 		ClientRegistry.bindTileEntitySpecialRenderer(TileSphereCognizance.class, new RenderTileSphereCognizance());
@@ -283,13 +292,10 @@ public class ClientProxy extends CommonProxy {
 
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 
-		if (player == null)
-			return false;
+		if (player == null) { return false; }
 
-		if (player.isCreative())
-			return true;
-		if (WizardData.get(player) != null && RitualDiscoveryData.hasRitualBeenDiscovered(player, ritual))
-			return true;
+		if (player.isCreative()) { return true; }
+		if (WizardData.get(player) != null && RitualDiscoveryData.hasRitualBeenDiscovered(player, ritual)) { return true; }
 
 		return false;
 	}
@@ -337,15 +343,76 @@ public class ClientProxy extends CommonProxy {
 
 			Potion potion = ForgeRegistries.POTIONS.getValue(new ResourceLocation(potionString));
 			if (potion != null) {
-			String potionDisplayName = I18n.format(potion.getName());
-			return I18n.format("item." + AncientSpellcraft.MODID + ":ice_cream.potion_name", potionDisplayName).trim();
+				String potionDisplayName = I18n.format(potion.getName());
+				return I18n.format("item." + AncientSpellcraft.MODID + ":ice_cream.potion_name", potionDisplayName).trim();
 			}
 		}
 		return net.minecraft.util.text.translation.I18n.translateToLocal("item.ancientspellcraft:ice_cream.name").trim();
 	}
 
-	public void registerAtlasMarkers(){
+	public void registerAtlasMarkers() {
 		ASAntiqueAtlasIntegration.registerMarkers();
 	}
 
+	/**
+	 * Utility method to check if language keys are missing. Only runs in dev environment and the client side.
+	 */
+	@Override
+	public void checkTranslationKeys() {
+
+		if (!FMLLaunchHandler.isDeobfuscatedEnvironment()) {
+			return;
+		}
+
+		// Checking spells for missing translation keys
+		Collection<ResourceLocation> spells = Spell.getSpellNames();
+		for (ResourceLocation resourceLocation : spells) {
+			String registryName = resourceLocation.toString();
+			String nameKey = "spell." + registryName;
+			String descKey = nameKey + ".desc";
+
+			String localizedName = net.minecraft.client.resources.I18n.format(nameKey);
+			String localizedDesc = net.minecraft.client.resources.I18n.format(descKey);
+
+			if (nameKey.equals(localizedName)) {
+				missingKeyWarning("Spell", registryName, nameKey);
+			}
+			if (descKey.equals(localizedDesc)) {
+				missingKeyWarning("Spell", registryName, descKey);
+			}
+		}
+
+		// Checking items for missing translation keys
+		for (Item item : Item.REGISTRY) {
+
+			if (item.getRegistryName().getNamespace().equals(AncientSpellcraft.MODID)) {
+
+
+				String registryName = item.getRegistryName().toString();
+				String nameKey = "item." + registryName + ".name";
+
+				if (item instanceof ItemBlock) {
+					nameKey = "tile." + registryName + ".name";
+				}
+
+				String localizedName = net.minecraft.client.resources.I18n.format(nameKey);
+
+				if (nameKey.equals(localizedName)) {
+					missingKeyWarning("Item", registryName, nameKey);
+				}
+
+				if (item instanceof ItemArtefact || item instanceof ItemNewArtefact) {
+					String descKey = "item." + registryName + ".desc";
+					String localizedDesc = net.minecraft.client.resources.I18n.format(descKey);
+					if (descKey.equals(localizedDesc)) {
+						missingKeyWarning("Artefact", registryName, descKey);
+					}
+				}
+			}
+		}
+	}
+
+	private void missingKeyWarning(String type, String registryName, String expectedKey) {
+		AncientSpellcraft.logger.warn(type + " " + registryName + " is missing a translation key: \"" + expectedKey + "\"");
+	}
 }

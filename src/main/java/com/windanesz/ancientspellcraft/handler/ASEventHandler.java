@@ -14,6 +14,7 @@ import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
 import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
 import com.windanesz.ancientspellcraft.potion.PotionMetamagicEffect;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftEnchantments;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
 import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
@@ -971,7 +972,7 @@ public class ASEventHandler {
 					if (modifier >= 0) {
 						modifiers.set(SpellModifiers.POTENCY, (1 + modifier) * potency, false);
 					}
-				}
+				} else
 
 				if (artefact == AncientSpellcraftItems.belt_scroll_holder && ASBaublesIntegration.enabled()) {
 					ItemStack holder = ASBaublesIntegration.getBeltSlotItemStack(player);
@@ -989,9 +990,17 @@ public class ASEventHandler {
 							}
 						}
 					}
-				}
+				} else
 
-			}
+				if (artefact == AncientSpellcraftItems.head_lightning && ASBaublesIntegration.enabled()) {
+
+					if (event.getSpell().getElement() == Element.LIGHTNING && player.world.getBlockState(player.getPosition()).getBlock() == AncientSpellcraftBlocks.lightning_block) {
+							modifiers.set(WizardryItems.blast_upgrade, modifiers.get(WizardryItems.blast_upgrade) + 0.25F, true);
+							modifiers.set(WizardryItems.range_upgrade, modifiers.get(WizardryItems.range_upgrade) + 0.25F, true);
+							modifiers.set(WizardryItems.duration_upgrade, modifiers.get(WizardryItems.duration_upgrade) + 0.25F, true);
+						}
+					}
+				}
 
 			for (ItemArtefact artefact : getActiveArtefacts(player)) {
 

@@ -3,8 +3,8 @@ package com.windanesz.ancientspellcraft;
 import com.windanesz.ancientspellcraft.block.BlockCrystalLeaves;
 import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.packet.PacketContinuousRitual;
-import com.windanesz.ancientspellcraft.packet.PacketMushroomActivation;
 import com.windanesz.ancientspellcraft.packet.PacketExtendedSwordReach;
+import com.windanesz.ancientspellcraft.packet.PacketMushroomActivation;
 import com.windanesz.ancientspellcraft.packet.PacketStartRitual;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
 import net.minecraft.item.ItemStack;
@@ -98,5 +98,7 @@ public class CommonProxy {
 	public String getIceCreamDisplayName(ItemStack stack) {
 		return I18n.translateToLocal("item.ancientspellcraft:ice_cream.name").trim();
 	}
+
+	public void checkTranslationKeys() {}
 
 }

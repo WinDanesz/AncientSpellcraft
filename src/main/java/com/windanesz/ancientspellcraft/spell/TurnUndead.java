@@ -1,6 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardryPotions;
@@ -13,6 +15,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.INpc;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityDispenser;
@@ -37,7 +40,7 @@ public class TurnUndead extends SpellRay {
 		if (!(target instanceof EntityLivingBase)) { return false; }
 
 		EntityLivingBase livingTarget = (EntityLivingBase) target;
-		if ((livingTarget.isEntityUndead() || ((EntityLivingBase) target).isPotionActive(WizardryPotions.curse_of_undeath)) &&
+		if (ASUtils.isEntityConsideredUndead(livingTarget) &&
 				livingTarget.isNonBoss() && !(target instanceof INpc)) {
 
 			EntityLivingBase targetEntity = (EntityLivingBase) target;
@@ -49,6 +52,14 @@ public class TurnUndead extends SpellRay {
 			targetEntity.addPotionEffect(new PotionEffect(WizardryPotions.fear,
 					(int) (getProperty(EFFECT_DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade)),
 					getProperty(EFFECT_STRENGTH).intValue() + bonusAmplifier));
+
+			origin = targetEntity.getPositionEyes(1);
+			for (int i = 0; i < 30; i++) {
+				double x = origin.x - 1 + world.rand.nextDouble() * 2;
+				double y = origin.y - 0.25 + world.rand.nextDouble() * 0.5;
+				double z = origin.z - 1 + world.rand.nextDouble() * 2;
+				ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x, y, z).clr(1, 1, 0.3f).spawn(world);
+			}
 			return true;
 		}
 		return false;
@@ -73,12 +84,12 @@ public class TurnUndead extends SpellRay {
 
 	@Override
 	protected void spawnParticleRay(World world, Vec3d origin, Vec3d direction, @Nullable EntityLivingBase caster, double distance) {
-		if (caster != null) { origin = caster.getPositionEyes(1); }
-		for (int i = 0; i < 30; i++) {
-			double x = origin.x - 1 + world.rand.nextDouble() * 2;
-			double y = origin.y - 0.25 + world.rand.nextDouble() * 0.5;
-			double z = origin.z - 1 + world.rand.nextDouble() * 2;
-			ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x, y, z).clr(1, 1, 0.3f).spawn(world);
-		}
+
 	}
+
+	@Override
+	public boolean applicableForItem(Item item) {
+		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+	}
+
 }

@@ -16,10 +16,10 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class Fluorescene extends SpellRayAS {
+public class Fluorescence extends SpellRayAS {
 
-	public Fluorescene() {
-		super("fluorescene", SpellActions.POINT, false);
+	public Fluorescence() {
+		super("fluorescence", SpellActions.POINT, false);
 		addProperties(EFFECT_DURATION);
 	}
 

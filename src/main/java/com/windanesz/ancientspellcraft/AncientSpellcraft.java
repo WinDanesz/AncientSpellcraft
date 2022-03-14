@@ -50,22 +50,6 @@ public class AncientSpellcraft {
 	public static final String NAME = "Ancient Spellcraft by Dan";
 
 	public static final Random rand = new Random();
-
-	/**
-	 * Static instance of the {@link Settings} object for AncientSpellcraft.
-	 */
-	public static Settings settings = new Settings();
-
-	public static Logger logger;
-
-	// The instance of wizardry that Forge uses.
-	@Mod.Instance(AncientSpellcraft.MODID)
-	public static AncientSpellcraft instance;
-
-	// Location of the proxy code, used by Forge.
-	@SidedProxy(clientSide = "com.windanesz.ancientspellcraft.client.ClientProxy", serverSide = "com.windanesz.ancientspellcraft.CommonProxy")
-	public static CommonProxy proxy;
-
 	public static final Material DEVORITIUM = (new Material(MapColor.BLACK));
 	public static final Item.ToolMaterial DEVORITIUM_TOOL_MATERIAL = EnumHelper.addToolMaterial("devoritium", 2, 250, 6.0F, 2.0F, 0);
 	public static final ItemArmor.ArmorMaterial DEVORITIUM_ARMOR_MATERIAL = EnumHelper.addArmorMaterial(
@@ -76,6 +60,17 @@ public class AncientSpellcraft {
 			0,
 			SoundEvents.ITEM_ARMOR_EQUIP_GENERIC,
 			1);
+	/**
+	 * Static instance of the {@link Settings} object for AncientSpellcraft.
+	 */
+	public static Settings settings = new Settings();
+	public static Logger logger;
+	// The instance of wizardry that Forge uses.
+	@Mod.Instance(AncientSpellcraft.MODID)
+	public static AncientSpellcraft instance;
+	// Location of the proxy code, used by Forge.
+	@SidedProxy(clientSide = "com.windanesz.ancientspellcraft.client.ClientProxy", serverSide = "com.windanesz.ancientspellcraft.CommonProxy")
+	public static CommonProxy proxy;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -130,6 +125,7 @@ public class AncientSpellcraft {
 		ItemRelic.initEffects();
 		proxy.initialiseLayers();
 		SpellCategorization.init();
+		proxy.checkTranslationKeys();
 	}
 
 	@EventHandler

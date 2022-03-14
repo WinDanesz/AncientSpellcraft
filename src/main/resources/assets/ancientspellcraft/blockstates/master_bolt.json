@@ -1,0 +1,13 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "transform": "forge:default-block",
+        "model": "ancientspellcraft:master_bolt"
+    },
+    "variants": {
+        "facing=south": { "model": "ancientspellcraft:master_bolt" },
+        "facing=west": { "model": "ancientspellcraft:master_bolt", "y": 90 },
+        "facing=north": { "model": "ancientspellcraft:master_bolt", "y": 180 },
+        "facing=east": { "model": "ancientspellcraft:master_bolt", "y": 270 }
+    }
+}

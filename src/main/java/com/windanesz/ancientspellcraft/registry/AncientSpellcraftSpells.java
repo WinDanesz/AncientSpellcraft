@@ -157,6 +157,7 @@ public final class AncientSpellcraftSpells {
 	public static final Spell healing_sigil = placeholder();
 	public static final Spell cauterize = placeholder();
 	public static final Spell turn_undead = placeholder();
+	public static final Spell reveal_undead = placeholder();
 	public static final Spell singe = placeholder();
 	public static final Spell hunger = placeholder();
 	public static final Spell power_siphon = placeholder();
@@ -167,8 +168,15 @@ public final class AncientSpellcraftSpells {
 	public static final Spell conjure_lava = placeholder();
 	public static final Spell lily_pad = placeholder();
 	public static final Spell mass_pyrokinesis = placeholder();
-	public static final Spell fluorescene = placeholder();
+	public static final Spell fluorescence = placeholder();
 	public static final Spell spring_charge = placeholder();
+	public static final Spell master_bolt = placeholder();
+	public static final Spell lightning_wall = placeholder();
+	public static final Spell static_dome = placeholder();
+	public static final Spell electrify = placeholder();
+	public static final Spell shock_zone = placeholder();
+	public static final Spell force_shove = placeholder();
+	public static final Spell corpse_bomb = placeholder();
 	//public static final Spell heat_furnace = placeholder();
 
 
@@ -411,12 +419,13 @@ public final class AncientSpellcraftSpells {
 		registry.register(new RunewordSol());
 		registry.register(new Runeword("runeword_shatter", SpellActions.POINT_UP, false).addProperties(Runeword.CHARGES));
 		registry.register(new RunewordBlast());
-		registry.register(new RunewordReach("runeword_pull", SpellActions.POINT_UP, false).setEffect(RunewordReach.Effect.PULL).addProperties(Runeword.CHARGES));
-		registry.register(new RunewordReach("runeword_reach", SpellActions.POINT_UP, false).setEffect(RunewordReach.Effect.NONE).addProperties(Runeword.CHARGES));
-		registry.register(new RunewordReach("runeword_push", SpellActions.POINT_UP, false).setEffect(RunewordReach.Effect.PUSH).addProperties(Runeword.CHARGES));
+		registry.register(new RunewordReach("runeword_pull", SpellActions.POINT_UP, false).setEffect(RunewordReach.Effect.PULL));
+		registry.register(new RunewordReach("runeword_reach", SpellActions.POINT_UP, false).setEffect(RunewordReach.Effect.NONE));
+		registry.register(new RunewordReach("runeword_push", SpellActions.POINT_UP, false).setEffect(RunewordReach.Effect.PUSH));
 		registry.register(new RunewordFury());
 		registry.register(new RunewordSuppress());
 		registry.register(new TurnUndead());
+		registry.register(new RevealUndead());
 		registry.register(new Singe());
 		registry.register(new Hunger());
 		registry.register(new PowerSiphon());
@@ -427,8 +436,16 @@ public final class AncientSpellcraftSpells {
 		registry.register(new ConjureLava());
 		registry.register(new LilyPad());
 		registry.register(new MassPyrokinesis());
-		registry.register(new Fluorescene());
+		registry.register(new Fluorescence());
 		registry.register(new SpringCharge());
+		registry.register(new MasterBolt());
+		registry.register(new LightningWall());
+		registry.register(new StaticDome());
+		registry.register(new Electrify());
+		registry.register(new ShockZone());
+		registry.register(new ForceShove());
+		registry.register(new CorpseBomb());
+
 
 		// registry.register(new HeatFurnace()); TODO
 		//registry.register(new WarpWeapon()); TODO
@@ -440,6 +457,9 @@ public final class AncientSpellcraftSpells {
 		}
 		if (Settings.spellCompatSettings.conjurePickaxeSpellOverride) {
 			registry.register(new ConjurePickaxe("conjure_pickaxe", WizardryItems.spectral_pickaxe));
+		}
+		if (Settings.spellCompatSettings.chargeSpellOverride) {
+			registry.register(new ChargeAS());
 		}
 
 		/// BASE SPELL MODIFICATION OVERRIDES ///

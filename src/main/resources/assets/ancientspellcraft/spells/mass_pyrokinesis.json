@@ -13,14 +13,13 @@
     "tier": "advanced",
     "element": "fire",
     "type": "attack",
-    "cost": 20,
+    "cost": 25,
     "chargeup": 0,
     "cooldown": 0,
     "base_properties": {
         "burn_duration": 10,
         "slow_duration": 30,
         "effect_radius": 10,
-        "range": 10,
         "damage": 3
     }
 }
