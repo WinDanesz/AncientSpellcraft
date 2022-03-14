@@ -2,8 +2,8 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.block.ITemporaryBlock;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.BlockUtils;
@@ -47,7 +47,7 @@ public class MoltenEarth extends SpellRay {
 		} else {
 
 			//center piece
-			ITemporaryBlock.placeTemporaryBlock(caster, world, AncientSpellcraftBlocks.CONJURED_MAGMA, pos, 600);
+			ITemporaryBlock.placeTemporaryBlock(caster, world, ASBlocks.CONJURED_MAGMA, pos, 600);
 
 			BlockPos finalPos = pos;
 			List<BlockPos> list = BlockUtils.getBlockSphere(pos, getProperty(EFFECT_RADIUS).intValue()).stream().filter(i -> !world.isAirBlock(i)).filter(i -> i.getY() == finalPos.getY()).collect(Collectors.toList());
@@ -55,7 +55,7 @@ public class MoltenEarth extends SpellRay {
 
 			for (int i = 0; i < list.size(); i++) {
 				BlockPos currPos = list.get(i);
-				ITemporaryBlock.placeTemporaryBlock(caster, world, AncientSpellcraftBlocks.CONJURED_MAGMA, currPos, 600);
+				ITemporaryBlock.placeTemporaryBlock(caster, world, ASBlocks.CONJURED_MAGMA, currPos, 600);
 
 			}
 		}
@@ -69,6 +69,6 @@ public class MoltenEarth extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

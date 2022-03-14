@@ -5,7 +5,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
 import com.windanesz.ancientspellcraft.packet.PacketSelectRadialItemSpell;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.block.BlockReceptacle;
 import electroblob.wizardry.client.DrawingUtils;
 import electroblob.wizardry.constants.Element;
@@ -198,7 +198,7 @@ public class GuiRadialMenu extends GuiScreen {
 				currentIndex = i;
 
 				int[] colour = isKnownSpell(spellOver) ? BlockReceptacle.PARTICLE_COLOURS.get(spellOver.getElement()) : BlockReceptacle.PARTICLE_COLOURS.get(Element.MAGIC);
-				if (spellOver.applicableForItem(AncientSpellcraftItems.ancient_spell_book)) {
+				if (spellOver.applicableForItem(ASItems.ancient_spell_book)) {
 					drawPieArc(buffer, x, y, zLevel, radiusIn, radiusOut, s, e, 219, 180, 72, 64);
 				} else if (spellOver.getElement() == Element.MAGIC) {
 					drawPieArc(buffer, x, y, zLevel, radiusIn, radiusOut, s, e, 200, 200, 200, 64);

@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.block;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.properties.IProperty;
@@ -23,7 +23,7 @@ import java.util.Random;
 public class BlockCrystalLeaves extends BlockLeaves {
 
 	public BlockCrystalLeaves() {
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 //		AncientSpellcraft.proxy.setGraphicsLevel(this, true);
 		setDefaultState(blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(true)));
 	}

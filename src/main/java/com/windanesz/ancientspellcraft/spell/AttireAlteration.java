@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
@@ -79,7 +79,7 @@ public class AttireAlteration extends Spell {
 	private static ItemStack update(EntityPlayer player, ItemStack stack) {
 		if (!player.world.isRemote && player.ticksExisted % 200 == 0) {
 
-			if (ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.charm_enchanted_needle)) {
+			if (ItemArtefact.isArtefactActive(player, ASItems.charm_enchanted_needle)) {
 
 				if (stack != null && stack != ItemStack.EMPTY && stack.getItem() instanceof IManaStoringItem) {
 					((IManaStoringItem) stack.getItem()).rechargeMana(stack, 2);
@@ -92,6 +92,6 @@ public class AttireAlteration extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.potion;
 
 import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
@@ -57,27 +57,27 @@ public class PotionShrinkage extends PotionMagicEffectAS {
 	@Override
 	public void performEffect(EntityLivingBase entitylivingbase, int strength) {
 		if (strength > MAX_LEVEL) {
-			if (entitylivingbase.isPotionActive(AncientSpellcraftPotions.shrinkage)) {
-				PotionEffect effect = entitylivingbase.getActivePotionEffect(AncientSpellcraftPotions.shrinkage);
+			if (entitylivingbase.isPotionActive(ASPotions.shrinkage)) {
+				PotionEffect effect = entitylivingbase.getActivePotionEffect(ASPotions.shrinkage);
 				if (effect != null) {
 					int duration = effect.getDuration();
-					entitylivingbase.removePotionEffect(AncientSpellcraftPotions.shrinkage);
-					entitylivingbase.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.shrinkage, duration, MAX_LEVEL));
+					entitylivingbase.removePotionEffect(ASPotions.shrinkage);
+					entitylivingbase.addPotionEffect(new PotionEffect(ASPotions.shrinkage, duration, MAX_LEVEL));
 				}
 			}
 		}
 
 		if (entitylivingbase.ticksExisted % 39 == 0) {
 
-			if (entitylivingbase.isPotionActive(AncientSpellcraftPotions.growth)) {
-				entitylivingbase.removePotionEffect(AncientSpellcraftPotions.shrinkage);
-				entitylivingbase.removePotionEffect(AncientSpellcraftPotions.growth);
+			if (entitylivingbase.isPotionActive(ASPotions.growth)) {
+				entitylivingbase.removePotionEffect(ASPotions.shrinkage);
+				entitylivingbase.removePotionEffect(ASPotions.growth);
 			}
 
 			entitylivingbase.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 40, Math.max(0, strength - 1), true, false));
 
 			if (strength > 0) {
-				entitylivingbase.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.feather_fall, 40, 0, true, false));
+				entitylivingbase.addPotionEffect(new PotionEffect(ASPotions.feather_fall, 40, 0, true, false));
 			}
 		}
 	}

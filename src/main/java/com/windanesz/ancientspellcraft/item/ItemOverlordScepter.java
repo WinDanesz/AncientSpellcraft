@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIWizardFollowPlayer;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardryPotions;
@@ -40,7 +40,7 @@ public class ItemOverlordScepter extends Item {
 	@SuppressWarnings("ConstantConditions")
 	public ItemOverlordScepter() {
 		super();
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR);
 		setMaxDamage(0);
 	}
 

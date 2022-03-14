@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.entity.projectile;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.entity.projectile.EntityMagicArrow;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardrySounds;
@@ -21,7 +21,7 @@ public class EntityFlint extends EntityMagicArrow {
 	}
 
 	@Override
-	public double getDamage() { return AncientSpellcraftSpells.flint_shard.getProperty(Spell.DAMAGE).doubleValue(); }
+	public double getDamage() { return ASSpells.flint_shard.getProperty(Spell.DAMAGE).doubleValue(); }
 
 	@Override
 	public boolean doGravity() { return true; }

@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.entity.projectile;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.util.EntityUtils;
 import net.minecraft.entity.Entity;
@@ -29,12 +29,12 @@ public class EntityDevoritiumArrow extends EntityArrow {
 
 	@Override
 	protected ItemStack getArrowStack() {
-		return new ItemStack(AncientSpellcraftItems.devoritium_arrow);
+		return new ItemStack(ASItems.devoritium_arrow);
 	}
 
 	protected void arrowHit(EntityLivingBase living) {
 		super.arrowHit(living);
-		PotionEffect potioneffect = new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, 60, 2);
+		PotionEffect potioneffect = new PotionEffect(ASPotions.magical_exhaustion, 60, 2);
 		living.addPotionEffect(potioneffect);
 	}
 

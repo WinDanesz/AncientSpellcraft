@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -28,7 +28,7 @@ import java.util.List;
 
 public class ItemRune extends Item {
 
-	protected final Block block = AncientSpellcraftBlocks.PLACED_RUNE;
+	protected final Block block = ASBlocks.PLACED_RUNE;
 
 	public ItemRune() {
 		super();

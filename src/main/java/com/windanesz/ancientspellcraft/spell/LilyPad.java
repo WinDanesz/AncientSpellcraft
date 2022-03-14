@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.spell;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
@@ -38,7 +38,7 @@ public class LilyPad extends SpellRayAS {
 
 		if (caster == null) { return false; }
 
-		if (caster instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) caster,AncientSpellcraftItems.ring_lily_flower)) {
+		if (caster instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.ring_lily_flower)) {
 
 			EnumFacing direction = caster.getHorizontalFacing();
 

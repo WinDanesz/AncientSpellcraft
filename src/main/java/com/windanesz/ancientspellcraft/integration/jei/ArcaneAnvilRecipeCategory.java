@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.integration.jei;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.util.WandHelper;
@@ -105,39 +105,39 @@ public class ArcaneAnvilRecipeCategory implements IRecipeCategory<ArcaneAnvilRec
 		List<ArcaneAnvilRecipe> recipes = new ArrayList<>();
 
 		// ingot -> plating
-		ItemStack plating_input1 = new ItemStack(AncientSpellcraftItems.crystal_silver_ingot);
+		ItemStack plating_input1 = new ItemStack(ASItems.crystal_silver_ingot);
 		ItemStack plating_input2 = ItemStack.EMPTY;
 		ItemStack plating_output = new ItemStack(WizardryItems.crystal_silver_plating);
 		recipes.add(new ArcaneAnvilRecipe(plating_input1, plating_input2, plating_output));
 
 		// novice sword
-		ItemStack novice_input1 = new ItemStack(AncientSpellcraftItems.battlemage_sword_hilt);
-		ItemStack novice_input2 = new ItemStack(AncientSpellcraftItems.battlemage_sword_blade);
-		ItemStack novice_output = new ItemStack(AncientSpellcraftItems.battlemage_sword_novice);
+		ItemStack novice_input1 = new ItemStack(ASItems.battlemage_sword_hilt);
+		ItemStack novice_input2 = new ItemStack(ASItems.battlemage_sword_blade);
+		ItemStack novice_output = new ItemStack(ASItems.battlemage_sword_novice);
 		recipes.add(new ArcaneAnvilRecipe(novice_input1, novice_input2, novice_output));
 
 		// apprentice sword
-		ItemStack apprentice_input1 = new ItemStack(AncientSpellcraftItems.battlemage_sword_novice);
+		ItemStack apprentice_input1 = new ItemStack(ASItems.battlemage_sword_novice);
 		WandHelper.addProgression(apprentice_input1, Tier.APPRENTICE.getProgression());
 
-		ItemStack apprentice_input2 = new ItemStack(AncientSpellcraftItems.crystal_silver_ingot);
-		ItemStack apprentice_output = new ItemStack(AncientSpellcraftItems.battlemage_sword_apprentice);
+		ItemStack apprentice_input2 = new ItemStack(ASItems.crystal_silver_ingot);
+		ItemStack apprentice_output = new ItemStack(ASItems.battlemage_sword_apprentice);
 		recipes.add(new ArcaneAnvilRecipe(apprentice_input1, apprentice_input2, apprentice_output));
 
 		// advanced sword
-		ItemStack advanced_input1 = new ItemStack(AncientSpellcraftItems.battlemage_sword_apprentice);
+		ItemStack advanced_input1 = new ItemStack(ASItems.battlemage_sword_apprentice);
 		WandHelper.addProgression(advanced_input1, Tier.ADVANCED.getProgression());
 
-		ItemStack advanced_input2 = new ItemStack(AncientSpellcraftItems.crystal_silver_ingot);
-		ItemStack advanced_output = new ItemStack(AncientSpellcraftItems.battlemage_sword_advanced);
+		ItemStack advanced_input2 = new ItemStack(ASItems.crystal_silver_ingot);
+		ItemStack advanced_output = new ItemStack(ASItems.battlemage_sword_advanced);
 		recipes.add(new ArcaneAnvilRecipe(advanced_input1, advanced_input2, advanced_output));
 
 		// master sword
-		ItemStack master_input1 = new ItemStack(AncientSpellcraftItems.battlemage_sword_advanced);
+		ItemStack master_input1 = new ItemStack(ASItems.battlemage_sword_advanced);
 		WandHelper.addProgression(advanced_input1, Tier.MASTER.getProgression());
 
-		ItemStack master_input2 = new ItemStack(AncientSpellcraftItems.crystal_silver_ingot);
-		ItemStack master_output = new ItemStack(AncientSpellcraftItems.battlemage_sword_master);
+		ItemStack master_input2 = new ItemStack(ASItems.crystal_silver_ingot);
+		ItemStack master_output = new ItemStack(ASItems.battlemage_sword_master);
 		recipes.add(new ArcaneAnvilRecipe(master_input1, master_input2, master_output));
 
 		return recipes;

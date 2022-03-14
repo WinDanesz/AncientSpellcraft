@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.ritual;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.misc.DonorPerks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import com.windanesz.ancientspellcraft.tileentity.TileRune;
 import com.windanesz.ancientspellcraft.util.ASParticles;
 import electroblob.wizardry.item.SpellActions;
@@ -81,9 +81,9 @@ public class ArcaneBarrier extends Ritual implements IRitualIngredient, IRitualB
 
 			// check for the integrity of the supporting blocks
 			if (!areContinuousRequirementsMet(world, centerPiece)) {
-				if (world.getBlockState(centerPiece.getPos()).getBlock() == AncientSpellcraftBlocks.PLACED_RUNE) {
+				if (world.getBlockState(centerPiece.getPos()).getBlock() == ASBlocks.PLACED_RUNE) {
 					world.removeTileEntity(centerPiece.getPos());
-					world.setBlockState(centerPiece.getPos(), AncientSpellcraftBlocks.RUNE_USED.getDefaultState());
+					world.setBlockState(centerPiece.getPos(), ASBlocks.RUNE_USED.getDefaultState());
 				}
 			}
 

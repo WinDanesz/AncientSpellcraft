@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.client.renderer;
 
 import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -45,7 +45,7 @@ public class RenderArcaneBarrierEventBased {
 		if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) {
 			renderBarriers(Minecraft.getMinecraft().player, event.getPartialTicks());
 
-			if (Minecraft.getMinecraft().player.isPotionActive(AncientSpellcraftPotions.wizard_shield)) { // && data.currentlyCasting().getRegistryName().getPath().equals("wizard_shield")) {
+			if (Minecraft.getMinecraft().player.isPotionActive(ASPotions.wizard_shield)) { // && data.currentlyCasting().getRegistryName().getPath().equals("wizard_shield")) {
 				renderWizardShield(player, event.getPartialTicks());
 
 			}
@@ -62,7 +62,7 @@ public class RenderArcaneBarrierEventBased {
 	// Third person
 	@SubscribeEvent
 	public static void onRenderPlayerEvent(RenderPlayerEvent.Post event) {
-		if (Minecraft.getMinecraft().player.isPotionActive(AncientSpellcraftPotions.wizard_shield)) { // && data.currentlyCasting().getRegistryName().getPath().equals("wizard_shield")) {
+		if (Minecraft.getMinecraft().player.isPotionActive(ASPotions.wizard_shield)) { // && data.currentlyCasting().getRegistryName().getPath().equals("wizard_shield")) {
 
 			renderWizardShield(event.getEntityPlayer(), event.getPartialRenderTick());
 		}
@@ -72,7 +72,7 @@ public class RenderArcaneBarrierEventBased {
 
 	@SuppressWarnings("Duplicates")
 	private static void renderWizardShield(EntityPlayer player, Float partialTicks) {
-		PotionEffect effect = player.getActivePotionEffect(AncientSpellcraftPotions.wizard_shield);
+		PotionEffect effect = player.getActivePotionEffect(ASPotions.wizard_shield);
 		float amp = 0.3f;
 		if (effect != null) {
 			amp = Math.max(0.3f, Math.min(1.8f, effect.getAmplifier() * 0.1f + 0.1f));

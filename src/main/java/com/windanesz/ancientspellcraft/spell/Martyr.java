@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
@@ -64,8 +64,8 @@ public class Martyr extends SpellRay {
 				// Return false if soulbinding failed (e.g. if the target is already soulbound)
 				if (getMartyrBoundEntities(data).add(target.getUniqueID())) {
 					// This will actually run out in the end, but only if you leave Minecraft running for 3.4 years
-					((EntityLivingBase) target).addPotionEffect(new PotionEffect(AncientSpellcraftPotions.martyr_beneficial, 1200));
-					caster.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.martyr, 1200));
+					((EntityLivingBase) target).addPotionEffect(new PotionEffect(ASPotions.martyr_beneficial, 1200));
+					caster.addPotionEffect(new PotionEffect(ASPotions.martyr, 1200));
 				} else {
 					return false;
 				}
@@ -105,7 +105,7 @@ public class Martyr extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 
 }

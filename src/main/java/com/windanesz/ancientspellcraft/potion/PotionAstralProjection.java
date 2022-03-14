@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.potion;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.ClientEventHandler;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.potion.PotionMagicEffect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,7 +30,7 @@ public class PotionAstralProjection extends PotionMagicEffect {
 
 	@SubscribeEvent
 	public static void onPotionAddedEvent(PotionEvent.PotionAddedEvent event) {
-		if (event.getEntity() instanceof EntityPlayer && event.getEntity().world.isRemote && event.getPotionEffect().getPotion() == AncientSpellcraftPotions.astral_projection) {
+		if (event.getEntity() instanceof EntityPlayer && event.getEntity().world.isRemote && event.getPotionEffect().getPotion() == ASPotions.astral_projection) {
 
 			ClientEventHandler.astralTravelInputTimeout = 10;
 			ClientEventHandler.ASTRAL_TRAVEL_ENABLED = true;

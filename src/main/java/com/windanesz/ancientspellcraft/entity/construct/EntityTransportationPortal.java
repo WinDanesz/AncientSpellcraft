@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.entity.construct;
 
 import com.windanesz.ancientspellcraft.Settings;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
 import com.windanesz.ancientspellcraft.util.SpellTeleporter;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.util.EntityUtils;
@@ -85,7 +85,7 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 				}
 
 		if ((this.ticksExisted == 20 || this.ticksExisted % 160 == 0)) {
-			this.playSound(AncientSpellcraftSounds.ENTITY_TRANSPORTATION_PORTAL_AMBIENT, 0.4f, 1.0f);
+			this.playSound(ASSounds.ENTITY_TRANSPORTATION_PORTAL_AMBIENT, 0.4f, 1.0f);
 		}
 
 		List<EntityLivingBase> targets = EntityUtils.getEntitiesWithinRadius(width, posX, posY, posZ, world, EntityLivingBase.class);
@@ -130,7 +130,7 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 		} else {
 			if (hasEntityInside) {
 				if (entityTicker == 50) {
-					this.playSound(AncientSpellcraftSounds.TRANSPORTATION_PORTAL_TELEPORTS, 0.6f, 1.0f);
+					this.playSound(ASSounds.TRANSPORTATION_PORTAL_TELEPORTS, 0.6f, 1.0f);
 				}
 				if (entityTicker == 90) {
 					EntityLivingBase target = targets.get(0);
@@ -141,15 +141,15 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 					}
 
 					if (target instanceof EntityPlayer) {
-						if (!target.isPotionActive(AncientSpellcraftPotions.dimensional_anchor)) {
+						if (!target.isPotionActive(ASPotions.dimensional_anchor)) {
 							teleportPlayer((EntityPlayer) target, targetDim, targetPos);
 						}
 
 						// non players
 					} else {
-						if (Settings.generalSettings.transportation_portal_teleports_any_entites && !target.isPotionActive(AncientSpellcraftPotions.dimensional_anchor) && target.dimension == getTargetDim()) {
+						if (Settings.generalSettings.transportation_portal_teleports_any_entites && !target.isPotionActive(ASPotions.dimensional_anchor) && target.dimension == getTargetDim()) {
 							teleportEntityLiving(target, targetDim, targetPos);
-							this.playSound(AncientSpellcraftSounds.TRANSPORTATION_PORTAL_TELEPORTS, 0.6f, 1.0f);
+							this.playSound(ASSounds.TRANSPORTATION_PORTAL_TELEPORTS, 0.6f, 1.0f);
 						} else {EntityUtils.applyStandardKnockback(this, targets.get(0));}
 					}
 				} else {

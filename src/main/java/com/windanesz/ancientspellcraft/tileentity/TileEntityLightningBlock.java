@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.tileentity;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import electroblob.wizardry.tileentity.TileEntityPlayerSave;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,7 +24,7 @@ public class TileEntityLightningBlock extends TileEntityPlayerSave implements IT
 		if (world.isRemote) {
 
 			float flag = 1.0f;
-			boolean halfblock = world.getBlockState(pos.down()).getBlock() != AncientSpellcraftBlocks.lightning_block && world.getBlockState(pos.up()).getBlock() != AncientSpellcraftBlocks.lightning_block;
+			boolean halfblock = world.getBlockState(pos.down()).getBlock() != ASBlocks.lightning_block && world.getBlockState(pos.up()).getBlock() != ASBlocks.lightning_block;
 			if (halfblock) flag = 0.5f;
 			for (int i = 0; i < 4; i++) {
 				ParticleBuilder.create(ParticleBuilder.Type.SPARK)

@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.block;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.constants.Element;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -23,7 +23,7 @@ public class BlockCrystalOre extends Block {
 		super(Material.ROCK);
 		this.setSoundType(SoundType.STONE);
 		setHardness(3.0F);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		setResistance(5.0F);
 		setHarvestLevel("pickaxe", 2);
 		this.element = element;
@@ -47,21 +47,21 @@ public class BlockCrystalOre extends Block {
 	public Item getItemDropped(IBlockState state, Random random, int fortune) {
 		switch (element) {
 			case FIRE:
-				return AncientSpellcraftItems.crystal_shard_fire;
+				return ASItems.crystal_shard_fire;
 			case ICE:
-				return AncientSpellcraftItems.crystal_shard_ice;
+				return ASItems.crystal_shard_ice;
 			case NECROMANCY:
-				return AncientSpellcraftItems.crystal_shard_necromancy;
+				return ASItems.crystal_shard_necromancy;
 			case SORCERY:
-				return AncientSpellcraftItems.crystal_shard_sorcery;
+				return ASItems.crystal_shard_sorcery;
 			case HEALING:
-				return AncientSpellcraftItems.crystal_shard_healing;
+				return ASItems.crystal_shard_healing;
 			case LIGHTNING:
-				return AncientSpellcraftItems.crystal_shard_lightning;
+				return ASItems.crystal_shard_lightning;
 			case EARTH:
-				return AncientSpellcraftItems.crystal_shard_earth;
+				return ASItems.crystal_shard_earth;
 			default:
-				return AncientSpellcraftItems.crystal_shard_earth;
+				return ASItems.crystal_shard_earth;
 		}
 	}
 

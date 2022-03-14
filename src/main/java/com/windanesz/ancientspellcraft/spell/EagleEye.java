@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.spell.SpellBuff;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 public class EagleEye extends SpellBuff {
 
 	public EagleEye() {
-		super(AncientSpellcraft.MODID, "eagle_eye", 255, 200, 0, () -> AncientSpellcraftPotions.eagle_eye);
+		super(AncientSpellcraft.MODID, "eagle_eye", 255, 200, 0, () -> ASPotions.eagle_eye);
 		soundValues(0.7f, 1.1f, 0.1f);
 	}
 
@@ -68,6 +68,6 @@ public class EagleEye extends SpellBuff {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

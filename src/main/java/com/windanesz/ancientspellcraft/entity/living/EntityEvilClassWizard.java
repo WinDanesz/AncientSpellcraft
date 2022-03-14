@@ -5,7 +5,7 @@ import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellImproved;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIBattlemageMelee;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIBattlemageSpellcasting;
 import com.windanesz.ancientspellcraft.item.WizardClassWeaponHelper;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.entity.living.EntityAIAttackSpell;
@@ -150,7 +150,7 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 		WandHelper.setSpells(wand, list.toArray(new Spell[5]));
 
 		if (getArmourClass() == ItemWizardArmour.ArmourClass.BATTLEMAGE) {
-			ItemStack sword = new ItemStack(AncientSpellcraftItems.battlemage_sword_master);
+			ItemStack sword = new ItemStack(ASItems.battlemage_sword_master);
 			NBTTagCompound nbt = sword.getTagCompound();
 			if (nbt == null) {
 				nbt = new NBTTagCompound();

@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.item.ItemArtefact;
@@ -92,14 +92,14 @@ public class Conduit extends Spell {
 		if (caster instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) caster;
 
-			if (player.getHeldItemMainhand().getItem() instanceof ItemWand && (player.getHeldItemOffhand().getItem() instanceof ItemWand || ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.ring_mana_transfer))) {
+			if (player.getHeldItemMainhand().getItem() instanceof ItemWand && (player.getHeldItemOffhand().getItem() instanceof ItemWand || ItemArtefact.isArtefactActive(player, ASItems.ring_mana_transfer))) {
 				// source wand is in the main hand, target is offhand
 				ItemStack sourceWandStack = player.getHeldItemMainhand();
 				ItemStack targetWandStack = player.getHeldItemOffhand();
 				ItemWand sourceWand = (ItemWand) sourceWandStack.getItem();
 				ItemWand targetWand = (ItemWand) targetWandStack.getItem();
 
-				if (!Wizardry.settings.legacyWandLevelling && ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.charm_progression_orb)) {
+				if (!Wizardry.settings.legacyWandLevelling && ItemArtefact.isArtefactActive(player, ASItems.charm_progression_orb)) {
 
 					if (targetWand.tier.level < Tier.MASTER.level) {
 						int sourceProgression = WandHelper.getProgression(sourceWandStack);
@@ -131,7 +131,7 @@ public class Conduit extends Spell {
 						}
 					}
 
-				} else if (ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.ring_mana_transfer)) {
+				} else if (ItemArtefact.isArtefactActive(player, ASItems.ring_mana_transfer)) {
 					Vec3d look = caster.getLookVec();
 					double Y_OFFSET = 0.25;
 
@@ -223,6 +223,6 @@ public class Conduit extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

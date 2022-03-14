@@ -2,8 +2,8 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.block.ITemporaryBlock;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -47,7 +47,7 @@ public class SummonQuicksand extends SpellRay {
 		} else {
 
 			//center piece
-			ITemporaryBlock.placeTemporaryBlock(caster, world, AncientSpellcraftBlocks.QUICKSAND, pos, 600);
+			ITemporaryBlock.placeTemporaryBlock(caster, world, ASBlocks.QUICKSAND, pos, 600);
 
 			BlockPos origPos = pos;
 			// random bonus
@@ -59,7 +59,7 @@ public class SummonQuicksand extends SpellRay {
 				EnumFacing offset = horizontals.get(world.rand.nextInt(length));
 				pos = pos.offset(offset, 1);
 
-				ITemporaryBlock.placeTemporaryBlock(caster, world, AncientSpellcraftBlocks.QUICKSAND, pos, 600);
+				ITemporaryBlock.placeTemporaryBlock(caster, world, ASBlocks.QUICKSAND, pos, 600);
 				pos = origPos;
 			}
 
@@ -76,7 +76,7 @@ public class SummonQuicksand extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 
 }

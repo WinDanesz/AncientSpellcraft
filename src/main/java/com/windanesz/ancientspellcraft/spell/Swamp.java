@@ -3,8 +3,8 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.block.ITemporaryBlock;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpellTicker;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
@@ -29,7 +29,7 @@ public class Swamp extends SpellConstruct<EntitySpellTicker> implements ISpellTi
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class Swamp extends SpellConstruct<EntitySpellTicker> implements ISpellTi
 		//	shouldPlace = false;
 
 		if (shouldPlace) {
-			ITemporaryBlock.placeTemporaryBlock(entity.getCaster(), world, AncientSpellcraftBlocks.QUICKSAND, pos.down(), blockDuration);
+			ITemporaryBlock.placeTemporaryBlock(entity.getCaster(), world, ASBlocks.QUICKSAND, pos.down(), blockDuration);
 			placed = true;
 		}
 
@@ -76,7 +76,7 @@ public class Swamp extends SpellConstruct<EntitySpellTicker> implements ISpellTi
 				if (pos == null || entity.getCaster() != null && entity.getCaster().getPosition().getY() == pos.getY())
 					continue;
 
-				ITemporaryBlock.placeTemporaryBlock(entity.getCaster(), world, AncientSpellcraftBlocks.QUICKSAND, pos.down(), blockDuration);
+				ITemporaryBlock.placeTemporaryBlock(entity.getCaster(), world, ASBlocks.QUICKSAND, pos.down(), blockDuration);
 				prevPos = pos;
 			}
 		}

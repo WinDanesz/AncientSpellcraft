@@ -10,16 +10,16 @@ public class BookshelfItems {
 
 
 	public static void preInitBookShelfModelTextures() {
-		registerBookModelTexture(() -> AncientSpellcraftItems.ancient_spell_book, new ResourceLocation(AncientSpellcraft.MODID, "blocks/books_ancient_spell_book"));
-		registerBookModelTexture(() -> AncientSpellcraftItems.ancient_spellcraft_spell_book, new ResourceLocation(AncientSpellcraft.MODID, "blocks/ancient_spellcraft_spell_book"));
-		registerBookModelTexture(() -> AncientSpellcraftItems.ancient_spellcraft_scroll, new ResourceLocation(AncientSpellcraft.MODID, "blocks/scrolls_ancient_spellcraft"));
+		registerBookModelTexture(() -> ASItems.ancient_spell_book, new ResourceLocation(AncientSpellcraft.MODID, "blocks/books_ancient_spell_book"));
+		registerBookModelTexture(() -> ASItems.ancient_spellcraft_spell_book, new ResourceLocation(AncientSpellcraft.MODID, "blocks/ancient_spellcraft_spell_book"));
+		registerBookModelTexture(() -> ASItems.ancient_spellcraft_scroll, new ResourceLocation(AncientSpellcraft.MODID, "blocks/scrolls_ancient_spellcraft"));
 
 	}
 
 	public static void InitBookshelfItems() {
 
-		ContainerBookshelf.registerBookItem(AncientSpellcraftItems.ancient_spell_book);
-		ContainerBookshelf.registerBookItem(AncientSpellcraftItems.ancient_spellcraft_spell_book);
-		ContainerBookshelf.registerBookItem(AncientSpellcraftItems.ancient_spellcraft_scroll);
+		ContainerBookshelf.registerBookItem(ASItems.ancient_spell_book);
+		ContainerBookshelf.registerBookItem(ASItems.ancient_spellcraft_spell_book);
+		ContainerBookshelf.registerBookItem(ASItems.ancient_spellcraft_scroll);
 	}
 }

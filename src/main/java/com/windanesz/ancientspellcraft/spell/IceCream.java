@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.spell;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +21,7 @@ public class IceCream extends SpellConjurationAS {
 	public static final String SATURATION_AMOUNT = "saturation_amount";
 
 	public IceCream() {
-		super("ice_cream", AncientSpellcraftItems.ice_cream);
+		super("ice_cream", ASItems.ice_cream);
 		addProperties(HEALING_AMOUNT, HUNGER_RESTORE_AMOUNT, SATURATION_AMOUNT);
 	}
 
@@ -32,7 +32,7 @@ public class IceCream extends SpellConjurationAS {
 
 		float heal = getProperty(HEALING_AMOUNT).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 
-		if (ItemArtefact.isArtefactActive(caster, AncientSpellcraftItems.charm_ice_cream)) {
+		if (ItemArtefact.isArtefactActive(caster, ASItems.charm_ice_cream)) {
 			Potion[] potions = {MobEffects.HEALTH_BOOST, MobEffects.REGENERATION, MobEffects.SPEED,
 					MobEffects.HEALTH_BOOST, MobEffects.ABSORPTION, MobEffects.STRENGTH,
 					MobEffects.FIRE_RESISTANCE, MobEffects.INVISIBILITY, MobEffects.HASTE, MobEffects.NIGHT_VISION, MobEffects.LUCK};

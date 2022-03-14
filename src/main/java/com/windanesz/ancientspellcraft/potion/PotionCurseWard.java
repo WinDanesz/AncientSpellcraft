@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.potion;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.potion.Curse;
 import electroblob.wizardry.potion.PotionMagicEffect;
 import net.minecraft.potion.PotionEffect;
@@ -23,12 +23,12 @@ public class PotionCurseWard extends PotionMagicEffect {
 	@SubscribeEvent
 	public static void onPotionApplicableEvent(PotionEvent.PotionApplicableEvent event) {
 
-		if (event.getEntityLiving().isPotionActive(AncientSpellcraftPotions.curse_ward)) {
+		if (event.getEntityLiving().isPotionActive(ASPotions.curse_ward)) {
 			if (event.getPotionEffect().getPotion() instanceof Curse) {
-				PotionEffect curseWard = event.getEntityLiving().getActivePotionEffect(AncientSpellcraftPotions.curse_ward);
+				PotionEffect curseWard = event.getEntityLiving().getActivePotionEffect(ASPotions.curse_ward);
 				int newDuration = (int) (curseWard.getDuration() / 2);
-				event.getEntityLiving().removePotionEffect(AncientSpellcraftPotions.curse_ward);
-				event.getEntityLiving().addPotionEffect(new PotionEffect(AncientSpellcraftPotions.curse_ward, newDuration));
+				event.getEntityLiving().removePotionEffect(ASPotions.curse_ward);
+				event.getEntityLiving().addPotionEffect(new PotionEffect(ASPotions.curse_ward, newDuration));
 				event.setResult(Event.Result.DENY);
 			}
 		}

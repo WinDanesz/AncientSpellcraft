@@ -5,7 +5,7 @@ import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackRangedBowNoStrafi
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellWithCost;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import com.windanesz.ancientspellcraft.item.ItemIceShield;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.entity.living.EntitySummonedCreature;
@@ -303,7 +303,7 @@ public class EntityAnimatedItem extends EntitySummonedCreature implements ISpell
 			// normally, only allow up to apprentice spells
 			int maxTier = 1;
 
-			if (getCaster() instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) getCaster(), AncientSpellcraftItems.charm_spectral_tome)) {
+			if (getCaster() instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) getCaster(), ASItems.charm_spectral_tome)) {
 				// allow advanced tier spells with the artefact
 				maxTier += 1;
 			}
@@ -469,7 +469,7 @@ public class EntityAnimatedItem extends EntitySummonedCreature implements ISpell
 
 				// soulbound items attempt to return to their owner's inventory
 				if (this.getCaster() instanceof EntityPlayer && !getItemStackFromSlot(slot).isEmpty()
-						&& WandHelper.getUpgradeLevel(getItemStackFromSlot(slot), AncientSpellcraftItems.soulbound_upgrade) > 0) {
+						&& WandHelper.getUpgradeLevel(getItemStackFromSlot(slot), ASItems.soulbound_upgrade) > 0) {
 
 					shouldDropItem = !ASUtils.giveStackToPlayer((EntityPlayer) this.getCaster(), getItemStackFromSlot(slot));
 

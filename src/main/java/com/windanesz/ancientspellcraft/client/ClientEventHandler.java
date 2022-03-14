@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.client;
 
 import com.windanesz.ancientspellcraft.client.entity.ASFakePlayer;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.client.event.FOVUpdateEvent;
@@ -36,12 +36,12 @@ public class ClientEventHandler {
 				ClientEventHandler.astralTravelInputTimeout--;
 
 			// just to be sure..
-			if (ClientEventHandler.EAGLE_EYE_ENABLED && !event.player.isPotionActive(AncientSpellcraftPotions.eagle_eye)) {
+			if (ClientEventHandler.EAGLE_EYE_ENABLED && !event.player.isPotionActive(ASPotions.eagle_eye)) {
 				ClientEventHandler.EAGLE_EYE_ENABLED = false;
 			}
 
 			// just to be sure..
-			if (ClientEventHandler.ASTRAL_TRAVEL_ENABLED && !event.player.isPotionActive(AncientSpellcraftPotions.astral_projection)) {
+			if (ClientEventHandler.ASTRAL_TRAVEL_ENABLED && !event.player.isPotionActive(ASPotions.astral_projection)) {
 				ClientEventHandler.ASTRAL_TRAVEL_ENABLED = false;
 			}
 

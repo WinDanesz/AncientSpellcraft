@@ -5,8 +5,8 @@ import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.client.gui.ContainerSphereCognizance;
 import com.windanesz.ancientspellcraft.item.ItemMoonLetterDictionary;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.event.DiscoverSpellEvent;
@@ -168,7 +168,7 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 	public AxisAlignedBB getRenderBoundingBox() {
 		AxisAlignedBB bb = INFINITE_EXTENT_AABB;
 		Block type = getBlockType();
-		if (type == AncientSpellcraftBlocks.SPHERE_COGNIZANCE) {
+		if (type == ASBlocks.SPHERE_COGNIZANCE) {
 			bb = new AxisAlignedBB(pos, pos.add(1, 1, 1));
 		} else if (type != null) {
 			AxisAlignedBB cbb = this.getWorld().getBlockState(pos).getBoundingBox(world, pos);
@@ -317,7 +317,7 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 
 			if (currentPlayer != null && !world.isRemote) {
 
-				if (ItemArtefact.isArtefactActive(currentPlayer, AncientSpellcraftItems.charm_stone_tablet) && ItemMoonLetterDictionary.isFullMoon(currentPlayer.world)) {
+				if (ItemArtefact.isArtefactActive(currentPlayer, ASItems.charm_stone_tablet) && ItemMoonLetterDictionary.isFullMoon(currentPlayer.world)) {
 					ItemRelic.setRelicType(getInputStack(), currentPlayer, ItemRelic.RelicType.SPELL);
 				}
 				ItemRelic.setRandomContentType(getInputStack(), currentPlayer, null);
@@ -406,8 +406,8 @@ public class TileSphereCognizance extends TileEntity implements IInventory, ITic
 
 	public boolean hasSomethingToResearch() {
 		Item item = getInputStack().getItem();
-		return (!getInputStack().isEmpty() && (((item == AncientSpellcraftItems.stone_tablet_small || item == AncientSpellcraftItems.stone_tablet ||
-				item == AncientSpellcraftItems.stone_tablet_large || item == AncientSpellcraftItems.stone_tablet_grand)
+		return (!getInputStack().isEmpty() && (((item == ASItems.stone_tablet_small || item == ASItems.stone_tablet ||
+				item == ASItems.stone_tablet_large || item == ASItems.stone_tablet_grand)
 				&& !ItemRelic.isResearched(getInputStack())) || (item instanceof ItemSpellBook ||
 				item instanceof ItemScroll && !isCurrentBookKnown())));
 	}

@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMasterBolt;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.registry.WizardrySounds;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,7 +22,7 @@ public class ItemMasterBolt extends ItemBlock {
 
 	@SuppressWarnings("ConstantConditions")
 	public ItemMasterBolt() {
-		super(AncientSpellcraftBlocks.master_bolt);
+		super(ASBlocks.master_bolt);
 		setCreativeTab(null);
 		setMaxDamage(0);
 		setMaxStackSize(1);

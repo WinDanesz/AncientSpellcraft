@@ -57,9 +57,9 @@ import java.util.stream.Collectors;
 //import com.windanesz.ancientspellcraft.entity.EntityMageLight;
 
 @Mod.EventBusSubscriber
-public class AncientSpellcraftEntities {
+public class ASEntities {
 
-	private AncientSpellcraftEntities() {}
+	private ASEntities() {}
 
 	private final static int VOID_CREEPER_SPAWN_RATE = 30;
 
@@ -95,19 +95,19 @@ public class AncientSpellcraftEntities {
 		IForgeRegistry<EntityEntry> registry = event.getRegistry();
 
 		// projectile entities
-		registry.register(createEntry(EntityWisp.class, "will_o_wisp", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntityWisp.class, "will_o_wisp", ASEntities.TrackingType.PROJECTILE).build());
 
-		registry.register(createEntry(EntityMageLight.class, "mage_light_entity", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntityMageLight.class, "mage_light_entity", ASEntities.TrackingType.PROJECTILE).build());
 
-		registry.register(createEntry(EntityHeart.class, "healing_heart", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
-		registry.register(createEntry(EntityDispelMagic.class, "dispel_magic", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
-		registry.register(createEntry(EntityDispelGreaterMagic.class, "dispel_greater_magic", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntityHeart.class, "healing_heart", ASEntities.TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntityDispelMagic.class, "dispel_magic", ASEntities.TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntityDispelGreaterMagic.class, "dispel_greater_magic", ASEntities.TrackingType.PROJECTILE).build());
 		registry.register(createEntry(EntityManaVortex.class, "wizard_blast").tracker(160, 3, false).build());
-		registry.register(createEntry(EntityDevoritiumBomb.class, "devoritium_bomb", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntityDevoritiumBomb.class, "devoritium_bomb", ASEntities.TrackingType.PROJECTILE).build());
 
-		registry.register(createEntry(EntityDevoritiumArrow.class, "devoritium_arrow", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
-		registry.register(createEntry(EntityFlint.class, "flint_projectile", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
-		registry.register(createEntry(EntitySafeIceShard.class, "safe_ice_shard", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntityDevoritiumArrow.class, "devoritium_arrow", ASEntities.TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntityFlint.class, "flint_projectile", ASEntities.TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntitySafeIceShard.class, "safe_ice_shard", ASEntities.TrackingType.PROJECTILE).build());
 		//		registry.register(createEntry(EntitySpectralFishHook.class, "spectral_fish_hook", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
 
 		// mobs
@@ -135,8 +135,8 @@ public class AncientSpellcraftEntities {
 		registry.register(createEntry(EntityVolcano.class, "entity_volcano", TrackingType.LIVING).build());
 
 		registry.register(createEntry(EntityAntiMagicField.class, "anti_magic_field", TrackingType.CONSTRUCT).build());
-		registry.register(createEntry(EntityMetamagicProjectile.class, "contingency_projectile", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
-		registry.register(createEntry(EntityContingencyProjectile.class, "metamagic_projectile", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntityMetamagicProjectile.class, "contingency_projectile", ASEntities.TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntityContingencyProjectile.class, "metamagic_projectile", ASEntities.TrackingType.PROJECTILE).build());
 
 		registry.register(createEntry(EntitySentinel.class, "sentinel", TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntitySpellCaster.class, "spellcaster_entity", TrackingType.LIVING).build());

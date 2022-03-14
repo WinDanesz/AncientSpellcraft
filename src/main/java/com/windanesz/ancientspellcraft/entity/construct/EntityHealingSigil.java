@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.entity.construct;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.entity.construct.EntityScaledConstruct;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.spell.Spell;
@@ -21,7 +21,7 @@ public class EntityHealingSigil extends EntityScaledConstruct {
 
 	public EntityHealingSigil(World world){
 		super(world);
-		setSize(AncientSpellcraftSpells.healing_sigil.getProperty(Spell.EFFECT_RADIUS).floatValue() * 2, 0.2f);
+		setSize(ASSpells.healing_sigil.getProperty(Spell.EFFECT_RADIUS).floatValue() * 2, 0.2f);
 	}
 
 	@Override
@@ -43,8 +43,8 @@ public class EntityHealingSigil extends EntityScaledConstruct {
 
 				if(this.getCaster() == null || (this.getCaster() == target || AllyDesignationSystem.isAllied(this.getCaster(), target))){
 
-					target.heal(AncientSpellcraftSpells.healing_sigil.getProperty(Spell.HEALTH).floatValue() * damageMultiplier);
-					this.playSound(AncientSpellcraftSounds.ENTITY_HEALING_HEATH_HEALS, 1.0f, 1.0f);
+					target.heal(ASSpells.healing_sigil.getProperty(Spell.HEALTH).floatValue() * damageMultiplier);
+					this.playSound(ASSounds.ENTITY_HEALING_HEATH_HEALS, 1.0f, 1.0f);
 
 				} else if(target.isEntityUndead()){
 
@@ -57,14 +57,14 @@ public class EntityHealingSigil extends EntityScaledConstruct {
 								MagicDamage.causeIndirectMagicDamage(this, getCaster(), DamageType.RADIANT),
 								Spells.healing_aura.getProperty(Spell.DAMAGE).floatValue() * damageMultiplier);
 					}else{
-						target.attackEntityFrom(DamageSource.MAGIC, AncientSpellcraftSpells.healing_sigil.getProperty(Spell.HEALTH).floatValue() * damageMultiplier);
+						target.attackEntityFrom(DamageSource.MAGIC, ASSpells.healing_sigil.getProperty(Spell.HEALTH).floatValue() * damageMultiplier);
 					}
 
 					// Removes knockback
 					target.motionX = velX;
 					target.motionY = velY;
 					target.motionZ = velZ;
-					this.playSound(AncientSpellcraftSounds.ENTITY_HEALING_HEATH_HEALS, 1.0f, 1.0f);
+					this.playSound(ASSounds.ENTITY_HEALING_HEATH_HEALS, 1.0f, 1.0f);
 				}
 				this.setDead();
 			}

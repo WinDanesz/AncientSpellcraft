@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.tileentity;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
 import electroblob.wizardry.tileentity.TileEntityPlayerSave;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.EntityUtils;
@@ -49,7 +49,7 @@ public class TileSkullWatch extends TileEntityPlayerSave implements ITickable {
 	public AxisAlignedBB getRenderBoundingBox() {
 		AxisAlignedBB bb = INFINITE_EXTENT_AABB;
 		Block type = getBlockType();
-		if (type == AncientSpellcraftBlocks.SKULL_WATCH) {
+		if (type == ASBlocks.SKULL_WATCH) {
 			bb = new AxisAlignedBB(pos, pos.add(1, 1, 1));
 		} else if (type != null) {
 			AxisAlignedBB cbb = this.getWorld().getBlockState(pos).getBoundingBox(world, pos);
@@ -90,11 +90,11 @@ public class TileSkullWatch extends TileEntityPlayerSave implements ITickable {
 		if (target != null) {
 			if (world.getTotalWorldTime() % 50 == 0) {
 
-				world.playSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), AncientSpellcraftSounds.SKULL_WATCH_SCREAM, SoundCategory.BLOCKS, 1F, 1F, false);
-				world.playSound((double) target.getPosition().getX(), (double) target.getPosition().getY(), (double) target.getPosition().getZ(), AncientSpellcraftSounds.SKULL_WATCH_SCREAM, SoundCategory.PLAYERS, 0.3F, 1F, false);
+				world.playSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), ASSounds.SKULL_WATCH_SCREAM, SoundCategory.BLOCKS, 1F, 1F, false);
+				world.playSound((double) target.getPosition().getX(), (double) target.getPosition().getY(), (double) target.getPosition().getZ(), ASSounds.SKULL_WATCH_SCREAM, SoundCategory.PLAYERS, 0.3F, 1F, false);
 
 				if (getCaster() != null && getCaster() instanceof EntityPlayer) {
-					world.playSound((EntityPlayer) getCaster(), getCaster().getPosition(), AncientSpellcraftSounds.SKULL_WATCH_ALARM, SoundCategory.PLAYERS, 0.3F, 1F);
+					world.playSound((EntityPlayer) getCaster(), getCaster().getPosition(), ASSounds.SKULL_WATCH_ALARM, SoundCategory.PLAYERS, 0.3F, 1F);
 				}
 
 

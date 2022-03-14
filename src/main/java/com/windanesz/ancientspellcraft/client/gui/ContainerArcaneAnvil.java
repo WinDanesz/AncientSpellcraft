@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.client.gui;
 
 import com.windanesz.ancientspellcraft.packet.PacketControlInput;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.tileentity.TileArcaneAnvil;
 import electroblob.wizardry.inventory.SlotItemList;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,22 +28,22 @@ public class ContainerArcaneAnvil extends Container {
 		te.openInventory(player);
 
 		// INPUT_SLOT_0
-		this.addSlotToContainer(new SlotItemList(te, 0, 26, 24, 1, AncientSpellcraftItems.battlemage_sword_hilt,
-				AncientSpellcraftItems.battlemage_sword_novice,
-				AncientSpellcraftItems.battlemage_sword_apprentice,
-				AncientSpellcraftItems.battlemage_sword_advanced,
-				AncientSpellcraftItems.crystal_silver_ingot
+		this.addSlotToContainer(new SlotItemList(te, 0, 26, 24, 1, ASItems.battlemage_sword_hilt,
+				ASItems.battlemage_sword_novice,
+				ASItems.battlemage_sword_apprentice,
+				ASItems.battlemage_sword_advanced,
+				ASItems.crystal_silver_ingot
 		));
 
 		// INPUT_SLOT_1
-		this.addSlotToContainer(new SlotItemList(te, 1, 75, 24, 1, AncientSpellcraftItems.battlemage_sword_blade, AncientSpellcraftItems.crystal_silver_ingot));
+		this.addSlotToContainer(new SlotItemList(te, 1, 75, 24, 1, ASItems.battlemage_sword_blade, ASItems.crystal_silver_ingot));
 
 		/// RESULT_SLOT
 		this.addSlotToContainer(new SlotItemList(te, 2, 133, 24, 1,
-										AncientSpellcraftItems.battlemage_sword_novice,
-										AncientSpellcraftItems.battlemage_sword_apprentice,
-										AncientSpellcraftItems.battlemage_sword_advanced,
-										AncientSpellcraftItems.battlemage_sword_master) {
+										ASItems.battlemage_sword_novice,
+										ASItems.battlemage_sword_apprentice,
+										ASItems.battlemage_sword_advanced,
+										ASItems.battlemage_sword_master) {
 									@Override
 									public ItemStack onTake(EntityPlayer player, ItemStack stack) {
 										if (!player.world.isRemote) 			{

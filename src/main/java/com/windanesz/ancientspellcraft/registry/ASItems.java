@@ -8,7 +8,7 @@ import com.windanesz.ancientspellcraft.item.ItemAdvancedStoneFist;
 import com.windanesz.ancientspellcraft.item.ItemAlchemicalEssence;
 import com.windanesz.ancientspellcraft.item.ItemAmberMushroomAmulet;
 import com.windanesz.ancientspellcraft.item.ItemAncientHat;
-import com.windanesz.ancientspellcraft.item.ItemAncientSpellcraftSpellBook;
+import com.windanesz.ancientspellcraft.item.ItemASSpellBook;
 import com.windanesz.ancientspellcraft.item.ItemArmourUpgradeMaterial;
 import com.windanesz.ancientspellcraft.item.ItemBarterScroll;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
@@ -100,9 +100,9 @@ import java.util.List;
 
 @ObjectHolder(AncientSpellcraft.MODID)
 @Mod.EventBusSubscriber
-public final class AncientSpellcraftItems {
+public final class ASItems {
 
-	private AncientSpellcraftItems() {} // No instances!
+	private ASItems() {} // No instances!
 
 	@Nonnull
 	@SuppressWarnings("ConstantConditions")
@@ -418,7 +418,7 @@ public final class AncientSpellcraftItems {
 
 		//		registerItemBlock(registry, AncientSpellcraftBlocks.SNOW_SLAB);
 		//		registerItemBlock(registry, AncientSpellcraftBlocks.ICE_CRAFTING_TABLE);
-		registerItemBlock(registry, AncientSpellcraftBlocks.ARTEFACT_PENSIVE, new ItemBlock(AncientSpellcraftBlocks.ARTEFACT_PENSIVE) {
+		registerItemBlock(registry, ASBlocks.ARTEFACT_PENSIVE, new ItemBlock(ASBlocks.ARTEFACT_PENSIVE) {
 			@Override
 			public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 				Wizardry.proxy.addMultiLineDescription(tooltip, "item.ancientspellcraft:pensive.desc");
@@ -430,44 +430,44 @@ public final class AncientSpellcraftItems {
 			}
 		});
 
-		registerItemBlock(registry, AncientSpellcraftBlocks.SKULL_WATCH, new ItemBlock(AncientSpellcraftBlocks.SKULL_WATCH));
-		registerItemBlock(registry, AncientSpellcraftBlocks.SCRIBING_DESK, new ItemBlock(AncientSpellcraftBlocks.SCRIBING_DESK));
-		registerItemBlock(registry, AncientSpellcraftBlocks.IMBUEMENT_ALTAR_RUINED, new ItemBlock(AncientSpellcraftBlocks.IMBUEMENT_ALTAR_RUINED));
-		registerItemBlock(registry, AncientSpellcraftBlocks.SPHERE_COGNIZANCE, new ItemBlock(AncientSpellcraftBlocks.SPHERE_COGNIZANCE));
-		registerItemBlock(registry, AncientSpellcraftBlocks.SENTINEL_BLOCK_IRON, new ItemBlock(AncientSpellcraftBlocks.SENTINEL_BLOCK_IRON));
-		registerItemBlock(registry, AncientSpellcraftBlocks.SENTINEL_BLOCK_GOLD, new ItemBlock(AncientSpellcraftBlocks.SENTINEL_BLOCK_GOLD));
-		registerItemBlock(registry, AncientSpellcraftBlocks.SENTINEL_BLOCK_DIAMOND, new ItemBlock(AncientSpellcraftBlocks.SENTINEL_BLOCK_DIAMOND));
-		registerItemBlock(registry, AncientSpellcraftBlocks.SENTINEL_BLOCK_LARGE_IRON, new ItemBlock(AncientSpellcraftBlocks.SENTINEL_BLOCK_LARGE_IRON));
-		registerItemBlock(registry, AncientSpellcraftBlocks.SENTINEL_BLOCK_LARGE_GOLD, new ItemBlock(AncientSpellcraftBlocks.SENTINEL_BLOCK_LARGE_GOLD));
-		registerItemBlock(registry, AncientSpellcraftBlocks.SENTINEL_BLOCK_LARGE_DIAMOND, new ItemBlock(AncientSpellcraftBlocks.SENTINEL_BLOCK_LARGE_DIAMOND));
+		registerItemBlock(registry, ASBlocks.SKULL_WATCH, new ItemBlock(ASBlocks.SKULL_WATCH));
+		registerItemBlock(registry, ASBlocks.SCRIBING_DESK, new ItemBlock(ASBlocks.SCRIBING_DESK));
+		registerItemBlock(registry, ASBlocks.IMBUEMENT_ALTAR_RUINED, new ItemBlock(ASBlocks.IMBUEMENT_ALTAR_RUINED));
+		registerItemBlock(registry, ASBlocks.SPHERE_COGNIZANCE, new ItemBlock(ASBlocks.SPHERE_COGNIZANCE));
+		registerItemBlock(registry, ASBlocks.SENTINEL_BLOCK_IRON, new ItemBlock(ASBlocks.SENTINEL_BLOCK_IRON));
+		registerItemBlock(registry, ASBlocks.SENTINEL_BLOCK_GOLD, new ItemBlock(ASBlocks.SENTINEL_BLOCK_GOLD));
+		registerItemBlock(registry, ASBlocks.SENTINEL_BLOCK_DIAMOND, new ItemBlock(ASBlocks.SENTINEL_BLOCK_DIAMOND));
+		registerItemBlock(registry, ASBlocks.SENTINEL_BLOCK_LARGE_IRON, new ItemBlock(ASBlocks.SENTINEL_BLOCK_LARGE_IRON));
+		registerItemBlock(registry, ASBlocks.SENTINEL_BLOCK_LARGE_GOLD, new ItemBlock(ASBlocks.SENTINEL_BLOCK_LARGE_GOLD));
+		registerItemBlock(registry, ASBlocks.SENTINEL_BLOCK_LARGE_DIAMOND, new ItemBlock(ASBlocks.SENTINEL_BLOCK_LARGE_DIAMOND));
 
-		registerItemBlock(registry, AncientSpellcraftBlocks.CRYSTAL_ORE_FIRE, new ItemBlock(AncientSpellcraftBlocks.CRYSTAL_ORE_FIRE));
-		registerItemBlock(registry, AncientSpellcraftBlocks.CRYSTAL_ORE_EARTH, new ItemBlock(AncientSpellcraftBlocks.CRYSTAL_ORE_EARTH));
-		registerItemBlock(registry, AncientSpellcraftBlocks.CRYSTAL_ORE_HEALING, new ItemBlock(AncientSpellcraftBlocks.CRYSTAL_ORE_HEALING));
-		registerItemBlock(registry, AncientSpellcraftBlocks.CRYSTAL_ORE_ICE, new ItemBlock(AncientSpellcraftBlocks.CRYSTAL_ORE_ICE));
-		registerItemBlock(registry, AncientSpellcraftBlocks.CRYSTAL_ORE_LIGHTNING, new ItemBlock(AncientSpellcraftBlocks.CRYSTAL_ORE_LIGHTNING));
-		registerItemBlock(registry, AncientSpellcraftBlocks.CRYSTAL_ORE_NECROMANCY, new ItemBlock(AncientSpellcraftBlocks.CRYSTAL_ORE_NECROMANCY));
-		registerItemBlock(registry, AncientSpellcraftBlocks.CRYSTAL_ORE_SORCERY, new ItemBlock(AncientSpellcraftBlocks.CRYSTAL_ORE_SORCERY));
+		registerItemBlock(registry, ASBlocks.CRYSTAL_ORE_FIRE, new ItemBlock(ASBlocks.CRYSTAL_ORE_FIRE));
+		registerItemBlock(registry, ASBlocks.CRYSTAL_ORE_EARTH, new ItemBlock(ASBlocks.CRYSTAL_ORE_EARTH));
+		registerItemBlock(registry, ASBlocks.CRYSTAL_ORE_HEALING, new ItemBlock(ASBlocks.CRYSTAL_ORE_HEALING));
+		registerItemBlock(registry, ASBlocks.CRYSTAL_ORE_ICE, new ItemBlock(ASBlocks.CRYSTAL_ORE_ICE));
+		registerItemBlock(registry, ASBlocks.CRYSTAL_ORE_LIGHTNING, new ItemBlock(ASBlocks.CRYSTAL_ORE_LIGHTNING));
+		registerItemBlock(registry, ASBlocks.CRYSTAL_ORE_NECROMANCY, new ItemBlock(ASBlocks.CRYSTAL_ORE_NECROMANCY));
+		registerItemBlock(registry, ASBlocks.CRYSTAL_ORE_SORCERY, new ItemBlock(ASBlocks.CRYSTAL_ORE_SORCERY));
 
-		registerItemBlock(registry, AncientSpellcraftBlocks.DEVORITIUM_ORE, new ItemBlockDevoritiumMaterial(AncientSpellcraftBlocks.DEVORITIUM_ORE));
-		registerItemBlock(registry, AncientSpellcraftBlocks.DEVORITIUM_BLOCK, new ItemBlockDevoritiumMaterial(AncientSpellcraftBlocks.DEVORITIUM_BLOCK));
-		registerItemBlock(registry, AncientSpellcraftBlocks.DEVORITIUM_BARS, new ItemBlockDevoritiumMaterial(AncientSpellcraftBlocks.DEVORITIUM_BARS));
+		registerItemBlock(registry, ASBlocks.DEVORITIUM_ORE, new ItemBlockDevoritiumMaterial(ASBlocks.DEVORITIUM_ORE));
+		registerItemBlock(registry, ASBlocks.DEVORITIUM_BLOCK, new ItemBlockDevoritiumMaterial(ASBlocks.DEVORITIUM_BLOCK));
+		registerItemBlock(registry, ASBlocks.DEVORITIUM_BARS, new ItemBlockDevoritiumMaterial(ASBlocks.DEVORITIUM_BARS));
 
-		registerItemBlock(registry, AncientSpellcraftBlocks.LOG_CRYSTAL_TREE, new ItemBlock(AncientSpellcraftBlocks.LOG_CRYSTAL_TREE));
+		registerItemBlock(registry, ASBlocks.LOG_CRYSTAL_TREE, new ItemBlock(ASBlocks.LOG_CRYSTAL_TREE));
 		//		registerItemBlock(registry, AncientSpellcraftBlocks.log_crystal_tree2, new ItemBlock(AncientSpellcraftBlocks.log_crystal_tree2));
-		registerItemBlock(registry, AncientSpellcraftBlocks.LEAVES_CRYSTAL_TREE, new ItemBlock(AncientSpellcraftBlocks.LEAVES_CRYSTAL_TREE));
+		registerItemBlock(registry, ASBlocks.LEAVES_CRYSTAL_TREE, new ItemBlock(ASBlocks.LEAVES_CRYSTAL_TREE));
 
-		registerItemBlock(registry, AncientSpellcraftBlocks.DIMENSION_BOUNDARY, new ItemBlock(AncientSpellcraftBlocks.DIMENSION_BOUNDARY));
-		registerItemBlock(registry, AncientSpellcraftBlocks.DIMENSION_FOCUS, new ItemBlock(AncientSpellcraftBlocks.DIMENSION_FOCUS));
-		registerItemBlock(registry, AncientSpellcraftBlocks.ARCANE_ANVIL, new ItemBlock(AncientSpellcraftBlocks.ARCANE_ANVIL));
-		registerItemBlock(registry, AncientSpellcraftBlocks.sage_lectern, new ItemBlock(AncientSpellcraftBlocks.sage_lectern));
-		registerItemBlock(registry, AncientSpellcraftBlocks.master_bolt, new ItemMasterBolt());
+		registerItemBlock(registry, ASBlocks.DIMENSION_BOUNDARY, new ItemBlock(ASBlocks.DIMENSION_BOUNDARY));
+		registerItemBlock(registry, ASBlocks.DIMENSION_FOCUS, new ItemBlock(ASBlocks.DIMENSION_FOCUS));
+		registerItemBlock(registry, ASBlocks.ARCANE_ANVIL, new ItemBlock(ASBlocks.ARCANE_ANVIL));
+		registerItemBlock(registry, ASBlocks.sage_lectern, new ItemBlock(ASBlocks.sage_lectern));
+		registerItemBlock(registry, ASBlocks.master_bolt, new ItemMasterBolt());
 		//		registerItemBlock(registry, AncientSpellcraftBlocks.ANCIENT_DIMENSION_BOUNDARY, new ItemBlock(AncientSpellcraftBlocks.ANCIENT_DIMENSION_BOUNDARY));
 
 		registerItem(registry, "magic_shield", new ItemMagicShield(EnumRarity.EPIC));
 		registerItem(registry, "spectral_shield", new ItemSpectralShield());
-		registerItem(registry, "ancient_spellcraft_spell_book", new ItemAncientSpellcraftSpellBook());
-		registerItem(registry, "ancient_spell_book", new ItemAncientSpellcraftSpellBook());
+		registerItem(registry, "ancient_spellcraft_spell_book", new ItemASSpellBook());
+		registerItem(registry, "ancient_spell_book", new ItemASSpellBook());
 		registerItem(registry, "ancient_spellcraft_scroll", new ItemScroll());
 		registerItem(registry, "enchanted_name_tag", new ItemEnchantedNameTag());
 
@@ -609,18 +609,18 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "advanced_stone_fist", new ItemAdvancedStoneFist());
 		registerItem(registry, "sacred_mace", new ItemSacredMace());
 
-		registerItem(registry, "astral_diamond_shard", new Item().setMaxDamage(0).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "astral_diamond_shard", new Item().setMaxDamage(0).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
 		registerItem(registry, "astral_diamond_charged", new ItemChargedAstralDiamond());
 
-		registerItem(registry, "crystal_shard_fire", new Item().setMaxDamage(0).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "crystal_shard_earth", new Item().setMaxDamage(0).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "crystal_shard_healing", new Item().setMaxDamage(0).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "crystal_shard_ice", new Item().setMaxDamage(0).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "crystal_shard_lightning", new Item().setMaxDamage(0).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "crystal_shard_necromancy", new Item().setMaxDamage(0).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "crystal_shard_sorcery", new Item().setMaxDamage(0).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "battlemage_sword_hilt", new Item().setMaxDamage(0).setMaxStackSize(1).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "battlemage_sword_blade", new Item().setMaxDamage(0).setMaxStackSize(1).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "crystal_shard_fire", new Item().setMaxDamage(0).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "crystal_shard_earth", new Item().setMaxDamage(0).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "crystal_shard_healing", new Item().setMaxDamage(0).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "crystal_shard_ice", new Item().setMaxDamage(0).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "crystal_shard_lightning", new Item().setMaxDamage(0).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "crystal_shard_necromancy", new Item().setMaxDamage(0).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "crystal_shard_sorcery", new Item().setMaxDamage(0).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "battlemage_sword_hilt", new Item().setMaxDamage(0).setMaxStackSize(1).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "battlemage_sword_blade", new Item().setMaxDamage(0).setMaxStackSize(1).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
 		registerItem(registry, "crystal_silver_nugget", new ItemArmourUpgradeMaterial());
 		registerItem(registry, "crystal_silver_ingot", new ItemArmourUpgradeMaterial());
 		registerItem(registry, "enchanted_filament", new ItemArmourUpgradeMaterial());
@@ -632,9 +632,9 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "devoritium_nugget", new ItemDevoritium());
 		registerItem(registry, "devoritium_sword", new ItemDevoritiumSword());
 		registerItem(registry, "devoritium_axe", new ItemDevoritiumAxe());
-		registerItem(registry, "devoritium_arrow", new ItemDevoritiumArrow().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "devoritium_arrow", new ItemDevoritiumArrow().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
 		registerItem(registry, "devoritium_bomb", new ItemDevoritiumBomb());
-		registerItem(registry, "devoritium_door", new ItemDevoritiumDoor(AncientSpellcraftBlocks.DEVORITIUM_DOOR));
+		registerItem(registry, "devoritium_door", new ItemDevoritiumDoor(ASBlocks.DEVORITIUM_DOOR));
 		registerItem(registry, "devoritium_scimitar", new ItemDevoritiumScimitar());
 		registerItem(registry, "devoritium_shield", new ItemDevoritiumShield());
 
@@ -644,34 +644,34 @@ public final class AncientSpellcraftItems {
 		registerItem(registry, "duplication_scroll", new ItemDuplicationScroll());
 		registerItem(registry, "amnesia_scroll", new ItemAmnesiaScroll());
 
-		registerItem(registry, "blank_rune", new Item().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT).setMaxStackSize(16));
-		registerItem(registry, "rune_feoh", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_uruz", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_thurisaz", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_ansuz", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_raido", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_kaunan", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_gyfu", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_wynn", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_haglaz", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_naudiz", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_isaz", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_jera", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_ihwaz", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_peorth", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_algiz", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_sowilo", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_tiwaz", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_berkanan", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_ehwaz", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_mannaz", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_laguz", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_yngvi", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_odal", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "rune_dagaz", new ItemRune().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "blank_rune", new Item().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT).setMaxStackSize(16));
+		registerItem(registry, "rune_feoh", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_uruz", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_thurisaz", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_ansuz", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_raido", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_kaunan", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_gyfu", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_wynn", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_haglaz", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_naudiz", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_isaz", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_jera", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_ihwaz", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_peorth", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_algiz", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_sowilo", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_tiwaz", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_berkanan", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_ehwaz", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_mannaz", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_laguz", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_yngvi", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_odal", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "rune_dagaz", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
 
 		registerItem(registry, "ritual_book", new ItemRitualBook());
-		registerItem(registry, "arcane_compound", new Item().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT).setMaxStackSize(16));
+		registerItem(registry, "arcane_compound", new Item().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT).setMaxStackSize(16));
 
 		registerItem(registry, "soulbound_upgrade", new ItemSoulboundWandUpgrade());
 		registerItem(registry, "spectral_shovel", new ItemSpectralShovel());

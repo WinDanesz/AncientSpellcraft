@@ -12,15 +12,15 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod.EventBusSubscriber
-public class AncientSpellcraftRecipes {
+public class ASRecipes {
 
-	private AncientSpellcraftRecipes() {} // no instances
+	private ASRecipes() {} // no instances
 
 	@SubscribeEvent
 	public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
 
-		FurnaceRecipes.instance().addSmeltingRecipeForBlock(AncientSpellcraftBlocks.DEVORITIUM_ORE, new ItemStack(AncientSpellcraftItems.devoritium_ingot), 0.5f);
-		FurnaceRecipes.instance().addSmelting(WizardryItems.crystal_silver_plating, new ItemStack(AncientSpellcraftItems.crystal_silver_ingot, 1), 1.5f);
+		FurnaceRecipes.instance().addSmeltingRecipeForBlock(ASBlocks.DEVORITIUM_ORE, new ItemStack(ASItems.devoritium_ingot), 0.5f);
+		FurnaceRecipes.instance().addSmelting(WizardryItems.crystal_silver_plating, new ItemStack(ASItems.crystal_silver_ingot, 1), 1.5f);
 
 		BrewingRecipeRegistry.addRecipe(new EssenceHealingPotionRecipe());
 		BrewingRecipeRegistry.addRecipe(new EssenceRegenerationPotionRecipe());

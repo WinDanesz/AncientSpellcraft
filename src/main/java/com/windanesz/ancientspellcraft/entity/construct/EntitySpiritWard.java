@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.entity.construct;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.entity.ICustomHitbox;
@@ -94,7 +94,7 @@ public class EntitySpiritWard extends EntityMagicConstruct implements ICustomHit
 		super.onUpdate();
 
 		if(this.ticksExisted % 50  == 0){
-			this.playSound(AncientSpellcraftSounds.SHADOW_MAGIC_LOOP, 1f, 1f);
+			this.playSound(ASSounds.SHADOW_MAGIC_LOOP, 1f, 1f);
 		}
 
 		if (world.isRemote) {
@@ -129,7 +129,7 @@ public class EntitySpiritWard extends EntityMagicConstruct implements ICustomHit
 		// remove non-undeads
 		targets.removeIf(t -> t instanceof EntityLivingBase && !ASUtils.isEntityConsideredUndead(t));
 
-		if (!(getCaster() instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) getCaster(), AncientSpellcraftItems.ring_spirit_ward))) {
+		if (!(getCaster() instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) getCaster(), ASItems.ring_spirit_ward))) {
 		//noinspection ConstantConditions
 		targets.removeIf((
 				t -> t instanceof EntityMagicArrow && ((EntityMagicArrow) t).getCaster() != null &&  ((EntityMagicArrow)t).getCaster().isEntityUndead()
@@ -186,7 +186,7 @@ public class EntitySpiritWard extends EntityMagicConstruct implements ICustomHit
 					Vec3d targetNewPos = target.getPositionVector().add(targetRelativePos.normalize().scale(distanceTowardsCentre));
 					target.setPosition(targetNewPos.x, targetNewPos.y, targetNewPos.z);
 
-					world.playSound(target.posX, target.posY, target.posZ, AncientSpellcraftSounds.SHADOW_MAGIC_CHARGE, // TODO replace
+					world.playSound(target.posX, target.posY, target.posZ, ASSounds.SHADOW_MAGIC_CHARGE, // TODO replace
 							WizardrySounds.SPELLS, 0.4f, 1.0f, false);
 
 					if (world.isRemote) {

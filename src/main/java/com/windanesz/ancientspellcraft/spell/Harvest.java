@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
@@ -84,7 +84,7 @@ public class Harvest extends Spell {
 				}
 			}
 		}
-		if (flag & !replantList.isEmpty() && ItemArtefact.isArtefactActive(caster, AncientSpellcraftItems.charm_seed_bag)) {
+		if (flag & !replantList.isEmpty() && ItemArtefact.isArtefactActive(caster, ASItems.charm_seed_bag)) {
 
 			for (Map.Entry<BlockPos, Block> currentEntry : replantList.entrySet()) {
 				Item seedItem = null;
@@ -129,7 +129,7 @@ public class Harvest extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 
 }

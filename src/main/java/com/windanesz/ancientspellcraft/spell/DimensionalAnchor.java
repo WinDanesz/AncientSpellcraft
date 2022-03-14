@@ -2,8 +2,8 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.potion.PotionDimensionalAnchor;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
@@ -59,7 +59,7 @@ public class DimensionalAnchor extends SpellRay {
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 		if (EntityUtils.isLiving(target)) {
-			((EntityLivingBase) target).addPotionEffect(new PotionEffect(AncientSpellcraftPotions.dimensional_anchor, getProperty(EFFECT_DURATION).intValue(), 0));
+			((EntityLivingBase) target).addPotionEffect(new PotionEffect(ASPotions.dimensional_anchor, getProperty(EFFECT_DURATION).intValue(), 0));
 		}
 		return true;
 	}
@@ -83,7 +83,7 @@ public class DimensionalAnchor extends SpellRay {
 	// called by Event Subscription
 	public static boolean shouldPreventSpell(EntityLivingBase entity, World world, Spell spell) {
 		boolean preventCast = false;
-		if (entity != null && world != null && entity.isPotionActive(AncientSpellcraftPotions.dimensional_anchor)) {
+		if (entity != null && world != null && entity.isPotionActive(ASPotions.dimensional_anchor)) {
 			//noinspection ConstantConditions
 			preventCast = teleportationSpellList.contains(spell.getRegistryName().toString());
 
@@ -134,7 +134,7 @@ public class DimensionalAnchor extends SpellRay {
 
 	@SubscribeEvent
 	public static void onEnderTeleportEvent(EnderTeleportEvent event) {
-		if (event.getEntityLiving().isPotionActive(AncientSpellcraftPotions.dimensional_anchor)) {
+		if (event.getEntityLiving().isPotionActive(ASPotions.dimensional_anchor)) {
 			if (event.isCancelable()) {
 				if (event.getEntityLiving() instanceof EntityPlayer && !event.getEntityLiving().world.isRemote) {
 					((EntityPlayer) event.getEntityLiving()).sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:dimensional_anchor.prevent_ender_pearl"), false);
@@ -146,6 +146,6 @@ public class DimensionalAnchor extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

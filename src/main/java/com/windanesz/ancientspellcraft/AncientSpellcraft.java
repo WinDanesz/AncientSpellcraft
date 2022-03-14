@@ -10,11 +10,11 @@ import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBiomes;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftDimensions;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftLoot;
+import com.windanesz.ancientspellcraft.registry.ASBiomes;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASDimensions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASLoot;
 import com.windanesz.ancientspellcraft.registry.BookshelfItems;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
 import com.windanesz.ancientspellcraft.util.RitualProperties;
@@ -79,9 +79,9 @@ public class AncientSpellcraft {
 
 		proxy.registerRenderers();
 
-		AncientSpellcraftLoot.preInit();
-		AncientSpellcraftBlocks.registerTileEntities();
-		AncientSpellcraftBiomes.preInit();
+		ASLoot.preInit();
+		ASBlocks.registerTileEntities();
+		ASBiomes.preInit();
 		BookshelfItems.preInitBookShelfModelTextures();
 
 		ASBaublesIntegration.init();
@@ -101,13 +101,13 @@ public class AncientSpellcraft {
 		GameRegistry.registerWorldGenerator(new WorldGenBattlemageCamp(), 20);
 		GameRegistry.registerWorldGenerator(new WorldGenBattlemageKeep(), 20);
 
-		AncientSpellcraftItems.registerDispenseBehaviours();
+		ASItems.registerDispenseBehaviours();
 		MinecraftForge.EVENT_BUS.register(instance); // Since there's already an instance we might as well use it
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandlerAS());
 		ASPacketHandler.initPackets();
 		proxy.registerParticles();
 
-		AncientSpellcraftDimensions.init();
+		ASDimensions.init();
 
 		Ritual.registry.forEach(Ritual::init);
 		RitualProperties.init();

@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.item.IConjuredItem;
 import electroblob.wizardry.util.InventoryUtils;
 import net.minecraft.block.state.IBlockState;
@@ -38,7 +38,7 @@ public class ItemSpectralShovel extends ItemSpade implements IConjuredItem {
 
 	@Override
 	public int getMaxDamage(ItemStack stack){
-		return this.getMaxDamageFromNBT(stack, AncientSpellcraftSpells.conjure_shovel);
+		return this.getMaxDamageFromNBT(stack, ASSpells.conjure_shovel);
 	}
 
 	@Override

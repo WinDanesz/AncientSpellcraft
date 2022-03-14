@@ -1,15 +1,11 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.Wizardry;
-import electroblob.wizardry.constants.Constants;
-import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ISpellCastingItem;
-import electroblob.wizardry.item.IWorkbenchItem;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemNameTag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -25,7 +21,7 @@ import java.util.List;
 
 public class ItemEnchantedNameTag extends ItemNameTag {
 	public ItemEnchantedNameTag() {
-		this.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		this.setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		this.maxStackSize = 1;
 	}
 

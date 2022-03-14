@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.block.BlockMagicMushroom;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.util.BlockUtils;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,7 +22,7 @@ public class ItemAmberMushroomAmulet extends ItemASArtefact implements ITickable
 				for (int i = 0; i < player.world.rand.nextInt(3); i++) {
 					BlockPos pos = BlockUtils.findNearbyFloorSpace(player, 7, 7);
 					if (pos != null) {
-						BlockMagicMushroom.tryPlaceMushroom(player.world, pos, player, (BlockMagicMushroom) AncientSpellcraftBlocks.MUSHROOM_HEALING, 700);
+						BlockMagicMushroom.tryPlaceMushroom(player.world, pos, player, (BlockMagicMushroom) ASBlocks.MUSHROOM_HEALING, 700);
 						((EntityPlayer) player).getCooldownTracker().setCooldown(this, 900);
 
 					}

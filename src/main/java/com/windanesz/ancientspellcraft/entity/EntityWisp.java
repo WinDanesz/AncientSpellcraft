@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.entity;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -183,7 +183,7 @@ public class EntityWisp extends Entity {
 			if (this.despawnTimer > 120 && !this.world.isRemote) {
 				this.playSound(SoundEvents.ENTITY_GHAST_SHOOT, 1.0F, 1.0F);
 
-				ItemStack stack = new ItemStack(AncientSpellcraftItems.enchanted_name_tag, 1, nameTagMana);
+				ItemStack stack = new ItemStack(ASItems.enchanted_name_tag, 1, nameTagMana);
 				stack.setTagCompound(nameTag);
 				this.world.spawnEntity(new EntityItem(this.world, this.posX, this.posY, this.posZ, stack));
 				this.setDead();

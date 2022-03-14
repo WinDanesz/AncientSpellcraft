@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.tileentity;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -28,11 +28,11 @@ public class TileCandleLight extends TileEntity implements ITickable {
 
 		if (thePlayer == null) {
 			if (world.getBlockState(getPos()).getBlock() ==
-					AncientSpellcraftBlocks.CANDLELIGHT) {
+					ASBlocks.CANDLELIGHT) {
 				world.setBlockToAir(this.getPos());
 			}
-		} else if (!thePlayer.isPotionActive(AncientSpellcraftPotions.candlelight)) {
-			if (world.getBlockState(getPos()).getBlock() == AncientSpellcraftBlocks.CANDLELIGHT) {
+		} else if (!thePlayer.isPotionActive(ASPotions.candlelight)) {
+			if (world.getBlockState(getPos()).getBlock() == ASBlocks.CANDLELIGHT) {
 				world.setBlockToAir(getPos());
 			}
 		}

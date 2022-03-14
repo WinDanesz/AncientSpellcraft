@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.entity.projectile;
 
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.EntityUtils;
@@ -26,7 +26,7 @@ public class EntityHeart extends EntityMagicProjectile {
 
 	@Override
 	public float getSeekingStrength(){
-		return AncientSpellcraftSpells.healing_heart.getProperty(Spell.SEEKING_STRENGTH).floatValue();
+		return ASSpells.healing_heart.getProperty(Spell.SEEKING_STRENGTH).floatValue();
 	}
 
 	public void setDamage(float damage) {
@@ -34,7 +34,7 @@ public class EntityHeart extends EntityMagicProjectile {
 	}
 
 	public float getDamage() {
-		return AncientSpellcraftSpells.healing_heart.getProperty(Spell.DAMAGE).floatValue();
+		return ASSpells.healing_heart.getProperty(Spell.DAMAGE).floatValue();
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class EntityHeart extends EntityMagicProjectile {
 					entityLivingBase.attackEntityFrom(
 							MagicDamage.causeIndirectMagicDamage(this, this.getThrower(), DamageType.MAGIC).setProjectile(),
 							getDamage());
-					playSound(AncientSpellcraftSounds.ENTITY_HEALING_HEALTH_DAMAGES, 0.9F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+					playSound(ASSounds.ENTITY_HEALING_HEALTH_DAMAGES, 0.9F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					if (world.isRemote)
 						ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(posX, posY, posZ).clr(250, 63, 63).spawn(world);
 
@@ -59,16 +59,16 @@ public class EntityHeart extends EntityMagicProjectile {
 
 					if (entityLivingBase.getHealth() < entityLivingBase.getMaxHealth() && entityLivingBase.getHealth() > 0) {
 
-						entityLivingBase.heal(AncientSpellcraftSpells.healing_heart.getProperty(HEALTH).floatValue());
+						entityLivingBase.heal(ASSpells.healing_heart.getProperty(HEALTH).floatValue());
 						if (world.isRemote)
 							ParticleBuilder.spawnHealParticles(world, entityLivingBase);
-						playSound(AncientSpellcraftSounds.ENTITY_HEALING_HEATH_HEALS, 0.9F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+						playSound(ASSounds.ENTITY_HEALING_HEATH_HEALS, 0.9F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 						if (world.isRemote)
 							ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(posX, posY, posZ).clr(250, 63, 63).spawn(world);
 					}
 				}
 			} else {
-				playSound(AncientSpellcraftSounds.ENTITY_HEALING_HEALTH_DAMAGES, 0.9F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+				playSound(ASSounds.ENTITY_HEALING_HEALTH_DAMAGES, 0.9F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 				if (this.world.isRemote)
 					ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(posX, posY, posZ).clr(250, 63, 63).spawn(world);
 			}

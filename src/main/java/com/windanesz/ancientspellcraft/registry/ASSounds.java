@@ -10,8 +10,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @GameRegistry.ObjectHolder(AncientSpellcraft.MODID)
 @Mod.EventBusSubscriber(modid = AncientSpellcraft.MODID)
-public class AncientSpellcraftSounds {
-	private AncientSpellcraftSounds() {}
+public class ASSounds {
+	private ASSounds() {}
 
 	public static final SoundEvent ENTITY_HEALING_HEATH_HEALS = createSound("entity.healing_heath_heals");
 	public static final SoundEvent ENTITY_HEALING_HEALTH_DAMAGES = createSound("entity.healing_health_damages");

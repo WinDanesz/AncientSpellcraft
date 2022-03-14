@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.Wizardry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,7 +30,7 @@ public abstract class ItemDailyArtefact extends Item {
 	public ItemDailyArtefact(EnumRarity rarity) {
 		setMaxStackSize(1);
 		this.rarity = rarity;
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR);
 	}
 
 	public void addReadinessPropertyOverride() {

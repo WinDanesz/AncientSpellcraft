@@ -3,8 +3,8 @@ package com.windanesz.ancientspellcraft.block;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
 import com.windanesz.ancientspellcraft.packet.PacketMushroomActivation;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import com.windanesz.ancientspellcraft.tileentity.TileEntityMagicMushroom;
 import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.registry.WizardryBlocks;
@@ -172,7 +172,7 @@ public abstract class BlockMagicMushroom extends BlockBush implements ITileEntit
 		int potionDuration = 80;
 		int effectAmplifier = 0;
 		DamageSource source = DamageSource.CACTUS;
-		float damage = AncientSpellcraftSpells.fairy_ring.getProperty(Spell.DAMAGE).floatValue();
+		float damage = ASSpells.fairy_ring.getProperty(Spell.DAMAGE).floatValue();
 
 		TileEntity tileentity = world.getTileEntity(pos);
 
@@ -188,7 +188,7 @@ public abstract class BlockMagicMushroom extends BlockBush implements ITileEntit
 			casterEntity = ((TileEntityMagicMushroom) tileentity).getCaster();
 
 			if (target instanceof EntityLivingBase) {
-				if (!AllyDesignationSystem.isValidTarget(caster, target) || block == AncientSpellcraftBlocks.MUSHROOM_HEALING) {
+				if (!AllyDesignationSystem.isValidTarget(caster, target) || block == ASBlocks.MUSHROOM_HEALING) {
 					// the beneficial mushrooms should affect allies!
 					return applyBeneficialEffect(world, block, pos, source, damage, state, caster, (EntityLivingBase) target, potency);
 				} else {
@@ -234,7 +234,7 @@ public abstract class BlockMagicMushroom extends BlockBush implements ITileEntit
 
 	@SideOnly(Side.CLIENT)
 	public BlockRenderLayer getRenderLayer() {
-		return this == AncientSpellcraftBlocks.MUSHROOM_FORCE ? BlockRenderLayer.TRANSLUCENT : super.getRenderLayer();
+		return this == ASBlocks.MUSHROOM_FORCE ? BlockRenderLayer.TRANSLUCENT : super.getRenderLayer();
 	}
 
 	@SubscribeEvent
@@ -269,33 +269,33 @@ public abstract class BlockMagicMushroom extends BlockBush implements ITileEntit
 		// regular
 		List<Block> mushrooms = new ArrayList<>();
 		if (type == MushroomType.ANY || type == MushroomType.COMBAT) {
-			mushrooms.add(AncientSpellcraftBlocks.MUSHROOM_FIRE);
-			mushrooms.add(AncientSpellcraftBlocks.MUSHROOM_ICE);
-			mushrooms.add(AncientSpellcraftBlocks.MUSHROOM_POISON);
-			mushrooms.add(AncientSpellcraftBlocks.MUSHROOM_WITHER);
-			mushrooms.add(AncientSpellcraftBlocks.MUSHROOM_FORCE);
-			mushrooms.add(AncientSpellcraftBlocks.MUSHROOM_SHOCKING);
+			mushrooms.add(ASBlocks.MUSHROOM_FIRE);
+			mushrooms.add(ASBlocks.MUSHROOM_ICE);
+			mushrooms.add(ASBlocks.MUSHROOM_POISON);
+			mushrooms.add(ASBlocks.MUSHROOM_WITHER);
+			mushrooms.add(ASBlocks.MUSHROOM_FORCE);
+			mushrooms.add(ASBlocks.MUSHROOM_SHOCKING);
 		}
 
 		if (type == MushroomType.ANY || type == MushroomType.BUFF) {
-			mushrooms.add(AncientSpellcraftBlocks.MUSHROOM_HEALING);
+			mushrooms.add(ASBlocks.MUSHROOM_HEALING);
 		}
 
 		// rare
 		List<Block> rareMushrooms = new ArrayList<>();
 		if (type == MushroomType.ANY || type == MushroomType.COMBAT) {
-			rareMushrooms.add(AncientSpellcraftBlocks.MUSHROOM_MIND);
-			rareMushrooms.add(AncientSpellcraftBlocks.MUSHROOM_EXPLOSIVE);
+			rareMushrooms.add(ASBlocks.MUSHROOM_MIND);
+			rareMushrooms.add(ASBlocks.MUSHROOM_EXPLOSIVE);
 		}
 
 		if (type == MushroomType.ANY || type == MushroomType.BUFF) {
-			rareMushrooms.add(AncientSpellcraftBlocks.MUSHROOM_CLEANSING);
+			rareMushrooms.add(ASBlocks.MUSHROOM_CLEANSING);
 		}
 
 		// epic
 		List<Block> epicMushrooms = new ArrayList<>();
 		if (type == MushroomType.ANY || type == MushroomType.BUFF) {
-			epicMushrooms.add(AncientSpellcraftBlocks.MUSHROOM_EMPOWERING);
+			epicMushrooms.add(ASBlocks.MUSHROOM_EMPOWERING);
 		}
 
 		// calculating this from the "highest end"

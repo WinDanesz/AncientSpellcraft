@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -21,7 +21,7 @@ public class ItemEvergrowingCrystal extends ItemDailyArtefact {
 			ItemStack stack;
 			float i = AncientSpellcraft.rand.nextFloat();
 			if (i <= 0.1) {
-				stack = new ItemStack(AncientSpellcraftItems.astral_diamond_shard, ASUtils.randIntBetween(1, 3));
+				stack = new ItemStack(ASItems.astral_diamond_shard, ASUtils.randIntBetween(1, 3));
 			} else if (i <= 0.15) {
 				stack = new ItemStack(Items.DIAMOND, ASUtils.randIntBetween(1, 1));
 			} else {

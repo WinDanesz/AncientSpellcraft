@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.material.IDevoritium;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -14,7 +14,7 @@ public class ItemDevoritiumSword extends ItemSword implements IDevoritium {
 	@SuppressWarnings("ConstantConditions")
 	public ItemDevoritiumSword() {
 		super(AncientSpellcraft.DEVORITIUM_TOOL_MATERIAL);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR);
 	}
 
 	@Override

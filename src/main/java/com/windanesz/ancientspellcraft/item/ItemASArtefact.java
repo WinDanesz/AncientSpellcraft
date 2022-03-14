@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.event.ImbuementActivateEvent;
@@ -22,12 +22,12 @@ public class ItemASArtefact extends ItemArtefact {
 
 	public ItemASArtefact(EnumRarity rarity, Type type) {
 		super(rarity, type);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR);
 	}
 
 	@SubscribeEvent
 	public static void onImbuement(ImbuementActivateEvent event) {
-		if (event.lastUser != null && ItemArtefact.isArtefactActive(event.lastUser, AncientSpellcraftItems.amulet_imbued_marble)) {
+		if (event.lastUser != null && ItemArtefact.isArtefactActive(event.lastUser, ASItems.amulet_imbued_marble)) {
 			List<Element> elements = Arrays.asList(event.receptacleElements);
 
 			Element firstElement = elements.get(0);
@@ -43,8 +43,8 @@ public class ItemASArtefact extends ItemArtefact {
 					if (spell.applicableForItem(WizardryItems.spell_book)) {
 						event.result = new ItemStack(WizardryItems.spell_book, 1, spell.metadata());
 						break;
-					} else if (spell.applicableForItem(AncientSpellcraftItems.ancient_spellcraft_spell_book)) {
-						event.result = new ItemStack(AncientSpellcraftItems.ancient_spellcraft_spell_book, 1, spell.metadata());
+					} else if (spell.applicableForItem(ASItems.ancient_spellcraft_spell_book)) {
+						event.result = new ItemStack(ASItems.ancient_spellcraft_spell_book, 1, spell.metadata());
 						break;
 					}
 				}

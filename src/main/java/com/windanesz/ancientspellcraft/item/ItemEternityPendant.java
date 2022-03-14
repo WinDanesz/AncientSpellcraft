@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import com.windanesz.ancientspellcraft.spell.MetaSpellBuff;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.SpellType;
@@ -40,12 +40,12 @@ public class ItemEternityPendant extends ItemASArtefact implements IWorkbenchIte
 			Spell spell = Spell.byMetadata(spellBooks[0].getStack().getItemDamage());
 
 			// only buff type spells can be applied to the pendant
-			if ((spell.getType() == SpellType.BUFF || spell instanceof SpellBuff) && !(spell instanceof MetaSpellBuff) && spell != AncientSpellcraftSpells.time_knot) {
+			if ((spell.getType() == SpellType.BUFF || spell instanceof SpellBuff) && !(spell instanceof MetaSpellBuff) && spell != ASSpells.time_knot) {
 
 				// Spells can only be bound to the artefact if the player has already cast them
 				// This restriction does not apply in creative mode
 				if (spell != Spells.none && player.isCreative() || (spell.isEnabled(SpellProperties.Context.WANDS))) {
-					centre.putStack(new ItemStack(AncientSpellcraftItems.amulet_pendant_of_eternity, 1, spell.metadata()));
+					centre.putStack(new ItemStack(ASItems.amulet_pendant_of_eternity, 1, spell.metadata()));
 
 					// consumes the book
 					spellBooks[0].putStack(ItemStack.EMPTY);

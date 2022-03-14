@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.spell;
 import com.google.common.base.Predicate;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
@@ -61,7 +61,7 @@ public class HorseWhistle extends Spell {
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 
-		if (caster.isRiding() && caster.getRidingEntity() instanceof EntityHorse && ItemNewArtefact.isNewArtefactActive(caster, AncientSpellcraftItems.belt_horse)) {
+		if (caster.isRiding() && caster.getRidingEntity() instanceof EntityHorse && ItemNewArtefact.isNewArtefactActive(caster, ASItems.belt_horse)) {
 
 			EntityHorse horse = (EntityHorse) caster.getRidingEntity();
 			horse.addPotionEffect(new PotionEffect(MobEffects.SPEED, 600, 0));
@@ -159,7 +159,7 @@ public class HorseWhistle extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 
 	@SubscribeEvent

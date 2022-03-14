@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.spell;
 import com.google.common.base.Predicate;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIWizardFollowPlayer;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
@@ -218,6 +218,6 @@ public class Covenant extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

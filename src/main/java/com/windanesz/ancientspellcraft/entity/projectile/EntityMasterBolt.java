@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.entity.projectile;
 
 import com.windanesz.ancientspellcraft.block.BlockMasterBolt;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import com.windanesz.ancientspellcraft.spell.MasterBolt;
 import electroblob.wizardry.entity.projectile.EntityMagicArrow;
 import electroblob.wizardry.registry.WizardrySounds;
@@ -24,7 +24,7 @@ public class EntityMasterBolt extends EntityMagicArrow {
 		super(world);
 	}
 
-	@Override public double getDamage(){ return AncientSpellcraftSpells.master_bolt.getProperty(Spell.DAMAGE).doubleValue(); }
+	@Override public double getDamage(){ return ASSpells.master_bolt.getProperty(Spell.DAMAGE).doubleValue(); }
 
 	@Override public int getLifetime(){ return 20; }
 
@@ -61,7 +61,7 @@ public class EntityMasterBolt extends EntityMagicArrow {
 		if (!world.isRemote && BlockUtils.canBlockBeReplaced(world, pos, true)) {
 			EnumFacing facing = this.getHorizontalFacing();
 			if (facing == EnumFacing.NORTH || facing == EnumFacing.SOUTH) { facing = facing.getOpposite(); }
-			world.setBlockState(pos, AncientSpellcraftBlocks.master_bolt.getDefaultState().withProperty(BlockMasterBolt.FACING, facing));
+			world.setBlockState(pos, ASBlocks.master_bolt.getDefaultState().withProperty(BlockMasterBolt.FACING, facing));
 			MasterBolt.storeLocation(world, (EntityPlayer) this.getCaster(), pos);
 		}
 	}

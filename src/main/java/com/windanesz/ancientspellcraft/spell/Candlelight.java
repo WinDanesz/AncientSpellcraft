@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellBuff;
 import electroblob.wizardry.util.SpellModifiers;
@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 public class Candlelight extends SpellBuff {
 
 	public Candlelight() {
-		super(AncientSpellcraft.MODID, "candlelight", 216, 26, 11, () -> AncientSpellcraftPotions.candlelight);
+		super(AncientSpellcraft.MODID, "candlelight", 216, 26, 11, () -> ASPotions.candlelight);
 		soundValues(0.7f, 1.2f, 0.4f);
 	}
 
@@ -24,8 +24,8 @@ public class Candlelight extends SpellBuff {
 	 */
 	protected boolean applyEffects(EntityLivingBase caster, SpellModifiers modifiers) {
 		// magelight and candlelight is mutually exclusive
-		if (caster.isPotionActive(AncientSpellcraftPotions.magelight)) {
-			caster.removePotionEffect(AncientSpellcraftPotions.magelight);
+		if (caster.isPotionActive(ASPotions.magelight)) {
+			caster.removePotionEffect(ASPotions.magelight);
 		}
 
 		for (Potion potion : potionSet) {
@@ -55,6 +55,6 @@ public class Candlelight extends SpellBuff {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

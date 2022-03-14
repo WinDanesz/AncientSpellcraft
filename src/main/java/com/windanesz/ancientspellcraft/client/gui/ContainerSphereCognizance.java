@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.client.gui;
 
 import com.windanesz.ancientspellcraft.packet.PacketControlInput;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.tileentity.TileSphereCognizance;
 import electroblob.wizardry.inventory.SlotItemList;
 import electroblob.wizardry.registry.WizardryItems;
@@ -75,14 +75,14 @@ public class ContainerSphereCognizance extends Container {
 		this.addSlotToContainer(new SlotItemList(te, 1, 62 + 17, 100 + 15, 1,
 				WizardryItems.spell_book,
 				WizardryItems.scroll,
-				AncientSpellcraftItems.ancient_spellcraft_spell_book,
-				AncientSpellcraftItems.ancient_spellcraft_scroll,
-				AncientSpellcraftItems.stone_tablet_small,
-				AncientSpellcraftItems.stone_tablet,
-				AncientSpellcraftItems.stone_tablet_large,
-				AncientSpellcraftItems.stone_tablet_grand,
-				AncientSpellcraftItems.ancient_mana_flask,
-				AncientSpellcraftItems.ancient_bound_stone
+				ASItems.ancient_spellcraft_spell_book,
+				ASItems.ancient_spellcraft_scroll,
+				ASItems.stone_tablet_small,
+				ASItems.stone_tablet,
+				ASItems.stone_tablet_large,
+				ASItems.stone_tablet_grand,
+				ASItems.ancient_mana_flask,
+				ASItems.ancient_bound_stone
 		));
 
 		int n = 75;

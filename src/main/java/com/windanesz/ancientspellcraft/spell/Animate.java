@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.IConjuredItem;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellMinion;
@@ -105,7 +105,7 @@ public abstract class Animate extends SpellMinion<EntityAnimatedItem> {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 
 	public boolean spawnMinions(World world, EntityLivingBase caster, SpellModifiers modifiers, boolean damageScalesWithPotency) {

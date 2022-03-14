@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import com.windanesz.ancientspellcraft.registry.Rituals;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
 import com.windanesz.ancientspellcraft.util.LangUtils;
@@ -30,13 +30,13 @@ public class ItemRitualBook extends Item {
 		super();
 		setHasSubtypes(true);
 		setMaxStackSize(16);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_RITUALS);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_RITUALS);
 	}
 
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list) {
 
-		if (tab == AncientSpellcraftTabs.ANCIENTSPELLCRAFT_RITUALS) {
+		if (tab == ASTabs.ANCIENTSPELLCRAFT_RITUALS) {
 
 			List<Ritual> rituals = Ritual.getAllRituals();
 			rituals.removeIf(r -> !r.applicableForItem(this));

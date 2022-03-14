@@ -1,13 +1,11 @@
 package com.windanesz.ancientspellcraft.block;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -34,12 +32,12 @@ public class BlockMushroomEmpowering extends BlockMagicMushroom {
 			if (!world.isRemote) {
 
 				List<Potion> potions = new ArrayList<>();
-				potions.add(AncientSpellcraftPotions.mana_regeneration);
-				potions.add(AncientSpellcraftPotions.spell_siphon);
-				potions.add(AncientSpellcraftPotions.spell_cooldown);
-				potions.add(AncientSpellcraftPotions.spell_blast);
-				potions.add(AncientSpellcraftPotions.spell_duration);
-				potions.add(AncientSpellcraftPotions.spell_range);
+				potions.add(ASPotions.mana_regeneration);
+				potions.add(ASPotions.spell_siphon);
+				potions.add(ASPotions.spell_cooldown);
+				potions.add(ASPotions.spell_blast);
+				potions.add(ASPotions.spell_duration);
+				potions.add(ASPotions.spell_range);
 				potions.add(WizardryPotions.empowerment);
 
 				PotionEffect potionEffect = new PotionEffect(potions.get(world.rand.nextInt(potions.size())), POTION_DURATION * 4);

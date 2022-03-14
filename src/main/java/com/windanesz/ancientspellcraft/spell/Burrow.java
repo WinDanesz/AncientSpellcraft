@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.Spell;
@@ -13,13 +13,11 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Mod;
@@ -76,14 +74,14 @@ public class Burrow extends Spell {
 				if (ticksInUse % 20 == 0) {
 					caster.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 41, 2));
 					caster.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 81));
-					caster.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.burrow, 20));
+					caster.addPotionEffect(new PotionEffect(ASPotions.burrow, 20));
 					if (!world.isRemote)
 						caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:burrow.hard_material"), false);
 				}
 				return false;
 			}
 
-			caster.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.burrow, 20));
+			caster.addPotionEffect(new PotionEffect(ASPotions.burrow, 20));
 
 			if (ticksInUse % 20 == 0 && !world.isRemote) {
 				caster.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 41));
@@ -124,7 +122,7 @@ public class Burrow extends Spell {
 		diggable.add(Material.GROUND);
 		diggable.add(Material.LEAVES);
 
-		if (ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.charm_burrow)) {
+		if (ItemArtefact.isArtefactActive(player, ASItems.charm_burrow)) {
 			diggable.add(Material.ROCK);
 		}
 		return diggable.contains(state.getMaterial());
@@ -132,7 +130,7 @@ public class Burrow extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 
 }

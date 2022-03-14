@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.Wizardry;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -21,7 +21,7 @@ public class ItemNonBaubleArtefact extends Item {
 
 	public ItemNonBaubleArtefact(EnumRarity rarity) {
 		this.rarity = rarity;
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR);
 	}
 
 	@Override

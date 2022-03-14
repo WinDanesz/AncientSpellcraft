@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.spell;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.IConjuredItem;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.util.SpellModifiers;
@@ -14,7 +14,7 @@ import static electroblob.wizardry.util.InventoryUtils.doesPlayerHaveItem;
 public class ConjureFishingRod extends SpellConjurationAS {
 
 	public ConjureFishingRod() {
-		super("conjure_fishing_rod", AncientSpellcraftItems.spectral_fishing_rod);
+		super("conjure_fishing_rod", ASItems.spectral_fishing_rod);
 	}
 
 	/**

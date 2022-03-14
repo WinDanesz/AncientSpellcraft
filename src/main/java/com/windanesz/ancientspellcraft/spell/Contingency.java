@@ -1,9 +1,9 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import com.windanesz.ancientspellcraft.util.SpellcastUtils;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.data.IStoredVariable;
@@ -108,7 +108,7 @@ public class Contingency extends Spell {
 			data.setVariable(ACTIVE_CONTINGENCIES, activeContingencies);
 			data.sync();
 
-			player.world.playSound(player.posX, player.posY, player.posZ, AncientSpellcraftSounds.CONTINGENCY_ACTIVATE, WizardrySounds.SPELLS, 1F, 1F, false);
+			player.world.playSound(player.posX, player.posY, player.posZ, ASSounds.CONTINGENCY_ACTIVATE, WizardrySounds.SPELLS, 1F, 1F, false);
 
 			return true;
 		}
@@ -169,14 +169,14 @@ public class Contingency extends Spell {
 
 	public enum Type {
 
-		FIRE(AncientSpellcraftSpells.contingency_fire, "ancientspellcraft:contingency_fire"),
-		FALL(AncientSpellcraftSpells.contingency_fall, "ancientspellcraft:contingency_fall"),
-		DAMAGE(AncientSpellcraftSpells.contingency_damage, "ancientspellcraft:contingency_damage"),
-		CRITICAL_HEALTH(AncientSpellcraftSpells.contingency_critical_health, "ancientspellcraft:contingency_critical_health"),
-		DEATH(AncientSpellcraftSpells.contingency_death, "ancientspellcraft:contingency_death"),
-		DROWNING(AncientSpellcraftSpells.contingency_drowning, "ancientspellcraft:contingency_drowning"),
-		HOSTILE_SPELLCAST(AncientSpellcraftSpells.contingency_hostile_spellcast, "ancientspellcraft:contingency_hostile_spellcast"),
-		IMMOBILITY(AncientSpellcraftSpells.contingency_paralysis, "ancientspellcraft:contingency_immobility"),
+		FIRE(ASSpells.contingency_fire, "ancientspellcraft:contingency_fire"),
+		FALL(ASSpells.contingency_fall, "ancientspellcraft:contingency_fall"),
+		DAMAGE(ASSpells.contingency_damage, "ancientspellcraft:contingency_damage"),
+		CRITICAL_HEALTH(ASSpells.contingency_critical_health, "ancientspellcraft:contingency_critical_health"),
+		DEATH(ASSpells.contingency_death, "ancientspellcraft:contingency_death"),
+		DROWNING(ASSpells.contingency_drowning, "ancientspellcraft:contingency_drowning"),
+		HOSTILE_SPELLCAST(ASSpells.contingency_hostile_spellcast, "ancientspellcraft:contingency_hostile_spellcast"),
+		IMMOBILITY(ASSpells.contingency_paralysis, "ancientspellcraft:contingency_immobility"),
 		;
 
 		public Spell spell;
@@ -204,7 +204,7 @@ public class Contingency extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 
 	/** Spawns buff particles around the caster. Override to add a custom particle effect. Only called client-side. */
@@ -238,6 +238,6 @@ public class Contingency extends Spell {
 	}
 
 	public static void playSound(World world, BlockPos pos) {
-		world.playSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), AncientSpellcraftSounds.CONTINGENCY, SoundCategory.BLOCKS, 1F, 1F, false);
+		world.playSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), ASSounds.CONTINGENCY, SoundCategory.BLOCKS, 1F, 1F, false);
 	}
 }

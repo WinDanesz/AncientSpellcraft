@@ -2,8 +2,8 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.block.BlockCrystalMine;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.tileentity.TileEntityPlayerSave;
@@ -42,7 +42,7 @@ public class CrystalMine extends SpellRay {
 		List<BlockPos> blockPosList = BlockUtils.getBlockSphere(pos, 10);
 
 		for (BlockPos blockPos : blockPosList) {
-			if (world.getBlockState(blockPos).getBlock() == AncientSpellcraftBlocks.CRYSTAL_MINE) {
+			if (world.getBlockState(blockPos).getBlock() == ASBlocks.CRYSTAL_MINE) {
 
 				TileEntity tileEntity = world.getTileEntity(blockPos);
 				if (tileEntity instanceof TileEntityPlayerSave && ((TileEntityPlayerSave) tileEntity).getCaster() != null && ((TileEntityPlayerSave) tileEntity).getCaster() == caster) {
@@ -58,7 +58,7 @@ public class CrystalMine extends SpellRay {
 
 		if (side == EnumFacing.UP && world.isSideSolid(pos, EnumFacing.UP) && BlockUtils.canBlockBeReplaced(world, pos.up())) {
 			if (!world.isRemote) {
-				world.setBlockState(pos.up(), AncientSpellcraftBlocks.CRYSTAL_MINE.getDefaultState());
+				world.setBlockState(pos.up(), ASBlocks.CRYSTAL_MINE.getDefaultState());
 				((TileEntityPlayerSave) world.getTileEntity(pos.up())).setCaster(caster);
 				((TileEntityPlayerSave) world.getTileEntity(pos.up())).sync();
 			}
@@ -83,7 +83,7 @@ public class CrystalMine extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 
 }

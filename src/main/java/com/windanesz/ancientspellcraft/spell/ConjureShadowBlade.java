@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.spell.SpellConjuration;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -13,7 +13,7 @@ public class ConjureShadowBlade extends SpellConjuration {
 	public static final String WITHER_DURATION = "wither_duration";
 
 	public ConjureShadowBlade() {
-		super(AncientSpellcraft.MODID, "conjure_shadow_blade", AncientSpellcraftItems.shadow_blade);
+		super(AncientSpellcraft.MODID, "conjure_shadow_blade", ASItems.shadow_blade);
 		addProperties(DAMAGE, WITHER_DURATION);
 	}
 
@@ -32,6 +32,6 @@ public class ConjureShadowBlade extends SpellConjuration {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

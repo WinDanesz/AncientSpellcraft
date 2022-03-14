@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.ritual;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.tileentity.TileRune;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.constants.Element;
@@ -127,25 +127,25 @@ public class Condensing extends Ritual implements IRitualIngredient, IHasItemToR
 		if (item == WizardryItems.crystal_shard) {
 			return new ItemStack(WizardryItems.magic_crystal);
 		}
-		if (item == AncientSpellcraftItems.crystal_shard_sorcery) {
+		if (item == ASItems.crystal_shard_sorcery) {
 			return new ItemStack(WizardryItems.magic_crystal, Element.SORCERY.ordinal());
 		}
-		if (item == AncientSpellcraftItems.crystal_shard_necromancy) {
+		if (item == ASItems.crystal_shard_necromancy) {
 			return new ItemStack(WizardryItems.magic_crystal, Element.NECROMANCY.ordinal());
 		}
-		if (item == AncientSpellcraftItems.crystal_shard_lightning) {
+		if (item == ASItems.crystal_shard_lightning) {
 			return new ItemStack(WizardryItems.magic_crystal, Element.LIGHTNING.ordinal());
 		}
-		if (item == AncientSpellcraftItems.crystal_shard_ice) {
+		if (item == ASItems.crystal_shard_ice) {
 			return new ItemStack(WizardryItems.magic_crystal, Element.ICE.ordinal());
 		}
-		if (item == AncientSpellcraftItems.crystal_shard_healing) {
+		if (item == ASItems.crystal_shard_healing) {
 			return new ItemStack(WizardryItems.magic_crystal, Element.HEALING.ordinal());
 		}
-		if (item == AncientSpellcraftItems.crystal_shard_fire) {
+		if (item == ASItems.crystal_shard_fire) {
 			return new ItemStack(WizardryItems.magic_crystal, Element.FIRE.ordinal());
 		}
-		if (item == AncientSpellcraftItems.crystal_shard_earth) {
+		if (item == ASItems.crystal_shard_earth) {
 			return new ItemStack(WizardryItems.magic_crystal, Element.EARTH.ordinal());
 		}
 
@@ -232,10 +232,10 @@ public class Condensing extends Ritual implements IRitualIngredient, IHasItemToR
 	}
 
 	private boolean isElementalCrystalShard(Item item) {
-		return item == AncientSpellcraftItems.crystal_shard_sorcery || item == AncientSpellcraftItems.crystal_shard_necromancy ||
-				item == AncientSpellcraftItems.crystal_shard_lightning || item == AncientSpellcraftItems.crystal_shard_ice ||
-				item == AncientSpellcraftItems.crystal_shard_healing || item == AncientSpellcraftItems.crystal_shard_fire ||
-				item == AncientSpellcraftItems.crystal_shard_earth;
+		return item == ASItems.crystal_shard_sorcery || item == ASItems.crystal_shard_necromancy ||
+				item == ASItems.crystal_shard_lightning || item == ASItems.crystal_shard_ice ||
+				item == ASItems.crystal_shard_healing || item == ASItems.crystal_shard_fire ||
+				item == ASItems.crystal_shard_earth;
 	}
 
 	@Override

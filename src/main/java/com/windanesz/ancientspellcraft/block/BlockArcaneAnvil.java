@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.block;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import com.windanesz.ancientspellcraft.tileentity.TileArcaneAnvil;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
@@ -45,7 +45,7 @@ public class BlockArcaneAnvil extends BlockContainer {
 		super(Material.ANVIL);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		this.setLightOpacity(0);
-		this.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		this.setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		this.setSoundType(SoundType.ANVIL);
 	}
 

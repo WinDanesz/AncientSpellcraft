@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.material.IDevoritium;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.registry.WizardryPotions;
 import net.minecraft.entity.Entity;
@@ -26,12 +26,12 @@ public class ItemDevoritiumShield extends ItemShield implements IDevoritium {
 
 	public ItemDevoritiumShield() {
 		super();
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR);
 		this.setMaxDamage(900);
 	}
 
 	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
-		return repair.getItem() == AncientSpellcraftItems.devoritium_ingot;
+		return repair.getItem() == ASItems.devoritium_ingot;
 	}
 
 	@Override

@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.Settings;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.tileentity.TileEntityLightningBlock;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.data.IVariable;
@@ -71,9 +71,9 @@ public class ChargeAS extends Spell implements IOverrideSpell {
 
 		if(chargeTime > 0){
 
-			if (!player.world.isRemote && ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.ring_charge)) {
+			if (!player.world.isRemote && ItemArtefact.isArtefactActive(player, ASItems.ring_charge)) {
 				if (player.world.isAirBlock(player.getPosition())) {
-					player.world.setBlockState(player.getPosition(), AncientSpellcraftBlocks.lightning_block.getDefaultState());
+					player.world.setBlockState(player.getPosition(), ASBlocks.lightning_block.getDefaultState());
 					TileEntity tile = player.world.getTileEntity(player.getPosition());
 					if (tile instanceof TileEntityLightningBlock) {
 						((TileEntityLightningBlock) tile).setLifetime(120);

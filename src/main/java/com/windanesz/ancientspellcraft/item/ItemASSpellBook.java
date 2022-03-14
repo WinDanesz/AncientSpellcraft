@@ -25,7 +25,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import java.util.List;
 import java.util.Map;
 
-public class ItemAncientSpellcraftSpellBook extends ItemSpellBook {
+public class ItemASSpellBook extends ItemSpellBook {
 
 	private static final Map<String, ResourceLocation> guiTextures = ImmutableMap.of(
 			"magic", 		new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/spell_book_ancient_element.png"),

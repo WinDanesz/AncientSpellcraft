@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
@@ -89,7 +89,7 @@ public class ArcaneMagnetism extends Spell {
 
 			if (caster instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) caster;
-				if (ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.ring_lodestone) && !player.getHeldItemOffhand().isEmpty()) {
+				if (ItemArtefact.isArtefactActive(player, ASItems.ring_lodestone) && !player.getHeldItemOffhand().isEmpty()) {
 					ItemStack stack = player.getHeldItemOffhand();
 					if (!(ItemStack.areItemsEqualIgnoreDurability(entityItem.getItem(), stack))) {
 						continue;
@@ -122,6 +122,6 @@ public class ArcaneMagnetism extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

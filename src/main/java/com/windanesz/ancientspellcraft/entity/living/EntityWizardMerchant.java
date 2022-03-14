@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.entity.living;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.block.BlockReceptacle;
 import electroblob.wizardry.client.ClientProxy;
@@ -171,14 +171,14 @@ public class EntityWizardMerchant extends EntityWizard {
 
 			// can sell a stone tablet occassionally
 			if (rand.nextBoolean()) {
-				List<Item> tablets = new ArrayList<>(Arrays.asList(AncientSpellcraftItems.stone_tablet_small, AncientSpellcraftItems.stone_tablet,
-						AncientSpellcraftItems.stone_tablet_large, AncientSpellcraftItems.stone_tablet_grand));
+				List<Item> tablets = new ArrayList<>(Arrays.asList(ASItems.stone_tablet_small, ASItems.stone_tablet,
+						ASItems.stone_tablet_large, ASItems.stone_tablet_grand));
 				Item tablet = tablets.get(rand.nextInt(tablets.size()));
 
-				if (tablet == AncientSpellcraftItems.stone_tablet_small) {
+				if (tablet == ASItems.stone_tablet_small) {
 					ItemStack secondItemToBuy = new ItemStack(WizardryItems.magic_crystal, Tier.NOVICE.ordinal() * 3 + 1 + rand.nextInt(4));
 					this.trades.add(new MerchantRecipe(this.getRandomPrice(Tier.NOVICE), secondItemToBuy, new ItemStack(tablet), 0, 1));
-				} else if (tablet == AncientSpellcraftItems.stone_tablet) {
+				} else if (tablet == ASItems.stone_tablet) {
 					ItemStack secondItemToBuy = new ItemStack(WizardryItems.magic_crystal, Tier.APPRENTICE.ordinal() * 3 + 1 + rand.nextInt(4));
 					this.trades.add(new MerchantRecipe(this.getRandomPrice(Tier.APPRENTICE), secondItemToBuy, new ItemStack(tablet), 0, 1));
 				} else {
@@ -416,7 +416,7 @@ public class EntityWizardMerchant extends EntityWizard {
 					return new ItemStack(WizardryItems.arcane_tome, 1, 2);
 
 				} else if (randomiser < 10) {
-					return new ItemStack(AncientSpellcraftItems.transmutation_scroll, 1);
+					return new ItemStack(ASItems.transmutation_scroll, 1);
 				} else if (randomiser < 12) {
 					return new ItemStack(WizardryItems.grand_crystal, 1);
 				} else {

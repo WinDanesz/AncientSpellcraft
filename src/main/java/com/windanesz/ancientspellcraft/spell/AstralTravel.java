@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.spell.SpellBuff;
 import electroblob.wizardry.util.SpellModifiers;
@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 public class AstralTravel extends SpellBuff {
 
 	public AstralTravel() {
-		super(AncientSpellcraft.MODID, "astral_projection", 255, 200, 0, () -> (AncientSpellcraftPotions.astral_projection), () -> WizardryPotions.sixth_sense, () -> WizardryPotions.transience);
+		super(AncientSpellcraft.MODID, "astral_projection", 255, 200, 0, () -> (ASPotions.astral_projection), () -> WizardryPotions.sixth_sense, () -> WizardryPotions.transience);
 		soundValues(0.7f, 1.1f, 0.1f);
 	}
 
@@ -55,6 +55,6 @@ public class AstralTravel extends SpellBuff {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

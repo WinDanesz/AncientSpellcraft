@@ -1,8 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.item.IConjuredItem;
 import electroblob.wizardry.util.InventoryUtils;
 import net.minecraft.entity.Entity;
@@ -42,7 +41,7 @@ public class ItemIceCream extends ItemFood implements IConjuredItem {
 
 	@Override
 	public int getMaxDamage(ItemStack stack) {
-		return this.getMaxDamageFromNBT(stack, AncientSpellcraftSpells.ice_cream);
+		return this.getMaxDamageFromNBT(stack, ASSpells.ice_cream);
 	}
 
 	@Override

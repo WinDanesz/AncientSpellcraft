@@ -2,8 +2,8 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.block.BlockIceDoor;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.BlockUtils;
@@ -206,17 +206,17 @@ public class IceTower extends Spell {
 		}
 
 		for (BlockPos currPos : blockposListLower) {
-			world.setBlockState(currPos, AncientSpellcraftBlocks.SNOW_SLAB.getDefaultState().withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM));
+			world.setBlockState(currPos, ASBlocks.SNOW_SLAB.getDefaultState().withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM));
 		}
 		for (BlockPos currPos : blockposListUpper) {
-			world.setBlockState(currPos, AncientSpellcraftBlocks.SNOW_SLAB.getDefaultState().withProperty(HALF, BlockSlab.EnumBlockHalf.TOP));
+			world.setBlockState(currPos, ASBlocks.SNOW_SLAB.getDefaultState().withProperty(HALF, BlockSlab.EnumBlockHalf.TOP));
 		}
 
 		//door
 		//		world.setBlockState(pos.offset(EnumFacing.UP).offset(EnumFacing.SOUTH, 2), Blocks.AIR.getDefaultState());
-		world.setBlockState(pos.offset(EnumFacing.UP).offset(EnumFacing.SOUTH, 2), AncientSpellcraftBlocks.ICE_DOOR.getDefaultState().withProperty(BlockIceDoor.HALF, BlockIceDoor.EnumDoorHalf.LOWER));
+		world.setBlockState(pos.offset(EnumFacing.UP).offset(EnumFacing.SOUTH, 2), ASBlocks.ICE_DOOR.getDefaultState().withProperty(BlockIceDoor.HALF, BlockIceDoor.EnumDoorHalf.LOWER));
 		//		world.setBlockState(pos.offset(EnumFacing.UP,2).offset(EnumFacing.SOUTH, 2), Blocks.AIR.getDefaultState());
-		world.setBlockState(pos.offset(EnumFacing.UP, 2).offset(EnumFacing.SOUTH, 2), AncientSpellcraftBlocks.ICE_DOOR.getDefaultState().withProperty(BlockIceDoor.HALF, BlockIceDoor.EnumDoorHalf.UPPER));
+		world.setBlockState(pos.offset(EnumFacing.UP, 2).offset(EnumFacing.SOUTH, 2), ASBlocks.ICE_DOOR.getDefaultState().withProperty(BlockIceDoor.HALF, BlockIceDoor.EnumDoorHalf.UPPER));
 
 		// windows
 		List<BlockPos> windows = new ArrayList<>();
@@ -236,7 +236,7 @@ public class IceTower extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 
 }

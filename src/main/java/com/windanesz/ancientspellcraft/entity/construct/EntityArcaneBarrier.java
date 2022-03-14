@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.entity.construct;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.entity.ICustomHitbox;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
@@ -124,7 +124,7 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 
 		if (ticksExisted == 1 || ticksExisted % 60 == 0) {
 			this.radius = dataManager.get(RADIUS);
-			if (world.getBlockState(this.getPosition()).getBlock() != AncientSpellcraftBlocks.PLACED_RUNE) {
+			if (world.getBlockState(this.getPosition()).getBlock() != ASBlocks.PLACED_RUNE) {
 				this.setDead();
 				return;
 			}

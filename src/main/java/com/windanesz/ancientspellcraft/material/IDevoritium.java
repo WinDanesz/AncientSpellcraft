@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.material;
 
 import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.entity.living.EntityRemnant;
 import electroblob.wizardry.entity.living.EntitySpiritWolf;
 import electroblob.wizardry.entity.living.ISummonedCreature;
@@ -22,7 +22,7 @@ public interface IDevoritium {
 
 	default void onEntityWalkDelegate(World worldIn, BlockPos pos, Entity entityIn) {
 		if (entityIn instanceof EntityLivingBase) {
-			((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, 40, 2));
+			((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, 40, 2));
 			damageSummonedCreature(entityIn, 1);
 		}
 	}
@@ -46,19 +46,19 @@ public interface IDevoritium {
 	default void hitEntityDelegate(Entity attacker, Entity target, int bonusAmplifier, int bonusDuration) {
 		if (target instanceof EntityLivingBase) {
 			EntityLivingBase entityLivingBase = (EntityLivingBase) target;
-			if (!entityLivingBase.isPotionActive(AncientSpellcraftPotions.magical_exhaustion)) {
-				entityLivingBase.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, 30 + bonusDuration, + bonusAmplifier));
+			if (!entityLivingBase.isPotionActive(ASPotions.magical_exhaustion)) {
+				entityLivingBase.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, 30 + bonusDuration, + bonusAmplifier));
 			} else {
-				int amplifier = entityLivingBase.getActivePotionEffect(AncientSpellcraftPotions.magical_exhaustion).getAmplifier();
+				int amplifier = entityLivingBase.getActivePotionEffect(ASPotions.magical_exhaustion).getAmplifier();
 				switch (amplifier) {
 					case 0:
-						entityLivingBase.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, 45 + bonusDuration, 1 + bonusAmplifier));
+						entityLivingBase.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, 45 + bonusDuration, 1 + bonusAmplifier));
 						break;
 					case 1:
-						entityLivingBase.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, 45 + bonusDuration, 2 + bonusAmplifier));
+						entityLivingBase.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, 45 + bonusDuration, 2 + bonusAmplifier));
 						break;
 					case 2:
-						entityLivingBase.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, 45 + bonusDuration, 3 + bonusAmplifier));
+						entityLivingBase.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, 45 + bonusDuration, 3 + bonusAmplifier));
 						break;
 					default:
 						break;
@@ -72,9 +72,9 @@ public interface IDevoritium {
 
 			if (entityIn instanceof EntityPlayer) {
 				if (isSelected || ((EntityPlayer) entityIn).getHeldItemOffhand() == stack) {
-					((EntityPlayer) entityIn).addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, 40, 2));
+					((EntityPlayer) entityIn).addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, 40, 2));
 				} else {
-					((EntityPlayer) entityIn).addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, 40, 1));
+					((EntityPlayer) entityIn).addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, 40, 1));
 				}
 			}
 		}

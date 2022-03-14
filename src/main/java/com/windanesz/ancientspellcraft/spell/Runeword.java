@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
@@ -135,7 +135,7 @@ public class Runeword extends Spell {
 	}
 
 	@Override
-	public boolean applicableForItem(Item item) { return item == AncientSpellcraftItems.runic_plate; }
+	public boolean applicableForItem(Item item) { return item == ASItems.runic_plate; }
 
 	//	public enum Context {
 	//		ON_ANY_HIT,

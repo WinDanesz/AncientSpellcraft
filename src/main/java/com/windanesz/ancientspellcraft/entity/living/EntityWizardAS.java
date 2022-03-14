@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.entity.living;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellImproved;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.entity.living.EntityAIAttackSpell;
 import electroblob.wizardry.entity.living.EntityWizard;
 import electroblob.wizardry.registry.WizardryItems;
@@ -39,33 +39,33 @@ public class EntityWizardAS extends EntityWizard {
 		if (list.size() >= 12 && (Settings.generalSettings.wizards_buy_ancient_spellcraft_books || Settings.generalSettings.wizards_buy_ancient_element_books)) {
 
 			// buy
-			ItemStack anyASSpellBook = new ItemStack(AncientSpellcraftItems.ancient_spellcraft_spell_book, 1, OreDictionary.WILDCARD_VALUE);
-			ItemStack anyAncientSpellBook = new ItemStack(AncientSpellcraftItems.ancient_spell_book, 1, OreDictionary.WILDCARD_VALUE);
-			ItemStack ritualBook = new ItemStack(AncientSpellcraftItems.ritual_book, 1, OreDictionary.WILDCARD_VALUE);
+			ItemStack anyASSpellBook = new ItemStack(ASItems.ancient_spellcraft_spell_book, 1, OreDictionary.WILDCARD_VALUE);
+			ItemStack anyAncientSpellBook = new ItemStack(ASItems.ancient_spell_book, 1, OreDictionary.WILDCARD_VALUE);
+			ItemStack ritualBook = new ItemStack(ASItems.ritual_book, 1, OreDictionary.WILDCARD_VALUE);
 
 			MerchantRecipe ASBooks = new MerchantRecipe(anyASSpellBook, new ItemStack(WizardryItems.magic_crystal, 5));
 			MerchantRecipe ancientElementBooks = new MerchantRecipe(anyAncientSpellBook, new ItemStack(WizardryItems.magic_crystal, 5));
 
 			MerchantRecipe ritualBooks = new MerchantRecipe(ritualBook, new ItemStack(WizardryItems.magic_crystal, 20));
 
-			if (Settings.generalSettings.wizards_buy_ancient_spellcraft_books && list.stream().noneMatch(i -> i.getItemToBuy().getItem() == AncientSpellcraftItems.ancient_spellcraft_spell_book)) {
+			if (Settings.generalSettings.wizards_buy_ancient_spellcraft_books && list.stream().noneMatch(i -> i.getItemToBuy().getItem() == ASItems.ancient_spellcraft_spell_book)) {
 				list.add(ASBooks);
 			}
 
-			if (Settings.generalSettings.wizards_buy_ancient_element_books && list.stream().noneMatch(i -> i.getItemToBuy().getItem() == AncientSpellcraftItems.ancient_spell_book)) {
+			if (Settings.generalSettings.wizards_buy_ancient_element_books && list.stream().noneMatch(i -> i.getItemToBuy().getItem() == ASItems.ancient_spell_book)) {
 				list.add(ancientElementBooks);
 			}
 
-			if (Settings.generalSettings.wizards_buy_ancient_spellcraft_ritual_books && list.stream().noneMatch(i -> i.getItemToBuy().getItem() == AncientSpellcraftItems.ancient_spellcraft_spell_book)) {
+			if (Settings.generalSettings.wizards_buy_ancient_spellcraft_ritual_books && list.stream().noneMatch(i -> i.getItemToBuy().getItem() == ASItems.ancient_spellcraft_spell_book)) {
 				list.add(ritualBooks);
 			}
 		}
 
-		if (ItemNewArtefact.isNewArtefactActive(player, AncientSpellcraftItems.head_merchant)) {
+		if (ItemNewArtefact.isNewArtefactActive(player, ASItems.head_merchant)) {
 
 			List<Item> scrollList = new ArrayList<>();
 			scrollList.add(WizardryItems.scroll);
-			scrollList.add(AncientSpellcraftItems.ancient_spellcraft_scroll);
+			scrollList.add(ASItems.ancient_spellcraft_scroll);
 
 			for (Item scroll : scrollList) {
 				ItemStack scrollStack = new ItemStack(scroll, 1, OreDictionary.WILDCARD_VALUE);

@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.entity.living.ISummonedCreature;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.SpellActions;
@@ -65,7 +65,7 @@ public class WithdrawLife extends Spell {
 			if (!world.isRemote) {
 				float heal = (caster.getMaxHealth() * percentPerMinion) * minions;
 				float excess = (caster.getHealth() + heal) - caster.getMaxHealth();
-				if (excess > 0 && ItemArtefact.isArtefactActive(caster, AncientSpellcraftItems.ring_withdraw_life)) {
+				if (excess > 0 && ItemArtefact.isArtefactActive(caster, ASItems.ring_withdraw_life)) {
 					int amplifier = Math.max(0, (int) (excess / 3 - 1));
 					caster.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 160, amplifier));
 				}
@@ -87,6 +87,6 @@ public class WithdrawLife extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

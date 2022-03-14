@@ -2,8 +2,8 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
@@ -142,7 +142,7 @@ public class CreateIgloo extends Spell {
 		// builder.batchSize = (int)  (2  * (modifiers.get(SpellModifiers.POTENCY))) + (int) (3 * modifiers.get(WizardryItems.blast_upgrade));
 		blockPosList.sort(Comparator.comparingInt(Vec3i::getY));
 		builder.setBuildList(blockPosList);
-		builder.setBlockToBuild(AncientSpellcraftBlocks.CONJURED_SNOW.getDefaultState());
+		builder.setBlockToBuild(ASBlocks.CONJURED_SNOW.getDefaultState());
 		// check claims because we are using the non reverting blocks here...!
 		builder.setIgnoreClaims(false);
 		world.spawnEntity(builder);
@@ -199,6 +199,6 @@ public class CreateIgloo extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

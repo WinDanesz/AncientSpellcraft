@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.client.gui;
 
-import com.windanesz.ancientspellcraft.item.ItemAncientSpellcraftSpellBook;
+import com.windanesz.ancientspellcraft.item.ItemASSpellBook;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
 import com.windanesz.ancientspellcraft.item.ItemRunicPlate;
 import com.windanesz.ancientspellcraft.item.ItemSageTome;
@@ -59,9 +59,9 @@ public class GuiHandlerAS implements IGuiHandler {
 			return new GuiIceWorkbench(player.inventory, world, new BlockPos(x, y, z));
 		}
 		if (id == SPELL_BOOK_ANCIENT) {
-			if (player.getHeldItemMainhand().getItem() instanceof ItemAncientSpellcraftSpellBook) {
+			if (player.getHeldItemMainhand().getItem() instanceof ItemASSpellBook) {
 				return new GuiAncientElementSpellBook(player.getHeldItemMainhand());
-			} else if (player.getHeldItemOffhand().getItem() instanceof ItemAncientSpellcraftSpellBook) {
+			} else if (player.getHeldItemOffhand().getItem() instanceof ItemASSpellBook) {
 				return new GuiAncientElementSpellBook(player.getHeldItemOffhand());
 			}
 		}
@@ -110,7 +110,7 @@ public class GuiHandlerAS implements IGuiHandler {
 			if (tileEntity instanceof TileSageLectern) {
 				ItemStack book = ((TileSageLectern) tileEntity).getBookSlotItem();
 
-				if (book.getItem() instanceof ItemAncientSpellcraftSpellBook) {
+				if (book.getItem() instanceof ItemASSpellBook) {
 					return new GuiAncientElementSpellBook(book);
 				} else if (book.getItem() instanceof ItemSpellBook) {
 					return new electroblob.wizardry.client.gui.GuiSpellBook(book);

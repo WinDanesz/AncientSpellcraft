@@ -20,9 +20,9 @@ import javax.annotation.Nonnull;
 
 @GameRegistry.ObjectHolder(AncientSpellcraft.MODID)
 @Mod.EventBusSubscriber
-public class AncientSpellcraftEnchantments {
+public class ASEnchantments {
 
-	private AncientSpellcraftEnchantments() {}
+	private ASEnchantments() {}
 
 	@Nonnull
 	@SuppressWarnings("ConstantConditions")

@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.data.WizardData;
@@ -55,13 +55,13 @@ public class WizardClassWeaponHelper {
 
 			case BATTLEMAGE:
 				if (tier == Tier.NOVICE) {
-					return AncientSpellcraftItems.battlemage_sword_novice;
+					return ASItems.battlemage_sword_novice;
 				} else if (tier == Tier.APPRENTICE) {
-					return AncientSpellcraftItems.battlemage_sword_apprentice;
+					return ASItems.battlemage_sword_apprentice;
 				} else if (tier == Tier.ADVANCED) {
-					return AncientSpellcraftItems.battlemage_sword_advanced;
+					return ASItems.battlemage_sword_advanced;
 				}
-				return AncientSpellcraftItems.battlemage_sword_master;
+				return ASItems.battlemage_sword_master;
 
 			case SAGE:
 				String registryName = "sage_tome_" +  (tier == Tier.NOVICE && element == Element.MAGIC ? "magic" : tier.getUnlocalisedName());

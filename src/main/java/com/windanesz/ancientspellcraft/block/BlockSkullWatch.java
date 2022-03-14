@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.block;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
 import com.windanesz.ancientspellcraft.tileentity.TileSkullWatch;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -62,7 +62,7 @@ public class BlockSkullWatch extends BlockContainer {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState block, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-		world.playSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), AncientSpellcraftSounds.SKULL_WATCH_SCREAM, SoundCategory.BLOCKS, 0.5F, 1F, false);
+		world.playSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), ASSounds.SKULL_WATCH_SCREAM, SoundCategory.BLOCKS, 0.5F, 1F, false);
 
 		return true;
 	}

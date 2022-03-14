@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.potion;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.Wizardry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -64,7 +64,7 @@ public class PotionCurseDeath extends PotionCurseAS {
 
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 
-			if (event.getPotionEffect().getPotion() == AncientSpellcraftPotions.curse_of_death) {
+			if (event.getPotionEffect().getPotion() == ASPotions.curse_of_death) {
 
 				player.attackEntityFrom(DamageSource.MAGIC, Float.MAX_VALUE);
 			}

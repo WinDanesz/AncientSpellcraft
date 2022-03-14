@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.client.gui;
 
 import com.windanesz.ancientspellcraft.packet.PacketControlInput;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.tileentity.TileScribingDesk;
 import electroblob.wizardry.inventory.SlotItemList;
 import electroblob.wizardry.registry.WizardryItems;
@@ -45,10 +45,10 @@ public class ContainerScribingDesk extends Container {
 
 		// relic slot
 		this.addSlotToContainer(new SlotItemList(te, 4, 19, 28, 64,
-				AncientSpellcraftItems.stone_tablet_small,
-				AncientSpellcraftItems.stone_tablet,
-				AncientSpellcraftItems.stone_tablet_large,
-				AncientSpellcraftItems.stone_tablet_grand));
+				ASItems.stone_tablet_small,
+				ASItems.stone_tablet,
+				ASItems.stone_tablet_large,
+				ASItems.stone_tablet_grand));
 
 
 		// ink slot

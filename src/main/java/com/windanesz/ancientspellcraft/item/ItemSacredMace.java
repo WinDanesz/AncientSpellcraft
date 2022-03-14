@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.google.common.collect.Multimap;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import com.windanesz.ancientspellcraft.spell.ConjureShadowBlade;
 import electroblob.wizardry.item.IConjuredItem;
 import electroblob.wizardry.registry.Spells;
@@ -76,7 +76,7 @@ public class ItemSacredMace extends ItemSword implements IConjuredItem {
 	}
 
 	private static void applyWitherDamage(EntityLivingBase target) {
-		target.addPotionEffect(new PotionEffect(MobEffects.WITHER, AncientSpellcraftSpells.conjure_shadow_blade.getProperty(ConjureShadowBlade.WITHER_DURATION).intValue()));
+		target.addPotionEffect(new PotionEffect(MobEffects.WITHER, ASSpells.conjure_shadow_blade.getProperty(ConjureShadowBlade.WITHER_DURATION).intValue()));
 
 	}
 

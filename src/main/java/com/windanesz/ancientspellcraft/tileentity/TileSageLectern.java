@@ -5,7 +5,7 @@ import com.windanesz.ancientspellcraft.block.BlockSageLectern;
 import com.windanesz.ancientspellcraft.client.gui.ContainerSageLectern;
 import com.windanesz.ancientspellcraft.item.ItemSageTome;
 import com.windanesz.ancientspellcraft.item.WizardClassWeaponHelper;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.WizardArmourUtils;
 import electroblob.wizardry.block.BlockReceptacle;
 import electroblob.wizardry.constants.Element;
@@ -166,7 +166,7 @@ public class TileSageLectern extends TileEntity implements ITickable, IInventory
 		ItemStack stack1 = this.inventory.get(ContainerSageLectern.INPUT_SLOT_1);
 
 		// tome progression
-		if (stack0.getItem() instanceof ItemSageTome && stack1.getItem() == AncientSpellcraftItems.enchanted_page) {
+		if (stack0.getItem() instanceof ItemSageTome && stack1.getItem() == ASItems.enchanted_page) {
 
 			Tier tier = ((ItemSageTome) stack0.getItem()).tier;
 
@@ -304,7 +304,7 @@ public class TileSageLectern extends TileEntity implements ITickable, IInventory
 		if (slotNumber == 0 && stack.getItem() instanceof ItemSageTome) {
 			return true;
 		} else if (slotNumber == 1) {
-			return stack.getItem() == AncientSpellcraftItems.enchanted_page;
+			return stack.getItem() == ASItems.enchanted_page;
 		}
 		return false;
 	}

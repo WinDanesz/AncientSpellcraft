@@ -42,7 +42,7 @@ import javax.annotation.Nonnull;
 
 @GameRegistry.ObjectHolder(AncientSpellcraft.MODID)
 @Mod.EventBusSubscriber
-public class AncientSpellcraftPotions {
+public class ASPotions {
 
 	@Nonnull
 	@SuppressWarnings("ConstantConditions")

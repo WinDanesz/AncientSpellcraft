@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftEnchantments;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASEnchantments;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.SpellActions;
@@ -37,20 +37,20 @@ public class StaticCharge extends Spell {
 
 		// Won't work if the weapon already has the enchantment
 		if (WizardData.get(caster) != null
-				&& WizardData.get(caster).getImbuementDuration(AncientSpellcraftEnchantments.static_charge) <= 0) {
+				&& WizardData.get(caster).getImbuementDuration(ASEnchantments.static_charge) <= 0) {
 
 			for (ItemStack stack : InventoryUtils.getPrioritisedHotbarAndOffhand(caster)) {
 
 				if ((ImbueWeapon.isSword(stack))
-						&& !EnchantmentHelper.getEnchantments(stack).containsKey(AncientSpellcraftEnchantments.static_charge)) {
+						&& !EnchantmentHelper.getEnchantments(stack).containsKey(ASEnchantments.static_charge)) {
 					// The enchantment level as determined by the damage multiplier. The + 0.5f is so that
 					// weird float processing doesn't incorrectly round it down.
-					stack.addEnchantment(AncientSpellcraftEnchantments.static_charge,
+					stack.addEnchantment(ASEnchantments.static_charge,
 							modifiers.get(SpellModifiers.POTENCY) == 1.0f ? 1
 									: (int) ((modifiers.get(SpellModifiers.POTENCY) - 1.0f)
 									/ Constants.POTENCY_INCREASE_PER_TIER + 0.5f));
 
-					WizardData.get(caster).setImbuementDuration(AncientSpellcraftEnchantments.static_charge,
+					WizardData.get(caster).setImbuementDuration(ASEnchantments.static_charge,
 							(int) (getProperty(EFFECT_DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade)));
 
 					if (world.isRemote) {
@@ -73,7 +73,7 @@ public class StaticCharge extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 
 }

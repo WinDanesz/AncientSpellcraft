@@ -31,10 +31,10 @@ import javax.annotation.Nonnull;
 
 @ObjectHolder(AncientSpellcraft.MODID)
 @EventBusSubscriber
-public final class AncientSpellcraftSpells {
+public final class ASSpells {
 
 
-	private AncientSpellcraftSpells() {} // no instances
+	private ASSpells() {} // no instances
 
 	private static final String modId = AncientSpellcraft.MODID;
 
@@ -200,7 +200,7 @@ public final class AncientSpellcraftSpells {
 
 		IForgeRegistry<Spell> registry = event.getRegistry();
 
-		Item[] asSpellItems = {AncientSpellcraftItems.ancient_spellcraft_spell_book, AncientSpellcraftItems.ancient_spellcraft_scroll};
+		Item[] asSpellItems = {ASItems.ancient_spellcraft_spell_book, ASItems.ancient_spellcraft_scroll};
 
 		// AS 1.0.0 Spells
 		registry.register(new HellGate(modId, "hellgate", EnumAction.BLOCK, false));
@@ -213,7 +213,7 @@ public final class AncientSpellcraftSpells {
 		registry.register(new Extinguish(modId, "extinguish"));
 		registry.register(new CurseOfEnder(modId, "curse_of_ender", EnumAction.NONE, false) {});
 		registry.register(new ConjureWater(modId, "conjure_water", EnumAction.BLOCK, false));
-		registry.register(new SpellConjurationAS("conjure_shield", AncientSpellcraftItems.spectral_shield));
+		registry.register(new SpellConjurationAS("conjure_shield", ASItems.spectral_shield));
 		registry.register(new Drought(modId, "drought", EnumAction.BLOCK, false));
 		registry.register(new WillOWisp(modId, "will_o_wisp"));
 		registry.register(new NaturesSprout(modId, "natures_sprout", EnumAction.BLOCK, false));
@@ -236,7 +236,7 @@ public final class AncientSpellcraftSpells {
 		registry.register(new SpellProjectile<EntityHeart>(AncientSpellcraft.MODID, "healing_heart", EntityHeart::new) {
 			@Override
 			public boolean applicableForItem(Item item) {
-				return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+				return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 			}
 		}.addProperties(Spell.HEALTH, Spell.DAMAGE, Spell.SEEKING_STRENGTH));
 
@@ -250,7 +250,7 @@ public final class AncientSpellcraftSpells {
 		registry.register(new SpellConstruct<EntitySpiritWard>(AncientSpellcraft.MODID, "spirit_ward", EnumAction.BOW, EntitySpiritWard::new, false) {
 			@Override
 			public boolean applicableForItem(Item item) {
-				return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+				return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 			}
 		});
 
@@ -270,21 +270,21 @@ public final class AncientSpellcraftSpells {
 		registry.register(new SpellProjectile<EntityDispelMagic>(AncientSpellcraft.MODID, "dispel_lesser_magic", EntityDispelMagic::new) {
 			@Override
 			public boolean applicableForItem(Item item) {
-				return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+				return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 			}
 		});
 
 		registry.register(new SpellProjectile<EntityDispelGreaterMagic>(AncientSpellcraft.MODID, "dispel_greater_magic", EntityDispelGreaterMagic::new) {
 			@Override
 			public boolean applicableForItem(Item item) {
-				return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+				return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 			}
 		});
 
 		registry.register(new ConjureFishingRod());
 		registry.register(new CurseWard());
 		registry.register(new ArcaneBeam());
-		registry.register(new SpellConjurationAS("ice_shield", AncientSpellcraftItems.ice_shield) {
+		registry.register(new SpellConjurationAS("ice_shield", ASItems.ice_shield) {
 			@Override
 			protected void spawnParticles(World world, EntityLivingBase caster, SpellModifiers modifiers) {
 				for (int i = 0; i < 2; i++) {
@@ -303,7 +303,7 @@ public final class AncientSpellcraftSpells {
 		registry.register(new ManaFlare());
 
 		registry.register(new EyeOfTheStorm());
-		registry.register(new SpellBuffAS("feather_fall", 230, 230, 255, () -> AncientSpellcraftPotions.feather_fall));
+		registry.register(new SpellBuffAS("feather_fall", 230, 230, 255, () -> ASPotions.feather_fall));
 		registry.register(new WaterWalking());
 
 		// metamagic!
@@ -313,9 +313,9 @@ public final class AncientSpellcraftSpells {
 
 		///
 
-		registry.register(new SpellWard("projectile_ward", 230, 230, 255, () -> AncientSpellcraftPotions.projectile_ward));
-		registry.register(new SpellWard("bulwark", 230, 230, 255, () -> AncientSpellcraftPotions.bulwark));
-		registry.register(new SpellWard("arcane_aegis", 230, 230, 255, () -> AncientSpellcraftPotions.arcane_aegis));
+		registry.register(new SpellWard("projectile_ward", 230, 230, 255, () -> ASPotions.projectile_ward));
+		registry.register(new SpellWard("bulwark", 230, 230, 255, () -> ASPotions.bulwark));
+		registry.register(new SpellWard("arcane_aegis", 230, 230, 255, () -> ASPotions.arcane_aegis));
 
 		registry.register(new Forcefend());
 		registry.register(new SkullSentinel());
@@ -339,11 +339,11 @@ public final class AncientSpellcraftSpells {
 		registry.register(new StonePunch());
 		registry.register(new StoneFist());
 		registry.register(new EagleEye());
-		registry.register(new SpellConjurationAS("sacred_mace", AncientSpellcraftItems.sacred_mace));
-		registry.register(new SpellBuffAS("bubble_head", 52, 195, 235, () -> AncientSpellcraftPotions.bubble_head) {
+		registry.register(new SpellConjurationAS("sacred_mace", ASItems.sacred_mace));
+		registry.register(new SpellBuffAS("bubble_head", 52, 195, 235, () -> ASPotions.bubble_head) {
 			@Override
 			public boolean applicableForItem(Item item) {
-				return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+				return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 			}
 		});
 
@@ -375,10 +375,10 @@ public final class AncientSpellcraftSpells {
 		registry.register(new Armageddon());
 		registry.register(new Fimbulwinter());
 
-		registry.register(new SpellResizeSelf("shrink_self", 173, 80, 172, () -> AncientSpellcraftPotions.shrinkage));
-		registry.register(new SpellResizeSelf("grow_self", 173, 80, 172, () -> AncientSpellcraftPotions.growth));
-		registry.register(new SpellProjectileAOEPotion<>("mass_shrink", EntityAOEProjectile::new, 173, 80, 172, () -> AncientSpellcraftPotions.shrinkage));
-		registry.register(new SpellProjectileAOEPotion<>("mass_growth", EntityAOEProjectile::new, 173, 80, 172, () -> AncientSpellcraftPotions.growth));
+		registry.register(new SpellResizeSelf("shrink_self", 173, 80, 172, () -> ASPotions.shrinkage));
+		registry.register(new SpellResizeSelf("grow_self", 173, 80, 172, () -> ASPotions.growth));
+		registry.register(new SpellProjectileAOEPotion<>("mass_shrink", EntityAOEProjectile::new, 173, 80, 172, () -> ASPotions.shrinkage));
+		registry.register(new SpellProjectileAOEPotion<>("mass_growth", EntityAOEProjectile::new, 173, 80, 172, () -> ASPotions.growth));
 		registry.register(new Permashrink());
 		registry.register(new Permagrowth());
 		registry.register(new WordsOfUnbinding());
@@ -393,7 +393,7 @@ public final class AncientSpellcraftSpells {
 		registry.register(new WildSporeling());
 		registry.register(new SporelingsAid());
 		registry.register(new Weakness());
-		registry.register(new SpellConjurationAS("conjure_shovel", AncientSpellcraftItems.spectral_shovel));
+		registry.register(new SpellConjurationAS("conjure_shovel", ASItems.spectral_shovel));
 		registry.register(new IceCream());
 		registry.register(new Burrow());
 		registry.register(new MagmaShell());

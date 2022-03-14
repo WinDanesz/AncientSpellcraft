@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.entity.construct.EntityTransportationPortal;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.block.BlockTransportationStone;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.ItemArtefact;
@@ -70,7 +70,7 @@ public class TransportationPortal extends SpellConstructRanged<EntityTransportat
 				return false;
 			}
 
-			if (!ItemArtefact.isArtefactActive(caster, AncientSpellcraftItems.charm_rift_bottle)) {
+			if (!ItemArtefact.isArtefactActive(caster, ASItems.charm_rift_bottle)) {
 			// no Rift Bottle - current dim only
 
 				if (ItemArtefact.isArtefactActive(caster, WizardryItems.charm_transportation)) {
@@ -150,7 +150,7 @@ public class TransportationPortal extends SpellConstructRanged<EntityTransportat
 		}
 
 		// only checks for stone circle in the current dimension
-		if (caster instanceof EntityPlayer && (!ItemArtefact.isArtefactActive((EntityPlayer) caster, AncientSpellcraftItems.charm_rift_bottle) || caster.dimension == location.dimension)) {
+		if (caster instanceof EntityPlayer && (!ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.charm_rift_bottle) || caster.dimension == location.dimension)) {
 			if (!BlockTransportationStone.testForCircle(world, location.pos)) {
 				if (!world.isRemote)
 					((EntityPlayer) caster).sendStatusMessage(new TextComponentTranslation("spell.ebwizardry:transportation.missing"), true);
@@ -167,7 +167,7 @@ public class TransportationPortal extends SpellConstructRanged<EntityTransportat
 			// Sets the various parameters
 			construct.setCaster(caster);
 
-			construct.lifetime = (caster instanceof EntityPlayer && ItemNewArtefact.isNewArtefactActive((EntityPlayer) caster, AncientSpellcraftItems.head_riftstone) ? -1 :
+			construct.lifetime = (caster instanceof EntityPlayer && ItemNewArtefact.isNewArtefactActive((EntityPlayer) caster, ASItems.head_riftstone) ? -1 :
 					(int) (getProperty(DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade)));
 
 			construct.setTargetDim(location.dimension);
@@ -192,7 +192,7 @@ public class TransportationPortal extends SpellConstructRanged<EntityTransportat
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }
 

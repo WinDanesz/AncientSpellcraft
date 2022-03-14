@@ -5,9 +5,9 @@ import com.google.common.collect.Multimap;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.data.ClassWeaponData;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import com.windanesz.ancientspellcraft.spell.Runeword;
 import com.windanesz.ancientspellcraft.spell.RunewordFury;
 import com.windanesz.ancientspellcraft.util.WizardArmourUtils;
@@ -135,7 +135,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 	public ItemBattlemageSword(Tier tier, int upgradeLimit) {
 		super(ToolMaterial.IRON);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR);
 		this.tier = tier;
 		this.upgradeLimit = upgradeLimit;
 		int bonus = tier.level == 0 ? 2 : tier.level == 1 ? 1 : 0;
@@ -230,7 +230,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 							glyphs.add(name);
 
 							// custom logic
-							if (item == AncientSpellcraftItems.charm_glyph_antigravity && ((EntityPlayer) entity).getHeldItemMainhand().getItem() instanceof ItemBattlemageSword) {
+							if (item == ASItems.charm_glyph_antigravity && ((EntityPlayer) entity).getHeldItemMainhand().getItem() instanceof ItemBattlemageSword) {
 								((EntityPlayer) entity).addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 40,0));
 								((EntityPlayer) entity).addPotionEffect(new PotionEffect(MobEffects.SPEED, 40,0));
 							}
@@ -318,13 +318,13 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 						HashMap<Runeword, NBTTagCompound> data = getTemporaryRunewordData(stack);
 
-						if (spell == AncientSpellcraftSpells.runeword_fury) {
-							if (data.containsKey((Runeword) AncientSpellcraftSpells.runeword_fury)) {
-								int charges = data.get(AncientSpellcraftSpells.runeword_fury).getInteger(RunewordFury.CHARGES_TAG);
-								float modifier = 1 + AncientSpellcraftSpells.runeword_fury.getProperty(RunewordFury.DMG_PERCENT_INCREASE_PER_HIT).floatValue() * charges;
+						if (spell == ASSpells.runeword_fury) {
+							if (data.containsKey((Runeword) ASSpells.runeword_fury)) {
+								int charges = data.get(ASSpells.runeword_fury).getInteger(RunewordFury.CHARGES_TAG);
+								float modifier = 1 + ASSpells.runeword_fury.getProperty(RunewordFury.DMG_PERCENT_INCREASE_PER_HIT).floatValue() * charges;
 								damage = damage * modifier;
 							}
-						} else if (spell == AncientSpellcraftSpells.runeword_sacrifice) {
+						} else if (spell == ASSpells.runeword_sacrifice) {
 
 						}
 					}
@@ -506,11 +506,11 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	private ItemStack getNextTier(Tier tier) {
 		switch (tier) {
 			case NOVICE:
-				return new ItemStack(AncientSpellcraftItems.battlemage_sword_apprentice);
+				return new ItemStack(ASItems.battlemage_sword_apprentice);
 			case APPRENTICE:
-				return new ItemStack(AncientSpellcraftItems.battlemage_sword_advanced);
+				return new ItemStack(ASItems.battlemage_sword_advanced);
 			default:
-				return new ItemStack(AncientSpellcraftItems.battlemage_sword_master);
+				return new ItemStack(ASItems.battlemage_sword_master);
 		}
 	}
 
@@ -869,8 +869,8 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	@Override
 	public boolean canDisableShield(ItemStack stack, ItemStack shield, EntityLivingBase entity, EntityLivingBase attacker) {
 		if (shield.getItem() instanceof ItemShield) {
-			if (getRunewordCharges(stack, (Runeword) AncientSpellcraftSpells.runeword_shatter) > 0) {
-				spendCharge(stack, (Runeword) AncientSpellcraftSpells.runeword_shatter, 1);
+			if (getRunewordCharges(stack, (Runeword) ASSpells.runeword_shatter) > 0) {
+				spendCharge(stack, (Runeword) ASSpells.runeword_shatter, 1);
 				return true;
 			}
 		}
@@ -1169,13 +1169,13 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		if (tier == null) { throw new NullPointerException("The given tier cannot be null."); }
 
 		if (tier == Tier.NOVICE) {
-			return AncientSpellcraftItems.battlemage_sword_novice;
+			return ASItems.battlemage_sword_novice;
 		} else if (tier == Tier.APPRENTICE) {
-			return AncientSpellcraftItems.battlemage_sword_apprentice;
+			return ASItems.battlemage_sword_apprentice;
 		} else if (tier == Tier.ADVANCED) {
-			return AncientSpellcraftItems.battlemage_sword_advanced;
+			return ASItems.battlemage_sword_advanced;
 		}
-		return AncientSpellcraftItems.battlemage_sword_master;
+		return ASItems.battlemage_sword_master;
 	}
 
 	//--------------------------  Events  --------------------------//

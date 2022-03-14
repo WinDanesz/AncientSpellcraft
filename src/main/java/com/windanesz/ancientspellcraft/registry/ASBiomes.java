@@ -4,7 +4,7 @@ import com.windanesz.ancientspellcraft.worldgen.pocketdim.BiomePocket;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
-public class AncientSpellcraftBiomes {
+public class ASBiomes {
 
 	// instantiate Biomes
 	public static BiomePocket pocket;

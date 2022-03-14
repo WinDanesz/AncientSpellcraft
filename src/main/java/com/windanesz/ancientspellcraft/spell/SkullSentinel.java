@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.tileentity.TileEntityPlayerSave;
@@ -40,7 +40,7 @@ public class SkullSentinel extends SpellRay {
 				// TODO: add particles at spellcast?
 				if (world.isAirBlock(pos.offset(EnumFacing.UP))) {
 					if (caster != null) {
-						world.setBlockState(pos.offset(EnumFacing.UP), AncientSpellcraftBlocks.SKULL_WATCH.getDefaultState());
+						world.setBlockState(pos.offset(EnumFacing.UP), ASBlocks.SKULL_WATCH.getDefaultState());
 						if (!world.isRemote) {
 							((TileEntityPlayerSave) world.getTileEntity(pos.up())).setCaster(caster);
 						}
@@ -48,7 +48,7 @@ public class SkullSentinel extends SpellRay {
 					}
 				} else {
 					if (caster != null) {
-						world.setBlockState(pos, AncientSpellcraftBlocks.SKULL_WATCH.getDefaultState());
+						world.setBlockState(pos, ASBlocks.SKULL_WATCH.getDefaultState());
 						if (!world.isRemote) {
 							((TileEntityPlayerSave) world.getTileEntity(pos)).setCaster(caster);
 						}
@@ -77,6 +77,6 @@ public class SkullSentinel extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

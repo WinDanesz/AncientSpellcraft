@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import com.windanesz.ancientspellcraft.util.SpellTeleporter;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
@@ -44,7 +44,7 @@ public class TimeKnot extends SpellBuff {
 	// location: electroblob.wizardry.util.Location.fromNBT
 
 	public TimeKnot() {
-		super(AncientSpellcraft.MODID, "time_knot", 42, 206, 88, () -> AncientSpellcraftPotions.time_knot);
+		super(AncientSpellcraft.MODID, "time_knot", 42, 206, 88, () -> ASPotions.time_knot);
 		WizardData.registerStoredVariables(TIME_KNOT_DATA);
 	}
 
@@ -53,7 +53,7 @@ public class TimeKnot extends SpellBuff {
 	 */
 	protected boolean applyEffects(EntityLivingBase caster, SpellModifiers modifiers) {
 
-		float baseDur = (getProperty(getDurationKey(AncientSpellcraftPotions.time_knot)).floatValue());
+		float baseDur = (getProperty(getDurationKey(ASPotions.time_knot)).floatValue());
 		float durationUpgrade = (modifiers.get(WizardryItems.duration_upgrade));
 		float potency = (modifiers.get(SpellModifiers.POTENCY));
 		if (potency > 1.0f) {
@@ -88,10 +88,10 @@ public class TimeKnot extends SpellBuff {
 		if (world.isRemote)
 			this.spawnParticles(world, player, modifiers);
 
-		if (!player.isPotionActive(AncientSpellcraftPotions.time_knot)) {
+		if (!player.isPotionActive(ASPotions.time_knot)) {
 
-			if (player.isPotionActive(AncientSpellcraftPotions.curse_temporal_casualty)) {
-				player.removePotionEffect(AncientSpellcraftPotions.curse_temporal_casualty);
+			if (player.isPotionActive(ASPotions.curse_temporal_casualty)) {
+				player.removePotionEffect(ASPotions.curse_temporal_casualty);
 			}
 			WizardData data = WizardData.get(player);
 			if (data != null) {
@@ -140,7 +140,7 @@ public class TimeKnot extends SpellBuff {
 				// TODO: artefact ?
 
 				// skip time knot potion effect
-				if (potioneffect.getPotion() == AncientSpellcraftPotions.time_knot) {
+				if (potioneffect.getPotion() == ASPotions.time_knot) {
 					continue;
 				}
 				potionTagList.appendTag(potioneffect.writeCustomPotionEffectToNBT(new NBTTagCompound()));
@@ -160,7 +160,7 @@ public class TimeKnot extends SpellBuff {
 
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 
-			if (event.getPotionEffect().getPotion() == AncientSpellcraftPotions.time_knot && player.isEntityAlive() && player.getHealth() != 0F) {
+			if (event.getPotionEffect().getPotion() == ASPotions.time_knot && player.isEntityAlive() && player.getHealth() != 0F) {
 				loopPlayer(player);
 			}
 		}
@@ -293,6 +293,6 @@ public class TimeKnot extends SpellBuff {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

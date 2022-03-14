@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.material.IDevoritium;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -11,7 +11,7 @@ public class ItemDevoritium extends Item implements IDevoritium {
 
 	public ItemDevoritium() {
 		setMaxDamage(0);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 	}
 
 	@Override

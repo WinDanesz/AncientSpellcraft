@@ -1,11 +1,8 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
-import com.windanesz.ancientspellcraft.packet.PacketContinuousRitual;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.block.BlockCrystal;
 import electroblob.wizardry.client.DrawingUtils;
@@ -46,12 +43,8 @@ import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -130,7 +123,7 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 					// handle special case with its related artefact
 					if (offhandStack.getItem() instanceof ItemArmourUpgrade) {
 
-						if (ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.charm_runic_hammer)) {
+						if (ItemArtefact.isArtefactActive(player, ASItems.charm_runic_hammer)) {
 							if (offhandStack.getItem() != WizardryItems.crystal_silver_plating) {
 								transmuted = true;
 								transmutedItem = new ItemStack(WizardryItems.crystal_silver_plating);
@@ -138,7 +131,7 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 								player.sendStatusMessage(new TextComponentTranslation("item.ancientspellcraft:transmutation_scroll.results_in_same_item"), false);
 								return scrollStack;
 							}
-						} else if (ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.charm_fabrikator_toolkit)) {
+						} else if (ItemArtefact.isArtefactActive(player, ASItems.charm_fabrikator_toolkit)) {
 							if (offhandStack.getItem() != WizardryItems.resplendent_thread) {
 								transmuted = true;
 								transmutedItem = new ItemStack(WizardryItems.resplendent_thread);
@@ -146,7 +139,7 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 								player.sendStatusMessage(new TextComponentTranslation("item.ancientspellcraft:transmutation_scroll.results_in_same_item"), false);
 								return scrollStack;
 							}
-						} else if (ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.charm_scissors)) {
+						} else if (ItemArtefact.isArtefactActive(player, ASItems.charm_scissors)) {
 							if (offhandStack.getItem() != WizardryItems.ethereal_crystalweave) {
 								transmuted = true;
 								transmutedItem = new ItemStack(WizardryItems.ethereal_crystalweave);
@@ -174,7 +167,7 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 
 							if (!charmSlot.isEmpty()) {
 								charm = charmSlot.get(0);
-								if (charm == AncientSpellcraftItems.charm_scissors || charm == AncientSpellcraftItems.charm_fabrikator_toolkit || charm == AncientSpellcraftItems.charm_runic_hammer) {
+								if (charm == ASItems.charm_scissors || charm == ASItems.charm_fabrikator_toolkit || charm == ASItems.charm_runic_hammer) {
 									isArtefactActive = true;
 								}
 							}
@@ -189,14 +182,14 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 									if (item != offhandStack.getItem()) {
 
 										if (isArtefactActive) {
-											if (charm == AncientSpellcraftItems.charm_scissors) { // AMULET or BELT
+											if (charm == ASItems.charm_scissors) { // AMULET or BELT
 												if (item instanceof ItemArtefact && ((ItemArtefact) item).getType() == ItemArtefact.Type.AMULET
 														|| item instanceof ItemNewArtefact && ((ItemNewArtefact) item).getType() == ItemNewArtefact.AdditionalType.BELT) {
 													transmuted = true;
 													transmutedItem = artefactCandidate;
 													break;
 												}
-											} else if (charm == AncientSpellcraftItems.charm_fabrikator_toolkit) { // CHARM or HEAD
+											} else if (charm == ASItems.charm_fabrikator_toolkit) { // CHARM or HEAD
 												if (item instanceof ItemArtefact && ((ItemArtefact) item).getType() == ItemArtefact.Type.CHARM
 														|| item instanceof ItemNewArtefact && ((ItemNewArtefact) item).getType() == ItemNewArtefact.AdditionalType.HEAD
 														|| item instanceof ItemDailyArtefact) { // these are considered as charms
@@ -269,7 +262,7 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 			player.getCooldownTracker().setCooldown(this, 60);
 		}
 
-		world.playSound(entityLiving.posX, entityLiving.posY, entityLiving.posZ, AncientSpellcraftSounds.TRANSMUTATION, WizardrySounds.SPELLS, 1, 1, false);
+		world.playSound(entityLiving.posX, entityLiving.posY, entityLiving.posZ, ASSounds.TRANSMUTATION, WizardrySounds.SPELLS, 1, 1, false);
 
 		return scrollStack;
 	}
@@ -306,7 +299,7 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 				if (!matches(bookStack))
 					return bookStack;
 
-				if (bookStack.getItem() == AncientSpellcraftItems.ancient_spell_book) {
+				if (bookStack.getItem() == ASItems.ancient_spell_book) {
 					return bookStack;
 				}
 
@@ -327,7 +320,7 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 
 			@Override
 			protected Item getRelatedArtefact(Item item) {
-				return AncientSpellcraftItems.amulet_arcane_catalyst;
+				return ASItems.amulet_arcane_catalyst;
 			}
 
 			boolean matches(ItemStack stack) {
@@ -353,7 +346,7 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 
 			@Override
 			protected Item getRelatedArtefact(Item item) {
-				return AncientSpellcraftItems.amulet_arcane_catalyst;
+				return ASItems.amulet_arcane_catalyst;
 			}
 
 			boolean matches(ItemStack stack) {
@@ -661,7 +654,7 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 	@SubscribeEvent
 	public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
 		if (event.getEntity() instanceof EntityPlayer && event.getHand() == EnumHand.OFF_HAND
-				&& ((EntityPlayer) event.getEntity()).getHeldItemMainhand().getItem() == AncientSpellcraftItems.transmutation_scroll) {
+				&& ((EntityPlayer) event.getEntity()).getHeldItemMainhand().getItem() == ASItems.transmutation_scroll) {
 			event.setCanceled(true);
 		}
 

@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.block;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -18,7 +18,7 @@ public class BlockDimensionBoundary extends Block {
 		this.setBlockUnbreakable();
 		this.setResistance(6000000.0F);
 		this.setSoundType(SoundType.STONE);
-		this.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		this.setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		this.disableStats();
 		setLightLevel(0.8F);
 	}

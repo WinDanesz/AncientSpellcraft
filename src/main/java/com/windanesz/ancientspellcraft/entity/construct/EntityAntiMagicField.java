@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.entity.construct;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.potion.Curse;
 import electroblob.wizardry.potion.PotionMagicEffect;
@@ -36,7 +36,7 @@ public class EntityAntiMagicField extends EntityMagicConstruct {
 
 		// This is a good example of why you might define a spell base property without necessarily using it in the
 		// spell - in fact, blizzard doesn't even have a spell class (yet)
-		double radius = AncientSpellcraftSpells.antimagic_field.getProperty(Spell.EFFECT_RADIUS).doubleValue();
+		double radius = ASSpells.antimagic_field.getProperty(Spell.EFFECT_RADIUS).doubleValue();
 
 		if (!this.world.isRemote) {
 
@@ -46,11 +46,11 @@ public class EntityAntiMagicField extends EntityMagicConstruct {
 			for (EntityLivingBase target : targets) {
 
 				// All entities are slowed, even the caster (except those immune to frost effects)
-				target.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, 40, 3));
+				target.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, 40, 3));
 
 				Map<Potion, PotionEffect> activeEffects = new HashMap<>(target.getActivePotionMap());
 				for (Potion potion : activeEffects.keySet()) {
-					if (potion instanceof PotionMagicEffect && !(potion instanceof Curse) && potion != AncientSpellcraftPotions.magical_exhaustion) {
+					if (potion instanceof PotionMagicEffect && !(potion instanceof Curse) && potion != ASPotions.magical_exhaustion) {
 						target.removePotionEffect(potion);
 					}
 				}

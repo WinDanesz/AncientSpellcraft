@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.EntityUtils;
@@ -70,7 +70,7 @@ public class ChannelPower extends SpellRay {
 						entityLivingBase.addPotionEffect(new PotionEffect(MobEffects.GLOWING, 60, 1));
 					}
 					if (ticksInUse > 40) {
-						entityLivingBase.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.unlimited_power,
+						entityLivingBase.addPotionEffect(new PotionEffect(ASPotions.unlimited_power,
 								(int) (getProperty(EFFECT_DURATION).floatValue()))); //  * modifiers.get(WizardryItems.duration_upgrade)
 					}
 				}
@@ -106,6 +106,6 @@ public class ChannelPower extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

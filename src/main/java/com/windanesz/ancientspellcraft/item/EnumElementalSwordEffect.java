@@ -4,8 +4,8 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.block.BlockMagicMushroom;
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
 import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import com.windanesz.ancientspellcraft.spell.Animate;
 import com.windanesz.ancientspellcraft.spell.Runeword;
 import com.windanesz.ancientspellcraft.util.ASUtils;
@@ -85,7 +85,7 @@ public enum EnumElementalSwordEffect {
 			wielder.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 160, 0));
 
 			if (target.isBurning()) {
-				target.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.soul_scorch, 100, 0));
+				target.addPotionEffect(new PotionEffect(ASPotions.soul_scorch, 100, 0));
 			}
 		}
 	},
@@ -222,7 +222,7 @@ public enum EnumElementalSwordEffect {
 			}
 
 			if (AncientSpellcraft.rand.nextDouble() < 0.3) {
-				if (wielder instanceof EntityPlayer && ItemGlyphArtefact.isArtefactActive((EntityPlayer) wielder, AncientSpellcraftItems.charm_glyph_leeching)) {
+				if (wielder instanceof EntityPlayer && ItemGlyphArtefact.isArtefactActive((EntityPlayer) wielder, ASItems.charm_glyph_leeching)) {
 
 					// get the beneficial effects only and only those which has a rather limited duration as potions with a very long lifetime are usually stuff like abilities and such
 					Map<Potion, PotionEffect> beneficialPotions = target.getActivePotionMap()
@@ -380,9 +380,9 @@ public enum EnumElementalSwordEffect {
 					new PotionEffect(WizardryPotions.empowerment, 200, 0),
 					new PotionEffect(WizardryPotions.font_of_mana, 200, 0),
 					new PotionEffect(WizardryPotions.ward, 200, 0),
-					new PotionEffect(AncientSpellcraftPotions.fortified_archery, 200, 0),
-					new PotionEffect(AncientSpellcraftPotions.projectile_ward, 200, 0),
-					new PotionEffect(AncientSpellcraftPotions.wizard_shield, 200, 8)
+					new PotionEffect(ASPotions.fortified_archery, 200, 0),
+					new PotionEffect(ASPotions.projectile_ward, 200, 0),
+					new PotionEffect(ASPotions.wizard_shield, 200, 8)
 			);
 
 			if (!entitiesToBuff.isEmpty()) {

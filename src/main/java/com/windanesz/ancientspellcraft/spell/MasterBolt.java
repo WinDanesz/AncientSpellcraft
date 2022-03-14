@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
@@ -79,15 +79,15 @@ public class MasterBolt extends Spell {
 
 				List<Location> locations = data.getVariable(MASTER_BOLT_LOCATIONS_KEY);
 				if (locations == null || locations.isEmpty()) {
-					if(InventoryUtils.doesPlayerHaveItem(caster, AncientSpellcraftItems.master_bolt)) return false;
+					if(InventoryUtils.doesPlayerHaveItem(caster, ASItems.master_bolt)) return false;
 
-					ASUtils.giveStackToPlayer(caster, new ItemStack(AncientSpellcraftItems.master_bolt));
+					ASUtils.giveStackToPlayer(caster, new ItemStack(ASItems.master_bolt));
 					return true;
 				}
 
 				Location destination = locations.get(locations.size() - 1);
 				if (destination.dimension == caster.dimension) {
-					if (world.getBlockState(destination.pos).getBlock() == AncientSpellcraftBlocks.master_bolt) {
+					if (world.getBlockState(destination.pos).getBlock() == ASBlocks.master_bolt) {
 						if (!world.isRemote) {
 							world.setBlockToAir(destination.pos);
 						}
@@ -105,6 +105,6 @@ public class MasterBolt extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

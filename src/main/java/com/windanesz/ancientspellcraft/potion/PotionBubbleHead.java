@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.potion;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.potion.PotionMagicEffect;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
@@ -37,8 +37,8 @@ public class PotionBubbleHead extends PotionMagicEffect {
 	@SubscribeEvent
 	public static void onLivingDamageEvent(LivingDamageEvent event) {
 		// We have no way of checking if it's a spawner in getCanSpawnHere() so this has to be done here instead
-		if (event.getEntityLiving().isPotionActive(AncientSpellcraftPotions.bubble_head)) {
-			event.getEntityLiving().removePotionEffect(AncientSpellcraftPotions.bubble_head);
+		if (event.getEntityLiving().isPotionActive(ASPotions.bubble_head)) {
+			event.getEntityLiving().removePotionEffect(ASPotions.bubble_head);
 		}
 
 	}

@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.entity.living.EntityWizard;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.Entity;
@@ -23,7 +23,7 @@ public class ItemAmnesiaScroll extends ItemRareScroll {
 
 	@SubscribeEvent
 	public static void onEntityInteractEvent(PlayerInteractEvent.EntityInteract event) {
-		if (event.getTarget() instanceof EntityWizard && event.getItemStack().getItem() == AncientSpellcraftItems.amnesia_scroll) {
+		if (event.getTarget() instanceof EntityWizard && event.getItemStack().getItem() == ASItems.amnesia_scroll) {
 			World world = event.getWorld();
 			NBTTagCompound entityInNbt = event.getTarget().serializeNBT();
 			boolean foundTrades = entityInNbt.hasKey("trades");

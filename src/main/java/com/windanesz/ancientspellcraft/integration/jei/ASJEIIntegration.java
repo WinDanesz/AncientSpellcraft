@@ -3,8 +3,8 @@ package com.windanesz.ancientspellcraft.integration.jei;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.Wizardry;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
@@ -36,35 +36,35 @@ public class ASJEIIntegration implements IModPlugin {
 		if (!Wizardry.settings.jeiIntegration) { return; }
 
 		// Add imbuement altar as the item required to use imbuement altar recipes
-		registry.addRecipeCatalyst(new ItemStack(AncientSpellcraftBlocks.ARCANE_ANVIL), ArcaneAnvilRecipeCategory.UID);
+		registry.addRecipeCatalyst(new ItemStack(ASBlocks.ARCANE_ANVIL), ArcaneAnvilRecipeCategory.UID);
 		registry.addRecipes(ArcaneAnvilRecipeCategory.generateRecipes(), ArcaneAnvilRecipeCategory.UID);
 
 		// Hide some items from JEI
 		IIngredientBlacklist blacklist = registry.getJeiHelpers().getIngredientBlacklist();
 
-		addItemInfo(registry, Item.getItemFromBlock(AncientSpellcraftBlocks.SCRIBING_DESK), ".desc_extended");
-		addItemInfo(registry, Item.getItemFromBlock(AncientSpellcraftBlocks.SPHERE_COGNIZANCE), ".desc_extended");
-		addItemInfo(registry, Item.getItemFromBlock(AncientSpellcraftBlocks.DEVORITIUM_BLOCK), ".desc_extended");
+		addItemInfo(registry, Item.getItemFromBlock(ASBlocks.SCRIBING_DESK), ".desc_extended");
+		addItemInfo(registry, Item.getItemFromBlock(ASBlocks.SPHERE_COGNIZANCE), ".desc_extended");
+		addItemInfo(registry, Item.getItemFromBlock(ASBlocks.DEVORITIUM_BLOCK), ".desc_extended");
 
-		addItemInfo(registry, AncientSpellcraftItems.crystal_shard_fire, ".desc_extended");
-		addItemInfo(registry, AncientSpellcraftItems.crystal_shard_ice, ".desc_extended");
-		addItemInfo(registry, AncientSpellcraftItems.crystal_shard_lightning, ".desc_extended");
-		addItemInfo(registry, AncientSpellcraftItems.crystal_shard_necromancy, ".desc_extended");
-		addItemInfo(registry, AncientSpellcraftItems.crystal_shard_earth, ".desc_extended");
-		addItemInfo(registry, AncientSpellcraftItems.crystal_shard_sorcery, ".desc_extended");
-		addItemInfo(registry, AncientSpellcraftItems.crystal_shard_healing, ".desc_extended");
+		addItemInfo(registry, ASItems.crystal_shard_fire, ".desc_extended");
+		addItemInfo(registry, ASItems.crystal_shard_ice, ".desc_extended");
+		addItemInfo(registry, ASItems.crystal_shard_lightning, ".desc_extended");
+		addItemInfo(registry, ASItems.crystal_shard_necromancy, ".desc_extended");
+		addItemInfo(registry, ASItems.crystal_shard_earth, ".desc_extended");
+		addItemInfo(registry, ASItems.crystal_shard_sorcery, ".desc_extended");
+		addItemInfo(registry, ASItems.crystal_shard_healing, ".desc_extended");
 
-		addItemInfo(registry, AncientSpellcraftItems.devoritium_bomb, ".desc_extended");
-		addItemInfo(registry, AncientSpellcraftItems.devoritium_sword, ".desc_extended");
-		addItemInfo(registry, AncientSpellcraftItems.devoritium_arrow, ".desc_extended");
-		addItemInfo(registry, AncientSpellcraftItems.devoritium_door, ".desc_extended");
-		addItemInfo(registry, AncientSpellcraftItems.devoritium_ingot, ".desc_extended");
-		addItemInfo(registry, AncientSpellcraftItems.astral_diamond_charged, ".desc_extended");
+		addItemInfo(registry, ASItems.devoritium_bomb, ".desc_extended");
+		addItemInfo(registry, ASItems.devoritium_sword, ".desc_extended");
+		addItemInfo(registry, ASItems.devoritium_arrow, ".desc_extended");
+		addItemInfo(registry, ASItems.devoritium_door, ".desc_extended");
+		addItemInfo(registry, ASItems.devoritium_ingot, ".desc_extended");
+		addItemInfo(registry, ASItems.astral_diamond_charged, ".desc_extended");
 
-		addItemInfo(registry, AncientSpellcraftItems.stone_tablet_small, ".desc_extended");
-		addItemInfo(registry, AncientSpellcraftItems.stone_tablet, ".desc_extended");
-		addItemInfo(registry, AncientSpellcraftItems.stone_tablet_large, ".desc_extended");
-		addItemInfo(registry, AncientSpellcraftItems.stone_tablet_grand, ".desc_extended");
+		addItemInfo(registry, ASItems.stone_tablet_small, ".desc_extended");
+		addItemInfo(registry, ASItems.stone_tablet, ".desc_extended");
+		addItemInfo(registry, ASItems.stone_tablet_large, ".desc_extended");
+		addItemInfo(registry, ASItems.stone_tablet_grand, ".desc_extended");
 
 		for (Item item : Item.REGISTRY) {
 

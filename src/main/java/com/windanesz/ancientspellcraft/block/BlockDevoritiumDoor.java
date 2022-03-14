@@ -3,9 +3,9 @@ package com.windanesz.ancientspellcraft.block;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.constants.AWConstants;
 import com.windanesz.ancientspellcraft.material.IDevoritium;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.potion.Curse;
 import electroblob.wizardry.potion.PotionMagicEffect;
 import net.minecraft.block.BlockDoor;
@@ -36,7 +36,7 @@ public class BlockDevoritiumDoor extends BlockDoor implements IDevoritium {
 
 	public BlockDevoritiumDoor() {
 		super(AncientSpellcraft.DEVORITIUM);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		setHardness(AWConstants.DEVORITIUM_BLOCK_HARDNESS);
 		setResistance(AWConstants.DEVORITIUM_BLOCK_RESISTANCE);
 		setHarvestLevel(AWConstants.DEVORITIUM_HARVEST_TOOL, AWConstants.DEVORITIUM_HARVEST_LEVEL);
@@ -61,11 +61,11 @@ public class BlockDevoritiumDoor extends BlockDoor implements IDevoritium {
 
 	@Override
 	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-		return new ItemStack(AncientSpellcraftItems.devoritium_door);
+		return new ItemStack(ASItems.devoritium_door);
 	}
 
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return state.getValue(HALF) == BlockDoor.EnumDoorHalf.UPPER ? Items.AIR : AncientSpellcraftItems.devoritium_door;
+		return state.getValue(HALF) == BlockDoor.EnumDoorHalf.UPPER ? Items.AIR : ASItems.devoritium_door;
 	}
 
 	@Nullable
@@ -77,7 +77,7 @@ public class BlockDevoritiumDoor extends BlockDoor implements IDevoritium {
 			if (!map.isEmpty()) {
 				List<Potion> toRemove = new ArrayList<>();
 				for (Potion potion : map.keySet()) {
-					if (potion instanceof PotionMagicEffect && !(potion instanceof Curse) && potion != AncientSpellcraftPotions.magical_exhaustion ||
+					if (potion instanceof PotionMagicEffect && !(potion instanceof Curse) && potion != ASPotions.magical_exhaustion ||
 							potion == MobEffects.FIRE_RESISTANCE || potion == MobEffects.ABSORPTION || potion == MobEffects.SPEED || potion == MobEffects.STRENGTH
 							|| potion == MobEffects.REGENERATION) {
 						if (!toRemove.contains(potion)) {

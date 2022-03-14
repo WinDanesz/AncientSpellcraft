@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.material.IDevoritium;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.Wizardry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,7 +21,7 @@ public class ItemDevoritiumScimitar extends ItemSword implements IDevoritium {
 	@SuppressWarnings("ConstantConditions")
 	public ItemDevoritiumScimitar() {
 		super(AncientSpellcraft.DEVORITIUM_TOOL_MATERIAL);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR);
 		setMaxDamage(0);
 	}
 

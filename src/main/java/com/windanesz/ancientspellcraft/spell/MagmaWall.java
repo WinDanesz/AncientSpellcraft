@@ -2,8 +2,8 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
@@ -42,7 +42,7 @@ public class MagmaWall extends SpellRay {
 	@Override
 	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers){
 		
-		if(caster.isSneaking() && world.getBlockState(pos).getBlock() == AncientSpellcraftBlocks.CONJURED_MAGMA){
+		if(caster.isSneaking() && world.getBlockState(pos).getBlock() == ASBlocks.CONJURED_MAGMA){
 
 			if(!world.isRemote){
 				// Dispelling of blocks
@@ -90,7 +90,7 @@ public class MagmaWall extends SpellRay {
 			builder.batchSize = (int)  (2  * (modifiers.get(SpellModifiers.POTENCY))) + (int) (3 * modifiers.get(WizardryItems.blast_upgrade));
 			wall.sort(Comparator.comparingInt(Vec3i::getY));
 			builder.setBuildList(wall);
-			builder.setBlockToBuild(AncientSpellcraftBlocks.CONJURED_MAGMA.getDefaultState());
+			builder.setBlockToBuild(ASBlocks.CONJURED_MAGMA.getDefaultState());
 			world.spawnEntity(builder);
 			return true;
 		}
@@ -105,6 +105,6 @@ public class MagmaWall extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

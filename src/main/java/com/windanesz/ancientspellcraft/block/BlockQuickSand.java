@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.block;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemWand;
 import electroblob.wizardry.tileentity.TileEntityPlayerSave;
@@ -62,14 +62,14 @@ public class BlockQuickSand extends Block implements ITileEntityProvider, ITempo
 
 	public static boolean shouldDrown(World world, Entity entity) {
 		double y = entity.posY + entity.getEyeHeight();
-		return world.getBlockState(new BlockPos(entity.posX, y, entity.posZ)).getBlock() == AncientSpellcraftBlocks.QUICKSAND;
+		return world.getBlockState(new BlockPos(entity.posX, y, entity.posZ)).getBlock() == ASBlocks.QUICKSAND;
 	}
 
 	@Override
 	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes,
 			@Nullable Entity entityIn, boolean isActualState) {
 
-		if (entityIn instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) entityIn, AncientSpellcraftItems.charm_quicksand_walker) ) {
+		if (entityIn instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) entityIn, ASItems.charm_quicksand_walker) ) {
 			super.addCollisionBoxToList(state,worldIn, pos,entityBox, collidingBoxes, entityIn, isActualState);
 		}
 

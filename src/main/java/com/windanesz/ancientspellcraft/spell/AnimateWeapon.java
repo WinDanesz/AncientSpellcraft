@@ -4,8 +4,8 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
 import com.windanesz.ancientspellcraft.item.ItemSageTome;
 import com.windanesz.ancientspellcraft.material.IDevoritium;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.item.ItemArtefact;
@@ -131,9 +131,9 @@ public class AnimateWeapon extends Animate {
 						minion.setHasArmour(true);
 
 						// artefact effect, gives sword and shield to the conjured mob
-						if (ItemArtefact.isArtefactActive((EntityPlayer) caster, AncientSpellcraftItems.charm_spectral_army)) {
+						if (ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.charm_spectral_army)) {
 							minion.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, conjureItem(modifiers, WizardryItems.spectral_sword));
-							minion.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, conjureItem(modifiers, AncientSpellcraftItems.spectral_shield));
+							minion.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, conjureItem(modifiers, ASItems.spectral_shield));
 						}
 
 						// nerf speed
@@ -179,7 +179,7 @@ public class AnimateWeapon extends Animate {
 					minion.setArrows(arrowsToGive);
 				} else {
 					if (!caster.world.isRemote) {
-						((EntityPlayer) caster).sendStatusMessage(new TextComponentTranslation("spell." + AncientSpellcraftSpells.animate_weapon.getUnlocalisedName() + ".no_arrow"), true);
+						((EntityPlayer) caster).sendStatusMessage(new TextComponentTranslation("spell." + ASSpells.animate_weapon.getUnlocalisedName() + ".no_arrow"), true);
 					}
 				}
 			}

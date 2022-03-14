@@ -2,8 +2,8 @@ package com.windanesz.ancientspellcraft.block;
 
 import com.windanesz.ancientspellcraft.constants.AWConstants;
 import com.windanesz.ancientspellcraft.material.IDevoritium;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -18,7 +18,7 @@ public class BlockDevoritiumOre extends BlockOre implements IDevoritium {
 
 	public BlockDevoritiumOre() {
 		setSoundType(SoundType.STONE);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		setHardness(AWConstants.DEVORITIUM_BLOCK_HARDNESS);
 		setResistance(AWConstants.DEVORITIUM_BLOCK_RESISTANCE);
 		setHarvestLevel(AWConstants.DEVORITIUM_HARVEST_TOOL, AWConstants.DEVORITIUM_HARVEST_LEVEL);
@@ -26,7 +26,7 @@ public class BlockDevoritiumOre extends BlockOre implements IDevoritium {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return Item.getItemFromBlock(AncientSpellcraftBlocks.DEVORITIUM_ORE);
+		return Item.getItemFromBlock(ASBlocks.DEVORITIUM_ORE);
 	}
 
 	@Override

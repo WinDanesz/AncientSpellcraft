@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.entity.construct.EntityBarterConstruct;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
 import electroblob.wizardry.registry.WizardrySounds;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -42,7 +42,7 @@ public class ItemBarterScroll extends ItemRareScroll {
 			itemstack.shrink(1);
 		}
 
-		world.playSound(player.posX, player.posY, player.posZ, AncientSpellcraftSounds.BARTERING_SCROLL, WizardrySounds.SPELLS, 1, 1, false);
+		world.playSound(player.posX, player.posY, player.posZ, ASSounds.BARTERING_SCROLL, WizardrySounds.SPELLS, 1, 1, false);
 
 		player.setActiveHand(hand);
 		player.getCooldownTracker().setCooldown(this, 120);

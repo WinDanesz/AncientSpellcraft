@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
-public final class AncientSpellcraftModels {
+public final class ASModels {
 
 	/**
 	 * Keeps track of all items whose models have been registered manually to exclude them from automatic registry of
@@ -26,7 +26,7 @@ public final class AncientSpellcraftModels {
 	private static final List<Item> registeredItems = new ArrayList<>();
 
 	// no instances
-	private AncientSpellcraftModels() {}
+	private ASModels() {}
 
 	@SubscribeEvent
 	public static void register(ModelRegistryEvent event) {

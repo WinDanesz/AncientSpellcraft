@@ -3,9 +3,9 @@ package com.windanesz.ancientspellcraft.item;
 import com.google.common.collect.Lists;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.data.SpellComponentList;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
@@ -102,19 +102,19 @@ public class ItemRelic extends Item {
 		// ALL_POTIONS.add(MobEffects.INSTANT_HEALTH;
 		// ALL_POTIONS.add(MobEffects.SATURATION;
 
-		ALL_POTIONS.add(AncientSpellcraftPotions.candlelight);
-		ALL_POTIONS.add(AncientSpellcraftPotions.curse_ward);
-		ALL_POTIONS.add(AncientSpellcraftPotions.magelight);
-		ALL_POTIONS.add(AncientSpellcraftPotions.arcane_aegis);
-		ALL_POTIONS.add(AncientSpellcraftPotions.bubble_head);
-		ALL_POTIONS.add(AncientSpellcraftPotions.bulwark);
-		ALL_POTIONS.add(AncientSpellcraftPotions.water_walking);
-		ALL_POTIONS.add(AncientSpellcraftPotions.fortified_archery);
-		ALL_POTIONS.add(AncientSpellcraftPotions.lava_vision);
-		ALL_POTIONS.add(AncientSpellcraftPotions.feather_fall);
-		ALL_POTIONS.add(AncientSpellcraftPotions.projectile_ward);
-		ALL_POTIONS.add(AncientSpellcraftPotions.aquatic_agility);
-		ALL_POTIONS.add(AncientSpellcraftPotions.magma_strider);
+		ALL_POTIONS.add(ASPotions.candlelight);
+		ALL_POTIONS.add(ASPotions.curse_ward);
+		ALL_POTIONS.add(ASPotions.magelight);
+		ALL_POTIONS.add(ASPotions.arcane_aegis);
+		ALL_POTIONS.add(ASPotions.bubble_head);
+		ALL_POTIONS.add(ASPotions.bulwark);
+		ALL_POTIONS.add(ASPotions.water_walking);
+		ALL_POTIONS.add(ASPotions.fortified_archery);
+		ALL_POTIONS.add(ASPotions.lava_vision);
+		ALL_POTIONS.add(ASPotions.feather_fall);
+		ALL_POTIONS.add(ASPotions.projectile_ward);
+		ALL_POTIONS.add(ASPotions.aquatic_agility);
+		ALL_POTIONS.add(ASPotions.magma_strider);
 
 		ALL_POTIONS.add(WizardryPotions.muffle);
 		ALL_POTIONS.add(WizardryPotions.transience);
@@ -133,17 +133,17 @@ public class ItemRelic extends Item {
 		ALL_POTIONS.add(WizardryPotions.font_of_mana);
 
 		ALL_POWERS.add(WizardryPotions.empowerment);
-		ALL_POWERS.add(AncientSpellcraftPotions.spell_blast);
-		ALL_POWERS.add(AncientSpellcraftPotions.spell_range);
-		ALL_POWERS.add(AncientSpellcraftPotions.spell_duration);
-		ALL_POWERS.add(AncientSpellcraftPotions.spell_cooldown);
-		ALL_POWERS.add(AncientSpellcraftPotions.spell_siphon);
-		ALL_POWERS.add(AncientSpellcraftPotions.mana_regeneration);
+		ALL_POWERS.add(ASPotions.spell_blast);
+		ALL_POWERS.add(ASPotions.spell_range);
+		ALL_POWERS.add(ASPotions.spell_duration);
+		ALL_POWERS.add(ASPotions.spell_cooldown);
+		ALL_POWERS.add(ASPotions.spell_siphon);
+		ALL_POWERS.add(ASPotions.mana_regeneration);
 	}
 
 	public ItemRelic(String name, EnumRarity rarity) {
 		this.maxStackSize = 1;
-		this.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		this.setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		this.rarity = rarity;
 
 		this.addPropertyOverride(new ResourceLocation("activating"), new IItemPropertyGetter() {
@@ -202,7 +202,7 @@ public class ItemRelic extends Item {
 			RelicType relicType = getRelicType(itemStack);
 
 			if (relicType == RelicType.INCANTATION || relicType == RelicType.ENCHANTMENT || relicType == RelicType.POWER) {
-				player.world.playSound(null, player.posX, player.posY, player.posZ, AncientSpellcraftSounds.RELIC_USE_LOOP, SoundCategory.NEUTRAL, 1.1F, 1F);
+				player.world.playSound(null, player.posX, player.posY, player.posZ, ASSounds.RELIC_USE_LOOP, SoundCategory.NEUTRAL, 1.1F, 1F);
 			}
 		}
 
@@ -273,14 +273,14 @@ public class ItemRelic extends Item {
 				Potion potion = getIncantationFromRelic(itemStack);
 				int duration = itemStack.getTagCompound().getInteger("duration");
 				entityLiving.addPotionEffect(new PotionEffect(potion, duration, 0));
-				worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, AncientSpellcraftSounds.RELIC_ACTIVATE_2, SoundCategory.NEUTRAL, 0.9F, 1F);
+				worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, ASSounds.RELIC_ACTIVATE_2, SoundCategory.NEUTRAL, 0.9F, 1F);
 				return ItemStack.EMPTY;
 
 			} else if (relicType == RelicType.POWER) {
 				Potion potion = getPowerFromRelic(itemStack);
 				int duration = itemStack.getTagCompound().getInteger("duration");
 				entityLiving.addPotionEffect(new PotionEffect(potion, duration, 0));
-				worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, AncientSpellcraftSounds.RELIC_ACTIVATE_2, SoundCategory.NEUTRAL, 0.9F, 1F);
+				worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, ASSounds.RELIC_ACTIVATE_2, SoundCategory.NEUTRAL, 0.9F, 1F);
 				return ItemStack.EMPTY;
 
 			} else if (relicType == RelicType.ENCHANTMENT) {
@@ -340,7 +340,7 @@ public class ItemRelic extends Item {
 					}
 
 					if (enchantedSomething) {
-						worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, AncientSpellcraftSounds.RELIC_ACTIVATE, SoundCategory.NEUTRAL, 0.9F, 1F);
+						worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, ASSounds.RELIC_ACTIVATE, SoundCategory.NEUTRAL, 0.9F, 1F);
 
 						return ItemStack.EMPTY;
 					} else {

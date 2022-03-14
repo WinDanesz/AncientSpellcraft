@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.potion;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import com.windanesz.ancientspellcraft.spell.Burrow;
 import electroblob.wizardry.potion.PotionMagicEffect;
 import electroblob.wizardry.util.BlockUtils;
@@ -33,7 +33,7 @@ public class PotionBurrow extends PotionMagicEffect {
 	private void makeAirPocketIfPossible(EntityLivingBase caster) {
 		if (!caster.world.isRemote && caster instanceof EntityPlayer && !caster.isAirBorne) {
 
-			if (!EntityUtils.isCasting(caster, AncientSpellcraftSpells.burrow)) {
+			if (!EntityUtils.isCasting(caster, ASSpells.burrow)) {
 
 				World world = caster.world;
 

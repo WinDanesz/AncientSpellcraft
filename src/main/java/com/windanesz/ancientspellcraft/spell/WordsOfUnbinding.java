@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemWand;
 import electroblob.wizardry.item.ItemWandUpgrade;
@@ -39,7 +39,7 @@ public class WordsOfUnbinding extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		if (ItemArtefact.isArtefactActive(caster, AncientSpellcraftItems.ring_disenchanter)) {
+		if (ItemArtefact.isArtefactActive(caster, ASItems.ring_disenchanter)) {
 			if (caster.getHeldItemOffhand().isItemEnchanted()) {
 				if (!world.isRemote) {
 
@@ -105,7 +105,7 @@ public class WordsOfUnbinding extends Spell {
 	}
 
 	public static boolean removeUpgrade(EntityPlayer player, ItemStack wand, @Nullable Item upgrade) {
-		boolean returnItem = player.world.rand.nextDouble() < 0.2 && ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.ring_unbinding);
+		boolean returnItem = player.world.rand.nextDouble() < 0.2 && ItemArtefact.isArtefactActive(player, ASItems.ring_unbinding);
 
 		if (wand.getTagCompound() == null)
 			wand.setTagCompound((new NBTTagCompound()));
@@ -211,6 +211,6 @@ public class WordsOfUnbinding extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

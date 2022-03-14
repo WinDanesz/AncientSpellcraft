@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.EntityUtils;
@@ -31,7 +31,7 @@ public class CurseOfDeath extends SpellRay {
 		if (EntityUtils.isLiving(target) && target instanceof EntityPlayer) {
 
 			if (!world.isRemote)
-				((EntityLivingBase) target).addPotionEffect(new PotionEffect(AncientSpellcraftPotions.curse_of_death, 72000, 0));
+				((EntityLivingBase) target).addPotionEffect(new PotionEffect(ASPotions.curse_of_death, 72000, 0));
 		}
 
 		return true;
@@ -56,6 +56,6 @@ public class CurseOfDeath extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
@@ -48,7 +48,7 @@ public class EmpoweringLink extends SpellRayAS {
 				empoweredPlayer.addPotionEffect(new PotionEffect(WizardryPotions.empowerment, 60, 0));
 				empoweredPlayer.addPotionEffect(new PotionEffect(MobEffects.SPEED, 60, 0));
 				empoweredPlayer.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 60, 0));
-				player.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, 60, 0));
+				player.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, 60, 0));
 				player.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 60, 0));
 				player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 60, 0));
 			}
@@ -86,7 +86,7 @@ public class EmpoweringLink extends SpellRayAS {
 			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 		if (caster instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) caster;
-			if (ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.ring_devotion)) {
+			if (ItemArtefact.isArtefactActive(player, ASItems.ring_devotion)) {
 				WizardData data = WizardData.get(player);
 				UUID lastUUID = data.getVariable(LAST_UUID_KEY);
 				UUID currentUUID = data.getVariable(UUID_KEY);

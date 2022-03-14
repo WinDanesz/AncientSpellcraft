@@ -3,9 +3,9 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import com.windanesz.ancientspellcraft.item.ItemGlyphArtefact;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import com.windanesz.ancientspellcraft.tileentity.TileMageLight;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
@@ -33,9 +33,9 @@ public class Magelight extends SpellBuff {
 	private static NBTTagCompound update(EntityPlayer player, NBTTagCompound compound) {
 
 		if (compound == null) {
-			if (ItemGlyphArtefact.isArtefactActive(player, AncientSpellcraftItems.charm_glyph_illumination) && player.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword) {
+			if (ItemGlyphArtefact.isArtefactActive(player, ASItems.charm_glyph_illumination) && player.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword) {
 				if (player.world.isAirBlock(player.getPosition().up())) {
-					player.world.setBlockState(player.getPosition().up(), AncientSpellcraftBlocks.MAGELIGHT.getDefaultState());
+					player.world.setBlockState(player.getPosition().up(), ASBlocks.MAGELIGHT.getDefaultState());
 					return (new Location(player.getPosition().up(), player.dimension)).toNBT();
 				}
 			}
@@ -48,7 +48,7 @@ public class Magelight extends SpellBuff {
 			//if (player.world.getBlockState(location.pos).getBlock() instanceof BlockMageLight) {
 				player.world.setBlockToAir(location.pos);
 
-			if (!(player.isPotionActive(AncientSpellcraftPotions.magelight) || player.isPotionActive(AncientSpellcraftPotions.candlelight)
+			if (!(player.isPotionActive(ASPotions.magelight) || player.isPotionActive(ASPotions.candlelight)
 					)) {
 				return null;
 			}
@@ -57,7 +57,7 @@ public class Magelight extends SpellBuff {
 						((TileMageLight) player.world.getTileEntity(player.getPosition().up())).setPlayer(player);
 					}
 
-					player.world.setBlockState(player.getPosition().up(), AncientSpellcraftBlocks.MAGELIGHT.getDefaultState());
+					player.world.setBlockState(player.getPosition().up(), ASBlocks.MAGELIGHT.getDefaultState());
 					location = new Location(player.getPosition().up(), player.dimension);
 					compound = location.toNBT();
 				}
@@ -67,7 +67,7 @@ public class Magelight extends SpellBuff {
 	}
 
 	public Magelight() {
-		super(AncientSpellcraft.MODID, "magelight", 216, 26, 11, () -> AncientSpellcraftPotions.magelight);
+		super(AncientSpellcraft.MODID, "magelight", 216, 26, 11, () -> ASPotions.magelight);
 		soundValues(0.7f, 1.2f, 0.4f);
 		WizardData.registerStoredVariables(LIGHT_POS);
 	}
@@ -76,8 +76,8 @@ public class Magelight extends SpellBuff {
 	 * <b>Overriding as we don't want to spawn particles.</b>
 	 */
 	protected boolean applyEffects(EntityLivingBase caster, SpellModifiers modifiers){
-		if (caster.isPotionActive(AncientSpellcraftPotions.candlelight)) {
-			caster.removePotionEffect(AncientSpellcraftPotions.candlelight);
+		if (caster.isPotionActive(ASPotions.candlelight)) {
+			caster.removePotionEffect(ASPotions.candlelight);
 		}
 
 		for(Potion potion : potionSet){
@@ -113,6 +113,6 @@ public class Magelight extends SpellBuff {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

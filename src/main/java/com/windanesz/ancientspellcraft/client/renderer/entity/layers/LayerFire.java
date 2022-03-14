@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.client.renderer.entity.layers;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.client.renderer.entity.layers.LayerTiledOverlay;
 import electroblob.wizardry.item.ItemWand;
 import electroblob.wizardry.registry.WizardryPotions;
@@ -29,7 +29,7 @@ public class LayerFire extends LayerTiledOverlay<EntityLivingBase> {
 	@Override
 	public boolean shouldRender(EntityLivingBase entity, float partialTicks) {
 		return !entity.isInvisible() && entity instanceof EntityPlayer && entity.isHandActive() && entity.getHeldItem(entity.getActiveHand()).getItem() instanceof ItemWand &&
-				((ItemWand) entity.getHeldItem(entity.getActiveHand()).getItem()).getCurrentSpell(entity.getHeldItem(entity.getActiveHand())) == AncientSpellcraftSpells.living_comet;
+				((ItemWand) entity.getHeldItem(entity.getActiveHand()).getItem()).getCurrentSpell(entity.getHeldItem(entity.getActiveHand())) == ASSpells.living_comet;
 	}
 
 	@Override

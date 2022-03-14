@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.client.gui;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ContainerWorkbench;
@@ -18,7 +18,7 @@ public class ContainerIceWorkbench extends ContainerWorkbench {
 	}
 
 	public boolean canInteractWith(EntityPlayer playerIn) {
-		if (this.world.getBlockState(this.pos).getBlock() != AncientSpellcraftBlocks.ICE_CRAFTING_TABLE) {
+		if (this.world.getBlockState(this.pos).getBlock() != ASBlocks.ICE_CRAFTING_TABLE) {
 			return false;
 		} else {
 			return playerIn.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;

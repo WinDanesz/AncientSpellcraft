@@ -1,20 +1,10 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
-import electroblob.wizardry.constants.Tier;
-import electroblob.wizardry.item.ItemScroll;
-import electroblob.wizardry.item.ItemSpellBook;
-import electroblob.wizardry.item.ItemWand;
-import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.util.WandHelper;
-import net.minecraft.entity.player.EntityPlayer;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -26,7 +16,7 @@ public class ItemRareScroll extends Item {
 
 	public ItemRareScroll() {
 		super();
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		setMaxStackSize(1);
 	}
 

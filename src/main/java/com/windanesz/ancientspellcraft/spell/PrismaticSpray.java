@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.item.ItemArtefact;
@@ -52,7 +52,7 @@ public class PrismaticSpray extends Spell {
 
 		boolean foundTarget = false;
 
-		if (!ItemArtefact.isArtefactActive(caster, AncientSpellcraftItems.charm_prismatic_spray)) {
+		if (!ItemArtefact.isArtefactActive(caster, ASItems.charm_prismatic_spray)) {
 			Random rnd = new Random(42);
 
 			double radius = getProperty(BLAST_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
@@ -258,7 +258,7 @@ public class PrismaticSpray extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 
 	protected double getRange(World world, Vec3d origin, Vec3d direction, @Nullable EntityLivingBase caster, int ticksInUse, SpellModifiers modifiers) {

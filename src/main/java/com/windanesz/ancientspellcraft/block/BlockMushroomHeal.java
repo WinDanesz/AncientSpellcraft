@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.block;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.block.Block;
@@ -28,7 +28,7 @@ public class BlockMushroomHeal extends BlockMagicMushroom {
 			} else {
 				spawnRedHealingParticles(world, target);
 			}
-			target.playSound(AncientSpellcraftSounds.ENTITY_HEALING_HEATH_HEALS, 0.9F, 1.2F / (world.rand.nextFloat() * 0.2F + 0.9F));
+			target.playSound(ASSounds.ENTITY_HEALING_HEATH_HEALS, 0.9F, 1.2F / (world.rand.nextFloat() * 0.2F + 0.9F));
 			return true;
 		}
 		return false;

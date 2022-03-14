@@ -4,8 +4,8 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
 import com.windanesz.ancientspellcraft.packet.PacketContinuousRitual;
 import com.windanesz.ancientspellcraft.packet.PacketStartRitual;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.Rituals;
 import com.windanesz.ancientspellcraft.tileentity.TileRune;
 import com.windanesz.ancientspellcraft.util.RitualProperties;
@@ -85,7 +85,7 @@ public abstract class Ritual extends IForgeRegistryEntry.Impl<Ritual> {
 		this.setRegistryName(modID, name);
 		this.unlocalisedName = this.getRegistryName().toString();
 		this.id = nextRitualId++;
-		this.items(AncientSpellcraftItems.ritual_book);
+		this.items(ASItems.ritual_book);
 	}
 
 	/**
@@ -136,7 +136,7 @@ public abstract class Ritual extends IForgeRegistryEntry.Impl<Ritual> {
 				ASPacketHandler.net.sendToDimension(msg, caster.world.provider.getDimension());
 			}
 			if (BlockUtils.canBlockBeReplaced(world, centerPiece.getPos().up())) {
-				world.setBlockState(centerPiece.getPos().up(), AncientSpellcraftBlocks.MAGELIGHT.getDefaultState());
+				world.setBlockState(centerPiece.getPos().up(), ASBlocks.MAGELIGHT.getDefaultState());
 			}
 		}
 	}
@@ -146,8 +146,8 @@ public abstract class Ritual extends IForgeRegistryEntry.Impl<Ritual> {
 		if (!world.isRemote) {
 			List<BlockPos> posList = centerPiece.getConnectedRunes().stream().map(TileRune::getPos).collect(Collectors.toList());
 			for (BlockPos pos : posList) {
-				if (world.getBlockState(pos).getBlock() == AncientSpellcraftBlocks.PLACED_RUNE) {
-					world.setBlockState(pos, AncientSpellcraftBlocks.RUNE_USED.getDefaultState());
+				if (world.getBlockState(pos).getBlock() == ASBlocks.PLACED_RUNE) {
+					world.setBlockState(pos, ASBlocks.RUNE_USED.getDefaultState());
 				}
 			}
 		}
@@ -233,9 +233,9 @@ public abstract class Ritual extends IForgeRegistryEntry.Impl<Ritual> {
 			List<BlockPos> alist = centerPiece.getRitualRunes().stream().filter(Objects::nonNull).filter(r -> r != centerPiece).map(TileRune::getPos).collect(Collectors.toList());
 
 			for (BlockPos pos : alist) {
-				if (world.getBlockState(pos).getBlock() == AncientSpellcraftBlocks.PLACED_RUNE) {
+				if (world.getBlockState(pos).getBlock() == ASBlocks.PLACED_RUNE) {
 					world.removeTileEntity(pos);
-					world.setBlockState(pos, AncientSpellcraftBlocks.RUNE_USED.getDefaultState());
+					world.setBlockState(pos, ASBlocks.RUNE_USED.getDefaultState());
 				}
 			}
 		}

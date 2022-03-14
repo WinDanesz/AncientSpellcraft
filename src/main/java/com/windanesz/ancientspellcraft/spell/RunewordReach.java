@@ -4,7 +4,7 @@ import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import com.windanesz.ancientspellcraft.item.WizardClassWeaponHelper;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
 import com.windanesz.ancientspellcraft.packet.PacketExtendedSwordReach;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.block.BlockReceptacle;
 import electroblob.wizardry.constants.Element;
@@ -109,13 +109,13 @@ public class RunewordReach extends Runeword {
 
 	public enum Effect {
 
-		NONE((Runeword) AncientSpellcraftSpells.runeword_reach) {
+		NONE((Runeword) ASSpells.runeword_reach) {
 			@Override
 			public void apply(EntityPlayer player, Entity target) {
 				;
 			}
 		},
-		PULL((Runeword) AncientSpellcraftSpells.runeword_pull) {
+		PULL((Runeword) ASSpells.runeword_pull) {
 			@Override
 			public void apply(EntityPlayer player, Entity target) {
 				{
@@ -135,12 +135,12 @@ public class RunewordReach extends Runeword {
 						}}}
 
 		},
-		AOE((Runeword) AncientSpellcraftSpells.runeword_reach) {
+		AOE((Runeword) ASSpells.runeword_reach) {
 			@Override
 			public void apply(EntityPlayer player, Entity target) {
 			}
 		},
-		PUSH((Runeword) AncientSpellcraftSpells.runeword_push) {
+		PUSH((Runeword) ASSpells.runeword_push) {
 			@Override
 			public void apply(EntityPlayer player, Entity target) {
 				Vec3d origin = new Vec3d(player.posX, player.posY + player.getEyeHeight() -  0.25, player.posZ);
@@ -167,13 +167,13 @@ public class RunewordReach extends Runeword {
 			switch (this) {
 				case NONE:
 				case AOE:
-					return (Runeword) AncientSpellcraftSpells.runeword_reach;
+					return (Runeword) ASSpells.runeword_reach;
 				case PULL:
-					return (Runeword) AncientSpellcraftSpells.runeword_pull;
+					return (Runeword) ASSpells.runeword_pull;
 				case PUSH:
-					return (Runeword) AncientSpellcraftSpells.runeword_push;
+					return (Runeword) ASSpells.runeword_push;
 				default:
-					return (Runeword) AncientSpellcraftSpells.runeword_reach;
+					return (Runeword) ASSpells.runeword_reach;
 			}
 
 		}

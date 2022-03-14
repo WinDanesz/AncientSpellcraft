@@ -2,8 +2,8 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
@@ -85,7 +85,7 @@ public class MagmaShell extends Spell {
 				List<BlockPos> list = getShellBlocks(caster, modifiers);
 				list.sort(Comparator.comparingInt(Vec3i::getY));
 				builder.setBuildList(list);
-				builder.setBlockToBuild(AncientSpellcraftBlocks.CONJURED_MAGMA.getDefaultState());
+				builder.setBlockToBuild(ASBlocks.CONJURED_MAGMA.getDefaultState());
 				world.spawnEntity(builder);
 			}
 
@@ -109,7 +109,7 @@ public class MagmaShell extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 
 }

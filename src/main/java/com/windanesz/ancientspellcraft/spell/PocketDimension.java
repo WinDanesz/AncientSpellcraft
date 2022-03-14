@@ -1,9 +1,9 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftDimensions;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASDimensions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.SpellTeleporter;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
@@ -44,7 +44,7 @@ public class PocketDimension extends Spell {
 		if (ticksInUse == 0) {
 			this.playSound(world, caster, ticksInUse, -1, modifiers);
 			if (!world.isRemote) {
-				WorldServer destinationWorld = caster.getServer().getWorld(AncientSpellcraftDimensions.POCKET_DIM_ID);
+				WorldServer destinationWorld = caster.getServer().getWorld(ASDimensions.POCKET_DIM_ID);
 
 				checkOrInitPocketData(caster, destinationWorld);
 				return true;
@@ -71,7 +71,7 @@ public class PocketDimension extends Spell {
 			if (data != null) {
 
 				// teleport player back from the pocket
-				if (((EntityPlayer) caster).dimension == AncientSpellcraftDimensions.POCKET_DIM_ID) {
+				if (((EntityPlayer) caster).dimension == ASDimensions.POCKET_DIM_ID) {
 					if (data.getVariable(POCKET_DIM_PREVIOUS_LOCATION) != null) {
 
 						Location previousPos = Location.fromNBT(data.getVariable(POCKET_DIM_PREVIOUS_LOCATION));
@@ -88,7 +88,7 @@ public class PocketDimension extends Spell {
 				NBTTagCompound location = data.getVariable(POCKET_DIM_LOCATION);
 				if (location != null) {
 					BlockPos pocketPos = NBTUtil.getPosFromTag(location);
-					SpellTeleporter.teleportEntity(AncientSpellcraftDimensions.POCKET_DIM_ID, pocketPos.getX(), pocketPos.getY(), pocketPos.getZ(), true, player);
+					SpellTeleporter.teleportEntity(ASDimensions.POCKET_DIM_ID, pocketPos.getX(), pocketPos.getY(), pocketPos.getZ(), true, player);
 					return true;
 				}
 
@@ -145,7 +145,7 @@ public class PocketDimension extends Spell {
 		createPlatform(pos, pocketWorld, pocketHeight);
 		createWalls(pos, pocketWorld, pocketSize, pocketHeight);
 		createPlatform(pos.offset(EnumFacing.UP, pocketHeight + 1), pocketWorld, pocketSize); // roof
-		pocketWorld.setBlockState(pos, AncientSpellcraftBlocks.DIMENSION_FOCUS.getDefaultState());
+		pocketWorld.setBlockState(pos, ASBlocks.DIMENSION_FOCUS.getDefaultState());
 	}
 
 	public static BlockPos findSuitablePocketPos(World pocketWorld) {
@@ -184,7 +184,7 @@ public class PocketDimension extends Spell {
 		for (BlockPos currPos : BlockPos.getAllInBox(
 				pos.offset(EnumFacing.SOUTH, size).offset(EnumFacing.WEST, size),
 				pos.offset(EnumFacing.NORTH, size).offset(EnumFacing.EAST, size))) {
-			pocketWorld.setBlockState(currPos, AncientSpellcraftBlocks.DIMENSION_BOUNDARY.getDefaultState());
+			pocketWorld.setBlockState(currPos, ASBlocks.DIMENSION_BOUNDARY.getDefaultState());
 		}
 
 	}
@@ -193,30 +193,30 @@ public class PocketDimension extends Spell {
 		for (BlockPos currPos : BlockPos.getAllInBox(
 				center.offset(EnumFacing.SOUTH, width).offset(EnumFacing.WEST, width),
 				center.offset(EnumFacing.NORTH, width).offset(EnumFacing.WEST, width).offset(EnumFacing.UP, height))) {
-			pocketWorld.setBlockState(currPos, AncientSpellcraftBlocks.DIMENSION_BOUNDARY.getDefaultState());
+			pocketWorld.setBlockState(currPos, ASBlocks.DIMENSION_BOUNDARY.getDefaultState());
 		}
 
 		for (BlockPos currPos : BlockPos.getAllInBox(
 				center.offset(EnumFacing.SOUTH, width).offset(EnumFacing.EAST, width),
 				center.offset(EnumFacing.NORTH, width).offset(EnumFacing.EAST, width).offset(EnumFacing.UP, height))) {
-			pocketWorld.setBlockState(currPos, AncientSpellcraftBlocks.DIMENSION_BOUNDARY.getDefaultState());
+			pocketWorld.setBlockState(currPos, ASBlocks.DIMENSION_BOUNDARY.getDefaultState());
 		}
 
 		for (BlockPos currPos : BlockPos.getAllInBox(
 				center.offset(EnumFacing.SOUTH, width).offset(EnumFacing.EAST, -width),
 				center.offset(EnumFacing.SOUTH, width).offset(EnumFacing.EAST, width).offset(EnumFacing.UP, height))) {
-			pocketWorld.setBlockState(currPos, AncientSpellcraftBlocks.DIMENSION_BOUNDARY.getDefaultState());
+			pocketWorld.setBlockState(currPos, ASBlocks.DIMENSION_BOUNDARY.getDefaultState());
 		}
 
 		for (BlockPos currPos : BlockPos.getAllInBox(
 				center.offset(EnumFacing.NORTH, width).offset(EnumFacing.WEST, -width),
 				center.offset(EnumFacing.NORTH, width).offset(EnumFacing.WEST, width).offset(EnumFacing.UP, height))) {
-			pocketWorld.setBlockState(currPos, AncientSpellcraftBlocks.DIMENSION_BOUNDARY.getDefaultState());
+			pocketWorld.setBlockState(currPos, ASBlocks.DIMENSION_BOUNDARY.getDefaultState());
 		}
 	}
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

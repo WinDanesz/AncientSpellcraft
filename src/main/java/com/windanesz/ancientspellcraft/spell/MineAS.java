@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.item.ISpellCastingItem;
@@ -117,7 +117,7 @@ public class MineAS extends Mine {
 							boolean silkTouch = state1.getBlock().canSilkHarvest(world, pos1, state1, (EntityPlayer) caster)
 									&& ItemArtefact.isArtefactActive((EntityPlayer) caster, WizardryItems.charm_silk_touch);
 
-							boolean hasFortune = ItemNewArtefact.isNewArtefactActive((EntityPlayer) caster, AncientSpellcraftItems.head_fortune);
+							boolean hasFortune = ItemNewArtefact.isNewArtefactActive((EntityPlayer) caster, ASItems.head_fortune);
 
 							int xp = BlockUtils.checkBlockBreakXP(caster, world, pos);
 

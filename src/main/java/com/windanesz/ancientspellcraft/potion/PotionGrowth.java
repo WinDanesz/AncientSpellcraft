@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.potion;
 
 import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.item.ItemArtefact;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -51,8 +51,8 @@ public class PotionGrowth extends PotionMagicEffectAS {
 	@Override
 	public void applyAttributesModifiersToEntity(EntityLivingBase entity, AbstractAttributeMap attributeMapIn, int amplifier) {
 		if (entity instanceof EntityPlayer) {
-			if (ItemArtefact.isArtefactActive((EntityPlayer) entity, AncientSpellcraftItems.amulet_persistence)) {
-				entity.removePotionEffect(AncientSpellcraftPotions.growth);
+			if (ItemArtefact.isArtefactActive((EntityPlayer) entity, ASItems.amulet_persistence)) {
+				entity.removePotionEffect(ASPotions.growth);
 				return;
 			}
 
@@ -66,21 +66,21 @@ public class PotionGrowth extends PotionMagicEffectAS {
 	@Override
 	public void performEffect(EntityLivingBase entitylivingbase, int strength) {
 		if (strength > MAX_LEVEL) {
-			if (entitylivingbase.isPotionActive(AncientSpellcraftPotions.growth)) {
-				PotionEffect effect = entitylivingbase.getActivePotionEffect(AncientSpellcraftPotions.growth);
+			if (entitylivingbase.isPotionActive(ASPotions.growth)) {
+				PotionEffect effect = entitylivingbase.getActivePotionEffect(ASPotions.growth);
 				if (effect != null) {
 					int duration = effect.getDuration();
-					entitylivingbase.removePotionEffect(AncientSpellcraftPotions.growth);
-					entitylivingbase.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.growth, duration, MAX_LEVEL));
+					entitylivingbase.removePotionEffect(ASPotions.growth);
+					entitylivingbase.addPotionEffect(new PotionEffect(ASPotions.growth, duration, MAX_LEVEL));
 				}
 			}
 		}
 
 		if (entitylivingbase.ticksExisted % 39 == 0) {
 
-			if (entitylivingbase.isPotionActive(AncientSpellcraftPotions.shrinkage)) {
-				entitylivingbase.removePotionEffect(AncientSpellcraftPotions.shrinkage);
-				entitylivingbase.removePotionEffect(AncientSpellcraftPotions.growth);
+			if (entitylivingbase.isPotionActive(ASPotions.shrinkage)) {
+				entitylivingbase.removePotionEffect(ASPotions.shrinkage);
+				entitylivingbase.removePotionEffect(ASPotions.growth);
 			}
 
 			entitylivingbase.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 40, strength + 1, true, false));

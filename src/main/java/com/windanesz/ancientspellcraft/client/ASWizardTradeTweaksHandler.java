@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.client;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.client.DrawingUtils;
 import electroblob.wizardry.data.WizardData;
@@ -118,19 +118,19 @@ public class ASWizardTradeTweaksHandler {
 				return;
 
 			// Using == the specific item rather than instanceof because that's how trades do it.
-			if (gui.inventorySlots.getSlot(0).getStack().getItem() == AncientSpellcraftItems.ancient_spell_book
-					|| gui.inventorySlots.getSlot(1).getStack().getItem() == AncientSpellcraftItems.ancient_spell_book
-					|| gui.inventorySlots.getSlot(0).getStack().getItem() == AncientSpellcraftItems.ancient_spellcraft_spell_book
-					|| gui.inventorySlots.getSlot(1).getStack().getItem() == AncientSpellcraftItems.ancient_spellcraft_spell_book
-					|| gui.inventorySlots.getSlot(0).getStack().getItem() == AncientSpellcraftItems.ritual_book
-					|| gui.inventorySlots.getSlot(1).getStack().getItem() == AncientSpellcraftItems.ritual_book
+			if (gui.inventorySlots.getSlot(0).getStack().getItem() == ASItems.ancient_spell_book
+					|| gui.inventorySlots.getSlot(1).getStack().getItem() == ASItems.ancient_spell_book
+					|| gui.inventorySlots.getSlot(0).getStack().getItem() == ASItems.ancient_spellcraft_spell_book
+					|| gui.inventorySlots.getSlot(1).getStack().getItem() == ASItems.ancient_spellcraft_spell_book
+					|| gui.inventorySlots.getSlot(0).getStack().getItem() == ASItems.ritual_book
+					|| gui.inventorySlots.getSlot(1).getStack().getItem() == ASItems.ritual_book
 					|| gui.inventorySlots.getSlot(0).getStack().getItem() instanceof ItemScroll
 					|| gui.inventorySlots.getSlot(1).getStack().getItem() instanceof ItemScroll
 			) {
 
 				for (MerchantRecipe trade : trades) {
-					if ((trade.getItemToBuy().getItem() == AncientSpellcraftItems.ancient_spell_book || trade.getItemToBuy().getItem() == AncientSpellcraftItems.ancient_spellcraft_spell_book
-							|| trade.getItemToBuy().getItem() == AncientSpellcraftItems.ritual_book || trade.getItemToBuy().getItem() instanceof ItemScroll)
+					if ((trade.getItemToBuy().getItem() == ASItems.ancient_spell_book || trade.getItemToBuy().getItem() == ASItems.ancient_spellcraft_spell_book
+							|| trade.getItemToBuy().getItem() == ASItems.ritual_book || trade.getItemToBuy().getItem() instanceof ItemScroll)
 							&& trade.getSecondItemToBuy().isEmpty()) {
 						Slot slot = gui.inventorySlots.getSlot(2);
 						// It still doesn't look quite right because the slot highlight is behind the item, but it'll do

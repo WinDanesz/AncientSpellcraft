@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.SpellcastUtils;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.item.ItemArtefact;
@@ -59,7 +59,7 @@ public class SpringCharge extends Spell {
 
 		float reduct = 1.0f;
 		if (caster instanceof EntityPlayer) {
-			if (!caster.onGround && !ItemArtefact.isArtefactActive((EntityPlayer) caster, AncientSpellcraftItems.ring_cloudwalker)) {
+			if (!caster.onGround && !ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.ring_cloudwalker)) {
 				return;
 			} else if (!caster.onGround) {
 				ticksInUse = 2;
@@ -84,7 +84,7 @@ public class SpringCharge extends Spell {
 			}
 		}
 
-		if (ticksInUse > 5 && caster instanceof EntityPlayer && caster.onGround && ItemNewArtefact.isNewArtefactActive((EntityPlayer) caster, AncientSpellcraftItems.belt_spring_charge)) {
+		if (ticksInUse > 5 && caster instanceof EntityPlayer && caster.onGround && ItemNewArtefact.isNewArtefactActive((EntityPlayer) caster, ASItems.belt_spring_charge)) {
 			SpellModifiers modifiers1 = new SpellModifiers();
 			modifiers1.set(WizardryItems.blast_upgrade, ticksInUse * 0.1f, true);
 			modifiers1.set(SpellModifiers.POTENCY, 0.5f, true);
@@ -94,6 +94,6 @@ public class SpringCharge extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

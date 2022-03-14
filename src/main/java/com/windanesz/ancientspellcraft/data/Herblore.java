@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.data;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.registry.WizardryPotions;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
@@ -11,11 +11,11 @@ public class Herblore {
 	public enum PlantEffect {
 
 		ALLIUM(MobEffects.REGENERATION),
-		AZURE_BLUET(AncientSpellcraftPotions.feather_fall),
+		AZURE_BLUET(ASPotions.feather_fall),
 		BLUE_ORCHID(MobEffects.WATER_BREATHING),
 		DANDELION(MobEffects.SATURATION),
 		LILAC(MobEffects.JUMP_BOOST),
-		ORANGE_TULIP(AncientSpellcraftPotions.candlelight),
+		ORANGE_TULIP(ASPotions.candlelight),
 		OXEYE_DAISY(MobEffects.RESISTANCE),
 		PEONY(MobEffects.NIGHT_VISION),
 		PINK_TULIP(MobEffects.INSTANT_HEALTH),

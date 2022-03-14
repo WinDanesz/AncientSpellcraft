@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.client.renderer;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.ISpellCastingItem;
@@ -60,7 +60,7 @@ public class RenderTransportationPortalUI {
 				return;
 		}
 
-		if (((ISpellCastingItem) stack.getItem()).getCurrentSpell(stack) == AncientSpellcraftSpells.transportation_portal
+		if (((ISpellCastingItem) stack.getItem()).getCurrentSpell(stack) == ASSpells.transportation_portal
 				&& ItemArtefact.isArtefactActive(player, WizardryItems.charm_transportation)) {
 
 			WizardData data = WizardData.get(player);
@@ -81,7 +81,7 @@ public class RenderTransportationPortalUI {
 			BufferBuilder buffer = tessellator.getBuffer();
 
 			Location target = Transportation.getLocationAimedAt(player, locations, event.getPartialTicks());
-			boolean rift_active = ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.charm_rift_bottle);
+			boolean rift_active = ItemArtefact.isArtefactActive(player, ASItems.charm_rift_bottle);
 
 			for (Location location : locations) {
 				boolean otherdim = false;

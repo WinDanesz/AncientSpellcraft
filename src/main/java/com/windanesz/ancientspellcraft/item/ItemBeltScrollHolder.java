@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.item.IManaStoringItem;
@@ -52,7 +52,7 @@ public class ItemBeltScrollHolder extends ItemNewArtefact implements ITickableAr
 			if (nbt == null) { nbt = new NBTTagCompound(); }
 
 			if (scroll != null && scroll.getItem() instanceof ItemWandUpgrade
-					&& scroll.getItem() != AncientSpellcraftItems.soulbound_upgrade
+					&& scroll.getItem() != ASItems.soulbound_upgrade
 					&& scroll.getItem() != WizardryItems.melee_upgrade
 					&& scroll.getItem() != WizardryItems.storage_upgrade
 					&& scroll.getItem() != WizardryItems.siphon_upgrade

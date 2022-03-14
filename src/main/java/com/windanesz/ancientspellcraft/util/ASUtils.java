@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.util;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.item.IManaStoringItem;
@@ -128,12 +128,12 @@ public final class ASUtils {
 
 	public static Potion getRandomPowerPotion() {
 		List<Potion> potionList = Arrays.asList(
-				AncientSpellcraftPotions.mana_regeneration,
-				AncientSpellcraftPotions.spell_blast,
-				AncientSpellcraftPotions.spell_siphon,
-				AncientSpellcraftPotions.spell_cooldown,
-				AncientSpellcraftPotions.spell_range,
-				AncientSpellcraftPotions.spell_duration
+				ASPotions.mana_regeneration,
+				ASPotions.spell_blast,
+				ASPotions.spell_siphon,
+				ASPotions.spell_cooldown,
+				ASPotions.spell_range,
+				ASPotions.spell_duration
 		);
 
 		return potionList.get(AncientSpellcraft.rand.nextInt(potionList.size()));

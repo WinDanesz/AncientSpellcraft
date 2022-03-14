@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.brewing;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import net.minecraft.init.Items;
 import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
@@ -30,7 +30,7 @@ public class EssenceRegenerationPotionRecipe implements IBrewingRecipe {
 	 */
 	@Override
 	public boolean isIngredient(@Nonnull ItemStack ingredient) {
-		return ingredient.getItem() == AncientSpellcraftItems.alchemical_essence;
+		return ingredient.getItem() == ASItems.alchemical_essence;
 	}
 
 	/**

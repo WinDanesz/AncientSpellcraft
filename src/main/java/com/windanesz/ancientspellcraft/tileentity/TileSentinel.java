@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.tileentity;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.block.BlockSentinel;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpellCaster;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.packet.PacketCastSpell;
@@ -185,7 +185,7 @@ public class TileSentinel extends TileEntity implements ITickable {
 		doRotation();
 
 		if (world.getTotalWorldTime() % 32 == 0) {
-			world.playSound(null, this.pos.getX(), this.pos.getY(), this.pos.getZ(), AncientSpellcraftSounds.SENTINEL_AMBIENT, SoundCategory.NEUTRAL, 1.1F, 1F);
+			world.playSound(null, this.pos.getX(), this.pos.getY(), this.pos.getZ(), ASSounds.SENTINEL_AMBIENT, SoundCategory.NEUTRAL, 1.1F, 1F);
 		}
 
 		if (this.ownerUUID == null) {

@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.data.SpellGlyphData;
@@ -31,13 +31,13 @@ abstract class ItemArmourClassSpellHolder extends ItemSpellBook {
 	public ItemArmourClassSpellHolder(){
 		setHasSubtypes(true);
 		setMaxStackSize(16);
-		setCreativeTab(AncientSpellcraftTabs.CLASS_SPELLS);
+		setCreativeTab(ASTabs.CLASS_SPELLS);
 	}
 
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> list){
 
-		if(tab == AncientSpellcraftTabs.CLASS_SPELLS){
+		if(tab == ASTabs.CLASS_SPELLS){
 
 			List<Spell> spells = Spell.getAllSpells();
 			spells.removeIf(s -> !s.applicableForItem(this));

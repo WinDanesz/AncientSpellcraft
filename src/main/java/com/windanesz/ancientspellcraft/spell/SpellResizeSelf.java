@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.util.SpellModifiers;
@@ -60,8 +60,8 @@ public class SpellResizeSelf extends SpellBuffAS {
 				int duration = (int) (getProperty(getDurationKey(potion)).floatValue() * modifiers.get(WizardryItems.duration_upgrade));
 
 				if (caster instanceof EntityPlayer && ((
-						potion == AncientSpellcraftPotions.shrinkage && ItemArtefact.isArtefactActive((EntityPlayer) caster, AncientSpellcraftItems.ring_permanent_shrinkage)) ||
-						potion == AncientSpellcraftPotions.growth && ItemArtefact.isArtefactActive((EntityPlayer) caster, AncientSpellcraftItems.ring_permanent_growth))) {
+						potion == ASPotions.shrinkage && ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.ring_permanent_shrinkage)) ||
+						potion == ASPotions.growth && ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.ring_permanent_growth))) {
 					duration = Integer.MAX_VALUE;
 				}
 
@@ -74,6 +74,6 @@ public class SpellResizeSelf extends SpellBuffAS {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

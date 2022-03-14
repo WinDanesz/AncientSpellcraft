@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.potion;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.potion.PotionMagicEffect;
 import electroblob.wizardry.registry.WizardryItems;
@@ -34,10 +34,10 @@ public class PotionUnlimitedPower extends PotionMagicEffect {
 	@SubscribeEvent(priority = EventPriority.NORMAL) // Doesn't really matter but there's no point processing it if casting is blocked
 	public static void onSpellCastPreEvent(SpellCastEvent.Pre event) {
 		// Unlimited Power stacks extra potency on top of the existing potency.
-		if (event.getCaster() != null && event.getCaster().isPotionActive(AncientSpellcraftPotions.unlimited_power)
+		if (event.getCaster() != null && event.getCaster().isPotionActive(ASPotions.unlimited_power)
 			//			&& !(event.getSpell() instanceof EmpoweringPresence) // Prevent exponential empowerment stacking!
 		) {
-			int amplifier = event.getCaster().getActivePotionEffect(AncientSpellcraftPotions.unlimited_power).getAmplifier() + 1;
+			int amplifier = event.getCaster().getActivePotionEffect(ASPotions.unlimited_power).getAmplifier() + 1;
 			float potency = 1 + IF_POTENCY_PER_LEVEL * amplifier * 0.5f;
 			float upgrade_modifier = 1 + IF_MODIFIERS_PER_LEVEL * amplifier * 0.5f;
 

@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.util.AllyDesignationSystem;
@@ -77,7 +77,7 @@ public class ItemHorn extends ItemASArtefact {
 		}
 
 		player.swingArm(handIn);
-		world.playSound(null, player.posX, player.posY, player.posZ, AncientSpellcraftSounds.WAR_HORN, SoundCategory.PLAYERS, 1.0F, 1.0F);
+		world.playSound(null, player.posX, player.posY, player.posZ, ASSounds.WAR_HORN, SoundCategory.PLAYERS, 1.0F, 1.0F);
 		return new ActionResult<>(EnumActionResult.SUCCESS, itemstack);
 	}
 

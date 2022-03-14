@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.entity.projectile;
 
 import com.windanesz.ancientspellcraft.entity.construct.EntitySilencingSigil;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
 import com.windanesz.ancientspellcraft.spell.Contingency;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.data.WizardData;
@@ -102,7 +102,7 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 						if (entity instanceof ISummonedCreature) {
 							((ISummonedCreature) entity).onDespawn();
 						}
-						world.playSound(this.posX, this.posY, this.posZ, AncientSpellcraftSounds.DISPEL_ENTITY, SoundCategory.HOSTILE, 1, 1, false);
+						world.playSound(this.posX, this.posY, this.posZ, ASSounds.DISPEL_ENTITY, SoundCategory.HOSTILE, 1, 1, false);
 						entity.setDead();
 
 						if (this.world.isRemote) {
@@ -134,7 +134,7 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 							if (tier != Tier.ADVANCED)
 								break;
 						}
-						world.playSound(this.posX, this.posY, this.posZ, AncientSpellcraftSounds.DISPEL, SoundCategory.HOSTILE, 1, 1, false);
+						world.playSound(this.posX, this.posY, this.posZ, ASSounds.DISPEL, SoundCategory.HOSTILE, 1, 1, false);
 						this.setDead();
 					}
 
@@ -142,7 +142,7 @@ public class EntityDispelMagic extends EntityMagicProjectile {
 			}
 
 			//this.playSound(WizardrySounds.ENTITY_MAGIC_FIREBALL_HIT, 2, 0.8f + rand.nextFloat() * 0.3f);
-			world.playSound(this.posX, this.posY, this.posZ, AncientSpellcraftSounds.DISPEL, SoundCategory.HOSTILE, 1, 1, false);
+			world.playSound(this.posX, this.posY, this.posZ, ASSounds.DISPEL, SoundCategory.HOSTILE, 1, 1, false);
 			this.setDead();
 		}
 	}

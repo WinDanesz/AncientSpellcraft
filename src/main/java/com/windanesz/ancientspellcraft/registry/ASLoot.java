@@ -28,7 +28,7 @@ import java.util.List;
  * @author WinDanesz
  */
 @Mod.EventBusSubscriber
-public class AncientSpellcraftLoot {
+public class ASLoot {
 
 	private static LootTable UNCOMMON_ARTEFACTS;
 	private static LootTable RARE_ARTEFACTS;
@@ -41,7 +41,7 @@ public class AncientSpellcraftLoot {
 	private static LootTable WIZARD_TOWER;
 	private static LootTable WAND_UPGRADES;
 
-	private AncientSpellcraftLoot() {}
+	private ASLoot() {}
 
 	/**
 	 * Called from the preInit method in the main mod class to register the custom dungeon loot.

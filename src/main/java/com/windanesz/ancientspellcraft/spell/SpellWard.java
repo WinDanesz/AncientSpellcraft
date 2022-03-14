@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
@@ -19,14 +19,14 @@ public class SpellWard extends SpellBuffAS {
 	protected boolean applyEffects(EntityLivingBase caster, SpellModifiers modifiers) {
 		// magelight and candlelight is mutually exclusive
 
-		if (caster.isPotionActive(AncientSpellcraftPotions.projectile_ward)) {
-			caster.removePotionEffect(AncientSpellcraftPotions.projectile_ward);
+		if (caster.isPotionActive(ASPotions.projectile_ward)) {
+			caster.removePotionEffect(ASPotions.projectile_ward);
 		}
-		if (caster.isPotionActive(AncientSpellcraftPotions.bulwark)) {
-			caster.removePotionEffect(AncientSpellcraftPotions.bulwark);
+		if (caster.isPotionActive(ASPotions.bulwark)) {
+			caster.removePotionEffect(ASPotions.bulwark);
 		}
-		if (caster.isPotionActive(AncientSpellcraftPotions.arcane_aegis)) {
-			caster.removePotionEffect(AncientSpellcraftPotions.arcane_aegis);
+		if (caster.isPotionActive(ASPotions.arcane_aegis)) {
+			caster.removePotionEffect(ASPotions.arcane_aegis);
 		}
 
 		return super.applyEffects(caster, modifiers);
@@ -34,6 +34,6 @@ public class SpellWard extends SpellBuffAS {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

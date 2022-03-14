@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.BlockUtils;
@@ -48,7 +48,7 @@ public class IceWorkbench extends SpellRay {
 
 			if (!world.isRemote) {
 
-				world.setBlockState(pos, AncientSpellcraftBlocks.ICE_CRAFTING_TABLE.getDefaultState());
+				world.setBlockState(pos, ASBlocks.ICE_CRAFTING_TABLE.getDefaultState());
 			}
 
 			return true;
@@ -64,6 +64,6 @@ public class IceWorkbench extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.material.IDevoritium;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemAxe;
@@ -17,7 +17,7 @@ public class ItemDevoritiumAxe extends ItemAxe implements IDevoritium {
 	@SuppressWarnings("ConstantConditions")
 	public ItemDevoritiumAxe() {
 		super(AncientSpellcraft.DEVORITIUM_TOOL_MATERIAL, DEVORITIUM_TOOL_DAMAGE, DEVORITIUM_TOOL_ATTACK_SPEED);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR);
 	}
 
 	@Override

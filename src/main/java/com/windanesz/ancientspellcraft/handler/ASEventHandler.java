@@ -14,11 +14,11 @@ import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
 import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
 import com.windanesz.ancientspellcraft.potion.PotionMetamagicEffect;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftEnchantments;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASEnchantments;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
 import com.windanesz.ancientspellcraft.spell.Contingency;
 import com.windanesz.ancientspellcraft.spell.DimensionalAnchor;
@@ -143,9 +143,9 @@ public class ASEventHandler {
 
 	@SubscribeEvent
 	public static void onLivingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
-		if (event.getEntityLiving().isPotionActive(AncientSpellcraftPotions.magma_strider)) {
+		if (event.getEntityLiving().isPotionActive(ASPotions.magma_strider)) {
 			EntityLivingBase entity = event.getEntityLiving();
-			PotionEffect effect = entity.getActivePotionEffect(AncientSpellcraftPotions.magma_strider);
+			PotionEffect effect = entity.getActivePotionEffect(ASPotions.magma_strider);
 			if (entity.isInLava() && (entity instanceof EntityPlayer) && !((EntityPlayer) entity).isCreative()) {
 				entity.motionX *= (1.7f + 0.03 * effect.getAmplifier());
 				entity.motionZ *= (1.7f + 0.03 * effect.getAmplifier());
@@ -156,8 +156,8 @@ public class ASEventHandler {
 			}
 		}
 
-		if (event.getEntityLiving().isPotionActive(AncientSpellcraftPotions.aquatic_agility)) {
-			PotionEffect effect = event.getEntityLiving().getActivePotionEffect(AncientSpellcraftPotions.aquatic_agility);
+		if (event.getEntityLiving().isPotionActive(ASPotions.aquatic_agility)) {
+			PotionEffect effect = event.getEntityLiving().getActivePotionEffect(ASPotions.aquatic_agility);
 			if (event.getEntityLiving().isInWater()) {
 				event.getEntityLiving().motionX *= (1.1f + 0.025 * effect.getAmplifier());
 				event.getEntityLiving().motionZ *= (1.1f + 0.025 * effect.getAmplifier());
@@ -252,7 +252,7 @@ public class ASEventHandler {
 	@SubscribeEvent(priority = EventPriority.LOW) // Low priority in case the event gets cancelled at default priority
 	public static void onLivingAttackEvent(LivingAttackEvent event) {
 		if (event.getEntity() instanceof EntityPlayer) {
-			if (((EntityPlayer) event.getEntity()).isPotionActive(AncientSpellcraftPotions.burrow)) {
+			if (((EntityPlayer) event.getEntity()).isPotionActive(ASPotions.burrow)) {
 				if ("inWall".equals(event.getSource().getDamageType())) {
 					event.setCanceled(true);
 				}
@@ -265,7 +265,7 @@ public class ASEventHandler {
 
 			if (!attacker.getHeldItemMainhand().isEmpty() && ImbueWeapon.isSword(attacker.getHeldItemMainhand())) {
 
-				int level = EnchantmentHelper.getEnchantmentLevel(AncientSpellcraftEnchantments.static_charge,
+				int level = EnchantmentHelper.getEnchantmentLevel(ASEnchantments.static_charge,
 						attacker.getHeldItemMainhand());
 				if (level > 0 && event.getEntityLiving().world.isRemote) {
 					// Particle effect
@@ -367,8 +367,8 @@ public class ASEventHandler {
 
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 
-			if (player.isPotionActive(AncientSpellcraftPotions.wizard_shield)) {
-				PotionEffect effect = player.getActivePotionEffect(AncientSpellcraftPotions.wizard_shield);
+			if (player.isPotionActive(ASPotions.wizard_shield)) {
+				PotionEffect effect = player.getActivePotionEffect(ASPotions.wizard_shield);
 				if (effect != null) {
 					float oldAmount = event.getAmount();
 					int oldTimer = effect.getDuration();
@@ -388,11 +388,11 @@ public class ASEventHandler {
 							event.getSource().getImmediateSource().setDead();
 						}
 
-						player.removePotionEffect(AncientSpellcraftPotions.wizard_shield);
-						player.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.wizard_shield, oldTimer, newAmplifier));
+						player.removePotionEffect(ASPotions.wizard_shield);
+						player.addPotionEffect(new PotionEffect(ASPotions.wizard_shield, oldTimer, newAmplifier));
 
 					} else {
-						player.removePotionEffect(AncientSpellcraftPotions.wizard_shield);
+						player.removePotionEffect(ASPotions.wizard_shield);
 					}
 					event.setAmount(newAmount);
 				}
@@ -400,22 +400,22 @@ public class ASEventHandler {
 
 			for (ItemArtefact artefact : getActiveArtefacts(player)) {
 
-				if (artefact == AncientSpellcraftItems.amulet_time_knot) {
-					if (player.isPotionActive(AncientSpellcraftPotions.time_knot) && (player.getHealth() - event.getAmount() <= 0F)) {
-						if (!player.getCooldownTracker().hasCooldown(AncientSpellcraftItems.amulet_time_knot)) {
+				if (artefact == ASItems.amulet_time_knot) {
+					if (player.isPotionActive(ASPotions.time_knot) && (player.getHealth() - event.getAmount() <= 0F)) {
+						if (!player.getCooldownTracker().hasCooldown(ASItems.amulet_time_knot)) {
 							TimeKnot.loopPlayer(player);
 							event.setCanceled(true);
 							player.extinguish();
-							player.getCooldownTracker().setCooldown(AncientSpellcraftItems.amulet_time_knot, 6000);
+							player.getCooldownTracker().setCooldown(ASItems.amulet_time_knot, 6000);
 						}
 					}
 				}
 
-				if (artefact == AncientSpellcraftItems.charm_cryostasis) {
+				if (artefact == ASItems.charm_cryostasis) {
 					if ((player.getHealth() <= 6 || (player.getHealth() - event.getAmount() <= 6)) && player.world.rand.nextFloat() < 0.25f) {
-						AncientSpellcraftSpells.cryostasis.cast(player.world, player, player.getActiveHand(), 0, new SpellModifiers());
+						ASSpells.cryostasis.cast(player.world, player, player.getActiveHand(), 0, new SpellModifiers());
 					}
-				} else if (artefact == AncientSpellcraftItems.ring_protector) {
+				} else if (artefact == ASItems.ring_protector) {
 					if ((player.getHealth() <= 8 || (player.getHealth() - event.getAmount() <= 6)) && player.world.rand.nextFloat() < 0.75f) {
 						boolean shouldContinue = true;
 						for (ItemStack wand : ASUtils.getAllHotbarWands(player)) {
@@ -458,14 +458,14 @@ public class ASEventHandler {
 							}
 						}
 					}
-				} else if (artefact == AncientSpellcraftItems.ring_berserker) {
+				} else if (artefact == ASItems.ring_berserker) {
 					if (!player.world.isRemote && (player.getHealth() <= 6 || (player.getHealth() - event.getAmount() <= 6))) {
 
 						if (!player.isPotionActive(MobEffects.STRENGTH)) {
 							player.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 300)); // 15 seconds of strength
 						}
 					}
-				} else if (artefact == AncientSpellcraftItems.amulet_rabbit) {
+				} else if (artefact == ASItems.amulet_rabbit) {
 					if (!player.world.isRemote && player.world.rand.nextFloat() < 0.25f) {
 						if (!player.isPotionActive(MobEffects.SPEED)) {
 							player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 200)); // 10 seconds of speed
@@ -474,10 +474,10 @@ public class ASEventHandler {
 							player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, 200, 1)); // 10 seconds of weakness
 						}
 					}
-				} else if (artefact == AncientSpellcraftItems.amulet_shield && !player.getCooldownTracker().hasCooldown(AncientSpellcraftItems.amulet_shield)) {
+				} else if (artefact == ASItems.amulet_shield && !player.getCooldownTracker().hasCooldown(ASItems.amulet_shield)) {
 					if (event.getAmount() > 1) {
-						player.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.wizard_shield, 100, 15));
-						player.getCooldownTracker().setCooldown(AncientSpellcraftItems.amulet_shield, 3600); // 3 mins cd
+						player.addPotionEffect(new PotionEffect(ASPotions.wizard_shield, 100, 15));
+						player.getCooldownTracker().setCooldown(ASItems.amulet_shield, 3600); // 3 mins cd
 					}
 				}
 			}
@@ -516,7 +516,7 @@ public class ASEventHandler {
 		}
 
 		{
-			if (!event.getEntity().world.isRemote && event.getEntityLiving().isPotionActive(AncientSpellcraftPotions.martyr_beneficial) && event.getEntityLiving() instanceof EntityPlayer
+			if (!event.getEntity().world.isRemote && event.getEntityLiving().isPotionActive(ASPotions.martyr_beneficial) && event.getEntityLiving() instanceof EntityPlayer
 					&& !event.getSource().isUnblockable() && !(event.getSource() instanceof IElementalDamage
 					&& ((IElementalDamage) event.getSource()).isRetaliatory())) {
 
@@ -531,7 +531,7 @@ public class ASEventHandler {
 
 						if (entity == null) { iterator.remove(); }
 
-						if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isPotionActive(AncientSpellcraftPotions.martyr)) {
+						if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isPotionActive(ASPotions.martyr)) {
 							// Retaliatory effect
 							if (DamageSafetyChecker.attackEntitySafely(entity, MagicDamage.causeDirectMagicDamage(player,
 									MagicDamage.DamageType.MAGIC, true), event.getAmount(), event.getSource().getDamageType(),
@@ -555,7 +555,7 @@ public class ASEventHandler {
 				// Players can only ever attack with their main hand, so this is the right method to use here.
 				if (!attacker.getHeldItemMainhand().isEmpty() && ImbueWeapon.isSword(attacker.getHeldItemMainhand())) {
 
-					int level = EnchantmentHelper.getEnchantmentLevel(AncientSpellcraftEnchantments.static_charge,
+					int level = EnchantmentHelper.getEnchantmentLevel(ASEnchantments.static_charge,
 							attacker.getHeldItemMainhand());
 
 					if (level > 0 && !MagicDamage.isEntityImmune(MagicDamage.DamageType.SHOCK, event.getEntityLiving())) {
@@ -569,11 +569,11 @@ public class ASEventHandler {
 
 	@SubscribeEvent
 	public static void onPotionApplicableEvent(PotionEvent.PotionApplicableEvent event) {
-		if (event.getPotionEffect().getPotion() == AncientSpellcraftPotions.eagle_eye && !(event.getEntityLiving() instanceof EntityPlayer)) {
+		if (event.getPotionEffect().getPotion() == ASPotions.eagle_eye && !(event.getEntityLiving() instanceof EntityPlayer)) {
 			event.setResult(Event.Result.DENY);
 		}
 
-		if (event.getPotionEffect().getPotion() == AncientSpellcraftPotions.shrinkage || event.getPotionEffect().getPotion() == AncientSpellcraftPotions.growth) {
+		if (event.getPotionEffect().getPotion() == ASPotions.shrinkage || event.getPotionEffect().getPotion() == ASPotions.growth) {
 			if (!ASArtemisLibIntegration.enabled()) {
 				// ArtemisLib-dependent potions are not applicable if ArtemisLib is not loaded
 				event.setResult(Event.Result.DENY);
@@ -586,19 +586,19 @@ public class ASEventHandler {
 
 			for (ItemArtefact artefact : getActiveArtefacts(player)) {
 
-				if (artefact == AncientSpellcraftItems.amulet_poison_resistance) {
+				if (artefact == ASItems.amulet_poison_resistance) {
 
 					if (event.getPotionEffect().getPotion() == MobEffects.POISON) {
 						if (player.world.rand.nextFloat() < 0.5f) {
 							event.setResult(Event.Result.DENY);
 						}
 					}
-				} else if (artefact == AncientSpellcraftItems.amulet_curse_ward) {
+				} else if (artefact == ASItems.amulet_curse_ward) {
 					if (event.getPotionEffect().getPotion() instanceof Curse) {
 						event.setResult(Event.Result.DENY);
 					}
-				} else if (artefact == AncientSpellcraftItems.amulet_persistence) {
-					if (event.getPotionEffect().getPotion() == AncientSpellcraftPotions.shrinkage || event.getPotionEffect().getPotion() == AncientSpellcraftPotions.growth) {
+				} else if (artefact == ASItems.amulet_persistence) {
+					if (event.getPotionEffect().getPotion() == ASPotions.shrinkage || event.getPotionEffect().getPotion() == ASPotions.growth) {
 						event.setResult(Event.Result.DENY);
 					}
 				}
@@ -609,7 +609,7 @@ public class ASEventHandler {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onPotionRemoveEvent(PotionEvent.PotionRemoveEvent event) {
 
-		if (event.getPotion() == AncientSpellcraftPotions.magical_exhaustion) {
+		if (event.getPotion() == ASPotions.magical_exhaustion) {
 			event.setCanceled(true);
 		}
 	}
@@ -623,12 +623,12 @@ public class ASEventHandler {
 
 			for (ItemArtefact artefact : getActiveArtefacts(player)) {
 
-				if (artefact == AncientSpellcraftItems.amulet_pendant_of_eternity) {
+				if (artefact == ASItems.amulet_pendant_of_eternity) {
 					List<ItemStack> amuletList = ASBaublesIntegration.enabled() ? ASBaublesIntegration.getEquippedArtefactStacks(player, ItemArtefact.Type.AMULET) : new ArrayList<>();
 					if (!amuletList.isEmpty()) {
 						ItemStack pendant = amuletList.get(0);
 
-						Spell spell = getCurrentSpellFromSpellBearingArtefact(AncientSpellcraftItems.amulet_pendant_of_eternity, pendant);
+						Spell spell = getCurrentSpellFromSpellBearingArtefact(ASItems.amulet_pendant_of_eternity, pendant);
 						if (spell != Spells.none && spell instanceof SpellBuff) {
 							try {
 								// FIXME: get rid of reflection :(
@@ -667,7 +667,7 @@ public class ASEventHandler {
 
 			EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
 
-			if (ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.charm_reanimation)) {
+			if (ItemArtefact.isArtefactActive(player, ASItems.charm_reanimation)) {
 				if (!event.getEntityLiving().world.isRemote) {
 
 					if (player.world.rand.nextFloat() < 0.15f) {
@@ -726,13 +726,13 @@ public class ASEventHandler {
 
 			EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
 
-			if (player.isPotionActive(AncientSpellcraftPotions.spell_siphon)) {
+			if (player.isPotionActive(ASPotions.spell_siphon)) {
 
 				for (ItemStack stack : InventoryUtils.getPrioritisedHotbarAndOffhand(player)) {
 
 					if (stack.getItem() instanceof IManaStoringItem && !((IManaStoringItem) stack.getItem()).isManaFull(stack)) {
 
-						int mana = 5 * (player.getActivePotionEffect(AncientSpellcraftPotions.spell_siphon).getAmplifier() + 1);
+						int mana = 5 * (player.getActivePotionEffect(ASPotions.spell_siphon).getAmplifier() + 1);
 
 						((IManaStoringItem) stack.getItem()).rechargeMana(stack, mana);
 
@@ -755,7 +755,7 @@ public class ASEventHandler {
 
 				for (ItemArtefact artefact : getActiveArtefacts(player)) {
 
-					if (artefact == AncientSpellcraftItems.ring_poison_arrow) {
+					if (artefact == ASItems.ring_poison_arrow) {
 						//						if (player.world.rand.nextFloat() < 0.2f) {
 						if (player.world.rand.nextFloat() < 0.2f) {
 
@@ -867,7 +867,7 @@ public class ASEventHandler {
 
 					if (potion instanceof PotionMetamagicEffect) {
 
-						if (potion.equals(AncientSpellcraftPotions.arcane_augmentation)) {
+						if (potion.equals(ASPotions.arcane_augmentation)) {
 							PotionEffect effect = entry.getValue();
 							SpellModifiers modifiers = event.getModifiers();
 
@@ -880,9 +880,9 @@ public class ASEventHandler {
 								modifiers.set(WizardryItems.range_upgrade, blast + level * Constants.RANGE_INCREASE_PER_LEVEL, true);
 								modifiers.set(WizardryItems.blast_upgrade, range + level * Constants.BLAST_RADIUS_INCREASE_PER_LEVEL, true);
 							}
-							onMetaMagicFinished(player, AncientSpellcraftSpells.arcane_augmentation, AncientSpellcraftPotions.arcane_augmentation);
+							onMetaMagicFinished(player, ASSpells.arcane_augmentation, ASPotions.arcane_augmentation);
 
-						} else if (potion.equals(AncientSpellcraftPotions.intensifying_focus)) {
+						} else if (potion.equals(ASPotions.intensifying_focus)) {
 							PotionEffect effect = entry.getValue();
 							SpellModifiers modifiers = event.getModifiers();
 
@@ -897,11 +897,11 @@ public class ASEventHandler {
 								modifiers.set(WizardryItems.range_upgrade, blast - level * Constants.RANGE_INCREASE_PER_LEVEL, true);
 								modifiers.set(WizardryItems.blast_upgrade, range - level * Constants.BLAST_RADIUS_INCREASE_PER_LEVEL, true);
 							}
-							setCooldown(player, AncientSpellcraftSpells.intensifying_focus);
-							player.removePotionEffect(AncientSpellcraftPotions.intensifying_focus);
-							onMetaMagicFinished(player, AncientSpellcraftSpells.intensifying_focus, AncientSpellcraftPotions.intensifying_focus);
+							setCooldown(player, ASSpells.intensifying_focus);
+							player.removePotionEffect(ASPotions.intensifying_focus);
+							onMetaMagicFinished(player, ASSpells.intensifying_focus, ASPotions.intensifying_focus);
 
-						} else if (potion.equals(AncientSpellcraftPotions.continuity_charm)) {
+						} else if (potion.equals(ASPotions.continuity_charm)) {
 							PotionEffect effect = entry.getValue();
 							SpellModifiers modifiers = event.getModifiers();
 
@@ -913,29 +913,29 @@ public class ASEventHandler {
 								modifiers.set(WizardryItems.duration_upgrade, duration + level * DURATION_INCREASE_PER_LEVEL, true);
 								modifiers.set(SpellModifiers.COST, cost + level * COST_REDUCTION_PER_ARMOUR, true);
 							}
-							onMetaMagicFinished(player, AncientSpellcraftSpells.continuity_charm, AncientSpellcraftPotions.continuity_charm);
+							onMetaMagicFinished(player, ASSpells.continuity_charm, ASPotions.continuity_charm);
 						}
 
 					}
 					int level = entry.getValue().getAmplifier() + 1;
 
-					if (potion == AncientSpellcraftPotions.spell_blast) {
+					if (potion == ASPotions.spell_blast) {
 						SpellModifiers modifiers = event.getModifiers();
 						float blast = modifiers.get(WizardryItems.blast_upgrade);
 						modifiers.set(WizardryItems.blast_upgrade, blast + level * BLAST_RADIUS_INCREASE_PER_LEVEL, true);
 					}
-					if (potion == AncientSpellcraftPotions.spell_range) {
+					if (potion == ASPotions.spell_range) {
 						SpellModifiers modifiers = event.getModifiers();
 						float range = modifiers.get(WizardryItems.range_upgrade);
 						modifiers.set(WizardryItems.range_upgrade, range + level * Constants.RANGE_INCREASE_PER_LEVEL, true);
 
 					}
-					if (potion == AncientSpellcraftPotions.spell_cooldown) {
+					if (potion == ASPotions.spell_cooldown) {
 						SpellModifiers modifiers = event.getModifiers();
 						float cooldown = modifiers.get(WizardryItems.cooldown_upgrade);
 						modifiers.set(WizardryItems.cooldown_upgrade, cooldown - (level * Constants.COOLDOWN_REDUCTION_PER_LEVEL), true);
 					}
-					if (potion == AncientSpellcraftPotions.spell_duration) {
+					if (potion == ASPotions.spell_duration) {
 						SpellModifiers modifiers = event.getModifiers();
 						float duration = modifiers.get(WizardryItems.duration_upgrade);
 						modifiers.set(WizardryItems.duration_upgrade, duration + level * DURATION_INCREASE_PER_LEVEL, false);
@@ -951,7 +951,7 @@ public class ASEventHandler {
 			int jewelsSetCount = 0;
 
 			/// custom artefact types
-			if (ItemNewArtefact.isNewArtefactActive(player, AncientSpellcraftItems.belt_enchanter)) {
+			if (ItemNewArtefact.isNewArtefactActive(player, ASItems.belt_enchanter)) {
 				if (event.getSpell().getType() == SpellType.BUFF) {
 					modifiers.set(WizardryItems.duration_upgrade, modifiers.get(WizardryItems.duration_upgrade) * 1.2f, false);
 				}
@@ -960,7 +960,7 @@ public class ASEventHandler {
 			/// custom artefact types
 			for (ItemNewArtefact artefact : getActiveNewArtefacts(player)) {
 
-				if (artefact == AncientSpellcraftItems.head_curse) {
+				if (artefact == ASItems.head_curse) {
 					float potency = modifiers.get(SpellModifiers.POTENCY);
 					int modifier = 0;
 					for (Potion potion : player.getActivePotionMap().keySet()) {
@@ -974,7 +974,7 @@ public class ASEventHandler {
 					}
 				} else
 
-				if (artefact == AncientSpellcraftItems.belt_scroll_holder && ASBaublesIntegration.enabled()) {
+				if (artefact == ASItems.belt_scroll_holder && ASBaublesIntegration.enabled()) {
 					ItemStack holder = ASBaublesIntegration.getBeltSlotItemStack(player);
 					if (holder.getItem() instanceof ItemBeltScrollHolder) {
 						ItemStack scroll = ItemBeltScrollHolder.getScroll(holder);
@@ -992,9 +992,9 @@ public class ASEventHandler {
 					}
 				} else
 
-				if (artefact == AncientSpellcraftItems.head_lightning && ASBaublesIntegration.enabled()) {
+				if (artefact == ASItems.head_lightning && ASBaublesIntegration.enabled()) {
 
-					if (event.getSpell().getElement() == Element.LIGHTNING && player.world.getBlockState(player.getPosition()).getBlock() == AncientSpellcraftBlocks.lightning_block) {
+					if (event.getSpell().getElement() == Element.LIGHTNING && player.world.getBlockState(player.getPosition()).getBlock() == ASBlocks.lightning_block) {
 							modifiers.set(WizardryItems.blast_upgrade, modifiers.get(WizardryItems.blast_upgrade) + 0.25F, true);
 							modifiers.set(WizardryItems.range_upgrade, modifiers.get(WizardryItems.range_upgrade) + 0.25F, true);
 							modifiers.set(WizardryItems.duration_upgrade, modifiers.get(WizardryItems.duration_upgrade) + 0.25F, true);
@@ -1007,61 +1007,61 @@ public class ASEventHandler {
 				float potency = modifiers.get(SpellModifiers.POTENCY);
 				float cost = modifiers.get(SpellModifiers.COST);
 
-				if (artefact == AncientSpellcraftItems.charm_mana_orb) {
+				if (artefact == ASItems.charm_mana_orb) {
 					modifiers.set(SpellModifiers.COST, 0.85f * cost, false);
 
-				} else if (artefact == AncientSpellcraftItems.amulet_mana) {
+				} else if (artefact == ASItems.amulet_mana) {
 					modifiers.set(SpellModifiers.COST, 0.90f * cost, false);
 
-				} else if (artefact == AncientSpellcraftItems.ring_blast) {
+				} else if (artefact == ASItems.ring_blast) {
 					modifiers.set(SpellModifiers.COST, 1.25f * cost, false);
 					event.getModifiers().set(WizardryItems.blast_upgrade, event.getModifiers().get(WizardryItems.blast_upgrade) + 0.25F, true);
 
-				} else if (artefact == AncientSpellcraftItems.ring_range) {
+				} else if (artefact == ASItems.ring_range) {
 					modifiers.set(SpellModifiers.COST, 1.25f * cost, false);
 					event.getModifiers().set(WizardryItems.range_upgrade, event.getModifiers().get(WizardryItems.range_upgrade) + 0.25F, true);
 
-				} else if (artefact == AncientSpellcraftItems.charm_elemental_grimoire) {
+				} else if (artefact == ASItems.charm_elemental_grimoire) {
 					if (event.getSpell().getElement() == Element.FIRE || event.getSpell().getElement() == Element.ICE || event.getSpell().getElement() == Element.LIGHTNING) {
 						modifiers.set(SpellModifiers.POTENCY, 0.1f + potency, false);
 					}
-				} else if (artefact == AncientSpellcraftItems.charm_earth_orb) {
+				} else if (artefact == ASItems.charm_earth_orb) {
 					if (event.getSpell().getElement() == Element.EARTH) {
 						modifiers.set(SpellModifiers.POTENCY, 0.01f * Settings.generalSettings.orb_artefact_potency_bonus + potency, false);
 					} else {
 						modifiers.set(SpellModifiers.POTENCY, -0.5f + potency, false);
 					}
-				} else if (artefact == AncientSpellcraftItems.charm_healing_orb) {
+				} else if (artefact == ASItems.charm_healing_orb) {
 					if (event.getSpell().getElement() == Element.HEALING) {
 						modifiers.set(SpellModifiers.POTENCY, 0.01f * Settings.generalSettings.orb_artefact_potency_bonus + potency, false);
 					} else {
 						modifiers.set(SpellModifiers.POTENCY, -0.5f + potency, false);
 					}
-				} else if (artefact == AncientSpellcraftItems.charm_lightning_orb) {
+				} else if (artefact == ASItems.charm_lightning_orb) {
 					if (event.getSpell().getElement() == Element.LIGHTNING) {
 						modifiers.set(SpellModifiers.POTENCY, 0.01f * Settings.generalSettings.orb_artefact_potency_bonus + potency, false);
 					} else {
 						modifiers.set(SpellModifiers.POTENCY, -0.5f + potency, false);
 					}
-				} else if (artefact == AncientSpellcraftItems.charm_fire_orb) {
+				} else if (artefact == ASItems.charm_fire_orb) {
 					if (event.getSpell().getElement() == Element.FIRE) {
 						modifiers.set(SpellModifiers.POTENCY, 0.01f * Settings.generalSettings.orb_artefact_potency_bonus + potency, false);
 					} else {
 						modifiers.set(SpellModifiers.POTENCY, -0.5f + potency, false);
 					}
-				} else if (artefact == AncientSpellcraftItems.charm_ice_orb) {
+				} else if (artefact == ASItems.charm_ice_orb) {
 					if (event.getSpell().getElement() == Element.ICE) {
 						modifiers.set(SpellModifiers.POTENCY, 0.01f * Settings.generalSettings.orb_artefact_potency_bonus + potency, false);
 					} else {
 						modifiers.set(SpellModifiers.POTENCY, -0.5f + potency, false);
 					}
-				} else if (artefact == AncientSpellcraftItems.charm_necromancy_orb) {
+				} else if (artefact == ASItems.charm_necromancy_orb) {
 					if (event.getSpell().getElement() == Element.NECROMANCY) {
 						modifiers.set(SpellModifiers.POTENCY, 0.01f * Settings.generalSettings.orb_artefact_potency_bonus + potency, false);
 					} else {
 						modifiers.set(SpellModifiers.POTENCY, -0.5f + potency, false);
 					}
-				} else if (artefact == AncientSpellcraftItems.charm_sorcery_orb) {
+				} else if (artefact == ASItems.charm_sorcery_orb) {
 					if (event.getSpell().getElement() == Element.SORCERY) {
 						modifiers.set(SpellModifiers.POTENCY, 0.01f * Settings.generalSettings.orb_artefact_potency_bonus + potency, false);
 					} else {
@@ -1069,19 +1069,19 @@ public class ASEventHandler {
 					}
 				}
 
-				if (artefact == AncientSpellcraftItems.ring_power) {
+				if (artefact == ASItems.ring_power) {
 					jewelsSetCount++;
 
 					modifiers.set(SpellModifiers.POTENCY, 0.05f + potency, false);
 					modifiers.set(SpellModifiers.COST, 0.05f + cost, false);
 
-				} else if (artefact == AncientSpellcraftItems.amulet_power) {
+				} else if (artefact == ASItems.amulet_power) {
 					jewelsSetCount++;
 
 					modifiers.set(SpellModifiers.POTENCY, 0.10f + potency, false);
 					modifiers.set(SpellModifiers.COST, 0.10f + cost, false);
 
-				} else if (artefact == AncientSpellcraftItems.charm_power_orb) {
+				} else if (artefact == ASItems.charm_power_orb) {
 					jewelsSetCount++;
 
 					modifiers.set(SpellModifiers.POTENCY, 0.20f + potency, false);
@@ -1201,7 +1201,7 @@ public class ASEventHandler {
 
 			EntityPlayer player = (EntityPlayer) event.getCaster();
 
-			if (isArtefactActive(player, AncientSpellcraftItems.charm_knowledge_orb)) {
+			if (isArtefactActive(player, ASItems.charm_knowledge_orb)) {
 
 				boolean flag = false;
 
@@ -1253,7 +1253,7 @@ public class ASEventHandler {
 
 			for (ItemArtefact artefact : getActiveArtefacts(player)) {
 
-				if (artefact == AncientSpellcraftItems.charm_wand_upgrade) {
+				if (artefact == ASItems.charm_wand_upgrade) {
 
 					if (player.world.rand.nextFloat() < 0.2f) {
 						// check if its a wand and a wand upgrade item
@@ -1291,18 +1291,18 @@ public class ASEventHandler {
 
 			for (ItemArtefact artefact : getActiveArtefacts(player)) {
 
-				if (artefact == AncientSpellcraftItems.ring_prismarine) {
+				if (artefact == ASItems.ring_prismarine) {
 
 					if (player.isBurning()) {
-						float i = player.getCooldownTracker().getCooldown(AncientSpellcraftItems.ring_prismarine, 0.0F);
+						float i = player.getCooldownTracker().getCooldown(ASItems.ring_prismarine, 0.0F);
 						if (i == 0) {
 							player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 120));
 
 							SpellModifiers modifiers = new SpellModifiers();
-							if (AncientSpellcraftSpells.extinguish.cast(player.world, player, EnumHand.MAIN_HAND, 0, modifiers)) {
+							if (ASSpells.extinguish.cast(player.world, player, EnumHand.MAIN_HAND, 0, modifiers)) {
 
-								MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.SCROLL, AncientSpellcraftSpells.extinguish, player, modifiers));
-								player.getCooldownTracker().setCooldown(AncientSpellcraftItems.ring_prismarine, 1200);
+								MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.SCROLL, ASSpells.extinguish, player, modifiers));
+								player.getCooldownTracker().setCooldown(ASItems.ring_prismarine, 1200);
 							}
 						}
 					}
@@ -1370,8 +1370,8 @@ public class ASEventHandler {
 			if (event.getEntity() instanceof EntityCreature && ((ISummonedCreature) event.getEntity()).getOwner() != null) {
 				Entity owner = ((ISummonedCreature) event.getEntity()).getOwner();
 
-				if (owner instanceof EntityPlayer && ItemNewArtefact.isNewArtefactActive(((EntityPlayer) owner), AncientSpellcraftItems.head_minions)) {
-					if (ItemNewArtefact.isNewArtefactActive(((EntityPlayer) owner), AncientSpellcraftItems.head_minions)) {
+				if (owner instanceof EntityPlayer && ItemNewArtefact.isNewArtefactActive(((EntityPlayer) owner), ASItems.head_minions)) {
+					if (ItemNewArtefact.isNewArtefactActive(((EntityPlayer) owner), ASItems.head_minions)) {
 						EntityCreature creature = (EntityCreature) event.getEntity();
 						EntitySummonAIFollowOwner task = new EntitySummonAIFollowOwner(creature, 1.0D, 10.0F, 2.0F);
 						creature.tasks.addTask(5, task);
@@ -1396,7 +1396,7 @@ public class ASEventHandler {
 				}
 
 				// Taken directly from ItemBow, so it works exactly the same as the power enchantment.
-				int level = EnchantmentHelper.getEnchantmentLevel(AncientSpellcraftEnchantments.degrade_bow, bow);
+				int level = EnchantmentHelper.getEnchantmentLevel(ASEnchantments.degrade_bow, bow);
 
 				if (level > 0) {
 					arrow.setDamage(arrow.getDamage() * (1.5 / (level + 1)));

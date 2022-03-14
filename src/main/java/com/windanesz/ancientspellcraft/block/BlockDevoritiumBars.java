@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.block;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.constants.AWConstants;
 import com.windanesz.ancientspellcraft.material.IDevoritium;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import net.minecraft.block.BlockPane;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -14,7 +14,7 @@ public class BlockDevoritiumBars extends BlockPane implements IDevoritium {
 
 	public BlockDevoritiumBars() {
 		super(AncientSpellcraft.DEVORITIUM, true);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		setHardness(AWConstants.DEVORITIUM_BLOCK_HARDNESS);
 		setResistance(AWConstants.DEVORITIUM_BLOCK_RESISTANCE);
 		setHarvestLevel(AWConstants.DEVORITIUM_HARVEST_TOOL, AWConstants.DEVORITIUM_HARVEST_LEVEL);

@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.potion;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.ClientEventHandler;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.potion.PotionMagicEffect;
 import net.minecraft.client.Minecraft;
@@ -29,7 +29,7 @@ public class PotionEagleEye extends PotionMagicEffect {
 
 	@SubscribeEvent
 	public static void onPotionAddedEvent(PotionEvent.PotionAddedEvent event) {
-		if (event.getEntity() instanceof EntityPlayer && event.getEntity().world.isRemote && event.getPotionEffect().getPotion() == AncientSpellcraftPotions.eagle_eye) {
+		if (event.getEntity() instanceof EntityPlayer && event.getEntity().world.isRemote && event.getPotionEffect().getPotion() == ASPotions.eagle_eye) {
 			Wizardry.proxy.playBlinkEffect((EntityPlayer) event.getEntity());
 
 			ClientEventHandler.astralTravelInputTimeout = 10;

@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.block;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.constants.AWConstants;
 import com.windanesz.ancientspellcraft.material.IDevoritium;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -18,7 +18,7 @@ public class BlockDevoritium extends Block implements IDevoritium {
 		setHardness(AWConstants.DEVORITIUM_BLOCK_HARDNESS);
 		setResistance(AWConstants.DEVORITIUM_BLOCK_RESISTANCE);
 		setSoundType(SoundType.METAL);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 	}
 
 	@Override

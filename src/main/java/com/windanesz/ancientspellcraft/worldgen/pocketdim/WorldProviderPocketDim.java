@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.worldgen.pocketdim;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBiomes;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftDimensions;
+import com.windanesz.ancientspellcraft.registry.ASBiomes;
+import com.windanesz.ancientspellcraft.registry.ASDimensions;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -25,7 +25,7 @@ public class WorldProviderPocketDim extends WorldProvider {
 
 	@Override
 	public DimensionType getDimensionType() {
-		return AncientSpellcraftDimensions.POCKET_DIM_TYPE;
+		return ASDimensions.POCKET_DIM_TYPE;
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class WorldProviderPocketDim extends WorldProvider {
 
 	@Override
 	public Biome getBiomeForCoords(BlockPos pos) {
-		return AncientSpellcraftBiomes.pocket;
+		return ASBiomes.pocket;
 	}
 
 	@Override

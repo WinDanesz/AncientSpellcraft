@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.spell.SpellBuff;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.GlStateManager;
@@ -18,14 +18,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class LavaVision extends SpellBuff {
 
 	public LavaVision() {
-		super(AncientSpellcraft.MODID, "lava_vision", 245, 70, 1, () -> AncientSpellcraftPotions.lava_vision);
+		super(AncientSpellcraft.MODID, "lava_vision", 245, 70, 1, () -> ASPotions.lava_vision);
 		soundValues(0.7f, 1.2f, 0.4f);
 	}
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public static void onFogDensityEvent(EntityViewRenderEvent.FogDensity event) {
-		if (event.getEntity() instanceof EntityPlayer && ((EntityPlayer) event.getEntity()).isPotionActive(AncientSpellcraftPotions.lava_vision)) {
+		if (event.getEntity() instanceof EntityPlayer && ((EntityPlayer) event.getEntity()).isPotionActive(ASPotions.lava_vision)) {
 			if (event.getState().getMaterial() == Material.LAVA) {
 				GlStateManager.setFog(GlStateManager.FogMode.EXP);
 				event.setDensity(0.2f);
@@ -36,6 +36,6 @@ public class LavaVision extends SpellBuff {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.block;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import com.windanesz.ancientspellcraft.tileentity.TileEntityRevertingBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -24,7 +24,7 @@ import java.util.Random;
 public interface ITemporaryBlock {
 
 	default void setTemporaryBlockProperties(Block block) {
-		block.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		block.setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		block.setBlockUnbreakable();
 		block.setResistance(6000000.0F);
 	}

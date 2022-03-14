@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityAOEProjectile;
 import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Heal;
@@ -177,6 +177,6 @@ public class SpellProjectileAOEPotion<T extends EntityMagicProjectile> extends S
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.tileentity;
 
 import com.windanesz.ancientspellcraft.constants.EnumFacingIntercardinal;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import com.windanesz.ancientspellcraft.registry.Rituals;
 import com.windanesz.ancientspellcraft.ritual.IRitualBlockRequirement;
 import com.windanesz.ancientspellcraft.ritual.IRitualIngredient;
@@ -96,7 +96,7 @@ public class TileRune extends TileEntity implements ITickable {
 
 	@Override
 	public void update() {
-		if (world.getBlockState(pos).getBlock() != AncientSpellcraftBlocks.PLACED_RUNE) {
+		if (world.getBlockState(pos).getBlock() != ASBlocks.PLACED_RUNE) {
 			world.removeTileEntity(pos);
 			return;
 		}
@@ -282,7 +282,7 @@ public class TileRune extends TileEntity implements ITickable {
 			for (BlockPos blockPos : blockPosList) {
 				//						this.setMaster(centerPiece);
 				//						centerPiece.ritual = this.ritual;
-				if (world.getBlockState(blockPos).getBlock() == AncientSpellcraftBlocks.PLACED_RUNE) {
+				if (world.getBlockState(blockPos).getBlock() == ASBlocks.PLACED_RUNE) {
 					TileEntity tile = world.getTileEntity(blockPos);
 					if (tile instanceof TileRune) {
 						ritualRunes.add((TileRune) tile);

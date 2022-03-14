@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.spell;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.util.SpellModifiers;
@@ -26,16 +26,16 @@ public class RunewordExorcise extends Runeword {
 		}
 
 		int amplifier = 0;
-		if (target.isPotionActive(AncientSpellcraftPotions.magical_exhaustion)) {
+		if (target.isPotionActive(ASPotions.magical_exhaustion)) {
 			//noinspection ConstantConditions
-			amplifier = target.getActivePotionEffect(AncientSpellcraftPotions.magical_exhaustion).getAmplifier() + 1;
+			amplifier = target.getActivePotionEffect(ASPotions.magical_exhaustion).getAmplifier() + 1;
 
 			// if the effect stacks, this backfires on the caster too for a smaller extent
-			target.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion,  (int)(getProperty(EFFECT_DURATION).floatValue()* 0.5f), 0));
+			target.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion,  (int)(getProperty(EFFECT_DURATION).floatValue()* 0.5f), 0));
 		}
 
 		// affect target
-		target.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, getProperty(EFFECT_DURATION).intValue(), amplifier));
+		target.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, getProperty(EFFECT_DURATION).intValue(), amplifier));
 
 		spendCharge(sword);
 		return true;

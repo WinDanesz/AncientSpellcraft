@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.entity.projectile;
 
 import com.windanesz.ancientspellcraft.material.IDevoritium;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.entity.projectile.EntityBomb;
 import electroblob.wizardry.registry.Spells;
@@ -54,7 +54,7 @@ public class EntityDevoritiumBomb extends EntityBomb implements IDevoritium {
 
 		if(!this.world.isRemote){
 
-			this.playSound(AncientSpellcraftSounds.DEVORITIUM_BOMB_HIT, 1.5F, rand.nextFloat() * 0.4F + 0.6F);
+			this.playSound(ASSounds.DEVORITIUM_BOMB_HIT, 1.5F, rand.nextFloat() * 0.4F + 0.6F);
 			this.playSound(WizardrySounds.ENTITY_SMOKE_BOMB_SMOKE, 1.2F, 1.0f);
 
 			double range = Spells.smoke_bomb.getProperty(Spell.BLAST_RADIUS).floatValue() * blastMultiplier;
@@ -66,7 +66,7 @@ public class EntityDevoritiumBomb extends EntityBomb implements IDevoritium {
 
 			for(EntityLivingBase target : targets){
 				damageSummonedCreature(target, 3);
-				target.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, duration, 2));
+				target.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, duration, 2));
 
 			}
 
@@ -92,7 +92,7 @@ public class EntityDevoritiumBomb extends EntityBomb implements IDevoritium {
 			entityareaeffectcloud.setDuration(entityareaeffectcloud.getDuration() / 2);
 			entityareaeffectcloud.setParticle(EnumParticleTypes.FALLING_DUST);
 			entityareaeffectcloud.setRadiusPerTick(-entityareaeffectcloud.getRadius() / (float)entityareaeffectcloud.getDuration());
-			entityareaeffectcloud.addEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, 60,2));
+			entityareaeffectcloud.addEffect(new PotionEffect(ASPotions.magical_exhaustion, 60,2));
 
 			this.world.spawnEntity(entityareaeffectcloud);
 

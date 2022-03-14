@@ -1,10 +1,9 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.block.BlockQuickSand;
 import com.windanesz.ancientspellcraft.block.ITemporaryBlock;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
@@ -99,10 +98,10 @@ public class QuicksandRing extends Spell {
 
 					pos = pos.offset(EnumFacing.DOWN, i);
 
-					ITemporaryBlock.placeTemporaryBlock(caster, world, AncientSpellcraftBlocks.QUICKSAND, pos, 800);
+					ITemporaryBlock.placeTemporaryBlock(caster, world, ASBlocks.QUICKSAND, pos, 800);
 				}
 
-				if (!(caster instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) caster, AncientSpellcraftItems.ring_quicksand))) {
+				if (!(caster instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.ring_quicksand))) {
 					break;
 				}
 			}
@@ -113,6 +112,6 @@ public class QuicksandRing extends Spell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

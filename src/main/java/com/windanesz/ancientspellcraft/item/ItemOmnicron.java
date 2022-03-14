@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.client.DrawingUtils;
 import electroblob.wizardry.constants.Constants;
@@ -38,7 +38,7 @@ public class ItemOmnicron extends ItemASArtefact implements IWorkbenchItem, IMan
 	public ItemOmnicron(EnumRarity rarity, Type type) {
 		super(rarity, type);
 		setMaxStackSize(1);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR);
 		setMaxDamage(MAX_MANA);
 		WizardryRecipes.addToManaFlaskCharging(this);
 	}
@@ -124,7 +124,7 @@ public class ItemOmnicron extends ItemASArtefact implements IWorkbenchItem, IMan
 						// Identification scrolls give the chat readout in creative mode, otherwise it looks like
 						// nothing happens!
 						data.discoverSpell(spell);
-						player.playSound(AncientSpellcraftSounds.CHARM_OMNICRON, 1.25f, 1);
+						player.playSound(ASSounds.CHARM_OMNICRON, 1.25f, 1);
 						if (!world.isRemote) {
 							consumeMana(cubeStack, requiredMana, player);
 							player.sendMessage(new TextComponentTranslation("item." + this.getRegistryName() + ".discover",

@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.google.common.collect.Multimap;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
 import electroblob.wizardry.client.DrawingUtils;
 import electroblob.wizardry.item.IConjuredItem;
 import electroblob.wizardry.util.EntityUtils;
@@ -72,7 +72,7 @@ public class ItemStoneFist extends ItemSword implements IConjuredItem {
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
 		EntityUtils.applyStandardKnockback(wielder, target, 2.5f);
 		if (wielder.world.isRemote)
-			wielder.world.playSound(wielder.posX, wielder.posY, wielder.posZ, AncientSpellcraftSounds.STONE_FIST, SoundCategory.PLAYERS, 1, 1, false);
+			wielder.world.playSound(wielder.posX, wielder.posY, wielder.posZ, ASSounds.STONE_FIST, SoundCategory.PLAYERS, 1, 1, false);
 		stack.damageItem(2, wielder);
 		return true;
 	}

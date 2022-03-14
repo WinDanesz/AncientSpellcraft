@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.util.EntityUtils;
@@ -29,7 +29,7 @@ public class SpectralArmy extends Animate {
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers){
 
-		if(!this.spawnMinions(world, caster, modifiers, !ItemArtefact.isArtefactActive(caster, AncientSpellcraftItems.charm_spectral_army))) return false;
+		if(!this.spawnMinions(world, caster, modifiers, !ItemArtefact.isArtefactActive(caster, ASItems.charm_spectral_army))) return false;
 		this.playSound(world, caster, ticksInUse, -1, modifiers);
 		return true;
 	}
@@ -48,14 +48,14 @@ public class SpectralArmy extends Animate {
 
 
 		// artefact effect, gives sword and shield to the conjured mob
-		if (caster instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) caster, AncientSpellcraftItems.charm_spectral_army)) {
+		if (caster instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.charm_spectral_army)) {
 			minion.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, conjureItem(modifiers, WizardryItems.spectral_sword));
-			minion.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, conjureItem(modifiers, AncientSpellcraftItems.spectral_shield));
+			minion.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, conjureItem(modifiers, ASItems.spectral_shield));
 		}
 
 		// boosting damage
 		IAttributeInstance attack_damage = minion.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-		if (attack_damage != null && (!(caster instanceof EntityPlayer) || (!ItemArtefact.isArtefactActive((EntityPlayer) caster, AncientSpellcraftItems.charm_spectral_army)))) {
+		if (attack_damage != null && (!(caster instanceof EntityPlayer) || (!ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.charm_spectral_army)))) {
 			attack_damage.applyModifier( // Apparently some things don't have an attack damage
 					new AttributeModifier(POTENCY_ATTRIBUTE_MODIFIER, 1.2, EntityUtils.Operations.MULTIPLY_FLAT));
 		}

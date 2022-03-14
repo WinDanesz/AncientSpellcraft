@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.entity.EntityWisp;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpellTicker;
 import com.windanesz.ancientspellcraft.item.ItemEnchantedNameTag;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import com.windanesz.ancientspellcraft.util.BiomeLocator;
 import electroblob.wizardry.data.WizardData;
@@ -205,7 +205,7 @@ public class WillOWisp extends SpellConstruct<EntitySpellTicker> implements ISpe
 	private static void dropNameTag(EntitySpellTicker entitySpellTicker) {
 		if (!entitySpellTicker.world.isRemote) {
 			if (entitySpellTicker.getExtraData().hasKey("nametagCompound")) {
-				ItemStack stack = new ItemStack(AncientSpellcraftItems.enchanted_name_tag, 1);
+				ItemStack stack = new ItemStack(ASItems.enchanted_name_tag, 1);
 				stack.setTagCompound(entitySpellTicker.getExtraData().getCompoundTag("nametagCompound"));
 
 				entitySpellTicker.world.spawnEntity(new EntityItem(entitySpellTicker.world, entitySpellTicker.posX, entitySpellTicker.posY, entitySpellTicker.posZ, stack));
@@ -220,6 +220,6 @@ public class WillOWisp extends SpellConstruct<EntitySpellTicker> implements ISpe
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

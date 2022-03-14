@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftDimensions;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASDimensions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.EntityUtils;
@@ -47,7 +47,7 @@ public class HellGate extends SpellRay {
 		if (world.isAirBlock(pos)) {
 
 			if (!world.isRemote) {
-				world.setBlockState(pos, AncientSpellcraftBlocks.NETHER_FIRE.getDefaultState());
+				world.setBlockState(pos, ASBlocks.NETHER_FIRE.getDefaultState());
 			}
 			world.playSound((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, SoundEvents.BLOCK_PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
 
@@ -59,7 +59,7 @@ public class HellGate extends SpellRay {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		if (caster.dimension == AncientSpellcraftDimensions.POCKET_DIM_ID) {
+		if (caster.dimension == ASDimensions.POCKET_DIM_ID) {
 			return false;
 		}
 		return super.cast(world, caster, hand, ticksInUse, modifiers);
@@ -79,6 +79,6 @@ public class HellGate extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.block;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.tileentity.TileEntityLightningBlock;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryBlocks;
@@ -116,7 +116,7 @@ public class BlockLightning extends Block implements ITileEntityProvider {
 	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity target) {
 		if (target.ticksExisted % 5 != 0) return;
 
-		if (target instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) target, AncientSpellcraftItems.ring_kinetic)) {
+		if (target instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) target, ASItems.ring_kinetic)) {
 			((EntityPlayer) target).addPotionEffect(new PotionEffect(MobEffects.SPEED, 40,1));
 		}
 
@@ -143,7 +143,7 @@ public class BlockLightning extends Block implements ITileEntityProvider {
 	}
 
 	public static void setProperties(World world, BlockPos pos, EntityLivingBase caster, int blockLifetime, float damage) {
-		if (!world.isRemote && world.getBlockState(pos).getBlock() == AncientSpellcraftBlocks.lightning_block) {
+		if (!world.isRemote && world.getBlockState(pos).getBlock() == ASBlocks.lightning_block) {
 			TileEntity tile = world.getTileEntity(pos);
 
 			if (tile instanceof TileEntityLightningBlock) {

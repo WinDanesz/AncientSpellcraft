@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.registry.WizardryRecipes;
@@ -15,7 +15,7 @@ public abstract class ItemASWizardArmour extends ItemWizardArmour {
 	public ItemASWizardArmour(ItemArmor.ArmorMaterial material, int renderIndex, EntityEquipmentSlot armourType, Element element) {
 		super(material, renderIndex, armourType, element);
 		this.element = element;
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		WizardryRecipes.addToManaFlaskCharging(this);
 	}
 

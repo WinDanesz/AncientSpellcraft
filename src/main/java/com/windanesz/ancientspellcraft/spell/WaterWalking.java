@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -18,7 +18,7 @@ import java.util.List;
 public class WaterWalking extends SpellBuffAS {
 
 	public WaterWalking() {
-		super("water_walking", 58, 147, 254, () -> AncientSpellcraftPotions.water_walking);
+		super("water_walking", 58, 147, 254, () -> ASPotions.water_walking);
 		addProperties(EFFECT_RADIUS);
 	}
 
@@ -57,6 +57,6 @@ public class WaterWalking extends SpellBuffAS {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

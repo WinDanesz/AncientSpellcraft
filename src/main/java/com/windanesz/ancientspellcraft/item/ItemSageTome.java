@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.Settings;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.constants.Element;
@@ -89,7 +89,7 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 
 	public ItemSageTome(Tier tier, Element element) {
 		super();
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR);
 		this.tier = tier;
 		this.element = element;
 		setMaxDamage(this.tier.maxCharge);

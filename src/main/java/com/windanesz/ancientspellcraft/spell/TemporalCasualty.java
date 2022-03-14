@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
@@ -55,11 +55,11 @@ public class TemporalCasualty extends SpellRay {
 				return true;
 			}
 
-			if (player.isPotionActive(AncientSpellcraftPotions.time_knot)) {
-				player.removePotionEffect(AncientSpellcraftPotions.time_knot);
+			if (player.isPotionActive(ASPotions.time_knot)) {
+				player.removePotionEffect(ASPotions.time_knot);
 			}
 
-			player.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.curse_temporal_casualty, Integer.MAX_VALUE, 0));
+			player.addPotionEffect(new PotionEffect(ASPotions.curse_temporal_casualty, Integer.MAX_VALUE, 0));
 			//			player.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.curse_temporal_casualty, Integer.MAX_VALUE, 0));
 			return true;
 		}
@@ -87,10 +87,10 @@ public class TemporalCasualty extends SpellRay {
 	private static long update(EntityPlayer player, Long nextLoopStart) {
 		if (nextLoopStart == null)
 			return 0;
-		if (player.world.getTotalWorldTime() == nextLoopStart && player.isPotionActive(AncientSpellcraftPotions.curse_temporal_casualty) && player.isEntityAlive()) {
+		if (player.world.getTotalWorldTime() == nextLoopStart && player.isPotionActive(ASPotions.curse_temporal_casualty) && player.isEntityAlive()) {
 			loopPlayer(player);
 			long l = player.world.getTotalWorldTime() + LOOP_DURATION;
-			player.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.curse_temporal_casualty, Integer.MAX_VALUE, 0));
+			player.addPotionEffect(new PotionEffect(ASPotions.curse_temporal_casualty, Integer.MAX_VALUE, 0));
 
 			return l;
 		}
@@ -100,6 +100,6 @@ public class TemporalCasualty extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

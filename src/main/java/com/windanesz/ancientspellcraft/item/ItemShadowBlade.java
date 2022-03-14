@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.google.common.collect.Multimap;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import com.windanesz.ancientspellcraft.spell.ConjureShadowBlade;
 import electroblob.wizardry.data.IVariable;
 import electroblob.wizardry.data.Persistence;
@@ -85,7 +85,7 @@ public class ItemShadowBlade extends ItemSword implements IConjuredItem {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 
-		if (ItemArtefact.isArtefactActive(player, AncientSpellcraftItems.charm_shadow_blade)) {
+		if (ItemArtefact.isArtefactActive(player, ASItems.charm_shadow_blade)) {
 
 			// sneak-casting causes the player to move upwards
 			startShadowForm(player, player.isSneaking());
@@ -184,7 +184,7 @@ public class ItemShadowBlade extends ItemSword implements IConjuredItem {
 	}
 
 	private static void applyWitherDamage(EntityLivingBase target) {
-		target.addPotionEffect(new PotionEffect(MobEffects.WITHER, AncientSpellcraftSpells.conjure_shadow_blade.getProperty(ConjureShadowBlade.WITHER_DURATION).intValue()));
+		target.addPotionEffect(new PotionEffect(MobEffects.WITHER, ASSpells.conjure_shadow_blade.getProperty(ConjureShadowBlade.WITHER_DURATION).intValue()));
 
 	}
 

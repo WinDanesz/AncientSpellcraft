@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.entity.living;
 
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellImproved;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSpells;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.entity.living.ISpellCaster;
@@ -135,7 +135,7 @@ public class EntitySkeletonMageMinion extends AbstractSkeleton implements ISpell
 
 	@Override
 	protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
-		this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(AncientSpellcraftItems.wizard_hat_ancient));
+		this.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(ASItems.wizard_hat_ancient));
 		for (EntityEquipmentSlot slot : EntityEquipmentSlot.values())
 			this.setDropChance(slot, 0.0f);
 	}
@@ -284,7 +284,7 @@ public class EntitySkeletonMageMinion extends AbstractSkeleton implements ISpell
 				spells.add(Spells.force_arrow);
 				break;
 			case HEALING:
-				spells.add(AncientSpellcraftSpells.healing_heart);
+				spells.add(ASSpells.healing_heart);
 				break;
 			case NECROMANCY:
 				spells.add(Spells.darkness_orb);

@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.tileentity;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.gui.ContainerScribingDesk;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.ItemCrystal;
 import electroblob.wizardry.item.ItemScroll;
@@ -243,7 +243,7 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 		decrStackSize(ContainerScribingDesk.RELIC_SLOT, 1);
 		decrStackSize(ContainerScribingDesk.INK_SLOT, 1);
 
-		ItemStack spellBook = new ItemStack(AncientSpellcraftItems.ancient_spell_book, 1, spell.metadata());
+		ItemStack spellBook = new ItemStack(ASItems.ancient_spell_book, 1, spell.metadata());
 		setInventorySlotContents(ContainerScribingDesk.BOOK_SLOT, spellBook);
 
 		if (WizardData.get(currentPlayer) != null) {

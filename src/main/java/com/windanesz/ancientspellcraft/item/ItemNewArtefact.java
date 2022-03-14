@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.integration.baubles.WizardryBaublesIntegration;
 import electroblob.wizardry.util.InventoryUtils;
@@ -42,7 +42,7 @@ public class ItemNewArtefact extends Item {
 	public ItemNewArtefact(EnumRarity rarity, AdditionalType type) {
 		super();
 		setMaxStackSize(1);
-		setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR);
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR);
 		this.rarity = rarity;
 		this.type = type;
 	}

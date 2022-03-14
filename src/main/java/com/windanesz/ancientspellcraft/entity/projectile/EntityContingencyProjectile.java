@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.entity.projectile;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
 import com.windanesz.ancientspellcraft.spell.Contingency;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.registry.Spells;
@@ -56,7 +56,7 @@ public class EntityContingencyProjectile extends EntityMagicProjectile {
 
 		}
 
-		world.playSound(this.posX, this.posY, this.posZ, AncientSpellcraftSounds.DISPEL, SoundCategory.HOSTILE, 1, 1, false);
+		world.playSound(this.posX, this.posY, this.posZ, ASSounds.DISPEL, SoundCategory.HOSTILE, 1, 1, false);
 		this.setDead();
 	}
 

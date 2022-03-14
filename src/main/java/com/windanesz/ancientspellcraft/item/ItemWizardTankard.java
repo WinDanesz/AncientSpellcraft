@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.client.DrawingUtils;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.EntityLivingBase;
@@ -69,7 +69,7 @@ public class ItemWizardTankard extends ItemASArtefact implements ITickableArtefa
 				CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) entityplayer, stack);
 			}
 
-			entityLiving.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.mana_regeneration, 400, 7));
+			entityLiving.addPotionEffect(new PotionEffect(ASPotions.mana_regeneration, 400, 7));
 		}
 
 		setMana(stack, 0);

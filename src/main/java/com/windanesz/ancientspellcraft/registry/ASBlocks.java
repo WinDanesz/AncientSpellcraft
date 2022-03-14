@@ -73,10 +73,10 @@ import javax.annotation.Nonnull;
 
 @GameRegistry.ObjectHolder(AncientSpellcraft.MODID)
 @Mod.EventBusSubscriber
-public class AncientSpellcraftBlocks {
+public class ASBlocks {
 
 
-	private AncientSpellcraftBlocks() {} // no instances
+	private ASBlocks() {} // no instances
 
 	@Nonnull
 	@SuppressWarnings("ConstantConditions")
@@ -169,14 +169,14 @@ public class AncientSpellcraftBlocks {
 		registerBlock(registry, "ice_door", (new BlockIceDoor(Material.PACKED_ICE)));
 		registerBlock(registry, "ice_crafting_table", (new BlockIceWorkbench()));
 		registerBlock(registry, "hard_frosted_ice", new BlockHardFrostedIce());
-		registerBlock(registry, "artefact_pensive", new BlockArtefactPensive().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT_GEAR));
-		registerBlock(registry, "sphere_cognizance", new BlockSphereCognizance().setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerBlock(registry, "sentinel_block_iron", new BlockSentinel(5, false).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerBlock(registry, "sentinel_block_gold", new BlockSentinel(10, false).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerBlock(registry, "sentinel_block_diamond", new BlockSentinel(20, false).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerBlock(registry, "sentinel_block_large_iron", new BlockSentinel(15, true).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerBlock(registry, "sentinel_block_large_gold", new BlockSentinel(30, true).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
-		registerBlock(registry, "sentinel_block_large_diamond", new BlockSentinel(60, true).setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT));
+		registerBlock(registry, "artefact_pensive", new BlockArtefactPensive().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR));
+		registerBlock(registry, "sphere_cognizance", new BlockSphereCognizance().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerBlock(registry, "sentinel_block_iron", new BlockSentinel(5, false).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerBlock(registry, "sentinel_block_gold", new BlockSentinel(10, false).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerBlock(registry, "sentinel_block_diamond", new BlockSentinel(20, false).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerBlock(registry, "sentinel_block_large_iron", new BlockSentinel(15, true).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerBlock(registry, "sentinel_block_large_gold", new BlockSentinel(30, true).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerBlock(registry, "sentinel_block_large_diamond", new BlockSentinel(60, true).setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
 		registerBlock(registry, "skull_watch", new BlockSkullWatch());
 		registerBlock(registry, "magelight", new BlockMageLight());
 		registerBlock(registry, "candlelight", new BlockCandleLight());

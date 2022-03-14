@@ -5,7 +5,7 @@ import com.windanesz.ancientspellcraft.client.gui.ContainerArcaneAnvil;
 import com.windanesz.ancientspellcraft.client.gui.ContainerSphereCognizance;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.item.WizardClassWeaponHelper;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.item.ItemScroll;
 import electroblob.wizardry.item.ItemSpellBook;
@@ -211,14 +211,14 @@ public class TileArcaneAnvil extends TileEntity implements IInventory {
 		ItemStack stack1 = this.inventory.get(ContainerArcaneAnvil.INPUT_SLOT_1);
 
 		// novice spellblade crafting
-		if (stack0.getItem() == AncientSpellcraftItems.battlemage_sword_hilt && stack1.getItem() == AncientSpellcraftItems.battlemage_sword_blade) {
-			return new ItemStack(AncientSpellcraftItems.battlemage_sword_novice);
+		if (stack0.getItem() == ASItems.battlemage_sword_hilt && stack1.getItem() == ASItems.battlemage_sword_blade) {
+			return new ItemStack(ASItems.battlemage_sword_novice);
 		}
 
 		int tierLevel = getSwordTier(stack0);
 
 		// crystal silver plating from crystal silver ingot
-		if (stack0.getItem() == AncientSpellcraftItems.crystal_silver_ingot && stack1.isEmpty()) {
+		if (stack0.getItem() == ASItems.crystal_silver_ingot && stack1.isEmpty()) {
 			return new ItemStack(WizardryItems.crystal_silver_plating);
 		}
 
@@ -227,7 +227,7 @@ public class TileArcaneAnvil extends TileEntity implements IInventory {
 			Tier tier = Tier.values()[tierLevel];
 			int progression = WandHelper.getProgression(stack0);
 
-			if (progression >= tier.next().getProgression() && stack1.getItem() == AncientSpellcraftItems.crystal_silver_ingot) {
+			if (progression >= tier.next().getProgression() && stack1.getItem() == ASItems.crystal_silver_ingot) {
 				ItemStack copy = stack0.copy();
 				ItemStack newSword = new ItemStack(WizardClassWeaponHelper.getClassItemForTier(tier.next(), ItemWizardArmour.ArmourClass.BATTLEMAGE));
 				newSword.setTagCompound(copy.getTagCompound());
@@ -240,15 +240,15 @@ public class TileArcaneAnvil extends TileEntity implements IInventory {
 	}
 
 	private int getSwordTier(ItemStack stack) {
-		if (stack.getItem() == AncientSpellcraftItems.battlemage_sword_novice) {
+		if (stack.getItem() == ASItems.battlemage_sword_novice) {
 			return 0;
 		}
 
-		if (stack.getItem() == AncientSpellcraftItems.battlemage_sword_apprentice) {
+		if (stack.getItem() == ASItems.battlemage_sword_apprentice) {
 			return 1;
 		}
 
-		if (stack.getItem() == AncientSpellcraftItems.battlemage_sword_advanced) {
+		if (stack.getItem() == ASItems.battlemage_sword_advanced) {
 			return 2;
 		}
 
@@ -287,10 +287,10 @@ public class TileArcaneAnvil extends TileEntity implements IInventory {
 		if (stack == ItemStack.EMPTY) { return true; }
 
 		if (slotNumber == 0 &&
-				stack.getItem() == AncientSpellcraftItems.battlemage_sword_hilt ||
-				stack.getItem() == AncientSpellcraftItems.battlemage_sword_novice ||
-				stack.getItem() == AncientSpellcraftItems.battlemage_sword_apprentice ||
-				stack.getItem() == AncientSpellcraftItems.battlemage_sword_advanced) {
+				stack.getItem() == ASItems.battlemage_sword_hilt ||
+				stack.getItem() == ASItems.battlemage_sword_novice ||
+				stack.getItem() == ASItems.battlemage_sword_apprentice ||
+				stack.getItem() == ASItems.battlemage_sword_advanced) {
 			return true;
 		} else if (slotNumber == ContainerSphereCognizance.BOOK_SLOT) {
 			return stack.getItem() instanceof ItemRelic || stack.getItem() instanceof ItemSpellBook || stack.getItem() instanceof ItemScroll;

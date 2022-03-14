@@ -2,8 +2,7 @@ package com.windanesz.ancientspellcraft.entity.construct;
 
 import com.windanesz.ancientspellcraft.block.BlockLightning;
 import com.windanesz.ancientspellcraft.block.ITemporaryBlock;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.tileentity.TileEntityLightningBlock;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.util.BlockUtils;
@@ -57,7 +56,7 @@ public class EntityBuilder extends EntityMagicConstruct {
 								world.setBlockState(currPos, blockToBuild);
 								world.scheduleUpdate(currPos.toImmutable(), blockToBuild.getBlock(), blockLifetime);
 
-								if (blockToBuild.getBlock() == AncientSpellcraftBlocks.lightning_block) {
+								if (blockToBuild.getBlock() == ASBlocks.lightning_block) {
 									BlockLightning.setProperties(world, currPos, getCaster(), blockLifetime, damageMultiplier);
 								}
 							}

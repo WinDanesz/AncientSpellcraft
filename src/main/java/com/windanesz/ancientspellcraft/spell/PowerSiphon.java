@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.spell;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.util.SpellModifiers;
@@ -31,7 +31,7 @@ public class PowerSiphon extends SpellRayAS {
 		if (target instanceof EntityLivingBase) {
 
 			EntityLivingBase targetEntity = (EntityLivingBase) target;
-			targetEntity.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.magical_exhaustion, getProperty(EFFECT_DURATION).intValue(), 0));
+			targetEntity.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, getProperty(EFFECT_DURATION).intValue(), 0));
 			if (caster != null)
 				caster.addPotionEffect(new PotionEffect(WizardryPotions.empowerment, getProperty(EFFECT_DURATION).intValue(), 0));
 			return true;

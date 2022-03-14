@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.client.renderer;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -24,7 +24,7 @@ public class RenderBubble {
 
 		EntityPlayer entity = event.getEntityPlayer();
 
-		if (entity.isInsideOfMaterial(Material.WATER) && entity.isPotionActive(AncientSpellcraftPotions.bubble_head)) {
+		if (entity.isInsideOfMaterial(Material.WATER) && entity.isPotionActive(ASPotions.bubble_head)) {
 
 			// For now we're just using a UV sphere
 

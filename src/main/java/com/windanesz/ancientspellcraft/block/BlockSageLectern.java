@@ -5,8 +5,8 @@ import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
 import com.windanesz.ancientspellcraft.item.ItemSageTome;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import com.windanesz.ancientspellcraft.tileentity.TileSageLectern;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.block.BlockReceptacle;
@@ -45,7 +45,7 @@ public class BlockSageLectern extends BlockHorizontal implements ITileEntityProv
 	public BlockSageLectern() {
 		super(Material.ROCK);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-		this.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		this.setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		this.setHardness(2.0F);
 		this.setResistance(5.0F);
 		this.setSoundType(SoundType.STONE);
@@ -238,6 +238,6 @@ public class BlockSageLectern extends BlockHorizontal implements ITileEntityProv
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return AncientSpellcraftItems.amulet_curse_ward;
+		return ASItems.amulet_curse_ward;
 	}
 }

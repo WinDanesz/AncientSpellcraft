@@ -7,7 +7,7 @@ import net.minecraftforge.common.DimensionManager;
 
 import javax.annotation.Nullable;
 
-public class AncientSpellcraftDimensions {
+public class ASDimensions {
 
 	public static final String POCKET_DIM_NAME = "pocket";
 	public static final int POCKET_DIM_ID = findNextFreeDimensionID();

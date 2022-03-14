@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftTabs;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
@@ -22,12 +22,12 @@ public class ItemSoulboundWandUpgrade extends ItemWandUpgrade {
 
 	public ItemSoulboundWandUpgrade() {
 		super();
-		this.setCreativeTab(AncientSpellcraftTabs.ANCIENTSPELLCRAFT);
+		this.setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		WizardData.registerStoredVariables(STORED_WANDS);
 	}
 
 	public static void init() {
-		WandHelper.registerSpecialUpgrade(AncientSpellcraftItems.soulbound_upgrade, "soulbound_upgrade");
+		WandHelper.registerSpecialUpgrade(ASItems.soulbound_upgrade, "soulbound_upgrade");
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class ItemSoulboundWandUpgrade extends ItemWandUpgrade {
 
 			for (ItemStack stack : player.inventory.mainInventory) {
 				if (stack.getItem() instanceof ItemWand || stack.getItem() instanceof IWizardClassWeapon) {
-					boolean hasUpgrade = WandHelper.getUpgradeLevel(stack, AncientSpellcraftItems.soulbound_upgrade) != 0;
+					boolean hasUpgrade = WandHelper.getUpgradeLevel(stack, ASItems.soulbound_upgrade) != 0;
 					if (hasUpgrade) {
 						itemList.add(stack.copy());
 						stack.setCount(0);
@@ -99,7 +99,7 @@ public class ItemSoulboundWandUpgrade extends ItemWandUpgrade {
 
 			for (ItemStack stack : player.inventory.offHandInventory) {
 				if (stack.getItem() instanceof ItemWand || stack.getItem() instanceof IWizardClassWeapon) {
-					boolean hasUpgrade = WandHelper.getUpgradeLevel(stack, AncientSpellcraftItems.soulbound_upgrade) != 0;
+					boolean hasUpgrade = WandHelper.getUpgradeLevel(stack, ASItems.soulbound_upgrade) != 0;
 					if (hasUpgrade) {
 						itemList.add(stack.copy());
 						stack.setCount(0);

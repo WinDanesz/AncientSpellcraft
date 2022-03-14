@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.worldgen;
 import com.google.common.base.Predicate;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockMatcher;
@@ -31,25 +31,25 @@ public class WorldGenCrystalShardOre implements IWorldGenerator {
 			Biome biome = world.getBiome(new BlockPos(chunkX * 16, 0, chunkZ * 16));
 
 			if (AncientSpellcraft.settings.shardFireBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.CRYSTAL_ORE_FIRE, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
+				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_FIRE, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
 			}
 			if (AncientSpellcraft.settings.shardNecromancyShardBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.CRYSTAL_ORE_NECROMANCY, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
+				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_NECROMANCY, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
 			}
 			if (AncientSpellcraft.settings.shardHealingBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.CRYSTAL_ORE_HEALING, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
+				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_HEALING, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
 			}
 			if (AncientSpellcraft.settings.shardEarthShardBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.CRYSTAL_ORE_EARTH, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
+				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_EARTH, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
 			}
 			if (AncientSpellcraft.settings.shardLightningBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.CRYSTAL_ORE_LIGHTNING, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
+				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_LIGHTNING, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
 			}
 			if (AncientSpellcraft.settings.shardIceBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.CRYSTAL_ORE_ICE, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
+				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_ICE, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
 			}
 			if (AncientSpellcraft.settings.shardSorceryShardBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, AncientSpellcraftBlocks.CRYSTAL_ORE_SORCERY, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
+				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_SORCERY, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
 			}
 		}
 	}

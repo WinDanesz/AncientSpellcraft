@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.potion;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,7 +14,7 @@ public class PotionSoulScorch extends PotionMagicEffectAS {
 
 	@SubscribeEvent
 	public static void onLivingHeal(LivingHealEvent event) {
-		if (event.getEntityLiving() != null && event.getEntityLiving().isPotionActive(AncientSpellcraftPotions.soul_scorch)) {
+		if (event.getEntityLiving() != null && event.getEntityLiving().isPotionActive(ASPotions.soul_scorch)) {
 			float newAmount = event.getAmount() * 0.4f;
 			event.setAmount(newAmount);
 		}

@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
@@ -44,8 +44,8 @@ public class CurseArmor extends SpellRay {
 				if (target instanceof EntityLivingBase) {
 					EntityLivingBase livingTarget = (EntityLivingBase) target;
 
-					if (livingTarget.isPotionActive(AncientSpellcraftPotions.curse_ward) ||
-							(livingTarget instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) livingTarget, AncientSpellcraftItems.amulet_curse_ward))) {
+					if (livingTarget.isPotionActive(ASPotions.curse_ward) ||
+							(livingTarget instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) livingTarget, ASItems.amulet_curse_ward))) {
 						return false;
 					}
 
@@ -105,7 +105,7 @@ public class CurseArmor extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }
 

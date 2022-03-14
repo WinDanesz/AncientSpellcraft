@@ -2,8 +2,8 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftPotions;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.EntityUtils;
@@ -37,7 +37,7 @@ public class Permashrink extends SpellRay {
 
 			// This will actually run out in the end, but only if you leave Minecraft running for 3.4 years
 			if (!world.isRemote)
-				((EntityLivingBase) target).addPotionEffect(new PotionEffect(AncientSpellcraftPotions.shrinkage, Integer.MAX_VALUE, getProperty(EFFECT_STRENGTH).intValue()));
+				((EntityLivingBase) target).addPotionEffect(new PotionEffect(ASPotions.shrinkage, Integer.MAX_VALUE, getProperty(EFFECT_STRENGTH).intValue()));
 		}
 
 		return true;
@@ -62,7 +62,7 @@ public class Permashrink extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }
 

@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.entity.construct;
 
 import com.windanesz.ancientspellcraft.entity.living.EntityWizardMerchant;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.ASParticles;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.util.BlockUtils;
@@ -53,7 +53,7 @@ public class EntityBarterConstruct extends EntityMagicConstruct {
 				if (getCaster() != null && !world.isRemote && getCaster() instanceof EntityPlayer) {
 					getCaster().sendMessage(new TextComponentTranslation("item.ancientspellcraft:bartering_scroll.will_not_summon"));
 				}
-				InventoryHelper.spawnItemStack(world, posX, posY, posZ, new ItemStack(AncientSpellcraftItems.bartering_scroll));
+				InventoryHelper.spawnItemStack(world, posX, posY, posZ, new ItemStack(ASItems.bartering_scroll));
 				this.setDead();
 			}
 		}

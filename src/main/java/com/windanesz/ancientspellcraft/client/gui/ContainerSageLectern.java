@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.client.gui;
 
 import com.windanesz.ancientspellcraft.packet.PacketControlInput;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.tileentity.TileSageLectern;
 import electroblob.wizardry.inventory.SlotItemList;
 import electroblob.wizardry.registry.WizardrySounds;
@@ -29,42 +29,42 @@ public class ContainerSageLectern extends Container {
 
 		// INPUT_SLOT_0
 		this.addSlotToContainer(new SlotItemList(te, 0, 26, 24, 1,
-				AncientSpellcraftItems.sage_tome_novice_fire,
-				AncientSpellcraftItems.sage_tome_apprentice_fire,
-				AncientSpellcraftItems.sage_tome_advanced_fire,
-				AncientSpellcraftItems.sage_tome_master_fire,
-				AncientSpellcraftItems.sage_tome_novice_ice,
-				AncientSpellcraftItems.sage_tome_apprentice_ice,
-				AncientSpellcraftItems.sage_tome_advanced_ice,
-				AncientSpellcraftItems.sage_tome_master_ice,
-				AncientSpellcraftItems.sage_tome_novice_lightning,
-				AncientSpellcraftItems.sage_tome_apprentice_lightning,
-				AncientSpellcraftItems.sage_tome_advanced_lightning,
-				AncientSpellcraftItems.sage_tome_master_lightning,
-				AncientSpellcraftItems.sage_tome_novice_necromancy,
-				AncientSpellcraftItems.sage_tome_apprentice_necromancy,
-				AncientSpellcraftItems.sage_tome_advanced_necromancy,
-				AncientSpellcraftItems.sage_tome_master_necromancy,
-				AncientSpellcraftItems.sage_tome_novice_earth,
-				AncientSpellcraftItems.sage_tome_apprentice_earth,
-				AncientSpellcraftItems.sage_tome_advanced_earth,
-				AncientSpellcraftItems.sage_tome_master_earth,
-				AncientSpellcraftItems.sage_tome_novice_sorcery,
-				AncientSpellcraftItems.sage_tome_apprentice_sorcery,
-				AncientSpellcraftItems.sage_tome_advanced_sorcery,
-				AncientSpellcraftItems.sage_tome_master_sorcery,
-				AncientSpellcraftItems.sage_tome_novice_healing,
-				AncientSpellcraftItems.sage_tome_apprentice_healing,
-				AncientSpellcraftItems.sage_tome_advanced_healing,
-				AncientSpellcraftItems.sage_tome_master_healing
+				ASItems.sage_tome_novice_fire,
+				ASItems.sage_tome_apprentice_fire,
+				ASItems.sage_tome_advanced_fire,
+				ASItems.sage_tome_master_fire,
+				ASItems.sage_tome_novice_ice,
+				ASItems.sage_tome_apprentice_ice,
+				ASItems.sage_tome_advanced_ice,
+				ASItems.sage_tome_master_ice,
+				ASItems.sage_tome_novice_lightning,
+				ASItems.sage_tome_apprentice_lightning,
+				ASItems.sage_tome_advanced_lightning,
+				ASItems.sage_tome_master_lightning,
+				ASItems.sage_tome_novice_necromancy,
+				ASItems.sage_tome_apprentice_necromancy,
+				ASItems.sage_tome_advanced_necromancy,
+				ASItems.sage_tome_master_necromancy,
+				ASItems.sage_tome_novice_earth,
+				ASItems.sage_tome_apprentice_earth,
+				ASItems.sage_tome_advanced_earth,
+				ASItems.sage_tome_master_earth,
+				ASItems.sage_tome_novice_sorcery,
+				ASItems.sage_tome_apprentice_sorcery,
+				ASItems.sage_tome_advanced_sorcery,
+				ASItems.sage_tome_master_sorcery,
+				ASItems.sage_tome_novice_healing,
+				ASItems.sage_tome_apprentice_healing,
+				ASItems.sage_tome_advanced_healing,
+				ASItems.sage_tome_master_healing
 		));
 
 		// INPUT_SLOT_1
-		this.addSlotToContainer(new SlotItemList(te, 1, 75, 24, 1, AncientSpellcraftItems.battlemage_sword_blade, AncientSpellcraftItems.crystal_silver_ingot));
+		this.addSlotToContainer(new SlotItemList(te, 1, 75, 24, 1, ASItems.battlemage_sword_blade, ASItems.crystal_silver_ingot));
 
 		/// RESULT_SLOT
 		this.addSlotToContainer(new SlotItemList(te, 2, 133, 24, 1,
-										AncientSpellcraftItems.enchanted_page) {
+										ASItems.enchanted_page) {
 									@Override
 									public ItemStack onTake(EntityPlayer player, ItemStack stack) {
 										if (!player.world.isRemote) 			{

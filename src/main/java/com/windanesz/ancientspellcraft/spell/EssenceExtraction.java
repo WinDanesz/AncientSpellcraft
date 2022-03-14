@@ -2,9 +2,9 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftSounds;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSounds;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.block.BlockBookshelf;
@@ -137,11 +137,11 @@ public class EssenceExtraction extends SpellRay {
 							data.setVariable(EXTRACTION_LOCATION, null);
 
 							if (!world.isRemote) {
-								world.playSound(pos.getX(), pos.getY(), pos.getZ(), AncientSpellcraftSounds.IMBUEMENT_TABLE_BREAK, SoundCategory.HOSTILE, 1, 1, false);
+								world.playSound(pos.getX(), pos.getY(), pos.getZ(), ASSounds.IMBUEMENT_TABLE_BREAK, SoundCategory.HOSTILE, 1, 1, false);
 
 								if (player.getHeldItemOffhand().getItem() == WizardryItems.astral_diamond) {
 									player.getHeldItemOffhand().shrink(1);
-									ItemStack newStack = new ItemStack(AncientSpellcraftItems.astral_diamond_charged);
+									ItemStack newStack = new ItemStack(ASItems.astral_diamond_charged);
 									if (player.getHeldItemOffhand().isEmpty()) {
 										player.setHeldItem(EnumHand.OFF_HAND, newStack);
 									} else if (!player.inventory.addItemStackToInventory(newStack)) {
@@ -161,7 +161,7 @@ public class EssenceExtraction extends SpellRay {
 								//							}
 
 							}
-							world.setBlockState(pos, AncientSpellcraftBlocks.IMBUEMENT_ALTAR_RUINED.getDefaultState());
+							world.setBlockState(pos, ASBlocks.IMBUEMENT_ALTAR_RUINED.getDefaultState());
 						}
 						return true;
 					}
@@ -219,6 +219,6 @@ public class EssenceExtraction extends SpellRay {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spell_book;  // No scroll!
+		return item == ASItems.ancient_spell_book;  // No scroll!
 	}
 }

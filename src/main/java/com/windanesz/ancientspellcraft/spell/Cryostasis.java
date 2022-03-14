@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftBlocks;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.spell.SpellBuff;
@@ -62,8 +62,8 @@ public class Cryostasis extends SpellBuff {
 				int duration = (int) (getProperty(EFFECT_DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade));
 
 				if (canBlockBeReplaced(caster.world, currPos)) {
-					caster.world.setBlockState(currPos, AncientSpellcraftBlocks.HARD_FROSTED_ICE.getDefaultState());
-					caster.world.scheduleUpdate(currPos.toImmutable(), AncientSpellcraftBlocks.HARD_FROSTED_ICE, duration);
+					caster.world.setBlockState(currPos, ASBlocks.HARD_FROSTED_ICE.getDefaultState());
+					caster.world.scheduleUpdate(currPos.toImmutable(), ASBlocks.HARD_FROSTED_ICE, duration);
 				}
 			}
 			caster.world.setBlockToAir(caster.getPosition());
@@ -102,6 +102,6 @@ public class Cryostasis extends SpellBuff {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == AncientSpellcraftItems.ancient_spellcraft_spell_book || item == AncientSpellcraftItems.ancient_spellcraft_scroll;
+		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 }

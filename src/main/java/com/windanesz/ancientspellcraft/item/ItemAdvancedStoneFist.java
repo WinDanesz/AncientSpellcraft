@@ -1,6 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.entity.construct.EntityEarthquake;
 import electroblob.wizardry.util.BlockUtils;
@@ -42,7 +42,7 @@ public class ItemAdvancedStoneFist extends ItemStoneFist {
 				player.getHeldItem(hand).damageItem(4, player);
 				player.swingArm(hand);
 				return EnumActionResult.PASS;
-			} else if (ItemNewArtefact.isNewArtefactActive(player, AncientSpellcraftItems.belt_stone)) {
+			} else if (ItemNewArtefact.isNewArtefactActive(player, ASItems.belt_stone)) {
 				if (!world.isRemote) {
 					EntityEarthquake earthquake = new EntityEarthquake(world);
 					earthquake.setCaster(player);

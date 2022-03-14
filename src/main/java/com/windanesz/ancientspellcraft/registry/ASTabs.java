@@ -13,12 +13,12 @@ import net.minecraft.item.ItemStack;
  *
  * @author WinDanesz
  */
-public final class AncientSpellcraftTabs {
+public final class ASTabs {
 
-	public static final CreativeTabs ANCIENTSPELLCRAFT = new AncientSpellcraftTab("ancientspellcraft") {
+	public static final CreativeTabs ANCIENTSPELLCRAFT = new ASTab("ancientspellcraft") {
 		@Override
 		public ItemStack createIcon() {
-			return new ItemStack(AncientSpellcraftItems.stone_tablet_large);
+			return new ItemStack(ASItems.stone_tablet_large);
 		}
 	};
 
@@ -44,28 +44,28 @@ public final class AncientSpellcraftTabs {
 
 			true);
 
-	public static final CreativeTabs ANCIENTSPELLCRAFT_GEAR = new AncientSpellcraftTab("ancientspellcraftgear") {
+	public static final CreativeTabs ANCIENTSPELLCRAFT_GEAR = new ASTab("ancientspellcraftgear") {
 		@Override
 		public ItemStack createIcon() {
-			return new ItemStack(AncientSpellcraftItems.ring_blast);
+			return new ItemStack(ASItems.ring_blast);
 		}
 	};
 
-	public static final CreativeTabs ANCIENTSPELLCRAFT_RITUALS = new AncientSpellcraftTab("ancientspellcraftrituals") {
+	public static final CreativeTabs ANCIENTSPELLCRAFT_RITUALS = new ASTab("ancientspellcraftrituals") {
 		@Override
 		public ItemStack createIcon() {
-			return new ItemStack(AncientSpellcraftItems.ritual_book);
+			return new ItemStack(ASItems.ritual_book);
 		}
 	};
 
-	private static class AncientSpellcraftTab extends CreativeTabs {
-		public AncientSpellcraftTab(String label) {
+	private static class ASTab extends CreativeTabs {
+		public ASTab(String label) {
 			super(label);
 		}
 
 		@Override
 		public ItemStack createIcon() {
-			return new ItemStack(AncientSpellcraftItems.charm_mana_orb);
+			return new ItemStack(ASItems.charm_mana_orb);
 		}
 	}
 

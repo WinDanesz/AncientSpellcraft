@@ -1,7 +1,7 @@
 package com.windanesz.ancientspellcraft.client.model;
 
 import com.windanesz.ancientspellcraft.item.ItemRelic;
-import com.windanesz.ancientspellcraft.registry.AncientSpellcraftItems;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.color.ItemColors;
@@ -22,10 +22,10 @@ public class ItemColorizer {
 			return 0xFFFFFF;
 		};
 
-		itemColors.registerItemColorHandler(itemColorForOneLayer, AncientSpellcraftItems.stone_tablet_small);
-		itemColors.registerItemColorHandler(itemColorForOneLayer, AncientSpellcraftItems.stone_tablet);
-		itemColors.registerItemColorHandler(itemColorForOneLayer, AncientSpellcraftItems.stone_tablet_large);
-		itemColors.registerItemColorHandler(itemColorForOneLayer, AncientSpellcraftItems.stone_tablet_grand);
+		itemColors.registerItemColorHandler(itemColorForOneLayer, ASItems.stone_tablet_small);
+		itemColors.registerItemColorHandler(itemColorForOneLayer, ASItems.stone_tablet);
+		itemColors.registerItemColorHandler(itemColorForOneLayer, ASItems.stone_tablet_large);
+		itemColors.registerItemColorHandler(itemColorForOneLayer, ASItems.stone_tablet_grand);
 	}
 
 }
