@@ -1,7 +1,6 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.item.ItemStoneFist;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.IConjuredItem;
 import electroblob.wizardry.spell.SpellConjuration;
@@ -44,20 +43,17 @@ public class StoneFist extends SpellConjuration {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		if (caster.getHeldItemMainhand().getItem() instanceof ItemStoneFist) {
-			return false;
-		}
 
 		if (hand != EnumHand.OFF_HAND) {
 			if (!world.isRemote)
 				caster.sendStatusMessage(new TextComponentTranslation("spell." + getRegistryName() + ".wrong_hand"), true);
 			return false;
 		}
-		if (caster.getHeldItemMainhand() != ItemStack.EMPTY) {
-			if (!world.isRemote)
-				caster.sendStatusMessage(new TextComponentTranslation("spell." + getRegistryName() + ".full_hand"), true);
-			return false;
-		}
+//		if (caster.) {
+//			if (!world.isRemote)
+//				caster.sendStatusMessage(new TextComponentTranslation("spell." + getRegistryName() + ".full_hand"), true);
+//			return false;
+//		}
 
 		return super.cast(world, caster, hand, ticksInUse, modifiers);
 	}
