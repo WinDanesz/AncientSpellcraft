@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "ancientspellcraft:items/oblivion_scroll"
+        "layer0": "ancientspellcraft:items/amnesia_scroll"
     }
 }
