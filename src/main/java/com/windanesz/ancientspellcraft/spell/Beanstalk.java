@@ -23,6 +23,7 @@ public class Beanstalk extends SpellRayAS {
 	public Beanstalk() {
 		super("beanstalk", SpellActions.POINT, true);
 		addProperties(MAX_HEIGHT_IN_BLOCKS);
+		soundValues(0.7f, 1f, 1f);
 	}
 
 	@Override
