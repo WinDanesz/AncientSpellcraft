@@ -109,14 +109,8 @@ public class ASLoot {
 			LootPool sourcePool = OBELISK.getPool("ancientspellcraft");
 			injectEntries(sourcePool, targetPool);
 		} else if (event.getName().toString().equals(Wizardry.MODID + ":chests/shrine") && SHRINE_EXTRAS != null) {
-			LootPool targetPool = event.getTable().getPool("high_value");
-			LootPool sourcePool = SHRINE.getPool("ancientspellcraft");
-			injectEntries(sourcePool, targetPool);
-
 			// add shrine extras
 			event.getTable().addPool(SHRINE_EXTRAS.getPool("shrine_extras"));
-
-
 		} else if (event.getName().toString().equals(Wizardry.MODID + ":chests/wizard_tower") && WIZARD_TOWER != null) {
 			LootPool targetPool = event.getTable().getPool("wizardry");
 			LootPool sourcePool = WIZARD_TOWER.getPool("ancientspellcraft");
@@ -127,6 +121,12 @@ public class ASLoot {
 			injectEntries(sourcePool, targetPool);
 		}
 
+		if (event.getName().toString().equals(Wizardry.MODID + ":chests/shrine") && SHRINE != null) {
+			LootPool targetPool = event.getTable().getPool("high_value");
+			LootPool sourcePool = SHRINE.getPool("ancientspellcraft");
+			injectEntries(sourcePool, targetPool);
+
+		}
 
 		// inject artefacts to ebwiz tables
 		if (Arrays.asList(AncientSpellcraft.settings.artefactInjectionLocations).contains(event.getName())) {
