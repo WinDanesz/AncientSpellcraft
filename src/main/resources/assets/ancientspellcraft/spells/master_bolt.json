@@ -10,10 +10,10 @@
 	"trades": true,
     "looting": true
   },
-  "tier": "advanced",
+  "tier": "master",
   "element": "lightning",
   "type": "projectile",
-  "cost": 35,
+  "cost": 40,
   "chargeup": 0,
   "cooldown": 20,
   "base_properties": {

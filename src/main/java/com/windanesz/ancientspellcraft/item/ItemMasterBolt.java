@@ -5,6 +5,7 @@ import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.registry.WizardrySounds;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -51,6 +52,10 @@ public class ItemMasterBolt extends ItemBlock {
 		Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc");
 	}
 
+	public EnumAction getItemUseAction(ItemStack stack)
+	{
+		return EnumAction.BOW;
+	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){

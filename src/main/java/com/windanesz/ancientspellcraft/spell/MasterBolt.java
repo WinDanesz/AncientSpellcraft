@@ -91,6 +91,10 @@ public class MasterBolt extends Spell {
 						if (!world.isRemote) {
 							world.setBlockToAir(destination.pos);
 						}
+
+						//ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).entity(caster).pos(origin.subtract(caster.getPositionVector()))
+						//		.length(freeRange).spawn(world);
+
 						caster.setPositionAndUpdate(destination.pos.getX() + 0.5, destination.pos.getY(), destination.pos.getZ() + 0.5);
 					}
 					locations.remove(destination);

@@ -30,9 +30,14 @@ public class EntityMasterBolt extends EntityMagicArrow {
 
 	@Override public DamageType getDamageType(){ return DamageType.SHOCK; }
 
-	@Override public boolean doGravity(){ return false; }
+	@Override public boolean doGravity(){ return true; }
 
-	@Override public boolean doDeceleration(){ return false; }
+	@Override public boolean doDeceleration(){ return true; }
+
+	@Override
+	public boolean doOverpenetration() {
+		return true;
+	}
 
 	@Override
 	public void onEntityHit(EntityLivingBase entityHit){
