@@ -73,18 +73,6 @@
                 },
                 {
                     "type": "item",
-                    "name": "ancientspellcraft:bartering_scroll",
-                    "entryName": "bartering_scroll",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:transmutation_scroll",
-                    "entryName": "transmutation_scroll",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
                     "name": "ancientspellcraft:blank_rune",
                     "entryName": "blank_rune",
                     "weight": 12,
@@ -107,6 +95,32 @@
                 {
                     "type": "loot_table",
                     "name": "ancientspellcraft:subsets/ritual_books",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amnesia_scroll",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:knowledge_scroll",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:duplication_scroll",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:transmutation_scroll",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:bartering_scroll",
+                    "entryName": "bartering_scroll",
                     "weight": 1
                 }
             ]

@@ -142,20 +142,34 @@
                 {
                     "type": "item",
                     "name": "ancientspellcraft:transmutation_scroll",
-                    "entryName": "transmutation_scroll",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amnesia_scroll",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:knowledge_scroll",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:duplication_scroll",
                     "weight": 1
                 },
                 {
                     "type": "item",
                     "name": "ancientspellcraft:crystal_silver_nugget",
                     "entryName": "crystal_silver_nugget",
-                    "weight": 3,
+                    "weight": 4,
                     "functions": [
                         {
                             "function": "minecraft:set_count",
                             "count": {
                                 "min": 1,
-                                "max": 2
+                                "max": 4
                             }
                         }
                     ]
@@ -164,6 +178,17 @@
                     "type": "loot_table",
                     "name": "ancientspellcraft:subsets/ritual_books",
                     "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:runic_place",
+                    "weight": 2,
+                    "functions": [
+                        {
+                            "function": "ebwizardry:random_spell",
+                            "undiscovered_bias": 0.3
+                        }
+                    ]
                 }
             ]
         },

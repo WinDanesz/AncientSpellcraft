@@ -17,28 +17,29 @@
                     ]
                 },
                 {
-                    "type": "loot_table",
-                    "name": "ebwizardry:subsets/rare_artefacts",
-                    "weight": 3,
-                    "conditions": [
-                        {
-                            "condition": "ancientspellcraft:artefact_condition",
-                            "required_artefact": "ancientspellcraft:charm_clover",
-                            "chance": 0.05
-                        }
-                    ]
+                    "type": "item",
+                    "name": "ancientspellcraft:amnesia_scroll",
+                    "weight": 1
                 },
                 {
-                    "type": "loot_table",
-                    "name": "ebwizardry:subsets/epic_artefacts",
-                    "weight": 1,
-                    "conditions": [
-                        {
-                            "condition": "ancientspellcraft:artefact_condition",
-                            "required_artefact": "ancientspellcraft:charm_clover",
-                            "chance": 0.05
-                        }
-                    ]
+                    "type": "item",
+                    "name": "ancientspellcraft:knowledge_scroll",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:duplication_scroll",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:transmutation_scroll",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:bartering_scroll",
+                    "weight": 1
                 }
             ]
         }
