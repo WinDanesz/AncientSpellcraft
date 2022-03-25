@@ -1,5 +1,3 @@
-
-
 import org.apache.tools.ant.filters.ReplaceTokens
 
 buildscript {
@@ -131,42 +129,10 @@ dependencies {
 
     implementation fg.deobf("curse.maven:ElectroblobsWizardry-${wizardry_projectid}:${wizardry_fileid}")
     implementation fg.deobf("curse.maven:baubles-${baubles_projectid}:${baubles_fileid}")
-    //runtime "curse.maven:jei-${jei_projectid}:${jei_fileid}"
     implementation fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}")
     implementation fg.deobf("curse.maven:artemislib-${artemislib_projectid}:${artemislib_fileid}")
     implementation fg.deobf("curse.maven:antique-atlas-${antiqueatlas_projectid}:${antiqueatlas_fileid}")
-
-    //// Dependencies ////
-
-    //// Forge examples ////
-    // You may put jars on which you depend on in ./libs or you may define them like so..
-    // compile "some.group:artifact:version:classifier"
-    // compile "some.group:artifact:version"
-
-    // Real examples
-    // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
-    // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // These dependencies get remapped to your current MCP mappings
-    // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // For more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
-    //// Forge examples ////
-
 }
-
-//// (1.12.2 + FG3) resources issue fix by Gigaherz
-//sourceSets {
-//    main {
-//        output.resourcesDir = file('build/combined')
-//        java.outputDir = file('build/combined')
-//    }
-//}
 
 //// Project manifest data ////
 
@@ -207,7 +173,7 @@ task sourceJar(type: Jar, dependsOn: classes) {
         ])
     }
 }
-//
+
 //processResources {
 //    // this will ensure that this task is redone when the versions change.
 //    inputs.property "version", version.toString()
@@ -227,8 +193,6 @@ task sourceJar(type: Jar, dependsOn: classes) {
 //    }
 //}
 
-
-
 //// Project manifest data ////
 
 // Example configuration to allow publishing using the maven-publish task
@@ -236,25 +200,6 @@ task sourceJar(type: Jar, dependsOn: classes) {
 jar.finalizedBy('reobfJar') 
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 // publish.dependsOn('reobfJar')
-
-//publishing {
-//    repositories {
-//        maven {
-//            name = "GitHubPackages"
-//            url = "https://maven.pkg.github.com/${project.github}"
-//            credentials {
-//                username = System.getenv("GITHUB_ACTOR")
-//                password = System.getenv("GITHUB_TOKEN")
-//            }
-//        }
-//    }
-//    publications {
-//        gpr(MavenPublication) {
-//            artifactId archivesBaseName
-//            from(components.java)
-//        }
-//    }
-//}
 
 // downloads the dependency sources from github into the libs folder
 // Yes, I've forked some of them to properly tag their versions...
