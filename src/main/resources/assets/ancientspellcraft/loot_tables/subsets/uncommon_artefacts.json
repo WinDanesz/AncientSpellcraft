@@ -38,6 +38,21 @@
                     "type": "item",
                     "name": "ancientspellcraft:ring_mana_lesser",
                     "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ring_charge",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ring_lily_flower",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ring_protector",
+                    "weight": 1
                 }
             ]
         }
