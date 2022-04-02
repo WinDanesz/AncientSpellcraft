@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " F ",
+        "H H",
+        " R "
+    ],
+    "key": {
+        "F": {
+            "item": "ebwizardry:medium_mana_flask"
+        },
+        "H": {
+            "item": "ebwizardry:magic_crystal",
+            "data": 7
+        },
+        "R": {
+            "item": "ancientspellcraft:purifying_elixir_recipe",
+            "data": 7
+        }
+    },
+    "result": {
+        "item": "ebwizardry:purifying_elixir"
+    }
+}

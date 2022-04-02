@@ -50,6 +50,7 @@ import electroblob.wizardry.item.ItemWandUpgrade;
 import electroblob.wizardry.potion.Curse;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardryItems;
+import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.ImbueWeapon;
 import electroblob.wizardry.spell.Spell;
@@ -122,9 +123,15 @@ import static electroblob.wizardry.item.ItemArtefact.isArtefactActive;
 @Mod.EventBusSubscriber
 public class ASEventHandler {
 
-	private ASEventHandler() {} // No instances!
-
 	public static final float COST_REDUCTION_PER_ARMOUR = 0.15f;
+	public static final IStoredVariable<Integer> SPELL_ID = IStoredVariable.StoredVariable.ofInt("artefactEternitySpell", Persistence.ALWAYS);
+	public static final IStoredVariable<Integer> COUNTDOWN_KEY = IStoredVariable.StoredVariable.ofInt("artefactEternityCountdown", Persistence.NEVER).withTicker(ASEventHandler::update);
+
+	static {
+		WizardData.registerStoredVariables(COUNTDOWN_KEY, SPELL_ID);
+	}
+
+	private ASEventHandler() {} // No instances!
 
 	@SubscribeEvent
 	public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
@@ -249,6 +256,8 @@ public class ASEventHandler {
 		}
 	}
 
+	/////////////////////////////// ARTEFACT EVENTS ///////////////////////////////
+
 	@SubscribeEvent(priority = EventPriority.LOW) // Low priority in case the event gets cancelled at default priority
 	public static void onLivingAttackEvent(LivingAttackEvent event) {
 		if (event.getEntity() instanceof EntityPlayer) {
@@ -322,15 +331,6 @@ public class ASEventHandler {
 				}
 			}
 		}
-	}
-
-	/////////////////////////////// ARTEFACT EVENTS ///////////////////////////////
-
-	public static final IStoredVariable<Integer> COUNTDOWN_KEY = IStoredVariable.StoredVariable.ofInt("artefactEternityCountdown", Persistence.NEVER).withTicker(ASEventHandler::update);
-	public static final IStoredVariable<Integer> SPELL_ID = IStoredVariable.StoredVariable.ofInt("artefactEternitySpell", Persistence.ALWAYS);
-
-	static {
-		WizardData.registerStoredVariables(COUNTDOWN_KEY, SPELL_ID);
 	}
 
 	private static int update(EntityPlayer player, Integer countdown) {
@@ -419,9 +419,9 @@ public class ASEventHandler {
 					if ((player.getHealth() <= 8 || (player.getHealth() - event.getAmount() <= 6)) && player.world.rand.nextFloat() < 0.75f) {
 						boolean shouldContinue = true;
 						for (ItemStack wand : ASUtils.getAllHotbarWands(player)) {
-							if (!shouldContinue) break;
+							if (!shouldContinue) { break; }
 							Spell[] spells = WandHelper.getSpells(wand);
-							List<Spell> minions =  new ArrayList<>();
+							List<Spell> minions = new ArrayList<>();
 							List<Integer> indexes = new ArrayList<>();
 
 							int index = 0;
@@ -440,9 +440,9 @@ public class ASEventHandler {
 								// get modifiers
 								SpellModifiers modifiers = new SpellModifiers();
 
-								if(WizardData.get(player) != null){
+								if (WizardData.get(player) != null) {
 									modifiers = WizardData.get(player).itemCastingModifiers;
-								}else{
+								} else {
 									modifiers = ((ItemWand) wand.getItem()).calculateModifiers(wand, player, spell); // Fallback to the old way, should never be used
 								}
 
@@ -749,28 +749,27 @@ public class ASEventHandler {
 
 		if (!event.getArrow().world.isRemote) {
 
-			if (event.getArrow().shootingEntity != null && event.getArrow().shootingEntity instanceof EntityPlayer) {
+			if (event.getArrow().shootingEntity instanceof EntityPlayer) {
 
 				EntityPlayer player = (EntityPlayer) event.getArrow().shootingEntity;
 
-				for (ItemArtefact artefact : getActiveArtefacts(player)) {
+				if (player.world.rand.nextFloat() < 0.2f && ItemArtefact.isArtefactActive(player, ASItems.ring_poison_arrow)) {
+					if (event.getRayTraceResult().entityHit instanceof EntityLivingBase) {
+						EntityLivingBase target = (EntityLivingBase) event.getRayTraceResult().entityHit;
+						if (!target.isPotionActive(MobEffects.POISON)) {
+							target.addPotionEffect(new PotionEffect(MobEffects.POISON, 100)); // 5 seconds of poisoning
 
-					if (artefact == ASItems.ring_poison_arrow) {
-						//						if (player.world.rand.nextFloat() < 0.2f) {
-						if (player.world.rand.nextFloat() < 0.2f) {
-
-							if (event.getRayTraceResult().entityHit != null && event.getRayTraceResult().entityHit instanceof EntityLivingBase) {
-								EntityLivingBase target = (EntityLivingBase) event.getRayTraceResult().entityHit;
-								if (!target.isPotionActive(MobEffects.POISON)) {
-									target.addPotionEffect(new PotionEffect(MobEffects.POISON, 100)); // 5 seconds of poisoning
-
-								}
-							}
 						}
 					}
 				}
-			}
 
+				if (ItemArtefact.isArtefactActive(player, ASItems.charm_ice_arrow)) {
+					if (event.getRayTraceResult().entityHit instanceof EntityLivingBase) {
+						EntityLivingBase target = (EntityLivingBase) event.getRayTraceResult().entityHit;
+						target.addPotionEffect(new PotionEffect(WizardryPotions.frost, 30)); // 1,5 seconds of poisoning
+					}
+				}
+			}
 		}
 	}
 
@@ -972,9 +971,7 @@ public class ASEventHandler {
 					if (modifier >= 0) {
 						modifiers.set(SpellModifiers.POTENCY, (1 + modifier) * potency, false);
 					}
-				} else
-
-				if (artefact == ASItems.belt_scroll_holder && ASBaublesIntegration.enabled()) {
+				} else if (artefact == ASItems.belt_scroll_holder && ASBaublesIntegration.enabled()) {
 					ItemStack holder = ASBaublesIntegration.getBeltSlotItemStack(player);
 					if (holder.getItem() instanceof ItemBeltScrollHolder) {
 						ItemStack scroll = ItemBeltScrollHolder.getScroll(holder);
@@ -990,17 +987,15 @@ public class ASEventHandler {
 							}
 						}
 					}
-				} else
-
-				if (artefact == ASItems.head_lightning && ASBaublesIntegration.enabled()) {
+				} else if (artefact == ASItems.head_lightning && ASBaublesIntegration.enabled()) {
 
 					if (event.getSpell().getElement() == Element.LIGHTNING && player.world.getBlockState(player.getPosition()).getBlock() == ASBlocks.lightning_block) {
-							modifiers.set(WizardryItems.blast_upgrade, modifiers.get(WizardryItems.blast_upgrade) + 0.25F, true);
-							modifiers.set(WizardryItems.range_upgrade, modifiers.get(WizardryItems.range_upgrade) + 0.25F, true);
-							modifiers.set(WizardryItems.duration_upgrade, modifiers.get(WizardryItems.duration_upgrade) + 0.25F, true);
-						}
+						modifiers.set(WizardryItems.blast_upgrade, modifiers.get(WizardryItems.blast_upgrade) + 0.25F, true);
+						modifiers.set(WizardryItems.range_upgrade, modifiers.get(WizardryItems.range_upgrade) + 0.25F, true);
+						modifiers.set(WizardryItems.duration_upgrade, modifiers.get(WizardryItems.duration_upgrade) + 0.25F, true);
 					}
 				}
+			}
 
 			for (ItemArtefact artefact : getActiveArtefacts(player)) {
 

@@ -4,11 +4,12 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDevoritiumBomb;
 import com.windanesz.ancientspellcraft.item.ItemASArtefact;
 import com.windanesz.ancientspellcraft.item.ItemASArtemisLibArtefact;
+import com.windanesz.ancientspellcraft.item.ItemASSpellBook;
 import com.windanesz.ancientspellcraft.item.ItemAdvancedStoneFist;
 import com.windanesz.ancientspellcraft.item.ItemAlchemicalEssence;
 import com.windanesz.ancientspellcraft.item.ItemAmberMushroomAmulet;
+import com.windanesz.ancientspellcraft.item.ItemAmnesiaScroll;
 import com.windanesz.ancientspellcraft.item.ItemAncientHat;
-import com.windanesz.ancientspellcraft.item.ItemASSpellBook;
 import com.windanesz.ancientspellcraft.item.ItemArmourUpgradeMaterial;
 import com.windanesz.ancientspellcraft.item.ItemBarterScroll;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
@@ -40,12 +41,12 @@ import com.windanesz.ancientspellcraft.item.ItemIceCream;
 import com.windanesz.ancientspellcraft.item.ItemIceShield;
 import com.windanesz.ancientspellcraft.item.ItemKnowledgeOrb;
 import com.windanesz.ancientspellcraft.item.ItemKnowledgeScroll;
+import com.windanesz.ancientspellcraft.item.ItemLostRecipe;
 import com.windanesz.ancientspellcraft.item.ItemMagicShield;
 import com.windanesz.ancientspellcraft.item.ItemManaRing;
 import com.windanesz.ancientspellcraft.item.ItemMasterBolt;
 import com.windanesz.ancientspellcraft.item.ItemMoonLetterDictionary;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
-import com.windanesz.ancientspellcraft.item.ItemAmnesiaScroll;
 import com.windanesz.ancientspellcraft.item.ItemOmnicron;
 import com.windanesz.ancientspellcraft.item.ItemOverlordScepter;
 import com.windanesz.ancientspellcraft.item.ItemPhiloshopersStone;
@@ -199,13 +200,17 @@ public final class ASItems {
 	public static final Item charm_scissors = placeholder();
 	public static final Item charm_philosophers_stone = placeholder();
 	public static final Item charm_cube_phasing = placeholder();
+	public static final Item charm_cube_duplication = placeholder();
 	public static final Item charm_spectral_army = placeholder();
 	public static final Item charm_spectral_tome = placeholder();
 	public static final Item charm_clover = placeholder();
 	public static final Item charm_stone_tablet = placeholder();
+	public static final Item charm_ice_arrow = placeholder();
 
 	public static final Item alchemical_essence = placeholder();
 	public static final Item wand_channeling = placeholder();
+
+	public static final Item purifying_elixir_recipe = placeholder();
 
 	/// now with Belts!
 
@@ -571,11 +576,14 @@ public final class ASItems {
 		registerItem(registry, "charm_scissors", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_philosophers_stone", new ItemPhiloshopersStone(EnumRarity.EPIC));
 		registerItem(registry, "charm_cube_phasing", new ItemCubePhasing(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_cube_duplication", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_spectral_army", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_spectral_tome", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_clover", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_stone_tablet", new ItemMoonLetterDictionary(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "scepter_mind_control", new ItemOverlordScepter());
+		registerItem(registry, "purifying_elixir_recipe", new ItemLostRecipe(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+
 
 		registerItem(registry, "belt_enchanter", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
 		registerItem(registry, "belt_stone", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));

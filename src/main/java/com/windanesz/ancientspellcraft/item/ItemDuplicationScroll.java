@@ -1,6 +1,10 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.Settings;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import electroblob.wizardry.item.ItemArcaneTome;
+import electroblob.wizardry.item.ItemArmourUpgrade;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemScroll;
 import electroblob.wizardry.item.ItemSpellBook;
 import electroblob.wizardry.registry.WizardrySounds;
@@ -33,6 +37,7 @@ public class ItemDuplicationScroll extends ItemRareScroll {
 
 		if (otherItem instanceof ItemRitualBook || otherItem instanceof ItemEnchantedBook || otherItem instanceof ItemSpellBook
 				|| otherItem instanceof ItemScroll || otherItem instanceof ItemRareScroll || otherItem instanceof ItemWrittenBook
+				|| checkArtefactConditions(player, otherItem)
 				|| Arrays.asList(Settings.generalSettings.duplication_scroll_additional_items).contains(otherItem.getRegistryName().toString())) {
 			ItemStack newStack = otherStack.copy();
 			newStack.setCount(1);
@@ -42,5 +47,9 @@ public class ItemDuplicationScroll extends ItemRareScroll {
 			}
 		}
 		return new ActionResult<>(EnumActionResult.PASS, stack);
+	}
+
+	private boolean checkArtefactConditions(EntityPlayer player, Item item) {
+		return ItemArtefact.isArtefactActive(player, ASItems.charm_cube_duplication) && (item instanceof ItemArmourUpgrade || item instanceof ItemArcaneTome);
 	}
 }

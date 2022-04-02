@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "ebwizardry:astral_diamond"
+        }
+    ],
+    "result": {
+        "item": "ancientspellcraft:astral_diamond_shard",
+        "count": 9
+    }
+}

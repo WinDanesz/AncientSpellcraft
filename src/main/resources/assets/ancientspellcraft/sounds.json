@@ -1,4 +1,4 @@
-{
+﻿{
     "skull_watch_alarm":                        {"category": "player", "sounds": ["ancientspellcraft:skull_watch_alarm"]},
     "skull_watch_scream":                       {"category": "player", "sounds": ["ancientspellcraft:skull_watch_scream"]},
     "spell.antimagic_field":                    {"category": "spells", "sounds": ["ancientspellcraft:shield"]},
@@ -176,7 +176,6 @@
     "spell.wild_sporeling": 					{"category": "spells", "sounds": ["dig/grass1", "dig/grass2", "dig/grass3", "dig/grass4"]},
     "spell.fairy_ring": 				   	    {"category": "player", "sounds": ["ancientspellcraft:fairy_ring"]},
     "spell.wind_blast": 		    			{"category": "spells", "sounds": ["ebwizardry:ice"]},
-
     "stone_fist":                               {"category": "player", "sounds": ["ancientspellcraft:stone_fist"]},
     "bartering_scroll":                         {"category": "player", "sounds": ["ancientspellcraft:bartering_scroll"]},
     "charm_omnicron":                           {"category": "player", "sounds": ["ancientspellcraft:charm_omnicron"]},
