@@ -763,12 +763,12 @@ public class ASEventHandler {
 					}
 				}
 
-				if (ItemArtefact.isArtefactActive(player, ASItems.charm_ice_arrow)) {
-					if (event.getRayTraceResult().entityHit instanceof EntityLivingBase) {
-						EntityLivingBase target = (EntityLivingBase) event.getRayTraceResult().entityHit;
-						target.addPotionEffect(new PotionEffect(WizardryPotions.frost, 30)); // 1,5 seconds of poisoning
-					}
-				}
+//				if (ItemArtefact.isArtefactActive(player, ASItems.charm_ice_arrow)) {
+//					if (event.getRayTraceResult().entityHit instanceof EntityLivingBase) {
+//						EntityLivingBase target = (EntityLivingBase) event.getRayTraceResult().entityHit;
+//						target.addPotionEffect(new PotionEffect(WizardryPotions.frost, 30)); // 1,5 seconds of poisoning
+//					}
+//				}
 			}
 		}
 	}

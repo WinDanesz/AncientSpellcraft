@@ -205,7 +205,7 @@ public final class ASItems {
 	public static final Item charm_spectral_tome = placeholder();
 	public static final Item charm_clover = placeholder();
 	public static final Item charm_stone_tablet = placeholder();
-	public static final Item charm_ice_arrow = placeholder();
+	//public static final Item charm_ice_arrow = placeholder();
 
 	public static final Item alchemical_essence = placeholder();
 	public static final Item wand_channeling = placeholder();
