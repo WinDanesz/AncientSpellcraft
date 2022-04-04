@@ -42,7 +42,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
-@Mod(modid = AncientSpellcraft.MODID, name = AncientSpellcraft.NAME, version = "1.4.0", acceptedMinecraftVersions = "1.12.2",
+@Mod(modid = AncientSpellcraft.MODID, name = AncientSpellcraft.NAME, version = "1.4.1", acceptedMinecraftVersions = "1.12.2",
 		dependencies = "required-after:ebwizardry@[@WIZARDRY_VERSION@,4.4);after:jei@[4.15.0,);after:artemislib")
 public class AncientSpellcraft {
 
