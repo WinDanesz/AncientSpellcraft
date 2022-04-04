@@ -1,6 +1,6 @@
 {
     "enabled": {
-        "book": false,
+        "book": true,
         "scroll": false,
         "wands": false,
         "npcs": false,
