@@ -63,7 +63,7 @@ public class ClientEventHandler {
 				previousZ = z;
 				previousPitch = Minecraft.getMinecraft().player.rotationPitch;
 				pirevousYaw = Minecraft.getMinecraft().player.rotationYaw;
-			} else {
+			} else if (Minecraft.getMinecraft().getRenderViewEntity() == ASFakePlayer.FAKE_PLAYER) {
 				Minecraft.getMinecraft().setRenderViewEntity(Minecraft.getMinecraft().player);
 			}
 
