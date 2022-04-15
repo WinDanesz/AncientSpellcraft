@@ -1,16 +1,11 @@
 [{
-    "modid": "ancientspellcraft",
-    "name": "Ancient Spellcraft by Dan",
-    "description": "Ancient Spellcraft is an addon mod for Electroblob's Wizardry, adding many new spells, mechanics, blocks and a new magical element to the game.",
-    "version": "1.4.1",
-    "mcversion": "1.4.1",
-    "url": "https://www.curseforge.com/minecraft/mc-mods/ancient-spellcraft",
+    "modid": "${modid}",
+    "name": "${name}",
+    "description": "${description}",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "${url}",
     "authorList": ["WinDanesz"],
-    "credits": "
-    Created by WinDanesz
-    Electroblob, for making his awesome Wizardry mod
-    Contributors:
-      - Yranic, Bombadil, HatBot for writing/reworking many of the lore texts
-      - Idea contributors: Elso, Kug, OBLIQUE, VasiliySiniy (class weapon ideas)",
-    "logoFile":"assets/ancientspellcraft/textures/gui/logo.png"
+    "credits": "${credits}",
+    "logoFile":"assets/${modid}/textures/gui/logo.png"
 }]
