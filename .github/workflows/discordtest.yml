@@ -14,4 +14,5 @@ jobs:
       uses: tsickert/discord-webhook@v4.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_ANNOUNCER_WEBHOOK }}
-        content: "Test mention for version ${{ steps.get_version.outputs.VERSION }} <@&544916564508409867>"
+        # TODO: should use ${{ steps.build.outpus.name }} as the mod name, needs a gradle change
+        content: "<@&544916564508409867>\n`n<br>Ancient Spellcraft version ${{ steps.build.outputs.version }} is now available on CurseForge"
