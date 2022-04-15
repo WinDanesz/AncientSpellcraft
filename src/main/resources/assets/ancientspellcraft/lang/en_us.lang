@@ -1186,7 +1186,7 @@ tooltip.ancientspellcraft\:artefact_use.usage=Right click to use
 tooltip.ancientspellcraft\:mana_with_eternal_source_name=Mana\: %1$s/%2$s (%3$s)
 tooltip.ancientspellcraft\:missing_artemislib.disabled_item=This item is disabled because you don't have the ArtemisLib mod installed!
 tooltip.ancientspellcraft\:missing_artemislib.disabled_spell=This spell is disabled because you don't have the ArtemisLib mod installed!
-tooltip.ancientspellcraft\:no_mana_source=No mana source
+tooltip.ancientspellcraft\:no_mana_source=No mana source - hold a wand in your off hand
 
 #integration
 integration.antiqueatlas.marker.ancientspellcraft.battlemage_camp=Battlemage Camp
