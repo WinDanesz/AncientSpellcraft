@@ -2,7 +2,7 @@
     "type": "minecraft:crafting_shaped",
     "pattern": [
         " F ",
-        "H H",
+        "HSH",
         " R "
     ],
     "key": {
@@ -13,9 +13,11 @@
             "item": "ebwizardry:magic_crystal",
             "data": 7
         },
+        "S": {
+            "item": "ancientspellcraft:astral_diamond_shard"
+        },
         "R": {
-            "item": "ancientspellcraft:purifying_elixir_recipe",
-            "data": 7
+            "item": "ancientspellcraft:purifying_elixir_recipe"
         }
     },
     "result": {
