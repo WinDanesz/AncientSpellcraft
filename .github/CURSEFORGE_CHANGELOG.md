@@ -7,9 +7,11 @@
 <p>- Fixed Sorcery and Healing sage tome recipe</p>
 <p>- Fixed battlemage camp/chest empty loot table</p>
 <p>- Fixed apprentice battlemage sword missing its texture</p>
+<p>- Should fix all previous issues</p>
 
 <h4><strong>Features</strong></h4>
 <p>- Slightly increased the chance of getting Runic Plates</p>
+<p>- Added Chinese translation (by ScoTWT) (#52)</p>
 <p>&nbsp;</p>
 <p>As always, the easiest way to get help or feedback is through the Discord server! Find the link on the CurseForge page.</p>
 <p>&nbsp;</p>
