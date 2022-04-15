@@ -45,8 +45,8 @@ jobs:
           tag: ${{ github.ref_name }}
 
       - name: Generate Curseforge Changelog
-        uses: Helmisek/conventional-changelog-generator@v1.0.6-release
         id: changelog-generator
+        uses: Helmisek/conventional-changelog-generator@v1.0.6-release
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           commit-types: "fix:Bug Fixes,feat:Features,refactor:Refactoring"
@@ -60,14 +60,8 @@ jobs:
             ${{steps.changelog-generator.outputs.changelog}}
           write-mode: overwrite
 
-
-
-      # publish_to_curseforge:
-      # name: Publish to CurseForge
-      # needs: generate_changelog
-      # runs-on: ubuntu-latest
-      # steps:
       - name: "Upload Release to CurseForge"
+        id: publish
         uses: itsmeow/curseforge-upload@master
         with:
           changelog: "${{steps.changelog-generator.outputs.changelog}}"
@@ -86,3 +80,41 @@ jobs:
         with:
           branch: 1.12.2
           commit_message: 'docs: update changelogs for ${{ github.ref_name }}'
+
+      - name: Generate Discord Announcement With Changelog
+        id: discord-changelog-generator
+        uses: Helmisek/conventional-changelog-generator@v1.0.6-release
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          commit-types: "fix:Bug Fixes,feat:Features,refactor:Refactoring"
+          template-path: ".github/workflows/DISCORD_CHANGELOG.tpl.md"
+          current-tag: ${{ steps.get_version.outputs.VERSION }}
+
+      - name: Write Discord Announcement to File
+        uses: DamianReeves/write-file-action@master
+        with:
+          path: ${{ github.workspace }}/.github/DISCORD_ANNOUNCEMENT.txt
+          contents: |
+            ${{steps.discord-changelog-generator.outputs.changelog}}
+          write-mode: overwrite
+
+      - name: Replace Tokens in Discord Announcement
+        uses: cschleiden/replace-tokens@v1
+        with:
+          files: '["**/DISCORD_ANNOUNCEMENT.txt"]'
+        env:
+          MOD_NAME: "${{ steps.build.outputs.name }}"
+          URL: "${{ steps.build.outputs.url }}"
+          FILE_ID: "${{ steps.publish.outputs.id }}"
+
+      - name: Read Discord Announcement From File
+        id: announcement-content
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ${{ github.workspace }}/.github/DISCORD_ANNOUNCEMENT.txt
+
+      - name: Discord Webhook Action
+        uses: tsickert/discord-webhook@v4.0.0
+        with:
+          webhook-url: ${{ secrets.DISCORD_ANNOUNCER_WEBHOOK }}
+          content: "${{ steps.announcement-content.outputs.content }}"
