@@ -181,7 +181,7 @@
                 },
                 {
                     "type": "item",
-                    "name": "ancientspellcraft:runic_place",
+                    "name": "ancientspellcraft:runic_plate",
                     "weight": 2,
                     "functions": [
                         {
