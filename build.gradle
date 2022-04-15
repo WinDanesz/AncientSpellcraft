@@ -242,6 +242,12 @@ if (System.getenv('USE_ALPHAS').equals('true')) {
                 commandLine "echo", "##[set-output name=version;]${project.version}";
             }
             exec {
+                commandLine "echo", "##[set-output name=name;]${project.name}";
+            }
+            exec {
+                commandLine "echo", "##[set-output name=url;]${project.url}";
+            }
+            exec {
                 commandLine "echo", "##[set-output name=commitlog;]" + "{\"content\":\"" + (project.hasProperty('hook_content') ? project.hook_content : "") + "\",\"embeds\":[{\"author\":{\"name\":\"WinDanesz\",\"url\":\"https://www.curseforge.com/minecraft/mc-mods/ancient-spellcraft\",\"icon_url\":\"https://avatars.githubusercontent.com/u/31292708?s=48&v=4\"},\"title\":\"${project.mod_id}-alpha-${project.version}\",\"url\":\"https://github.com/${project.github}/releases/tag/alpha-${project.version}\",\"color\":14700288,\"description\":\"" + log + "\"}]}";
             }
         }
@@ -267,6 +273,12 @@ if (System.getenv('USE_ALPHAS').equals('true')) {
             }
             exec {
                 commandLine "echo", "##[set-output name=version;]${project.version}";
+            }
+            exec {
+                commandLine "echo", "##[set-output name=name;]${project.name}";
+            }
+            exec {
+                commandLine "echo", "##[set-output name=url;]${project.url}";
             }
         }
     }
