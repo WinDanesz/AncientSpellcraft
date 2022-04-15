@@ -182,7 +182,7 @@
                 {
                     "type": "item",
                     "name": "ancientspellcraft:runic_plate",
-                    "weight": 2,
+                    "weight": 3,
                     "functions": [
                         {
                             "function": "ebwizardry:random_spell",
