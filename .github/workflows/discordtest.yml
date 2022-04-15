@@ -9,4 +9,4 @@ jobs:
       uses: tsickert/discord-webhook@v4.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_ANNOUNCER_WEBHOOK }}
-        content: "Test mention <@544916564508409867>"
+        content: "Test mention <@&544916564508409867>"
