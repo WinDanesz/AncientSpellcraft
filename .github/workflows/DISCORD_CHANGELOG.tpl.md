@@ -1,5 +1,5 @@
 <@&544916564508409867>
-:shiny: **Ancient Spellcraft** version {{versionName}} is now available on CurseForge! :shiny:
+<:shiny:800825504369868830> **Ancient Spellcraft** {{versionName}} is now available on CurseForge! <:shiny:800825504369868830>
 
 :star: *What's Changed* :star:
 {{.SECTION}}**$title**{{.SECTION}}
