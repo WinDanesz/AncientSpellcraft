@@ -22,9 +22,31 @@ jobs:
         template-path: ".github/workflows/DISCORD_CHANGELOG.tpl.md"
         current-tag: ${{ steps.get_version.outputs.VERSION }}
 
+    - name: Write Discord Announcement to File
+      uses: DamianReeves/write-file-action@master
+      with:
+        path: ${{ github.workspace }}/.github/DISCORD_ANNOUNCEMENT.txt
+        contents: |
+          ${{steps.changelog-generator.outputs.changelog}}
+        write-mode: overwrite
+
+    - name: Replace Tokens in Discord Announcement
+    - uses: cschleiden/replace-tokens@v1
+      with:
+        files: '["**/DISCORD_ANNOUNCEMENT.txt"]'
+      env:
+        MOD_NAME: "${{ steps.build.outpus.name }}"
+        URL: "${{ steps.build.outputs.url }}"
+        FILE_ID: "${{ steps.publish.outputs.id }}"
+
+    - name: Read Discord Announcement From File
+      id: announcement-content
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: ${{ github.workspace }}/.github/DISCORD_ANNOUNCEMENT.txt
+
     - name: Discord Webhook Action
       uses: tsickert/discord-webhook@v4.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_ANNOUNCER_WEBHOOK }}
-        # TODO: should use ${{ steps.build.outpus.name }} as the mod name, needs a gradle change
-        content: "${{ steps.changelog-generator.outputs.changelog }}"
+        content: "${{ steps.announcement-content.outputs.content }}"
