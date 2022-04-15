@@ -3,7 +3,7 @@
 
 :star: *What's Changed* :star:
 {{.SECTION}}**$title**{{.SECTION}}
-{{.COMMITS}}<p>- $commit</p>{{.COMMITS}}
+{{.COMMITS}}- $commit{{.COMMITS}}
 
-Download it from CurseForge: <<<url>>>/files/<<<file_id>>>
+:link: *Download it from CurseForge:<<<url>>>/files/<<<file_id>>>*
 (The link might take a few minutes to go be approved)
