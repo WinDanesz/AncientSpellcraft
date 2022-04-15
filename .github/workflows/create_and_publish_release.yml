@@ -101,7 +101,7 @@ jobs:
       - name: Replace Tokens in Discord Announcement
         uses: cschleiden/replace-tokens@v1
         with:
-          files: '["**/DISCORD_ANNOUNCEMENT.txt"]'
+          files: ${{ github.workspace }}/.github/DISCORD_ANNOUNCEMENT.txt
         env:
           MOD_NAME: "${{ steps.build.outputs.name }}"
           URL: "${{ steps.build.outputs.url }}"
