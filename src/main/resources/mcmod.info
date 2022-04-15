@@ -5,6 +5,7 @@
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": "${url}",
+    "updateUrl": "${update_url}",
     "authorList": ["WinDanesz"],
     "credits": "${credits}",
     "logoFile":"assets/${modid}/textures/gui/logo.png"

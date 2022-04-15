@@ -109,7 +109,6 @@ dependencies {
     minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
     //// MC version ////
 
-
     // CurseForge Maven
     // Currently unused
     // CurseForge Maven usage: https://support.curseforge.com/en/support/solutions/articles/9000197321-curseforge-api
@@ -308,6 +307,7 @@ processResources {
                 'name': project.name,
                 'description': project.description,
                 'url': project.url,
+                'update_url': project.update_url,
                 "credits" : credits
     }
 
@@ -318,7 +318,7 @@ task replaceTokens(type: Sync) {
     // replace @TOKENS@ in main file
     from sourceSets.main.java
     inputs.property 'version', project.mc_version.toString()
-    filter(ReplaceTokens, tokens: [VERSION: version.toString()])
+    filter(ReplaceTokens, tokens: [VERSION: "${project.mod_version}".toString()])
     filter(ReplaceTokens, tokens: [MCVERSION: "${project.mc_version}".toString()])
     filter(ReplaceTokens, tokens: [WIZARDRY_VERSION: "${project.wizardry_version}".toString()])
     into "$buildDir/src"
