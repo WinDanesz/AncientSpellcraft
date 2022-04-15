@@ -19,7 +19,7 @@
                 "items": [
                     {
                         "item": "ancientspellcraft:stone_tablet_small",
-                        "nbt": "{researched:1}"
+                        "nbt": "{researched:true}"
                     }
                 ]
             }
@@ -30,7 +30,7 @@
                 "items": [
                     {
                         "item": "ancientspellcraft:stone_tablet",
-                        "nbt": "{researched:1}"
+                        "nbt": "{researched:true}"
                     }
                 ]
             }
@@ -41,7 +41,7 @@
                 "items": [
                     {
                         "item": "ancientspellcraft:stone_tablet_large",
-                        "nbt": "{researched:1}"
+                        "nbt": "{researched:true}"
                     }
                 ]
             }
@@ -52,7 +52,7 @@
                 "items": [
                     {
                         "item": "ancientspellcraft:stone_tablet_grand",
-                        "nbt": "{researched:1}"
+                        "nbt": "{researched:true}"
                     }
                 ]
             }
