@@ -5,8 +5,13 @@ jobs:
   message:
     runs-on: ubuntu-latest
     steps:
+
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::$(echo v1.4.2)
+      
     - name: Discord Webhook Action
       uses: tsickert/discord-webhook@v4.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_ANNOUNCER_WEBHOOK }}
-        content: "Test mention <@&544916564508409867>"
+        content: "Test mention for version ${{ steps.get_version.outputs.VERSION }} <@&544916564508409867>"
