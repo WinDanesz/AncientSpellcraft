@@ -1,7 +1,7 @@
 <@&544916564508409867>
-**Ancient Spellcraft** version {{versionName}} is now available on CurseForge!
+:shiny: **Ancient Spellcraft** version {{versionName}} is now available on CurseForge! :shiny:
 
-*What's Changed*
+:star: *What's Changed* :star:
 {{.SECTION}}**$title**{{.SECTION}}
 {{.COMMITS}}<p>- $commit</p>{{.COMMITS}}
 
