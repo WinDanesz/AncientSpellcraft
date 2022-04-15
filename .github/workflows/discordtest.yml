@@ -6,13 +6,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+    - name: Checkout
+      uses: actions/checkout@v2
+
     - name: Get the version
       id: get_version
       run: echo ::set-output name=VERSION::$(echo v1.4.2)
-      
+
+    - name: Generate Discord Announcement With Changelog
+      uses: Helmisek/conventional-changelog-generator@v1.0.6-release
+      id: changelog-generator
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        commit-types: "fix:Bug Fixes,feat:Features,refactor:Refactoring"
+        template-path: ".github/workflows/DISCORD_CHANGELOG.tpl.md"
+        current-tag: ${{ steps.get_version.outputs.VERSION }}
+
     - name: Discord Webhook Action
       uses: tsickert/discord-webhook@v4.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_ANNOUNCER_WEBHOOK }}
         # TODO: should use ${{ steps.build.outpus.name }} as the mod name, needs a gradle change
-        content: "<@&544916564508409867>\n`n<br>Ancient Spellcraft version ${{ steps.build.outputs.version }} is now available on CurseForge"
+        content: "${{ steps.changelog-generator.outputs.changelog }}"
