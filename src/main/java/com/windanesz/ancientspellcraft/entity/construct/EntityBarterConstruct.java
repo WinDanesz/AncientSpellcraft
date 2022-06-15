@@ -44,7 +44,7 @@ public class EntityBarterConstruct extends EntityMagicConstruct {
 			return;
 		}
 
-		int i = world.rand.nextInt(Math.max(0, (int) (lifetime * 0.03) - 1));
+		int i = world.rand.nextInt(Math.max(1, (int) (lifetime * 0.03)) - 1);
 
 		if (lifetime <= 0 || i <= 0) {
 			if (summonMerchant()) {
