@@ -194,6 +194,7 @@ public class EntityAIAttackSpellWithCost<T extends EntityLiving & ISpellCaster> 
 			double dz = target.posZ - attacker.posZ;
 
 			List<Spell> spells = new ArrayList<Spell>(attacker.getSpells());
+			spells.removeIf(spell -> spell == Spells.none);
 
 			if (spells.size() > 0) {
 
