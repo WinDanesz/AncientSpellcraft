@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import com.windanesz.ancientspellcraft.registry.ASItems;
+import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
@@ -19,7 +20,7 @@ import java.util.Arrays;
 
 import static electroblob.wizardry.util.WandHelper.SPELL_ARRAY_KEY;
 
-public class Runeword extends Spell {
+public class Runeword extends Spell implements IClassSpell {
 
 	public static final String POTENCY_ATTRIBUTE_MODIFIER = "potency";
 	public static final String EFFECT_TRIGGER_CHANCE = "effect_trigger_chance";
@@ -173,6 +174,8 @@ public class Runeword extends Spell {
 		ItemBattlemageSword.spendCharge(sword, this, 1);
 	}
 
+	@Override
+	public ItemWizardArmour.ArmourClass getArmourClass() { return ItemWizardArmour.ArmourClass.BATTLEMAGE; }
 }
 
 
