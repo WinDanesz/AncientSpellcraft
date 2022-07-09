@@ -45,6 +45,8 @@ public class BlockArcaneAnvil extends BlockContainer {
 		super(Material.ANVIL);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		this.setLightOpacity(0);
+		setHardness(3.0F);
+		setResistance(5.0F);
 		this.setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		this.setSoundType(SoundType.ANVIL);
 	}
