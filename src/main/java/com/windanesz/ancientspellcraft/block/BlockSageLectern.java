@@ -5,8 +5,8 @@ import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
 import com.windanesz.ancientspellcraft.item.ItemSageTome;
-import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASTabs;
+import com.windanesz.ancientspellcraft.spell.SpellLecternInteract;
 import com.windanesz.ancientspellcraft.tileentity.TileSageLectern;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.block.BlockReceptacle;
@@ -22,8 +22,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemWrittenBook;
+import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -51,6 +52,33 @@ public class BlockSageLectern extends BlockHorizontal implements ITileEntityProv
 		this.setSoundType(SoundType.STONE);
 	}
 
+	public static boolean isBookOpen(IBlockState state, World world, BlockPos pos) {
+		BlockPos lookUpPos = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
+		EnumFacing offset = state.getValue(BlockHorizontal.FACING);
+		if (offset != null) {
+			lookUpPos = lookUpPos.offset(offset);
+		}
+		EntityPlayer player = world.getClosestPlayer(lookUpPos.getX() + 0.5, lookUpPos.getY() + 0.5, lookUpPos.getZ() + 0.5,
+				TileSageLectern.BOOK_OPEN_DISTANCE, false);
+
+		TileEntity tile = world.getTileEntity(pos);
+
+		return tile instanceof TileSageLectern && player != null && ((TileSageLectern) tile).shouldBookOpen(player);
+	}
+
+	public static ItemStack getItemOnLectern(World world, BlockPos pos) {
+		TileEntity tileentity = world.getTileEntity(pos);
+
+		if (tileentity instanceof TileSageLectern) {
+
+			TileSageLectern lectern = (TileSageLectern) tileentity;
+
+			return lectern.getBookSlotItem();
+		}
+
+		return ItemStack.EMPTY;
+	}
+
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer.Builder(this).add(FACING).build();
@@ -71,26 +99,11 @@ public class BlockSageLectern extends BlockHorizontal implements ITileEntityProv
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+		if (isBookOpen(state, world, pos)) {
+			int[] colours = BlockReceptacle.PARTICLE_COLOURS.get(((TileSageLectern) world.getTileEntity(pos)).getBookElement());
 
-		BlockPos lookUpPos = new BlockPos(pos.getX(), pos.getY(), pos.getZ());
-		EnumFacing offset = state.getValue(BlockHorizontal.FACING);
-		if (offset != null) {
-			lookUpPos = lookUpPos.offset(offset);
-		}
-
-		EntityPlayer player = world.getClosestPlayer(lookUpPos.getX() + 0.5, lookUpPos.getY() + 0.5, lookUpPos.getZ() + 0.5,
-				TileSageLectern.BOOK_OPEN_DISTANCE, false);
-
-		TileEntity tile = world.getTileEntity(pos);
-		if (tile instanceof TileSageLectern) {
-			if (player != null && ((TileSageLectern) tile).hasItem()) {
-				if (((TileSageLectern) tile).shouldBookOpen(player)) {
-					int[] colours = BlockReceptacle.PARTICLE_COLOURS.get(((TileSageLectern) tile).getBookElement());
-
-					ParticleBuilder.create(ParticleBuilder.Type.DUST).pos(pos.getX() + rand.nextFloat(), pos.getY() + 1, pos.getZ() + rand.nextFloat())
-							.vel(0, 0.03, 0).clr(colours[1]).fade(colours[2]).time(40).shaded(false).spawn(world);
-				}
-			}
+			ParticleBuilder.create(ParticleBuilder.Type.DUST).pos(pos.getX() + rand.nextFloat(), pos.getY() + 1, pos.getZ() + rand.nextFloat())
+					.vel(0, 0.03, 0).clr(colours[1]).fade(colours[2]).time(40).shaded(false).spawn(world);
 		}
 	}
 
@@ -149,6 +162,12 @@ public class BlockSageLectern extends BlockHorizontal implements ITileEntityProv
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState block, EntityPlayer player, EnumHand hand,
 			EnumFacing side, float hitX, float hitY, float hitZ) {
 
+		// do not intercept spell casts with lectern interacting spells
+		if (player.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemSageTome
+				&& ((ItemSageTome) player.getHeldItem(EnumHand.MAIN_HAND).getItem()).getCurrentSpell(player.getHeldItem(EnumHand.MAIN_HAND)) instanceof SpellLecternInteract) {
+			return false;
+		}
+
 		TileEntity tileEntity = world.getTileEntity(pos);
 
 		if (tileEntity == null) {
@@ -184,6 +203,9 @@ public class BlockSageLectern extends BlockHorizontal implements ITileEntityProv
 
 			// GUI interactions
 			if (!player.isSneaking()) {
+
+				lectern.getSpellEffects().forEach(effect -> effect.persistentEffectOnLecternClick(lectern, player));
+
 				// Sage books GUI
 				if (!player.isSneaking() && lectern.getBookSlotItem().getItem() instanceof ItemSageTome) {
 					if (!lectern.shouldBookOpen(player)) {
@@ -200,12 +222,21 @@ public class BlockSageLectern extends BlockHorizontal implements ITileEntityProv
 
 					// Spell Books, Ritual Books are handled here
 					if (lectern.getBookSlotItem().getItem() instanceof ItemSpellBook || lectern.getBookSlotItem().getItem() instanceof ItemRitualBook) {
-						player.openGui(AncientSpellcraft.instance, GuiHandlerAS.SPELL_GUI_LECTERN, world, pos.getX(), pos.getY(),pos.getZ());
+						player.openGui(AncientSpellcraft.instance, GuiHandlerAS.SPELL_GUI_LECTERN, world, pos.getX(), pos.getY(), pos.getZ());
 						return true;
+					} else
+
+					if (lectern.getBookSlotItem().getItem() instanceof ItemWrittenBook) {
+						AncientSpellcraft.proxy.openBookGUI(player, lectern.getBookSlotItem());
+						player.addStat(StatList.getObjectUseStats(lectern.getBookSlotItem().getItem()));
+					} else {
+						lectern.getBookSlotItem().getItem().onItemRightClick(world, player, EnumHand.MAIN_HAND);
+
 					}
 
 					// everything else
-					lectern.getBookSlotItem().getItem().onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ);
+					//if (lectern.getBookSlotItem().getItem().onItemUse(player, world, pos, hand, side, hitX, hitY, hitZ) == EnumActionResult.FAIL) {
+					//}
 					return true;
 				}
 			}
@@ -234,10 +265,5 @@ public class BlockSageLectern extends BlockHorizontal implements ITileEntityProv
 		}
 
 		super.breakBlock(world, pos, block);
-	}
-
-	@Override
-	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return ASItems.amulet_curse_ward;
 	}
 }

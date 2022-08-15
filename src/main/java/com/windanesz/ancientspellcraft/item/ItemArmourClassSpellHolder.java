@@ -3,7 +3,6 @@ package com.windanesz.ancientspellcraft.item;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.Wizardry;
-import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.data.SpellGlyphData;
 import electroblob.wizardry.item.ItemSpellBook;
 import electroblob.wizardry.item.ItemWizardArmour;
@@ -77,11 +76,11 @@ abstract class ItemArmourClassSpellHolder extends ItemSpellBook {
 
 			// Advanced tooltips display more information, mainly for searching purposes in creative
 			if (discovered && advanced.isAdvanced()) { // No cheating!
-				String elementTooltip = (spell.getElement() == Element.MAGIC) ? I18n.format("gui.ancientspellcraft:element.magic") : spell.getElement().getDisplayName();
+				//tring elementTooltip = (spell.getElement() == Element.MAGIC) ? I18n.format("gui.ancientspellcraft:element.magic") : spell.getElement().getDisplayName();
 
-				if (getArmourClass() == ItemWizardArmour.ArmourClass.SAGE) {
-					tooltip.add(elementTooltip);
-				}
+				//if (getArmourClass() == ItemWizardArmour.ArmourClass.SAGE) {
+				//	tooltip.add(elementTooltip);
+				//}
 				tooltip.add(spell.getType().getDisplayName());
 			}
 		}

@@ -1,0 +1,22 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": false,
+        "wands": true,
+        "npcs": false,
+        "dispensers": false,
+        "commands": true,
+        "treasure": false,
+        "trades": false,
+        "looting": false
+    },
+    "tier": "apprentice",
+    "element": "magic",
+    "type": "utility",
+    "cost": 120,
+    "chargeup": 30,
+    "cooldown": 600,
+    "base_properties": {
+        "range": 6
+    }
+}

@@ -16,6 +16,7 @@ import com.windanesz.ancientspellcraft.client.renderer.entity.RenderDevoritiumAr
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderEntityMageLight;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderEvilClassWizard;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderFireSpider;
+import com.windanesz.ancientspellcraft.client.renderer.entity.RenderMoltenBoulder;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderSkeletonHorseMinion;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderSkeletonMage;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderSpiritBear;
@@ -37,13 +38,16 @@ import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBarterConstruct;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;
 import com.windanesz.ancientspellcraft.entity.construct.EntityHealingSigil;
+import com.windanesz.ancientspellcraft.entity.construct.EntityMoltenBoulder;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySilencingSigil;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpellTicker;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
 import com.windanesz.ancientspellcraft.entity.construct.EntityTransportationPortal;
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
+import com.windanesz.ancientspellcraft.entity.living.EntityCreeperMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
 import com.windanesz.ancientspellcraft.entity.living.EntityFireAnt;
+import com.windanesz.ancientspellcraft.entity.living.EntityPigZombieMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonHorseMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpellCaster;
@@ -90,6 +94,9 @@ import electroblob.wizardry.spell.Spell;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiScreenBook;
+import net.minecraft.client.renderer.entity.RenderCreeper;
+import net.minecraft.client.renderer.entity.RenderPigZombie;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
@@ -187,6 +194,8 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityWolfMinion.class, RenderWolfMinion::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpiritBear.class, RenderSpiritBear::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityFireAnt.class, RenderFireSpider::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityCreeperMinion.class, RenderCreeper::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityPigZombieMinion.class, RenderPigZombie::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityVolcano.class, RenderVolcano::new);
 
 		////////// Throwables and projectiles //////////
@@ -232,6 +241,7 @@ public class ClientProxy extends CommonProxy {
 
 		////////// Other constructs //////////
 		RenderingRegistry.registerEntityRenderingHandler(EntityArcaneBarrier.class, RenderBlank::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityMoltenBoulder.class, RenderMoltenBoulder::new);
 		//		RenderingRegistry.registerEntityRenderingHandler(EntityArcaneBarrierProxy.class, RenderArcaneBarrierProxy::new);
 
 	}
@@ -414,5 +424,9 @@ public class ClientProxy extends CommonProxy {
 
 	private void missingKeyWarning(String type, String registryName, String expectedKey) {
 		AncientSpellcraft.logger.warn(type + " " + registryName + " is missing a translation key: \"" + expectedKey + "\"");
+	}
+
+	public void openBookGUI(EntityPlayer player, ItemStack book) {
+		Minecraft.getMinecraft().displayGuiScreen(new GuiScreenBook(Minecraft.getMinecraft().player, book, false));
 	}
 }

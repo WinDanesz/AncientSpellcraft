@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.block.BlockMagicMushroom;
 import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
@@ -63,11 +64,11 @@ public class FairyRing extends Spell {
 		return true;
 	}
 
-	private boolean summonMushroomRing(World world, @Nullable EntityLivingBase caster, BlockPos origin, SpellModifiers modifiers) {
+	public static boolean summonMushroomRing(World world, @Nullable EntityLivingBase caster, BlockPos origin, SpellModifiers modifiers) {
 
 		if (!world.isRemote) {
 
-			double radius = getProperty(EFFECT_RADIUS).doubleValue() * modifiers.get(WizardryItems.blast_upgrade);
+			double radius = ASSpells.fairy_ring.getProperty(EFFECT_RADIUS).doubleValue() * modifiers.get(WizardryItems.blast_upgrade);
 
 			List<BlockPos> ring = new ArrayList<>((int) (7 * radius)); // 7 is a bit more than 2 pi
 
@@ -98,7 +99,7 @@ public class FairyRing extends Spell {
 				singleType = true;
 			}
 
-			int lifetime = (int) ((getProperty(DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade)) * 5);
+			int lifetime = (int) ((ASSpells.fairy_ring.getProperty(DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade)) * 5);
 			for (BlockPos pos : ring) {
 
 				if (!singleType) // get a new random mushroom

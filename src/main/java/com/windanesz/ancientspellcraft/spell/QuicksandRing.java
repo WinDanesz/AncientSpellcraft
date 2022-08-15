@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.block.ITemporaryBlock;
 import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
@@ -67,10 +68,10 @@ public class QuicksandRing extends Spell {
 	}
 
 	//  from Thorns spell, by Electroblob
-	private boolean summonQuickSandRing(World world, @Nullable EntityLivingBase caster, BlockPos origin, SpellModifiers modifiers) {
+	public static boolean summonQuickSandRing(World world, @Nullable EntityLivingBase caster, BlockPos origin, SpellModifiers modifiers) {
 		if (!world.isRemote) {
 
-			double radius = getProperty(EFFECT_RADIUS).doubleValue() * modifiers.get(WizardryItems.blast_upgrade);
+			double radius = ASSpells.quicksand_ring.getProperty(EFFECT_RADIUS).doubleValue() * modifiers.get(WizardryItems.blast_upgrade);
 
 			List<BlockPos> ring = new ArrayList<>((int) (7 * radius)); // 7 is a bit more than 2 pi
 

@@ -9,6 +9,7 @@ import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegr
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
+import com.windanesz.ancientspellcraft.misc.ASForfeits;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
 import com.windanesz.ancientspellcraft.registry.ASBiomes;
 import com.windanesz.ancientspellcraft.registry.ASBlocks;
@@ -22,6 +23,7 @@ import com.windanesz.ancientspellcraft.worldgen.WorldGenBattlemageCamp;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenBattlemageKeep;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenCrystalShardOre;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenDevoritiumOre;
+import electroblob.wizardry.event.SpellCastEvent;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.SoundEvents;
@@ -60,6 +62,11 @@ public class AncientSpellcraft {
 			0,
 			SoundEvents.ITEM_ARMOR_EQUIP_GENERIC,
 			1);
+
+	public static final SpellCastEvent.Source BATTLEMAGE_ITEM = EnumHelper.addEnum(SpellCastEvent.Source.class, "BATTLEMAGE_ITEM", new Class[]{});
+	public static final SpellCastEvent.Source SAGE_ITEM = EnumHelper.addEnum(SpellCastEvent.Source.class, "SAGE_ITEM", new Class[]{});
+	public static final SpellCastEvent.Source WARLOCK_ITEM = EnumHelper.addEnum(SpellCastEvent.Source.class, "WARLOCK_ITEM", new Class[]{});
+	
 	/**
 	 * Static instance of the {@link Settings} object for AncientSpellcraft.
 	 */
@@ -88,6 +95,8 @@ public class AncientSpellcraft {
 		ASArtemisLibIntegration.init();
 		ASAntiqueAtlasIntegration.init();
 		RitualDiscoveryData.init();
+		ASForfeits.register();
+
 	}
 
 	@EventHandler

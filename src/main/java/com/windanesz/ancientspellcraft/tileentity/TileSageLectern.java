@@ -6,11 +6,13 @@ import com.windanesz.ancientspellcraft.client.gui.ContainerSageLectern;
 import com.windanesz.ancientspellcraft.item.ItemSageTome;
 import com.windanesz.ancientspellcraft.item.WizardClassWeaponHelper;
 import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.spell.SpellLecternInteract;
 import com.windanesz.ancientspellcraft.util.WizardArmourUtils;
 import electroblob.wizardry.block.BlockReceptacle;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.item.ItemWizardArmour;
+import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.NBTExtras;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.WandHelper;
@@ -21,6 +23,7 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -31,6 +34,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.util.Constants;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -50,9 +55,32 @@ public class TileSageLectern extends TileEntity implements ITickable, IInventory
 	private NonNullList<ItemStack> inventory;
 	private boolean inUse = false;
 	private EntityPlayer currentPlayer;
+	private List<SpellLecternInteract> spellEffects = new ArrayList<>();
 
 	public TileSageLectern() {
 		this.inventory = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
+	}
+
+	public List<SpellLecternInteract> getSpellEffects() {
+		return spellEffects;
+	}
+
+	// remove any non-persistent effect if the slot item changes
+	private void resetEffects() {
+		spellEffects.removeIf(effect -> effect instanceof SpellLecternInteract && !effect.persistsOnBookRemoval());
+		markDirty();
+	}
+
+	public void removeSpellEffect(SpellLecternInteract spell) {
+		spellEffects.remove(spell);
+		markDirty();
+	}
+
+	public void addSpellEffect(SpellLecternInteract spellEffects) {
+		if (!this.spellEffects.contains(spellEffects)) {
+			this.spellEffects.add(spellEffects);
+			markDirty();
+		}
 	}
 
 	public void setInUse(boolean inUse) {
@@ -158,6 +186,7 @@ public class TileSageLectern extends TileEntity implements ITickable, IInventory
 			inventory.set(ContainerSageLectern.RESULT_SLOT, getResultItem());
 		}
 
+		resetEffects();
 		markDirty();
 	}
 
@@ -179,12 +208,11 @@ public class TileSageLectern extends TileEntity implements ITickable, IInventory
 				}
 			}
 			// sage tome levelling
-//			if (tierLevel >= 0) {
-//				Tier tier = Tier.values()[tierLevel];
-//
-//			}
-			if (true)
-			throw new IllegalArgumentException("Incomplete feature..");
+			//			if (tierLevel >= 0) {
+			//				Tier tier = Tier.values()[tierLevel];
+			//
+			//			}
+			if (true) { throw new IllegalArgumentException("Incomplete feature.."); }
 
 			return getProgressedTome(stack1);
 		}
@@ -196,8 +224,6 @@ public class TileSageLectern extends TileEntity implements ITickable, IInventory
 		Tier tier = ((ItemSageTome) tome.getItem()).tier;
 		Element element = ((ItemSageTome) tome.getItem()).element;
 		ItemStack copy = tome.copy();
-
-
 
 		// Next tier tome
 		ItemStack progressedTome = new ItemStack(WizardClassWeaponHelper.getClassItemForTier(tier.next(), ItemWizardArmour.ArmourClass.SAGE, element));
@@ -349,6 +375,7 @@ public class TileSageLectern extends TileEntity implements ITickable, IInventory
 			}
 		}
 
+		NBTExtras.storeTagSafely(compound, "SpellEffects", NBTExtras.listToNBT(spellEffects, s -> new NBTTagString(s.getRegistryName().toString())));
 		NBTExtras.storeTagSafely(compound, "Inventory", inventoryList);
 		return compound;
 	}
@@ -364,6 +391,11 @@ public class TileSageLectern extends TileEntity implements ITickable, IInventory
 			if (slot >= 0 && slot < getSizeInventory()) {
 				setInventorySlotContents(slot, new ItemStack(tag));
 			}
+		}
+
+		if (compound.hasKey("SpellEffects")) {
+			this.spellEffects = (List<SpellLecternInteract>) NBTExtras.NBTToList(compound.getTagList("SpellEffects", Constants.NBT.TAG_STRING),
+					(NBTTagString tag) -> (SpellLecternInteract) Spell.get(tag.getString()));
 		}
 	}
 

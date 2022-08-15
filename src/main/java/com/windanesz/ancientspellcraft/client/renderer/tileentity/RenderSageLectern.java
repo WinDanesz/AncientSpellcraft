@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.item.ItemSageTome;
 import com.windanesz.ancientspellcraft.tileentity.TileSageLectern;
 import electroblob.wizardry.constants.Tier;
+import electroblob.wizardry.item.ItemSpellBook;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.client.model.ModelBook;
 import net.minecraft.client.renderer.GlStateManager;
@@ -15,6 +16,8 @@ import net.minecraft.util.math.MathHelper;
 import java.util.HashMap;
 
 public class RenderSageLectern extends TileEntitySpecialRenderer<TileSageLectern> {
+
+	private static final ResourceLocation GENERIC_BOOK = new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/lectern_book_empty.png");
 
 	private static ResourceLocation[] BOOK_TEXTURES = new ResourceLocation[] {
 			new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/lectern_book_generic.png"),
@@ -33,7 +36,14 @@ public class RenderSageLectern extends TileEntitySpecialRenderer<TileSageLectern
 	private static HashMap<String, ResourceLocation> EXTRA_BOOK_TEXTURES = new HashMap<String, ResourceLocation>() {{
 		put("ancientspellcraft:ancient_spell_book", new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/lectern_book_ancient_spell_book.png"));
 		put("ancientspellcraft:ancient_spellcraft_spell_book", new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/lectern_book_ancient_spellcraft_spell_book.png"));
+		put("ancientspellcraft:mystic_spell_book", new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/lectern_mystic_spell_book.png"));
+		put("ancientspellcraft:empty_mystic_spell_book", new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/lectern_mystic_spell_book.png"));
 		put("ancientspellcraft:ritual_book", new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/lectern_book_ritual_book.png"));
+		put("minecraft:book", new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/lectern_book_empty.png"));
+		put("minecraft:writable_book", new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/lectern_book_empty.png"));
+		put("minecraft:written_book", new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/lectern_book_empty.png"));
+		put("minecraft:book_and_quill", new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/lectern_book_empty.png"));
+		put("minecraft:enchanted_book", new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/lectern_book_enchanted.png"));
 
 	}};
 
@@ -48,6 +58,15 @@ public class RenderSageLectern extends TileEntitySpecialRenderer<TileSageLectern
 
 			GlStateManager.translate((float) x + 0.5F, (float) y + 1, (float) z + 0.5F);
 			GlStateManager.rotate(90 - te.getWorld().getBlockState(te.getPos()).getValue(BlockHorizontal.FACING).getHorizontalAngle(), 0, 1, 0);
+
+			//			GlStateManager.pushMatrix();
+			//
+			//			GlStateManager.translate(0, 0.2, 0);
+			//
+			//			float t = Minecraft.getMinecraft().player.ticksExisted + partialTicks;
+			//			//		GlStateManager.translate(0, 0.05f * MathHelper.sin(t/15), 0);
+			//			this.renderItem(t);
+			//			GlStateManager.popMatrix();
 
 			float time = (float) te.ticksExisted + partialTicks;
 
@@ -66,7 +85,12 @@ public class RenderSageLectern extends TileEntitySpecialRenderer<TileSageLectern
 			// Choose book texture
 			Item item = te.getBookSlotItem().getItem();
 			// Default brown book
-			ResourceLocation texture = BOOK_TEXTURES[0];
+			ResourceLocation texture = GENERIC_BOOK;
+
+			if (item instanceof ItemSpellBook) {
+				texture = BOOK_TEXTURES[0];
+			}
+
 			String name = item.getRegistryName().toString();
 			if (item instanceof ItemSageTome) {
 				// Default - sage tome textures and default brown book texture
@@ -119,5 +143,20 @@ public class RenderSageLectern extends TileEntitySpecialRenderer<TileSageLectern
 		}
 
 	}
+
+	//	private void renderItem(float t) {
+	//
+	//		ItemStack stack =  new ItemStack(Items.FEATHER);
+	//		if (!stack.isEmpty()) {
+	//			GlStateManager.pushMatrix();
+	//
+	//			GlStateManager.rotate(180, 0, 180, -180);
+	//			GlStateManager.scale(0.65F, 0.65F, 0.65F);
+	//
+	//			GlStateManager.color(1, 1, 1, 1);
+	//			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
+	//			GlStateManager.popMatrix();
+	//		}
+	//	}
 
 }

@@ -1,0 +1,30 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "DPF",
+        "LPI",
+        "DP "
+    ],
+    "key": {
+        "D": {
+            "type": "forge:ore_dict",
+            "ore": "dyeCyan"
+        },
+        "L": {
+            "item": "minecraft:leather"
+        },
+        "P": {
+            "item": "ancientspellcraft:enchanted_page"
+        },
+        "F": {
+            "item": "minecraft:feather"
+        },
+        "I": {
+            "type": "forge:ore_dict",
+            "ore": "dyeBlack"
+        }
+    },
+    "result": {
+        "item": "ancientspellcraft:empty_mystic_spell_book"
+    }
+}

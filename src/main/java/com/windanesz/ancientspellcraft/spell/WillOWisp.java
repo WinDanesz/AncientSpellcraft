@@ -97,6 +97,7 @@ public class WillOWisp extends SpellConstruct<EntitySpellTicker> implements ISpe
 	protected void addConstructExtras(EntitySpellTicker construct, EnumFacing side, @Nullable EntityLivingBase caster, SpellModifiers modifiers) {
 		NBTTagCompound extraData = new NBTTagCompound();
 
+		if (caster == null) return;
 		// range update base values are 1.25 1.5 1.75
 		// ranges: 800,	1562, 2700, 4287
 		double maxRange = getProperty(RANGE).floatValue() * Math.pow(modifiers.get(WizardryItems.range_upgrade), 3);

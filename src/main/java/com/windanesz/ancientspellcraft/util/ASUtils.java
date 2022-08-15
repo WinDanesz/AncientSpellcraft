@@ -6,9 +6,13 @@ import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ISpellCastingItem;
+import electroblob.wizardry.item.ItemSpellBook;
 import electroblob.wizardry.item.ItemWand;
+import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.BlockUtils;
+import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.entity.Entity;
@@ -25,6 +29,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -223,39 +228,6 @@ public final class ASUtils {
 		return entityItemList;
 	}
 
-	public static class ReflectionUtil {
-		public static Field getField(Class clazz, String fieldName) throws NoSuchFieldException {
-			try {
-				return clazz.getDeclaredField(fieldName);
-			}
-			catch (NoSuchFieldException e) {
-				Class superClass = clazz.getSuperclass();
-				if (superClass == null) {
-					throw e;
-				} else {
-					return getField(superClass, fieldName);
-				}
-			}
-		}
-
-		public static void makeAccessible(Field field) {
-			if (!Modifier.isPublic(field.getModifiers()) ||
-					!Modifier.isPublic(field.getDeclaringClass().getModifiers())) {
-				field.setAccessible(true);
-			}
-		}
-
-		public static void removeFinalModifier(Field field) {
-			try {
-				Field modifiersField = Field.class.getDeclaredField("modifiers");
-				modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
 	/**
 	 * Checks if an entity has a biped model
 	 *
@@ -450,4 +422,76 @@ public final class ASUtils {
 		return entity instanceof EntityLivingBase && (((EntityLivingBase) entity).isEntityUndead() || ((EntityLivingBase) entity).isPotionActive(WizardryPotions.curse_of_undeath));
 	}
 
+	public static List<BlockPos> getHollowSphere(EntityLivingBase caster, SpellModifiers modifiers, float radius) {
+		List<BlockPos> largeFilledSphere = BlockUtils.getBlockSphere(caster.getPosition().up(), radius * modifiers.get(WizardryItems.blast_upgrade));
+		List<BlockPos> smallFilledSphere = BlockUtils.getBlockSphere(caster.getPosition().up(), (radius - 1) * modifiers.get(WizardryItems.blast_upgrade));
+
+		List<BlockPos> hollowSphere = new ArrayList<>();
+		for (BlockPos pos : largeFilledSphere) {
+			if (!smallFilledSphere.contains(pos)) {
+				hollowSphere.add(pos);
+			}
+		}
+		return hollowSphere;
+	}
+
+	public static class ReflectionUtil {
+		public static Field getField(Class clazz, String fieldName) throws NoSuchFieldException {
+			try {
+				return clazz.getDeclaredField(fieldName);
+			}
+			catch (NoSuchFieldException e) {
+				Class superClass = clazz.getSuperclass();
+				if (superClass == null) {
+					throw e;
+				} else {
+					return getField(superClass, fieldName);
+				}
+			}
+		}
+
+		public static void makeAccessible(Field field) {
+			if (!Modifier.isPublic(field.getModifiers()) ||
+					!Modifier.isPublic(field.getDeclaringClass().getModifiers())) {
+				field.setAccessible(true);
+			}
+		}
+
+		public static void removeFinalModifier(Field field) {
+			try {
+				Field modifiersField = Field.class.getDeclaredField("modifiers");
+				modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	/**
+	 * Shorthand method to do instance check and sideonly checks for player messages
+	 */
+	public static void sendMessage(Entity player, String translationKey, boolean actionBar, Object... args) {
+		if (player instanceof EntityPlayer && !player.world.isRemote) {
+			((EntityPlayer) player).sendStatusMessage(new TextComponentTranslation(translationKey, args), actionBar);
+		}
+	}
+
+	public static ItemStack getSpellBookForSpell(Spell spell) {
+		List<Item> bookTypeList = ForgeRegistries.ITEMS.getValuesCollection().stream().filter(i -> i instanceof ItemSpellBook).distinct().collect(Collectors.toList());
+		Item book = null;
+		for (int i = 0; i < bookTypeList.size(); i++) {
+			Item currentBook = bookTypeList.get(i);
+			if (spell.applicableForItem(currentBook)) {
+				book = currentBook;
+				break;
+			}
+		}
+
+		if (book == null) {
+			return ItemStack.EMPTY;
+		}
+		return new ItemStack(book, 1, spell.metadata());
+	}
 }

@@ -8,6 +8,8 @@ import com.windanesz.ancientspellcraft.potion.PotionCandleLight;
 import com.windanesz.ancientspellcraft.potion.PotionCurseAS;
 import com.windanesz.ancientspellcraft.potion.PotionCurseDeath;
 import com.windanesz.ancientspellcraft.potion.PotionCurseEnder;
+import com.windanesz.ancientspellcraft.potion.PotionCurseGills;
+import com.windanesz.ancientspellcraft.potion.PotionCurseUmbra;
 import com.windanesz.ancientspellcraft.potion.PotionCurseWard;
 import com.windanesz.ancientspellcraft.potion.PotionDimensionalAnchor;
 import com.windanesz.ancientspellcraft.potion.PotionEagleEye;
@@ -89,6 +91,8 @@ public class ASPotions {
 	public static final Potion mana_regeneration = placeholder();
 	public static final Potion burrow = placeholder();
 	public static final Potion soul_scorch = placeholder();
+	public static final Potion curse_of_umbra = placeholder();
+	public static final Potion curse_of_gills = placeholder();
 
 	// artemislib potions
 	public static final Potion shrinkage = placeholder();
@@ -191,6 +195,11 @@ public class ASPotions {
 				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_soul_scorch.png")));
 
 		registerPotion(registry, "burrow", new PotionBurrow());
+
+		registerPotion(registry, "curse_of_umbra", new PotionCurseUmbra());
+		registerPotion(registry, "curse_of_gills", new PotionCurseGills());
+
+
 
 		// ---- Artemislib dependent potions ----
 		registerPotion(registry, "shrinkage", new PotionShrinkage("shrinkage", false, 0xc558d6,

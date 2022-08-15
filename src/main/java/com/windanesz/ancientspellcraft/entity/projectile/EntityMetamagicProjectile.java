@@ -104,6 +104,7 @@ public class EntityMetamagicProjectile extends EntityMagicProjectile {
 				double dy = (rand.nextDouble() - 0.5) * height + this.height / 2 - 0.1; // -0.1 because flames aren't centred
 				double dz = (rand.nextDouble() - 0.5) * width;
 				double v = 0.06;
+				// TODO add colors from element
 				ParticleBuilder.create(ParticleBuilder.Type.DUST).clr(255, 255, 255)
 						.pos(this.getPositionVector().add(dx - this.motionX / 2, dy, dz - this.motionZ / 2))
 						.vel(-v * dx, -v * dy, -v * dz).scale(width * 2).time(10).spawn(world);

@@ -33,15 +33,17 @@ public class AttireAlteration extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer player, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		if (world.isRemote) {
+			this.spawnParticles(world, player, modifiers);
+			this.playSound(world, player, ticksInUse, -1, modifiers);
+		}
+		return swapArmour(player, world, modifiers, ticksInUse);
+	}
 
+	public static boolean swapArmour(EntityPlayer player, World world, SpellModifiers modifiers, int ticksInUse) {
 		WizardData data = WizardData.get(player);
 
 		if (data != null) {
-
-			if (world.isRemote) {
-				this.spawnParticles(world, player, modifiers);
-				this.playSound(world, player, ticksInUse, -1, modifiers);
-			}
 
 			ItemStack storedHead = getStack(HEAD_SLOT, data);
 			ItemStack storedChest = getStack(CHEST_SLOT, data);
@@ -63,7 +65,7 @@ public class AttireAlteration extends Spell {
 		return true;
 	}
 
-	private ItemStack getStack(IStoredVariable<ItemStack> variable, WizardData data) {
+	private static ItemStack getStack(IStoredVariable<ItemStack> variable, WizardData data) {
 		ItemStack stack = data.getVariable(variable);
 		return stack != null ? stack : ItemStack.EMPTY;
 	}

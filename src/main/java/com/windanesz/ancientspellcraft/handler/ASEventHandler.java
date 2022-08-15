@@ -50,7 +50,6 @@ import electroblob.wizardry.item.ItemWandUpgrade;
 import electroblob.wizardry.potion.Curse;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardryItems;
-import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.ImbueWeapon;
 import electroblob.wizardry.spell.Spell;
@@ -1407,7 +1406,7 @@ public class ASEventHandler {
 		ItemSoulboundWandUpgrade.restoreStoredWandsToInventory(event.player);
 	}
 
-	protected static float calculateVelocity(EntityMagicProjectile projectile, SpellModifiers modifiers, float launchHeight) {
+	public static float calculateVelocity(EntityMagicProjectile projectile, SpellModifiers modifiers, float launchHeight) {
 		// The required range
 		float range = 20 * modifiers.get(WizardryItems.range_upgrade);
 

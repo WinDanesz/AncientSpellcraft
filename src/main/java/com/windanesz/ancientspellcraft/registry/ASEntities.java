@@ -9,6 +9,7 @@ import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBarterConstruct;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;
 import com.windanesz.ancientspellcraft.entity.construct.EntityHealingSigil;
+import com.windanesz.ancientspellcraft.entity.construct.EntityMoltenBoulder;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySentinel;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySilencingSigil;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpellTicker;
@@ -16,9 +17,11 @@ import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
 import com.windanesz.ancientspellcraft.entity.construct.EntityTransportationPortal;
 import com.windanesz.ancientspellcraft.entity.construct.EntityVenusFlyTrap;
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
+import com.windanesz.ancientspellcraft.entity.living.EntityCreeperMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
 import com.windanesz.ancientspellcraft.entity.living.EntityFireAnt;
 import com.windanesz.ancientspellcraft.entity.living.EntityOrdinarySpiderMinion;
+import com.windanesz.ancientspellcraft.entity.living.EntityPigZombieMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonHorseMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpellCaster;
@@ -144,6 +147,9 @@ public class ASEntities {
 		registry.register(createEntry(EntityBuilder.class, "builder_entity", TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntityAnimatedItem.class, "animated_item", TrackingType.LIVING).build());
 		registry.register(createEntry(EntityMasterBolt.class, 	"master_bolt", 	TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntityMoltenBoulder.class, "molten_boulder").tracker(160, 1, true).build()); // Vertical velocity is not constant
+		registry.register(createEntry(EntityCreeperMinion.class, "creeper_minion", TrackingType.LIVING).build());
+		registry.register(createEntry(EntityPigZombieMinion.class, "pig_zombie_minion", TrackingType.LIVING).build());
 
 		//// Living Entity Overrides
 

@@ -66,18 +66,21 @@ public class Conflagration extends SpellAreaEffect {
 	@Override
 	protected boolean affectEntity(World world, Vec3d origin,
 			@Nullable EntityLivingBase caster, EntityLivingBase target, int targetCount, int ticksInUse, SpellModifiers modifiers) {
-		if (caster instanceof EntityPlayer && AllyDesignationSystem.isAllied((EntityPlayer) caster, target))
-			return false;
+		if (target == null || caster == null) { return false; }
+
+		if (caster instanceof EntityPlayer && AllyDesignationSystem.isAllied((EntityPlayer) caster, target)) { return false; }
 
 		if (target instanceof EntityPlayer) {
 			Wizardry.proxy.shakeScreen((EntityPlayer) target, 8);
 		}
 
-		target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.BLAST),
-				// Damage decreases with distance but cannot be less than 0, naturally.
-				Math.max(getProperty(MAX_DAMAGE).floatValue() - (float) target.getDistance(caster.posX + 0.5,
-						caster.posY + 0.5, caster.posZ + 0.5) * 4, 0) * modifiers.get(SpellModifiers.POTENCY));
+		if (caster != null) {
 
+			target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.BLAST),
+					// Damage decreases with distance but cannot be less than 0, naturally.
+					Math.max(getProperty(MAX_DAMAGE).floatValue() - (float) target.getDistance(caster.posX + 0.5,
+							caster.posY + 0.5, caster.posZ + 0.5) * 4, 0) * modifiers.get(SpellModifiers.POTENCY));
+		}
 		target.setFire(getProperty(BURN_DURATION).intValue());
 
 		double dx = target.posX - caster.posX;

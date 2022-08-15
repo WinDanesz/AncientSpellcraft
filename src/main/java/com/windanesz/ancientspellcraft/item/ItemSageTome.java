@@ -1,7 +1,10 @@
 package com.windanesz.ancientspellcraft.item;
 
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.registry.ASTabs;
+import com.windanesz.ancientspellcraft.spell.IClassSpell;
+import com.windanesz.ancientspellcraft.spell.PerfectTheorySpell;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.constants.Element;
@@ -15,6 +18,7 @@ import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.item.IWorkbenchItem;
 import electroblob.wizardry.item.ItemWand;
+import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.packet.PacketCastSpell;
 import electroblob.wizardry.packet.WizardryPacketHandler;
 import electroblob.wizardry.registry.Spells;
@@ -32,6 +36,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -47,7 +52,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.windanesz.ancientspellcraft.item.WizardClassWeaponHelper.getDistributedCost;
 
@@ -57,7 +64,7 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 	/**
 	 * The number of spell slots a tome has with no attunement upgrades applied.
 	 */
-	public static final int TOME_BASE_SPELL_SLOTS = 3;
+	public static final int TOME_BASE_SPELL_SLOTS = 5;
 	public static final IStoredVariable<BlockPos> LAST_POS = IStoredVariable.StoredVariable.ofBlockPos("lastPlayerPos", Persistence.NEVER);
 	private static final String MANA_AVAILABLE_TAG = "mana_available";
 	/**
@@ -111,11 +118,11 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 		WandHelper.decrementCooldowns(stack);
 	}
 
-		// Max damage is modifiable with upgrades.
+	// Max damage is modifiable with upgrades.
 	@Override
-	public int getMaxDamage(ItemStack stack){
+	public int getMaxDamage(ItemStack stack) {
 		// + 0.5f corrects small float errors rounding down
-		return (int)(super.getMaxDamage(stack) * (1.0f + Constants.STORAGE_INCREASE_PER_LEVEL
+		return (int) (super.getMaxDamage(stack) * (1.0f + Constants.STORAGE_INCREASE_PER_LEVEL
 				* WandHelper.getUpgradeLevel(stack, WizardryItems.storage_upgrade)) + 0.5f);
 	}
 
@@ -174,8 +181,12 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 			// +0.5f is necessary due to the error in the way floats are calculated.
 			text.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":wand.buff",
 					new Style().setColor(TextFormatting.DARK_GRAY),
-					(int) ((tier.level + 1) * (Constants.POTENCY_INCREASE_PER_TIER / 3) * 100 + 0.5f), element.getDisplayName()));
+					(int) ((tier.level + 1) * (Constants.POTENCY_INCREASE_PER_TIER) * 100 + 0.5f), element.getDisplayName()));
 		}
+		// +0.5f is necessary due to the error in the way floats are calculated.
+		text.add(Wizardry.proxy.translate("item." + AncientSpellcraft.MODID + ":sage_tome.buff",
+				new Style().setColor(TextFormatting.DARK_GRAY),
+				(int) ((tier.level + 1) * (Constants.POTENCY_INCREASE_PER_TIER) * 100 + 0.5f)));
 
 		Spell spell = WandHelper.getCurrentSpell(stack);
 
@@ -190,6 +201,9 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 			// show innate mana
 			text.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":wand.mana", new Style().setColor(TextFormatting.BLUE),
 					this.getMana(stack), this.getManaCapacity(stack)));
+		}
+
+		if (this.tier.level < Tier.MASTER.level) {
 			text.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":wand.progression", new Style().setColor(TextFormatting.GRAY),
 					WandHelper.getProgression(stack), this.tier.level < Tier.MASTER.level ? tier.next().getProgression() : 0));
 		}
@@ -256,41 +270,41 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 	@Override
 	public void onUsingTick(ItemStack stack, EntityLivingBase user, int count) {
 
-		if(user instanceof EntityPlayer){
+		if (user instanceof EntityPlayer) {
 
-			EntityPlayer player = (EntityPlayer)user;
+			EntityPlayer player = (EntityPlayer) user;
 
 			Spell spell = WandHelper.getCurrentSpell(stack);
 
 			SpellModifiers modifiers;
 
-			if(WizardData.get(player) != null){
+			if (WizardData.get(player) != null) {
 				modifiers = WizardData.get(player).itemCastingModifiers;
-			}else{
-				modifiers = this.calculateModifiers(stack, (EntityPlayer)user, spell); // Fallback to the old way, should never be used
+			} else {
+				modifiers = this.calculateModifiers(stack, (EntityPlayer) user, spell); // Fallback to the old way, should never be used
 			}
 
 			int useTick = stack.getMaxItemUseDuration() - count;
-			int chargeup = (int)(spell.getChargeup() * modifiers.get(SpellModifiers.CHARGEUP));
+			int chargeup = (int) (spell.getChargeup() * modifiers.get(SpellModifiers.CHARGEUP));
 
-			if(spell.isContinuous){
+			if (spell.isContinuous) {
 				// Continuous spell charge-up is simple, just don't do anything until it's charged
-				if(useTick >= chargeup){
+				if (useTick >= chargeup) {
 					// castingTick needs to be relative to when the spell actually started
 					int castingTick = useTick - chargeup;
 					// Continuous spells (these must check if they can be cast each tick since the mana changes)
 					// Don't call canCast when castingTick == 0 because we already did it in onItemRightClick - even
 					// with charge-up times, because we don't want to trigger events twice
-					if(castingTick == 0 || canCast(stack, spell, player, player.getActiveHand(), castingTick, modifiers)){
+					if (castingTick == 0 || canCast(stack, spell, player, player.getActiveHand(), castingTick, modifiers)) {
 						cast(stack, spell, player, player.getActiveHand(), castingTick, modifiers);
-					}else{
+					} else {
 						// Stops the casting if it was interrupted, either by events or because the wand ran out of mana
 						player.stopActiveHand();
 					}
 				}
-			}else{
+			} else {
 				// Non-continuous spells need to check they actually have a charge-up since ALL spells call setActiveHand
-				if(chargeup > 0 && useTick == chargeup){
+				if (chargeup > 0 && useTick == chargeup) {
 					// Once the spell is charged, it's exactly the same as in onItemRightClick
 					cast(stack, spell, player, player.getActiveHand(), 0, modifiers);
 				}
@@ -346,16 +360,16 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 	@Override
 	public boolean canCast(ItemStack stack, Spell spell, EntityPlayer caster, EnumHand hand, int castingTick, SpellModifiers modifiers) {
 		// Spells can only be cast if the casting events aren't cancelled...
-		if(castingTick == 0){
-			if(MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(SpellCastEvent.Source.WAND, spell, caster, modifiers))) return false;
-		}else{
-			if(MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Tick(SpellCastEvent.Source.WAND, spell, caster, modifiers, castingTick))) return false;
+		if (castingTick == 0) {
+			if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(AncientSpellcraft.SAGE_ITEM, spell, caster, modifiers))) { return false; }
+		} else {
+			if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Tick(AncientSpellcraft.SAGE_ITEM, spell, caster, modifiers, castingTick))) { return false; }
 		}
 
-		int cost = (int)(spell.getCost() * modifiers.get(SpellModifiers.COST) + 0.1f); // Weird floaty rounding
+		int cost = (int) (spell.getCost() * modifiers.get(SpellModifiers.COST) + 0.1f); // Weird floaty rounding
 
 		// As of wizardry 4.2 mana cost is only divided over two intervals each second
-		if(spell.isContinuous) cost = getDistributedCost(cost, castingTick);
+		if (spell.isContinuous) { cost = getDistributedCost(cost, castingTick); }
 
 		// ...and the wand has enough mana to cast the spell...
 		return cost <= this.getMana(stack) // This comes first because it changes over time
@@ -378,7 +392,7 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 
 		if (spell.cast(world, caster, hand, castingTick, modifiers)) {
 
-			if (castingTick == 0) { MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.WAND, spell, caster, modifiers)); }
+			if (castingTick == 0) { MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(AncientSpellcraft.SAGE_ITEM, spell, caster, modifiers)); }
 
 			if (!world.isRemote) {
 
@@ -446,6 +460,41 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 		}
 
 		return false;
+	}
+
+	@Override
+	public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase user, int timeLeft) {
+
+		if (user instanceof EntityPlayer) {
+
+			EntityPlayer player = (EntityPlayer) user;
+
+			Spell spell = WandHelper.getCurrentSpell(stack);
+
+			SpellModifiers modifiers;
+
+			if (WizardData.get(player) != null) {
+				modifiers = WizardData.get(player).itemCastingModifiers;
+			} else {
+				modifiers = this.calculateModifiers(stack, (EntityPlayer) user, spell); // Fallback to the old way, should never be used
+			}
+
+			int castingTick = stack.getMaxItemUseDuration() - timeLeft; // Might as well include this
+
+			int cost = getDistributedCost((int) (spell.getCost() * modifiers.get(SpellModifiers.COST) + 0.1f), castingTick);
+
+			// Still need to check there's enough mana or the spell will finish twice, since running out of mana is
+			// handled separately.
+			if (spell.isContinuous && spell.getTier().level <= this.tier.level && cost <= this.getMana(stack)) {
+
+				MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Finish(AncientSpellcraft.SAGE_ITEM, spell, player, modifiers, castingTick));
+				spell.finishCasting(world, player, Double.NaN, Double.NaN, Double.NaN, null, castingTick, modifiers);
+
+				if (!player.isCreative()) { // Spells only have a cooldown in survival
+					WandHelper.setCurrentCooldown(stack, (int) (spell.getCooldown() * modifiers.get(WizardryItems.cooldown_upgrade)));
+				}
+			}
+		}
 	}
 
 	@Override
@@ -547,6 +596,8 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 			spells = new Spell[ItemWand.BASE_SPELL_SLOTS];
 		}
 
+		HashMap<Integer, NBTTagCompound> theorySpellData = new HashMap<>();
+
 		for (int i = 0; i < spells.length; i++) {
 			if (spellBooks[i].getStack() != ItemStack.EMPTY) {
 
@@ -555,11 +606,31 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 				if (!(spell.getTier().level > this.tier.level) && spells[i] != spell && spell.isEnabled(SpellProperties.Context.WANDS)) {
 					spells[i] = spell;
 					changed = true;
+
+					if (spell instanceof PerfectTheorySpell) {
+						theorySpellData.put(i, spellBooks[i].getStack().getTagCompound());
+					}
 				}
 			}
 		}
 
 		WandHelper.setSpells(centre.getStack(), spells);
+
+		if (!theorySpellData.isEmpty()) {
+			NBTTagCompound tomeTheoryData = new NBTTagCompound();
+
+			if (centre.getStack().hasTagCompound() && centre.getStack().getTagCompound().hasKey("perfectTheoryData")) {
+				NBTTagCompound theorySpells = centre.getStack().getTagCompound().getCompoundTag("perfectTheoryData");
+				for (String key : theorySpells.getKeySet()) {
+					theorySpellData.put(Integer.parseInt(key), theorySpells.getCompoundTag(key));
+				}
+			}
+
+			for (Map.Entry<Integer, NBTTagCompound> entry : theorySpellData.entrySet()) {
+				if (entry.getValue() != null) { tomeTheoryData.setTag(entry.getKey().toString(), entry.getValue()); }
+			}
+			centre.getStack().getTagCompound().setTag("perfectTheoryData", tomeTheoryData);
+		}
 
 		// Charges wand by appropriate amount
 		if (crystals.getStack() != ItemStack.EMPTY && !this.isManaFull(centre.getStack())) {
@@ -647,9 +718,11 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 	 * Returns a SpellModifiers object with the appropriate modifiers applied for the given ItemStack and Spell.
 	 * This is now public because artefacts use it
 	 */
+	/**
+	 * Returns a SpellModifiers object with the appropriate modifiers applied for the given ItemStack and Spell.
+	 */
+	// This is now public because artefacts use it
 	public SpellModifiers calculateModifiers(ItemStack stack, EntityPlayer player, Spell spell) {
-
-		EnumHand otherHand = getOtherHandForSword(stack, player);
 
 		SpellModifiers modifiers = new SpellModifiers();
 
@@ -666,31 +739,34 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 		level = WandHelper.getUpgradeLevel(stack, WizardryItems.cooldown_upgrade);
 		if (level > 0) { modifiers.set(WizardryItems.cooldown_upgrade, 1.0f - level * Constants.COOLDOWN_REDUCTION_PER_LEVEL, true); }
 
-		////		float progressionModifier = 1.0f - ((float) WizardData.get(player).countRecentCasts(spell) / WizardData.MAX_RECENT_SPELLS)
-		////				* MAX_PROGRESSION_REDUCTION;
-		//
-		//		Element element = getElement(stack);
-		//
-		//		if (element != Element.MAGIC && element == spell.getElement()) {
-		//			modifiers.set(SpellModifiers.POTENCY, 1.0f + (this.tier.level + 1) * (Constants.POTENCY_INCREASE_PER_TIER / 3), true);
-		//			progressionModifier *= ELEMENTAL_PROGRESSION_MODIFIER;
-		//
-		//		}
-		//
-		//		if (WizardData.get(player) != null) {
-		//
-		//			if (!WizardData.get(player).hasSpellBeenDiscovered(spell)) {
-		//				// Casting an undiscovered spell now grants 5x progression
-		//				progressionModifier *= DISCOVERY_PROGRESSION_MODIFIER;
-		//			}
-		//
-		//			if (!WizardData.get(player).hasReachedTier(this.tier.next())) {
-		//				// 1.5x progression for tiers that have already been reached
-		//				progressionModifier *= SECOND_TIME_PROGRESSION_MODIFIER;
-		//			}
-		//		}
+		float progressionModifier = 1.0f - ((float) WizardData.get(player).countRecentCasts(spell) / WizardData.MAX_RECENT_SPELLS)
+				* MAX_PROGRESSION_REDUCTION;
 
-		//		modifiers.set(SpellModifiers.PROGRESSION, progressionModifier, false);
+		if (this.element == spell.getElement()) {
+			modifiers.set(SpellModifiers.POTENCY, 1.0f + (this.tier.level + 1) * Constants.POTENCY_INCREASE_PER_TIER, true);
+			progressionModifier *= ELEMENTAL_PROGRESSION_MODIFIER;
+		}
+
+		// Mystic Spells
+		if (spell instanceof IClassSpell && ((IClassSpell) spell).getArmourClass() == ItemWizardArmour.ArmourClass.SAGE) {
+			modifiers.set(SpellModifiers.POTENCY, 1.0f + (this.tier.level + 1) * Constants.POTENCY_INCREASE_PER_TIER, true);
+			progressionModifier *= ELEMENTAL_PROGRESSION_MODIFIER;
+		}
+
+		if (WizardData.get(player) != null) {
+
+			if (!WizardData.get(player).hasSpellBeenDiscovered(spell)) {
+				// Casting an undiscovered spell now grants 5x progression
+				progressionModifier *= DISCOVERY_PROGRESSION_MODIFIER;
+			}
+
+			if (!WizardData.get(player).hasReachedTier(this.tier.next())) {
+				// 1.5x progression for tiers that have already been reached
+				progressionModifier *= SECOND_TIME_PROGRESSION_MODIFIER;
+			}
+		}
+
+		modifiers.set(SpellModifiers.PROGRESSION, progressionModifier, false);
 
 		return modifiers;
 	}

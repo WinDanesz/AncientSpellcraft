@@ -3,8 +3,6 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import com.windanesz.ancientspellcraft.registry.ASDimensions;
 import com.windanesz.ancientspellcraft.registry.ASItems;
-import electroblob.wizardry.item.SpellActions;
-import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.Entity;
@@ -21,13 +19,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
-public class HellGate extends SpellRay {
-	private Random rand = new Random();
+public class HellGate extends SpellRayAS {
 
-	public HellGate(String modID, String name, EnumAction action, boolean isContinuous) {
-		super(modID, name, SpellActions.POINT, false);
+	public HellGate() {
+		super("hellgate", EnumAction.BLOCK, false);
 	}
 
 	@Override
@@ -49,7 +45,8 @@ public class HellGate extends SpellRay {
 			if (!world.isRemote) {
 				world.setBlockState(pos, ASBlocks.NETHER_FIRE.getDefaultState());
 			}
-			world.playSound((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, SoundEvents.BLOCK_PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
+			world.playSound((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, SoundEvents.BLOCK_PORTAL_AMBIENT,
+					SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.4F + 0.8F, false);
 
 			return true;
 		}

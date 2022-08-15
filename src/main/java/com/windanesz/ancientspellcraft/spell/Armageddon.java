@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.ASItems;
-import electroblob.wizardry.entity.projectile.EntityMagicFireball;
+import electroblob.wizardry.entity.EntityMeteor;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellAreaEffect;
@@ -47,13 +47,16 @@ public class Armageddon extends SpellAreaEffect {
 
 			for (int i = 0; i < 4; i++) {
 				BlockPos currPos = list.get(world.rand.nextInt(list.size()));
-				EntityMagicFireball fireball = new EntityMagicFireball(world);
-				fireball.setCaster(caster);
-				fireball.setLifetime(80);
-				fireball.setPosition(currPos.getX() + world.rand.nextFloat(), currPos.getY() + world.rand.nextFloat() * (world.rand.nextBoolean() ? 1 : -1)
-						, currPos.getZ() + world.rand.nextFloat());
-				fireball.motionY = -0.5f;
-				world.spawnEntity(fireball);
+
+				EntityMeteor meteor = new EntityMeteor(world, currPos.getX(), currPos.getY(),currPos.getZ(),
+						0.5f, false);
+
+				Vec3d direction = caster.getLookVec().scale(2 * modifiers.get(WizardryItems.range_upgrade));
+				meteor.motionX = direction.x;
+				meteor.motionY = direction.y;
+				meteor.motionZ = direction.z;
+
+				world.spawnEntity(meteor);
 			}
 
 		} else {

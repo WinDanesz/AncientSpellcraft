@@ -1,0 +1,27 @@
+﻿{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": true,
+        "dispensers": true,
+        "commands": true,
+        "treasure": true,
+        "trades": true,
+        "looting": true
+    },
+    "tier": "novice",
+    "element": "magic",
+    "type": "attack",
+    "cost": 10,
+    "chargeup": 20,
+    "cooldown": 40,
+    "base_properties": {
+        "base_success_chance" : 0.01,
+        "forfeit_weight": 3,
+        "buff_weight": 1,
+        "debuff_weight": 1,
+        "no_effect_weight" : 3
+
+    }
+}

@@ -5,6 +5,8 @@ import com.windanesz.ancientspellcraft.block.ITemporaryBlock;
 import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
+import electroblob.wizardry.registry.WizardryBlocks;
+import electroblob.wizardry.tileentity.TileEntityTimer;
 import electroblob.wizardry.util.BlockUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -58,6 +60,14 @@ public class EntityBuilder extends EntityMagicConstruct {
 
 								if (blockToBuild.getBlock() == ASBlocks.lightning_block) {
 									BlockLightning.setProperties(world, currPos, getCaster(), blockLifetime, damageMultiplier);
+								}
+
+								if (blockToBuild.getBlock() == WizardryBlocks.spectral_block) {
+									world.setBlockState(currPos, WizardryBlocks.spectral_block.getDefaultState());
+
+									if(world.getTileEntity(currPos) instanceof TileEntityTimer){
+										((TileEntityTimer)world.getTileEntity(currPos)).setLifetime(blockLifetime);
+									}
 								}
 							}
 						}

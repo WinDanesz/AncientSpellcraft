@@ -3,12 +3,12 @@
         "book": true,
         "scroll": true,
         "wands": true,
-        "npcs": true,
-        "dispensers": true,
+        "npcs": false,
+        "dispensers": false,
         "commands": true,
-        "treasure": true,
-        "trades": true,
-        "looting": true
+        "treasure": false,
+        "trades": false,
+        "looting": false
     },
     "tier": "master",
     "element": "sorcery",

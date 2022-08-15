@@ -1,0 +1,24 @@
+﻿{
+    "enabled": {
+        "book": true,
+        "scroll": false,
+        "wands": true,
+        "npcs": false,
+        "dispensers": true,
+        "commands": true,
+        "treasure": false,
+        "trades": false,
+        "looting": false
+    },
+    "tier": "master",
+    "element": "magic",
+    "type": "utility",
+    "cost": 150,
+    "chargeup": 40,
+    "cooldown": 200,
+    "base_properties": {
+        "summon_radius": 4,
+        "minion_lifetime": 600,
+        "minion_count": 5
+    }
+}

@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.item;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.data.ClassWeaponData;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
@@ -121,6 +122,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	 * The number of spell slots a sword has with no attunement upgrades applied.
 	 */
 	public static final int SWORD_BASE_SPELL_SLOTS = 3;
+	public static final String ACTIVE_RUNEWORDS = "active_runewords";
 
 	/**
 	 * The maximum number of upgrades that can be applied to a wand of this tier.
@@ -491,6 +493,9 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 				}
 			}
 
+		}
+
+		if (this.tier.level < Tier.MASTER.level) {
 			text.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":wand.progression", new Style().setColor(TextFormatting.GRAY),
 					WandHelper.getProgression(stack), this.tier.level < Tier.MASTER.level ? tier.next().getProgression() : 0));
 		}
@@ -665,9 +670,9 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 		// Spells can only be cast if the casting events aren't cancelled...
 		if (castingTick == 0) {
-			if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(SpellCastEvent.Source.COMMAND, spell, caster, modifiers))) { return false; }
+			if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(AncientSpellcraft.BATTLEMAGE_ITEM, spell, caster, modifiers))) { return false; }
 		} else {
-			if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Tick(SpellCastEvent.Source.COMMAND, spell, caster, modifiers, castingTick))) { return false; }
+			if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Tick(AncientSpellcraft.BATTLEMAGE_ITEM, spell, caster, modifiers, castingTick))) { return false; }
 		}
 
 		int cost = (int) (spell.getCost() * modifiers.get(SpellModifiers.COST) + 0.1f); // Weird floaty rounding
@@ -709,7 +714,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 		if (spell.cast(world, caster, hand, castingTick, modifiers)) {
 
-			if (castingTick == 0) { MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.COMMAND, spell, caster, modifiers)); }
+			if (castingTick == 0) { MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(AncientSpellcraft.BATTLEMAGE_ITEM, spell, caster, modifiers)); }
 
 			if (!world.isRemote) {
 
@@ -784,8 +789,8 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 	public static HashMap<Runeword, Integer> getActiveRunewords(ItemStack stack) {
 		HashMap<Runeword, Integer> map = new HashMap<>();
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey("active_runewords")) {
-			NBTTagCompound compound = stack.getTagCompound().getCompoundTag("active_runewords");
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(ACTIVE_RUNEWORDS)) {
+			NBTTagCompound compound = stack.getTagCompound().getCompoundTag(ACTIVE_RUNEWORDS);
 			for (String key : compound.getKeySet()) {
 				Spell runeword = Spell.get(key);
 				if (runeword instanceof Runeword && compound.getInteger(key) > 0) {
@@ -814,7 +819,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 			}
 		}
 		//noinspection ConstantConditions
-		compound.setTag("active_runewords", runewords);
+		compound.setTag(ACTIVE_RUNEWORDS, runewords);
 		stack.setTagCompound(compound);
 	}
 
@@ -1183,7 +1188,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	// hitEntity is only called server-side, so we'll have to use events
 	// this event DOES NOT trigger when the conditions are met in electroblob.wizardry.item.ItemWand.onAttackEntityEvent
 	@SubscribeEvent
-	public void onAttackEntityEvent(AttackEntityEvent event) {
+	public static void onAttackEntityEvent(AttackEntityEvent event) {
 
 		EntityPlayer player = event.getEntityPlayer();
 		ItemStack stack = player.getHeldItemMainhand(); // Can't melee with offhand items
@@ -1203,88 +1208,95 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 					Element element = WizardClassWeaponHelper.getElement(stack);
 
-					if (element == Element.NECROMANCY) {
-						Vec3d origin = player.getPositionEyes(1);
-						Vec3d hit = origin.add(player.getLookVec().scale(player.getDistance(event.getTarget())));
-						Vec3d vec1 = player.getLookVec().rotatePitch(90);
-						Vec3d vec2 = player.getLookVec().crossProduct(vec1);
+					switch (element) {
+						case MAGIC: {
+							Vec3d origin = new Vec3d(player.posX, player.posY + player.getEyeHeight() - 0.5, player.posZ);
+							Vec3d hit = origin.add(player.getLookVec().scale(player.getDistance(event.getTarget())));
+							// Generate two perpendicular vectors in the plane perpendicular to the look vec
+							Vec3d vec1 = player.getLookVec().rotatePitch(90);
+							Vec3d vec2 = player.getLookVec().crossProduct(vec1);
 
-						for (int i = 0; i < 15; i++) {
-							ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(hit)
-									.vel(vec1.scale(random.nextFloat() * 0.3f - 0.15f).add(vec2.scale(random.nextFloat() * 0.3f - 0.15f)))
-									.clr(0.5f, 0, 0)
-									.time(8 + random.nextInt(4)).spawn(player.world);
+							for (int i = 0; i < 15; i++) {
+								ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(hit)
+										.vel(vec1.scale(random.nextFloat() * 0.3f - 0.15f).add(vec2.scale(random.nextFloat() * 0.3f - 0.15f)))
+										.clr(1f, 1f, 1f).fade(0.3f, 0.5f, 1)
+										.time(8 + random.nextInt(4)).spawn(player.world);
+							}
+							break;
 						}
+						case NECROMANCY: {
+							Vec3d origin = player.getPositionEyes(1);
+							Vec3d hit = origin.add(player.getLookVec().scale(player.getDistance(event.getTarget())));
+							Vec3d vec1 = player.getLookVec().rotatePitch(90);
+							Vec3d vec2 = player.getLookVec().crossProduct(vec1);
 
-					} else if (element == Element.MAGIC) {
-
-						Vec3d origin = new Vec3d(player.posX, player.posY + player.getEyeHeight() - 0.5, player.posZ);
-						Vec3d hit = origin.add(player.getLookVec().scale(player.getDistance(event.getTarget())));
-						// Generate two perpendicular vectors in the plane perpendicular to the look vec
-						Vec3d vec1 = player.getLookVec().rotatePitch(90);
-						Vec3d vec2 = player.getLookVec().crossProduct(vec1);
-
-						for (int i = 0; i < 15; i++) {
-							ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(hit)
-									.vel(vec1.scale(random.nextFloat() * 0.3f - 0.15f).add(vec2.scale(random.nextFloat() * 0.3f - 0.15f)))
-									.clr(1f, 1f, 1f).fade(0.3f, 0.5f, 1)
-									.time(8 + random.nextInt(4)).spawn(player.world);
+							for (int i = 0; i < 15; i++) {
+								ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(hit)
+										.vel(vec1.scale(random.nextFloat() * 0.3f - 0.15f).add(vec2.scale(random.nextFloat() * 0.3f - 0.15f)))
+										.clr(0.5f, 0, 0)
+										.time(8 + random.nextInt(4)).spawn(player.world);
+							}
+							break;
 						}
-					} else if (element == Element.LIGHTNING) {
-						ParticleBuilder.spawnShockParticles(player.world, event.getTarget().posX, event.getTarget().posY + event.getTarget().height / 2, event.getTarget().posZ);
-						List<EntityLivingBase> secondaryTargets = EntityUtils.getLivingWithinRadius(
-								4, event.getTarget().posX, event.getTarget().posY + event.getTarget().height / 2,
-								event.getTarget().posZ, player.world);
+						case LIGHTNING: {
+							ParticleBuilder.spawnShockParticles(player.world, event.getTarget().posX, event.getTarget().posY + event.getTarget().height / 2, event.getTarget().posZ);
+							List<EntityLivingBase> secondaryTargets = EntityUtils.getLivingWithinRadius(
+									4, event.getTarget().posX, event.getTarget().posY + event.getTarget().height / 2,
+									event.getTarget().posZ, player.world);
 
-						secondaryTargets.stream()
-								.filter(entity -> !entity.equals(event.getTarget()))
-								.filter(EntityUtils::isLiving)
-								.filter(e -> AllyDesignationSystem.isValidTarget(player, e))
-								.limit(3)
-								.forEach(secondaryTarget -> EnumElementalSwordEffect.electrocute(event.getTarget().world, player,
-										event.getTarget().getPositionVector().add(0, event.getTarget().height / 2, 0),
-										secondaryTarget,
-										4,
-										0));
-					} else if (element == Element.ICE) {
-						Vec3d origin = player.getPositionEyes(1);
-						Vec3d hit = origin.add(player.getLookVec().scale(player.getDistance(event.getTarget())));
-						Vec3d vec1 = player.getLookVec().rotatePitch(90);
-						Vec3d vec2 = player.getLookVec().crossProduct(vec1);
-
-						for (int i = 0; i < 15; i++) {
-							ParticleBuilder.create(ParticleBuilder.Type.SNOW).pos(hit)
-									.vel(vec1.scale(random.nextFloat() * 0.3f - 0.15f).add(vec2.scale(random.nextFloat() * 0.3f - 0.15f)))
-									.time(8 + random.nextInt(4)).spawn(player.world);
+							secondaryTargets.stream()
+									.filter(entity -> !entity.equals(event.getTarget()))
+									.filter(EntityUtils::isLiving)
+									.filter(e -> AllyDesignationSystem.isValidTarget(player, e))
+									.limit(3)
+									.forEach(secondaryTarget -> EnumElementalSwordEffect.electrocute(event.getTarget().world, player,
+											event.getTarget().getPositionVector().add(0, event.getTarget().height / 2, 0),
+											secondaryTarget,
+											4,
+											0));
+							break;
 						}
+						case ICE: {
+							Vec3d origin = player.getPositionEyes(1);
+							Vec3d hit = origin.add(player.getLookVec().scale(player.getDistance(event.getTarget())));
+							Vec3d vec1 = player.getLookVec().rotatePitch(90);
+							Vec3d vec2 = player.getLookVec().crossProduct(vec1);
 
-						if (WizardClassWeaponHelper.isChargeFull(stack)) {
-
-							double particleX, particleZ;
-
-							for (int i = 0; i < 10; i++) {
-
-								particleX = event.getTarget().posX - 1.0d + 2 * event.getTarget().world.rand.nextDouble();
-								particleZ = event.getTarget().posZ - 1.0d + 2 * event.getTarget().world.rand.nextDouble();
-								ParticleBuilder.create(ParticleBuilder.Type.ICE)
-										.pos(particleX, event.getTarget().posY + 1, particleZ)
-										.vel((particleX - event.getTarget().posX) * 0.3, 0, (particleZ - event.getTarget().posZ) * 0.3)
-										.time(20)
-										.spawn(event.getTarget().world);
-
+							for (int i = 0; i < 15; i++) {
+								ParticleBuilder.create(ParticleBuilder.Type.SNOW).pos(hit)
+										.vel(vec1.scale(random.nextFloat() * 0.3f - 0.15f).add(vec2.scale(random.nextFloat() * 0.3f - 0.15f)))
+										.time(8 + random.nextInt(4)).spawn(player.world);
 							}
 
-							for (int i = 0; i < 40; i++) {
+							if (WizardClassWeaponHelper.isChargeFull(stack)) {
 
-								particleX = event.getTarget().posX - 1.0d + 2 * event.getTarget().world.rand.nextDouble();
-								particleZ = event.getTarget().posZ - 1.0d + 2 * event.getTarget().world.rand.nextDouble();
-								ParticleBuilder.create(ParticleBuilder.Type.SNOW)
-										.pos(particleX, event.getTarget().posY + 1, particleZ)
-										.vel((particleX - event.getTarget().posX) * 0.3, 0, (particleZ - event.getTarget().posZ) * 0.3)
-										.time(20)
-										.spawn(event.getTarget().world);
+								double particleX, particleZ;
 
+								for (int i = 0; i < 10; i++) {
+
+									particleX = event.getTarget().posX - 1.0d + 2 * event.getTarget().world.rand.nextDouble();
+									particleZ = event.getTarget().posZ - 1.0d + 2 * event.getTarget().world.rand.nextDouble();
+									ParticleBuilder.create(ParticleBuilder.Type.ICE)
+											.pos(particleX, event.getTarget().posY + 1, particleZ)
+											.vel((particleX - event.getTarget().posX) * 0.3, 0, (particleZ - event.getTarget().posZ) * 0.3)
+											.time(20)
+											.spawn(event.getTarget().world);
+
+								}
+
+								for (int i = 0; i < 40; i++) {
+
+									particleX = event.getTarget().posX - 1.0d + 2 * event.getTarget().world.rand.nextDouble();
+									particleZ = event.getTarget().posZ - 1.0d + 2 * event.getTarget().world.rand.nextDouble();
+									ParticleBuilder.create(ParticleBuilder.Type.SNOW)
+											.pos(particleX, event.getTarget().posY + 1, particleZ)
+											.vel((particleX - event.getTarget().posX) * 0.3, 0, (particleZ - event.getTarget().posZ) * 0.3)
+											.time(20)
+											.spawn(event.getTarget().world);
+
+								}
 							}
+							break;
 						}
 					}
 				}

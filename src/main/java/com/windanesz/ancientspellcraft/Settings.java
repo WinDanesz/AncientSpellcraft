@@ -21,7 +21,8 @@ public class Settings {
 
 	public ResourceLocation[] lootInjectionLocations = toResourceLocations(generalSettings.DEFAULT_LOOT_INJECTION_LOCATIONS);
 
-	public ResourceLocation[] artefactInjectionLocations = toResourceLocations(generalSettings.ARTEFACT_INJECTION_LOCATIONS);
+	public ResourceLocation[] artefactInjectionLocations = toResourceLocations(generalSettings.
+			ARTEFACT_INJECTION_LOCATIONS);
 
 	public ResourceLocation[] voidCreeperBiomeBlacklist = toResourceLocations(generalSettings.void_creeper_biome_blacklist);
 
@@ -37,7 +38,7 @@ public class Settings {
 	public ResourceLocation[] battlemageKeepWithChestFiles = {new ResourceLocation(AncientSpellcraft.MODID, "battlemage_keep_chest_0")};
 
 	/**
-	 * Helper method to figure out if an item was disabled in the ebwiz configs, as unfortunately temArtefact#enabled private and has no getter method
+	 * Helper method to figure out if an item was disabled in the ebwiz configs, as unfortunately itemArtefact#enabled private and has no getter method
 	 * @param artefact to check
 	 * @return true if the item is enabled (or if it has no config)
 	 */
@@ -137,6 +138,17 @@ public class Settings {
 				"ebwizardry:subsets/uncommon_artefacts",
 				"ebwizardry:subsets/rare_artefacts",
 				"ebwizardry:subsets/epic_artefacts"
+		};
+
+		@Config.Name("Expertiment Debuff Blacklist")
+		@Config.Comment("List of negative potion effect which cannot occur as a side effect of the Experiment spell. Must be in a 'modid:potion_registry_name' format.")
+		public String[] experiment_debuff_blacklist = {
+		};
+
+		@Config.Name("Expertiment Buff Blacklist")
+		@Config.Comment("List of postive potion effect which cannot occur as a side effect of the Experiment spell. Must be in a 'modid:potion_registry_name' format.")
+		public String[] experiment_buff_blacklist = {
+
 		};
 
 		@Config.Name("Essence Extraction Screen Shake")
@@ -296,7 +308,7 @@ public class Settings {
 		@Config.Comment("List of item registry names that are allowed to be placed on the sage lectern. Each entry has a format of 'modid:item_name', example: antiqueatlas:antique_atlas. All spell books are allowed by default, without listing them."
 				+ "NOTE that this probably won't work with many items as they expect the player to hold the item in their hand to function, so only experiment with this in a testworld.")
 		@Config.RequiresMcRestart
-		public String[] sage_lectern_item_whitelist = {"antiqueatlas:antique_atlas"};
+		public String[] sage_lectern_item_whitelist = {"ancientspellcraft:empty_mystic_spell_book", "antiqueatlas:antique_atlas", "minecraft:writable_book", "minecraft:written_book", "minecraft:book", "minecraft:enchanted_book"};
 
 		@Config.Name("Sage Tome Required Enchanted Pages Per Tier")
 		@Config.Comment("The required amount of Enchanted Pages to progress a Sage Tome to the next tier.")

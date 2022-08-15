@@ -1,0 +1,16 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "ancientspellcraft:items/forbidden_tome_sealed"
+    },
+    "overrides": [
+        {"predicate": {"tier": 0.0}, "model": "ancientspellcraft:item/forbidden_tome_sealed"},
+        {"predicate": {"tier": 0.1}, "model": "ancientspellcraft:item/forbidden_tome_novice"},
+        {"predicate": {"tier": 0.2}, "model": "ancientspellcraft:item/forbidden_tome_apprentice"},
+        {"predicate": {"tier": 0.3}, "model": "ancientspellcraft:item/forbidden_tome_advanced"},
+        {"predicate": {"tier": 0.4}, "model": "ancientspellcraft:item/forbidden_tome_master"}
+    ]
+}
+
+
+

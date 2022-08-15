@@ -7,6 +7,7 @@ import com.windanesz.ancientspellcraft.packet.PacketExtendedSwordReach;
 import com.windanesz.ancientspellcraft.packet.PacketMushroomActivation;
 import com.windanesz.ancientspellcraft.packet.PacketStartRitual;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
@@ -41,7 +42,7 @@ public class CommonProxy {
 		return false;
 	}
 
-	public void registerAtlasMarkers(){}
+	public void registerAtlasMarkers() {}
 
 	/**
 	 * Translates the given key and formats it with the given style. Client-side only; on the server this simply returns
@@ -100,5 +101,7 @@ public class CommonProxy {
 	}
 
 	public void checkTranslationKeys() {}
+
+	public void openBookGUI(EntityPlayer player, ItemStack book) {}
 
 }

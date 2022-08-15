@@ -99,6 +99,8 @@ public class ChannelEffects extends SpellRay {
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit,
 			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
+		if (caster == null) return false;
+
 		if (!caster.getHeldItemOffhand().isEmpty() && caster.getHeldItemOffhand().getItem() instanceof ISpellCastingItem) {
 			return attemptCastingForTarget(world, target, caster, modifiers, EnumHand.OFF_HAND);
 		} else if (!caster.getHeldItemMainhand().isEmpty() && caster.getHeldItemMainhand().getItem() instanceof ISpellCastingItem) {

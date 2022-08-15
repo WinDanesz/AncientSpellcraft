@@ -32,15 +32,15 @@ public class Contingency extends Spell {
 
 	public static final String ACTIVE_LISTENER_TAG = "active_listener";
 	public static final String CONTINGENCY_CASTER_TAG = "contingency_caster";
+	public static final IStoredVariable<NBTTagCompound> ACTIVE_CONTINGENCIES = IStoredVariable.StoredVariable.ofNBT("active_contingencies", Persistence.ALWAYS).setSynced();
+	public static final IStoredVariable<NBTTagCompound> ACTIVE_CONTINGENCY_LISTENER = IStoredVariable.StoredVariable.ofNBT("active_contingency_listener", Persistence.ALWAYS).setSynced();
+	/**
+	 * The number of sparkle particles spawned when this spell is cast. Defaults to 10.
+	 */
+	protected float particleCount = 10;
 	private float r;
 	private float g;
 	private float b;
-
-	public static final IStoredVariable<NBTTagCompound> ACTIVE_CONTINGENCIES = IStoredVariable.StoredVariable.ofNBT("active_contingencies", Persistence.ALWAYS).setSynced();
-	public static final IStoredVariable<NBTTagCompound> ACTIVE_CONTINGENCY_LISTENER = IStoredVariable.StoredVariable.ofNBT("active_contingency_listener", Persistence.ALWAYS).setSynced();
-
-	/** The number of sparkle particles spawned when this spell is cast. Defaults to 10. */
-	protected float particleCount = 10;
 
 	public Contingency(String name, EnumAction action, float r, float g, float b) {
 		super(AncientSpellcraft.MODID, name, action, false);
@@ -50,55 +50,20 @@ public class Contingency extends Spell {
 		this.b = b;
 	}
 
-	@Override
-	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		if (WizardData.get(caster) != null) {
-			WizardData data = WizardData.get(caster);
-			// Fixes the sound not playing in first person.
-			if (world.isRemote)
-				this.playSound(world, caster, ticksInUse, -1, modifiers);
-			NBTTagCompound listener = new NBTTagCompound();
-
-			//noinspection ConstantConditions
-			listener.setString(ACTIVE_LISTENER_TAG, this.getRegistryName().toString());
-			data.setVariable(ACTIVE_CONTINGENCY_LISTENER, listener);
-			if (!world.isRemote)
-				data.sync();
-			if(world.isRemote) this.spawnParticles(world, caster, modifiers);
-			this.playSound(world, caster, ticksInUse, -1, modifiers);
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean canBeCastBy(EntityLiving npc, boolean override) {
-		return false;
-	}
-
-	@Override
-	public boolean canBeCastBy(TileEntityDispenser dispenser) {
-		return false;
-	}
-
-
 	@SuppressWarnings("Duplicates")
 	public static boolean tryCastContingencySpell(EntityPlayer player, WizardData data, Type contingency) {
-		if (data == null)
-			return false;
+		if (data == null) { return false; }
 
 		// purging the active contingency listener to avoid weird use cases
 		data.setVariable(ACTIVE_CONTINGENCY_LISTENER, null);
 		data.sync();
 		NBTTagCompound activeContingencies = data.getVariable(ACTIVE_CONTINGENCIES);
 
-		if (activeContingencies == null || !activeContingencies.hasKey(contingency.spellName))
-			return false;
+		if (activeContingencies == null || !activeContingencies.hasKey(contingency.spellName)) { return false; }
 
 		String spellNameToTrigger = activeContingencies.getString(contingency.spellName);
 		Spell spellToTrigger = Spell.registry.getValue(new ResourceLocation(spellNameToTrigger));
-		if (spellToTrigger == null)
-			return false;
+		if (spellToTrigger == null) { return false; }
 
 		// if true, the spell cast fails
 
@@ -112,6 +77,10 @@ public class Contingency extends Spell {
 
 			return true;
 		}
+		// removing this contingency
+		activeContingencies.removeTag(contingency.spellName);
+		data.setVariable(ACTIVE_CONTINGENCIES, activeContingencies);
+		data.sync();
 
 		return false;
 	}
@@ -125,13 +94,11 @@ public class Contingency extends Spell {
 		if (entityLivingBase instanceof EntityLiving) {
 			EntityLiving entityLiving = (EntityLiving) entityLivingBase;
 			NBTTagCompound entityData = entityLiving.getEntityData();
-			if (!(entityData.hasKey(ACTIVE_LISTENER_TAG) && entityData.getCompoundTag(ACTIVE_LISTENER_TAG).hasKey(contingency.spellName)))
-				return false;
+			if (!(entityData.hasKey(ACTIVE_LISTENER_TAG) && entityData.getCompoundTag(ACTIVE_LISTENER_TAG).hasKey(contingency.spellName))) { return false; }
 
 			Spell spellToTrigger = Spell.registry.getValue(new ResourceLocation(entityData.getCompoundTag(ACTIVE_LISTENER_TAG).getString(contingency.spellName)));
 
-			if (spellToTrigger == null)
-				return false;
+			if (spellToTrigger == null) { return false; }
 
 			EntityLivingBase target = entityLiving;
 			// Buffs are usually self targeted
@@ -167,6 +134,79 @@ public class Contingency extends Spell {
 		entity.getEntityData().setTag(Contingency.ACTIVE_LISTENER_TAG, compound);
 	}
 
+	public static boolean isFireDamageSource(DamageSource source) {
+		return source == DamageSource.IN_FIRE || source == DamageSource.ON_FIRE || source == DamageSource.LAVA || source == DamageSource.HOT_FLOOR;
+	}
+
+	public static void spawnParticles(World world, EntityLivingBase caster, Contingency.Type type) {
+		Spell spell = Spell.registry.getValue(new ResourceLocation(type.spellName));
+		if (!(spell instanceof Contingency)) { return; }
+
+		Contingency contingency = (Contingency) spell;
+
+		for (int i = 0; i < contingency.particleCount; i++) {
+			double x = caster.posX + world.rand.nextDouble() * 2 - 1;
+			double y = caster.posY + caster.getEyeHeight() - 0.5 + world.rand.nextDouble();
+			double z = caster.posZ + world.rand.nextDouble() * 2 - 1;
+			ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x, y, z).vel(0, 0.1, 0).clr(contingency.r, contingency.g, contingency.b).spawn(world);
+		}
+
+		ParticleBuilder.create(ParticleBuilder.Type.BUFF).entity(caster).clr(contingency.r, contingency.g, contingency.b).spawn(world);
+	}
+
+	public static void playSound(World world, BlockPos pos) {
+		world.playSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), ASSounds.CONTINGENCY, SoundCategory.BLOCKS, 1F, 1F, false);
+	}
+
+	@Override
+	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		if (WizardData.get(caster) != null) {
+			WizardData data = WizardData.get(caster);
+			// Fixes the sound not playing in first person.
+			if (world.isRemote) { this.playSound(world, caster, ticksInUse, -1, modifiers); }
+			NBTTagCompound listener = new NBTTagCompound();
+
+			//noinspection ConstantConditions
+			listener.setString(ACTIVE_LISTENER_TAG, this.getRegistryName().toString());
+			data.setVariable(ACTIVE_CONTINGENCY_LISTENER, listener);
+			if (!world.isRemote) { data.sync(); }
+			if (world.isRemote) { this.spawnParticles(world, caster, modifiers); }
+			this.playSound(world, caster, ticksInUse, -1, modifiers);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean canBeCastBy(EntityLiving npc, boolean override) {
+		return false;
+	}
+
+	@Override
+	public boolean canBeCastBy(TileEntityDispenser dispenser) {
+		return false;
+	}
+
+	@Override
+	public boolean applicableForItem(Item item) {
+		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
+	}
+
+	/**
+	 * Spawns buff particles around the caster. Override to add a custom particle effect. Only called client-side.
+	 */
+	public void spawnParticles(World world, EntityLivingBase caster, SpellModifiers modifiers) {
+
+		for (int i = 0; i < particleCount; i++) {
+			double x = caster.posX + world.rand.nextDouble() * 2 - 1;
+			double y = caster.posY + caster.getEyeHeight() - 0.5 + world.rand.nextDouble();
+			double z = caster.posZ + world.rand.nextDouble() * 2 - 1;
+			ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x, y, z).vel(0, 0.1, 0).clr(r, g, b).spawn(world);
+		}
+
+		ParticleBuilder.create(ParticleBuilder.Type.BUFF).entity(caster).clr(r, g, b).spawn(world);
+	}
+
 	public enum Type {
 
 		FIRE(ASSpells.contingency_fire, "ancientspellcraft:contingency_fire"),
@@ -190,54 +230,10 @@ public class Contingency extends Spell {
 		public static Type fromName(String name) {
 
 			for (Type type : values()) {
-				if (type.spellName.equals(name))
-					return type;
+				if (type.spellName.equals(name)) { return type; }
 			}
 
 			throw new IllegalArgumentException("No such type with unlocalised name: " + name);
 		}
-	}
-
-	public static boolean isFireDamageSource(DamageSource source) {
-		return source == DamageSource.IN_FIRE || source == DamageSource.ON_FIRE || source == DamageSource.LAVA || source == DamageSource.HOT_FLOOR;
-	}
-
-	@Override
-	public boolean applicableForItem(Item item) {
-		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
-	}
-
-	/** Spawns buff particles around the caster. Override to add a custom particle effect. Only called client-side. */
-	public void spawnParticles(World world, EntityLivingBase caster, SpellModifiers modifiers){
-
-		for(int i = 0; i < particleCount; i++){
-			double x = caster.posX + world.rand.nextDouble() * 2 - 1;
-			double y = caster.posY + caster.getEyeHeight() - 0.5 + world.rand.nextDouble();
-			double z = caster.posZ + world.rand.nextDouble() * 2 - 1;
-			ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x, y, z).vel(0, 0.1, 0).clr(r, g, b).spawn(world);
-		}
-
-		ParticleBuilder.create(ParticleBuilder.Type.BUFF).entity(caster).clr(r, g, b).spawn(world);
-	}
-
-	public static void spawnParticles(World world, EntityLivingBase caster, Contingency.Type type) {
-		Spell spell = Spell.registry.getValue(new ResourceLocation(type.spellName));
-		if (!(spell instanceof Contingency))
-			return;
-
-		Contingency contingency = (Contingency) spell;
-
-		for(int i = 0; i < contingency.particleCount; i++){
-			double x = caster.posX + world.rand.nextDouble() * 2 - 1;
-			double y = caster.posY + caster.getEyeHeight() - 0.5 + world.rand.nextDouble();
-			double z = caster.posZ + world.rand.nextDouble() * 2 - 1;
-			ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x, y, z).vel(0, 0.1, 0).clr(contingency.r, contingency.g, contingency.b).spawn(world);
-		}
-
-		ParticleBuilder.create(ParticleBuilder.Type.BUFF).entity(caster).clr(contingency.r, contingency.g, contingency.b).spawn(world);
-	}
-
-	public static void playSound(World world, BlockPos pos) {
-		world.playSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), ASSounds.CONTINGENCY, SoundCategory.BLOCKS, 1F, 1F, false);
 	}
 }

@@ -32,25 +32,22 @@ import static com.windanesz.ancientspellcraft.util.ASUtils.pickRandomStackFromIt
 public class CurseArmor extends SpellRay {
 
 	public CurseArmor(String modID, String name, EnumAction action, boolean isContinuous) {
-		super(modID, name, SpellActions.THRUST,false);
+		super(modID, name, SpellActions.THRUST, false);
 		this.soundValues(1, 1.1f, 0.2f);
 	}
 
-	@Override
-	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-
+	public static boolean curseRandomArmourPiece(EntityLivingBase target, World world) {
 		if (EntityUtils.isLiving(target)) {
 			if (!world.isRemote) {
 				if (target instanceof EntityLivingBase) {
-					EntityLivingBase livingTarget = (EntityLivingBase) target;
 
-					if (livingTarget.isPotionActive(ASPotions.curse_ward) ||
-							(livingTarget instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) livingTarget, ASItems.amulet_curse_ward))) {
+					if (target.isPotionActive(ASPotions.curse_ward) ||
+							(target instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) target, ASItems.amulet_curse_ward))) {
 						return false;
 					}
 
 					List<ItemStack> itemStackList = new ArrayList<>();
-					for (ItemStack stack : livingTarget.getArmorInventoryList()) {
+					for (ItemStack stack : target.getArmorInventoryList()) {
 						if (stack.getItem() instanceof ItemArmor) {
 							itemStackList.add(stack);
 						}
@@ -67,12 +64,10 @@ public class CurseArmor extends SpellRay {
 		return false;
 	}
 
-	private static boolean attemptCurseItemStack(ItemStack stack) {
+	public static boolean attemptCurseItemStack(ItemStack stack) {
 		List<Enchantment> validCurseList = new ArrayList<>();
-		if (!EnchantmentHelper.hasVanishingCurse(stack))
-			validCurseList.add(Enchantments.VANISHING_CURSE);
-		if (!EnchantmentHelper.hasBindingCurse(stack))
-			validCurseList.add(Enchantments.BINDING_CURSE);
+		if (!EnchantmentHelper.hasVanishingCurse(stack)) { validCurseList.add(Enchantments.VANISHING_CURSE); }
+		if (!EnchantmentHelper.hasBindingCurse(stack)) { validCurseList.add(Enchantments.BINDING_CURSE); }
 		if (!validCurseList.isEmpty()) {
 			Random rand = new Random();
 			try {
@@ -82,6 +77,14 @@ public class CurseArmor extends SpellRay {
 			catch (Exception e) {
 				return false;
 			}
+		}
+		return false;
+	}
+
+	@Override
+	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
+		if (EntityUtils.isLiving(target)) {
+			return curseRandomArmourPiece((EntityLivingBase) target, world);
 		}
 		return false;
 	}

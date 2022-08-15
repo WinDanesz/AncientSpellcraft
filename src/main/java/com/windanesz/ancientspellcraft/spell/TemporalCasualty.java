@@ -40,29 +40,32 @@ public class TemporalCasualty extends SpellRay {
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit,
 			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 		if (target instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) target;
+			cursePlayer((EntityPlayer) target);
+		}
+		return true;
+	}
 
-			WizardData data = WizardData.get(player);
-			if (data != null) {
+	public static boolean cursePlayer(EntityPlayer target) {
+		EntityPlayer player = (EntityPlayer) target;
 
-				NBTTagCompound compound = storeCurrentPlayerData(player);
-				data.setVariable(TIME_KNOT_DATA, compound);
+		WizardData data = WizardData.get(player);
+		if (data != null) {
 
-				data.setVariable(CURSE_TEMPORAL_CASUALTY_LOOP_START, player.world.getTotalWorldTime() + LOOP_DURATION);
-				data.sync();
+			NBTTagCompound compound = storeCurrentPlayerData(player);
+			data.setVariable(TIME_KNOT_DATA, compound);
 
-			} else {
-				return true;
-			}
+			data.setVariable(CURSE_TEMPORAL_CASUALTY_LOOP_START, player.world.getTotalWorldTime() + LOOP_DURATION);
+			data.sync();
 
-			if (player.isPotionActive(ASPotions.time_knot)) {
-				player.removePotionEffect(ASPotions.time_knot);
-			}
-
-			player.addPotionEffect(new PotionEffect(ASPotions.curse_temporal_casualty, Integer.MAX_VALUE, 0));
-			//			player.addPotionEffect(new PotionEffect(AncientSpellcraftPotions.curse_temporal_casualty, Integer.MAX_VALUE, 0));
+		} else {
 			return true;
 		}
+
+		if (player.isPotionActive(ASPotions.time_knot)) {
+			player.removePotionEffect(ASPotions.time_knot);
+		}
+
+		player.addPotionEffect(new PotionEffect(ASPotions.curse_temporal_casualty, Integer.MAX_VALUE, 0));
 		return true;
 	}
 

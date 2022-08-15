@@ -29,6 +29,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
 
+@SuppressWarnings("unused")
 @ObjectHolder(AncientSpellcraft.MODID)
 @EventBusSubscriber
 public final class ASSpells {
@@ -67,6 +68,7 @@ public final class ASSpells {
 	public static final Spell healing_heart = placeholder();
 	public static final Spell martyr = placeholder();
 	public static final Spell aquatic_agility = placeholder();
+	public static final Spell quicksand_ring = placeholder();
 	public static final Spell lava_vision = placeholder();
 	public static final Spell magma_strider = placeholder();
 	public static final Spell summon_anchor = placeholder();
@@ -146,6 +148,7 @@ public final class ASSpells {
 	public static final Spell burrow = placeholder();
 	public static final Spell magma_shell = placeholder();
 	public static final Spell summon_fire_ant = placeholder();
+	public static final Spell attire_alteration = placeholder();
 	public static final Spell summon_spider = placeholder();
 	public static final Spell soul_scorch = placeholder();
 	public static final Spell swamp = placeholder();
@@ -193,6 +196,38 @@ public final class ASSpells {
 	public static final Spell runeword_sacrifice = placeholder();
 	public static final Spell runeword_suppress = placeholder();
 
+	public static final Spell conjure_ink = placeholder();
+	public static final Spell vanish = placeholder();
+	public static final Spell spectral_wall = placeholder();
+	public static final Spell thoughtsteal = placeholder();
+    public static final Spell spectral_floor = placeholder();
+    public static final Spell teleport_object = placeholder();
+    public static final Spell poison_spray = placeholder();
+    public static final Spell molten_boulder = placeholder();
+    public static final Spell conjure_creeper = placeholder();
+    public static final Spell identify = placeholder();
+    public static final Spell experiment = placeholder();
+    public static final Spell enchant_lectern = placeholder();
+    public static final Spell phase_jump = placeholder();
+    public static final Spell scribe = placeholder();
+    public static final Spell perfect_theory = placeholder();
+    public static final Spell unveil = placeholder();
+    public static final Spell transcribe = placeholder();
+    public static final Spell counterspell = placeholder();
+    public static final Spell transplace = placeholder();
+    public static final Spell magic_sparks = placeholder();
+    public static final Spell summon_zombie_pigman = placeholder();
+    public static final Spell nether_guard = placeholder();
+    public static final Spell forced_channel = placeholder();
+    public static final Spell conjure_cake = placeholder();
+    public static final Spell curse_of_umbra = placeholder();
+    public static final Spell curse_of_gills = placeholder();
+    public static final Spell cursed_touch = placeholder();
+    public static final Spell ray_of_enfeeblement = placeholder();
+    public static final Spell sufferance = placeholder();
+    public static final Spell perfect_theory_spell = placeholder();
+    public static final Spell torchlight = placeholder();
+    public static final Spell pocket_library = placeholder();
 
 	@SuppressWarnings("unchecked")
 	@SubscribeEvent
@@ -203,7 +238,7 @@ public final class ASSpells {
 		Item[] asSpellItems = {ASItems.ancient_spellcraft_spell_book, ASItems.ancient_spellcraft_scroll};
 
 		// AS 1.0.0 Spells
-		registry.register(new HellGate(modId, "hellgate", EnumAction.BLOCK, false));
+		registry.register(new HellGate());
 
 		// AS 1.0.1 Spells
 		registry.register(new TameAnimal());
@@ -211,7 +246,7 @@ public final class ASSpells {
 
 		// AS 1.0.2 Spells
 		registry.register(new Extinguish(modId, "extinguish"));
-		registry.register(new CurseOfEnder(modId, "curse_of_ender", EnumAction.NONE, false) {});
+		registry.register(new CurseOfEnder());
 		registry.register(new ConjureWater(modId, "conjure_water", EnumAction.BLOCK, false));
 		registry.register(new SpellConjurationAS("conjure_shield", ASItems.spectral_shield));
 		registry.register(new Drought(modId, "drought", EnumAction.BLOCK, false));
@@ -445,7 +480,40 @@ public final class ASSpells {
 		registry.register(new ShockZone());
 		registry.register(new ForceShove());
 		registry.register(new CorpseBomb());
+		registry.register(new CurseOfUmbra());
+		registry.register(new CurseOfGills());
+		registry.register(new CursedTouch());
+		registry.register(new Sufferance());
 
+		// SAGE spells
+		registry.register(new ConjureInk());
+		registry.register(new Vanish());
+		registry.register(new SpectralWall());
+		registry.register(new Thoughtsteal());
+		registry.register(new SpectralFloor());
+		registry.register(new TeleportObject());
+		registry.register(new PoisonSpray());
+		registry.register(new MoltenBoulder());
+		registry.register(new ConjureCreeper());
+		registry.register(new Identify());
+		registry.register(new Experiment());
+		registry.register(new EnchantLectern());
+		registry.register(new PhaseJump());
+		registry.register(new Scribe());
+		registry.register(new PerfectTheory());
+		registry.register(new PerfectTheorySpell());
+		registry.register(new Unveil());
+		registry.register(new Transcribe());
+		registry.register(new Counterspell());
+		registry.register(new Transplace());
+		registry.register(new MagicSparks());
+		registry.register(new SummonZombiePigman());
+		registry.register(new NetherGuard());
+		registry.register(new ForcedChannel());
+		registry.register(new ConjureCake());
+		registry.register(new RayOfEnfeeblement());
+		registry.register(new Torchlight());
+		registry.register(new PocketLibrary());
 
 		// registry.register(new HeatFurnace()); TODO
 		//registry.register(new WarpWeapon()); TODO

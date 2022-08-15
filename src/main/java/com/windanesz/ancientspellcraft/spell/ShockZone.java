@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;
 import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellRay;
@@ -18,6 +19,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,28 +39,29 @@ public class ShockZone extends SpellRay {
 
 	@Override
 	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-
-		//pos = pos.offset(EnumFacing.DOWN);
 		pos = pos.up();
+		return makeZone(world, caster, pos, modifiers);
+	}
 
+	public static boolean makeZone(World world, @Nullable EntityLivingBase caster, BlockPos pos, SpellModifiers modifiers) {
 		if (!world.isRemote) {
 
 			//center piece
 			//ITemporaryBlock.placeTemporaryBlock(caster, world, AncientSpellcraftBlocks.CONJURED_MAGMA, pos, 600);
 
 			BlockPos finalPos = pos;
-			List<BlockPos> listb = BlockUtils.getBlockSphere(pos, getProperty(EFFECT_RADIUS).intValue() * modifiers.get(WizardryItems.blast_upgrade)).stream().filter(world::isAirBlock).filter(i -> i.getY() == finalPos.getY()).collect(Collectors.toList());
+			List<BlockPos> listb = BlockUtils.getBlockSphere(pos, ASSpells.shock_zone.getProperty(EFFECT_RADIUS).intValue() * modifiers.get(WizardryItems.blast_upgrade)).stream().filter(world::isAirBlock).filter(i -> i.getY() == finalPos.getY()).collect(Collectors.toList());
 
 			EntityBuilder builder = new EntityBuilder(world);
-			builder.setPosition(caster.getPosition().getX(), caster.getPosition().getY(), caster.getPosition().getZ());
+			builder.setPosition(pos.getX(), pos.getY(), pos.getZ());
 			builder.setCaster(caster);
-			builder.blockLifetime = (int) ((getProperty(EFFECT_DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade)));
+			builder.blockLifetime = (int) ((ASSpells.shock_zone.getProperty(EFFECT_DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade)));
 			builder.buildTickRate = 1;
 			builder.batchSize = (int) (2 * (modifiers.get(SpellModifiers.POTENCY))) + (int) (3 * modifiers.get(WizardryItems.blast_upgrade));
 			listb.sort(Comparator.comparingInt(Vec3i::getY));
 			builder.setBuildList(listb);
 			builder.setBlockToBuild(ASBlocks.lightning_block.getDefaultState());
-			builder.damageMultiplier = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
+			builder.damageMultiplier = ASSpells.shock_zone.getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 			world.spawnEntity(builder);
 		}
 

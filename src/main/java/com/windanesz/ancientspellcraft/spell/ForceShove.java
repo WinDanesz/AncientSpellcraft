@@ -88,9 +88,12 @@ public class ForceShove extends SpellRay {
 							.clr(colours[1]).fade(colours[2]).time(10).vel(vec.x * 0.8, vec.y * 0.8,vec.z * 0.8).spawn(world);
 
 					//world.spawnParticle(EnumParticleTypes.CLOUD, x, y, z, vec.x, vec.y, vec.z);
+
 				}
 			}
-			
+
+			this.playSound(world, caster, ticksInUse, -1, modifiers);
+
 			return true;
 		}
 		

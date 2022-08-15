@@ -1,0 +1,25 @@
+﻿{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": true,
+        "dispensers": true,
+        "commands": true,
+        "treasure": true,
+        "trades": false,
+        "looting": true
+    },
+    "tier": "apprentice",
+    "element": "magic",
+    "type": "attack",
+    "cost": 10,
+    "chargeup": 0,
+    "cooldown": 0,
+    "base_properties": {
+        "range": 10,
+        "damage": 5,
+        "effect_duration": 140,
+        "effect_strength": 0
+    }
+}

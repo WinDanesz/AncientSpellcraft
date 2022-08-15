@@ -25,7 +25,7 @@ public class ItemASArtemisLibArtefact extends ItemASArtefact {
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag advanced) {
 		Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc", Settings.generalSettings.orb_artefact_potency_bonus);
 
-		if (!Settings.isArtefactEnabled(this)) {
+		if (!isEnabled()) {
 			tooltip.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":generic.disabled", new Style().setColor(TextFormatting.RED)));
 		} else if (!ASArtemisLibIntegration.enabled()) {
 			tooltip.add(Wizardry.proxy.translate("tooltip.ancientspellcraft:missing_artemislib.disabled_item", new Style().setColor(TextFormatting.RED)));
