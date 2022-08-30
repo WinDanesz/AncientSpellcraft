@@ -1,0 +1,24 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": false,
+        "dispensers": false,
+        "commands": true,
+        "treasure": false,
+        "trades": false,
+        "looting": false
+    },
+    "tier": "apprentice",
+    "element": "magic",
+    "type": "alteration",
+    "cost": 40,
+    "chargeup": 0,
+    "cooldown": 80,
+    "base_properties": {
+        "minion_count": 1,
+        "summon_radius": 1,
+        "minion_lifetime": 10000
+    }
+}

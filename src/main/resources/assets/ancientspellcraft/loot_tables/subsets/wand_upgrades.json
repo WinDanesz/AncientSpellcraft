@@ -8,6 +8,16 @@
                     "type": "item",
                     "name": "ancientspellcraft:soulbound_upgrade",
                     "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:sentience_upgrade",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:empowerment_upgrade",
+                    "weight": 1
                 }
             ]
         }

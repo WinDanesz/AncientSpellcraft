@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft;
 
+import com.windanesz.ancientspellcraft.capability.DeathMarkCapability;
 import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
 import com.windanesz.ancientspellcraft.command.CommandListBiomes;
 import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
@@ -8,7 +9,7 @@ import com.windanesz.ancientspellcraft.integration.antiqueatlas.ASAntiqueAtlasIn
 import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
-import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
+import com.windanesz.ancientspellcraft.item.ItemWandUpgradeAS;
 import com.windanesz.ancientspellcraft.misc.ASForfeits;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
 import com.windanesz.ancientspellcraft.registry.ASBiomes;
@@ -19,10 +20,13 @@ import com.windanesz.ancientspellcraft.registry.ASLoot;
 import com.windanesz.ancientspellcraft.registry.BookshelfItems;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
 import com.windanesz.ancientspellcraft.util.RitualProperties;
+import com.windanesz.ancientspellcraft.worldgen.WorldGenAncientTemple;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenBattlemageCamp;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenBattlemageKeep;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenCrystalShardOre;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenDevoritiumOre;
+import com.windanesz.ancientspellcraft.worldgen.WorldGenSageHill;
+import com.windanesz.ancientspellcraft.worldgen.WorldgenAncientVault;
 import electroblob.wizardry.event.SpellCastEvent;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -91,6 +95,9 @@ public class AncientSpellcraft {
 		ASBiomes.preInit();
 		BookshelfItems.preInitBookShelfModelTextures();
 
+		// Capabilities
+		DeathMarkCapability.register();
+
 		ASBaublesIntegration.init();
 		ASArtemisLibIntegration.init();
 		ASAntiqueAtlasIntegration.init();
@@ -109,6 +116,9 @@ public class AncientSpellcraft {
 		// Weight is a misnomer, it's actually the priority (where lower numbers get generated first)
 		GameRegistry.registerWorldGenerator(new WorldGenBattlemageCamp(), 20);
 		GameRegistry.registerWorldGenerator(new WorldGenBattlemageKeep(), 20);
+		GameRegistry.registerWorldGenerator(new WorldGenSageHill(), 20);
+		GameRegistry.registerWorldGenerator(new WorldgenAncientVault(), 20);
+		GameRegistry.registerWorldGenerator(new WorldGenAncientTemple(), 20);
 
 		ASItems.registerDispenseBehaviours();
 		MinecraftForge.EVENT_BUS.register(instance); // Since there's already an instance we might as well use it
@@ -121,7 +131,7 @@ public class AncientSpellcraft {
 		Ritual.registry.forEach(Ritual::init);
 		RitualProperties.init();
 
-		ItemSoulboundWandUpgrade.init();
+		ItemWandUpgradeAS.init();
 
 		proxy.init();
 

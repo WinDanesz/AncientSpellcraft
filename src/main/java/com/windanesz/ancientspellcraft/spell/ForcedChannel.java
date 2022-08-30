@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.SpellcastUtils;
+import electroblob.wizardry.entity.living.EntityEvilWizard;
 import electroblob.wizardry.entity.living.EntityWizard;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.item.ItemWizardArmour;
@@ -42,7 +43,7 @@ public class ForcedChannel extends SpellRay implements IClassSpell {
 			EntityLivingBase livingTarget = (EntityLivingBase) target;
 			// Wizards are not actually setting their wand's current spell into the wand, so they need to be handled separately
 
-			if (target instanceof EntityWizard) {
+			if (target instanceof EntityWizard || target instanceof EntityEvilWizard) {
 				return tryChannelSpell(livingTarget.getHeldItemMainhand(), caster, (EntityWizard) livingTarget);
 			}
 			if (livingTarget.getHeldItemMainhand().getItem() instanceof ISpellCastingItem) {

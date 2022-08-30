@@ -3,9 +3,12 @@ package com.windanesz.ancientspellcraft.entity.living;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackRangedBowNoStrafing;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellWithCost;
+import com.windanesz.ancientspellcraft.entity.ai.EntitySummonAIFollowOwner;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import com.windanesz.ancientspellcraft.item.ItemIceShield;
+import com.windanesz.ancientspellcraft.item.ItemSageTome;
 import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.spell.AwakenTome;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.entity.living.EntitySummonedCreature;
@@ -87,26 +90,23 @@ import static electroblob.wizardry.spell.SpellMinion.HEALTH_MODIFIER;
 public class EntityAnimatedItem extends EntitySummonedCreature implements ISpellCaster, IRangedAttackMob {
 
 	public static final String ANIMATED_ITEM_TRANSLATION_KEY = "entity." + AncientSpellcraft.MODID + ":animated_item.nameplate";
-
-	private final double AISpeed = 1.0;
-
-	/* Used by animated bows which are not conjured or Infinity enchanted */
-	private ItemStack arrows = ItemStack.EMPTY;
-
 	/* Used by the display name - to decide if the item's name should be in the nameplate, or just "Animated Armour"*/
 	private static final DataParameter<Boolean> HAS_ARMOUR = EntityDataManager.createKey(EntityAnimatedItem.class, DataSerializers.BOOLEAN);
-
 	/* These must use the datamanager otherwise electroblob.wizardry.WizardryEventHandler.onLivingUpdateEvent will create an infinite loop of client-side only
 	 spellcasting loop if the target dies during the continuous spell cast. */
 	private static final DataParameter<String> CONTINUOUS_SPELL = EntityDataManager.createKey(EntityAnimatedItem.class, DataSerializers.STRING);
 	private static final DataParameter<Integer> SPELL_COUNTER = EntityDataManager.createKey(EntityAnimatedItem.class, DataSerializers.VARINT);
-
+	private final double AISpeed = 1.0;
 	// AI for wands or scrolls only
-	private final EntityAIAttackSpellWithCost<EntityAnimatedItem> spellAttackAI = new EntityAIAttackSpellWithCost<>(this, 0.1f, 15f, 30, 50, true);
+	private final EntityAIAttackSpellWithCost<EntityAnimatedItem> spellAttackAI = new EntityAIAttackSpellWithCost<>(this, 0.1f, 15f, 30, 50, false);
+	// Tome AI
+	private final EntityAIAttackSpellWithCost<EntityAnimatedItem> tomeAttackAI = new EntityAIAttackSpellWithCost<>(this, 0.1f, 15f, 30, 50, true);
 	// AI task for ranged (bow)
 	private final EntityAIAttackRangedBowNoStrafing<EntityAnimatedItem> bowAttackAI = new EntityAIAttackRangedBowNoStrafing<>(this, 0.1D, 40, 25.0F);
 	// melee AI
 	private final EntityAIAttackMelee meleeAI = new EntityAIAttackMelee(this, AISpeed, false);
+	/* Used by animated bows which are not conjured or Infinity enchanted */
+	private ItemStack arrows = ItemStack.EMPTY;
 
 	public EntityAnimatedItem(World world) {
 		super(world);
@@ -323,24 +323,24 @@ public class EntityAnimatedItem extends EntitySummonedCreature implements ISpell
 	}
 
 	@Override
+	public Spell getContinuousSpell() {
+		return Spell.get(this.dataManager.get(CONTINUOUS_SPELL));
+	}
+
+	@Override
 	public void setContinuousSpell(Spell spell) {
 		//noinspection ConstantConditions
 		this.dataManager.set(CONTINUOUS_SPELL, spell.getRegistryName().toString());
 	}
 
 	@Override
-	public Spell getContinuousSpell() {
-		return Spell.get(this.dataManager.get(CONTINUOUS_SPELL));
+	public int getSpellCounter() {
+		return this.dataManager.get(SPELL_COUNTER);
 	}
 
 	@Override
 	public void setSpellCounter(int count) {
 		this.dataManager.set(SPELL_COUNTER, count);
-	}
-
-	@Override
-	public int getSpellCounter() {
-		return this.dataManager.get(SPELL_COUNTER);
 	}
 
 	@Override
@@ -462,6 +462,17 @@ public class EntityAnimatedItem extends EntitySummonedCreature implements ISpell
 	 */
 	public void revertToItemForm() {
 		if (!world.isRemote) {
+
+			// sage tome
+			if (this.getHeldItemMainhand().getItem() instanceof ItemSageTome) {
+				if (this.getCaster() instanceof EntityPlayer) {
+					AwakenTome.removeController((EntityPlayer) this.getCaster());
+					ASUtils.giveStackToPlayer((EntityPlayer) this.getCaster(), this.getHeldItemMainhand().copy());
+					return;
+				} else {
+					this.entityDropItem(this.getHeldItemMainhand(), 1);
+				}
+			}
 
 			// mainhand, offhand and armor slots
 			for (EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
@@ -592,7 +603,26 @@ public class EntityAnimatedItem extends EntitySummonedCreature implements ISpell
 		this.tasks.removeTask(bowAttackAI);
 
 		if ((this.getHeldItemMainhand().getItem() instanceof ISpellCastingItem) && !(this.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword)) {
-			this.tasks.addTask(1, spellAttackAI);
+
+			// Tome logic
+			if (this.getHeldItemMainhand().getItem() instanceof ItemSageTome) {
+
+				int sentienceUpgrades = WandHelper.getUpgradeLevel(this.getHeldItemMainhand(), ASItems.sentience_upgrade);
+				if (sentienceUpgrades > 0) {
+					// tomes should follow the caster
+					EntitySummonAIFollowOwner task = new EntitySummonAIFollowOwner(this, 1.0D, 10.0F, 2.0F);
+					this.tasks.addTask(5, task);
+				}
+				if (sentienceUpgrades > 1) {
+					// should proxy buff spells
+					this.tasks.addTask(1, tomeAttackAI);
+				} else {
+					this.tasks.addTask(1, spellAttackAI);
+				}
+			} else {
+				// Wand / other logic
+				this.tasks.addTask(1, spellAttackAI);
+			}
 		} else if (this.getHeldItemMainhand().getItem() instanceof ItemBow
 				&& ((EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, this.getHeldItemMainhand()) > 0 || this.getHeldItemMainhand().getItem() instanceof ItemSpectralBow)
 				|| !this.arrows.isEmpty() && this.arrows.getItem() instanceof ItemArrow || this.getHeldItemMainhand().getItem() instanceof ItemFlamecatcher)) {

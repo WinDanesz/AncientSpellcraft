@@ -11,6 +11,7 @@ import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.tileentity.TileEntityBookshelf;
 import electroblob.wizardry.util.NBTExtras;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.worldgen.MossifierTemplateProcessor;
@@ -54,9 +55,12 @@ public class PocketLibrary extends Spell implements IClassSpell {
 
 	public static final String FIRST_CAST = "first_cast";
 	public static final String SIZE = "size";
+	public static final String LIBRARY_BLOCKS = "libraryBlocks";
+	public static final String CENTER_POS = "centerPos";
+	public static final String SAVED_DATA = "savedData";
 	private static final IStoredVariable<NBTTagCompound> POCKET_LIBRARY_DATA_NBT = IStoredVariable.StoredVariable.ofNBT("pocketLibraryData", Persistence.ALWAYS).setSynced();
-
 	private static final ResourceLocation POCKET_LIBRARY = new ResourceLocation(AncientSpellcraft.MODID, "pocket_library");
+	public static final String LIBRARY_IS_SUMMONED = "library_is_summoned";
 
 	public PocketLibrary() {
 		super(AncientSpellcraft.MODID, "pocket_library", SpellActions.POINT_DOWN, false);
@@ -106,36 +110,35 @@ public class PocketLibrary extends Spell implements IClassSpell {
 
 	public static boolean isLibrarySummoned(EntityPlayer player) {
 		NBTTagCompound nbt = getData(player);
-		return nbt.hasKey("library_is_summoned") && nbt.getBoolean("library_is_summoned");
+		return nbt.hasKey(LIBRARY_IS_SUMMONED) && nbt.getBoolean(LIBRARY_IS_SUMMONED);
 	}
 
 	public static void changeLibrarySummonedStatus(EntityPlayer player, NBTTagCompound nbt, boolean isSummoned) {
-		nbt.setBoolean("library_is_summoned", isSummoned);
+		nbt.setBoolean(LIBRARY_IS_SUMMONED, isSummoned);
 		saveData(player, nbt);
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 
-		// TODO: REMOVE DEBUG ------------------------
-		if (caster.isSneaking()) {
-
-			if (!world.isRemote) {
-				WizardData data = WizardData.get(caster);
-				data.setVariable(POCKET_LIBRARY_DATA_NBT, new NBTTagCompound());
-				data.sync();
-			}
-			System.out.println("clearing all data");
-			if (true) { return false; }
-		}
-		// TODO: REMOVE DEBUG ------------------------
+		//		debug
+		//		if (caster.isSneaking()) {
+		//
+		//			if (!world.isRemote) {
+		//				WizardData data = WizardData.get(caster);
+		//				data.setVariable(POCKET_LIBRARY_DATA_NBT, new NBTTagCompound());
+		//				data.sync();
+		//			}
+		//			System.out.println("clearing all data");
+		//			if (true) { return false; }
+		//		}
 
 		if (isFirstCast(getData(caster))) {
 			return spawnStructureInitially(caster, world);
 		}
 
 		if (isLibrarySummoned(caster)) {
-			BlockPos libraryPosition = NBTUtil.getPosFromTag(getData(caster).getCompoundTag("centerPos"));
+			BlockPos libraryPosition = NBTUtil.getPosFromTag(getData(caster).getCompoundTag(CENTER_POS));
 			double distance = Math.sqrt(caster.getPosition().distanceSq(libraryPosition));
 			if (distance > 3.0d) {
 				ASUtils.sendMessage(caster, "spell.ancientspellcraft:pocket_library.too_far_away", true);
@@ -151,25 +154,6 @@ public class PocketLibrary extends Spell implements IClassSpell {
 			}
 			return f;
 		}
-		//
-		//		if (!world.isRemote) {
-		//			caster.setPositionAndUpdate(caster.getPosition().getX() + 0.5, caster.posY + 1, caster.getPosition().getZ() + 0.5);
-		//		}
-		//
-		//		if (world.isRemote) {
-		//			for (int i = 0; i < 10; i++) {
-		//				double dx = caster.posX;
-		//				double dy = caster.posY + 2 * world.rand.nextFloat();
-		//				double dz = caster.posZ;
-		//				// For portal particles, velocity is not velocity but the offset where they start, then drift to
-		//				// the actual position given.
-		//				world.spawnParticle(EnumParticleTypes.PORTAL, dx, dy, dz, world.rand.nextDouble() - 0.5,
-		//						world.rand.nextDouble() - 0.5, world.rand.nextDouble() - 0.5);
-		//			}
-		//
-		//			Wizardry.proxy.playBlinkEffect(caster);
-		//		}
-		//		return true;
 	}
 
 	@Override
@@ -185,23 +169,7 @@ public class PocketLibrary extends Spell implements IClassSpell {
 	 * positions where a block was added.
 	 */
 	private boolean spawnStructureInitially(EntityPlayer caster, World world) {
-		System.out.println("first cast");
-
-		//			for (BlockPos pos : platform) {
-		//
-		//				for (int i = 0; i < 2; i++) {
-		//					if (!(world.isAirBlock(pos.offset(EnumFacing.UP, i)) || BlockUtils.canBlockBeReplaced(world, pos.offset(EnumFacing.UP, i)))) {
-		//						ASUtils.sendMessage(caster, "spell.ancientspellcraft:pocket_library.no_space", true);
-		//						return false;
-		//					}
-		//				}
-		//
-		//				if (BlockUtils.canPlaceBlock(caster, world, pos)) {
-		//					if (BlockUtils.canBlockBeReplaced(world, pos)) {
-		//						world.setBlockState(pos, WizardryBlocks.gilded_wood.getDefaultState());
-		//					}
-		//				} else { return false; }
-		//			}
+		// System.out.println("first cast");
 
 		if (!world.isRemote) {
 			NBTTagCompound data = getData(caster);
@@ -251,20 +219,6 @@ public class PocketLibrary extends Spell implements IClassSpell {
 			final float mossiness = getBiomeMossiness(biome);
 			final Set<BlockPos> blocksPlaced = new HashSet<>();
 			Rotation rotation = Rotation.NONE;
-			//			switch (caster.getAdjustedHorizontalFacing()) {
-			//				case NORTH:
-			//					rotation = Rotation.CLOCKWISE_90;
-			//					break;
-			//				case SOUTH:
-			//					rotation = Rotation.CLOCKWISE_180;
-			//					break;
-			//				case WEST:
-			//					rotation = Rotation.COUNTERCLOCKWISE_90;
-			//					break;
-			//				case EAST:
-			//					rotation = Rotation.NONE;
-			//					break;
-			//			}
 
 			PlacementSettings settings = new PlacementSettings().setRotation(rotation);
 
@@ -286,10 +240,10 @@ public class PocketLibrary extends Spell implements IClassSpell {
 
 			NBTTagCompound blocks = new NBTTagCompound();
 			if (blocksPlaced != null && blocksPlaced.size() > 0) {
-				NBTExtras.storeTagSafely(blocks, "libraryBlocks", NBTExtras.listToNBT(blocksPlaced, NBTUtil::createPosTag));
-				data.setTag("libraryBlocks", blocks);
+				NBTExtras.storeTagSafely(blocks, LIBRARY_BLOCKS, NBTExtras.listToNBT(blocksPlaced, NBTUtil::createPosTag));
+				data.setTag(LIBRARY_BLOCKS, blocks);
 				NBTTagCompound centerPos = NBTUtil.createPosTag(caster.getPosition());
-				data.setTag("centerPos", centerPos);
+				data.setTag(CENTER_POS, centerPos);
 				data.setBoolean(FIRST_CAST, false);
 				changeLibrarySummonedStatus(caster, data, true);
 				saveData(caster, data);
@@ -325,17 +279,16 @@ public class PocketLibrary extends Spell implements IClassSpell {
 		if (!world.isRemote) {
 			NBTTagCompound data = getData(caster);
 
-			System.out.println("packing existing library");
+			// System.out.println("packing existing library");
 
 			NBTTagCompound nbtData = getData(caster);
-			if (nbtData.hasKey("libraryBlocks")) {
+			if (nbtData.hasKey(LIBRARY_BLOCKS)) {
 
 				// Save the blocks
-				BlockPos centerPos = NBTUtil.getPosFromTag(nbtData.getCompoundTag("centerPos"));
-				Set<BlockPos> relativePositions = new HashSet<>();
+				BlockPos centerPos = NBTUtil.getPosFromTag(nbtData.getCompoundTag(CENTER_POS));
 
-				NBTTagCompound compound = nbtData.getCompoundTag("libraryBlocks");
-				NBTTagList tagList = compound.getTagList("libraryBlocks", Constants.NBT.TAG_COMPOUND);
+				NBTTagCompound compound = nbtData.getCompoundTag(LIBRARY_BLOCKS);
+				NBTTagList tagList = compound.getTagList(LIBRARY_BLOCKS, Constants.NBT.TAG_COMPOUND);
 
 				if (!tagList.isEmpty()) {
 					Set<BlockPos> blocksPlaced = new HashSet<>(NBTExtras.NBTToList(tagList, NBTUtil::getPosFromTag));
@@ -350,52 +303,63 @@ public class PocketLibrary extends Spell implements IClassSpell {
 					blocksPlaced.forEach(b -> {
 						TileEntity tile = world.getTileEntity(b);
 
-						if (tile != null) {
+						if (isAllowedTile(tile)) {
 							tileEntityList.add(tile);
 						}
 					});
 
 					blocksPlaced.forEach(b -> {
-						NBTTagCompound blockData = new NBTTagCompound();
-						NBTTagCompound state = new NBTTagCompound();
-						NBTUtil.writeBlockState(state, world.getBlockState(b));
+						if (world.getTileEntity(b) == null || isAllowedTile(world.getTileEntity(b))) {
 
-						blockData.setTag("state", state);
-						blockData.setTag("pos", NBTUtil.createPosTag(b.subtract(centerPos)));
-						blockDataList.appendTag(blockData);
-						//blockStateList.add(blockData);
+							NBTTagCompound blockData = new NBTTagCompound();
+							NBTTagCompound state = new NBTTagCompound();
+							NBTUtil.writeBlockState(state, world.getBlockState(b));
+
+							blockData.setTag("state", state);
+							blockData.setTag("pos", NBTUtil.createPosTag(b.subtract(centerPos)));
+							blockDataList.appendTag(blockData);
+						} else {
+							NBTTagCompound blockData = new NBTTagCompound();
+							NBTTagCompound state = new NBTTagCompound();
+							NBTUtil.writeBlockState(state, Blocks.AIR.getDefaultState());
+
+							blockData.setTag("state", state);
+							blockData.setTag("pos", NBTUtil.createPosTag(b.subtract(centerPos)));
+							blockDataList.appendTag(blockData);
+						}
 					});
 
 					compound1.setTag("Blocks", blockDataList);
 
 					for (TileEntity tileentity : tileEntityList) {
-						try {
-							NBTTagCompound nbttagcompound3 = tileentity.writeToNBT(new NBTTagCompound());
-							nbttagcompound3.setInteger("x", tileentity.getPos().subtract(centerPos).getX());
-							nbttagcompound3.setInteger("y", tileentity.getPos().subtract(centerPos).getY());
-							nbttagcompound3.setInteger("z", tileentity.getPos().subtract(centerPos).getZ());
-							nbttaglist2.appendTag(nbttagcompound3);
-						}
-						catch (Exception e) {
-							net.minecraftforge.fml.common.FMLLog.log.error("A TileEntity type {} has throw an exception trying to write state. It will not persist. Report this to the mod author",
-									tileentity.getClass().getName(), e);
+
+						if (isAllowedTile(tileentity)) {
+							try {
+								NBTTagCompound nbttagcompound3 = tileentity.writeToNBT(new NBTTagCompound());
+								nbttagcompound3.setInteger("x", tileentity.getPos().subtract(centerPos).getX());
+								nbttagcompound3.setInteger("y", tileentity.getPos().subtract(centerPos).getY());
+								nbttagcompound3.setInteger("z", tileentity.getPos().subtract(centerPos).getZ());
+								nbttaglist2.appendTag(nbttagcompound3);
+							}
+							catch (Exception e) {
+								net.minecraftforge.fml.common.FMLLog.log.error("A TileEntity type {} has throw an exception trying to write state. It will not persist. Report this to the mod author",
+										tileentity.getClass().getName(), e);
+							}
 						}
 					}
 
 					compound1.setTag("TileEntities", nbttaglist2);
 
-					nbtData.setTag("savedData", compound1);
+					nbtData.setTag(SAVED_DATA, compound1);
 					changeLibrarySummonedStatus(caster, data, false);
 					saveData(caster, data);
-					//WizardData wizardData = WizardData.get(caster);
-					//wizardData.setVariable(POCKET_LIBRARY_DATA_NBT, data);
 
 					// Clean up the blocks
 					if (!blocksPlaced.isEmpty()) {
 
 						// clear tiles first or they'll drop their content
 						blocksPlaced.forEach(b -> {
-							if (world.getTileEntity(b) != null) {
+							if (isAllowedTile(world.getTileEntity(b))) {
 								world.removeTileEntity(b);
 							}
 						});
@@ -410,11 +374,16 @@ public class PocketLibrary extends Spell implements IClassSpell {
 								world.setBlockToAir(b);
 							}
 						});
-						blocksPlaced.forEach(world::setBlockToAir);
+
+						blocksPlaced.forEach(b -> {
+							if (world.getTileEntity(b) == null || isAllowedTile(world.getTileEntity(b))) {
+								world.setBlockToAir(b);
+							}
+						});
 					}
 				}
 			}
-			System.out.println("packing existing library done");
+			// System.out.println("packing existing library done");
 		}
 		return true;
 	}
@@ -428,17 +397,17 @@ public class PocketLibrary extends Spell implements IClassSpell {
 		if (!world.isRemote) {
 			NBTTagCompound data = getData(caster);
 
-			System.out.println("summoning the library");
+			//System.out.println("summoning the library");
 
 			NBTTagCompound nbtData = getData(caster);
 
-			if (data.hasKey("savedData")) {
+			if (data.hasKey(SAVED_DATA)) {
 
 				final Set<BlockPos> blocksPlaced = new HashSet<>();
 
 				BlockPos centerPos = caster.getPosition();
 
-				NBTTagCompound savedData = nbtData.getCompoundTag("savedData");
+				NBTTagCompound savedData = nbtData.getCompoundTag(SAVED_DATA);
 				NBTTagList blockTagList = savedData.getTagList("Blocks", Constants.NBT.TAG_COMPOUND);
 
 				List<NBTTagCompound> blockList = new ArrayList<>();
@@ -481,21 +450,29 @@ public class PocketLibrary extends Spell implements IClassSpell {
 					}
 				}
 
-				// ---------- savind data ----------
+				// ---------- saving data ----------
 				NBTTagCompound blocks = new NBTTagCompound();
 				if (blocksPlaced != null && blocksPlaced.size() > 0) {
-					NBTExtras.storeTagSafely(blocks, "libraryBlocks", NBTExtras.listToNBT(blocksPlaced, NBTUtil::createPosTag));
-					nbtData.setTag("libraryBlocks", blocks);
+					NBTExtras.storeTagSafely(blocks, LIBRARY_BLOCKS, NBTExtras.listToNBT(blocksPlaced, NBTUtil::createPosTag));
+					nbtData.setTag(LIBRARY_BLOCKS, blocks);
 					NBTTagCompound centerPosNBT = NBTUtil.createPosTag(caster.getPosition());
-					nbtData.setTag("centerPos", centerPosNBT);
+					nbtData.setTag(CENTER_POS, centerPosNBT);
 					nbtData.setBoolean(FIRST_CAST, false);
 					changeLibrarySummonedStatus(caster, nbtData, true);
 					saveData(caster, nbtData);
 				}
 			}
 
-			System.out.println("summoning the library done");
+			//System.out.println("summoning the library done");
 		}
 		return true;
+	}
+
+	public boolean isAllowedTile(TileEntity tile) {
+		return tile instanceof TileEntityBookshelf;
+	}
+
+	public int getStructureRadius() {
+		return 13;
 	}
 }

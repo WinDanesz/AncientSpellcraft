@@ -56,6 +56,7 @@ public class ASForfeits {
 
 				T minion = minionFactory.apply(world);
 				((EntityLivingBase) minion).setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+				((EntityLivingBase) minion).setRevengeTarget(player);
 				world.spawnEntity(((EntityLivingBase) minion));
 			}
 		}
@@ -121,6 +122,7 @@ public class ASForfeits {
 
 					EntityWolfMinion mob = new EntityWolfMinion(w);
 					mob.setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
+					mob.setAttackTarget(p);
 					w.spawnEntity(mob);
 				}
 			}

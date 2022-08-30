@@ -13,6 +13,7 @@ import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.misc.Forfeit;
@@ -181,6 +182,11 @@ public class Experiment extends Spell implements IClassSpell {
 
 		float chance = getProperty(BASE_SUCCESS_CHANCE).floatValue();
 
+		//	Get +2% chance for a theory with the amulet artefact
+		if (ItemArtefact.isArtefactActive(caster, ASItems.amulet_inspiration)) {
+			chance += 0.02f;
+		}
+
 		if (data != null) {
 
 			if (!isFirstCast(experimentData)) {
@@ -328,6 +334,10 @@ public class Experiment extends Spell implements IClassSpell {
 
 				int knownSpellAmount = getDiscoveredSpellCount(caster);
 				int minimumKnownSpellAmount = getMinKnownSpellAmount();
+
+				if (ItemArtefact.isArtefactActive(caster, ASItems.charm_sage_diary)) {
+					minimumKnownSpellAmount = (int) (minimumKnownSpellAmount * 0.6f);
+				}
 
 				if (knownSpellAmount < minimumKnownSpellAmount) {
 					// need to identify more spells

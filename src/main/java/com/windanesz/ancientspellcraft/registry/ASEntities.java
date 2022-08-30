@@ -26,6 +26,7 @@ import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonHorseMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpellCaster;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
+import com.windanesz.ancientspellcraft.entity.living.EntityStoneGuardian;
 import com.windanesz.ancientspellcraft.entity.living.EntityVoidCreeper;
 import com.windanesz.ancientspellcraft.entity.living.EntityVolcano;
 import com.windanesz.ancientspellcraft.entity.living.EntityWizardMerchant;
@@ -42,6 +43,7 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityManaVortex;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMasterBolt;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
 import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityStoneGuardianShard;
 import electroblob.wizardry.Wizardry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
@@ -150,6 +152,8 @@ public class ASEntities {
 		registry.register(createEntry(EntityMoltenBoulder.class, "molten_boulder").tracker(160, 1, true).build()); // Vertical velocity is not constant
 		registry.register(createEntry(EntityCreeperMinion.class, "creeper_minion", TrackingType.LIVING).build());
 		registry.register(createEntry(EntityPigZombieMinion.class, "pig_zombie_minion", TrackingType.LIVING).build());
+		registry.register(createEntry(EntityStoneGuardian.class, "stone_guardian", TrackingType.LIVING).egg(0x86848c, 0xa100e6).build());
+		registry.register(createEntry(EntityStoneGuardianShard.class, "stone_guardian_shard", TrackingType.PROJECTILE).build());
 
 		//// Living Entity Overrides
 

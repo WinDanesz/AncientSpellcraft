@@ -9,6 +9,7 @@ import electroblob.wizardry.entity.projectile.EntityMagicArrow;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
+import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.GeometryUtils;
 import electroblob.wizardry.util.MagicDamage;
@@ -16,6 +17,8 @@ import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.ParticleBuilder.Type;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
@@ -163,7 +166,7 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 
 		targets.remove(this);
 
-		targets.removeIf(t -> t instanceof EntityMagicConstruct || t instanceof EntityXPOrb || t instanceof EntityAnimal || t instanceof EntityMagicArrow && !this.isValidTarget(((EntityMagicArrow) t).getCaster())
+		targets.removeIf(t -> t instanceof EntityArmorStand || AllyDesignationSystem.isAllied((EntityLivingBase) t, getCaster()) || t instanceof EntityMagicConstruct || t instanceof EntityXPOrb || t instanceof EntityAnimal || t instanceof EntityMagicArrow && !this.isValidTarget(((EntityMagicArrow) t).getCaster())
 				|| t instanceof EntityThrowable && !this.isValidTarget(((EntityThrowable) t).getThrower())
 				|| t instanceof EntityArrow && !this.isValidTarget(((EntityArrow) t).shootingEntity));
 

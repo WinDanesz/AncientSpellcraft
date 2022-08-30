@@ -36,6 +36,9 @@ public class Settings {
 
 	public ResourceLocation[] battlemageCampWithChestFiles = {new ResourceLocation(AncientSpellcraft.MODID, "battlemage_camp_chest_0")};
 	public ResourceLocation[] battlemageKeepWithChestFiles = {new ResourceLocation(AncientSpellcraft.MODID, "battlemage_keep_chest_0")};
+	public ResourceLocation[] sageHillWithChestFiles = {new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_0")};
+	public ResourceLocation[] ancientVaultFiles = {new ResourceLocation(AncientSpellcraft.MODID, "ancient_vault_1")};
+	public ResourceLocation[] ancientTempleFiles = {new ResourceLocation(AncientSpellcraft.MODID, "ancient_temple_0")};
 
 	/**
 	 * Helper method to figure out if an item was disabled in the ebwiz configs, as unfortunately itemArtefact#enabled private and has no getter method
@@ -101,6 +104,10 @@ public class Settings {
 		@Config.Comment("[Server-only] Controls whether AS automatically places antique atlas markers at the locations of battlemage keeps")
 		public boolean auto_battlemage_keep_markers = true;
 
+		@Config.Name("Ancient Vault Map Markers")
+		@Config.Comment("[Server-only] Controls whether AS automatically places antique atlas markers at the locations of ancient vaults")
+		public boolean ancient_vault_markers = true;
+
 		@Config.Name("Generate Crystal Ore Shards")
 		@Config.Comment("Determines whether to generate elemental crystal shards in the Overworld or not")
 		@Config.RequiresMcRestart
@@ -138,6 +145,11 @@ public class Settings {
 				"ebwizardry:subsets/uncommon_artefacts",
 				"ebwizardry:subsets/rare_artefacts",
 				"ebwizardry:subsets/epic_artefacts"
+		};
+
+		@Config.Name("Extension Spell Potion Blacklist")
+		@Config.Comment("List of potion effect which cannot be extended with the Extension sage spell.")
+		public String[] extension_spell_blacklist = {
 		};
 
 		@Config.Name("Expertiment Debuff Blacklist")
@@ -323,7 +335,19 @@ public class Settings {
 		@Config.RequiresMcRestart
 		@Config.RangeInt(min = 0, max = 10)
 		public int sage_tome_enchanted_page_requirement_multiplier = 2;
-		
+
+		@Config.Name("Potency Gain from Sage Tome Empowerment Upgade Scrolls")
+		@Config.Comment("")
+		@Config.RequiresMcRestart
+		@Config.RangeDouble(min = 0, max = 10)
+		public double empowerment_upgrade_potency_gain = 0.05f;
+
+		@Config.Name("Wild Catalyst max distance ")
+		@Config.Comment("[Server-only] The max destination distance in blocks where the Wild Catalyst artefact can redirect Transportation Portals.")
+		@Config.RequiresMcRestart
+		public int wild_catalyst_max_distance = 10000;
+
+
 	}
 
 	public static class ClientSettings {
@@ -421,10 +445,30 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public int[] battlemageKeepDimensions = {0};
 
+		@Config.Name("Ancient Vault Dimensions")
+		@Config.Comment("[Server-only] List of dimension ids in which to spawn Ancient Vault.")
+		@Config.RequiresMcRestart
+		public int[] ancientVaultDimensions = {0};
+
 		@Config.Name("Battlemage Keep Rarity")
 		@Config.Comment("[Server-only] The rarity of battlemage keeps, used by the world generator. Larger numbers are rarer.")
 		@Config.RequiresMcRestart
 		public int battlemageKeepRarity = 2000;
+
+		@Config.Name("Sage hill Dimensions")
+		@Config.Comment("[Server-only] List of dimension ids in which to spawn the sage hill structures.")
+		@Config.RequiresMcRestart
+		public int[] sageHillDimensions = {0};
+
+		@Config.Name("Sage hill Rarity")
+		@Config.Comment("[Server-only] The rarity of the sage hill structure, used by the world generator. Larger numbers are rarer.")
+		@Config.RequiresMcRestart
+		public int sageHillRarity = 2000;
+
+		@Config.Name("Ancient Vault Structure")
+		@Config.Comment("[Server-only] The rarity of the ancient vault and others (e.g. ancient temple) structures, used by the world generator. Larger numbers are rarer.")
+		@Config.RequiresMcRestart
+		public int ancientVaultRarity = 2500;
 
 	}
 

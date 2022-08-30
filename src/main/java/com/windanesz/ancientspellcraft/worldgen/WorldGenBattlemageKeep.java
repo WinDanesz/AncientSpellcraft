@@ -40,7 +40,6 @@ import java.util.Set;
 @Mod.EventBusSubscriber
 public class WorldGenBattlemageKeep extends WorldGenSurfaceStructureAS {
 
-	// TODO: Add wizard towers to the /locate command
 	// This requires some careful manipulation of Random objects to replicate the positions exactly for the current
 	// world. See the end of ChunkGeneratorOverworld for the relevant methods.
 

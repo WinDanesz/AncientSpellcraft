@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.potion.PotionMetamagicEffect;
 import com.windanesz.ancientspellcraft.registry.ASItems;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -109,8 +110,7 @@ public class MetaSpellBuff extends Spell {
 
 				}
 
-				int bonusAmplifier = active ? currentAmplifier + 1 : 0;
-
+				int bonusAmplifier = active ? currentAmplifier + 1 : ItemArtefact.isArtefactActive(caster, ASItems.charm_metamagic_amplifier) ? 1 : 0;
 
 				if (bonusAmplifier > 2) {
 					return false;

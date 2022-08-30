@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.client.renderer.entity;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.client.model.ModelClassWizard;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
-import electroblob.wizardry.client.model.ModelWizard;
 import electroblob.wizardry.item.ItemWizardArmour;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -16,7 +16,7 @@ public class RenderEvilClassWizard extends RenderBiped<EntityEvilClassWizard> {
 
 	public RenderEvilClassWizard(RenderManager renderManager) {
 
-		super(renderManager, new ModelWizard(), 0.5F);
+		super(renderManager, new ModelClassWizard(), 0.5F);
 
 		int totalCount = 0;
 		for (int i = 0; i < 4; i++) { // 4 class types

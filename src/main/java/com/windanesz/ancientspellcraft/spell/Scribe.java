@@ -9,11 +9,13 @@ import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.block.BlockReceptacle;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.data.WizardData;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
+import electroblob.wizardry.util.SpellProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -74,16 +76,26 @@ public class Scribe extends SpellLecternInteract {
 						return false;
 					}
 
-					List<Spell> sageSpells = getAllSageSpells();
-					sageSpells.removeIf(data::hasSpellBeenDiscovered);
+					List<Spell> spells;
+					if (ItemArtefact.isArtefactActive(player, ASItems.charm_elemental_alkahest) && world.rand.nextFloat() < 0.2f) {
+						spells = Spell.getSpells(s -> !(s instanceof IClassSpell) && s.isEnabled(SpellProperties.Context.BOOK) && s.isEnabled(SpellProperties.Context.LOOTING));
+						spells.removeIf(data::hasSpellBeenDiscovered);
+					} else {
+						spells = getAllSageSpells();
+						spells.removeIf(data::hasSpellBeenDiscovered);
+					}
 
-					if (!world.isRemote && !sageSpells.isEmpty()) {
-						Spell randomSpell = sageSpells.get(world.rand.nextInt(sageSpells.size()));
+					if (!world.isRemote && !spells.isEmpty()) {
+						Spell randomSpell = spells.get(world.rand.nextInt(spells.size()));
 						TileEntity tile = world.getTileEntity(pos);
 						if (tile instanceof TileSageLectern) {
-							((TileSageLectern) tile).setInventorySlotContents(TileSageLectern.BOOK_SLOT, new ItemStack(ASItems.mystic_spell_book, 1,randomSpell.metadata()));
+							((TileSageLectern) tile).setInventorySlotContents(TileSageLectern.BOOK_SLOT, ASUtils.getSpellBookForSpell(randomSpell));
 						}
 						Experiment.consumeTheoryPoint(player, 1);
+						if (player.isHandActive()) {
+							player.getCooldownTracker().setCooldown(player.getHeldItem(player.getActiveHand()).getItem(), 10);
+							player.stopActiveHand();
+						}
 						return true;
 					}
 					return false;

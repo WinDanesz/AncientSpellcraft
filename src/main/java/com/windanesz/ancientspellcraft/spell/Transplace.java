@@ -28,7 +28,12 @@ public class Transplace extends SpellRay implements IClassSpell {
 
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
+		boolean res = swapPlace(world, target, caster);
+		playSound(world, caster, 0, -1, new SpellModifiers());
+		return res;
+	}
 
+	public static boolean swapPlace(World world, Entity target, EntityLivingBase caster) {
 		if (EntityUtils.isLiving(target)) {
 
 			if (world.isRemote) {
@@ -56,7 +61,7 @@ public class Transplace extends SpellRay implements IClassSpell {
 			double posZ = caster.posZ;
 			caster.setPositionAndUpdate(target.posX, target.posY, target.posZ);
 			target.setPositionAndUpdate(posX, posY, posZ);
-			this.playSound(world, caster, 0, -1, new SpellModifiers());
+
 		}
 
 		return true;

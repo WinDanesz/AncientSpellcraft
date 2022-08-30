@@ -31,6 +31,8 @@ public class ASAntiqueAtlasIntegration {
 
 	private static final ResourceLocation BATTLEMAGE_CAMP_MARKER = new ResourceLocation(AncientSpellcraft.MODID, "battlemage_camp");
 	private static final ResourceLocation BATTLEMAGE_KEEP_MARKER = new ResourceLocation(AncientSpellcraft.MODID, "battlemage_keep");
+	private static final ResourceLocation SAGE_HILL_MARKER = new ResourceLocation(AncientSpellcraft.MODID, "sage_hill");
+	private static final ResourceLocation ANCIENT_VAULT_MARKER = new ResourceLocation(AncientSpellcraft.MODID, "ancient_vault");
 
 	private static boolean antiqueAtlasLoaded;
 
@@ -55,8 +57,21 @@ public class ASAntiqueAtlasIntegration {
 	 * {@link electroblob.wizardry.Settings#autoTowerMarkers} is enabled. Server side only! */
 	public static void markBattlemageKeep(World world, int x, int z){
 		if(enabled() && Settings.generalSettings.auto_battlemage_keep_markers){
-			System.out.println("test");
 			AtlasAPI.getMarkerAPI().putGlobalMarker(world, false, BATTLEMAGE_KEEP_MARKER.toString(), "integration.antiqueatlas.marker." + BATTLEMAGE_KEEP_MARKER.toString().replace(':', '.'), x, z);
+		}
+	}
+
+	/** Places a global sage hill marker in all antique atlases at the given coordinates in the given world if
+	 * {@link electroblob.wizardry.Settings#autoTowerMarkers} is enabled. Server side only! */
+	public static void markSageHill(World world, int x, int z){
+		if(enabled() && Settings.generalSettings.auto_battlemage_keep_markers){
+			AtlasAPI.getMarkerAPI().putGlobalMarker(world, false, SAGE_HILL_MARKER.toString(), "integration.antiqueatlas.marker." + SAGE_HILL_MARKER.toString().replace(':', '.'), x, z);
+		}
+	}
+
+	public static void markMysteryStructure(World world, int x, int z){
+		if(enabled() && Settings.generalSettings.ancient_vault_markers){
+			AtlasAPI.getMarkerAPI().putGlobalMarker(world, false, ANCIENT_VAULT_MARKER.toString(), "integration.antiqueatlas.marker." + ANCIENT_VAULT_MARKER.toString().replace(':', '.'), x, z);
 		}
 	}
 
@@ -67,6 +82,8 @@ public class ASAntiqueAtlasIntegration {
 
 		AtlasAPI.getMarkerAPI().registerMarker(new MarkerType(BATTLEMAGE_CAMP_MARKER, new ResourceLocation(AncientSpellcraft.MODID, "textures/integration/antiqueatlas/battlemage_camp.png")));
 		AtlasAPI.getMarkerAPI().registerMarker(new MarkerType(BATTLEMAGE_KEEP_MARKER, new ResourceLocation(AncientSpellcraft.MODID, "textures/integration/antiqueatlas/battlemage_keep.png")));
+		AtlasAPI.getMarkerAPI().registerMarker(new MarkerType(SAGE_HILL_MARKER, new ResourceLocation(AncientSpellcraft.MODID, "textures/integration/antiqueatlas/sage_hill.png")));
+		AtlasAPI.getMarkerAPI().registerMarker(new MarkerType(ANCIENT_VAULT_MARKER, new ResourceLocation(AncientSpellcraft.MODID, "textures/integration/antiqueatlas/ancient_vault.png")));
 
 	}
 

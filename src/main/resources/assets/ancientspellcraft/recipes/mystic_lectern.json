@@ -1,0 +1,93 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "vwv",
+        " y ",
+        "xzx"
+    ],
+    "key": {
+        "v": {
+            "type": "forge:ore_dict",
+            "ore": "ingotGold"
+        },
+        "w": {
+            "item": "minecraft:carpet",
+            "data": 10
+        },
+        "x": [
+            {
+                "item": "ebwizardry:magic_crystal",
+                "data": 0
+            },
+            {
+                "item": "ebwizardry:magic_crystal",
+                "data": 1
+            },
+            {
+                "item": "ebwizardry:magic_crystal",
+                "data": 2
+            },
+            {
+                "item": "ebwizardry:magic_crystal",
+                "data": 3
+            },
+            {
+                "item": "ebwizardry:magic_crystal",
+                "data": 4
+            },
+            {
+                "item": "ebwizardry:magic_crystal",
+                "data": 5
+            },
+            {
+                "item": "ebwizardry:magic_crystal",
+                "data": 6
+            },
+            {
+                "item": "ebwizardry:magic_crystal",
+                "data": 7
+            }
+        ],
+        "y": {
+            "type": "forge:ore_dict",
+            "ore": "blockLapis"
+        },
+        "z": [
+            {
+                "item": "ebwizardry:crystal_block",
+                "data": 0
+            },
+            {
+                "item": "ebwizardry:crystal_block",
+                "data": 1
+            },
+            {
+                "item": "ebwizardry:crystal_block",
+                "data": 2
+            },
+            {
+                "item": "ebwizardry:crystal_block",
+                "data": 3
+            },
+            {
+                "item": "ebwizardry:crystal_block",
+                "data": 4
+            },
+            {
+                "item": "ebwizardry:crystal_block",
+                "data": 5
+            },
+            {
+                "item": "ebwizardry:crystal_block",
+                "data": 6
+            },
+            {
+                "item": "ebwizardry:crystal_block",
+                "data": 7
+            }
+        ]
+    },
+    "result": {
+        "item": "ancientspellcraft:sage_lectern"
+    }
+}

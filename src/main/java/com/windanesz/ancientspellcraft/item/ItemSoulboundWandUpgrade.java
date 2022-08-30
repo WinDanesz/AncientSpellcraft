@@ -1,12 +1,10 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.registry.ASItems;
-import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.ItemWand;
-import electroblob.wizardry.item.ItemWandUpgrade;
 import electroblob.wizardry.util.WandHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -16,19 +14,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ItemSoulboundWandUpgrade extends ItemWandUpgrade {
+public class ItemSoulboundWandUpgrade extends ItemWandUpgradeAS {
 
 	private static final IStoredVariable<NBTTagCompound> STORED_WANDS = IStoredVariable.StoredVariable.ofNBT("soulbound_wands", Persistence.ALWAYS);
-
-	public ItemSoulboundWandUpgrade() {
-		super();
-		this.setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
-		WizardData.registerStoredVariables(STORED_WANDS);
-	}
-
-	public static void init() {
-		WandHelper.registerSpecialUpgrade(ASItems.soulbound_upgrade, "soulbound_upgrade");
-	}
 
 	/**
 	 * Gets all the stored wands from WizardData and gives it back to the player, then purges these from WizardData

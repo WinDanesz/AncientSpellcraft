@@ -20,11 +20,13 @@ import com.windanesz.ancientspellcraft.client.renderer.entity.RenderMoltenBoulde
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderSkeletonHorseMinion;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderSkeletonMage;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderSpiritBear;
+import com.windanesz.ancientspellcraft.client.renderer.entity.RenderStoneGuardian;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderVoidCreeper;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderVolcano;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderWisp;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderWolfMinion;
 import com.windanesz.ancientspellcraft.client.renderer.entity.layers.LayerFire;
+import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderArcaneWall;
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderRune;
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderSageLectern;
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderSkullWatch;
@@ -52,6 +54,7 @@ import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonHorseMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpellCaster;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
+import com.windanesz.ancientspellcraft.entity.living.EntityStoneGuardian;
 import com.windanesz.ancientspellcraft.entity.living.EntityVoidCreeper;
 import com.windanesz.ancientspellcraft.entity.living.EntityVolcano;
 import com.windanesz.ancientspellcraft.entity.living.EntityWizardMerchant;
@@ -68,12 +71,14 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityManaVortex;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMasterBolt;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
 import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityStoneGuardianShard;
 import com.windanesz.ancientspellcraft.integration.antiqueatlas.ASAntiqueAtlasIntegration;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.packet.PacketContinuousRitual;
 import com.windanesz.ancientspellcraft.packet.PacketMushroomActivation;
 import com.windanesz.ancientspellcraft.packet.PacketStartRitual;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
+import com.windanesz.ancientspellcraft.tileentity.TileArcaneWall;
 import com.windanesz.ancientspellcraft.tileentity.TileRune;
 import com.windanesz.ancientspellcraft.tileentity.TileSageLectern;
 import com.windanesz.ancientspellcraft.tileentity.TileSentinel;
@@ -196,6 +201,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityFireAnt.class, RenderFireSpider::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityCreeperMinion.class, RenderCreeper::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityPigZombieMinion.class, RenderPigZombie::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityStoneGuardian.class, RenderStoneGuardian::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityVolcano.class, RenderVolcano::new);
 
 		////////// Throwables and projectiles //////////
@@ -218,6 +224,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileSentinel.class, new RenderTileSentinel());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileRune.class, new RenderRune());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileSageLectern.class, new RenderSageLectern());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileArcaneWall.class, new RenderArcaneWall());
 
 		////////// Runes on ground //////////
 		RenderingRegistry.registerEntityRenderingHandler(EntityTransportationPortal.class, manager -> new RenderSigil(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/transportation_portal.png"), 0.0f, false));
@@ -242,6 +249,8 @@ public class ClientProxy extends CommonProxy {
 		////////// Other constructs //////////
 		RenderingRegistry.registerEntityRenderingHandler(EntityArcaneBarrier.class, RenderBlank::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityMoltenBoulder.class, RenderMoltenBoulder::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityStoneGuardianShard.class,
+				manager -> new RenderProjectile(manager, 0.15f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/stone_guardian_shard.png"), false));
 		//		RenderingRegistry.registerEntityRenderingHandler(EntityArcaneBarrierProxy.class, RenderArcaneBarrierProxy::new);
 
 	}

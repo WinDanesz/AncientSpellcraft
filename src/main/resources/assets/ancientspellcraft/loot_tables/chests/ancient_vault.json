@@ -1,0 +1,244 @@
+{
+    "pools": [
+        {
+            "name": "vault",
+            "rolls": {
+                "min": 3,
+                "max": 5
+            },
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "ebwizardry:subsets/elemental_crystals",
+                    "weight": 3
+                },
+                {
+                    "type": "loot_table",
+                    "name": "ebwizardry:subsets/wizard_armour",
+                    "weight": 6
+                },
+                {
+                    "type": "loot_table",
+                    "name": "ebwizardry:subsets/arcane_tomes",
+                    "weight": 5
+                },
+                {
+                    "type": "loot_table",
+                    "name": "ebwizardry:subsets/wand_upgrades",
+                    "weight": 2
+                },
+                {
+                    "type": "loot_table",
+                    "name": "ebwizardry:subsets/armour_upgrades",
+                    "weight": 3
+                },
+                {
+                    "type": "item",
+                    "name": "ebwizardry:magic_crystal",
+                    "weight": 5,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 10
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "ebwizardry:spell_book",
+                    "weight": 20,
+                    "functions": [
+                        {
+                            "function": "ebwizardry:random_spell",
+                            "undiscovered_bias": 0.3
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:runic_plate",
+                    "weight": 8,
+                    "functions": [
+                        {
+                            "function": "ebwizardry:random_spell",
+                            "undiscovered_bias": 0.5
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:theory_scroll",
+                    "weight": 7
+                },
+                {
+                    "type": "item",
+                    "name": "ebwizardry:scroll",
+                    "weight": 7,
+                    "functions": [
+                        {
+                            "function": "ebwizardry:random_spell",
+                            "undiscovered_bias": 0.3
+                        },
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 5
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "ebwizardry:identification_scroll",
+                    "weight": 3
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ancient_spellcraft_spell_book",
+                    "weight": 3,
+                    "functions": [
+                        {
+                            "function": "ebwizardry:random_spell",
+                            "undiscovered_bias": 0.3
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ancient_spellcraft_scroll",
+                    "weight": 3,
+                    "functions": [
+                        {
+                            "function": "ebwizardry:random_spell",
+                            "undiscovered_bias": 0.3
+                        },
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 4
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:stone_tablet_small",
+                    "entryName": "stone_tablet_small",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:stone_tablet",
+                    "entryName": "stone_tablet",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:stone_tablet_large",
+                    "entryName": "stone_tablet_large",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:stone_tablet_grand",
+                    "entryName": "stone_tablet_grand",
+                    "weight": 1
+                },
+                {
+                    "type": "loot_table",
+                    "name": "ancientspellcraft:subsets/ritual_books",
+                    "weight": 1
+                },
+                {
+                    "type": "loot_table",
+                    "name": "ancientspellcraft:subsets/rare_scrolls",
+                    "weight": 2
+                }
+            ]
+        },
+        {
+            "name": "misc",
+            "rolls": {
+                "min": 0,
+                "max": 3
+            },
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "minecraft:bone",
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 3,
+                                "max": 6
+                            }
+                        }
+                    ],
+                    "weight": 25
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:string",
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 8
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:book",
+                    "entryName": "book",
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 3
+                            }
+                        }
+                    ],
+                    "weight": 20
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:paper",
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 2,
+                                "max": 7
+                            }
+                        }
+                    ],
+                    "weight": 20
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:book",
+                    "entryName": "enchantedBook",
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "enchant_with_levels",
+                            "levels": 30,
+                            "treasure": true
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -46,10 +46,11 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 	 * base cooldown.
 	 */
 
-	/**
-	 * The resource location for the evil wizard's loot table.
-	 */
 	private static final ResourceLocation BATTLEMAGE_LOOT_TABLE = new ResourceLocation(AncientSpellcraft.MODID, "entities/evil_battlemage");
+	private static final ResourceLocation SAGE_LOOT_TABLE = new ResourceLocation(AncientSpellcraft.MODID, "entities/evil_sage");
+
+	/** True if this evil wizard was spawned as part of a structure (tower or shrine), false if it spawned naturally. */
+	public ItemWizardArmour.ArmourClass armourClass = ItemWizardArmour.ArmourClass.BATTLEMAGE;
 
 	protected int cooldown;
 
@@ -89,7 +90,14 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 	@Override
 	protected ResourceLocation getLootTable() {
 		// TODO debug
-		ResourceLocation loot = getArmourClass() == ItemWizardArmour.ArmourClass.BATTLEMAGE ? BATTLEMAGE_LOOT_TABLE : super.getLootTable();
+		ResourceLocation loot = super.getLootTable();
+
+		if (getArmourClass() == ItemWizardArmour.ArmourClass.BATTLEMAGE) {
+			loot = BATTLEMAGE_LOOT_TABLE;
+		} else if (getArmourClass() == ItemWizardArmour.ArmourClass.SAGE) {
+			loot = SAGE_LOOT_TABLE;
+		}
+
 		return loot;
 	}
 
@@ -112,7 +120,7 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 
 		// FIXME: ugly hack which will break when we'll add more types!
 		if (hasStructure) {
-			this.setArmourClass(ItemWizardArmour.ArmourClass.BATTLEMAGE);
+			this.setArmourClass(this.armourClass);
 		} else {
 			this.setArmourClass(ItemWizardArmour.ArmourClass.values()[rand.nextInt(ItemWizardArmour.ArmourClass.values().length - 1) + 1]);
 		}
@@ -243,7 +251,7 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 		setAITask(armourClass);
 
 		// no wandering for wizards with a tent, or they'll never go back to it
-		if (hasStructure && getArmourClass() == ItemWizardArmour.ArmourClass.BATTLEMAGE) {
+		if (hasStructure) {
 			this.tasks.taskEntries.removeIf(t -> t.action instanceof EntityAIWander);
 		}
 	}

@@ -2,12 +2,14 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.construct.EntityMoltenBoulder;
+import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellConstruct;
 import electroblob.wizardry.util.GeometryUtils;
 import electroblob.wizardry.util.SpellModifiers;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
@@ -32,6 +34,11 @@ public class MoltenBoulder extends SpellConstruct<EntityMoltenBoulder> implement
 		construct.rotationYaw = caster == null ? side.getHorizontalAngle() : caster.rotationYaw;
 		double yOffset = caster == null ? 0 : 1.6;
 		construct.setPosition(construct.posX + direction.x, construct.posY + yOffset, construct.posZ + direction.z);
+	}
+
+	@Override
+	public boolean canBeCastBy(EntityLiving npc, boolean override) {
+		return npc instanceof EntityEvilClassWizard && ((EntityEvilClassWizard) npc).getArmourClass() == ItemWizardArmour.ArmourClass.SAGE;
 	}
 
 	@Override

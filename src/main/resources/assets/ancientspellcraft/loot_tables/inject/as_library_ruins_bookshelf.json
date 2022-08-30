@@ -39,29 +39,8 @@
                     ]
                 },
                 {
-                    "type": "item",
-                    "name": "ancientspellcraft:bartering_scroll",
-                    "entryName": "bartering_scroll",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:amnesia_scroll",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:knowledge_scroll",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:duplication_scroll",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:transmutation_scroll",
+                    "type": "loot_table",
+                    "name": "ancientspellcraft:subsets/rare_scrolls",
                     "weight": 1
                 },
                 {

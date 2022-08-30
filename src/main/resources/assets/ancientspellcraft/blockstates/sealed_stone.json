@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "unsealing=0": { "model": "ancientspellcraft:sealed_stone" },
+        "unsealing=1": { "model": "ancientspellcraft:sealed_stone" },
+        "unsealing=2": { "model": "ancientspellcraft:sealed_stone" },
+        "unsealing=3": { "model": "ancientspellcraft:sealed_stone" }
+    }
+}

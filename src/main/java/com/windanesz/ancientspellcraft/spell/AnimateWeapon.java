@@ -45,6 +45,10 @@ public class AnimateWeapon extends Animate {
 		super(AncientSpellcraft.MODID, "animate_weapon");
 	}
 
+	public AnimateWeapon(String name) {
+		super(AncientSpellcraft.MODID, name);
+	}
+
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 
@@ -87,7 +91,7 @@ public class AnimateWeapon extends Animate {
 		addAnimatedEntityExtras(minion,pos, caster, modifiers);
 	}
 
-	public static void addAnimatedEntityExtras(EntityAnimatedItem minion, BlockPos pos, @Nullable EntityLivingBase caster, SpellModifiers modifiers) {
+	public void addAnimatedEntityExtras(EntityAnimatedItem minion, BlockPos pos, @Nullable EntityLivingBase caster, SpellModifiers modifiers) {
 		if (caster instanceof EntityPlayer) {
 
 			// undoing the damage boost

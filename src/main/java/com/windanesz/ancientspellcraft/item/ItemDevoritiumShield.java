@@ -1,10 +1,13 @@
 package com.windanesz.ancientspellcraft.item;
 
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.material.IDevoritium;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.registry.WizardryPotions;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -69,6 +72,12 @@ public class ItemDevoritiumShield extends ItemShield implements IDevoritium {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
 		Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc");
+
+		if (GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak)) {
+			AncientSpellcraft.proxy.addMultiLineDescription(tooltip, net.minecraft.client.resources.I18n.format("tooltip.ancientspellcraft:devoritium.more_info"));
+		} else {
+			tooltip.add(net.minecraft.client.resources.I18n.format("tooltip.ancientspellcraft:more_info"));
+		}
 	}
 
 	public String getItemStackDisplayName(ItemStack stack) {

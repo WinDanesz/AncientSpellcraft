@@ -93,6 +93,7 @@ public class EntitySkeletonMageMinion extends AbstractSkeleton implements ISpell
 		this.experienceValue = 0;
 		// For some reason this can't be in initEntityAI
 		this.tasks.addTask(0, this.spellcastingAI);
+		this.targetTasks.addTask(2, this.commonTargetingAI);
 	}
 
 	/**
@@ -129,7 +130,7 @@ public class EntitySkeletonMageMinion extends AbstractSkeleton implements ISpell
 			setElement(element);
 		}
 		Element element = this.getElement();
-		populateSpellList(element);
+		populateSpellList(element, null);
 		return livingdata;
 	}
 
@@ -266,7 +267,14 @@ public class EntitySkeletonMageMinion extends AbstractSkeleton implements ISpell
 		this.dataManager.set(ELEMENT, element.ordinal());
 	}
 
-	private void populateSpellList(Element element) {
+	public void populateSpellList(Element element, Spell spell) {
+		spells = new ArrayList<>(1);
+
+		if (spell != null) {
+			spells.add(spell);
+			return;
+		}
+
 		switch (element) {
 			case FIRE:
 				spells.add(Spells.fireball);

@@ -180,6 +180,7 @@ public final class ASSpells {
 	public static final Spell shock_zone = placeholder();
 	public static final Spell force_shove = placeholder();
 	public static final Spell corpse_bomb = placeholder();
+	public static final Spell death_mark = placeholder();
 	//public static final Spell heat_furnace = placeholder();
 
 
@@ -228,6 +229,12 @@ public final class ASSpells {
     public static final Spell perfect_theory_spell = placeholder();
     public static final Spell torchlight = placeholder();
     public static final Spell pocket_library = placeholder();
+    public static final Spell awaken_tome = placeholder();
+    public static final Spell conceal_object = placeholder();
+    public static final Spell extension = placeholder();
+    public static final Spell ternary_storm = placeholder();
+    public static final Spell arcane_wall = placeholder();
+    public static final Spell tome_warp = placeholder();
 
 	@SuppressWarnings("unchecked")
 	@SubscribeEvent
@@ -484,6 +491,7 @@ public final class ASSpells {
 		registry.register(new CurseOfGills());
 		registry.register(new CursedTouch());
 		registry.register(new Sufferance());
+		registry.register(new DeathMark());
 
 		// SAGE spells
 		registry.register(new ConjureInk());
@@ -514,6 +522,12 @@ public final class ASSpells {
 		registry.register(new RayOfEnfeeblement());
 		registry.register(new Torchlight());
 		registry.register(new PocketLibrary());
+		registry.register(new AwakenTome());
+		registry.register(new ConcealObject());
+		registry.register(new Extension());
+		registry.register(new TernaryStorm());
+		registry.register(new ArcaneWall());
+		registry.register(new TomeWarp());
 
 		// registry.register(new HeatFurnace()); TODO
 		//registry.register(new WarpWeapon()); TODO
