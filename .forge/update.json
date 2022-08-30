@@ -1,7 +1,13 @@
 {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/ancient-spellcraft",
-    "promos": {
-        "1.12.2-latest": "1.5",
-        "1.12.2-recommended": "1.5"
+  "homepage": "https://www.curseforge.com/minecraft/mc-mods/ancient-spellcraft",
+  "promos": {
+    "1.12.2-latest": "1.5",
+    "1.12.2-recommended": "1.5",
+    "'1": {
+      "12": {
+        "2-latest'": "v1.5.0",
+        "2-recommended'": "v1.5.0"
+      }
     }
+  }
 }

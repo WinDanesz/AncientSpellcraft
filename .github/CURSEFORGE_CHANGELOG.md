@@ -1,17 +1,16 @@
-<h2>Version v1.4.2 - 4/15/2022</h2>
+<h2>Version v1.5.0 - 8/30/2022</h2>
 <p>&nbsp;</p>
 <h3>What's Changed</h3>
 <p><span style="font-size: 1.2rem;">&nbsp;</span></p>
 <h4><strong>Bug Fixes</strong></h4>
-<p>- Fixed several issues caused by resetting the renderview entity every tick (#79) (bl4ckscor3)</p>
-<p>- Fixed Sorcery and Healing sage tome recipe</p>
-<p>- Fixed battlemage camp/chest empty loot table</p>
-<p>- Fixed apprentice battlemage sword missing its texture</p>
-<p>- Should fix all previous issues</p>
+<p>- Fixed Purifying Elixir's artefact recipe</p>
+<p>- Fixed Lithic Literature advancement. Fixes #64</p>
+<p>- Fixed occassional crash with Bartering Scroll</p>
+<p>- Fixed Arcane Anvil breaking instantly when hit</p>
+<p>- Fixed bad spell overlay icon in inventory for unknown spells</p>
 
-<h4><strong>Features</strong></h4>
-<p>- Slightly increased the chance of getting Runic Plates</p>
-<p>- Added Chinese translation (by ScoTWT) (#52)</p>
+<h4><strong>Refactoring</strong></h4>
+<p>- Implement IClassSpell for runewords</p>
 <p>&nbsp;</p>
 <p>As always, the easiest way to get help or feedback is through the Discord server! Find the link on the CurseForge page.</p>
 <p>&nbsp;</p>
