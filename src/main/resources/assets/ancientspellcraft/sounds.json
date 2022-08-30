@@ -187,6 +187,7 @@
     "entity.healing_health_damages":            {"category": "spells", "sounds": ["ancientspellcraft:healing_health_damages"]},
     "entity.healing_heath_heals":               {"category": "spells", "sounds": ["ancientspellcraft:healing_heath_heals"]},
     "entity.transportation_portal_ambient":     {"category": "spells", "sounds": ["ancientspellcraft:transportation_portal_ambient"]},
+    "entity.stone_guardian_hurt":               {"category": "hostiles", "sounds": ["ancientspellcraft:stone_guardian_hurt"]},
     "imbuement_table_break":                    {"category": "spells", "sounds": ["ancientspellcraft:imbuement_table_break"]},
     "relic_activate":                           {"category": "spells", "sounds": ["ancientspellcraft:relic_activate"]},
     "relic_activate_2":                         {"category": "spells", "sounds": ["ancientspellcraft:relic_activate_2"]},

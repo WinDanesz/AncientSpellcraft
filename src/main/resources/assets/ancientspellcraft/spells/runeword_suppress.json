@@ -8,7 +8,7 @@
         "commands": true,
         "treasure": false,
         "trades": false,
-        "looting": false
+        "looting": true
     },
     "tier": "advanced",
     "element": "magic",

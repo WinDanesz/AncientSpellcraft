@@ -3,7 +3,7 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASPotions;
-import electroblob.wizardry.entity.living.EntityWizard;
+import electroblob.wizardry.entity.living.ISpellCaster;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.item.SpellActions;
@@ -35,6 +35,11 @@ public class Counterspell extends SpellRay implements IClassSpell {
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 
 		if (!world.isRemote) {
+
+			if (target instanceof EntityLivingBase && ((EntityLivingBase) target).isHandActive()) {
+				((EntityLivingBase) target).stopActiveHand();
+			}
+
 			if (target instanceof EntityPlayer) {
 				EntityPlayer targetPlayer = (EntityPlayer) target;
 				EnumHand hand = EnumHand.MAIN_HAND;
@@ -54,8 +59,8 @@ public class Counterspell extends SpellRay implements IClassSpell {
 						targetPlayer.setHeldItem(hand, stack);
 					}
 				}
-			} else if (target instanceof EntityWizard && !world.isRemote) {
-				((EntityWizard) target).addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, 80, 4));
+			} else if ((target instanceof EntityLivingBase && target instanceof ISpellCaster) && !world.isRemote) {
+				((EntityLivingBase) target).addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, 80, 4));
 			}
 		}
 

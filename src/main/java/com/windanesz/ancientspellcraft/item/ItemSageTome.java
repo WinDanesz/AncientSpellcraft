@@ -2,6 +2,8 @@ package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import com.windanesz.ancientspellcraft.registry.ASTabs;
 import com.windanesz.ancientspellcraft.spell.IClassSpell;
 import com.windanesz.ancientspellcraft.spell.PerfectTheorySpell;
@@ -29,6 +31,9 @@ import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.SpellProperties;
 import electroblob.wizardry.util.WandHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -100,6 +105,7 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 		this.tier = tier;
 		this.element = element;
 		setMaxDamage(this.tier.maxCharge);
+		setMaxStackSize(1);
 		// TODO: expose to settings
 		this.upgradeLimit = this.tier.upgradeLimit;
 	}
@@ -183,6 +189,13 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 					new Style().setColor(TextFormatting.DARK_GRAY),
 					(int) ((tier.level + 1) * (Constants.POTENCY_INCREASE_PER_TIER) * 100 + 0.5f), element.getDisplayName()));
 		}
+		if (WandHelper.getUpgradeLevel(stack, ASItems.empowerment_upgrade) > 0) {
+			// +0.5f is necessary due to the error in the way floats are calculated.
+			text.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":wand.buff",
+					new Style().setColor(TextFormatting.DARK_GRAY),
+					(int) (WandHelper.getUpgradeLevel(stack, ASItems.empowerment_upgrade) * (Settings.generalSettings.empowerment_upgrade_potency_gain) * 100 + 0.5f),
+					Wizardry.proxy.translate("item.ancientspellcraft:all_other_elements")));
+		}
 		// +0.5f is necessary due to the error in the way floats are calculated.
 		text.add(Wizardry.proxy.translate("item." + AncientSpellcraft.MODID + ":sage_tome.buff",
 				new Style().setColor(TextFormatting.DARK_GRAY),
@@ -195,6 +208,12 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 
 		text.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":wand.spell", new Style().setColor(TextFormatting.GRAY),
 				discovered ? spell.getDisplayNameWithFormatting() : "#" + TextFormatting.BLUE + SpellGlyphData.getGlyphName(spell, player.world)));
+
+		if (GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak)) {
+			AncientSpellcraft.proxy.addMultiLineDescription(text, I18n.format("tooltip.ancientspellcraft:sage_tome.more_info"));
+		} else {
+			text.add(I18n.format("tooltip.ancientspellcraft:more_info"));
+		}
 
 		if (advanced.isAdvanced()) {
 
@@ -255,6 +274,9 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 			} else {
 				// All other (instant) spells
 				if (cast(stack, spell, player, hand, 0, modifiers)) {
+					if (spell == ASSpells.awaken_tome) {
+						stack = player.getHeldItem(hand);
+					}
 					return new ActionResult<>(EnumActionResult.SUCCESS, stack);
 				}
 			}
@@ -751,6 +773,8 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 		if (spell instanceof IClassSpell && ((IClassSpell) spell).getArmourClass() == ItemWizardArmour.ArmourClass.SAGE) {
 			modifiers.set(SpellModifiers.POTENCY, 1.0f + (this.tier.level + 1) * Constants.POTENCY_INCREASE_PER_TIER, true);
 			progressionModifier *= ELEMENTAL_PROGRESSION_MODIFIER;
+		} else if (this.element != spell.getElement() && WandHelper.getUpgradeLevel(stack, ASItems.empowerment_upgrade) > 0) {
+			modifiers.set(SpellModifiers.POTENCY, 1.0f + WandHelper.getUpgradeLevel(stack, ASItems.empowerment_upgrade) * (float) Settings.generalSettings.empowerment_upgrade_potency_gain, true);
 		}
 
 		if (WizardData.get(player) != null) {

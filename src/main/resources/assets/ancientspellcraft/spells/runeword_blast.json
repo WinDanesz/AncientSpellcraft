@@ -3,12 +3,12 @@
         "book": false,
         "scroll": false,
         "wands": false,
-        "npcs": false,
+        "npcs": true,
         "dispensers": false,
         "commands": true,
         "treasure": false,
         "trades": false,
-        "looting": false
+        "looting": true
     },
     "tier": "advanced",
     "element": "magic",

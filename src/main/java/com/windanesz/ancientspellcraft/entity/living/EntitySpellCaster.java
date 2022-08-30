@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.entity.living;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import com.windanesz.ancientspellcraft.tileentity.TileSentinel;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.entity.living.ISpellCaster;
@@ -17,6 +18,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
@@ -108,7 +110,7 @@ public class EntitySpellCaster extends EntityCreature implements ISpellCaster, I
 
 	@Override
 	public boolean isPotionApplicable(PotionEffect effect) {
-		return effect.getPotion() == WizardryPotions.arcane_jammer;
+		return effect.getPotion() == WizardryPotions.arcane_jammer || effect.getPotion() == MobEffects.REGENERATION || effect.getPotion() == ASPotions.arcane_aegis;
 	}
 
 	/**

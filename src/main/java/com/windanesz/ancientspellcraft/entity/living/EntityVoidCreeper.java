@@ -277,7 +277,7 @@ public class EntityVoidCreeper extends EntityCreeper {
 		return false;
 	}
 
-	private void explode() {
+	public void explode() {
 		if (!this.world.isRemote) {
 			boolean flag = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this);
 			float f = this.getPowered() ? 2.0F : 1.0F; // will be used for block destroying black holes

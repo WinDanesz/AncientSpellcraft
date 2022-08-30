@@ -19,6 +19,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
@@ -39,6 +42,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class BlockSageLectern extends BlockHorizontal implements ITileEntityProvider {
@@ -265,5 +269,17 @@ public class BlockSageLectern extends BlockHorizontal implements ITileEntityProv
 		}
 
 		super.breakBlock(world, pos, block);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack itemstack, World world, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced){
+		super.addInformation(itemstack,world,tooltip, advanced);
+
+		if (GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak)) {
+			AncientSpellcraft.proxy.addMultiLineDescription(tooltip, I18n.format("tooltip.ancientspellcraft:sage_lectern.more_info"));
+		} else {
+			tooltip.add(I18n.format("tooltip.ancientspellcraft:more_info"));
+		}
 	}
 }

@@ -9,7 +9,7 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjecti
 import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.item.ItemBeltScrollHolder;
-import com.windanesz.ancientspellcraft.item.ItemManaRing;
+import com.windanesz.ancientspellcraft.item.ItemManaArtefact;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
 import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
@@ -288,7 +288,18 @@ public class ASEventHandler {
 
 	private static void onMetaMagicFinished(EntityPlayer player, Spell spell, Potion effect) {
 		setCooldown(player, spell);
-		player.removePotionEffect(effect);
+
+		if (!player.world.isRemote) {
+			float chance =  0;
+			for (ItemArtefact ring : ItemArtefact.getActiveArtefacts(player, ItemArtefact.Type.RING)) {
+				if (ring == ASItems.ring_metamagic_preserve) {
+					chance += 0.33f;
+				}
+			}
+			if (chance > 0 && player.world.rand.nextFloat() < chance) {
+				player.removePotionEffect(effect);
+			}
+		}
 	}
 
 	private static void setCooldown(EntityPlayer player, Spell spell) {
@@ -775,6 +786,18 @@ public class ASEventHandler {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onSpellCastPreEvent(SpellCastEvent.Pre event) {
 
+		if (event.getSpell().getTier().ordinal() > 1) {
+			for (EntityPlayer player : event.getWorld().playerEntities) {
+				if (event.getCaster().getDistanceSq(player) < 20 && ItemArtefact.isArtefactActive(player, ASItems.charm_suppression_orb)) {
+					if (event.getCaster() instanceof EntityPlayer) {
+						ASUtils.sendMessage(event.getCaster(), "item.ancientspellcraft:charm_suppression_orb.message", true);
+					}
+					event.setCanceled(true);
+					return;
+				}
+			}
+		}
+
 		if (event.getCaster() instanceof EntityPlayer && event.getSource() == SpellCastEvent.Source.WAND) {
 
 			EntityPlayer player = (EntityPlayer) event.getCaster();
@@ -793,19 +816,19 @@ public class ASEventHandler {
 
 						if (!list.isEmpty()) {
 							for (ItemStack currentStack : list) {
-								if (currentStack.getItem() instanceof ItemManaRing) {
-									int currMana = ((ItemManaRing) currentStack.getItem()).getMana(currentStack);
+								if (currentStack.getItem() instanceof ItemManaArtefact) {
+									int currMana = ((ItemManaArtefact) currentStack.getItem()).getMana(currentStack);
 									if (currMana >= cost) {
 
 										// transfer mana
-										((ItemManaRing) currentStack.getItem()).setMana(currentStack, currMana - cost);
+										((ItemManaArtefact) currentStack.getItem()).setMana(currentStack, currMana - cost);
 										((ItemWand) wand.getItem()).setMana(wand, wandMana + cost);
 
 										// bit of an arbitrary number, but for continuous spells it transfers 50 more mana or the cont spell would be interrupted immediately
 										if (event.getSpell().isContinuous) {
-											currMana = ((ItemManaRing) currentStack.getItem()).getMana(currentStack);
+											currMana = ((ItemManaArtefact) currentStack.getItem()).getMana(currentStack);
 											if (currMana >= 50) {
-												((ItemManaRing) currentStack.getItem()).setMana(currentStack, currMana - 50);
+												((ItemManaArtefact) currentStack.getItem()).setMana(currentStack, currMana - 50);
 												((ItemWand) wand.getItem()).rechargeMana(wand, 50);
 											}
 										}
@@ -896,7 +919,7 @@ public class ASEventHandler {
 								modifiers.set(WizardryItems.blast_upgrade, range - level * Constants.BLAST_RADIUS_INCREASE_PER_LEVEL, true);
 							}
 							setCooldown(player, ASSpells.intensifying_focus);
-							player.removePotionEffect(ASPotions.intensifying_focus);
+							//player.removePotionEffect(ASPotions.intensifying_focus);
 							onMetaMagicFinished(player, ASSpells.intensifying_focus, ASPotions.intensifying_focus);
 
 						} else if (potion.equals(ASPotions.continuity_charm)) {

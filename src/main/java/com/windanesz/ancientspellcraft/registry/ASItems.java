@@ -25,11 +25,14 @@ import com.windanesz.ancientspellcraft.item.ItemDevoritiumArrow;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumAxe;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumBomb;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumDoor;
+import com.windanesz.ancientspellcraft.item.ItemDevoritiumMagnet;
+import com.windanesz.ancientspellcraft.item.ItemDevoritiumOrb;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumScimitar;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumShield;
 import com.windanesz.ancientspellcraft.item.ItemDevoritiumSword;
 import com.windanesz.ancientspellcraft.item.ItemDuplicationScroll;
 import com.windanesz.ancientspellcraft.item.ItemElementalOrb;
+import com.windanesz.ancientspellcraft.item.ItemEmpowermentTomeUpgrade;
 import com.windanesz.ancientspellcraft.item.ItemEmptyMysticSpellBook;
 import com.windanesz.ancientspellcraft.item.ItemEnchantedNameTag;
 import com.windanesz.ancientspellcraft.item.ItemEternityPendant;
@@ -44,7 +47,7 @@ import com.windanesz.ancientspellcraft.item.ItemKnowledgeOrb;
 import com.windanesz.ancientspellcraft.item.ItemKnowledgeScroll;
 import com.windanesz.ancientspellcraft.item.ItemLostRecipe;
 import com.windanesz.ancientspellcraft.item.ItemMagicShield;
-import com.windanesz.ancientspellcraft.item.ItemManaRing;
+import com.windanesz.ancientspellcraft.item.ItemManaArtefact;
 import com.windanesz.ancientspellcraft.item.ItemMasterBolt;
 import com.windanesz.ancientspellcraft.item.ItemMoonLetterDictionary;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
@@ -66,7 +69,10 @@ import com.windanesz.ancientspellcraft.item.ItemSpectralShield;
 import com.windanesz.ancientspellcraft.item.ItemSpectralShovel;
 import com.windanesz.ancientspellcraft.item.ItemStoneFist;
 import com.windanesz.ancientspellcraft.item.ItemTheoryScroll;
+import com.windanesz.ancientspellcraft.item.ItemTomeController;
 import com.windanesz.ancientspellcraft.item.ItemTransmutationScroll;
+import com.windanesz.ancientspellcraft.item.ItemUnsealingScroll;
+import com.windanesz.ancientspellcraft.item.ItemWandUpgradeAS;
 import com.windanesz.ancientspellcraft.item.ItemWizardTankard;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
@@ -147,6 +153,8 @@ public final class ASItems {
 	public static final Item ring_spirit_ward = placeholder();
 	public static final Item ring_kinetic = placeholder();
 	public static final Item ring_charge = placeholder();
+	public static final Item ring_griefing = placeholder();
+	public static final Item ring_metamagic_preserve = placeholder();
 
 	/// amulet
 	public static final Item charm_cryostasis = placeholder();
@@ -163,6 +171,7 @@ public final class ASItems {
 	public static final Item amulet_shield = placeholder();
 	public static final Item amulet_imbued_marble = placeholder();
 	public static final Item amulet_oakflesh = placeholder();
+	public static final Item amulet_inspiration = placeholder();
 
 	/// charm
 	public static final Item charm_rift_bottle = placeholder();
@@ -172,6 +181,7 @@ public final class ASItems {
 	public static final Item charm_power_orb = placeholder();
 	public static final Item charm_mana_orb = placeholder();
 	public static final Item charm_progression_orb = placeholder();
+	public static final Item charm_suppression_orb = placeholder();
 	public static final Item charm_lightning_orb = placeholder();
 	public static final Item charm_ice_orb = placeholder();
 	public static final Item charm_earth_orb = placeholder();
@@ -179,6 +189,7 @@ public final class ASItems {
 	public static final Item charm_necromancy_orb = placeholder();
 	public static final Item charm_fire_orb = placeholder();
 	public static final Item charm_sorcery_orb = placeholder();
+	public static final Item charm_majestic_mana = placeholder();
 
 	public static final Item charm_bucket_coal = placeholder();
 	public static final Item cornucopia = placeholder();
@@ -210,6 +221,12 @@ public final class ASItems {
 	public static final Item charm_clover = placeholder();
 	public static final Item charm_stone_tablet = placeholder();
 	//public static final Item charm_ice_arrow = placeholder();
+	public static final Item charm_hoarders_orb = placeholder();
+	public static final Item charm_elemental_alkahest = placeholder();
+	public static final Item charm_sage_diary = placeholder();
+	public static final Item charm_devoritium_magnet = placeholder();
+	public static final Item charm_wild_catalyst = placeholder();
+	public static final Item charm_metamagic_amplifier = placeholder();
 
 	public static final Item alchemical_essence = placeholder();
 	public static final Item wand_channeling = placeholder();
@@ -369,6 +386,11 @@ public final class ASItems {
 	public static final Item runic_plate = placeholder();
 	public static final Item mystic_spell_book = placeholder();
 	public static final Item empty_mystic_spell_book = placeholder();
+	public static final Item tome_controller = placeholder();
+	public static final Item sentience_upgrade = placeholder();
+	public static final Item empowerment_upgrade = placeholder();
+	public static final Item unsealing_scroll = placeholder();
+
 	//public static final Item forbidden_tome = placeholder(); TODO
 
 	public static final Item charm_glyph_illumination = placeholder();
@@ -376,7 +398,7 @@ public final class ASItems {
 	public static final Item charm_glyph_antigravity = placeholder();
 	public static final Item charm_glyph_vitality = placeholder();
 	public static final Item charm_glyph_warden = placeholder();
-	public static final Item charm_hoarders_orb = placeholder();
+
 
 
 	// below registry methods are courtesy of EB
@@ -478,6 +500,12 @@ public final class ASItems {
 		registerItemBlock(registry, ASBlocks.ARCANE_ANVIL, new ItemBlock(ASBlocks.ARCANE_ANVIL));
 		registerItemBlock(registry, ASBlocks.sage_lectern, new ItemBlock(ASBlocks.sage_lectern));
 		registerItemBlock(registry, ASBlocks.master_bolt, new ItemMasterBolt());
+
+		registerItemBlock(registry, ASBlocks.sealed_stone, new ItemBlock(ASBlocks.sealed_stone));
+		registerItemBlock(registry, ASBlocks.unsealed_stone, new ItemBlock(ASBlocks.unsealed_stone));
+		registerItemBlock(registry, ASBlocks.unseal_button, new ItemBlock(ASBlocks.unseal_button));
+
+
 		//		registerItemBlock(registry, AncientSpellcraftBlocks.ANCIENT_DIMENSION_BOUNDARY, new ItemBlock(AncientSpellcraftBlocks.ANCIENT_DIMENSION_BOUNDARY));
 
 		registerItem(registry, "magic_shield", new ItemMagicShield(EnumRarity.EPIC));
@@ -522,8 +550,8 @@ public final class ASItems {
 		registerItem(registry, "ring_permanent_shrinkage", new ItemASArtemisLibArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_permanent_growth", new ItemASArtemisLibArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
 
-		registerItem(registry, "ring_mana_lesser", new ItemManaRing(EnumRarity.UNCOMMON, ItemArtefact.Type.RING, 500));
-		registerItem(registry, "ring_mana_greater", new ItemManaRing(EnumRarity.RARE, ItemArtefact.Type.RING, 1000));
+		registerItem(registry, "ring_mana_lesser", new ItemManaArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING, 500));
+		registerItem(registry, "ring_mana_greater", new ItemManaArtefact(EnumRarity.RARE, ItemArtefact.Type.RING, 1000));
 		registerItem(registry, "ring_protector", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_devotion", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_withdraw_life", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
@@ -532,6 +560,8 @@ public final class ASItems {
 		registerItem(registry, "ring_spirit_ward", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_kinetic", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_charge", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_griefing", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_metamagic_preserve", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 
 		/// amulet
 		registerItem(registry, "amulet_mana", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
@@ -547,6 +577,7 @@ public final class ASItems {
 		registerItem(registry, "amulet_shield", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_imbued_marble", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_oakflesh", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_inspiration", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 
 		/// charm
 		registerItem(registry, "charm_seed_bag", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
@@ -563,6 +594,7 @@ public final class ASItems {
 		registerItem(registry, "charm_knowledge_orb", new ItemKnowledgeOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_power_orb", new ItemSetArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "jewels_of_power", 4, new ArrayList<String>(Arrays.asList("ring_power", "amulet_power", "charm_power_orb"))));
 		registerItem(registry, "charm_progression_orb", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_suppression_orb", new ItemDevoritiumOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 
 		registerItem(registry, "charm_lightning_orb", new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:thunderstorm", 6000, Element.LIGHTNING));
 		registerItem(registry, "charm_ice_orb", new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:ice_age", 6000, Element.ICE));
@@ -594,6 +626,13 @@ public final class ASItems {
 		registerItem(registry, "charm_clover", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_stone_tablet", new ItemMoonLetterDictionary(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_hoarders_orb", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_elemental_alkahest", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_sage_diary", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_devoritium_magnet", new ItemDevoritiumMagnet(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_wild_catalyst", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_metamagic_amplifier", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_majestic_mana",	new	ItemManaArtefact(EnumRarity.RARE, ItemArtefact.Type.RING, 2500));
+
 		registerItem(registry, "scepter_mind_control", new ItemOverlordScepter());
 		registerItem(registry, "purifying_elixir_recipe", new ItemLostRecipe(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 
@@ -664,6 +703,9 @@ public final class ASItems {
 		registerItem(registry, "knowledge_scroll", new ItemKnowledgeScroll());
 		registerItem(registry, "duplication_scroll", new ItemDuplicationScroll());
 		registerItem(registry, "amnesia_scroll", new ItemAmnesiaScroll());
+		registerItem(registry, "empty_theory_scroll", new ItemTheoryScroll());
+		registerItem(registry, "theory_scroll", new ItemTheoryScroll());
+		registerItem(registry, "unsealing_scroll", new ItemUnsealingScroll());
 
 		registerItem(registry, "blank_rune", new Item().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT).setMaxStackSize(16));
 		registerItem(registry, "rune_feoh", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
@@ -695,6 +737,9 @@ public final class ASItems {
 		registerItem(registry, "arcane_compound", new Item().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT).setMaxStackSize(16));
 
 		registerItem(registry, "soulbound_upgrade", new ItemSoulboundWandUpgrade());
+		registerItem(registry, "sentience_upgrade", new ItemWandUpgradeAS());
+		registerItem(registry, "empowerment_upgrade", new ItemEmpowermentTomeUpgrade());
+
 		registerItem(registry, "spectral_shovel", new ItemSpectralShovel());
 		registerItem(registry, "ice_cream", new ItemIceCream());
 		registerItem(registry, "alchemical_essence", new ItemAlchemicalEssence());
@@ -750,8 +795,7 @@ public final class ASItems {
 		registerItem(registry, "charm_glyph_antigravity", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_glyph_vitality", new ItemGlyphArtefact.ItemGlyphViality(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_glyph_warden", new ItemGlyphArtefact.ItemGlyphWarden(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		registerItem(registry, "empty_theory_scroll", new ItemTheoryScroll());
-		registerItem(registry, "theory_scroll", new ItemTheoryScroll());
+		registerItem(registry, "tome_controller", new ItemTomeController());
 
 		//registerItem(registry, "master_bolt", new ItemMasterBolt());
 

@@ -18,9 +18,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-public class ItemManaRing extends ItemASArtefact implements IManaStoringItem, IWorkbenchItem {
+public class ItemManaArtefact extends ItemASArtefact implements IManaStoringItem, IWorkbenchItem {
 
-	public ItemManaRing(EnumRarity rarity, Type type, int mana) {
+	public ItemManaArtefact(EnumRarity rarity, Type type, int mana) {
 		super(rarity, type);
 		setMaxDamage(mana);
 	}

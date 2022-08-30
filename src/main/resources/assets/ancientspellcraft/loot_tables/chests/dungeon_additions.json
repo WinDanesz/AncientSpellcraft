@@ -40,15 +40,8 @@
 
                 },
                 {
-                    "type": "item",
-                    "name": "ancientspellcraft:bartering_scroll",
-                    "entryName": "bartering_scroll",
-                    "weight": 2
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:transmutation_scroll",
-                    "entryName": "transmutation_scroll",
+                    "type": "loot_table",
+                    "name": "ancientspellcraft:subsets/rare_scrolls",
                     "weight": 2
                 }
             ]

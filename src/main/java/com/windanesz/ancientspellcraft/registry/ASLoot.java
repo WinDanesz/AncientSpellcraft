@@ -39,7 +39,9 @@ public class ASLoot {
 	private static LootTable SHRINE;
 	private static LootTable SHRINE_EXTRAS;
 	private static LootTable WIZARD_TOWER;
+	private static LootTable ANCIENT_VAULT;
 	private static LootTable WAND_UPGRADES;
+	private static LootTable RARE_SCROLLS;
 
 	private ASLoot() {}
 
@@ -52,6 +54,7 @@ public class ASLoot {
 
 		// chest
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "chests/dungeon_additions"));
+		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "chests/ancient_vault"));
 
 		// subsets
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/uncommon_artefacts"));
@@ -59,6 +62,7 @@ public class ASLoot {
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/epic_artefacts"));
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/ritual_books"));
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/wand_upgrades"));
+		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/rare_scrolls"));
 
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/ancientspellcraft_books_and_scrolls"));
 
@@ -72,6 +76,7 @@ public class ASLoot {
 		// entities
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "entities/void_creeper"));
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "entities/evil_battlemage"));
+		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "entities/stone_guardian"));
 	}
 
 	@SubscribeEvent

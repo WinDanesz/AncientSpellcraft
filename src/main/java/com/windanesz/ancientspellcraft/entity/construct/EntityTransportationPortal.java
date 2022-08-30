@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.entity.construct;
 
 import com.windanesz.ancientspellcraft.Settings;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASPotions;
 import com.windanesz.ancientspellcraft.registry.ASSounds;
 import com.windanesz.ancientspellcraft.util.SpellTeleporter;
@@ -9,7 +10,9 @@ import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.ParticleBuilder.Type;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.EnumFacing;
@@ -78,6 +81,17 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 		}
 	}
 
+	private BlockPos getRandomBlockPos(int x, int z, double radius) {
+		double ang = Math.random() * 2 * Math.PI,
+				hyp = Math.sqrt(Math.random()) * radius,
+				adj = Math.cos(ang) * hyp,
+				opp = Math.sin(ang) * hyp;
+		int xPos = (int) (x + adj);
+		int zPos = (int) (z + opp);
+		int yPos = world.getTopSolidOrLiquidBlock(new BlockPos(xPos, 0, zPos)).getY();
+		return new BlockPos(xPos, yPos, zPos);
+	}
+
 	@Override
 	public void onUpdate() {
 				if (this.ticksExisted == 3) {
@@ -86,6 +100,16 @@ public class EntityTransportationPortal extends EntityMagicConstruct {
 
 		if ((this.ticksExisted == 20 || this.ticksExisted % 160 == 0)) {
 			this.playSound(ASSounds.ENTITY_TRANSPORTATION_PORTAL_AMBIENT, 0.4f, 1.0f);
+		}
+
+		List<EntityItem> items = EntityUtils.getEntitiesWithinRadius(width, posX, posY, posZ, world, EntityItem.class);
+
+		for (EntityItem entityItem : items) {
+			if (entityItem != null & entityItem.getItem().getItem() == ASItems.charm_wild_catalyst) {
+				entityItem.setItem(ItemStack.EMPTY);
+				BlockPos newPos = getRandomBlockPos(this.getPosition().getX(), this.getPosition().getZ(), Settings.generalSettings.wild_catalyst_max_distance);
+				setTargetPos(newPos);
+			}
 		}
 
 		List<EntityLivingBase> targets = EntityUtils.getEntitiesWithinRadius(width, posX, posY, posZ, world, EntityLivingBase.class);

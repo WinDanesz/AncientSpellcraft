@@ -16,6 +16,7 @@ public class ASSounds {
 	public static final SoundEvent ENTITY_HEALING_HEATH_HEALS = createSound("entity.healing_heath_heals");
 	public static final SoundEvent ENTITY_HEALING_HEALTH_DAMAGES = createSound("entity.healing_health_damages");
 	public static final SoundEvent ENTITY_TRANSPORTATION_PORTAL_AMBIENT = createSound("entity.transportation_portal_ambient");
+	public static final SoundEvent ENTITY_STONE_GUARDIAN_HURT = createSound("entity.stone_guardian_hurt");
 	public static final SoundEvent SHADOW_MAGIC_LOOP = createSound("shadow_magic_loop");
 	public static final SoundEvent SHADOW_MAGIC_CHARGE = createSound("shadow_magic_charge");
 	public static final SoundEvent TRANSPORTATION_PORTAL_TELEPORTS = createSound("transportation_portal_teleports");
@@ -55,6 +56,7 @@ public class ASSounds {
 		event.getRegistry().register(ENTITY_HEALING_HEATH_HEALS);
 		event.getRegistry().register(ENTITY_HEALING_HEALTH_DAMAGES);
 		event.getRegistry().register(ENTITY_TRANSPORTATION_PORTAL_AMBIENT);
+		event.getRegistry().register(ENTITY_STONE_GUARDIAN_HURT);
 		event.getRegistry().register(SHADOW_MAGIC_LOOP);
 		event.getRegistry().register(SHADOW_MAGIC_CHARGE);
 		event.getRegistry().register(WAR_HORN);

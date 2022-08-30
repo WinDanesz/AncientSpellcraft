@@ -5,6 +5,9 @@ import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.WizardryGuiHandler;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.spell.Spell;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -33,6 +36,14 @@ public class ItemSageSpellBook extends ItemArmourClassSpellHolder {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemstack, World world, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced){
 		super.addInformation(itemstack,world,tooltip, advanced);
+
+		if (GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak)) {
+			AncientSpellcraft.proxy.addMultiLineDescription(tooltip, I18n.format("tooltip.ancientspellcraft:mystic_spell_book.more_info"));
+		} else {
+			tooltip.add(I18n.format("tooltip.ancientspellcraft:more_info"));
+		}
+
+
 //		if(world == null) world = Wizardry.proxy.getTheWorld(); // But... I need the world!
 //
 //		// Tooltip is left blank for wizards buying generic spell books.

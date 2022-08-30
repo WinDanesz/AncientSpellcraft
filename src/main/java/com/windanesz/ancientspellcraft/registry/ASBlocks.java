@@ -2,8 +2,10 @@ package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.block.BlockArcaneAnvil;
+import com.windanesz.ancientspellcraft.block.BlockArcaneWall;
 import com.windanesz.ancientspellcraft.block.BlockArtefactPensive;
 import com.windanesz.ancientspellcraft.block.BlockCandleLight;
+import com.windanesz.ancientspellcraft.block.BlockConcealedBlock;
 import com.windanesz.ancientspellcraft.block.BlockConjuredDirt;
 import com.windanesz.ancientspellcraft.block.BlockConjuredMagma;
 import com.windanesz.ancientspellcraft.block.BlockCrystalLeaves;
@@ -39,14 +41,19 @@ import com.windanesz.ancientspellcraft.block.BlockQuickSand;
 import com.windanesz.ancientspellcraft.block.BlockRuinedImbuementAltar;
 import com.windanesz.ancientspellcraft.block.BlockSageLectern;
 import com.windanesz.ancientspellcraft.block.BlockScribingDesk;
+import com.windanesz.ancientspellcraft.block.BlockSealedStone;
 import com.windanesz.ancientspellcraft.block.BlockSentinel;
 import com.windanesz.ancientspellcraft.block.BlockSkullWatch;
 import com.windanesz.ancientspellcraft.block.BlockSnowSlab;
 import com.windanesz.ancientspellcraft.block.BlockSphereCognizance;
+import com.windanesz.ancientspellcraft.block.BlockUnsealButton;
+import com.windanesz.ancientspellcraft.block.BlockUnsealedStone;
 import com.windanesz.ancientspellcraft.block.BlockUsedRune;
 import com.windanesz.ancientspellcraft.tileentity.TileArcaneAnvil;
+import com.windanesz.ancientspellcraft.tileentity.TileArcaneWall;
 import com.windanesz.ancientspellcraft.tileentity.TileArtefactPensive;
 import com.windanesz.ancientspellcraft.tileentity.TileCandleLight;
+import com.windanesz.ancientspellcraft.tileentity.TileConcealedBlock;
 import com.windanesz.ancientspellcraft.tileentity.TileEntityLightningBlock;
 import com.windanesz.ancientspellcraft.tileentity.TileEntityMagicMushroom;
 import com.windanesz.ancientspellcraft.tileentity.TileEntityRevertingBlock;
@@ -150,6 +157,11 @@ public class ASBlocks {
 	public static final Block sage_lectern = placeholder();
 	public static final Block master_bolt = placeholder();
 	public static final Block lightning_block = placeholder();
+	public static final Block concealed_block = placeholder();
+	public static final Block arcane_wall = placeholder();
+	public static final Block sealed_stone = placeholder();
+	public static final Block unsealed_stone = placeholder();
+	public static final Block unseal_button = placeholder();
 
 
 	public static void registerBlock(IForgeRegistry<Block> registry, String name, Block block) {
@@ -227,6 +239,11 @@ public class ASBlocks {
 		registerBlock(registry, "conjured_snow", new BlockConjuredDirt());
 		registerBlock(registry, "master_bolt", new BlockMasterBolt());
 		registerBlock(registry, "lightning_block", new BlockLightning());
+		registerBlock(registry, "concealed_block", new BlockConcealedBlock());
+		registerBlock(registry, "arcane_wall", new BlockArcaneWall());
+		registerBlock(registry, "sealed_stone", new BlockSealedStone());
+		registerBlock(registry, "unsealed_stone", new BlockUnsealedStone());
+		registerBlock(registry, "unseal_button", new BlockUnsealButton());
 	}
 
 	/**
@@ -249,6 +266,8 @@ public class ASBlocks {
 
 		GameRegistry.registerTileEntity(TileEntityRevertingBlock.class, new ResourceLocation(AncientSpellcraft.MODID, "reverting_tile"));
 		GameRegistry.registerTileEntity(TileArcaneAnvil.class, new ResourceLocation(AncientSpellcraft.MODID, "arcane_anvil"));
+		GameRegistry.registerTileEntity(TileConcealedBlock.class, new ResourceLocation(AncientSpellcraft.MODID, "concealed_block"));
+		GameRegistry.registerTileEntity(TileArcaneWall.class, new ResourceLocation(AncientSpellcraft.MODID, "arcane_wall"));
 	}
 
 }
