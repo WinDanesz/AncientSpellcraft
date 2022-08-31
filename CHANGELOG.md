@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.5.1] - 2022-08-31
+### :bug: Bug Fixes
+- [`6572904`](https://github.com/WinDanesz/AncientSpellcraft/commit/65729047872c54f355befcb4210aafb91f0b7ea4) - Fixed crash with dispenser spell casts (caused by Orb of Suppression's code) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`e6de558`](https://github.com/WinDanesz/AncientSpellcraft/commit/e6de558abc28e9e9b8dc8dad23fa5f44a06b1391) - Fixed class armour material tooltips *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+### :wrench: Chores
+- [`e7e1a09`](https://github.com/WinDanesz/AncientSpellcraft/commit/e7e1a093d4eff430ed449b660bd3530e5aa253fc) - v1.5 *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+
 ## [v1.5.0] - 2022-08-30
 ### :bug: Bug Fixes
 - [`9f656da`](https://github.com/WinDanesz/AncientSpellcraft/commit/9f656da4bd6959674b7076a3a786a0d5d7be28c1) - Fixed Purifying Elixir's artefact recipe *(commit by [@WinDanesz](https://github.com/WinDanesz))*
@@ -38,3 +47,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [v1.4.2]: https://github.com/WinDanesz/AncientSpellcraft/compare/alpha-1.12.2-1.2.0.103...v1.4.2
 [v1.5.0]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.4.2...v1.5.0
+[v1.5.1]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.0...v1.5.1
