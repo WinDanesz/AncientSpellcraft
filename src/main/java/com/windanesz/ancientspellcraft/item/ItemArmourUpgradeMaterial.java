@@ -43,7 +43,7 @@ public class ItemArmourUpgradeMaterial extends Item {
 		super.addInformation(itemstack,world,tooltip, advanced);
 
 		if (GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak)) {
-			AncientSpellcraft.proxy.addMultiLineDescription(tooltip, I18n.format("tooltip" + this.getRegistryName() + ".more_info"));
+			AncientSpellcraft.proxy.addMultiLineDescription(tooltip, I18n.format("tooltip." + this.getRegistryName() + ".more_info"));
 		} else {
 			tooltip.add(I18n.format("tooltip.ancientspellcraft:more_info"));
 		}
