@@ -788,7 +788,7 @@ public class ASEventHandler {
 
 		if (event.getSpell().getTier().ordinal() > 1) {
 			for (EntityPlayer player : event.getWorld().playerEntities) {
-				if (event.getCaster().getDistanceSq(player) < 20 && ItemArtefact.isArtefactActive(player, ASItems.charm_suppression_orb)) {
+				if (event.getCaster()  instanceof EntityLivingBase && event.getCaster().getDistanceSq(player) < 20 && ItemArtefact.isArtefactActive(player, ASItems.charm_suppression_orb)) {
 					if (event.getCaster() instanceof EntityPlayer) {
 						ASUtils.sendMessage(event.getCaster(), "item.ancientspellcraft:charm_suppression_orb.message", true);
 					}
