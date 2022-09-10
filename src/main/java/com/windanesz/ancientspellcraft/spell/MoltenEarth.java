@@ -5,6 +5,7 @@ import com.windanesz.ancientspellcraft.block.ITemporaryBlock;
 import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.SpellActions;
+import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.BlockUtils;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -50,7 +51,7 @@ public class MoltenEarth extends SpellRay {
 			ITemporaryBlock.placeTemporaryBlock(caster, world, ASBlocks.CONJURED_MAGMA, pos, 600);
 
 			BlockPos finalPos = pos;
-			List<BlockPos> list = BlockUtils.getBlockSphere(pos, getProperty(EFFECT_RADIUS).intValue()).stream().filter(i -> !world.isAirBlock(i)).filter(i -> i.getY() == finalPos.getY()).collect(Collectors.toList());
+			List<BlockPos> list = BlockUtils.getBlockSphere(pos, getProperty(EFFECT_RADIUS).intValue() * modifiers.get(WizardryItems.blast_upgrade)).stream().filter(i -> !world.isAirBlock(i)).filter(i -> i.getY() == finalPos.getY()).collect(Collectors.toList());
 			int blockLifetime = getProperty(BLOCK_LIFETIME).intValue();
 
 			for (int i = 0; i < list.size(); i++) {
