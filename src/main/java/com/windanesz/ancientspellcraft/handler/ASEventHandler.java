@@ -426,7 +426,7 @@ public class ASEventHandler {
 						ASSpells.cryostasis.cast(player.world, player, player.getActiveHand(), 0, new SpellModifiers());
 					}
 				} else if (artefact == ASItems.ring_protector) {
-					if ((player.getHealth() <= 8 || (player.getHealth() - event.getAmount() <= 6)) && player.world.rand.nextFloat() < 0.75f) {
+					if ((player.getHealth() <= 8 || (player.getHealth() - event.getAmount() <= 6)) && player.world.rand.nextFloat() < 0.5f) {
 						boolean shouldContinue = true;
 						for (ItemStack wand : ASUtils.getAllHotbarWands(player)) {
 							if (!shouldContinue) { break; }
@@ -444,7 +444,7 @@ public class ASEventHandler {
 							}
 
 							if (!minions.isEmpty()) {
-								int currIndex = player.world.rand.nextInt(indexes.size() - 1);
+								int currIndex = indexes.size() == 1 ? 0 : player.world.rand.nextInt(indexes.size() - 1);
 								Spell spell = minions.get(currIndex);
 
 								// get modifiers
