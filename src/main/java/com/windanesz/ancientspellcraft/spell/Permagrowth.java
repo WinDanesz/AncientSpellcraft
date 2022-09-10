@@ -11,6 +11,7 @@ import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
@@ -36,7 +37,7 @@ public class Permagrowth extends SpellRay {
 		if (EntityUtils.isLiving(target)) {
 
 			// This will actually run out in the end, but only if you leave Minecraft running for 3.4 years
-			if (!world.isRemote)
+			if (!world.isRemote && !(target instanceof EntityPlayer))
 				((EntityLivingBase) target).addPotionEffect(new PotionEffect(ASPotions.growth, Integer.MAX_VALUE, getProperty(EFFECT_STRENGTH).intValue()));
 		}
 

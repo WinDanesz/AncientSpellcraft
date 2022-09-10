@@ -11,6 +11,7 @@ import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
@@ -33,7 +34,7 @@ public class Permashrink extends SpellRay {
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 
-		if (EntityUtils.isLiving(target)) {
+		if (EntityUtils.isLiving(target) && !(target instanceof EntityPlayer)) {
 
 			// This will actually run out in the end, but only if you leave Minecraft running for 3.4 years
 			if (!world.isRemote)
