@@ -4,7 +4,9 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackRangedBowNoStrafing;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellWithCost;
 import com.windanesz.ancientspellcraft.entity.ai.EntitySummonAIFollowOwner;
+import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
+import com.windanesz.ancientspellcraft.item.ItemGuardianBlade;
 import com.windanesz.ancientspellcraft.item.ItemIceShield;
 import com.windanesz.ancientspellcraft.item.ItemSageTome;
 import com.windanesz.ancientspellcraft.registry.ASItems;
@@ -462,6 +464,23 @@ public class EntityAnimatedItem extends EntitySummonedCreature implements ISpell
 	 */
 	public void revertToItemForm() {
 		if (!world.isRemote) {
+
+			// guardian blade
+			if (this.getHeldItemMainhand().getItem() instanceof ItemGuardianBlade) {
+				if (this.getCaster() instanceof EntityPlayer) {
+					List<ItemStack> charm = ASBaublesIntegration.getEquippedArtefactStacks((EntityPlayer) this.getCaster(), ItemArtefact.Type.CHARM);
+					if (charm.isEmpty()) {
+						ASBaublesIntegration.setArtefactToSlot((EntityPlayer) this.getCaster(), this.getHeldItemMainhand().copy(), ItemArtefact.Type.CHARM);
+						return;
+					} else {
+						if (!ASUtils.giveStackToPlayer((EntityPlayer) this.getCaster(), this.getHeldItemMainhand().copy())) {
+							this.entityDropItem(this.getHeldItemMainhand(), 1);
+							return;
+						}
+					}
+				}
+				return;
+			}
 
 			// sage tome
 			if (this.getHeldItemMainhand().getItem() instanceof ItemSageTome) {

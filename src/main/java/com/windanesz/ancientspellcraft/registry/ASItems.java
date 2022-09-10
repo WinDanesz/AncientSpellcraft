@@ -40,6 +40,7 @@ import com.windanesz.ancientspellcraft.item.ItemEverfullManaFlask;
 import com.windanesz.ancientspellcraft.item.ItemEvergrowingCrystal;
 import com.windanesz.ancientspellcraft.item.ItemGlyphArtefact;
 import com.windanesz.ancientspellcraft.item.ItemGoldBag;
+import com.windanesz.ancientspellcraft.item.ItemGuardianBlade;
 import com.windanesz.ancientspellcraft.item.ItemHorn;
 import com.windanesz.ancientspellcraft.item.ItemIceCream;
 import com.windanesz.ancientspellcraft.item.ItemIceShield;
@@ -190,6 +191,7 @@ public final class ASItems {
 	public static final Item charm_fire_orb = placeholder();
 	public static final Item charm_sorcery_orb = placeholder();
 	public static final Item charm_majestic_mana = placeholder();
+	public static final Item charm_guardian_blade = placeholder();
 
 	public static final Item charm_bucket_coal = placeholder();
 	public static final Item cornucopia = placeholder();
@@ -632,6 +634,7 @@ public final class ASItems {
 		registerItem(registry, "charm_wild_catalyst", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_metamagic_amplifier", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_majestic_mana",	new	ItemManaArtefact(EnumRarity.RARE, ItemArtefact.Type.RING, 2500));
+		registerItem(registry, "charm_guardian_blade",	new ItemGuardianBlade(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 
 		registerItem(registry, "scepter_mind_control", new ItemOverlordScepter());
 		registerItem(registry, "purifying_elixir_recipe", new ItemLostRecipe(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
