@@ -5,6 +5,7 @@ import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLivingBase;
@@ -55,9 +56,11 @@ public class LivingComet  extends Spell {
 
 		if (ticksInUse > 40 && caster.onGround) {
 
-			if (!world.isRemote)
-				caster.world.createExplosion(caster, caster.posX, caster.posY, caster.posZ, 1.8f, true);
+			if (!world.isRemote) {
+				boolean terrainDamage = EntityUtils.canDamageBlocks(caster, world);
+				caster.world.createExplosion(caster, caster.posX, caster.posY, caster.posZ, 1.8f, terrainDamage);
 				caster.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 60, 0));
+			}
 			caster.stopActiveHand();
 			return true;
 		}
