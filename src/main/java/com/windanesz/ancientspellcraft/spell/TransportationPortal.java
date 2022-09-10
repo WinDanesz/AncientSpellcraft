@@ -9,7 +9,9 @@ import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellConstructRanged;
 import electroblob.wizardry.spell.Transportation;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.Location;
+import electroblob.wizardry.util.RayTracer;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,6 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
@@ -51,6 +54,27 @@ public class TransportationPortal extends SpellConstructRanged<EntityTransportat
 	@SuppressWarnings("Duplicates")
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+
+		double range = getProperty(RANGE).doubleValue() * modifiers.get(WizardryItems.range_upgrade);
+		RayTraceResult rayTrace = RayTracer.standardBlockRayTrace(world, caster, range, hitLiquids, ignoreUncollidables, false);
+
+		if(rayTrace != null &&  (rayTrace.sideHit == EnumFacing.UP )){
+			if(!world.isRemote){
+				double x = rayTrace.hitVec.x;
+				double y = rayTrace.hitVec.y;
+				double z = rayTrace.hitVec.z;
+				List<EntityTransportationPortal> portals = EntityUtils.getEntitiesWithinRadius(1.5d, x, y, z, world, EntityTransportationPortal.class);
+
+				if (!portals.isEmpty()) {
+					for (EntityTransportationPortal portal : portals) {
+						if (portal.getCaster() == caster) {
+							portal.setDead();
+							return true;
+						}
+					}
+				}
+			}
+		}
 
 		WizardData data = WizardData.get(caster);
 		// Fixes the sound not playing in first person.

@@ -112,11 +112,6 @@ public final class ASUtils {
 		return biomes.containsKey(biomeName);
 	}
 
-	public static int getBiomeIdFromName(String biomeName) {
-		Map<String, Integer> biomes = getAllBiomes();
-		return biomes.get(biomeName);
-	}
-
 	public static ResourceLocation getBiomeRegistryNameFromName(String biomeName) {
 		Map<String, ResourceLocation> biomes = getAllBiomesWithRegnames();
 		return biomes.get(biomeName);
