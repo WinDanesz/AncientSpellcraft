@@ -1,12 +1,14 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellBuff;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -35,6 +37,9 @@ public class Candlelight extends SpellBuff {
 					false, false));
 		}
 
+		if (caster instanceof EntityPlayer && !caster.world.isRemote && caster.world.isAirBlock(caster.getPosition().up())) {
+			caster.world.setBlockState(caster.getPosition().up(), ASBlocks.CANDLELIGHT.getDefaultState());
+		}
 		return true;
 	}
 

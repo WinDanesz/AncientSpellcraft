@@ -24,7 +24,7 @@ public class TileCandleLight extends TileEntity implements ITickable {
 	@Override
 	public void update() {
 		// check if player has moved away from the tile entity
-		EntityPlayer thePlayer = world.getClosestPlayer(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5, 2.0D, false);
+		EntityPlayer thePlayer = world.getClosestPlayer(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5, 4.0D, false);
 
 		if (thePlayer == null) {
 			if (world.getBlockState(getPos()).getBlock() ==

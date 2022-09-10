@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class Magelight extends SpellBuff {
 
-//	public static final IStoredVariable<Location> LIGHT_POS = IStoredVariable.StoredVariable.ofInt("magelight_pos", Persistence.NEVER).withTicker(Magelight::update);
+	//	public static final IStoredVariable<Location> LIGHT_POS = IStoredVariable.StoredVariable.ofInt("magelight_pos", Persistence.NEVER).withTicker(Magelight::update);
 
 	public static final IStoredVariable<NBTTagCompound> LIGHT_POS = IStoredVariable.StoredVariable.ofNBT("light_pos", Persistence.NEVER).withTicker(Magelight::update);
 
@@ -41,26 +41,26 @@ public class Magelight extends SpellBuff {
 			}
 		}
 
-		if (compound == null) return compound;
+		if (compound == null) { return compound; }
 
 		Location location = Location.fromNBT(compound);
-		if (player.getDistanceSq(location.pos) > 30) {
+		if (player.getDistanceSq(location.pos) > 20) {
 			//if (player.world.getBlockState(location.pos).getBlock() instanceof BlockMageLight) {
-				player.world.setBlockToAir(location.pos);
+			player.world.setBlockToAir(location.pos);
 
-			if (!(player.isPotionActive(ASPotions.magelight) || player.isPotionActive(ASPotions.candlelight)
-					)) {
+			if (!(player.isPotionActive(ASPotions.magelight))) {
 				return null;
 			}
-				if (player.world.isAirBlock(player.getPosition().up())) {
-					if (player.world.getTileEntity(player.getPosition().up()) instanceof TileMageLight) {
-						((TileMageLight) player.world.getTileEntity(player.getPosition().up())).setPlayer(player);
-					}
 
-					player.world.setBlockState(player.getPosition().up(), ASBlocks.MAGELIGHT.getDefaultState());
-					location = new Location(player.getPosition().up(), player.dimension);
-					compound = location.toNBT();
+			if (player.world.isAirBlock(player.getPosition().up())) {
+				if (player.world.getTileEntity(player.getPosition().up()) instanceof TileMageLight) {
+					((TileMageLight) player.world.getTileEntity(player.getPosition().up())).setPlayer(player);
 				}
+
+				player.world.setBlockState(player.getPosition().up(), ASBlocks.MAGELIGHT.getDefaultState());
+				location = new Location(player.getPosition().up(), player.dimension);
+				compound = location.toNBT();
+			}
 			//}
 		}
 		return compound;
@@ -75,15 +75,15 @@ public class Magelight extends SpellBuff {
 	/**
 	 * <b>Overriding as we don't want to spawn particles.</b>
 	 */
-	protected boolean applyEffects(EntityLivingBase caster, SpellModifiers modifiers){
+	protected boolean applyEffects(EntityLivingBase caster, SpellModifiers modifiers) {
 		if (caster.isPotionActive(ASPotions.candlelight)) {
 			caster.removePotionEffect(ASPotions.candlelight);
 		}
 
-		for(Potion potion : potionSet){
+		for (Potion potion : potionSet) {
 			caster.addPotionEffect(new PotionEffect(potion, potion.isInstant() ? 1 :
-					(int)(getProperty(getDurationKey(potion)).floatValue() * modifiers.get(WizardryItems.duration_upgrade)),
-					(int)getProperty(getStrengthKey(potion)).floatValue(),
+					(int) (getProperty(getDurationKey(potion)).floatValue() * modifiers.get(WizardryItems.duration_upgrade)),
+					(int) getProperty(getStrengthKey(potion)).floatValue(),
 					false, false));
 
 			if (caster instanceof EntityPlayer) {
@@ -91,6 +91,14 @@ public class Magelight extends SpellBuff {
 					WizardData.get((EntityPlayer) caster).setVariable(LIGHT_POS, (new Location(caster.getPosition().up(), caster.dimension)).toNBT());
 				}
 			}
+		}
+
+		if (caster instanceof EntityPlayer && !caster.world.isRemote && caster.world.isAirBlock(caster.getPosition().up())) {
+			if (caster.world.getTileEntity(caster.getPosition().up()) instanceof TileMageLight) {
+				((TileMageLight) caster.world.getTileEntity(caster.getPosition().up())).setPlayer((EntityPlayer) caster);
+			}
+
+			caster.world.setBlockState(caster.getPosition().up(), ASBlocks.MAGELIGHT.getDefaultState());
 		}
 
 		return true;

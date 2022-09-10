@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.potion;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import electroblob.wizardry.potion.PotionMagicEffect;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.EntityLivingBase;
@@ -34,6 +35,10 @@ public class PotionCandleLight extends PotionMagicEffect {
 						entity.world.rand.nextGaussian() / 80).clr(246, 180 + getRandomNumberInRange(0, 50), 80).collide(false).
 						scale(0.46F).spawn(entity.world);
 
+			} else {
+				if (entity.ticksExisted % 15 == 0 && entity instanceof EntityPlayer && !entity.world.isRemote && entity.world.isAirBlock(entity.getPosition().up())) {
+					entity.world.setBlockState(entity.getPosition().up(), ASBlocks.CANDLELIGHT.getDefaultState());
+				}
 			}
 		}
 	}
