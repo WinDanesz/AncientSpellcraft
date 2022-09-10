@@ -7,4 +7,4 @@
 {{.COMMITS}}- $commit{{.COMMITS}}
 
 :link: **Download it from CurseForge: #{URL}#/files/#{FILE_ID}#**
-(The link might take a few minutes to go be approved)
+(The link might take a few minutes get approved)
