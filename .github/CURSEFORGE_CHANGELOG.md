@@ -1,10 +1,18 @@
-<h2>Version v1.5.1 - 8/31/2022</h2>
+<h2>Version v1.5.2 - 9/10/2022</h2>
 <p>&nbsp;</p>
 <h3>What's Changed</h3>
 <p><span style="font-size: 1.2rem;">&nbsp;</span></p>
+<h4><strong>Features</strong></h4>
+<p>-  Added Guardian Blade charm</p>
+<p>- Allow closing a permanent transportation portal with recasting the spell. Fixes #91</p>
+
 <h4><strong>Bug Fixes</strong></h4>
-<p>- Fixed crash with dispenser spell casts (caused by Orb of Suppression's code)</p>
-<p>- Fixed class armour material tooltips</p>
+<p>- Living Comet spell now respects the terrainDamage setting, only optionally breaking blocks</p>
+<p>- Fix crashes related to Ring of the Protector. Fixes #89</p>
+<p>- Permashrink and Permagrowth spells no longer can be used on players. Fixes #86</p>
+<p>- Once again fixed Magelight and Candlelight spells. Fixes #96</p>
+<p>- Fix Molten Earth blast radius not scaling with Blast upgrades. Fixes #84</p>
+<p>- Fix crash with Soul Scorch. Fixes #80</p>
 <p>&nbsp;</p>
 <p>As always, the easiest way to get help or feedback is through the Discord server! Find the link on the CurseForge page.</p>
 <p>&nbsp;</p>

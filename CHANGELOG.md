@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.5.2] - 2022-09-10
+### :sparkles: New Features
+- [`b1a9caa`](https://github.com/WinDanesz/AncientSpellcraft/commit/b1a9caa7279213e7799a0dbb0ade05b8a1ff65fe) - Added Guardian Blade charm *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`1ac50a7`](https://github.com/WinDanesz/AncientSpellcraft/commit/1ac50a7fb7e3de986c0e94dfe869352ea2e2293f) - Allow closing a permanent transportation portal with recasting the spell. Fixes [#91](https://github.com/WinDanesz/AncientSpellcraft/pull/91) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+### :bug: Bug Fixes
+- [`e76fe68`](https://github.com/WinDanesz/AncientSpellcraft/commit/e76fe68c7bdbfe2abbe660bc66be2c9650583a17) - Living Comet spell now respects the terrainDamage setting, only optionally breaking blocks *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`efba368`](https://github.com/WinDanesz/AncientSpellcraft/commit/efba368c6ba9ef03a260e343f3db501557c4d565) - Fix crashes related to Ring of the Protector. Fixes [#89](https://github.com/WinDanesz/AncientSpellcraft/pull/89) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`dd37924`](https://github.com/WinDanesz/AncientSpellcraft/commit/dd37924f1bd272ae21aba4253aa948aa5e694c57) - Permashrink and Permagrowth spells no longer can be used on players. Fixes [#86](https://github.com/WinDanesz/AncientSpellcraft/pull/86) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`ae3d7b3`](https://github.com/WinDanesz/AncientSpellcraft/commit/ae3d7b3a853f9436da2e84abb99c21ed82181ae5) - Once again fixed Magelight and Candlelight spells. Fixes [#96](https://github.com/WinDanesz/AncientSpellcraft/pull/96) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`3a70ceb`](https://github.com/WinDanesz/AncientSpellcraft/commit/3a70ceb0ebbf93dcd57ef219fbb0705521089d9b) - Fix Molten Earth blast radius not scaling with Blast upgrades. Fixes [#84](https://github.com/WinDanesz/AncientSpellcraft/pull/84) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`9dcbbc7`](https://github.com/WinDanesz/AncientSpellcraft/commit/9dcbbc7ff9a3ca84cf40a98ccfd62ea4483f6d7c) - Fix crash with Soul Scorch. Fixes [#80](https://github.com/WinDanesz/AncientSpellcraft/pull/80) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+
 ## [v1.5.1] - 2022-08-31
 ### :bug: Bug Fixes
 - [`6572904`](https://github.com/WinDanesz/AncientSpellcraft/commit/65729047872c54f355befcb4210aafb91f0b7ea4) - Fixed crash with dispenser spell casts (caused by Orb of Suppression's code) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
@@ -48,3 +62,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v1.4.2]: https://github.com/WinDanesz/AncientSpellcraft/compare/alpha-1.12.2-1.2.0.103...v1.4.2
 [v1.5.0]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.4.2...v1.5.0
 [v1.5.1]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.0...v1.5.1
+[v1.5.2]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.1...v1.5.2
