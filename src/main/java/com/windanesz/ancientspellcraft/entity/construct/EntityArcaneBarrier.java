@@ -166,7 +166,7 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 
 		targets.remove(this);
 
-		targets.removeIf(t -> t instanceof EntityArmorStand || AllyDesignationSystem.isAllied((EntityLivingBase) t, getCaster()) || t instanceof EntityMagicConstruct || t instanceof EntityXPOrb || t instanceof EntityAnimal || t instanceof EntityMagicArrow && !this.isValidTarget(((EntityMagicArrow) t).getCaster())
+		targets.removeIf(t -> !(t instanceof EntityLivingBase) || t instanceof EntityArmorStand || t instanceof EntityLivingBase && AllyDesignationSystem.isAllied((EntityLivingBase) t, getCaster()) || t instanceof EntityMagicConstruct || t instanceof EntityXPOrb || t instanceof EntityAnimal || t instanceof EntityMagicArrow && !this.isValidTarget(((EntityMagicArrow) t).getCaster())
 				|| t instanceof EntityThrowable && !this.isValidTarget(((EntityThrowable) t).getThrower())
 				|| t instanceof EntityArrow && !this.isValidTarget(((EntityArrow) t).shootingEntity));
 
