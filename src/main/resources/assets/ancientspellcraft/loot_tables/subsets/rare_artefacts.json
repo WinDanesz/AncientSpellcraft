@@ -228,6 +228,41 @@
                     "type": "item",
                     "name": "ancientspellcraft:ring_devotion",
                     "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_majestic_mana",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_metamagic_amplifier",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_hoarders_orb",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_inspiration",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_oakflesh",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ring_metamagic_preserve",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ring_griefing",
+                    "weight": 1
                 }
             ]
         }

@@ -213,6 +213,31 @@
                     "type": "item",
                     "name": "ancientspellcraft:charm_stone_tablet",
                     "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_guardian_blade",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_devoritium_magnet",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_sage_diary",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_elemental_alkahest",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_suppression_orb",
+                    "weight": 1
                 }
             ]
         }
