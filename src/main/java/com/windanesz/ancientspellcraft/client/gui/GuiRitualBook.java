@@ -98,9 +98,9 @@ public class GuiRitualBook extends GuiScreen {
 	 */
 	protected void drawForegroundLayer(int left, int top, int mouseX, int mouseY) {
 		String fullDesc = getRitual().getDescription();
-		int splitIndex = 320;
+		boolean discovered = AncientSpellcraft.proxy.shouldDisplayDiscovered(getRitual(), ritualBook);
 
-		boolean doublePage = fullDesc.length() > 320;
+		int splitIndex = discovered ? 320 : 200;
 		if (doublePage) {
 			int i = 320;
 
@@ -117,7 +117,6 @@ public class GuiRitualBook extends GuiScreen {
 			splitIndex = i;
 		}
 
-		boolean discovered = AncientSpellcraft.proxy.shouldDisplayDiscovered(getRitual(), ritualBook);
 		String name;
 		String rightSideDesc = "";
 
@@ -155,18 +154,12 @@ public class GuiRitualBook extends GuiScreen {
 						itemRenderer.renderItemAndEffectIntoGUI(stack, xPos, y);
 						if (mouseX >= xPos && mouseX <= xPos + 16 && mouseY >= y && mouseY <= y + 16) {
 							stackTooltip = stack;
-							//						this.fontRenderer.drawString("hahahha!!!!", left + 17, top + 45, 0);
 						}
-						//					itemRenderer.renderItem(stack, ItemCameraTransforms.TransformType.GUI);
-					} else {
-						//Items.AIR;
 					}
 
 					index++;
-					//				x += x + 16 * k;
 				}
 				y += 16;
-				//			x =  x = left + 146 + 16 + 8; // reset
 			}
 			if (stackTooltip != ItemStack.EMPTY) {
 				renderToolTip(stackTooltip, mouseX, mouseY);
@@ -191,7 +184,7 @@ public class GuiRitualBook extends GuiScreen {
 		} else {
 			// left side
 			if (currentPage == 0) {
-				desc = LangUtils.toElderFuthark(getRitual().getDescription());
+				desc = LangUtils.toElderFuthark(desc);
 				this.fontRenderer.drawSplitString(desc, left + 17, top + 44, 118, 0);
 			}
 
