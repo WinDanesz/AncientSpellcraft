@@ -1,0 +1,24 @@
+{
+    "type": "ancientspellcraft:spell_book_recipe_shaped",
+    "pattern": [
+        "CCC",
+        "CBC",
+        "   "
+    ],
+    "key": {
+        "C": {
+            "item": "ebwizardry:magic_crystal",
+            "data": 0
+        },
+        "B": {
+            "item": "ancientspellcraft:empty_mystic_spell_book"
+        }
+    },
+    "result": {
+        "item": "ancientspellcraft:mystic_spell_book",
+        "data": 0,
+        "nbt" : {
+            "spell": "ancientspellcraft:scribe"
+        }
+    }
+}
