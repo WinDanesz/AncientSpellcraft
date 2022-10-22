@@ -12,7 +12,7 @@
     },
     "tier": "novice",
     "element": "magic",
-    "type": "attack",
+    "type": "alteration",
     "cost": 10,
     "chargeup": 20,
     "cooldown": 40,
