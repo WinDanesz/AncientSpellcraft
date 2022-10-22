@@ -1,0 +1,6 @@
+{
+    "ingredients": {},
+    "recipes": {
+        "spell_book_recipe_shaped": "com.windanesz.ancientspellcraft.crafting.recipe.ShapedSpellBookRecipe$Factory"
+    }
+}
