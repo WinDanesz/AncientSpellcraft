@@ -285,6 +285,10 @@ if (System.getenv('USE_ALPHAS').equals('true')) {
 }
 
 processResources {
+    if (System.getenv('PROJECT_VERSION') != null) {
+        version = "${project.mc_version}-" + System.getenv('PROJECT_VERSION')
+        project.mod_version = System.getenv('PROJECT_VERSION')
+    }
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", version.toString()
     inputs.property "mcversion", project.mc_version.toString()
@@ -315,10 +319,15 @@ processResources {
 }
 
 task replaceTokens(type: Sync) {
+    if (System.getenv('PROJECT_VERSION') != null) {
+        version = "${project.mc_version}-" + System.getenv('PROJECT_VERSION')
+        project.mod_version = System.getenv('PROJECT_VERSION')
+    }
+
     // replace @TOKENS@ in main file
     from sourceSets.main.java
     inputs.property 'version', project.mc_version.toString()
-    filter(ReplaceTokens, tokens: [VERSION: "${project.mod_version}".toString()])
+    filter(ReplaceTokens, tokens: [VERSION: version.toString()])
     filter(ReplaceTokens, tokens: [MCVERSION: "${project.mc_version}".toString()])
     filter(ReplaceTokens, tokens: [WIZARDRY_VERSION: "${project.wizardry_version}".toString()])
     into "$buildDir/src"

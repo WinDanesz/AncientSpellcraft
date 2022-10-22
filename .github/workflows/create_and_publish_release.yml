@@ -4,38 +4,60 @@ on:
   push:
     tags:
       - v[0-9]+.[0-9]+.[0-9]+
+  workflow_call:
+    secrets:
+      CURSEFORGE_API_TOKEN:
+        required: true
+      DISCORD_ANNOUNCER_WEBHOOK:
+        required: true
 
 jobs:
 
   generate_changelog:
     name: Build > Create and Commit Changelog > Publish
-    #needs: build
     runs-on: ubuntu-latest
     steps:
-      # build:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Setup Build
         run: 'chmod 777 gradlew'
 
-      - name: Build with Gradle
-        id: build
-        env: {USE_ALPHAS: false}
-        run: './gradlew setupGithubActions build --max-workers=1'
-
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+        run: |
+          echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -c 11-)
+          echo ::set-output name=VERSION_WITH_PREFIX::$(echo $GITHUB_REF)
+
+      - name: Build with Gradle
+        id: build
+        env:
+          USE_ALPHAS: false
+        run: |
+          PROJECT_VERSION=${{ steps.get_version.outputs.VERSION }} ./gradlew setupGithubActions build --max-workers=1
+
+      - name: Get .jar name
+        id: get_jar_name
+        run: |
+          ls ./build/libs/
+          echo ::set-output name=jar_name::$(ls ./build/libs/)
 
       - name: Create release
-        uses: ncipollo/release-action@v1
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          allowUpdates: true
-          draft: false
-          name: ${{ github.ref_name }}
-          body: ${{ steps.changelog.outputs.changes }}
-          token: ${{ github.token }}
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            "./build/libs/${{ steps.get_jar_name.outputs.jar_name }}"
+
+#      - name: Create release
+#        uses: ncipollo/release-action@v1
+#        with:
+#          allowUpdates: true
+#          draft: false
+#          name: ${{ github.ref_name }}
+#          body: ${{ steps.changelog.outputs.changes }}
+#          token: ${{ github.token }}
 
       - name: Update main CHANGELOG.md
         id: changelog
@@ -51,7 +73,6 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           commit-types: "fix:Bug Fixes,feat:Features,refactor:Refactoring"
           template-path: ".github/workflows/CURSEFORGE_CHANGELOG.tpl.md"
-          current-tag: ${{ steps.get_version.outputs.VERSION }}
       - name: Write curseforge changelog to file
         uses: DamianReeves/write-file-action@master
         with:
@@ -60,29 +81,28 @@ jobs:
             ${{steps.changelog-generator.outputs.changelog}}
           write-mode: overwrite
 
-      - name: "Upload Release to CurseForge"
+      - name: Upload Release to CurseForge
         id: publish
         uses: itsmeow/curseforge-upload@master
         with:
           changelog: "${{steps.changelog-generator.outputs.changelog}}"
           changelog_type: html
           # display_name: use the filename
-          file_path: "build/libs/${{ steps.build.outputs.jar_name }}-${{ steps.build.outputs.version }}.jar"
+          file_path: "./build/libs/${{ steps.get_jar_name.outputs.jar_name }}"
           game_endpoint: minecraft
-          relations: "${{ steps.build.outputs.curse_relations }}"
           game_versions: "${{ steps.build.outputs.curse_versions }}"
           project_id: "${{ steps.build.outputs.curse_project_id }}"
           release_type: release
           token: "${{ secrets.CURSEFORGE_API_TOKEN }}"
 
-      - name: Update ./forge/update.json latest version
+      - name: Update latest version in ./forge/update.json
         uses: jossef/action-set-json-field@v1
         with:
           file: ${{ github.workspace }}/.forge/update.json
           field: promos.'1.12.2-latest'
           value: ${{ steps.get_version.outputs.VERSION }}
 
-      - name: Update ./forge/update.json recommended version
+      - name: Update recommended version in ./forge/update.json 
         uses: jossef/action-set-json-field@v1
         with:
           file: ${{ github.workspace }}/.forge/update.json
