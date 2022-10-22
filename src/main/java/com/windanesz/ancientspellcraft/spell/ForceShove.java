@@ -92,7 +92,7 @@ public class ForceShove extends SpellRay {
 				}
 			}
 
-			this.playSound(world, caster, ticksInUse, -1, modifiers);
+			this.playSound(world, (EntityLivingBase) target, ticksInUse, -1, modifiers);
 
 			return true;
 		}
