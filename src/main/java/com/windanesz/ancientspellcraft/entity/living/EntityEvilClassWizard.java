@@ -207,6 +207,12 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 			TextComponentString textcomponentstring = new TextComponentString(ScorePlayerTeam.formatPlayerName(this.getTeam(), this.getName()));
 			textcomponentstring.getStyle().setHoverEvent(this.getHoverEvent());
 			textcomponentstring.getStyle().setInsertion(this.getCachedUniqueIdString());
+			// don't see why this could happen but it might fix #81
+			if (textcomponentstring == null) {
+				ITextComponent wizardName = new TextComponentTranslation("class_element." + getElement().getName() + ".wizard");
+				ITextComponent className = getArmourClassNameFor(this.getArmourClass());
+				new TextComponentTranslation("entity." + this.getEntityString() + "_combined.name", wizardName, className);
+			}
 			return textcomponentstring;
 		}
 
