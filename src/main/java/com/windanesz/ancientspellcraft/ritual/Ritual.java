@@ -18,6 +18,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -276,6 +277,13 @@ public abstract class Ritual extends IForgeRegistryEntry.Impl<Ritual> {
 	/** Returns the translation key for this spell. */
 	protected String getTranslationKey(){
 		return "ritual." + unlocalisedName;
+	}
+
+	/**
+	 * Returns a {@code TextComponentTranslation} which will be translated to the display name of the ritual.
+	 */
+	public ITextComponent getNameForTranslationFormatted(){
+		return new TextComponentTranslation(getTranslationKey());
 	}
 
 }

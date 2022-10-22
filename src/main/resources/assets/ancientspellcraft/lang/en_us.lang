@@ -578,6 +578,7 @@ item.ancientspellcraft\:ring_unbinding.name=Ring of Unbinding
 item.ancientspellcraft\:ring_withdraw_life.desc=Overhealing from Withdraw Life grants a temporary shield
 item.ancientspellcraft\:ring_withdraw_life.name=Ring of the Overlord
 item.ancientspellcraft\:ritual_book.name=Ritual Book
+item.ancientspellcraft\:ritual_book.desc=Can be identified with a Scroll of Identification
 item.ancientspellcraft\:rune_algiz.name=Algiz Rune
 item.ancientspellcraft\:rune_ansuz.name=Ansuz Rune
 item.ancientspellcraft\:rune_berkanan.name=Berkanan Rune

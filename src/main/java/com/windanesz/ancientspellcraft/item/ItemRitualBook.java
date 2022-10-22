@@ -109,6 +109,7 @@ public class ItemRitualBook extends Item {
 				// A bit annoying to check this again but it's the easiest way
 				if (!player.isCreative() && WizardData.get(player) != null && !discovered) {
 					tooltip.add(LangUtils.toElderFuthark(ritual.getDisplayName()));
+					tooltip.add(AncientSpellcraft.proxy.translate("item.ancientspellcraft:ritual_book.desc"));
 				} else {
 					tooltip.add(ritual.getDisplayName());
 				}
