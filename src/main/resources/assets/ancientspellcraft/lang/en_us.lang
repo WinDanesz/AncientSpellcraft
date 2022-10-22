@@ -1414,3 +1414,5 @@ tooltip.ancientspellcraft\:crystal_silver_nugget.more_info=Used by Battlemages t
 tooltip.ancientspellcraft\:devoritium.more_info=Devoritium is a magic-absorbing material, causing Magical Weakness for anyone interacting with it
 tooltip.ancientspellcraft\:sage_lectern.more_info=This lectern can hold a spell book for easy reading or a Sage Tome to upgrade the tome
 tooltip.ancientspellcraft\:sealed_stone.more_info=Magically Sealed Stone is unbreakable. Only its Unseal Glyph can dispel it
+
+ritual.discover=Discovered the ritual %1$s!

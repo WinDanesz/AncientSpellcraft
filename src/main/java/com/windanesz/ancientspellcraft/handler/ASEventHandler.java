@@ -134,7 +134,8 @@ public class ASEventHandler {
 
 	@SubscribeEvent
 	public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
-		if (event.getItemStack().getItem() == WizardryItems.identification_scroll && event.getEntityLiving() instanceof EntityPlayer) {
+		if (!event.getWorld().isRemote && event.getItemStack().getItem() == WizardryItems.identification_scroll
+				&& event.getEntityLiving() instanceof EntityPlayer) {
 			EnumHand otherHand = event.getHand() == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
 			ItemStack otherItemStack = event.getEntityLiving().getHeldItem(otherHand);
 			if (otherItemStack.getItem() instanceof ItemRitualBook) {
@@ -142,6 +143,9 @@ public class ASEventHandler {
 				Ritual ritual = ItemRitualBook.getRitual(otherItemStack);
 				if (!RitualDiscoveryData.hasRitualBeenDiscovered(player, ritual)) {
 					RitualDiscoveryData.addKnownRitual(player, ritual);
+					if(!player.isCreative()) event.getItemStack().shrink(1);
+					ASUtils.sendMessage(player, "ritual.discover", false, ritual.getNameForTranslationFormatted());
+					event.setCanceled(true);
 				}
 			}
 		}
