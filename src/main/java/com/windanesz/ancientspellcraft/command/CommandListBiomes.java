@@ -10,7 +10,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 
-import java.util.stream.Collectors;
+import java.util.List;
 
 public class CommandListBiomes extends CommandBase {
 
@@ -43,8 +43,12 @@ public class CommandListBiomes extends CommandBase {
 		catch (PlayerNotFoundException exception) {
 		}
 		// assemble biome name list
-		String list = ASUtils.getAllBiomes().keySet().stream().map(Object::toString).collect(Collectors.joining(","));
-		TextComponentTranslation TextComponentTranslation2 = new TextComponentTranslation(list);
+		List<String> listObj = ASUtils.getAllBiomes();
+		StringBuilder list = new StringBuilder();
+		for (String s : listObj) {
+			list.append(s).append(",");
+		}
+		TextComponentTranslation TextComponentTranslation2 = new TextComponentTranslation(list.toString());
 		player.sendMessage(TextComponentTranslation2);
 		return;
 	}

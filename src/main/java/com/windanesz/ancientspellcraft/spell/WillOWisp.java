@@ -154,6 +154,11 @@ public class WillOWisp extends SpellConstruct<EntitySpellTicker> implements ISpe
 
 					String biome = entitySpellTicker.getExtraData().getString("biome");
 					ResourceLocation biomeResourceLocation = ASUtils.getBiomeRegistryNameFromName(biome);
+
+					if (biomeResourceLocation == null) {
+						return;
+					}
+
 					BlockPos biomePos = BiomeLocator.spiralOutwardsLookingForBiome(world, ForgeRegistries.BIOMES.getValue(biomeResourceLocation), entitySpellTicker.posX, entitySpellTicker.posZ); // find biome pos
 
 					if (biomePos != null && biomePos != BlockPos.ORIGIN) {

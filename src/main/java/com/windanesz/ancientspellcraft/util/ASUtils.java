@@ -89,17 +89,8 @@ public final class ASUtils {
 	 *
 	 * @return A Map with all registered biome names with their corresponding biome Ids.
 	 **/
-	public static Map<String, Integer> getAllBiomes() {
-		return ForgeRegistries.BIOMES.getValuesCollection().stream().collect(Collectors.toMap(Biome::getBiomeName, Biome::getIdForBiome));
-	}
-
-	/**
-	 * Get a Map of all biomes with their registry names
-	 *
-	 * @return A Map with all registered biome names with their corresponding biome registry names.
-	 **/
-	public static Map<String, ResourceLocation> getAllBiomesWithRegnames() {
-		return ForgeRegistries.BIOMES.getValuesCollection().stream().collect(Collectors.toMap(Biome::getBiomeName, Biome::getRegistryName));
+	public static List<String> getAllBiomes() {
+		return ForgeRegistries.BIOMES.getValuesCollection().stream().map(Biome::getBiomeName).collect(Collectors.toList());
 	}
 
 	/**
@@ -108,13 +99,14 @@ public final class ASUtils {
 	 * @return A Map with all registered biome names with their corresponding biome Ids.
 	 **/
 	public static boolean isBiomeNameRegistered(String biomeName) {
-		Map<String, Integer> biomes = getAllBiomes();
-		return biomes.containsKey(biomeName);
+		List<String> biomes = getAllBiomes();
+		return biomes.contains(biomeName);
 	}
 
 	public static ResourceLocation getBiomeRegistryNameFromName(String biomeName) {
-		Map<String, ResourceLocation> biomes = getAllBiomesWithRegnames();
-		return biomes.get(biomeName);
+		Optional<Map.Entry<ResourceLocation, Biome>> optional = ForgeRegistries.BIOMES.getEntries().stream()
+				.filter(p -> p.getValue().getBiomeName().equals(biomeName)).findFirst();
+		return optional.map(Map.Entry::getKey).orElse(null);
 	}
 
 	public static ItemStack pickRandomStackFromItemStackList(List<ItemStack> stackList) {
