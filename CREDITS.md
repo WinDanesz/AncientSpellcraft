@@ -8,4 +8,4 @@ Texture
 Contributors
 - Yranic, Bombadil, HatBot for writing/reworking many of the lore texts
 Idea contributors - spells, artefacts and more
-- Idea contributors: Elso, Kug, OBLIQUE, VasiliySiniy (class weapon ideas), CycloneBuster, I Mayk Kwuests, Moreira, Mekhane
+- Idea contributors: Elso, Kug, OBLIQUE, VasiliySiniy (class weapon ideas), CycloneBuster, I Mayk Kwuests, Moreira, Mekhane, Eleklool
