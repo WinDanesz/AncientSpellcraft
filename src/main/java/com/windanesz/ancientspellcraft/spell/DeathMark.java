@@ -26,7 +26,9 @@ public class DeathMark extends SpellRayAS {
 		if (caster instanceof EntityLivingBase && target instanceof EntityLivingBase) {
 			EntityLivingBase entity = (EntityLivingBase) target;
 			DeathMarkCapability cap = DeathMarkCapability.get(entity);
-			cap.setCasterId(caster.getUniqueID());
+			if (cap != null) {
+				cap.setCasterId(caster.getUniqueID());
+			}
 		}
 
 		return true;
