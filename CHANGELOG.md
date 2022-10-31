@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.5.5] - 2022-10-31
+### :bug: Bug Fixes
+- [`7ab1e3c`](https://github.com/WinDanesz/AncientSpellcraft/commit/7ab1e3cf4a3287f89251f22e9f0527c0152546a6) - Fix crash with Death Mark spell *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+
 ## [v1.5.4] - 2022-10-22
 ### :sparkles: New Features
 - [`fc5b88d`](https://github.com/WinDanesz/AncientSpellcraft/commit/fc5b88df1f014234e48a6f086c68f6c7f9d83417) - Slightly increased the chance of getting Runic Plates *(commit by [@WinDanesz](https://github.com/WinDanesz))*
@@ -124,3 +129,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v1.5.1]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.0...v1.5.1
 [v1.5.2]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.1...v1.5.2
 [v1.5.4]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.3.0...v1.5.4
+[v1.5.5]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.4...v1.5.5
