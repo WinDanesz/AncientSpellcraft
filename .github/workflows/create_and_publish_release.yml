@@ -1,4 +1,4 @@
-name: 'Create And Publish Release'
+name: Curseforge Release
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
       - name: Get the version
         id: get_version
         run: |
-          echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -c 11-)
+          echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -c 12-)
           echo ::set-output name=VERSION_WITH_PREFIX::$(echo $GITHUB_REF)
 
       - name: Build with Gradle
