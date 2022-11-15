@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 public class DeathMark extends SpellRayAS {
 
 	public DeathMark() {
-		super("death_mark", SpellActions.POINT, true);
+		super("death_mark", SpellActions.POINT, false);
 		soundValues(0.7f, 1f, 1f);
 	}
 
