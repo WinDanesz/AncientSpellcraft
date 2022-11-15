@@ -88,6 +88,7 @@ jobs:
           changelog: "${{steps.changelog-generator.outputs.changelog}}"
           changelog_type: html
           # display_name: use the filename
+          relations: "${{ steps.build.outputs.curse_relations }}"
           file_path: "./build/libs/${{ steps.get_jar_name.outputs.jar_name }}"
           game_endpoint: minecraft
           game_versions: "${{ steps.build.outputs.curse_versions }}"
