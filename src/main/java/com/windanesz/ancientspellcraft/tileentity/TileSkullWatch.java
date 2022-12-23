@@ -41,6 +41,13 @@ public class TileSkullWatch extends TileEntityPlayerSave implements ITickable {
 	public float skullRotationPrev;
 	public float tRot;
 
+	public boolean isTriggered() {
+		return triggered;
+	}
+
+	private boolean triggered = false;
+	private boolean recentlyTriggered = false;
+
 	public TileSkullWatch() {
 	}
 
@@ -62,6 +69,12 @@ public class TileSkullWatch extends TileEntityPlayerSave implements ITickable {
 
 	@SuppressWarnings("Duplicates")
 	public void update() {
+
+		if (recentlyTriggered) {
+			world.notifyNeighborsOfStateChange(pos, ASBlocks.SKULL_WATCH, true);
+			recentlyTriggered = false;
+		}
+
 		EntityLivingBase target = null;
 
 		this.bookSpreadPrev = this.bookSpread;
@@ -116,9 +129,17 @@ public class TileSkullWatch extends TileEntityPlayerSave implements ITickable {
 					}
 				}
 			}
+			if (!triggered) {
+				recentlyTriggered = true;
+			}
+			triggered = true;
 		} else {
 			this.tRot += 0.02F;
 			this.bookSpread -= 0.1F;
+			if (triggered) {
+				recentlyTriggered = true;
+			}
+			triggered = false;
 		}
 
 		while (this.skullRotation >= (float) Math.PI) {

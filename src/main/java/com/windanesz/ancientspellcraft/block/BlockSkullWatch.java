@@ -62,8 +62,20 @@ public class BlockSkullWatch extends BlockContainer {
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState block, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-		world.playSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), ASSounds.SKULL_WATCH_SCREAM, SoundCategory.BLOCKS, 0.5F, 1F, false);
+		world.playSound(pos.getX(), pos.getY(), pos.getZ(), ASSounds.SKULL_WATCH_SCREAM, SoundCategory.BLOCKS, 0.5F, 1F, false);
+		return true;
+	}
 
+	public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+		return blockAccess.getTileEntity(pos) instanceof TileSkullWatch && ((TileSkullWatch) blockAccess.getTileEntity(pos)).isTriggered() ? 15 : 0;
+	}
+
+	public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+		return blockAccess.getTileEntity(pos) instanceof TileSkullWatch && ((TileSkullWatch) blockAccess.getTileEntity(pos)).isTriggered() ? 15 : 0;
+	}
+
+	public boolean canProvidePower(IBlockState state)
+	{
 		return true;
 	}
 }
