@@ -96,7 +96,7 @@ public class DeathMarkCapability implements INBTSerializable<NBTTagCompound> {
 			UUID casterUUID = get(event.getEntityLiving()).casterUUID;
 			if (event.getEntity().world.getPlayerEntityByUUID(casterUUID) != null) {
 				ASUtils.sendMessage(event.getEntity().world.getPlayerEntityByUUID(casterUUID), "spell.ancientspellcraft:death_mark.entity_death_message",
-						 false, event.getEntity().getDisplayName());
+						 false, event.getEntity().getDisplayName(), event.getEntity().getPosition().getX(), event.getEntity().getPosition().getY(), event.getEntity().getPosition().getZ());
 			}
 		}
 

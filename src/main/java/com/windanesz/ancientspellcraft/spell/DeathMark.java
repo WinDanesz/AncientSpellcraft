@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.capability.DeathMarkCapability;
+import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -28,6 +29,7 @@ public class DeathMark extends SpellRayAS {
 			DeathMarkCapability cap = DeathMarkCapability.get(entity);
 			if (cap != null) {
 				cap.setCasterId(caster.getUniqueID());
+				ASUtils.sendMessage(caster, "spell.ancientspellcraft:death_mark.entity_death_message", false, target.getDisplayName());
 			}
 		}
 
@@ -47,6 +49,8 @@ public class DeathMark extends SpellRayAS {
 
 	@Override
 	protected void spawnParticle(World world, double x, double y, double z, double vx, double vy, double vz) {
-		ParticleBuilder.create(ParticleBuilder.Type.LEAF).pos(x, y, z).vel(vx, vy, vz).collide(true).spawn(world);
+		ParticleBuilder.create(ParticleBuilder.Type.DARK_MAGIC).pos(x, y, z).clr(0.2f, 0, 0.3f).spawn(world);
+		ParticleBuilder.create(ParticleBuilder.Type.DARK_MAGIC).pos(x, y, z).clr(0.1f, 0, 0).spawn(world);
+		ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x, y, z).time(12 + world.rand.nextInt(8)).clr(0.4f, 0, 0).spawn(world);
 	}
 }

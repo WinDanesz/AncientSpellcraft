@@ -1399,7 +1399,8 @@ spell.ancientspellcraft\:arcane_wall=Arcane Wall
 spell.ancientspellcraft\:arcane_wall.desc=Creates a permanent magical barrier which is only passable by allies. Sneak-cast again to dispel.
 spell.ancientspellcraft\:death_mark=Death Mark
 spell.ancientspellcraft\:death_mark.desc=Places a magical glyph on the targeted entity, allowing you to sense if the entity dies.
-spell.ancientspellcraft\:death_mark.entity_death_message=Death-marked %1$s died
+spell.ancientspellcraft\:death_mark.entity_death_message=Death-marked %1$s died at %2$s %3$s %4$s
+spell.ancientspellcraft\:death_mark.entity_marked=Death-marked %1$s
 
 spell.ancientspellcraft\:tome_warp=Tome Warp
 spell.ancientspellcraft\:tome_warp.desc=Swaps place with your Awakened Tome by sneak-using the Tome Controller.
