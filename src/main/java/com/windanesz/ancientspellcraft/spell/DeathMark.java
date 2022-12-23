@@ -29,7 +29,7 @@ public class DeathMark extends SpellRayAS {
 			DeathMarkCapability cap = DeathMarkCapability.get(entity);
 			if (cap != null) {
 				cap.setCasterId(caster.getUniqueID());
-				ASUtils.sendMessage(caster, "spell.ancientspellcraft:death_mark.entity_death_message", false, target.getDisplayName());
+				ASUtils.sendMessage(caster, "spell.ancientspellcraft:death_mark.entity_marked", false, target.getDisplayName());
 			}
 		}
 
