@@ -49,6 +49,7 @@ public class ItemRunicPlate extends ItemArmourClassSpellHolder {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemstack, World world, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced){
 		super.addInformation(itemstack,world,tooltip, advanced);
+		AncientSpellcraft.proxy.addMultiLineDescription(tooltip, I18n.format("tooltip.ancientspellcraft:right_click_to_read"));
 
 		if (GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak)) {
 			AncientSpellcraft.proxy.addMultiLineDescription(tooltip, I18n.format("tooltip.ancientspellcraft:runic_plate.more_info"));

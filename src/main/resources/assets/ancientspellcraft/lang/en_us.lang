@@ -1405,6 +1405,7 @@ spell.ancientspellcraft\:tome_warp=Tome Warp
 spell.ancientspellcraft\:tome_warp.desc=Swaps place with your Awakened Tome by sneak-using the Tome Controller.
 
 tooltip.ancientspellcraft\:more_info=[Press sneak for more info]
+tooltip.ancientspellcraft\:right_click_to_read=[Right click to read]
 tooltip.ancientspellcraft\:mystic_spell_book.more_info=Mystic Spell books can only be bound to Sage Tomes and used by Sages. They can be created from Empty Mystic Spell books using the Scribe spell
 tooltip.ancientspellcraft\:runic_plate.more_info=Runic Plates can hold Runeword spells and can only be bound to Spell Blades, used by Battlemages. The art of creating them was lost and they can only be plundered
 tooltip.ancientspellcraft\:sage_tome.more_info=Sage Tomes can hold Mystic Spells, used by Sages, one must wear a matching set of Sage robe to cast spells. A tome can be upgraded at a Mystic Lectern with Enchanted Pages, if it has enough progression experience
