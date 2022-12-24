@@ -263,6 +263,16 @@
                     "type": "item",
                     "name": "ancientspellcraft:ring_griefing",
                     "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_domus",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_plunderers_mark",
+                    "weight": 1
                 }
             ]
         }

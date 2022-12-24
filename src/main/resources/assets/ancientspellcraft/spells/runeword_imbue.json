@@ -1,0 +1,23 @@
+{
+    "enabled": {
+        "book": false,
+        "scroll": false,
+        "wands": false,
+        "npcs": true,
+        "dispensers": false,
+        "commands": true,
+        "treasure": false,
+        "trades": false,
+        "looting": true
+    },
+    "tier": "novice",
+    "element": "magic",
+    "type": "attack",
+    "cost": 40,
+    "chargeup": 20,
+    "cooldown": 80,
+    "base_properties": {
+        "effect_duration": 300,
+        "max_uses ": 10
+    }
+}

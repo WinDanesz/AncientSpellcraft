@@ -36,6 +36,7 @@ import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.entity.construct.EntityBubble;
+import electroblob.wizardry.entity.living.EntityEvilWizard;
 import electroblob.wizardry.entity.living.EntitySkeletonMinion;
 import electroblob.wizardry.entity.living.ISummonedCreature;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
@@ -69,6 +70,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
@@ -755,6 +757,12 @@ public class ASEventHandler {
 				}
 			}
 
+			if (!event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityEvilWizard
+					&& ItemArtefact.isArtefactActive(player, ASItems.charm_plunderers_mark)) {
+				double d0 = event.getEntityLiving().posY - 0.30000001192092896D + (double) event.getEntityLiving().getEyeHeight();
+				EntityItem entityitem = new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, d0, event.getEntityLiving().posZ,new ItemStack(ASItems.astral_diamond_shard));
+				event.getEntityLiving().world.spawnEntity(entityitem);
+			}
 		}
 	}
 

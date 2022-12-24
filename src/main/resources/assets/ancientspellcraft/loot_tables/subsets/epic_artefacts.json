@@ -238,6 +238,16 @@
                     "type": "item",
                     "name": "ancientspellcraft:charm_suppression_orb",
                     "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_searing_skin",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_elemental_aura",
+                    "weight": 1
                 }
             ]
         }

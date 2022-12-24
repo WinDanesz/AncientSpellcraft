@@ -18,6 +18,7 @@ import electroblob.wizardry.spell.SpellProjectile;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
@@ -196,6 +197,9 @@ public final class ASSpells {
 	public static final Spell runeword_fury = placeholder();
 	public static final Spell runeword_sacrifice = placeholder();
 	public static final Spell runeword_suppress = placeholder();
+
+	public static final Spell runeword_strength = placeholder();
+	public static final Spell runeword_ignite = placeholder();
 
 	public static final Spell conjure_ink = placeholder();
 	public static final Spell vanish = placeholder();
@@ -466,6 +470,8 @@ public final class ASSpells {
 		registry.register(new RunewordReach("runeword_push", SpellActions.POINT_UP, false).setEffect(RunewordReach.Effect.PUSH));
 		registry.register(new RunewordFury());
 		registry.register(new RunewordSuppress());
+		registry.register(new RunewordSelfBuff("runeword_strength", 240, 0, 0, () -> MobEffects.STRENGTH));
+		registry.register(new RunewordIgnite());
 		registry.register(new TurnUndead());
 		registry.register(new RevealUndead());
 		registry.register(new Singe());

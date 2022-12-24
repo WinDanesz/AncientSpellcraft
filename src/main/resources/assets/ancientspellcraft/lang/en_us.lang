@@ -1192,6 +1192,8 @@ spell.ancientspellcraft\:runeword_suppress.desc=The next 3 hits of the Spell Bla
 spell.ancientspellcraft\:runeword_suppress=Runeword: Suppress
 spell.ancientspellcraft\:runeword_strength.desc=Temporarily empowers you with Strength.
 spell.ancientspellcraft\:runeword_strength=Runeword: Strength
+spell.ancientspellcraft\:runeword_ignite.desc=The next hit with the Spell Blade sets the target on fire for a long duration.
+spell.ancientspellcraft\:runeword_ignite=Runeword: Ignite
 
 
 # spell type
@@ -1421,3 +1423,13 @@ tooltip.ancientspellcraft\:sage_lectern.more_info=This lectern can hold a spell 
 tooltip.ancientspellcraft\:sealed_stone.more_info=Magically Sealed Stone is unbreakable. Only its Unseal Glyph can dispel it
 
 ritual.discover=Discovered the ritual %1$s!
+item.ancientspellcraft\:charm_sentinel_eye.name=Sentinel Eye
+item.ancientspellcraft\:charm_sentinel_eye.desc=Your Skull Sentinels mark detected creatures with the Glowing effect for 2 minutes
+item.ancientspellcraft\:amulet_domus.name=Domus Amulet
+item.ancientspellcraft\:amulet_domus.desc=Your Skull Sentinels summon an armed skeleton when they detect a hostile creature. 2 minutes cooldown
+item.ancientspellcraft\:amulet_searing_skin.name=Amulet of Searing Skin
+item.ancientspellcraft\:amulet_searing_skin.desc=The Fireskin effect also grants regeneration
+item.ancientspellcraft\:amulet_elemental_aura.name=Amulet of Elemental Aura
+item.ancientspellcraft\:amulet_elemental_aura.desc=Ice Shroud, Fireskin and Static Aura has a chance to affect nearby enemies
+item.ancientspellcraft\:charm_plunterers_mark.name=Plunderer's Mark
+item.ancientspellcraft\:charm_plunterers_mark.desc=Evil Wizards are always dropping an astral diamond shard

@@ -9,6 +9,7 @@ import com.windanesz.ancientspellcraft.item.ItemAdvancedStoneFist;
 import com.windanesz.ancientspellcraft.item.ItemAlchemicalEssence;
 import com.windanesz.ancientspellcraft.item.ItemAmberMushroomAmulet;
 import com.windanesz.ancientspellcraft.item.ItemAmnesiaScroll;
+import com.windanesz.ancientspellcraft.item.ItemElementalAuraAmulet;
 import com.windanesz.ancientspellcraft.item.ItemAncientHat;
 import com.windanesz.ancientspellcraft.item.ItemArmourUpgradeMaterial;
 import com.windanesz.ancientspellcraft.item.ItemBarterScroll;
@@ -62,6 +63,7 @@ import com.windanesz.ancientspellcraft.item.ItemRunicPlate;
 import com.windanesz.ancientspellcraft.item.ItemSacredMace;
 import com.windanesz.ancientspellcraft.item.ItemSageSpellBook;
 import com.windanesz.ancientspellcraft.item.ItemSageTome;
+import com.windanesz.ancientspellcraft.item.ItemSearingSkinAmulet;
 import com.windanesz.ancientspellcraft.item.ItemSetArtefact;
 import com.windanesz.ancientspellcraft.item.ItemShadowBlade;
 import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
@@ -173,6 +175,8 @@ public final class ASItems {
 	public static final Item amulet_imbued_marble = placeholder();
 	public static final Item amulet_oakflesh = placeholder();
 	public static final Item amulet_inspiration = placeholder();
+	public static final Item amulet_domus = placeholder();
+	public static final Item amulet_searing_skin = placeholder();
 
 	/// charm
 	public static final Item charm_rift_bottle = placeholder();
@@ -229,7 +233,8 @@ public final class ASItems {
 	public static final Item charm_devoritium_magnet = placeholder();
 	public static final Item charm_wild_catalyst = placeholder();
 	public static final Item charm_metamagic_amplifier = placeholder();
-
+	public static final Item charm_sentinel_eye = placeholder();
+	public static final Item charm_plunderers_mark = placeholder();
 	public static final Item alchemical_essence = placeholder();
 	public static final Item wand_channeling = placeholder();
 
@@ -580,6 +585,9 @@ public final class ASItems {
 		registerItem(registry, "amulet_imbued_marble", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_oakflesh", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_inspiration", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_domus", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_searing_skin",	new ItemSearingSkinAmulet(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_elemental_aura", new ItemElementalAuraAmulet(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 
 		/// charm
 		registerItem(registry, "charm_seed_bag", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
@@ -634,7 +642,9 @@ public final class ASItems {
 		registerItem(registry, "charm_wild_catalyst", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_metamagic_amplifier", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_majestic_mana",	new	ItemManaArtefact(EnumRarity.RARE, ItemArtefact.Type.RING, 2500));
-		registerItem(registry, "charm_guardian_blade",	new ItemGuardianBlade(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_guardian_blade", new ItemGuardianBlade(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_sentinel_eye",	new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_plunterers_mark",	new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 
 		registerItem(registry, "scepter_mind_control", new ItemOverlordScepter());
 		registerItem(registry, "purifying_elixir_recipe", new ItemLostRecipe(EnumRarity.EPIC, ItemArtefact.Type.CHARM));

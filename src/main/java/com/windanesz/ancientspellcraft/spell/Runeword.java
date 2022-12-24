@@ -34,20 +34,9 @@ public class Runeword extends Spell implements IClassSpell {
 	// True, if this runeword needs to be updated each tick
 	private boolean hasTickEffect = false;
 
-	//private final HashSet<Context> applicableContexts = new HashSet<>();
-
-	//	public Runeword(String name, EnumAction action, boolean isContinuous, Context... contexts) {
-	//		super(AncientSpellcraft.MODID, name, action, isContinuous);
-	//		applicableContexts.addAll(Arrays.asList(contexts));
-	//	}
-
 	public Runeword(String name, EnumAction action, boolean isContinuous) {
 		super(AncientSpellcraft.MODID, name, action, isContinuous);
 	}
-
-	//	public HashSet<Context> getContexts() {
-	//		return applicableContexts;
-	//	}
 
 	public Runeword setPassive() {
 		this.passive = true;
