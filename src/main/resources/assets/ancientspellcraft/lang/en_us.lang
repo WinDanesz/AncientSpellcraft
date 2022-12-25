@@ -1433,3 +1433,5 @@ item.ancientspellcraft\:amulet_elemental_aura.name=Amulet of Elemental Aura
 item.ancientspellcraft\:amulet_elemental_aura.desc=Ice Shroud, Fireskin and Static Aura has a chance to affect nearby enemies
 item.ancientspellcraft\:charm_plunderers_mark.name=Plunderer's Mark
 item.ancientspellcraft\:charm_plunderers_mark.desc=Evil Wizards are always dropping an astral diamond shard
+item.ancientspellcraft\:belt_soul_scorch.name=Scorching Belt
+item.ancientspellcraft\:belt_soul_scorch.desc=Attackers receive the Soul Scorch effect or 3 seconds

@@ -273,6 +273,11 @@
                     "type": "item",
                     "name": "ancientspellcraft:charm_plunderers_mark",
                     "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:belt_soul_scorch",
+                    "weight": 1
                 }
             ]
         }

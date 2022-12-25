@@ -495,6 +495,8 @@ public class ASEventHandler {
 						player.addPotionEffect(new PotionEffect(ASPotions.wizard_shield, 100, 15));
 						player.getCooldownTracker().setCooldown(ASItems.amulet_shield, 3600); // 3 mins cd
 					}
+				} else if (artefact == ASItems.belt_soul_scorch && event.getSource().getImmediateSource() instanceof EntityLivingBase) {
+					((EntityLivingBase) event.getSource().getImmediateSource()).addPotionEffect(new PotionEffect(ASPotions.soul_scorch, 60));
 				}
 			}
 

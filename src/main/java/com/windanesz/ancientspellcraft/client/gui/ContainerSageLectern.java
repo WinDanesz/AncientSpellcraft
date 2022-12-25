@@ -60,11 +60,10 @@ public class ContainerSageLectern extends Container {
 		));
 
 		// INPUT_SLOT_1
-		this.addSlotToContainer(new SlotItemList(te, 1, 75, 24, 1, ASItems.battlemage_sword_blade, ASItems.crystal_silver_ingot));
+		this.addSlotToContainer(new SlotItemList(te, 1, 75, 24, 1, ASItems.enchanted_page));
 
 		/// RESULT_SLOT
-		this.addSlotToContainer(new SlotItemList(te, 2, 133, 24, 1,
-										ASItems.enchanted_page) {
+		this.addSlotToContainer(new SlotItemList(te, 2, 133, 24, 1) {
 									@Override
 									public ItemStack onTake(EntityPlayer player, ItemStack stack) {
 										if (!player.world.isRemote) 			{

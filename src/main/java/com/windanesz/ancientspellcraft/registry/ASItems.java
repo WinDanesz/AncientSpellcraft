@@ -249,6 +249,7 @@ public final class ASItems {
 	public static final Item belt_horse = placeholder();
 	public static final Item belt_scroll_holder = placeholder();
 	public static final Item belt_spring_charge = placeholder();
+	public static final Item belt_soul_scorch = placeholder();
 
 	/// and head slot artefacts!
 	public static final Item head_curse = placeholder();
@@ -656,6 +657,7 @@ public final class ASItems {
 		registerItem(registry, "belt_horse", new ItemNewArtefact(EnumRarity.UNCOMMON, ItemNewArtefact.AdditionalType.BELT));
 		registerItem(registry, "belt_scroll_holder", new ItemBeltScrollHolder(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
 		registerItem(registry, "belt_spring_charge", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
+		registerItem(registry, "belt_soul_scorch", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
 
 		registerItem(registry, "head_curse", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.HEAD));
 		registerItem(registry, "head_merchant", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.HEAD));
