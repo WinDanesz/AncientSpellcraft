@@ -46,6 +46,7 @@ public class Extension extends SpellRay implements IClassSpell {
 				PotionEffect newEffect = new PotionEffect(oldEffect.getPotion(), oldEffect.getAmplifier(), newDuration);
 				target.removePotionEffect(oldEffect.getPotion());
 				target.addPotionEffect(newEffect);
+				return true;
 			}
 
 		}
