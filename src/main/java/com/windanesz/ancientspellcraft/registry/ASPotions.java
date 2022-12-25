@@ -11,7 +11,6 @@ import com.windanesz.ancientspellcraft.potion.PotionCurseEnder;
 import com.windanesz.ancientspellcraft.potion.PotionCurseGills;
 import com.windanesz.ancientspellcraft.potion.PotionCurseUmbra;
 import com.windanesz.ancientspellcraft.potion.PotionCurseWard;
-import com.windanesz.ancientspellcraft.potion.PotionDimensionalAnchor;
 import com.windanesz.ancientspellcraft.potion.PotionEagleEye;
 import com.windanesz.ancientspellcraft.potion.PotionFeatherFall;
 import com.windanesz.ancientspellcraft.potion.PotionGrowth;
@@ -189,7 +188,7 @@ public class ASPotions {
 		registerPotion(registry, "mana_regeneration", new PotionManaRegeneration());
 		registerPotion(registry, "wizard_shield", new PotionWizardShield("wizard_shield", false, 0xc558d6,
 				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_wizard_shield.png")).setBeneficial());
-		registerPotion(registry, "dimensional_anchor", new PotionDimensionalAnchor("dimensional_anchor", false, 0xc558d6,
+		registerPotion(registry, "dimensional_anchor", new PotionMagicEffectAS("dimensional_anchor", true, 0xc558d6,
 				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_dimensional_anchor.png")));
 		registerPotion(registry, "soul_scorch", new PotionSoulScorch("soul_scorch", false, 0xba3500,
 				new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_soul_scorch.png")));

@@ -1,7 +1,6 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.potion.PotionDimensionalAnchor;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.data.IStoredVariable;
@@ -25,6 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -35,10 +35,6 @@ import java.util.List;
 
 @Mod.EventBusSubscriber
 public class DimensionalAnchor extends SpellRay {
-
-	private static final String LOCATION_TAG = "location_data";
-
-	public static final IStoredVariable<NBTTagCompound> DIMENSION_ANCHOR_DATA = IStoredVariable.StoredVariable.ofNBT("dimension_anchor_data", Persistence.DIMENSION_CHANGE);
 
 	public static List<String> teleportationSpellList = Arrays.asList(
 			"ebwizardry:phase_step",
@@ -53,7 +49,6 @@ public class DimensionalAnchor extends SpellRay {
 		super(AncientSpellcraft.MODID, "dimensional_anchor", SpellActions.POINT, false);
 		this.soundValues(1, 1.1f, 0.2f);
 		this.addProperties(EFFECT_DURATION);
-		WizardData.registerStoredVariables(DIMENSION_ANCHOR_DATA);
 	}
 
 	@Override
@@ -65,7 +60,7 @@ public class DimensionalAnchor extends SpellRay {
 	}
 
 	@Override
-	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) { return true; }
+	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {return true;}
 
 	@Override
 	protected boolean onMiss(World world, EntityLivingBase caster, Vec3d origin, Vec3d direction, int ticksInUse, SpellModifiers modifiers) {
@@ -78,7 +73,6 @@ public class DimensionalAnchor extends SpellRay {
 		ParticleBuilder.create(ParticleBuilder.Type.DARK_MAGIC).pos(x, y, z).clr(0x084d02).spawn(world);
 		ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x, y, z).time(12 + world.rand.nextInt(8)).clr(0x0b4b40).spawn(world);
 	}
-
 
 	// called by Event Subscription
 	public static boolean shouldPreventSpell(EntityLivingBase entity, World world, Spell spell) {
@@ -95,43 +89,6 @@ public class DimensionalAnchor extends SpellRay {
 		return preventCast;
 	}
 
-	/**
-	 * Called by {@link PotionDimensionalAnchor#performEffect(net.minecraft.entity.EntityLivingBase, int) when the potion is active to keep this data updated
-	 */
-	public static void storePlayerLocationData(EntityPlayer player) {
-		WizardData data = WizardData.get(player);
-		if (data != null) {
-
-			NBTTagCompound compound = new NBTTagCompound();
-			compound.setTag(LOCATION_TAG, (new Location(player.getPosition(), player.dimension)).toNBT());
-
-			data.setVariable(DIMENSION_ANCHOR_DATA, compound);
-			data.sync();
-		}
-	}
-
-	public static void purgeLocationData(EntityPlayer player) {
-		WizardData data = WizardData.get(player);
-		if (data != null) {
-			data.setVariable(DIMENSION_ANCHOR_DATA, null);
-			data.sync();
-		}
-	}
-
-	@Nullable
-	public static Location getPlayerLocationData(EntityPlayer player) {
-		WizardData data = WizardData.get(player);
-		if (data != null) {
-			NBTTagCompound compound = data.getVariable(DIMENSION_ANCHOR_DATA);
-			if (compound != null) {
-				if (compound.hasKey(LOCATION_TAG)) {
-					return Location.fromNBT((NBTTagCompound) compound.getTag(LOCATION_TAG));
-				}
-			}
-		}
-		return null;
-	}
-
 	@SubscribeEvent
 	public static void onEnderTeleportEvent(EnderTeleportEvent event) {
 		if (event.getEntityLiving().isPotionActive(ASPotions.dimensional_anchor)) {
@@ -141,6 +98,16 @@ public class DimensionalAnchor extends SpellRay {
 				}
 				event.setCanceled(true);
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onEntityTravelToDimension(EntityTravelToDimensionEvent event) {
+		if (event.getEntity() instanceof EntityLivingBase && ((EntityLivingBase) event.getEntity()).isPotionActive(ASPotions.dimensional_anchor)) {
+			if (event.getEntity() instanceof EntityPlayer && !event.getEntity().world.isRemote) {
+				((EntityPlayer) event.getEntity()).sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:dimensional_anchor.prevent_ender_pearl"), false);
+			}
+			event.setCanceled(true);
 		}
 	}
 
