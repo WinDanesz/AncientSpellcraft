@@ -116,7 +116,7 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 
 	@Override
 	public boolean hasEffect(ItemStack stack) {
-		return WizardClassWeaponHelper.isChargeFull(stack);
+		return false;
 	}
 
 	@Override
@@ -149,6 +149,21 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 		// Ignore durability changes
 		if (ItemStack.areItemsEqualIgnoreDurability(oldStack, newStack)) { return true; }
 		return super.canContinueUsing(oldStack, newStack);
+	}
+
+	@Override
+	public int getItemEnchantability() {
+		return 0;
+	}
+
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return false;
+	}
+
+	@Override
+	public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+		return false;
 	}
 
 	@Override
