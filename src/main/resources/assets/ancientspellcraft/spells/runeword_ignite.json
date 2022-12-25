@@ -18,6 +18,6 @@
     "cooldown": 200,
     "base_properties": {
         "charges": 1,
-        "burn_duration": 300
+        "burn_duration": 13
     }
 }

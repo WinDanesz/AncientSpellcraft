@@ -20,6 +20,8 @@ public class RunewordIgnite extends Runeword {
 	@Override
 	public boolean onAboutToHitEntity(World world, EntityLivingBase caster, EntityLivingBase target, EnumHand hand, ItemStack sword, SpellModifiers modifiers, boolean charged) {
 		target.setFire((int) (getProperty(BURN_DURATION).intValue() * modifiers.get(WizardryItems.duration_upgrade)));
+
+		spendCharge(sword);
 		return true;
 	}
 }

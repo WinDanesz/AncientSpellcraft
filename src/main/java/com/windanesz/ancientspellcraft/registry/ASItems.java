@@ -644,7 +644,7 @@ public final class ASItems {
 		registerItem(registry, "charm_majestic_mana",	new	ItemManaArtefact(EnumRarity.RARE, ItemArtefact.Type.RING, 2500));
 		registerItem(registry, "charm_guardian_blade", new ItemGuardianBlade(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_sentinel_eye",	new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
-		registerItem(registry, "charm_plunterers_mark",	new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_plunderers_mark",	new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 
 		registerItem(registry, "scepter_mind_control", new ItemOverlordScepter());
 		registerItem(registry, "purifying_elixir_recipe", new ItemLostRecipe(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
