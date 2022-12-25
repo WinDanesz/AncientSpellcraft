@@ -1,6 +1,0 @@
-﻿{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "ancientspellcraft:items/charm_plunterers_mark"
-    }
-}
