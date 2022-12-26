@@ -128,7 +128,7 @@ public class AncientSpellcraft {
 
 		ASDimensions.init();
 
-		Ritual.registry.forEach(Ritual::init);
+
 		RitualProperties.init();
 
 		ItemWandUpgradeAS.init();
@@ -145,6 +145,7 @@ public class AncientSpellcraft {
 		proxy.initialiseLayers();
 		SpellCategorization.init();
 		proxy.checkTranslationKeys();
+		Ritual.registry.forEach(Ritual::init);
 	}
 
 	@EventHandler

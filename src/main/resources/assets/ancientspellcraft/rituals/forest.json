@@ -1,4 +1,5 @@
 {
+    "enabled": true,
     "lifetime": 1600,
     "size": 3,
     "pattern": [

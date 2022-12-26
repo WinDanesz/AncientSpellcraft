@@ -71,6 +71,10 @@ public abstract class Ritual extends IForgeRegistryEntry.Impl<Ritual> {
 	 */
 	private RitualProperties properties;
 
+	public boolean isEnabled() {
+		return enabled;
+	}
+
 	/**
 	 * False if the ritual has been disabled in the AS config file, true otherwise.
 	 */
@@ -126,6 +130,8 @@ public abstract class Ritual extends IForgeRegistryEntry.Impl<Ritual> {
 	 * Called continuously after the initial effect
 	 */
 	public void effect(World world, EntityPlayer caster, TileRune centerPiece) {
+		if (!enabled) return;
+
 		if (!world.isRemote) {
 			if (isFirstTick(centerPiece)) {
 				initialEffect(world, caster, centerPiece);
@@ -172,7 +178,10 @@ public abstract class Ritual extends IForgeRegistryEntry.Impl<Ritual> {
 	 * Called from {@code init()} in the main mod class. Used to initialise ritual fields and properties that depend on
 	 * other things being registered (e.g. potions). <i>Always initialise things in the constructor wherever possible.</i>
 	 */
-	public void init() {}
+	public void init() {
+		if (this == Rituals.none) return;
+		this.enabled = globalProperties.enabled;
+	}
 
 	/**
 	 * Returns true if this ritual's properties have been initialised, false if not. Check this if you're attempting

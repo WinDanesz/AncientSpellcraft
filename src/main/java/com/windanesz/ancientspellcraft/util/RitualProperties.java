@@ -69,6 +69,8 @@ public final class RitualProperties {
 	public int width = 0;
 	public int height = 0;
 
+	public boolean enabled = true;
+
 	public NonNullList<Ingredient> pattern;
 
 	public Ingredient centerPiece;
@@ -85,7 +87,7 @@ public final class RitualProperties {
 
 		lifetime = JsonUtils.getInt(json, "lifetime");
 		size = JsonUtils.getInt(json, "size");
-
+		enabled = JsonUtils.getBoolean(json, "enabled");
 		Map<Character, Ingredient> ingMap = Maps.newHashMap();
 		for (Map.Entry<String, JsonElement> entry : JsonUtils.getJsonObject(json, "key").entrySet()) {
 			if (entry.getKey().length() != 1)

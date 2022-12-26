@@ -107,7 +107,9 @@ public class ItemRitualBook extends Item {
 
 				// If the ritual should *appear* discovered but isn't *actually* discovered, show a 'new spell' message
 				// A bit annoying to check this again but it's the easiest way
-				if (!player.isCreative() && WizardData.get(player) != null && !discovered) {
+				if (!ritual.isEnabled()) {
+					tooltip.add(AncientSpellcraft.proxy.translate("item.ancientspellcraft:ritual_book.desc_disabled"));
+				} else if (!player.isCreative() && WizardData.get(player) != null && !discovered) {
 					tooltip.add(LangUtils.toElderFuthark(ritual.getDisplayName()));
 					tooltip.add(AncientSpellcraft.proxy.translate("item.ancientspellcraft:ritual_book.desc"));
 				} else {
