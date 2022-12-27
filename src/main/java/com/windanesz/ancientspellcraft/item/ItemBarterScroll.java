@@ -1,7 +1,9 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.entity.construct.EntityBarterConstruct;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASSounds;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardrySounds;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -36,6 +38,9 @@ public class ItemBarterScroll extends ItemRareScroll {
 			EntityBarterConstruct entityBarter = new EntityBarterConstruct(world);
 			entityBarter.setPosition(player.posX + 0.1f, player.posY, player.posZ + 0.1f);
 			entityBarter.setCaster(player);
+			if (ItemArtefact.isArtefactActive(player, ASItems.charm_wizard_ale)) {
+				entityBarter.wizardAleArtefact = true;
+			}
 			world.spawnEntity(entityBarter);
 
 			player.sendMessage(new TextComponentTranslation("item.ancientspellcraft:bartering_scroll.beacon_started"));

@@ -278,6 +278,21 @@
                     "type": "item",
                     "name": "ancientspellcraft:belt_soul_scorch",
                     "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:large_mana_flask_recipe",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:amulet_cursed_mirror",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:charm_wizard_ale",
+                    "weight": 1
                 }
             ]
         }

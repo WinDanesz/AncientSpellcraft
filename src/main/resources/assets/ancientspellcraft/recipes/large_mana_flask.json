@@ -1,0 +1,27 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " B ",
+        "CFC",
+        "CRC"
+    ],
+    "key": {
+        "B": {
+            "item": "ebwizardry:crystal_block",
+            "data": 0
+        },
+        "C": {
+            "item": "ebwizardry:magic_crystal",
+            "data": 0
+        },
+        "F": {
+            "item": "ebwizardry:medium_mana_flask"
+        },
+        "R": {
+            "item": "ancientspellcraft:large_mana_flask_recipe"
+        }
+    },
+    "result": {
+        "item": "ebwizardry:large_mana_flask"
+    }
+}

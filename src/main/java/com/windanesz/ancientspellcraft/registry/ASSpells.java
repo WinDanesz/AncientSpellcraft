@@ -200,6 +200,13 @@ public final class ASSpells {
 
 	public static final Spell runeword_strength = placeholder();
 	public static final Spell runeword_ignite = placeholder();
+	public static final Spell runeword_imbue = placeholder();
+	public static final Spell runeword_empower = placeholder();
+	public static final Spell runeword_exorcise = placeholder();
+	public static final Spell runeword_implode = placeholder();
+	public static final Spell runeword_restoration = placeholder();
+	public static final Spell runeword_arcane = placeholder();
+	public static final Spell runeword_disarm = placeholder();
 
 	public static final Spell conjure_ink = placeholder();
 	public static final Spell vanish = placeholder();
@@ -472,6 +479,13 @@ public final class ASSpells {
 		registry.register(new RunewordSuppress());
 		registry.register(new RunewordSelfBuff("runeword_strength", 240, 0, 0, () -> MobEffects.STRENGTH));
 		registry.register(new RunewordIgnite());
+		registry.register(new RunewordImbue());
+		registry.register(new RunewordEmpower());
+		registry.register(new RunewordExorcise());
+		registry.register(new RunewordImplode());
+		registry.register(new RunewordRestoration());
+		registry.register(new RunewordArcane());
+		registry.register(new RunewordDisarm());
 		registry.register(new TurnUndead());
 		registry.register(new RevealUndead());
 		registry.register(new Singe());

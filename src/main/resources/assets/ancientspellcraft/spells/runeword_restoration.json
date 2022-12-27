@@ -10,14 +10,13 @@
         "trades": false,
         "looting": true
     },
-    "tier": "novice",
+    "tier": "apprentice",
     "element": "magic",
-    "type": "attack",
+    "type": "utility",
     "cost": 40,
-    "chargeup": 0,
-    "cooldown": 80,
+    "chargeup": 20,
+    "cooldown": 100,
     "base_properties": {
-        "strength_duration": 400,
-        "strength_strength": 0
+        "missing_percent_hp_restored": 0.1
     }
 }

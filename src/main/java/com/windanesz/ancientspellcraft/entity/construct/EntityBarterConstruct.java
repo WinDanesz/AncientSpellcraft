@@ -9,6 +9,7 @@ import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -16,6 +17,9 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class EntityBarterConstruct extends EntityMagicConstruct {
+
+	public static final String WIZARD_ALE_ARTEFACT_TAG = "WizardAleArtefact";
+	public boolean wizardAleArtefact = false;
 
 	public EntityBarterConstruct(World world) {
 		super(world);
@@ -68,6 +72,10 @@ public class EntityBarterConstruct extends EntityMagicConstruct {
 		EntityWizardMerchant merchant = new EntityWizardMerchant(world);
 		merchant.setPosition(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
 		merchant.onInitialSpawn(world.getDifficultyForLocation(BlockPos.ORIGIN), null);
+		if (wizardAleArtefact) {
+			// full mc week
+			merchant.setLifetime(24000 * 7);
+		}
 		boolean res = world.spawnEntity(merchant);
 		if (getCaster() != null && getCaster().getDistance(merchant) < 120) {
 			merchant.getNavigator().clearPath();
@@ -94,6 +102,19 @@ public class EntityBarterConstruct extends EntityMagicConstruct {
 		ParticleBuilder.create(ParticleBuilder.Type.FLASH).clr(255, 255, 247).pos(posX, posY + 0.01f, posZ).scale(0.9f).spawn(world);
 
 		ParticleBuilder.create(ASParticles.CONSTANT_BEAM).clr(252, 252, 159).pos(posX, posY, posZ).scale(1.5f).shaded(true).time(1).target(target).spawn(world);
+	}
 
+	@Override
+	protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
+		super.readEntityFromNBT(nbttagcompound);
+		if (nbttagcompound.hasKey(WIZARD_ALE_ARTEFACT_TAG)) {
+			wizardAleArtefact = nbttagcompound.getBoolean(WIZARD_ALE_ARTEFACT_TAG);
+		}
+	}
+
+	@Override
+	protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
+		nbttagcompound.setBoolean(WIZARD_ALE_ARTEFACT_TAG, wizardAleArtefact);
+		super.writeEntityToNBT(nbttagcompound);
 	}
 }

@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
@@ -25,11 +26,15 @@ public class Runeword extends Spell implements IClassSpell {
 	public static final String POTENCY_ATTRIBUTE_MODIFIER = "potency";
 	public static final String EFFECT_TRIGGER_CHANCE = "effect_trigger_chance";
 	public static final String CHARGES = "charges";
+	public static final String DAMAGE_MULTIPLIER = "damage_multiplier";
 
 	private boolean passive = false;
 
 	// This is true for any runeword that has an effect on attribute modifiers. Added to save some performance with a quicker bool check
 	private boolean affectsAttributes = false;
+
+	// This is true for any runeword that has an effect on damage dealt directly. Added to save some performance with a quicker bool check
+	private boolean affectsDamage = false;
 
 	// True, if this runeword needs to be updated each tick
 	private boolean hasTickEffect = false;
@@ -48,6 +53,11 @@ public class Runeword extends Spell implements IClassSpell {
 		return this;
 	}
 
+	public Runeword affectsDamage() {
+		this.affectsDamage = true;
+		return this;
+	}
+
 	public Runeword enableTickEffect() {
 		this.hasTickEffect = true;
 		return this;
@@ -58,6 +68,8 @@ public class Runeword extends Spell implements IClassSpell {
 	}
 
 	public boolean isAffectingAttributes() { return affectsAttributes; }
+
+	public boolean isAffectingDamageDirectly() { return affectsDamage; }
 
 	public boolean isPassive() {
 		return passive;
@@ -108,9 +120,14 @@ public class Runeword extends Spell implements IClassSpell {
 				&& ((ItemBattlemageSword) stack.getItem()).cast(stack, runeword, (EntityPlayer) entity, hand, 0, modifiers);
 	}
 
+	/**
+	 * Called when the target is being hit, but before dealing damage.
+	 */
 	public boolean onAboutToHitEntity(World world, EntityLivingBase caster, EntityLivingBase target, EnumHand hand, ItemStack sword, SpellModifiers modifiers, boolean charged) {
 		return false;
 	}
+
+	public float affectDamage(DamageSource source, float damage, EntityPlayer player, EntityLivingBase target, ItemStack sword) { return damage; }
 
 	public boolean onDamageTaken(World world, EntityLivingBase caster, EntityLivingBase target, EnumHand hand, SpellModifiers modifiers) {
 		return false;
@@ -165,6 +182,10 @@ public class Runeword extends Spell implements IClassSpell {
 
 	@Override
 	public ItemWizardArmour.ArmourClass getArmourClass() { return ItemWizardArmour.ArmourClass.BATTLEMAGE; }
+
+	public static EnumHand getOtherHand(EnumHand hand) {
+		return hand == EnumHand.MAIN_HAND? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
+	}
 }
 
 

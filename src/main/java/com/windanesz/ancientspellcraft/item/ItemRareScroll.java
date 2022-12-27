@@ -34,6 +34,7 @@ public class ItemRareScroll extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, net.minecraft.client.util.ITooltipFlag flag) {
+		AncientSpellcraft.proxy.addMultiLineDescription(tooltip, "item.ancientspellcraft:rare_scroll_tooltip");
 		AncientSpellcraft.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc");
 	}
 }

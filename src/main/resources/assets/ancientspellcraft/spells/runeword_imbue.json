@@ -1,6 +1,6 @@
 {
     "enabled": {
-        "book": false,
+        "book": true,
         "scroll": false,
         "wands": false,
         "npcs": true,
@@ -18,6 +18,6 @@
     "cooldown": 80,
     "base_properties": {
         "effect_duration": 300,
-        "max_uses ": 10
+        "charges": 5
     }
 }

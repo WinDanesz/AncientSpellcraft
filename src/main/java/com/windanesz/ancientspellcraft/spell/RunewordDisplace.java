@@ -42,7 +42,7 @@ public class RunewordDisplace extends Runeword {
 
 				boolean success = ((Banish) Spells.banish).teleport(target, world, radius);
 				if (success) {
-					ItemBattlemageSword.spendCharge(sword, this, 1);
+					spendCharge(sword);
 				}
 			}
 		}

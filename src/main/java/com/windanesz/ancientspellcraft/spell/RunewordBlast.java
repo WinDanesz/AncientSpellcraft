@@ -88,7 +88,7 @@ public class RunewordBlast extends Runeword {
 				}
 			}
 
-			ItemBattlemageSword.spendCharge(sword, this, 1);
+			spendCharge(sword);
 			return true;
 		}
 		return false;

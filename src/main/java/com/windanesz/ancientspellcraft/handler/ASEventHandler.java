@@ -38,6 +38,7 @@ import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.entity.construct.EntityBubble;
 import electroblob.wizardry.entity.living.EntityEvilWizard;
 import electroblob.wizardry.entity.living.EntitySkeletonMinion;
+import electroblob.wizardry.entity.living.ISpellCaster;
 import electroblob.wizardry.entity.living.ISummonedCreature;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.event.SpellBindEvent;
@@ -618,6 +619,16 @@ public class ASEventHandler {
 				} else if (artefact == ASItems.amulet_persistence) {
 					if (event.getPotionEffect().getPotion() == ASPotions.shrinkage || event.getPotionEffect().getPotion() == ASPotions.growth) {
 						event.setResult(Event.Result.DENY);
+					}
+				} else if (artefact == ASItems.amulet_cursed_mirror) {
+					if (event.getPotionEffect().getPotion() instanceof Curse && player.world.rand.nextBoolean()) {
+						for (EntityLivingBase target : EntityUtils.getEntitiesWithinRadius(12, player.posX, player.posY, player.posZ, player.world, EntityLivingBase.class)) {
+							if (target == player || AllyDesignationSystem.isAllied(player, target)) {
+								continue;
+							} else if (target instanceof EntityPlayer || target instanceof ISpellCaster) {
+								target.addPotionEffect(event.getPotionEffect());
+							}
+						}
 					}
 				}
 			}

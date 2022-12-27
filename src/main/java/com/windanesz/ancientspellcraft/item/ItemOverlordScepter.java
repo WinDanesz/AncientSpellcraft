@@ -16,6 +16,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAITasks;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -48,6 +49,12 @@ public class ItemOverlordScepter extends Item {
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
 		World world = attacker.getEntityWorld();
 		Entity lastEntity = getLastControlledEntity(world, stack);
+
+		if (target instanceof EntityCreeper) {
+			((EntityCreeper) target).ignite();
+			return true;
+		}
+
 		if (lastEntity == target) {
 			// do nothing as we already control this entity
 		} else {

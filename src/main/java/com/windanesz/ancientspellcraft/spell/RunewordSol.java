@@ -29,7 +29,7 @@ public class RunewordSol extends Runeword {
 	@Override
 	public boolean onAboutToHitEntity(World world, EntityLivingBase caster, EntityLivingBase target, EnumHand hand, ItemStack sword, SpellModifiers modifiers, boolean charged) {
 		target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, getProperty(EFFECT_DURATION).intValue(), 0));
-		ItemBattlemageSword.spendCharge(sword, this, 1);
+		spendCharge(sword);
 
 		return true;
 	}

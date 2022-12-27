@@ -13,11 +13,12 @@
     "tier": "advanced",
     "element": "magic",
     "type": "alteration",
-    "cost": 10,
+    "cost": 40,
     "chargeup": 0,
     "cooldown": 60,
     "base_properties": {
         "charges": 3,
-        "effect_duration": 200
+        "effect_duration": 200,
+        "damage_multiplier": 1.5
     }
 }

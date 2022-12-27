@@ -72,6 +72,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -826,6 +827,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 				//noinspection ConstantConditions
 				runewords.setInteger(e.getKey().getRegistryName().toString(), e.getValue());
 			}
+			// TODO: I should probably remove the temporary data for these runewords if they have no more charges
 		}
 		//noinspection ConstantConditions
 		compound.setTag(ACTIVE_RUNEWORDS, runewords);
@@ -1313,4 +1315,20 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		}
 	}
 
+	@SubscribeEvent
+	public static void onLivingHurtEvent(LivingHurtEvent event) {
+		// runewords that directly increase damage, server-side only
+		if (event.getSource().getTrueSource() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
+			ItemStack sword = player.getHeldItemMainhand(); // Can't melee with offhand items
+			if (sword.getItem() instanceof ItemBattlemageSword) {
+				HashMap<Runeword, Integer> map = getActiveRunewords(sword);
+				for (Map.Entry<Runeword, Integer> entry: map.entrySet()) {
+					if (entry.getKey().isAffectingDamageDirectly()) {
+						event.setAmount(entry.getKey().affectDamage(event.getSource(), event.getAmount(), player, event.getEntityLiving(), sword));
+					}
+				}
+			}
+		}
+	}
 }

@@ -547,4 +547,8 @@ public class EntityWizardMerchant extends EntityWizard {
 			world.spawnParticle(EnumParticleTypes.ENCHANTMENT_TABLE, x, y, z, 0, 0.02, 0);
 		}
 	}
+
+	public void setLifetime(int lifetime) {
+		this.lifetime = lifetime;
+	}
 }

@@ -177,6 +177,7 @@ public final class ASItems {
 	public static final Item amulet_inspiration = placeholder();
 	public static final Item amulet_domus = placeholder();
 	public static final Item amulet_searing_skin = placeholder();
+	public static final Item amulet_cursed_mirror = placeholder();
 
 	/// charm
 	public static final Item charm_rift_bottle = placeholder();
@@ -235,10 +236,12 @@ public final class ASItems {
 	public static final Item charm_metamagic_amplifier = placeholder();
 	public static final Item charm_sentinel_eye = placeholder();
 	public static final Item charm_plunderers_mark = placeholder();
+	public static final Item charm_wizard_ale = placeholder();
 	public static final Item alchemical_essence = placeholder();
 	public static final Item wand_channeling = placeholder();
 
 	public static final Item purifying_elixir_recipe = placeholder();
+	public static final Item large_mana_flask_recipe = placeholder();
 
 	/// now with Belts!
 
@@ -406,6 +409,7 @@ public final class ASItems {
 	public static final Item charm_glyph_antigravity = placeholder();
 	public static final Item charm_glyph_vitality = placeholder();
 	public static final Item charm_glyph_warden = placeholder();
+	public static final Item charm_glyph_imbuement = placeholder();
 
 
 
@@ -525,6 +529,42 @@ public final class ASItems {
 
 		registerItem(registry, "wizard_hat_ancient", new ItemAncientHat(WizardryItems.Materials.SILK, 1, EntityEquipmentSlot.HEAD, Element.MAGIC));
 
+
+		registerItem(registry, "sage_tome_novice_fire", new ItemSageTome(Tier.NOVICE, Element.FIRE));
+		registerItem(registry, "sage_tome_apprentice_fire", new ItemSageTome(Tier.APPRENTICE, Element.FIRE));
+		registerItem(registry, "sage_tome_advanced_fire", new ItemSageTome(Tier.ADVANCED, Element.FIRE));
+		registerItem(registry, "sage_tome_master_fire", new ItemSageTome(Tier.MASTER, Element.FIRE));
+
+		registerItem(registry, "sage_tome_novice_ice", new ItemSageTome(Tier.NOVICE, Element.ICE));
+		registerItem(registry, "sage_tome_apprentice_ice", new ItemSageTome(Tier.APPRENTICE, Element.ICE));
+		registerItem(registry, "sage_tome_advanced_ice", new ItemSageTome(Tier.ADVANCED, Element.ICE));
+		registerItem(registry, "sage_tome_master_ice", new ItemSageTome(Tier.MASTER, Element.ICE));
+
+		registerItem(registry, "sage_tome_novice_lightning", new ItemSageTome(Tier.NOVICE, Element.LIGHTNING));
+		registerItem(registry, "sage_tome_apprentice_lightning", new ItemSageTome(Tier.APPRENTICE, Element.LIGHTNING));
+		registerItem(registry, "sage_tome_advanced_lightning", new ItemSageTome(Tier.ADVANCED, Element.LIGHTNING));
+		registerItem(registry, "sage_tome_master_lightning", new ItemSageTome(Tier.MASTER, Element.LIGHTNING));
+
+		registerItem(registry, "sage_tome_novice_necromancy", new ItemSageTome(Tier.NOVICE, Element.NECROMANCY));
+		registerItem(registry, "sage_tome_apprentice_necromancy", new ItemSageTome(Tier.APPRENTICE, Element.NECROMANCY));
+		registerItem(registry, "sage_tome_master_necromancy", new ItemSageTome(Tier.MASTER, Element.NECROMANCY));
+		registerItem(registry, "sage_tome_advanced_necromancy", new ItemSageTome(Tier.ADVANCED, Element.NECROMANCY));
+
+		registerItem(registry, "sage_tome_novice_earth", new ItemSageTome(Tier.NOVICE, Element.EARTH));
+		registerItem(registry, "sage_tome_apprentice_earth", new ItemSageTome(Tier.APPRENTICE, Element.EARTH));
+		registerItem(registry, "sage_tome_advanced_earth", new ItemSageTome(Tier.ADVANCED, Element.EARTH));
+		registerItem(registry, "sage_tome_master_earth", new ItemSageTome(Tier.MASTER, Element.EARTH));
+
+		registerItem(registry, "sage_tome_novice_sorcery", new ItemSageTome(Tier.NOVICE, Element.SORCERY));
+		registerItem(registry, "sage_tome_apprentice_sorcery", new ItemSageTome(Tier.APPRENTICE, Element.SORCERY));
+		registerItem(registry, "sage_tome_advanced_sorcery", new ItemSageTome(Tier.ADVANCED, Element.SORCERY));
+		registerItem(registry, "sage_tome_master_sorcery", new ItemSageTome(Tier.MASTER, Element.SORCERY));
+
+		registerItem(registry, "sage_tome_novice_healing", new ItemSageTome(Tier.NOVICE, Element.HEALING));
+		registerItem(registry, "sage_tome_apprentice_healing", new ItemSageTome(Tier.APPRENTICE, Element.HEALING));
+		registerItem(registry, "sage_tome_advanced_healing", new ItemSageTome(Tier.ADVANCED, Element.HEALING));
+		registerItem(registry, "sage_tome_master_healing", new ItemSageTome(Tier.MASTER, Element.HEALING));
+
 		// ====================== Artefacts ======================
 
 		/// ring
@@ -589,6 +629,7 @@ public final class ASItems {
 		registerItem(registry, "amulet_domus", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_searing_skin",	new ItemSearingSkinAmulet(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_elemental_aura", new ItemElementalAuraAmulet(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_cursed_mirror", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 
 		/// charm
 		registerItem(registry, "charm_seed_bag", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
@@ -646,9 +687,11 @@ public final class ASItems {
 		registerItem(registry, "charm_guardian_blade", new ItemGuardianBlade(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_sentinel_eye",	new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_plunderers_mark",	new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_wizard_ale",	new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 
 		registerItem(registry, "scepter_mind_control", new ItemOverlordScepter());
 		registerItem(registry, "purifying_elixir_recipe", new ItemLostRecipe(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "large_mana_flask_recipe", new ItemLostRecipe(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 
 
 		registerItem(registry, "belt_enchanter", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
@@ -765,40 +808,6 @@ public final class ASItems {
 		registerItem(registry, "battlemage_sword_master", new ItemBattlemageSword(Tier.MASTER, 9));
 		registerItem(registry, "devoritium_chestplate", new ItemDevoritiumArmour(AncientSpellcraft.DEVORITIUM_ARMOR_MATERIAL, 0, EntityEquipmentSlot.CHEST));
 
-		registerItem(registry, "sage_tome_novice_fire", new ItemSageTome(Tier.NOVICE, Element.FIRE));
-		registerItem(registry, "sage_tome_apprentice_fire", new ItemSageTome(Tier.APPRENTICE, Element.FIRE));
-		registerItem(registry, "sage_tome_advanced_fire", new ItemSageTome(Tier.ADVANCED, Element.FIRE));
-		registerItem(registry, "sage_tome_master_fire", new ItemSageTome(Tier.MASTER, Element.FIRE));
-
-		registerItem(registry, "sage_tome_novice_ice", new ItemSageTome(Tier.NOVICE, Element.ICE));
-		registerItem(registry, "sage_tome_apprentice_ice", new ItemSageTome(Tier.APPRENTICE, Element.ICE));
-		registerItem(registry, "sage_tome_advanced_ice", new ItemSageTome(Tier.ADVANCED, Element.ICE));
-		registerItem(registry, "sage_tome_master_ice", new ItemSageTome(Tier.MASTER, Element.ICE));
-
-		registerItem(registry, "sage_tome_novice_lightning", new ItemSageTome(Tier.NOVICE, Element.LIGHTNING));
-		registerItem(registry, "sage_tome_apprentice_lightning", new ItemSageTome(Tier.APPRENTICE, Element.LIGHTNING));
-		registerItem(registry, "sage_tome_advanced_lightning", new ItemSageTome(Tier.ADVANCED, Element.LIGHTNING));
-		registerItem(registry, "sage_tome_master_lightning", new ItemSageTome(Tier.MASTER, Element.LIGHTNING));
-
-		registerItem(registry, "sage_tome_novice_necromancy", new ItemSageTome(Tier.NOVICE, Element.NECROMANCY));
-		registerItem(registry, "sage_tome_apprentice_necromancy", new ItemSageTome(Tier.APPRENTICE, Element.NECROMANCY));
-		registerItem(registry, "sage_tome_master_necromancy", new ItemSageTome(Tier.MASTER, Element.NECROMANCY));
-		registerItem(registry, "sage_tome_advanced_necromancy", new ItemSageTome(Tier.ADVANCED, Element.NECROMANCY));
-
-		registerItem(registry, "sage_tome_novice_earth", new ItemSageTome(Tier.NOVICE, Element.EARTH));
-		registerItem(registry, "sage_tome_apprentice_earth", new ItemSageTome(Tier.APPRENTICE, Element.EARTH));
-		registerItem(registry, "sage_tome_advanced_earth", new ItemSageTome(Tier.ADVANCED, Element.EARTH));
-		registerItem(registry, "sage_tome_master_earth", new ItemSageTome(Tier.MASTER, Element.EARTH));
-
-		registerItem(registry, "sage_tome_novice_sorcery", new ItemSageTome(Tier.NOVICE, Element.SORCERY));
-		registerItem(registry, "sage_tome_apprentice_sorcery", new ItemSageTome(Tier.APPRENTICE, Element.SORCERY));
-		registerItem(registry, "sage_tome_advanced_sorcery", new ItemSageTome(Tier.ADVANCED, Element.SORCERY));
-		registerItem(registry, "sage_tome_master_sorcery", new ItemSageTome(Tier.MASTER, Element.SORCERY));
-
-		registerItem(registry, "sage_tome_novice_healing", new ItemSageTome(Tier.NOVICE, Element.HEALING));
-		registerItem(registry, "sage_tome_apprentice_healing", new ItemSageTome(Tier.APPRENTICE, Element.HEALING));
-		registerItem(registry, "sage_tome_advanced_healing", new ItemSageTome(Tier.ADVANCED, Element.HEALING));
-		registerItem(registry, "sage_tome_master_healing", new ItemSageTome(Tier.MASTER, Element.HEALING));
 
 		registerItem(registry, "runic_plate", new ItemRunicPlate(), true);
 		registerItem(registry, "mystic_spell_book", new ItemSageSpellBook());
@@ -810,6 +819,7 @@ public final class ASItems {
 		registerItem(registry, "charm_glyph_antigravity", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_glyph_vitality", new ItemGlyphArtefact.ItemGlyphViality(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_glyph_warden", new ItemGlyphArtefact.ItemGlyphWarden(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_imbuement", new ItemGlyphArtefact.ItemGlyphWarden(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "tome_controller", new ItemTomeController());
 
 		//registerItem(registry, "master_bolt", new ItemMasterBolt());

@@ -10,14 +10,14 @@
         "trades": false,
         "looting": true
     },
-    "tier": "novice",
+    "tier": "advanced",
     "element": "magic",
-    "type": "attack",
-    "cost": 40,
+    "type": "alteration",
+    "cost": 30,
     "chargeup": 0,
-    "cooldown": 80,
-    "base_properties": {
-        "strength_duration": 400,
-        "strength_strength": 0
+    "cooldown": 60,
+    "base_properties":{
+        "effect_duration": 60,
+        "charges": 1
     }
 }
