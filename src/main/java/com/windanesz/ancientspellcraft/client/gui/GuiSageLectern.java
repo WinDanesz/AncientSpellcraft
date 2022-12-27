@@ -32,6 +32,10 @@ public class GuiSageLectern extends GuiContainer {
 		GlStateManager.disableBlend();
 		this.fontRenderer.drawString(I18n.format("tile.ancientspellcraft:sage_lectern.name"), 55, 6, 4210752);
 
+		int requiredPages = lectern.getRequiredEnchantedPageCount();
+		if (requiredPages > 0) {
+			this.fontRenderer.drawString(I18n.format("tile.ancientspellcraft:sage_lectern.required_pages", requiredPages), 19, 50, 4210752);
+		}
 		GlStateManager.enableLighting();
 	}
 

@@ -60,7 +60,7 @@ public class ContainerSageLectern extends Container {
 		));
 
 		// INPUT_SLOT_1
-		this.addSlotToContainer(new SlotItemList(te, 1, 75, 24, 1, ASItems.enchanted_page));
+		this.addSlotToContainer(new SlotItemList(te, 1, 75, 24, 64, ASItems.enchanted_page));
 
 		/// RESULT_SLOT
 		this.addSlotToContainer(new SlotItemList(te, 2, 133, 24, 1) {

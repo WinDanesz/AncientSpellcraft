@@ -204,17 +204,21 @@ public class TileSageLectern extends TileEntity implements ITickable, IInventory
 				int progression = WandHelper.getProgression(stack0);
 
 				if (progression >= tier.next().getProgression()) {
-
+					int requiredPages = (tier.next().ordinal()) * 5;
+					if (stack1.getCount() >= requiredPages) {
+						return getProgressedTome(stack0);
+					}
 				}
 			}
+
 			// sage tome levelling
 			//			if (tierLevel >= 0) {
 			//				Tier tier = Tier.values()[tierLevel];
 			//
 			//			}
-			if (true) { throw new IllegalArgumentException("Incomplete feature.."); }
+//			if (true) { throw new IllegalArgumentException("Incomplete feature.."); }
 
-			return getProgressedTome(stack1);
+
 		}
 
 		return ItemStack.EMPTY;
@@ -227,7 +231,6 @@ public class TileSageLectern extends TileEntity implements ITickable, IInventory
 
 		// Next tier tome
 		ItemStack progressedTome = new ItemStack(WizardClassWeaponHelper.getClassItemForTier(tier.next(), ItemWizardArmour.ArmourClass.SAGE, element));
-
 		progressedTome.setTagCompound(copy.getTagCompound());
 		return progressedTome;
 	}
@@ -261,14 +264,41 @@ public class TileSageLectern extends TileEntity implements ITickable, IInventory
 	}
 
 	@Override
-	public ItemStack decrStackSize(int index, int count) {
-		ItemStack itemstack = ItemStackHelper.getAndSplit(this.inventory, index, count);
+	public ItemStack decrStackSize(int slot, int count) {
+		ItemStack itemstack = ItemStackHelper.getAndSplit(this.inventory, slot, count);
 
-		if (!itemstack.isEmpty()) {
+		if (slot != 2 && !itemstack.isEmpty()) {
+			this.markDirty();
+		}
+		if (slot == 2 && !itemstack.isEmpty()) {
+			ItemStack stack0 = this.inventory.get(0).copy();
+			int requiredPages = ((ItemSageTome)stack0.getItem()).tier.next().ordinal() * 5;
+			stack0.shrink(1);
+			ItemStack stack1 = this.inventory.get(1).copy();
+
+			stack1.shrink(requiredPages);
+
+			this.inventory.set(0, stack0);
+			this.inventory.set(1, stack1);
 			this.markDirty();
 		}
 
 		return itemstack;
+	}
+
+	public int getRequiredEnchantedPageCount() {
+		ItemStack tome = this.inventory.get(0);
+		if (!tome.isEmpty() && tome.getItem() instanceof ItemSageTome) {
+			Tier tier = ((ItemSageTome) tome.getItem()).tier;
+
+			if (tier.ordinal() < Tier.MASTER.ordinal()) {
+				int progression = WandHelper.getProgression(tome);
+				if (progression >= tier.next().getProgression()) {
+					return (tier.next().ordinal()) * 5;
+				}
+			}
+		}
+		return -1;
 	}
 
 	/**
@@ -302,7 +332,7 @@ public class TileSageLectern extends TileEntity implements ITickable, IInventory
 
 	@Override
 	public int getInventoryStackLimit() {
-		return 1;
+		return 64;
 	}
 
 	@Override
@@ -327,7 +357,7 @@ public class TileSageLectern extends TileEntity implements ITickable, IInventory
 	public boolean isItemValidForSlot(int slotNumber, ItemStack stack) {
 		if (stack == ItemStack.EMPTY) { return true; }
 
-		if (slotNumber == 0 && stack.getItem() instanceof ItemSageTome) {
+		if (slotNumber == 0 && stack.getItem() instanceof ItemSageTome && stack.getCount() == 1) {
 			return true;
 		} else if (slotNumber == 1) {
 			return stack.getItem() == ASItems.enchanted_page;
