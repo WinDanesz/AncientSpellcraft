@@ -25,6 +25,7 @@ public class Settings {
 			ARTEFACT_INJECTION_LOCATIONS);
 
 	public ResourceLocation[] voidCreeperBiomeBlacklist = toResourceLocations(generalSettings.void_creeper_biome_blacklist);
+	public ResourceLocation[] skeletonMageBiomeBlacklist = toResourceLocations(generalSettings.skeleton_mage_biome_blacklist);
 
 	public List<ResourceLocation> shardEarthShardBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.earth_shard_biome_whitelist));
 	public List<ResourceLocation> shardSorceryShardBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.sorcery_shard_biome_whitelist));
@@ -178,6 +179,16 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public int void_creeper_spawn_rate = 2;
 
+		@Config.Name("Skeleton Mage Spawn Rate")
+		@Config.Comment("Spawn rate for naturally-spawned void Skeleton Mages; higher numbers mean more Skeleton Mages will spawn. Set to 0 do disable spawning entirely")
+		@Config.RequiresMcRestart
+		public int skeleton_mage_spawn_rate = 20;
+
+		@Config.Name("Skeleton Mage Max Group Size")
+		@Config.Comment("Max group size for naturally-spawned Skeleton Mages; higher numbers mean more Skeleton Mages will spawn. Set to 0 do disable spawning entirely")
+		@Config.RequiresMcRestart
+		public int skeleton_mage_max_group_size = 3;
+
 		@Config.Name("Class Armour Evil Wizard Spawn Rate")
 		@Config.Comment("Spawn rate for naturally-spawned class (sage, warlock, battlemage) wizards; higher numbers mean more wizards will spawn.\n5 is equivalent to witches, 100 is equivalent to zombies, skeletons and creepers.\nSet to 0 to disable evil wizard spawning entirely.")
 		@Config.RequiresMcRestart
@@ -226,11 +237,22 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public String[] void_creeper_biome_blacklist = {"mushroom_island", "mushroom_island_shore"};
 
+		@Config.Name("Skeleton Mage Biome Blacklist")
+		@Config.Comment("List of Biomes where Skeleton Mages will never spawn.")
+		@Config.RequiresMcRestart
+		public String[] skeleton_mage_biome_blacklist = {"mushroom_island", "mushroom_island_shore"};
+
 		@Config.Name("Void Creeper Dimension Whitelist")
 		@Config.Comment("List of Dimensions where Void Creepers are allowed to spawn. Defaults to Overworld only."
 				+ "\n make")
 		@Config.RequiresMcRestart
 		public Integer[] void_creeper_dimension_whitelist = {0};
+
+		@Config.Name("Skeleton Mage Dimension Whitelist")
+		@Config.Comment("List of Dimensions where Skeleton Mages are allowed to spawn. Defaults to Overworld only."
+				+ "\n make")
+		@Config.RequiresMcRestart
+		public Integer[] skeleton_mage_dimension_whitelist = {0};
 
 		@Config.Name("Elemental Fire Crystal Shard Biome List")
 		@Config.Comment("List of Biomes where Fire Crystal Shards can spawn.")
@@ -266,10 +288,57 @@ public class Settings {
 				"mutated_extreme_hills",
 				"mutated_extreme_hills_with_trees"};
 
+		@Config.Name("Use biomes for Skeleton and Ghost Mage elements")
+		@Config.Comment("This setting decides how much the other skeleton and ghost mage biome settings matter (chance to consider the lists)."
+				+ "If 1 = biome whitelist settings always apply for element selection"
+				+ "if 0 = elements are always random, and the biome lists won't be considered")
+		@Config.RequiresMcRestart
+		public float use_biomes_for_mage_elements = 1.0f;
+
 		@Config.Name("Elemental Ice Crystal Shard Biome List")
 		@Config.Comment("List of Biomes where Ice Crystal Shards can spawn.")
 		@Config.RequiresMcRestart
 		public String[] ice_shard_biome_whitelist = {"taiga", "taiga_hills", "taiga_cold", "taiga_cold_hills", "mutated_taiga", "mutated_taiga_cold"};
+
+		@Config.Name("Fire Skeleton and Ghost Mage Biome List")
+		@Config.Comment("List of Biomes where Fire Skeleton and Ghost Mages can spawn.")
+		@Config.RequiresMcRestart
+		public String[] fire_skeleton_and_ghost_biome_whitelist = {"desert", "desert_hills", "mutated_desert"};
+
+		@Config.Name("Earth Skeleton and Ghost Mage Biome List")
+		@Config.Comment("List of Biomes where Earth Skeleton and Ghost Mages can spawn.")
+		@Config.RequiresMcRestart
+		public String[] earth_skeleton_and_ghost_biome_whitelist = {"forest", "birch_forest", "roofed_forest"};
+
+		@Config.Name("Sorcery Skeleton and Ghost Mage Biome List")
+		@Config.Comment("List of Biomes where Sorcery Skeleton and Ghost Mages can spawn.")
+		@Config.RequiresMcRestart
+		public String[] sorcery_skeleton_and_ghost_biome_whitelist = {"plains", "mutated_plains"};
+
+		@Config.Name("Necromancy Skeleton and Ghost Mage Biome List")
+		@Config.Comment("List of Biomes where Necromancy Skeleton and Ghost Mages can spawn.")
+		@Config.RequiresMcRestart
+		public String[] necromancy_skeleton_and_ghost_biome_whitelist = {"swampland", "mutated_swampland"};
+
+		@Config.Name("Healing Skeleton and Ghost Mage Biome List")
+		@Config.Comment("List of Biomes where Healing Skeleton and Ghost Mages can spawn.")
+		@Config.RequiresMcRestart
+		public String[] healing_skeleton_and_ghost_biome_whitelist = {"jungle", "jungle_hills", "jungle_edge"};
+
+		@Config.Name("Lightning Skeleton and Ghost Mage Biome List")
+		@Config.Comment("List of Biomes where Lightning Skeleton and Ghost Mages can spawn.")
+		@Config.RequiresMcRestart
+		public String[] lightning_skeleton_and_ghost_biome_whitelist = {"extreme_hills",
+				"smaller_extreme_hills",
+				"extreme_hills_with_trees",
+				"mutated_extreme_hills",
+				"mutated_extreme_hills_with_trees"};
+
+		@Config.Name("Ice Skeleton and Ghost Mage Biome List")
+		@Config.Comment("List of Biomes where Ice Skeleton and Ghost Mages can spawn.")
+		@Config.RequiresMcRestart
+		public String[] ice_skeleton_and_ghost_biome_whitelist = {"taiga", "taiga_hills", "redwood_taiga_hills", "taiga_cold", "taiga_cold_hills", "mutated_taiga", "mutated_taiga_cold"};
+
 
 		@Config.Name("[UNUSED] Pocket Biome registry ID")
 		@Config.Comment("Allows you to change the pocket biome registry ID if you encounter biome ID conflicts")

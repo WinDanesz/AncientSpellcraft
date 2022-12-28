@@ -23,6 +23,7 @@ import com.windanesz.ancientspellcraft.entity.living.EntityFireAnt;
 import com.windanesz.ancientspellcraft.entity.living.EntityOrdinarySpiderMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntityPigZombieMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonHorseMinion;
+import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMage;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpellCaster;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
@@ -123,6 +124,11 @@ public class ASEntities {
 						.collect(Collectors.toSet())).build());
 
 		registry.register(createEntry(EntitySkeletonMageMinion.class, "skeleton_mage_minion", TrackingType.LIVING).build());
+		registry.register(createEntry(EntitySkeletonMage.class, "skeleton_mage", TrackingType.LIVING).egg(0x868087, 0x8b0c9c)
+				.spawn(EnumCreatureType.MONSTER, Settings.generalSettings.skeleton_mage_spawn_rate, 1, 3, ForgeRegistries.BIOMES.getValuesCollection().stream()
+				.filter(b -> !Arrays.asList(AncientSpellcraft.settings.skeletonMageBiomeBlacklist).contains(b.getRegistryName()))
+				.collect(Collectors.toSet())).build());
+
 		registry.register(createEntry(EntityWolfMinion.class, "wolf_minion", TrackingType.LIVING).egg(0xcc6f47, 0x676767).build());
 		registry.register(createEntry(EntitySpiritBear.class, "spirit_bear", TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());
 		registry.register(createEntry(EntityVenusFlyTrap.class, "venus_fly_trap", TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());

@@ -34,51 +34,54 @@ public class CorpseBomb extends SpellRay {
 
 			if (((IEntityOwnable) target).getOwner() != null && ((IEntityOwnable) target).getOwner() == caster) {
 				double radius = getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
-
-				if (world.isRemote) {
-
-					double particleX, particleZ;
-
-					for (int i = 0; i < 40 * modifiers.get(WizardryItems.blast_upgrade); i++) {
-
-						particleX = origin.x - 1.0d + world.rand.nextDouble();
-						particleZ = origin.z - 1.0d + world.rand.nextDouble();
-						ParticleBuilder.create(ParticleBuilder.Type.DARK_MAGIC).pos(particleX, origin.y, particleZ)
-								.vel(particleX - origin.x, 0, particleZ - origin.z).clr(0.1f, 0, 0).spawn(world);
-
-						particleX = origin.x - 1.0d + 2 * world.rand.nextDouble();
-						particleZ = origin.z - 1.0d + 2 * world.rand.nextDouble();
-						ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(particleX, origin.y, particleZ)
-								.vel(particleX - origin.x, 0, particleZ - origin.z).time(30).clr(0.1f, 0, 0.05f).spawn(world);
-
-						particleX = origin.x - 1.0d + 2 * world.rand.nextDouble();
-						particleZ = origin.z - 1.0d + 2 * world.rand.nextDouble();
-
-						IBlockState block = world.getBlockState(new BlockPos(origin.x, origin.y - 0.5, origin.z));
-
-						if (block != null) {
-							world.spawnParticle(EnumParticleTypes.BLOCK_DUST, particleX, origin.y,
-									particleZ, particleX - origin.x, 0, particleZ - origin.z, Block.getStateId(block));
-						}
-					}
-
-					ParticleBuilder.create(ParticleBuilder.Type.SPHERE).pos(target.posX,target.posY + target.getEyeHeight() ,target.posZ).scale(1f).clr(0.8f, 0, 0.05f).spawn(world);
-					ParticleBuilder.create(ParticleBuilder.Type.SCORCH)
-							.pos(target.posX + world.rand.nextFloat() * 0.5,target.posY + target.getEyeHeight() + world.rand.nextFloat() * 0.5 ,target.posZ + world.rand.nextFloat() * 0.5)
-							.time(15).scale(0.5f).clr(0.8f, 0, 0.05f).spawn(world);
-
-				}
-
-				world.createExplosion(caster, target.posX, target.posY+ target.getEyeHeight(), target.posZ, (float) (radius * 0.7), false);
-				world.createExplosion(caster, target.posX, target.posY+ target.getEyeHeight(), target.posZ, (float) (radius * 0.2), true);
-
-
-				((EntityLivingBase) target).setHealth(0f);
+				explode(world, (EntityLivingBase) target, radius, origin, modifiers, caster);
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	public static void explode(World world, EntityLivingBase target, double radius, Vec3d origin, SpellModifiers modifiers, EntityLivingBase caster) {
+		if (world.isRemote) {
+
+			double particleX, particleZ;
+
+			for (int i = 0; i < 40 * modifiers.get(WizardryItems.blast_upgrade); i++) {
+
+				particleX = origin.x - 1.0d + world.rand.nextDouble();
+				particleZ = origin.z - 1.0d + world.rand.nextDouble();
+				ParticleBuilder.create(ParticleBuilder.Type.DARK_MAGIC).pos(particleX, origin.y, particleZ)
+						.vel(particleX - origin.x, 0, particleZ - origin.z).clr(0.1f, 0, 0).spawn(world);
+
+				particleX = origin.x - 1.0d + 2 * world.rand.nextDouble();
+				particleZ = origin.z - 1.0d + 2 * world.rand.nextDouble();
+				ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(particleX, origin.y, particleZ)
+						.vel(particleX - origin.x, 0, particleZ - origin.z).time(30).clr(0.1f, 0, 0.05f).spawn(world);
+
+				particleX = origin.x - 1.0d + 2 * world.rand.nextDouble();
+				particleZ = origin.z - 1.0d + 2 * world.rand.nextDouble();
+
+				IBlockState block = world.getBlockState(new BlockPos(origin.x, origin.y - 0.5, origin.z));
+
+				if (block != null) {
+					world.spawnParticle(EnumParticleTypes.BLOCK_DUST, particleX, origin.y,
+							particleZ, particleX - origin.x, 0, particleZ - origin.z, Block.getStateId(block));
+				}
+			}
+
+			ParticleBuilder.create(ParticleBuilder.Type.SPHERE).pos(target.posX,target.posY + target.getEyeHeight() ,target.posZ).scale(1f).clr(0.8f, 0, 0.05f).spawn(world);
+			ParticleBuilder.create(ParticleBuilder.Type.SCORCH)
+					.pos(target.posX + world.rand.nextFloat() * 0.5,target.posY + target.getEyeHeight() + world.rand.nextFloat() * 0.5 ,target.posZ + world.rand.nextFloat() * 0.5)
+					.time(15).scale(0.5f).clr(0.8f, 0, 0.05f).spawn(world);
+
+		}
+
+		world.createExplosion(caster, target.posX, target.posY+ target.getEyeHeight(), target.posZ, (float) (radius * 0.7), false);
+		world.createExplosion(caster, target.posX, target.posY+ target.getEyeHeight(), target.posZ, (float) (radius * 0.2), true);
+
+
+		((EntityLivingBase) target).setHealth(0f);
 	}
 
 	@Override

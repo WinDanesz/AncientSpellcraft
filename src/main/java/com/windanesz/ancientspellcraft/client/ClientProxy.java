@@ -51,6 +51,7 @@ import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
 import com.windanesz.ancientspellcraft.entity.living.EntityFireAnt;
 import com.windanesz.ancientspellcraft.entity.living.EntityPigZombieMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonHorseMinion;
+import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMage;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpellCaster;
 import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
@@ -195,6 +196,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityMageLight.class, manager -> new RenderEntityMageLight(manager, 0.7f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/wisp.png"), true));
 		RenderingRegistry.registerEntityRenderingHandler(EntityVoidCreeper.class, RenderVoidCreeper::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntitySkeletonMageMinion.class, RenderSkeletonMage::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntitySkeletonMage.class, RenderSkeletonMage::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntitySkeletonHorseMinion.class, RenderSkeletonHorseMinion::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityWolfMinion.class, RenderWolfMinion::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpiritBear.class, RenderSpiritBear::new);
