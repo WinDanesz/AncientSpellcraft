@@ -519,17 +519,6 @@ public final class ASItems {
 
 
 		//		registerItemBlock(registry, AncientSpellcraftBlocks.ANCIENT_DIMENSION_BOUNDARY, new ItemBlock(AncientSpellcraftBlocks.ANCIENT_DIMENSION_BOUNDARY));
-
-		registerItem(registry, "magic_shield", new ItemMagicShield(EnumRarity.EPIC));
-		registerItem(registry, "spectral_shield", new ItemSpectralShield());
-		registerItem(registry, "ancient_spellcraft_spell_book", new ItemASSpellBook());
-		registerItem(registry, "ancient_spell_book", new ItemASSpellBook());
-		registerItem(registry, "ancient_spellcraft_scroll", new ItemScroll());
-		registerItem(registry, "enchanted_name_tag", new ItemEnchantedNameTag());
-
-		registerItem(registry, "wizard_hat_ancient", new ItemAncientHat(WizardryItems.Materials.SILK, 1, EntityEquipmentSlot.HEAD, Element.MAGIC));
-
-
 		registerItem(registry, "sage_tome_novice_fire", new ItemSageTome(Tier.NOVICE, Element.FIRE));
 		registerItem(registry, "sage_tome_apprentice_fire", new ItemSageTome(Tier.APPRENTICE, Element.FIRE));
 		registerItem(registry, "sage_tome_advanced_fire", new ItemSageTome(Tier.ADVANCED, Element.FIRE));
@@ -564,6 +553,32 @@ public final class ASItems {
 		registerItem(registry, "sage_tome_apprentice_healing", new ItemSageTome(Tier.APPRENTICE, Element.HEALING));
 		registerItem(registry, "sage_tome_advanced_healing", new ItemSageTome(Tier.ADVANCED, Element.HEALING));
 		registerItem(registry, "sage_tome_master_healing", new ItemSageTome(Tier.MASTER, Element.HEALING));
+
+		registerItem(registry, "spectral_shield", new ItemSpectralShield());
+		registerItem(registry, "ancient_spellcraft_spell_book", new ItemASSpellBook());
+		registerItem(registry, "ancient_spell_book", new ItemASSpellBook());
+		registerItem(registry, "ancient_spellcraft_scroll", new ItemScroll());
+		registerItem(registry, "enchanted_name_tag", new ItemEnchantedNameTag());
+
+		registerItem(registry, "wizard_hat_ancient", new ItemAncientHat(WizardryItems.Materials.SILK, 1, EntityEquipmentSlot.HEAD, Element.MAGIC));
+
+		registerItem(registry, "battlemage_sword_novice", new ItemBattlemageSword(Tier.NOVICE, 3));
+		registerItem(registry, "battlemage_sword_apprentice", new ItemBattlemageSword(Tier.APPRENTICE, 5));
+		registerItem(registry, "battlemage_sword_advanced", new ItemBattlemageSword(Tier.ADVANCED, 7));
+		registerItem(registry, "battlemage_sword_master", new ItemBattlemageSword(Tier.MASTER, 9));
+
+		registerItem(registry, "devoritium_ingot", new ItemDevoritium());
+		registerItem(registry, "devoritium_nugget", new ItemDevoritium());
+		registerItem(registry, "devoritium_sword", new ItemDevoritiumSword());
+		registerItem(registry, "devoritium_axe", new ItemDevoritiumAxe());
+		registerItem(registry, "devoritium_arrow", new ItemDevoritiumArrow().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
+		registerItem(registry, "devoritium_bomb", new ItemDevoritiumBomb());
+		registerItem(registry, "devoritium_door", new ItemDevoritiumDoor(ASBlocks.DEVORITIUM_DOOR));
+		registerItem(registry, "devoritium_chestplate", new ItemDevoritiumArmour(AncientSpellcraft.DEVORITIUM_ARMOR_MATERIAL, 0, EntityEquipmentSlot.CHEST));
+		registerItem(registry, "devoritium_scimitar", new ItemDevoritiumScimitar());
+		registerItem(registry, "devoritium_shield", new ItemDevoritiumShield());
+		registerItem(registry, "magic_shield", new ItemMagicShield(EnumRarity.EPIC));
+
 
 		// ====================== Artefacts ======================
 
@@ -689,6 +704,14 @@ public final class ASItems {
 		registerItem(registry, "charm_plunderers_mark",	new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_wizard_ale",	new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 
+		registerItem(registry, "charm_glyph_illumination", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_leeching", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_antigravity", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_vitality", new ItemGlyphArtefact.ItemGlyphViality(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_warden", new ItemGlyphArtefact.ItemGlyphWarden(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_imbuement", new ItemGlyphArtefact.ItemGlyphWarden(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "tome_controller", new ItemTomeController());
+
 		registerItem(registry, "scepter_mind_control", new ItemOverlordScepter());
 		registerItem(registry, "purifying_elixir_recipe", new ItemLostRecipe(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "large_mana_flask_recipe", new ItemLostRecipe(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
@@ -746,24 +769,14 @@ public final class ASItems {
 
 		registerItem(registry, "wand_channeling", new Item().setMaxDamage(0).setCreativeTab(null));
 
-		registerItem(registry, "devoritium_ingot", new ItemDevoritium());
-		registerItem(registry, "devoritium_nugget", new ItemDevoritium());
-		registerItem(registry, "devoritium_sword", new ItemDevoritiumSword());
-		registerItem(registry, "devoritium_axe", new ItemDevoritiumAxe());
-		registerItem(registry, "devoritium_arrow", new ItemDevoritiumArrow().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
-		registerItem(registry, "devoritium_bomb", new ItemDevoritiumBomb());
-		registerItem(registry, "devoritium_door", new ItemDevoritiumDoor(ASBlocks.DEVORITIUM_DOOR));
-		registerItem(registry, "devoritium_scimitar", new ItemDevoritiumScimitar());
-		registerItem(registry, "devoritium_shield", new ItemDevoritiumShield());
-
 		registerItem(registry, "transmutation_scroll", new ItemTransmutationScroll());
 		registerItem(registry, "bartering_scroll", new ItemBarterScroll());
 		registerItem(registry, "knowledge_scroll", new ItemKnowledgeScroll());
 		registerItem(registry, "duplication_scroll", new ItemDuplicationScroll());
 		registerItem(registry, "amnesia_scroll", new ItemAmnesiaScroll());
+		registerItem(registry, "unsealing_scroll", new ItemUnsealingScroll());
 		registerItem(registry, "empty_theory_scroll", new ItemTheoryScroll());
 		registerItem(registry, "theory_scroll", new ItemTheoryScroll());
-		registerItem(registry, "unsealing_scroll", new ItemUnsealingScroll());
 
 		registerItem(registry, "blank_rune", new Item().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT).setMaxStackSize(16));
 		registerItem(registry, "rune_feoh", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
@@ -802,25 +815,10 @@ public final class ASItems {
 		registerItem(registry, "ice_cream", new ItemIceCream());
 		registerItem(registry, "alchemical_essence", new ItemAlchemicalEssence());
 
-		registerItem(registry, "battlemage_sword_novice", new ItemBattlemageSword(Tier.NOVICE, 3));
-		registerItem(registry, "battlemage_sword_apprentice", new ItemBattlemageSword(Tier.APPRENTICE, 5));
-		registerItem(registry, "battlemage_sword_advanced", new ItemBattlemageSword(Tier.ADVANCED, 7));
-		registerItem(registry, "battlemage_sword_master", new ItemBattlemageSword(Tier.MASTER, 9));
-		registerItem(registry, "devoritium_chestplate", new ItemDevoritiumArmour(AncientSpellcraft.DEVORITIUM_ARMOR_MATERIAL, 0, EntityEquipmentSlot.CHEST));
-
-
 		registerItem(registry, "runic_plate", new ItemRunicPlate(), true);
 		registerItem(registry, "mystic_spell_book", new ItemSageSpellBook());
 		registerItem(registry, "empty_mystic_spell_book", new ItemEmptyMysticSpellBook().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT).setMaxStackSize(16));
 		//registerItem(registry, "forbidden_tome", new ItemWarlockSpellBook()); TODO
-
-		registerItem(registry, "charm_glyph_illumination", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		registerItem(registry, "charm_glyph_leeching", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		registerItem(registry, "charm_glyph_antigravity", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		registerItem(registry, "charm_glyph_vitality", new ItemGlyphArtefact.ItemGlyphViality(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		registerItem(registry, "charm_glyph_warden", new ItemGlyphArtefact.ItemGlyphWarden(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		registerItem(registry, "charm_glyph_imbuement", new ItemGlyphArtefact.ItemGlyphWarden(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		registerItem(registry, "tome_controller", new ItemTomeController());
 
 		//registerItem(registry, "master_bolt", new ItemMasterBolt());
 
