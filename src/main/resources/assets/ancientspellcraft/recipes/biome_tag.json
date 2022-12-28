@@ -5,8 +5,7 @@
             "item": "minecraft:name_tag"
         },
         {
-            "item": "ancientspellcraft:crystal_shard_earth",
-            "data": 5
+            "item": "ancientspellcraft:crystal_shard_earth"
         }
     ],
     "result": {
