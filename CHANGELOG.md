@@ -4,6 +4,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.5.6] - 2022-12-28
+### :sparkles: New Features
+- [`6438ebc`](https://github.com/WinDanesz/AncientSpellcraft/commit/6438ebc0b5240fa20669399ab8a6c2f83c15d9a1) - Update duplication scroll description *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`4ba196a`](https://github.com/WinDanesz/AncientSpellcraft/commit/4ba196a77f0db30824e24f212270f3ed8c3cb4dc) - Changed Skull Sentinel spell element: ancient->necromancy *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`4e21c4b`](https://github.com/WinDanesz/AncientSpellcraft/commit/4e21c4b228dda3fa7d70d525021d08bdf8d31da8) - More tooltips for the Runic Plates *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`4f45939`](https://github.com/WinDanesz/AncientSpellcraft/commit/4f459396521d612eb04efc808f2d0f66710bf07f) - Skull Sentinel emits a redstone signal when it detects a hostile creature *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`4f40fe4`](https://github.com/WinDanesz/AncientSpellcraft/commit/4f40fe43beb5f879dfd06ba136e6426f23a3dee0) - Added some new artefacts and runewords *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`c85a041`](https://github.com/WinDanesz/AncientSpellcraft/commit/c85a0418486f4592db50ab2f353db23219d1b4fc) - Added a config property to the ritual json files to allow disabling individual rituals. Fixes [#123](https://github.com/WinDanesz/AncientSpellcraft/pull/123) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`2df82dc`](https://github.com/WinDanesz/AncientSpellcraft/commit/2df82dc57dc2887d96bb0f2698d412bda3223bd6) - More runewords and artefacts *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`919ad3b`](https://github.com/WinDanesz/AncientSpellcraft/commit/919ad3b93a39544291fbb51969749064fedbd1e7) - Skeleton Mages are now spawning naturally, also added a rare, more powerful variant *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+### :bug: Bug Fixes
+- [`307dd82`](https://github.com/WinDanesz/AncientSpellcraft/commit/307dd82e6d2900858c4fd0ac5685c637d88b4a85) - Death Mark spell is no longer continuous. Fixes [#114](https://github.com/WinDanesz/AncientSpellcraft/pull/114) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`6d40bfc`](https://github.com/WinDanesz/AncientSpellcraft/commit/6d40bfc72efefc74cd3694ea243133cfdbe3e755) - Added missing icon for Death Mark spell. Death Mark now also prints the death coordinates of the marked entity. Fixes [#112](https://github.com/WinDanesz/AncientSpellcraft/pull/112) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`1102c86`](https://github.com/WinDanesz/AncientSpellcraft/commit/1102c86d6a81d3b111d8752d64e542d0611323da) - Fixed Skull Sentinel's book item, fixing its assignment to Necromancy. *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`1508459`](https://github.com/WinDanesz/AncientSpellcraft/commit/1508459b85841243f3d412a64de21c9edcea8ad3) - Sage tomes are no longer enchantable and won't have the enchantment glint after every 4th cast. Fixes [#111](https://github.com/WinDanesz/AncientSpellcraft/pull/111) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`1e05cd2`](https://github.com/WinDanesz/AncientSpellcraft/commit/1e05cd2d341e89a20ee70c1e8d88cc30711b0c74) - Fixed the 'Extension' sage spell not going on cooldown after a successful cast. Fixes [#117](https://github.com/WinDanesz/AncientSpellcraft/pull/117) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`1b948fa`](https://github.com/WinDanesz/AncientSpellcraft/commit/1b948fa3b54298f153d9a500efc957af017bee8f) - Fixed the sage tome upgrading with the mystic lectern *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`5baf638`](https://github.com/WinDanesz/AncientSpellcraft/commit/5baf638f00a01286509fd49bc233399e876d20dd) - Fixed biome tag's recipe *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+### :recycle: Refactors
+- [`d425f9e`](https://github.com/WinDanesz/AncientSpellcraft/commit/d425f9e498349096021604b32ddcd6505e29be13) - Optimized Dimension Anchor's code (thanks for the tip, 19) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+### :wrench: Chores
+- [`1872292`](https://github.com/WinDanesz/AncientSpellcraft/commit/1872292add42c6d0d63b6f007d141bc87df460f4) - some small bugfixes *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`82f4640`](https://github.com/WinDanesz/AncientSpellcraft/commit/82f46403142dc2c796f15a194470c08cf7e59cbe) - fix typo *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`0ab37a5`](https://github.com/WinDanesz/AncientSpellcraft/commit/0ab37a5b7b961ffde6901b4bbe75bfd3c4599a7d) - added the Scorching Belt *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`748a398`](https://github.com/WinDanesz/AncientSpellcraft/commit/748a398795f6549e7566d219d732eda80d68ea4e) - Reordered creative tab items *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+
 ## [v1.5.5] - 2022-10-31
 ### :bug: Bug Fixes
 - [`7ab1e3c`](https://github.com/WinDanesz/AncientSpellcraft/commit/7ab1e3cf4a3287f89251f22e9f0527c0152546a6) - Fix crash with Death Mark spell *(commit by [@WinDanesz](https://github.com/WinDanesz))*
@@ -130,3 +160,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v1.5.2]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.1...v1.5.2
 [v1.5.4]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.3.0...v1.5.4
 [v1.5.5]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.4...v1.5.5
+[v1.5.6]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.5...v1.5.6
