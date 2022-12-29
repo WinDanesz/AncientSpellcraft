@@ -433,7 +433,7 @@ public class EntitySkeletonMage extends AbstractSkeleton implements ISpellCaster
 			if (!world.isRemote) {
 				for (int i = 0; i < 2; i++) {
 					EntityRemnant remnant = new EntityRemnant(world);
-					remnant.setPosition(posX, posY, posZ);
+					remnant.setPosition(posX, posY + 1f, posZ);
 					remnant.setElement(getElement());
 					world.spawnEntity(remnant);
 				}
