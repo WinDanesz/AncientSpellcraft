@@ -87,7 +87,7 @@ public class Experiment extends Spell implements IClassSpell {
 			chance = (float) (chance + Math.pow(distinctElements.size(), 2));
 		}
 
-		return chance;
+		return Math.min(chance, 100f);
 	}
 
 	public static List<Element> getResearchedElements(EntityPlayer player) {
@@ -566,7 +566,7 @@ public class Experiment extends Spell implements IClassSpell {
 				return Wizardry.proxy.translate(descTransKey, minKnownSpells, knownSpells);
 			} else {
 				List<Element> list = getResearchedElements(player);
-				List<String> test = list.stream().map(e -> e.getDisplayName() + " ").collect(Collectors.toList());
+				List<String> test = list.stream().map(e -> e.getDisplayName() + " ").map(f -> f.equals("None ") ? "Ancient" : f).distinct().collect(Collectors.toList());
 				return Wizardry.proxy.translate(getDescriptionTranslationKey(), getSuccessChance(player), getTheoryPoints(player), test);
 			}
 		}
