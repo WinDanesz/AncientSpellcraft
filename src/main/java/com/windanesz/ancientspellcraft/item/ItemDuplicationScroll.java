@@ -35,6 +35,7 @@ public class ItemDuplicationScroll extends ItemRareScroll {
 		EnumHand otherHand = hand == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
 		ItemStack otherStack = player.getHeldItem(otherHand);
 		Item otherItem = otherStack.getItem();
+		player.getCooldownTracker().setCooldown(otherItem, 20);
 
 		if (otherItem instanceof ItemRitualBook || otherItem instanceof ItemEnchantedBook || otherItem instanceof ItemSpellBook
 				|| otherItem instanceof ItemScroll || otherItem instanceof ItemRareScroll || otherItem instanceof ItemWrittenBook
@@ -47,8 +48,9 @@ public class ItemDuplicationScroll extends ItemRareScroll {
 				consumeScroll(player, hand);
 				if (!player.getHeldItem(hand).isEmpty()) {
 					ASUtils.giveStackToPlayer(player, newStack);
+					return new ActionResult<>(EnumActionResult.SUCCESS, stack);
 				} else {
-					player.setHeldItem(hand, newStack);
+					return new ActionResult<>(EnumActionResult.SUCCESS, newStack);
 				}
 			}
 		}
