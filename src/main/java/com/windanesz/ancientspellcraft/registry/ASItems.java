@@ -45,6 +45,7 @@ import com.windanesz.ancientspellcraft.item.ItemGuardianBlade;
 import com.windanesz.ancientspellcraft.item.ItemHorn;
 import com.windanesz.ancientspellcraft.item.ItemIceCream;
 import com.windanesz.ancientspellcraft.item.ItemIceShield;
+import com.windanesz.ancientspellcraft.item.ItemImbuementScroll;
 import com.windanesz.ancientspellcraft.item.ItemKnowledgeOrb;
 import com.windanesz.ancientspellcraft.item.ItemKnowledgeScroll;
 import com.windanesz.ancientspellcraft.item.ItemLostRecipe;
@@ -297,6 +298,8 @@ public final class ASItems {
 	public static final Item knowledge_scroll = placeholder();
 	public static final Item duplication_scroll = placeholder();
 	public static final Item amnesia_scroll = placeholder();
+	public static final Item unsealing_scroll = placeholder();
+	public static final Item imbuement_scroll = placeholder();
 
 	/// handheld
 	public static final Item shadow_blade = placeholder();
@@ -400,7 +403,6 @@ public final class ASItems {
 	public static final Item tome_controller = placeholder();
 	public static final Item sentience_upgrade = placeholder();
 	public static final Item empowerment_upgrade = placeholder();
-	public static final Item unsealing_scroll = placeholder();
 
 	//public static final Item forbidden_tome = placeholder(); TODO
 
@@ -775,6 +777,7 @@ public final class ASItems {
 		registerItem(registry, "duplication_scroll", new ItemDuplicationScroll());
 		registerItem(registry, "amnesia_scroll", new ItemAmnesiaScroll());
 		registerItem(registry, "unsealing_scroll", new ItemUnsealingScroll());
+		registerItem(registry, "imbuement_scroll", new ItemImbuementScroll());
 		registerItem(registry, "empty_theory_scroll", new ItemTheoryScroll());
 		registerItem(registry, "theory_scroll", new ItemTheoryScroll());
 

@@ -148,6 +148,14 @@ public class Settings {
 				"ebwizardry:subsets/epic_artefacts"
 		};
 
+//		@Config.Name("Imbuement Scroll Recipe List")
+//		@Config.Comment("List of recipes for the Scroll of Imbuement. Format: input|auto/[ice/fire/lightning/sorcery/necromancy/healing/earth]|output"
+//				+ "input: an item's registry name in namespace:path format e.g. minecraft:stick or ebwizardry:magic_crystal. Metadata is optional, can be appended with a :<metadata> suffix"
+//				+ "auto/[ice/fire/lightning/sorcery/necromancy/healing/earth]: if you provide the 'auto' value, you don't need to provide an output at all and the mod will try to find matching alternatives of the items based on their registry name"
+//				+ "output: if you have provided an element in the second parameter, you must provide an output item in the same item format as you did with the 'input'.")
+//		private String[] IMBUEMENT_SCROLL_RECIPE_LIST = {
+//		};
+
 		@Config.Name("Extension Spell Potion Blacklist")
 		@Config.Comment("List of potion effect which cannot be extended with the Extension sage spell.")
 		public String[] extension_spell_blacklist = {
