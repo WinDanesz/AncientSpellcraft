@@ -57,6 +57,7 @@ public class ItemAmnesiaScroll extends ItemRareScroll {
 						event.getEntityPlayer().setHeldItem(event.getHand(), ItemStack.EMPTY);
 						event.getWorld().spawnEntity(mob);
 						event.setCanceled(true);
+						consumeScroll(event.getEntityPlayer(), event.getHand());
 					}
 				}
 			}
