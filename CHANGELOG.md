@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.5.7] - 2022-12-30
+### :sparkles: New Features
+- [`1c17f53`](https://github.com/WinDanesz/AncientSpellcraft/commit/1c17f537e814da3c219e2a5de2dd1dc982aafb2e) - Added the Scroll of Imbuement, a new rare scroll type *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`90de1bb`](https://github.com/WinDanesz/AncientSpellcraft/commit/90de1bb256157ed1239652680ea16dc242c4f857) - Added the Seal of the Scrollmaster *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+### :bug: Bug Fixes
+- [`521c461`](https://github.com/WinDanesz/AncientSpellcraft/commit/521c4618b28463e0c352c65fa8574c8bd7e82d02) - Fixed book description of the Experiment spell *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`178d7d6`](https://github.com/WinDanesz/AncientSpellcraft/commit/178d7d6a61a61f6418ad2d877a87a4146306d770) - Fixed the epic_artefacts loottable *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`cbf98b4`](https://github.com/WinDanesz/AncientSpellcraft/commit/cbf98b453c86ebb1985d6e322c7adcac9755d4d7) - Fixed Scroll of Amnesia not being consumed on use *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`16f48a7`](https://github.com/WinDanesz/AncientSpellcraft/commit/16f48a7023a5ea45b6c52f728cea49d3cc9af433) - Fixed Scrolls of Duplication instantly using up/activating the duplicated items when conditions are met *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+### :wrench: Chores
+- [`be2d1b3`](https://github.com/WinDanesz/AncientSpellcraft/commit/be2d1b3299c003c77a27fb80488b2594f156bd61) - Updated remnant spawn position *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+
 ## [v1.5.6] - 2022-12-28
 ### :sparkles: New Features
 - [`6438ebc`](https://github.com/WinDanesz/AncientSpellcraft/commit/6438ebc0b5240fa20669399ab8a6c2f83c15d9a1) - Update duplication scroll description *(commit by [@WinDanesz](https://github.com/WinDanesz))*
@@ -161,3 +176,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v1.5.4]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.3.0...v1.5.4
 [v1.5.5]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.4...v1.5.5
 [v1.5.6]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.5...v1.5.6
+[v1.5.7]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.6...v1.5.7
