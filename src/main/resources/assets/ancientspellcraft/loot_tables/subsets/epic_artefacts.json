@@ -6,11 +6,6 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "ancientspellcraft:magic_shield",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
                     "name": "ancientspellcraft:artefact_pensive",
                     "weight": 1
                 },
