@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.item.ItemArcaneTome;
 import electroblob.wizardry.item.ItemArmourUpgrade;
 import electroblob.wizardry.item.ItemArtefact;
@@ -43,7 +44,12 @@ public class ItemDuplicationScroll extends ItemRareScroll {
 			newStack.setCount(1);
 			if (!world.isRemote) {
 				player.playSound(WizardrySounds.MISC_DISCOVER_SPELL, 1.25F, 1.0F);
-				player.setHeldItem(hand, newStack);
+				consumeScroll(player, hand);
+				if (!player.getHeldItem(hand).isEmpty()) {
+					ASUtils.giveStackToPlayer(player, newStack);
+				} else {
+					player.setHeldItem(hand, newStack);
+				}
 			}
 		}
 		return new ActionResult<>(EnumActionResult.PASS, stack);

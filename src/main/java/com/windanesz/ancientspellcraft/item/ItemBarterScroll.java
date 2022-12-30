@@ -44,7 +44,7 @@ public class ItemBarterScroll extends ItemRareScroll {
 			world.spawnEntity(entityBarter);
 
 			player.sendMessage(new TextComponentTranslation("item.ancientspellcraft:bartering_scroll.beacon_started"));
-			itemstack.shrink(1);
+			consumeScroll(player, hand);
 		}
 
 		world.playSound(player.posX, player.posY, player.posZ, ASSounds.BARTERING_SCROLL, WizardrySounds.SPELLS, 1, 1, false);

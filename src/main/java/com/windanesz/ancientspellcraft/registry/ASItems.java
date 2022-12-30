@@ -159,6 +159,7 @@ public final class ASItems {
 	public static final Item ring_charge = placeholder();
 	public static final Item ring_griefing = placeholder();
 	public static final Item ring_metamagic_preserve = placeholder();
+	public static final Item ring_rare_scroll = placeholder();
 
 	/// amulet
 	public static final Item charm_cryostasis = placeholder();
@@ -627,6 +628,7 @@ public final class ASItems {
 		registerItem(registry, "ring_charge", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_griefing", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_metamagic_preserve", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_rare_scroll", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 
 		/// amulet
 		registerItem(registry, "amulet_mana", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));

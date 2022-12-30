@@ -75,7 +75,7 @@ public class ItemImbuementScroll extends ItemRareScroll {
 								newStack.setTagCompound(oldStack.getTagCompound());
 								tile.setStack(newStack);
 								if (!player.isCreative()) {
-									player.getHeldItem(hand).shrink(1);
+									consumeScroll(player, hand);
 								}
 								consumeReceptacleContents(world, pos);
 								return EnumActionResult.SUCCESS;

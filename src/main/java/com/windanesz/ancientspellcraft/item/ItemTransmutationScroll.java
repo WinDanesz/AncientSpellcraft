@@ -243,7 +243,7 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 						}
 
 						if (!player.isCreative()) {
-							scrollStack.shrink(1);
+							consumeScroll(player, scrollStack);
 						}
 						offhandStack.shrink(1);
 

@@ -45,7 +45,9 @@ public class ItemUnsealingScroll extends ItemRareScroll {
 				TileEntity tile = world.getTileEntity(rayTrace.getBlockPos());
 				if (tile instanceof TileArcaneWall && ((TileArcaneWall) tile).isGenerated()) {
 					((TileArcaneWall) tile).setBeingDispelled(true);
-					if (!caster.isCreative()) { stack.shrink(1); }
+					if (!caster.isCreative()) {
+						consumeScroll(caster, stack);
+					}
 				}
 			}
 		}

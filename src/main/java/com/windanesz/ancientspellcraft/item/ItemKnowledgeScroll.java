@@ -35,7 +35,7 @@ public class ItemKnowledgeScroll extends ItemRareScroll {
 				if (currentProgression <= minProgressionForNextTier && tier != Tier.MASTER) {
 					int boost = ((int) ((minProgressionForNextTier - currentProgression) * 0.33));
 					WandHelper.addProgression(otherStack, boost);
-					stack.shrink(1);
+					consumeScroll(player, hand);
 					player.playSound(WizardrySounds.MISC_DISCOVER_SPELL, 1.25F, 1.0F);
 				}
 			}
