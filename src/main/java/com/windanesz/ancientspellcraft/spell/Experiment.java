@@ -269,7 +269,7 @@ public class Experiment extends Spell implements IClassSpell {
 						case NO_EFFECT_WEIGHT:
 							break;
 						case BUFF_WEIGHT: {
-							List<Potion> potions = ForgeRegistries.POTIONS.getValuesCollection().stream().filter(p -> p.isBeneficial() && !p.isBadEffect()).collect(Collectors.toList());
+							List<Potion> potions = ForgeRegistries.POTIONS.getValuesCollection().stream().filter(p -> !p.isBadEffect()).collect(Collectors.toList());
 							for (int i = 0; i < 10; i++) {
 								Potion randomPotion = potions.get(data.synchronisedRandom.nextInt(potions.size()));
 								if (!Arrays.asList(Settings.generalSettings.experiment_buff_blacklist).contains(randomPotion.getRegistryName().toString())) {
@@ -284,7 +284,7 @@ public class Experiment extends Spell implements IClassSpell {
 						}
 						break;
 						case DEBUFF_WEIGHT: {
-							List<Potion> potions = ForgeRegistries.POTIONS.getValuesCollection().stream().filter(p -> !p.isBeneficial() && !(p instanceof Curse) && p.isBadEffect()).collect(Collectors.toList());
+							List<Potion> potions = ForgeRegistries.POTIONS.getValuesCollection().stream().filter(p -> !(p instanceof Curse) && p.isBadEffect()).collect(Collectors.toList());
 							for (int i = 0; i < 10; i++) {
 								Potion randomPotion = potions.get(data.synchronisedRandom.nextInt(potions.size()));
 								if (!Arrays.asList(Settings.generalSettings.experiment_buff_blacklist).contains(randomPotion.getRegistryName().toString())) {
