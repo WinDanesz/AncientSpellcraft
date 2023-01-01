@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.5.8] - 2023-01-01
+### :bug: Bug Fixes
+- [`203cdf7`](https://github.com/WinDanesz/AncientSpellcraft/commit/203cdf7ceed053abca4827a1fe61285188986454) - Fixed occasional crash with the Experiment spell on dedicated servers. Fixes [#125](https://github.com/WinDanesz/AncientSpellcraft/pull/125) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+
 ## [v1.5.7] - 2022-12-30
 ### :sparkles: New Features
 - [`1c17f53`](https://github.com/WinDanesz/AncientSpellcraft/commit/1c17f537e814da3c219e2a5de2dd1dc982aafb2e) - Added the Scroll of Imbuement, a new rare scroll type *(commit by [@WinDanesz](https://github.com/WinDanesz))*
@@ -177,3 +182,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v1.5.5]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.4...v1.5.5
 [v1.5.6]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.5...v1.5.6
 [v1.5.7]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.6...v1.5.7
+[v1.5.8]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.7...v1.5.8
