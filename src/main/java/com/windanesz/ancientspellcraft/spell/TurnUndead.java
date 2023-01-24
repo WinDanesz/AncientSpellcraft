@@ -52,14 +52,17 @@ public class TurnUndead extends SpellRay {
 			targetEntity.addPotionEffect(new PotionEffect(WizardryPotions.fear,
 					(int) (getProperty(EFFECT_DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade)),
 					getProperty(EFFECT_STRENGTH).intValue() + bonusAmplifier));
-
-			origin = targetEntity.getPositionEyes(1);
-			for (int i = 0; i < 30; i++) {
-				double x = origin.x - 1 + world.rand.nextDouble() * 2;
-				double y = origin.y - 0.25 + world.rand.nextDouble() * 0.5;
-				double z = origin.z - 1 + world.rand.nextDouble() * 2;
-				ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x, y, z).clr(1, 1, 0.3f).spawn(world);
+			
+			if (world.isRemote) {
+				origin = targetEntity.getPositionEyes(1);
+				for (int i = 0; i < 30; i++) {
+					double x = origin.x - 1 + world.rand.nextDouble() * 2;
+					double y = origin.y - 0.25 + world.rand.nextDouble() * 0.5;
+					double z = origin.z - 1 + world.rand.nextDouble() * 2;
+					ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x, y, z).clr(1, 1, 0.3f).spawn(world);
+				}
 			}
+
 			return true;
 		}
 		return false;
