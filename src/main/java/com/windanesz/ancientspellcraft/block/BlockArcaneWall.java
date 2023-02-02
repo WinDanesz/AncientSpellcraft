@@ -5,6 +5,7 @@ import electroblob.wizardry.util.AllyDesignationSystem;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -97,5 +98,16 @@ public class BlockArcaneWall extends Block implements ITileEntityProvider, ITemp
 
 		super.addCollisionBoxToList(state,worldIn, pos,entityBox, collidingBoxes, entityIn, isActualState);
 
+	}
+
+	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
+
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) { return BlockFaceShape.UNDEFINED; }
+
+	@Nullable
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+		return FULL_BLOCK_AABB;
 	}
 }

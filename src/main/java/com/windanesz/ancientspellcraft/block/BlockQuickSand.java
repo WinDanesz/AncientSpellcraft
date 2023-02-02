@@ -3,7 +3,6 @@ package com.windanesz.ancientspellcraft.block;
 import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.ItemArtefact;
-import electroblob.wizardry.item.ItemWand;
 import electroblob.wizardry.tileentity.TileEntityPlayerSave;
 import electroblob.wizardry.util.MagicDamage;
 import net.minecraft.block.Block;
@@ -41,10 +40,6 @@ public class BlockQuickSand extends Block implements ITileEntityProvider, ITempo
 	 * Called When an Entity Collided with the Block
 	 */
 	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
-		if (entity instanceof EntityPlayer && ((EntityPlayer) entity).getHeldItemMainhand().getItem() instanceof ItemWand) {
-			return;
-		}
-
 		entity.setInWeb();
 
 		if (shouldDrown(world, entity)) {
