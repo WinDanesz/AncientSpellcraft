@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.5.9] - 2023-02-02
+### :bug: Bug Fixes
+- [`be8eccb`](https://github.com/WinDanesz/AncientSpellcraft/commit/be8eccbc8895a6433d0bfc8e10eb62d11ed159f8) - Fixed server side particle crash with Turn Undead spell. Fixes [#128](https://github.com/WinDanesz/AncientSpellcraft/pull/128) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`d762436`](https://github.com/WinDanesz/AncientSpellcraft/commit/d762436fa066ccbf7d0fffa9b2169f940915c897) - Added  Runeword - Fury missing a spell icon. Fixes [#126](https://github.com/WinDanesz/AncientSpellcraft/pull/126) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`dd8a49d`](https://github.com/WinDanesz/AncientSpellcraft/commit/dd8a49ddbd2c103aac7b3ad095702d49b2e2ddc4) - Fix server side crash with Starve spell. Fixes [#130](https://github.com/WinDanesz/AncientSpellcraft/pull/130) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`f61c66f`](https://github.com/WinDanesz/AncientSpellcraft/commit/f61c66f38af37e77c4fc9b69ca617f13350854b8) - Fixed the bug with Runic Plates appearing as [Empty], also fixes existing empty plates if you right click them. *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`9c34d30`](https://github.com/WinDanesz/AncientSpellcraft/commit/9c34d306c8e0475ea2f9940b7d524d32ce5f1b19) - Fixed bug with sages not being able to pass through their own Arcane Wall blocks. Fixes [#129](https://github.com/WinDanesz/AncientSpellcraft/pull/129) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+
 ## [v1.5.8] - 2023-01-01
 ### :bug: Bug Fixes
 - [`203cdf7`](https://github.com/WinDanesz/AncientSpellcraft/commit/203cdf7ceed053abca4827a1fe61285188986454) - Fixed occasional crash with the Experiment spell on dedicated servers. Fixes [#125](https://github.com/WinDanesz/AncientSpellcraft/pull/125) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
@@ -183,3 +192,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v1.5.6]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.5...v1.5.6
 [v1.5.7]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.6...v1.5.7
 [v1.5.8]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.7...v1.5.8
+[v1.5.9]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.8...v1.5.9
