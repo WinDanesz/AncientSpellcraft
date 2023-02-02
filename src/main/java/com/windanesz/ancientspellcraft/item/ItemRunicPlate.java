@@ -2,7 +2,10 @@ package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
+import com.windanesz.ancientspellcraft.spell.Runeword;
+import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.item.ItemWizardArmour;
+import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
@@ -18,6 +21,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ItemRunicPlate extends ItemArmourClassSpellHolder {
 
@@ -31,6 +35,16 @@ public class ItemRunicPlate extends ItemArmourClassSpellHolder {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		ItemStack stack = player.getHeldItem(hand);
+		if (Spell.byMetadata(stack.getMetadata()) == Spells.none) {
+			if (stack.getCount() > 1) {
+				ItemStack oldStack = stack.copy();
+				oldStack.shrink(1);
+				ASUtils.giveStackToPlayer(player, oldStack);
+			}
+			stack.setItemDamage(getRandomRuneword(world));
+			stack.setCount(1);
+			return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
+		}
 		player.openGui(AncientSpellcraft.instance, GuiHandlerAS.RUNIC_PLATE, world, player.getPosition().getX(), player.getPosition().getY(), player.getPosition().getZ());
 		return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
 	}
@@ -48,7 +62,10 @@ public class ItemRunicPlate extends ItemArmourClassSpellHolder {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemstack, World world, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced){
-		super.addInformation(itemstack,world,tooltip, advanced);
+		if (Spell.byMetadata(itemstack.getMetadata()) != Spells.none) {
+			super.addInformation(itemstack,world,tooltip, advanced);
+		}
+
 		AncientSpellcraft.proxy.addMultiLineDescription(tooltip, I18n.format("tooltip.ancientspellcraft:right_click_to_read"));
 
 		if (GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak)) {
@@ -56,5 +73,14 @@ public class ItemRunicPlate extends ItemArmourClassSpellHolder {
 		} else {
 			tooltip.add(I18n.format("tooltip.ancientspellcraft:more_info"));
 		}
+	}
+
+	public static int getRandomRuneword(World world) {
+		List<Integer> runewordIDs = Spell.getAllSpells().stream().filter(s -> s instanceof Runeword).map(Spell::metadata).collect(Collectors.toList());
+		if (runewordIDs.size() > 0) {
+			int rnd = world.rand.nextInt(runewordIDs.size());
+			return runewordIDs.get(rnd);
+		}
+		return 0;
 	}
 }

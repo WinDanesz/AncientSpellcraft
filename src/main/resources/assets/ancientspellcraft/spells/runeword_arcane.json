@@ -6,7 +6,7 @@
         "npcs": true,
         "dispensers": false,
         "commands": true,
-        "treasure": false,
+        "treasure": true,
         "trades": false,
         "looting": true
     },
