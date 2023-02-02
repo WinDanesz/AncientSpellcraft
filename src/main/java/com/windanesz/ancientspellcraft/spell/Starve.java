@@ -1,8 +1,6 @@
 package com.windanesz.ancientspellcraft.spell;
 
-import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import electroblob.wizardry.item.SpellActions;
-import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -35,7 +33,7 @@ public class Starve extends SpellRayAS {
 			targetPlayer.getFoodStats().setFoodLevel(foodlevel / 2);
 
 			float saturation = targetPlayer.getFoodStats().getSaturationLevel();
-			targetPlayer.getFoodStats().setFoodSaturationLevel(saturation / 2);
+			targetPlayer.getFoodStats().addExhaustion((int) (saturation / 2));
 
 			return true;
 		}
