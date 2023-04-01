@@ -26,6 +26,7 @@ import electroblob.wizardry.packet.WizardryPacketHandler;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardryAdvancementTriggers;
 import electroblob.wizardry.registry.WizardryItems;
+import electroblob.wizardry.registry.WizardryRecipes;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
@@ -108,6 +109,7 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 		setMaxStackSize(1);
 		// TODO: expose to settings
 		this.upgradeLimit = this.tier.upgradeLimit;
+		WizardryRecipes.addToManaFlaskCharging(this);
 	}
 
 	private static EnumHand getOtherHandForSword(ItemStack stack, EntityLivingBase entity) {
