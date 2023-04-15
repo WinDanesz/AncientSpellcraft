@@ -5,6 +5,7 @@ import com.windanesz.ancientspellcraft.item.ItemEmptyMysticSpellBook;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.tileentity.TileSageLectern;
 import com.windanesz.ancientspellcraft.util.ASUtils;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.block.BlockReceptacle;
 import electroblob.wizardry.constants.Element;
@@ -83,6 +84,7 @@ public class Scribe extends SpellLecternInteract {
 					} else {
 						spells = getAllSageSpells();
 						spells.removeIf(data::hasSpellBeenDiscovered);
+						spells.removeIf(s -> s == ASSpells.perfect_theory_spell);
 					}
 
 					if (!world.isRemote && !spells.isEmpty()) {
