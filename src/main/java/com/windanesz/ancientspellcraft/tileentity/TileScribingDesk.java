@@ -251,7 +251,11 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 			WizardData data = WizardData.get(currentPlayer);
 
 			if (!data.hasSpellBeenDiscovered(spell)) {
-
+				data.discoverSpell(spell);
+				data.sync();
+				if (!world.isRemote) {
+					player.sendMessage(new TextComponentTranslation("spell.discover", spell.getNameForTranslationFormatted()));
+				}
 			}
 		}
 
