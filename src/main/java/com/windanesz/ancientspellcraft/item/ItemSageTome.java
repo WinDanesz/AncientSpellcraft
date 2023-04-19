@@ -124,6 +124,12 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean isHeld) {
 		WandHelper.decrementCooldowns(stack);
+
+		// Decrements tome damage (increases mana) every 1.5 seconds if it has a condenser upgrade
+		if(!world.isRemote && !this.isManaFull(stack) && world.getTotalWorldTime() % Constants.CONDENSER_TICK_INTERVAL == 0){
+			// If the upgrade level is 0, this does nothing anyway.
+			this.rechargeMana(stack, WandHelper.getUpgradeLevel(stack, WizardryItems.condenser_upgrade));
+		}
 	}
 
 	// Max damage is modifiable with upgrades.

@@ -92,6 +92,14 @@ public class ItemBeltScrollHolder extends ItemNewArtefact implements ITickableAr
 		if (otherStack.getItem() instanceof ItemWandUpgrade) {
 			// put scroll to empty holder
 			if (!player.world.isRemote) {
+
+				ItemStack scroll = getScroll(stack);
+				if (scroll != ItemStack.EMPTY) {
+					setScroll(stack, null);
+					ASUtils.giveStackToPlayer(player, scroll);
+					player.sendStatusMessage(new TextComponentTranslation("item.ancientspellcraft:belt_scroll_holder.removed_scroll", scroll.getItem().getItemStackDisplayName(scroll)), false);
+				}
+
 				setScroll(stack, otherStack);
 				player.sendStatusMessage(new TextComponentTranslation("item.ancientspellcraft:belt_scroll_holder.added_scroll", otherStack.getItem().getItemStackDisplayName(otherStack)), false);
 				otherStack.shrink(1);

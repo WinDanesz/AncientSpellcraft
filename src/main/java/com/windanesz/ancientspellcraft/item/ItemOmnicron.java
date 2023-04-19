@@ -168,24 +168,34 @@ public class ItemOmnicron extends ItemASArtefact implements IWorkbenchItem, IMan
 	@Override
 	public boolean onApplyButtonPressed(EntityPlayer player, Slot centre, Slot crystals, Slot upgrade, Slot[] spellBooks) {
 		boolean changed = false;
-		if (crystals.getStack() != ItemStack.EMPTY && !this.isManaFull(centre.getStack())) {
-
+		// Charges the item by appropriate amount
+		if(crystals.getStack() != ItemStack.EMPTY && !this.isManaFull(centre.getStack())){
+			
 			int chargeDepleted = this.getManaCapacity(centre.getStack()) - this.getMana(centre.getStack());
 
-			if (crystals.getStack().getCount() * Constants.MANA_PER_CRYSTAL < chargeDepleted) {
-				// If there aren't enough crystals to fully charge the name tag
-				this.rechargeMana(centre.getStack(), crystals.getStack().getCount() * Constants.MANA_PER_CRYSTAL);
+			// Not too pretty but allows addons implementing the IManaStoringItem interface to provide their mana amount for custom crystals,
+			// previously this was defaulted to the regular crystal's amount, allowing players to exploit it if a crystal was worth less mana than that.
+			int manaPerItem = crystals.getStack().getItem() instanceof IManaStoringItem ?
+					((IManaStoringItem) crystals.getStack().getItem()).getMana(crystals.getStack()) :
+					crystals.getStack().getItem() instanceof ItemCrystal ? Constants.MANA_PER_CRYSTAL : Constants.MANA_PER_SHARD;
+
+			if(crystals.getStack().getItem() == WizardryItems.crystal_shard) manaPerItem = Constants.MANA_PER_SHARD;
+			if(crystals.getStack().getItem() == WizardryItems.grand_crystal) manaPerItem = Constants.GRAND_CRYSTAL_MANA;
+			
+			if(crystals.getStack().getCount() * manaPerItem < chargeDepleted){
+				// If there aren't enough crystals to fully charge the item
+				this.rechargeMana(centre.getStack(), crystals.getStack().getCount() * manaPerItem);
 				crystals.decrStackSize(crystals.getStack().getCount());
 
-			} else {
+			}else{
 				// If there are excess crystals (or just enough)
 				this.setMana(centre.getStack(), this.getManaCapacity(centre.getStack()));
-				crystals.decrStackSize((int) Math.ceil(((double) chargeDepleted) / Constants.MANA_PER_CRYSTAL));
+				crystals.decrStackSize((int)Math.ceil(((double)chargeDepleted) / manaPerItem));
 			}
 
 			changed = true;
 		}
-
+		
 		return changed;
 	}
 
