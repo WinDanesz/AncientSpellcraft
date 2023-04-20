@@ -1,11 +1,10 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
+import com.windanesz.ancientspellcraft.item.ItemSageTome;
 import com.windanesz.ancientspellcraft.registry.ASItems;
-import electroblob.wizardry.item.ItemArtefact;
-import electroblob.wizardry.item.ItemWand;
-import electroblob.wizardry.item.ItemWandUpgrade;
-import electroblob.wizardry.item.SpellActions;
+import electroblob.wizardry.item.*;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.NBTExtras;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -63,14 +62,14 @@ public class WordsOfUnbinding extends Spell {
 			return false;
 		}
 
-		if (caster.getHeldItem(hand).isEmpty() || !(caster.getHeldItem(hand).getItem() instanceof ItemWand)) {
+		if (caster.getHeldItem(hand).isEmpty() || !(caster.getHeldItem(hand).getItem() instanceof ISpellCastingItem)) {
 			if (!world.isRemote)
 				caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:words_of_unbinding.no_wand"), false);
 			return false;
 		}
 
 		ItemStack stack = caster.getHeldItem(hand);
-			if (stack.getItem() instanceof ItemWand) {
+			if (stack.getItem() instanceof ISpellCastingItem) {
 				if (WandHelper.getTotalUpgrades(stack) > 0) {
 					if (!world.isRemote) {
 
