@@ -10,6 +10,7 @@ import com.windanesz.ancientspellcraft.tileentity.TileMageLight;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellBuff;
 import electroblob.wizardry.util.Location;
@@ -33,7 +34,7 @@ public class Magelight extends SpellBuff {
 	private static NBTTagCompound update(EntityPlayer player, NBTTagCompound compound) {
 
 		if (compound == null) {
-			if (ItemGlyphArtefact.isArtefactActive(player, ASItems.charm_glyph_illumination) && player.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword) {
+			if (ItemArtefact.isArtefactActive(player, ASItems.charm_glyph_illumination) || (ItemGlyphArtefact.isArtefactActive(player, ASItems.charm_glyph_illumination) && player.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword)) {
 				if (player.world.isAirBlock(player.getPosition().up())) {
 					player.world.setBlockState(player.getPosition().up(), ASBlocks.MAGELIGHT.getDefaultState());
 					return (new Location(player.getPosition().up(), player.dimension)).toNBT();
