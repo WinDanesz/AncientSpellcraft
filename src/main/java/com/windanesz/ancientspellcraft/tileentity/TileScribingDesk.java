@@ -24,6 +24,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import java.util.List;
 
