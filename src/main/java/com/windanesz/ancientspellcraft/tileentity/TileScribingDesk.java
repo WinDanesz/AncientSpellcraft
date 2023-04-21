@@ -255,7 +255,7 @@ public class TileScribingDesk extends TileEntity implements IInventory, ITickabl
 				data.discoverSpell(spell);
 				data.sync();
 				if (!world.isRemote) {
-					player.sendMessage(new TextComponentTranslation("spell.discover", spell.getNameForTranslationFormatted()));
+					currentPlayer.sendMessage(new TextComponentTranslation("spell.discover", spell.getNameForTranslationFormatted()));
 				}
 			}
 		}

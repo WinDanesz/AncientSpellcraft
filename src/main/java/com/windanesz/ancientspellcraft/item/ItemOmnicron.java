@@ -9,8 +9,10 @@ import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.event.DiscoverSpellEvent;
 import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.IWorkbenchItem;
+import electroblob.wizardry.item.ItemCrystal;
 import electroblob.wizardry.item.ItemScroll;
 import electroblob.wizardry.item.ItemSpellBook;
+import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardryRecipes;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.entity.player.EntityPlayer;
@@ -100,9 +102,6 @@ public class ItemOmnicron extends ItemASArtefact implements IWorkbenchItem, IMan
 						case NOVICE:
 							requiredMana = 3000;
 							break;
-						case APPRENTICE:
-							requiredMana = 5000;
-							break;
 						case ADVANCED:
 							requiredMana = 7000;
 							break;
@@ -110,6 +109,7 @@ public class ItemOmnicron extends ItemASArtefact implements IWorkbenchItem, IMan
 							requiredMana = 10000;
 							break;
 						default:
+							// apprentice
 							requiredMana = 5000;
 					}
 
