@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.potion;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import electroblob.wizardry.potion.PotionMagicEffect;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,10 +36,13 @@ public class PotionMageLight extends PotionMagicEffect {
 		if (entity instanceof EntityPlayer) {
 
 			if (entity.world.isRemote) {
-
 				ParticleBuilder.create(ParticleBuilder.Type.FLASH).entity(entity).pos(0, 2.8, 0).time(6 + getRandomNumberInRange(0, 4)).vel(entity.world.rand.nextGaussian() / 40, entity.world.rand.nextDouble() / 40,
 						entity.world.rand.nextGaussian() / 40).clr(255, 255, 204).collide(false).
 						scale(particleSize / 1.5F).spawn(entity.world);
+			} else {
+				if (entity.ticksExisted % 15 == 0 && entity instanceof EntityPlayer && !entity.world.isRemote && entity.world.isAirBlock(entity.getPosition().up())) {
+					entity.world.setBlockState(entity.getPosition().up(), ASBlocks.MAGELIGHT.getDefaultState());
+				}
 			}
 		}
 	}

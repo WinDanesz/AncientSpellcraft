@@ -40,6 +40,7 @@ import com.windanesz.ancientspellcraft.item.ItemEternityPendant;
 import com.windanesz.ancientspellcraft.item.ItemEverfullManaFlask;
 import com.windanesz.ancientspellcraft.item.ItemEvergrowingCrystal;
 import com.windanesz.ancientspellcraft.item.ItemGlyphArtefact;
+import com.windanesz.ancientspellcraft.item.ItemGlyphOfIllumination;
 import com.windanesz.ancientspellcraft.item.ItemGoldBag;
 import com.windanesz.ancientspellcraft.item.ItemGuardianBlade;
 import com.windanesz.ancientspellcraft.item.ItemHorn;
@@ -56,6 +57,7 @@ import com.windanesz.ancientspellcraft.item.ItemMoonLetterDictionary;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.item.ItemOmnicron;
 import com.windanesz.ancientspellcraft.item.ItemOverlordScepter;
+import com.windanesz.ancientspellcraft.item.ItemPhialOfEternalFlame;
 import com.windanesz.ancientspellcraft.item.ItemPhiloshopersStone;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
@@ -660,7 +662,7 @@ public final class ASItems {
 		registerItem(registry, "cornucopia", new ItemCornucopia(EnumRarity.RARE));
 		registerItem(registry, "charm_gold_bag", new ItemGoldBag(EnumRarity.RARE));
 		registerItem(registry, "charm_quicksand_walker", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		registerItem(registry, "charm_magic_light", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_magic_light", new ItemPhialOfEternalFlame(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_mana_orb", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_knowledge_orb", new ItemKnowledgeOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_power_orb", new ItemSetArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "jewels_of_power", 4, new ArrayList<String>(Arrays.asList("ring_power", "amulet_power", "charm_power_orb"))));
@@ -708,7 +710,7 @@ public final class ASItems {
 		registerItem(registry, "charm_plunderers_mark",	new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_wizard_ale",	new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 
-		registerItem(registry, "charm_glyph_illumination", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_illumination", new ItemGlyphOfIllumination(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_glyph_leeching", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_glyph_antigravity", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_glyph_vitality", new ItemGlyphArtefact.ItemGlyphViality(EnumRarity.RARE, ItemArtefact.Type.CHARM));
