@@ -22,7 +22,7 @@ public class BlockCandleLight extends Block implements ITileEntityProvider {
 		super(Material.AIR);
 		setDefaultState(blockState.getBaseState());
 		setTickRandomly(false);
-		setLightLevel(0.7F);
+		setLightLevel(0.75F);
 		setCreativeTab(null);
 	}
 
