@@ -1,13 +1,19 @@
-<h2>Version v1.5.9 - 2/2/2023</h2>
+<h2>Version v1.5.10 - 4/22/2023</h2>
 <p>&nbsp;</p>
 <h3>What's Changed</h3>
 <p><span style="font-size: 1.2rem;">&nbsp;</span></p>
 <h4><strong>Bug Fixes</strong></h4>
-<p>- Fixed server side particle crash with Turn Undead spell. Fixes #128</p>
-<p>- Added  Runeword - Fury missing a spell icon. Fixes #126</p>
-<p>- Fix server side crash with Starve spell. Fixes #130</p>
-<p>- Fixed the bug with Runic Plates appearing as [Empty], also fixes existing empty plates if you right click them.</p>
-<p>- Fixed bug with sages not being able to pass through their own Arcane Wall blocks. Fixes #129</p>
+<p>- Condensing Updates now recharge Sage Tomes in the inventory as well. Fixes#148</p>
+<p>- Golden Scroll Holder no longer voids the current scroll when trying to swap scrolls. Fixes #146</p>
+<p>- Fixed Omnicron applying wrong mana from shards/grand crystals. Fixes #136</p>
+<p>- Unknown crafted ancient books become discovered  upon crafting at the Scribing Desk. Fixes #134</p>
+<p>- Fix some compile errors</p>
+<p>- Fixed Glyph of Illumination not providing light</p>
+
+<h4><strong>Features</strong></h4>
+<p>- Words of Unbinding supports sage tomes and battlemage swords</p>
+<p>- Bookshelf support for the rare scrolls</p>
+<p>- Mana flask now works with sage tomes</p>
 <p>&nbsp;</p>
 <p>As always, the easiest way to get help or feedback is through the Discord server! Find the link on the CurseForge page.</p>
 <p>&nbsp;</p>

@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.5.10] - 2023-04-22
+### :sparkles: New Features
+- [`db58f07`](https://github.com/WinDanesz/AncientSpellcraft/commit/db58f07fbd5b906e01ab88000d38c06fdd1bfb7e) - Words of Unbinding supports sage tomes and battlemage swords
+- [`6176797`](https://github.com/WinDanesz/AncientSpellcraft/commit/6176797afd7ffa73668074fbc72862380dd847ed) - Bookshelf support for the rare scrolls
+- [`c971e18`](https://github.com/WinDanesz/AncientSpellcraft/commit/c971e180eacd1a7dce5d69827207121c52bc9f14) - Mana flask now works with sage tomes *(commit by [@notveryAI](https://github.com/notveryAI))*
+
+### :bug: Bug Fixes
+- [`0d29f59`](https://github.com/WinDanesz/AncientSpellcraft/commit/0d29f5970ba3d5bcf27f9f6863ab89656eaf48e8) - Condensing Updates now recharge Sage Tomes in the inventory as well. Fixes[#148](https://github.com/WinDanesz/AncientSpellcraft/pull/148) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`ef37a2a`](https://github.com/WinDanesz/AncientSpellcraft/commit/ef37a2a248a9588eec7562643e991d288b39b7a2) - Golden Scroll Holder no longer voids the current scroll when trying to swap scrolls. Fixes [#146](https://github.com/WinDanesz/AncientSpellcraft/pull/146) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`896b8a2`](https://github.com/WinDanesz/AncientSpellcraft/commit/896b8a2b55bcf64ef6eea7c49ecd6188cf88bcf4) - Fixed Omnicron applying wrong mana from shards/grand crystals. Fixes [#136](https://github.com/WinDanesz/AncientSpellcraft/pull/136) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`f9be5fc`](https://github.com/WinDanesz/AncientSpellcraft/commit/f9be5fce056616762c1e07de0f65bffc6f2f0e92) - Unknown crafted ancient books become discovered  upon crafting at the Scribing Desk. Fixes [#134](https://github.com/WinDanesz/AncientSpellcraft/pull/134) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`83ef62b`](https://github.com/WinDanesz/AncientSpellcraft/commit/83ef62b19dc5b37ad2c60094a3dca44c222e168b) - Fixed Glyph of Illumination not providing light *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+### :wrench: Chores
+- [`4727772`](https://github.com/WinDanesz/AncientSpellcraft/commit/4727772fea97cb6413a61bc59758eb864880216b) - added missing import *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`82b1d5c`](https://github.com/WinDanesz/AncientSpellcraft/commit/82b1d5c85f0a73d4a0635dde3f8f473275ebdcf9) - fix some compile errors *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`a17c629`](https://github.com/WinDanesz/AncientSpellcraft/commit/a17c629332e6b1f4166d7011476e93101191efcb) - scroll color updates *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+
 ## [v1.5.9] - 2023-02-02
 ### :bug: Bug Fixes
 - [`be8eccb`](https://github.com/WinDanesz/AncientSpellcraft/commit/be8eccbc8895a6433d0bfc8e10eb62d11ed159f8) - Fixed server side particle crash with Turn Undead spell. Fixes [#128](https://github.com/WinDanesz/AncientSpellcraft/pull/128) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
@@ -193,3 +212,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v1.5.7]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.6...v1.5.7
 [v1.5.8]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.7...v1.5.8
 [v1.5.9]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.8...v1.5.9
+[v1.5.10]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.9...v1.5.10
