@@ -15,7 +15,7 @@ public class ItemAmuletOaken extends ItemASArtefact implements ITickableArtefact
 
 	public void onWornTick(ItemStack itemstack, EntityLivingBase player) {
 		if (player.ticksExisted % 10 == 0 && player.isPotionActive(WizardryPotions.oakflesh)
-				&& player.world.getBiome(player.getPosition()).getBiomeName().matches("forest|woods")) {
+				&& player.world.getBiome(player.getPosition()).getRegistryName().getPath().matches(".*forest.*|.*wood.*")) {
 			player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 20, 0));
 		}
 	}
