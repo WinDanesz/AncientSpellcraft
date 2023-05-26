@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -121,9 +122,20 @@ public class RenderArcaneBarrierEventBased {
 
 			if (barrier != null && barrier.dimension == player.dimension) {
 
-				double x = barrier.posX - player.posX;
-				double y = barrier.posY - player.posY;
-				double z = barrier.posZ - player.posZ;
+
+				///Changed to the frame accurate position instead of world positions #19
+				double clientPosX = player.prevPosX + (player.posX - player.prevPosX) * (double)partialTicks;
+				double clientPosY = player.prevPosY + (player.posY - player.prevPosY) * (double)partialTicks;
+				double clientPosZ = player.prevPosZ + (player.posZ - player.prevPosZ) * (double)partialTicks;
+
+				double barrierPosX = barrier.prevPosX + (barrier.posX - barrier.prevPosX) * (double)partialTicks;
+				double barrierPosY = barrier.prevPosY + (barrier.posY - barrier.prevPosY) * (double)partialTicks;
+				double barrierPosZ = barrier.prevPosZ + (barrier.posZ - barrier.prevPosZ) * (double)partialTicks;
+
+
+				double x = barrierPosX - clientPosX;
+				double y = barrierPosY - clientPosY;
+				double z = barrierPosZ - clientPosZ;
 
 				doRender(barrier, x, y, z, barrier.rotationYaw, partialTicks);
 			}
