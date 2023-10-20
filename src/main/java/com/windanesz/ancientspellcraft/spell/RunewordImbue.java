@@ -56,7 +56,7 @@ public class RunewordImbue extends Runeword {
 						if (!potioneffect.getPotion().isInstant()) {
 							int charges = getProperty(CHARGES).intValue();
 							if ((ItemArtefact.isArtefactActive(caster, ASItems.charm_glyph_imbuement))) {
-								charges *= 4;
+								charges *= 6;
 							}
 							ItemBattlemageSword.setActiveRuneword(caster.getHeldItem(hand), this, charges);
 							NBTTagCompound imbuement = new NBTTagCompound();

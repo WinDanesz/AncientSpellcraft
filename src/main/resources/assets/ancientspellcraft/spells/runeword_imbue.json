@@ -18,6 +18,6 @@
     "cooldown": 80,
     "base_properties": {
         "effect_duration": 300,
-        "charges": 5
+        "charges": 10
     }
 }
