@@ -1,6 +1,6 @@
 <@&818228055751131186>
 <:shiny:800825504369868830> **#{MOD_NAME}#** <:shiny:800825504369868830>
-*Version{{versionName}} is now available on CurseForge!*
+*Version {{versionName}} is now available on CurseForge!*
 
 :star: **What's Changed** :star:
 
