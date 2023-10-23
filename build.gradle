@@ -3,18 +3,26 @@ import groovy.json.*
 
 buildscript {
     repositories {
-        maven { url = 'https://maven.minecraftforge.net' } // old url was 'https://files.minecraftforge.net/maven'
-        mavenCentral()
-        maven { url = "https://ajoberstar.org/bintray-backup/" }
+        gradlePluginPortal()
         maven {
-            name = 'FancyGradle'
-            url = 'https://gitlab.com/api/v4/projects/26758973/packages/maven'
+            name 'MinecraftForge'
+            url 'https://maven.minecraftforge.net/'
+        }
+        maven {
+            name 'Garden of Fancy'
+            url 'https://maven.gofancy.wtf/releases'
+        }
+        //fallback for fancygradle maven
+        //mavenLocal()
+        maven {
+            name 'Sponge'
+            url 'https://repo.spongepowered.org/repository/maven-public/'
         }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:5.+'
         classpath 'org.ajoberstar.grgit:grgit-gradle:3.1.1'
-        classpath group: 'wtf.gofancy.fancygradle', name: 'wtf.gofancy.fancygradle.gradle.plugin', version: '1.1.2-0'
+        classpath group: 'wtf.gofancy.fancygradle', name: 'wtf.gofancy.fancygradle.gradle.plugin', version: '1.1.+'
     }
 
     repositories.each {
@@ -64,6 +72,7 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'info'
+            args '--username', 'WinDanesz', '--user', 'WinDanesz', '--uuid', '7faee354-8c60-4f5c-9862-fc0ce5f7f575'
         }
 
         server {
@@ -78,25 +87,42 @@ minecraft {
 }
 
 repositories {
+    google()
+    mavenCentral()
     maven {
-        name 'Curseforge Maven'
-        url 'https://minecraft.curseforge.com/api/maven/'
+        url = uri('https://www.cursemaven.com')
+        content {
+            includeGroup 'curse.maven'
+        }
     }
     maven {
-        url 'https://maven.blamejared.com'
+        name = 'Modrinth'
+        url = uri('https://api.modrinth.com/maven')
+        content {
+            includeGroup 'maven.modrinth'
+        }
     }
     maven {
-        url "https://www.cursemaven.com"
+        name = 'Sponge'
+        url = uri('https://repo.spongepowered.org/maven')
     }
     maven {
-        // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
-        url = "http://dvs1.progwml6.com/files/maven"
-        allowInsecureProtocol = true
+        url = uri('https://maven.blamejared.com')
+    }
+    maven {
+        url = uri('https://m2.dv8tion.net/releases')
+    }
+    maven {
+        url = uri('https://jitpack.io')
     }
     flatDir {
         // location for sources
-        dirs 'libs'
+        dirs 'build/libs'
+    }
+
+    // For local development
+    flatDir {
+        dirs '../Wizardry/build/libs'
     }
 }
 
@@ -123,12 +149,13 @@ dependencies {
     // Test link: https://www.cursemaven.com/test/<projectid>/<fileid>/<Classifier?>
 
     //// Dependencies ////
-    implementation fg.deobf("curse.maven:ElectroblobsWizardry-${wizardry_projectid}:${wizardry_fileid}")
+    // For local development
+    implementation fg.deobf("random_placeholder:ElectroblobsWizardry:4.3.12")
+  //  implementation fg.deobf("curse.maven:ElectroblobsWizardry-${wizardry_projectid}:${wizardry_fileid}")
     implementation fg.deobf("curse.maven:baubles-${baubles_projectid}:${baubles_fileid}")
     implementation fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}")
     implementation fg.deobf("curse.maven:artemislib-${artemislib_projectid}:${artemislib_fileid}")
     implementation fg.deobf("curse.maven:antique-atlas-${antiqueatlas_projectid}:${antiqueatlas_fileid}")
-
 }
 
 //// Project manifest data ////
@@ -185,7 +212,7 @@ task downloadSources {
     doLast {
         mkdir "libs"
         def wizardry = new File("libs/WizardrySrc-${wizardry_version}.zip")
-        new URL("https://github.com/Electroblob77/Wizardry/archive/${wizardry_version}.zip").withInputStream{ i -> wizardry.withOutputStream{ it << i }}
+        new URL("https://github.com/Electroblob77/Wizardry/archive/v${wizardry_version}.zip").withInputStream{ i -> wizardry.withOutputStream{ it << i }}
 
         def baubles = new File("libs/BaublesSrc-${baubles_version}.zip")
         new URL("https://github.com/WinDanesz/Baubles/archive/${baubles_version}.zip").withInputStream{ i -> baubles.withOutputStream{ it << i }}
