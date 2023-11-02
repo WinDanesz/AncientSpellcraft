@@ -12,8 +12,10 @@ public class ItemGlyphOfIllumination extends ItemGlyphArtefact implements ITicka
 	}
 
 	public void onWornTick(ItemStack itemstack, EntityLivingBase player) {
-		if (player.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword && player.world.isAirBlock(player.getPosition().up())) {
-			player.world.setBlockState(player.getPosition().up(), ASBlocks.MAGELIGHT.getDefaultState());
+ 		if (!player.world.isRemote && (player.getHeldItemOffhand().getItem() instanceof ItemBattlemageShield || player.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword && player.world.isAirBlock(player.getPosition().up()))) {
+			if (!player.world.getBlockState(player.getPosition().up()).equals(ASBlocks.MAGELIGHT.getDefaultState())) {
+				player.world.setBlockState(player.getPosition().up(), ASBlocks.MAGELIGHT.getDefaultState());
+			}
 		}
 	}
 }

@@ -104,4 +104,5 @@ public class CommonProxy {
 
 	public void openBookGUI(EntityPlayer player, ItemStack book) {}
 
+	public void registerExtraHandbookContent() {}
 }

@@ -424,7 +424,13 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public int wild_catalyst_max_distance = 10000;
 
+		@Config.Name("Runic Shield Armor Amount")
+		@Config.RequiresMcRestart
+		public float runic_shield_armor = 5.0f;
 
+		@Config.Name("Runic Shield Armor Toughness Amount")
+		@Config.RequiresMcRestart
+		public float runic_shield_armor_toughness = 5.0f;
 	}
 
 	public static class ClientSettings {

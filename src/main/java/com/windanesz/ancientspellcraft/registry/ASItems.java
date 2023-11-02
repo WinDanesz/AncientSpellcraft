@@ -13,6 +13,7 @@ import com.windanesz.ancientspellcraft.item.ItemAmuletOaken;
 import com.windanesz.ancientspellcraft.item.ItemAncientHat;
 import com.windanesz.ancientspellcraft.item.ItemArmourUpgradeMaterial;
 import com.windanesz.ancientspellcraft.item.ItemBarterScroll;
+import com.windanesz.ancientspellcraft.item.ItemBattlemageShield;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import com.windanesz.ancientspellcraft.item.ItemBeltScrollHolder;
 import com.windanesz.ancientspellcraft.item.ItemBlockDevoritiumMaterial;
@@ -41,6 +42,7 @@ import com.windanesz.ancientspellcraft.item.ItemEternityPendant;
 import com.windanesz.ancientspellcraft.item.ItemEverfullManaFlask;
 import com.windanesz.ancientspellcraft.item.ItemEvergrowingCrystal;
 import com.windanesz.ancientspellcraft.item.ItemGlyphArtefact;
+import com.windanesz.ancientspellcraft.item.ItemGlyphAuraArtefact;
 import com.windanesz.ancientspellcraft.item.ItemGlyphOfIllumination;
 import com.windanesz.ancientspellcraft.item.ItemGoldBag;
 import com.windanesz.ancientspellcraft.item.ItemGuardianBlade;
@@ -313,6 +315,7 @@ public final class ASItems {
 	public static final Item battlemage_sword_apprentice = placeholder();
 	public static final Item battlemage_sword_advanced = placeholder();
 	public static final Item battlemage_sword_master = placeholder();
+	public static final Item battlemage_shield = placeholder();
 	public static final Item devoritium_chestplate = placeholder();
 	public static final Item master_bolt = placeholder();
 
@@ -415,9 +418,17 @@ public final class ASItems {
 	public static final Item charm_glyph_antigravity = placeholder();
 	public static final Item charm_glyph_vitality = placeholder();
 	public static final Item charm_glyph_warden = placeholder();
+	public static final Item charm_glyph_fortification = placeholder();
 	public static final Item charm_glyph_imbuement = placeholder();
-
-
+	public static final Item charm_glyph_shield_disable = placeholder();
+	public static final Item charm_glyph_might = placeholder();
+	public static final Item charm_aura_alacrity = placeholder();
+	public static final Item charm_aura_hatred = placeholder();
+	public static final Item charm_aura_life = placeholder();
+	public static final Item charm_aura_purity = placeholder();
+	public static final Item charm_aura_warding = placeholder();
+	public static final Item charm_aura_wither = placeholder();
+	public static final Item charm_aura_tenacity = placeholder();
 
 	// below registry methods are courtesy of EB
 	public static void registerItem(IForgeRegistry<Item> registry, String name, Item item) {
@@ -572,6 +583,7 @@ public final class ASItems {
 		registerItem(registry, "battlemage_sword_apprentice", new ItemBattlemageSword(Tier.APPRENTICE, 5));
 		registerItem(registry, "battlemage_sword_advanced", new ItemBattlemageSword(Tier.ADVANCED, 7));
 		registerItem(registry, "battlemage_sword_master", new ItemBattlemageSword(Tier.MASTER, 9));
+		registerItem(registry, "battlemage_shield", new ItemBattlemageShield());
 
 		registerItem(registry, "devoritium_ingot", new ItemDevoritium());
 		registerItem(registry, "devoritium_nugget", new ItemDevoritium());
@@ -716,7 +728,20 @@ public final class ASItems {
 		registerItem(registry, "charm_glyph_antigravity", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_glyph_vitality", new ItemGlyphArtefact.ItemGlyphViality(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_glyph_warden", new ItemGlyphArtefact.ItemGlyphWarden(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		registerItem(registry, "charm_glyph_imbuement", new ItemGlyphArtefact.ItemGlyphWarden(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_imbuement", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_shield_disable", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_fortification", new ItemGlyphArtefact.ItemGlyphFortification(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_might", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+
+		registerItem(registry, "charm_aura_alacrity", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_hatred", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_life", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_purity", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_warding", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_wither", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_tenacity", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+
+
 		registerItem(registry, "tome_controller", new ItemTomeController());
 
 		registerItem(registry, "scepter_mind_control", new ItemOverlordScepter());

@@ -21,6 +21,7 @@ import com.windanesz.ancientspellcraft.potion.PotionMetamagicEffect;
 import com.windanesz.ancientspellcraft.potion.PotionProjectileWard;
 import com.windanesz.ancientspellcraft.potion.PotionShrinkage;
 import com.windanesz.ancientspellcraft.potion.PotionSoulScorch;
+import com.windanesz.ancientspellcraft.potion.PotionTenacity;
 import com.windanesz.ancientspellcraft.potion.PotionTimeKnot;
 import com.windanesz.ancientspellcraft.potion.PotionUnlimitedPower;
 import com.windanesz.ancientspellcraft.potion.PotionWaterWalking;
@@ -92,6 +93,7 @@ public class ASPotions {
 	public static final Potion soul_scorch = placeholder();
 	public static final Potion curse_of_umbra = placeholder();
 	public static final Potion curse_of_gills = placeholder();
+	public static final Potion tenacity = placeholder();
 
 	// artemislib potions
 	public static final Potion shrinkage = placeholder();
@@ -198,6 +200,7 @@ public class ASPotions {
 		registerPotion(registry, "curse_of_umbra", new PotionCurseUmbra());
 		registerPotion(registry, "curse_of_gills", new PotionCurseGills());
 
+		registerPotion(registry, "tenacity", new PotionTenacity());
 
 
 		// ---- Artemislib dependent potions ----

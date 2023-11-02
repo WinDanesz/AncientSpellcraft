@@ -24,6 +24,7 @@ import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.item.IWorkbenchItem;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemWand;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.packet.PacketCastSpell;
@@ -91,7 +92,7 @@ import java.util.Random;
 
 /**
  * Monster-sized class that holds all the Spell Blade related code. Brace yourselves.
- *
+ * <p>
  * Author WinDanesez
  */
 @Mod.EventBusSubscriber
@@ -194,20 +195,18 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 				ItemStack offhand = entityLiving.getHeldItemOffhand();
 
-				if (offhand.getItem() instanceof ItemWand && !((ItemWand) offhand.getItem()).isManaEmpty(offhand)) {
+				if ((offhand.getItem() instanceof ItemWand || offhand.getItem() instanceof ItemBattlemageShield) && !((IManaStoringItem) offhand.getItem()).isManaEmpty(offhand)) {
 					powered = true;
 				}
 
 				element = WizardArmourUtils.getFullSetElementForClass(entityLiving, ItemWizardArmour.ArmourClass.BATTLEMAGE);
 
-				if (element == null)
-					element = Element.MAGIC;
+				if (element == null) {element = Element.MAGIC;}
 				// Triggering the elemental effect of this sword each tick
 				EnumElementalSwordEffect.onUpdate(element, stack, world, entityLiving, slot, true);
 			}
 
-			if (element == null)
-				element = Element.MAGIC;
+			if (element == null) {element = Element.MAGIC;}
 
 			// setting the current element type, each tick
 			if (element != null) {
@@ -228,20 +227,14 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 			// update glyph data
 			if (entity.ticksExisted % 15 == 0 && entity instanceof EntityPlayer) {
 				List<String> glyphs = new ArrayList<>();
-
-				for (Item item : ItemGlyphArtefact.getActiveArtefacts((EntityPlayer) entity)) {
-					if (item instanceof ItemGlyphArtefact) {
-						String name = item.getRegistryName().toString();
-						if (!glyphs.contains(name)) {
-							glyphs.add(name);
-
-							// custom logic
-							if (item == ASItems.charm_glyph_antigravity && ((EntityPlayer) entity).getHeldItemMainhand().getItem() instanceof ItemBattlemageSword) {
-								((EntityPlayer) entity).addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 40,0));
-								((EntityPlayer) entity).addPotionEffect(new PotionEffect(MobEffects.SPEED, 40,0));
-							}
-						}
-					}
+				EntityPlayer player = (EntityPlayer) entity;
+				if ((player.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword && ItemArtefact.isArtefactActive(player, ASItems.charm_glyph_antigravity))) {
+					player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 40, 0));
+					player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 40, 0));
+					glyphs.add(ASItems.charm_glyph_antigravity.getRegistryName().toString());
+				}
+				if ((player.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword && ItemArtefact.isArtefactActive(player, ASItems.charm_glyph_might))) {
+					glyphs.add(ASItems.charm_glyph_might.getRegistryName().toString());
 				}
 
 				if (!glyphs.isEmpty()) {
@@ -250,9 +243,11 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 						list.appendTag(new NBTTagString(s));
 					}
 					compound.setTag("active_glyphs", list);
+				} else {
+					compound.removeTag("active_glyphs");
 				}
-			}
 
+			}
 			stack.setTagCompound(compound);
 		}
 	}
@@ -317,7 +312,6 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 				Spell[] spells = getSpells(stack);
 
-				//				Arrays.stream(spells).(s -> (s instanceof Runeword && ((Runeword) s).isAffectingAttributes()));
 				for (Spell spell : spells) {
 
 					if (spell instanceof Runeword && ((Runeword) spell).isAffectingAttributes()) {
@@ -341,10 +335,12 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 				Iterator<NBTBase> iterator = stack.getTagCompound().getTagList("active_glyphs", net.minecraftforge.common.util.Constants.NBT.TAG_STRING).iterator();
 				while (iterator.hasNext()) {
 					String glyph = ((NBTTagString) iterator.next()).getString();
-					if (glyph.equals("ancientspellcraft:charm_glyph_antigravity")) {
+					if (glyph.equals(ASItems.charm_glyph_antigravity.getRegistryName().toString())) {
 						damage *= 0.7;
-//						multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier",
-//								0.15f, net.minecraftforge.common.util.Constants.AttributeModifierOperation.ADD_MULTIPLE));
+						//						multimap.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier",
+						//								0.15f, net.minecraftforge.common.util.Constants.AttributeModifierOperation.ADD_MULTIPLE));
+					} else if (glyph.equals(ASItems.charm_glyph_might.getRegistryName().toString())) {
+						damage *= 1.2;
 					}
 				}
 
@@ -429,14 +425,14 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	@Override
 	public boolean canContinueUsing(ItemStack oldStack, ItemStack newStack) {
 		// Ignore durability changes
-		if (ItemStack.areItemsEqualIgnoreDurability(oldStack, newStack)) { return true; }
+		if (ItemStack.areItemsEqualIgnoreDurability(oldStack, newStack)) {return true;}
 		return super.canContinueUsing(oldStack, newStack);
 	}
 
 	@Override
 	public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
 		// Ignore durability changes
-		if (ItemStack.areItemsEqualIgnoreDurability(oldStack, newStack)) { return false; }
+		if (ItemStack.areItemsEqualIgnoreDurability(oldStack, newStack)) {return false;}
 		return super.shouldCauseBlockBreakReset(oldStack, newStack);
 	}
 
@@ -449,7 +445,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 		// We only care about the situation where we specifically want the animation NOT to play.
 		if (!oldStack.isEmpty() || !newStack.isEmpty() && oldStack.getItem() == newStack.getItem() && !slotChanged && oldStack.getItem() instanceof ItemBattlemageSword
-				&& newStack.getItem() instanceof ItemBattlemageSword) { return false; }
+				&& newStack.getItem() instanceof ItemBattlemageSword) {return false;}
 
 		return super.shouldCauseReequipAnimation(oldStack, newStack, slotChanged);
 	}
@@ -459,7 +455,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	public void addInformation(ItemStack stack, World world, List<String> text, net.minecraft.client.util.ITooltipFlag advanced) {
 
 		EntityPlayer player = net.minecraft.client.Minecraft.getMinecraft().player;
-		if (player == null) { return; }
+		if (player == null) {return;}
 
 		text.add(Wizardry.proxy.translate("item.ancientspellcraft:battlemage_sword_armour_requirements_tooltip"));
 
@@ -495,9 +491,9 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 			} else {
 				Optional<ItemStack> otherSource = WizardClassWeaponHelper.getManaSourceFromOtherHand(stack, player);
 				if (otherSource.isPresent()) {
-				otherSource.ifPresent(itemStack -> text.add(Wizardry.proxy.translate("tooltip.ancientspellcraft:mana_with_eternal_source_name",
-						new Style().setColor(TextFormatting.BLUE), ((IManaStoringItem) otherSource.get().getItem()).getMana(itemStack),
-						((IManaStoringItem) otherSource.get().getItem()).getManaCapacity(itemStack), itemStack.getDisplayName() + new Style().setColor(TextFormatting.BLUE).getFormattingCode())));
+					otherSource.ifPresent(itemStack -> text.add(Wizardry.proxy.translate("tooltip.ancientspellcraft:mana_with_eternal_source_name",
+							new Style().setColor(TextFormatting.BLUE), ((IManaStoringItem) otherSource.get().getItem()).getMana(itemStack),
+							((IManaStoringItem) otherSource.get().getItem()).getManaCapacity(itemStack), itemStack.getDisplayName() + new Style().setColor(TextFormatting.BLUE).getFormattingCode())));
 				} else {
 					text.add(Wizardry.proxy.translate("tooltip.ancientspellcraft:no_mana_source", new Style().setColor(TextFormatting.RED)));
 				}
@@ -549,28 +545,36 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		ItemStack stack = player.getHeldItem(hand);
 
 		// Alternate right-click function; overrides spell casting.
-		if (WizardClassWeaponHelper.selectMinionTarget(player, world)) { return new ActionResult<>(EnumActionResult.SUCCESS, stack); }
+		if (WizardClassWeaponHelper.selectMinionTarget(player, world)) {return new ActionResult<>(EnumActionResult.SUCCESS, stack);}
 
-		Spell spell = WandHelper.getCurrentSpell(stack);
-		SpellModifiers modifiers = this.calculateModifiers(stack, player, spell);
+		if (!(player.getHeldItemOffhand().getItem() instanceof ItemBattlemageShield && !player.isSneaking())) {
 
-		if (canCast(stack, spell, player, hand, 0, modifiers)) {
-			// Need to account for the modifier since it could be zero even if the original charge-up wasn't
-			int chargeup = (int) (spell.getChargeup() * modifiers.get(SpellModifiers.CHARGEUP));
+			Spell spell = WandHelper.getCurrentSpell(stack);
 
-			if (spell.isContinuous || chargeup > 0) {
-				// Spells that need the mouse to be held (continuous, charge-up or both)
-				if (!player.isHandActive()) {
-					player.setActiveHand(hand);
-					// Store the modifiers for use later
-					if (WizardData.get(player) != null) { WizardData.get(player).itemCastingModifiers = modifiers; }
-					if (chargeup > 0 && world.isRemote) { Wizardry.proxy.playChargeupSound(player); }
-					return new ActionResult<>(EnumActionResult.SUCCESS, stack);
-				}
-			} else {
-				// All other (instant) spells
-				if (cast(stack, spell, player, hand, 0, modifiers)) {
-					return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+			//	if (spell == ASSpells.runeword_meditate && player.getHeldItemOffhand().getItem() instanceof ItemBattlemageShield) {
+			//		((IManaStoringItem) player.getHeldItemOffhand().getItem()).rechargeMana(player.getHeldItemOffhand(), 1);
+			//	}
+
+			SpellModifiers modifiers = this.calculateModifiers(stack, player, spell);
+
+			if (canCast(stack, spell, player, hand, 0, modifiers)) {
+				// Need to account for the modifier since it could be zero even if the original charge-up wasn't
+				int chargeup = (int) (spell.getChargeup() * modifiers.get(SpellModifiers.CHARGEUP));
+
+				if (spell.isContinuous || chargeup > 0) {
+					// Spells that need the mouse to be held (continuous, charge-up or both)
+					if (!player.isHandActive()) {
+						player.setActiveHand(hand);
+						// Store the modifiers for use later
+						if (WizardData.get(player) != null) {WizardData.get(player).itemCastingModifiers = modifiers;}
+						if (chargeup > 0 && world.isRemote) {Wizardry.proxy.playChargeupSound(player);}
+						return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+					}
+				} else {
+					// All other (instant) spells
+					if (cast(stack, spell, player, hand, 0, modifiers)) {
+						return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+					}
 				}
 			}
 		}
@@ -578,48 +582,46 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		return new ActionResult<>(EnumActionResult.FAIL, stack);
 	}
 
-
-
 	// For continuous spells and spells with a charge-up time. The count argument actually decrements by 1 each tick.
 	// N.B. The first time this gets called is the tick AFTER onItemRightClick is called, not the same tick
 	@Override
-	public void onUsingTick(ItemStack stack, EntityLivingBase user, int count){
+	public void onUsingTick(ItemStack stack, EntityLivingBase user, int count) {
 
-		if(user instanceof EntityPlayer){
+		if (user instanceof EntityPlayer) {
 
-			EntityPlayer player = (EntityPlayer)user;
+			EntityPlayer player = (EntityPlayer) user;
 
 			Spell spell = WandHelper.getCurrentSpell(stack);
 
 			SpellModifiers modifiers;
 
-			if(WizardData.get(player) != null){
+			if (WizardData.get(player) != null) {
 				modifiers = WizardData.get(player).itemCastingModifiers;
-			}else{
-				modifiers = this.calculateModifiers(stack, (EntityPlayer)user, spell); // Fallback to the old way, should never be used
+			} else {
+				modifiers = this.calculateModifiers(stack, (EntityPlayer) user, spell); // Fallback to the old way, should never be used
 			}
 
 			int useTick = stack.getMaxItemUseDuration() - count;
-			int chargeup = (int)(spell.getChargeup() * modifiers.get(SpellModifiers.CHARGEUP));
+			int chargeup = (int) (spell.getChargeup() * modifiers.get(SpellModifiers.CHARGEUP));
 
-			if(spell.isContinuous){
+			if (spell.isContinuous) {
 				// Continuous spell charge-up is simple, just don't do anything until it's charged
-				if(useTick >= chargeup){
+				if (useTick >= chargeup) {
 					// castingTick needs to be relative to when the spell actually started
 					int castingTick = useTick - chargeup;
 					// Continuous spells (these must check if they can be cast each tick since the mana changes)
 					// Don't call canCast when castingTick == 0 because we already did it in onItemRightClick - even
 					// with charge-up times, because we don't want to trigger events twice
-					if(castingTick == 0 || canCast(stack, spell, player, player.getActiveHand(), castingTick, modifiers)){
+					if (castingTick == 0 || canCast(stack, spell, player, player.getActiveHand(), castingTick, modifiers)) {
 						cast(stack, spell, player, player.getActiveHand(), castingTick, modifiers);
-					}else{
+					} else {
 						// Stops the casting if it was interrupted, either by events or because the wand ran out of mana
 						player.stopActiveHand();
 					}
 				}
-			}else{
+			} else {
 				// Non-continuous spells need to check they actually have a charge-up since ALL spells call setActiveHand
-				if(chargeup > 0 && useTick == chargeup){
+				if (chargeup > 0 && useTick == chargeup) {
 					// Once the spell is charged, it's exactly the same as in onItemRightClick
 					cast(stack, spell, player, player.getActiveHand(), 0, modifiers);
 				}
@@ -680,19 +682,21 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 		// Spells can only be cast if the casting events aren't cancelled...
 		if (castingTick == 0) {
-			if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(AncientSpellcraft.BATTLEMAGE_ITEM, spell, caster, modifiers))) { return false; }
+			if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(AncientSpellcraft.BATTLEMAGE_ITEM, spell, caster, modifiers))) {return false;}
 		} else {
-			if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Tick(AncientSpellcraft.BATTLEMAGE_ITEM, spell, caster, modifiers, castingTick))) { return false; }
+			if (MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Tick(AncientSpellcraft.BATTLEMAGE_ITEM, spell, caster, modifiers, castingTick))) {
+				return false;
+			}
 		}
 
 		int cost = (int) (spell.getCost() * modifiers.get(SpellModifiers.COST) + 0.1f); // Weird floaty rounding
 
 		// As of wizardry 4.2 mana cost is only divided over two intervals each second
-		if (spell.isContinuous) { cost = getDistributedCost(cost, castingTick); }
+		if (spell.isContinuous) {cost = getDistributedCost(cost, castingTick);}
 
 		// ...and the wand has enough mana to cast the spell...
 
-//		if (hasManaStorage)
+		//		if (hasManaStorage)
 		boolean hasWandFromMana = cost <= this.getMana(stack, otherHand, caster) // This comes first because it changes over time
 				// ...and the wand is the same tier as the spell or higher...
 				&& spell.getTier().level <= this.tier.level
@@ -708,7 +712,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 			boolean test = (cost <= mana // ...and the wand is the same tier as the spell or higher...
 					&& spell.getTier().level <= this.tier.level
 					// ...and either the spell is not in cooldown or the player is in creative mode
-					&& ( cooldown == 0 || caster.isCreative()));
+					&& (cooldown == 0 || caster.isCreative()));
 			return test;
 		}
 	}
@@ -720,11 +724,11 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 		World world = caster.world;
 
-		if (world.isRemote && !spell.isContinuous && spell.requiresPacket()) { return false; }
+		if (world.isRemote && !spell.isContinuous && spell.requiresPacket()) {return false;}
 
 		if (spell.cast(world, caster, hand, castingTick, modifiers)) {
 
-			if (castingTick == 0) { MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(AncientSpellcraft.BATTLEMAGE_ITEM, spell, caster, modifiers)); }
+			if (castingTick == 0) {MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(AncientSpellcraft.BATTLEMAGE_ITEM, spell, caster, modifiers));}
 
 			if (!world.isRemote) {
 
@@ -738,7 +742,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 				// Mana cost
 				int cost = (int) (spell.getCost() * modifiers.get(SpellModifiers.COST) + 0.1f); // Weird floaty rounding
 				// As of wizardry 4.2 mana cost is only divided over two intervals each second
-				if (spell.isContinuous) { cost = getDistributedCost(cost, castingTick); }
+				if (spell.isContinuous) {cost = getDistributedCost(cost, castingTick);}
 
 				if (cost > 0) {
 					// wand
@@ -855,7 +859,6 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		}
 		return map;
 	}
-
 
 	public static void setTemporaryRuneWordData(ItemStack sword, Runeword runeword, NBTTagCompound data) {
 		// get the existing stuff
@@ -1014,8 +1017,8 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 			int chargeDepleted = this.getManaCapacity(centre.getStack()) - this.getMana(centre.getStack());
 
 			int manaPerItem = Constants.MANA_PER_CRYSTAL;
-			if (crystals.getStack().getItem() == WizardryItems.crystal_shard) { manaPerItem = Constants.MANA_PER_SHARD; }
-			if (crystals.getStack().getItem() == WizardryItems.grand_crystal) { manaPerItem = Constants.GRAND_CRYSTAL_MANA; }
+			if (crystals.getStack().getItem() == WizardryItems.crystal_shard) {manaPerItem = Constants.MANA_PER_SHARD;}
+			if (crystals.getStack().getItem() == WizardryItems.grand_crystal) {manaPerItem = Constants.GRAND_CRYSTAL_MANA;}
 
 			if (crystals.getStack().getCount() * manaPerItem < chargeDepleted) {
 				// If there aren't enough crystals to fully charge the wand
@@ -1042,12 +1045,12 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	 * @return True if the workbench tooltip should be shown, false if not.
 	 */
 	@Override
-	public boolean showTooltip(ItemStack stack) { return true; }
+	public boolean showTooltip(ItemStack stack) {return true;}
 
 	//--------------------------  IManaStoringItem implementation  --------------------------//
 
 	@Override
-	public int getMana(ItemStack stack) { return getManaCapacity(stack) - getDamage(stack); }
+	public int getMana(ItemStack stack) {return getManaCapacity(stack) - getDamage(stack);}
 
 	@Override
 	public void setMana(ItemStack stack, int mana) {
@@ -1104,16 +1107,16 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 		// Now we only need to add multipliers if they are not 1.
 		int level = WandHelper.getUpgradeLevel(stack, WizardryItems.range_upgrade);
-		if (level > 0) { modifiers.set(WizardryItems.range_upgrade, 1.0f + level * Constants.RANGE_INCREASE_PER_LEVEL, true); }
+		if (level > 0) {modifiers.set(WizardryItems.range_upgrade, 1.0f + level * Constants.RANGE_INCREASE_PER_LEVEL, true);}
 
 		level = WandHelper.getUpgradeLevel(stack, WizardryItems.duration_upgrade);
-		if (level > 0) { modifiers.set(WizardryItems.duration_upgrade, 1.0f + level * Constants.DURATION_INCREASE_PER_LEVEL, false); }
+		if (level > 0) {modifiers.set(WizardryItems.duration_upgrade, 1.0f + level * Constants.DURATION_INCREASE_PER_LEVEL, false);}
 
 		level = WandHelper.getUpgradeLevel(stack, WizardryItems.blast_upgrade);
-		if (level > 0) { modifiers.set(WizardryItems.blast_upgrade, 1.0f + level * Constants.BLAST_RADIUS_INCREASE_PER_LEVEL, true); }
+		if (level > 0) {modifiers.set(WizardryItems.blast_upgrade, 1.0f + level * Constants.BLAST_RADIUS_INCREASE_PER_LEVEL, true);}
 
 		level = WandHelper.getUpgradeLevel(stack, WizardryItems.cooldown_upgrade);
-		if (level > 0) { modifiers.set(WizardryItems.cooldown_upgrade, 1.0f - level * Constants.COOLDOWN_REDUCTION_PER_LEVEL, true); }
+		if (level > 0) {modifiers.set(WizardryItems.cooldown_upgrade, 1.0f - level * Constants.COOLDOWN_REDUCTION_PER_LEVEL, true);}
 
 		////		float progressionModifier = 1.0f - ((float) WizardData.get(player).countRecentCasts(spell) / WizardData.MAX_RECENT_SPELLS)
 		////				* MAX_PROGRESSION_REDUCTION;
@@ -1178,11 +1181,12 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 	/**
 	 * Gets the battlemage sword of the specificed tier
+	 *
 	 * @param tier to check
 	 * @return item of the tier
 	 */
 	public static Item getSwordForTier(Tier tier) {
-		if (tier == null) { throw new NullPointerException("The given tier cannot be null."); }
+		if (tier == null) {throw new NullPointerException("The given tier cannot be null.");}
 
 		if (tier == Tier.NOVICE) {
 			return ASItems.battlemage_sword_novice;
@@ -1323,7 +1327,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 			ItemStack sword = player.getHeldItemMainhand(); // Can't melee with offhand items
 			if (sword.getItem() instanceof ItemBattlemageSword) {
 				HashMap<Runeword, Integer> map = getActiveRunewords(sword);
-				for (Map.Entry<Runeword, Integer> entry: map.entrySet()) {
+				for (Map.Entry<Runeword, Integer> entry : map.entrySet()) {
 					if (entry.getKey().isAffectingDamageDirectly()) {
 						event.setAmount(entry.getKey().affectDamage(event.getSource(), event.getAmount(), player, event.getEntityLiving(), sword));
 					}

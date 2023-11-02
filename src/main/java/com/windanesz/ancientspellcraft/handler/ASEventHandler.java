@@ -8,6 +8,7 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityContingencyProjec
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
 import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
+import com.windanesz.ancientspellcraft.item.ItemBattlemageShield;
 import com.windanesz.ancientspellcraft.item.ItemBeltScrollHolder;
 import com.windanesz.ancientspellcraft.item.ItemManaArtefact;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
@@ -41,6 +42,7 @@ import electroblob.wizardry.entity.living.EntitySkeletonMinion;
 import electroblob.wizardry.entity.living.ISpellCaster;
 import electroblob.wizardry.entity.living.ISummonedCreature;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
+import electroblob.wizardry.event.ArtefactCheckEvent;
 import electroblob.wizardry.event.SpellBindEvent;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.integration.DamageSafetyChecker;
@@ -146,7 +148,7 @@ public class ASEventHandler {
 				Ritual ritual = ItemRitualBook.getRitual(otherItemStack);
 				if (!RitualDiscoveryData.hasRitualBeenDiscovered(player, ritual)) {
 					RitualDiscoveryData.addKnownRitual(player, ritual);
-					if(!player.isCreative()) event.getItemStack().shrink(1);
+					if (!player.isCreative()) {event.getItemStack().shrink(1);}
 					ASUtils.sendMessage(player, "ritual.discover", false, ritual.getNameForTranslationFormatted());
 					event.setCanceled(true);
 				}
@@ -297,7 +299,7 @@ public class ASEventHandler {
 		setCooldown(player, spell);
 
 		if (!player.world.isRemote) {
-			float chance =  0;
+			float chance = 0;
 			for (ItemArtefact ring : ItemArtefact.getActiveArtefacts(player, ItemArtefact.Type.RING)) {
 				if (ring == ASItems.ring_metamagic_preserve) {
 					chance += 0.33f;
@@ -351,7 +353,7 @@ public class ASEventHandler {
 	}
 
 	private static int update(EntityPlayer player, Integer countdown) {
-		if (countdown == null) { return 0; }
+		if (countdown == null) {return 0;}
 
 		if (!player.world.isRemote) {
 
@@ -359,7 +361,7 @@ public class ASEventHandler {
 
 			Integer spellId = data.getVariable(SPELL_ID);
 
-			if (spellId == null) { return 0; }
+			if (spellId == null) {return 0;}
 
 			Spell spell = Spell.byMetadata(spellId);
 
@@ -436,7 +438,7 @@ public class ASEventHandler {
 					if ((player.getHealth() <= 8 || (player.getHealth() - event.getAmount() <= 6)) && player.world.rand.nextFloat() < 0.5f) {
 						boolean shouldContinue = true;
 						for (ItemStack wand : ASUtils.getAllHotbarWands(player)) {
-							if (!shouldContinue) { break; }
+							if (!shouldContinue) {break;}
 							Spell[] spells = WandHelper.getSpells(wand);
 							List<Spell> minions = new ArrayList<>();
 							List<Integer> indexes = new ArrayList<>();
@@ -548,12 +550,12 @@ public class ASEventHandler {
 
 						Entity entity = EntityUtils.getEntityByUUID(player.world, iterator.next()); // the target who will take the damage instead
 
-						if (entity == null) { iterator.remove(); }
+						if (entity == null) {iterator.remove();}
 
 						if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isPotionActive(ASPotions.martyr)) {
 							// Retaliatory effect
 							if (DamageSafetyChecker.attackEntitySafely(entity, MagicDamage.causeDirectMagicDamage(player,
-									MagicDamage.DamageType.MAGIC, true), event.getAmount(), event.getSource().getDamageType(),
+											MagicDamage.DamageType.MAGIC, true), event.getAmount(), event.getSource().getDamageType(),
 									DamageSource.MAGIC, false)) {
 								// Sound only plays if the damage succeeds
 								entity.playSound(WizardrySounds.SPELL_CURSE_OF_SOULBINDING_RETALIATE, 1.0F, player.world.rand.nextFloat() * 0.2F + 1.0F);
@@ -588,6 +590,22 @@ public class ASEventHandler {
 
 	@SubscribeEvent
 	public static void onPotionApplicableEvent(PotionEvent.PotionApplicableEvent event) {
+		if (!event.getEntityLiving().world.isRemote && event.getPotionEffect().getPotion() != ASPotions.tenacity && event.getEntityLiving().isPotionActive(ASPotions.tenacity)) {
+			if (!event.getEntityLiving().getTags().contains(event.getPotionEffect().getPotion().getRegistryName().toString())) {
+
+				int tenacityLevel = event.getEntityLiving().getActivePotionEffect(ASPotions.tenacity).getAmplifier() + 1;
+				// Calculate the reduction factor based on tenacity level
+				double reductionFactor = 1.0 - (0.25 * tenacityLevel); // You can adjust the reduction factor as needed
+
+				event.getEntityLiving().addTag(event.getPotionEffect().getPotion().getRegistryName().toString());
+				event.getEntityLiving().addPotionEffect(new PotionEffect(event.getPotionEffect().getPotion(), (int) (event.getPotionEffect().getDuration() * 0.5), event.getPotionEffect().getAmplifier()));
+				event.setResult(Event.Result.DENY);
+			} else {
+				event.getEntityLiving().getTags().remove(event.getPotionEffect().getPotion().getRegistryName().toString());
+			//	event.setResult(Event.Result.DENY);
+			}
+		}
+
 		if (event.getPotionEffect().getPotion() == ASPotions.eagle_eye && !(event.getEntityLiving() instanceof EntityPlayer)) {
 			event.setResult(Event.Result.DENY);
 		}
@@ -773,7 +791,7 @@ public class ASEventHandler {
 			if (!event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof EntityEvilWizard
 					&& ItemArtefact.isArtefactActive(player, ASItems.charm_plunderers_mark)) {
 				double d0 = event.getEntityLiving().posY - 0.30000001192092896D + (double) event.getEntityLiving().getEyeHeight();
-				EntityItem entityitem = new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, d0, event.getEntityLiving().posZ,new ItemStack(ASItems.astral_diamond_shard));
+				EntityItem entityitem = new EntityItem(event.getEntityLiving().world, event.getEntityLiving().posX, d0, event.getEntityLiving().posZ, new ItemStack(ASItems.astral_diamond_shard));
 				event.getEntityLiving().world.spawnEntity(entityitem);
 			}
 		}
@@ -798,12 +816,12 @@ public class ASEventHandler {
 					}
 				}
 
-//				if (ItemArtefact.isArtefactActive(player, ASItems.charm_ice_arrow)) {
-//					if (event.getRayTraceResult().entityHit instanceof EntityLivingBase) {
-//						EntityLivingBase target = (EntityLivingBase) event.getRayTraceResult().entityHit;
-//						target.addPotionEffect(new PotionEffect(WizardryPotions.frost, 30)); // 1,5 seconds of poisoning
-//					}
-//				}
+				//				if (ItemArtefact.isArtefactActive(player, ASItems.charm_ice_arrow)) {
+				//					if (event.getRayTraceResult().entityHit instanceof EntityLivingBase) {
+				//						EntityLivingBase target = (EntityLivingBase) event.getRayTraceResult().entityHit;
+				//						target.addPotionEffect(new PotionEffect(WizardryPotions.frost, 30)); // 1,5 seconds of poisoning
+				//					}
+				//				}
 			}
 		}
 	}
@@ -813,7 +831,7 @@ public class ASEventHandler {
 
 		if (event.getSpell().getTier().ordinal() > 1) {
 			for (EntityPlayer player : event.getWorld().playerEntities) {
-				if (event.getCaster()  instanceof EntityLivingBase && event.getCaster().getDistanceSq(player) < 20 && ItemArtefact.isArtefactActive(player, ASItems.charm_suppression_orb)) {
+				if (event.getCaster() instanceof EntityLivingBase && event.getCaster().getDistanceSq(player) < 20 && ItemArtefact.isArtefactActive(player, ASItems.charm_suppression_orb)) {
 					if (event.getCaster() instanceof EntityPlayer) {
 						ASUtils.sendMessage(event.getCaster(), "item.ancientspellcraft:charm_suppression_orb.message", true);
 					}
@@ -1157,7 +1175,7 @@ public class ASEventHandler {
 					projectile.damageMultiplier = modifiers.get(SpellModifiers.POTENCY);
 
 					// Spawns the projectile in the world
-					if (!player.world.isRemote) { player.world.spawnEntity(projectile); }
+					if (!player.world.isRemote) {player.world.spawnEntity(projectile);}
 					data.setVariable(MetamagicProjectile.METAMAGIC_PROJECTILE, null);
 					event.setCanceled(true);
 
@@ -1179,7 +1197,7 @@ public class ASEventHandler {
 						projectile.damageMultiplier = modifiers.get(SpellModifiers.POTENCY);
 
 						// Spawns the projectile in the world
-						if (!event.getWorld().isRemote) { player.world.spawnEntity(projectile); }
+						if (!event.getWorld().isRemote) {player.world.spawnEntity(projectile);}
 						data.setVariable(Contingency.ACTIVE_CONTINGENCY_LISTENER, null);
 						Contingency.playSound(event.getWorld(), player.getPosition());
 						event.setCanceled(true);
@@ -1219,7 +1237,7 @@ public class ASEventHandler {
 							player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), spellToStore.getCooldown());
 						}
 					}
-					if (event.getWorld().isRemote) { Contingency.spawnParticles(event.getWorld(), player, Contingency.Type.fromName(spellTag)); }
+					if (event.getWorld().isRemote) {Contingency.spawnParticles(event.getWorld(), player, Contingency.Type.fromName(spellTag));}
 					Contingency.playSound(event.getWorld(), player.getPosition());
 
 					data.setVariable(Contingency.ACTIVE_CONTINGENCY_LISTENER, null);
@@ -1298,7 +1316,7 @@ public class ASEventHandler {
 				if (artefact == ASItems.charm_wand_upgrade) {
 
 					if (player.world.rand.nextFloat() < 0.2f) {
-						// check if its a wand and a wand upgrade item
+						// check if it's a wand and a wand upgrade item
 						if (WandHelper.isWandUpgrade(upgrade.getItem()) && centre.getItem() instanceof ItemWand) {
 							Item specialUpgrade = upgrade.getItem();
 
@@ -1360,6 +1378,15 @@ public class ASEventHandler {
 			}
 		}
 
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public static void onArtefactCheckEvent(ArtefactCheckEvent event) {
+		if (event.getPlayer() != null && event.getPlayer().getHeldItemOffhand().getItem() instanceof ItemBattlemageShield) {
+			if (ItemBattlemageShield.getArtefacts(event.getPlayer().getHeldItemOffhand()).stream().anyMatch(s -> s.getItem() == event.getArtefact())) {
+				event.setResult(Event.Result.ALLOW);
+			}
+		}
 	}
 
 	/**
@@ -1434,7 +1461,7 @@ public class ASEventHandler {
 
 				if (!ImbueWeapon.isBow(bow)) {
 					bow = archer.getHeldItemOffhand();
-					if (!ImbueWeapon.isBow(bow)) { return; }
+					if (!ImbueWeapon.isBow(bow)) {return;}
 				}
 
 				// Taken directly from ItemBow, so it works exactly the same as the power enchantment.
@@ -1460,7 +1487,7 @@ public class ASEventHandler {
 
 		if (projectile.hasNoGravity()) {
 			// No sensible spell will do this - range is meaningless if the projectile has no gravity or lifetime
-			if (projectile.getLifetime() <= 0) { return 1.5f; }
+			if (projectile.getLifetime() <= 0) {return 1.5f;}
 			// Speed = distance/time (trivial, I know, but I've put it here for the sake of completeness)
 			return range / projectile.getLifetime();
 		} else {

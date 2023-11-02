@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 
 // TODO: Possibly convert this to EntityScaledConstruct
 @Mod.EventBusSubscriber
@@ -451,6 +452,18 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 				new Vec3d(p).add(0.5, 0.5, 0.5)) != forcefield);
 
 		event.getExplosion().getPlayerKnockbackMap().keySet().removeIf(p -> getSurroundingForcefield(p) != forcefield);
+	}
+
+	@Nullable
+	@Override
+	public UUID getOwnerId() {
+		return null;
+	}
+
+	@Nullable
+	@Override
+	public Entity getOwner() {
+		return null;
 	}
 
 	public enum Colour {

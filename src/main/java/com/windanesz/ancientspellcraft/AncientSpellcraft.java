@@ -39,6 +39,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -89,7 +90,8 @@ public class AncientSpellcraft {
 		settings = new Settings();
 
 		proxy.registerRenderers();
-
+		proxy.registerExtraHandbookContent();
+		FMLInterModComms.sendMessage("ebwizardry", "addon_content", "I have stuff");
 		ASLoot.preInit();
 		ASBlocks.registerTileEntities();
 		ASBiomes.preInit();

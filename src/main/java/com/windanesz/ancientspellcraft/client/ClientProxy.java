@@ -87,6 +87,7 @@ import com.windanesz.ancientspellcraft.tileentity.TileSkullWatch;
 import com.windanesz.ancientspellcraft.tileentity.TileSphereCognizance;
 import com.windanesz.ancientspellcraft.util.ASParticles;
 import electroblob.wizardry.Wizardry;
+import electroblob.wizardry.client.gui.handbook.GuiWizardHandbook;
 import electroblob.wizardry.client.particle.ParticleWizardry;
 import electroblob.wizardry.client.renderer.entity.RenderBlank;
 import electroblob.wizardry.client.renderer.entity.RenderMagicArrow;
@@ -126,6 +127,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
+import javax.swing.event.AncestorEvent;
 import java.util.Collection;
 import java.util.List;
 
@@ -439,5 +441,10 @@ public class ClientProxy extends CommonProxy {
 
 	public void openBookGUI(EntityPlayer player, ItemStack book) {
 		Minecraft.getMinecraft().displayGuiScreen(new GuiScreenBook(Minecraft.getMinecraft().player, book, false));
+	}
+
+	@Override
+	public void registerExtraHandbookContent() {
+		GuiWizardHandbook.registerAddonHandbookContent(AncientSpellcraft.MODID);
 	}
 }

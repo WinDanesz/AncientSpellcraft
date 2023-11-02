@@ -66,6 +66,6 @@ function Create-Texture {
 #endregion Functions
 
 New-SimpleModelFile
-Add-LangFileEntry -Entry "item.$($script:modid)\:$($script:itemName).name=TODO"
-Add-LangFileEntry -Entry "item.$($script:modid)\:$($script:itemName).desc=TODO"
-Create-Texture
+ Add-LangFileEntry -Entry "item.$($script:modid)\:$($script:itemName).name=TODO"
+ Add-LangFileEntry -Entry "item.$($script:modid)\:$($script:itemName).desc=TODO"
+ Create-Texture

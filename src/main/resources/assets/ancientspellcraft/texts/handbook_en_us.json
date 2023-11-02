@@ -1,0 +1,152 @@
+{
+	"bookmark_start_section": "ancient_magic",
+
+	"colours": {
+		"text": "#000000",
+		"caption": "#666666",
+		"hyperlink": "#601ba0",
+		"highlight": "#dd4c1d",
+		"new_section": "#aaaaaa"
+	},
+
+	"images": {
+		"scribing_desk": {
+			"location": "ancientspellcraft:textures/gui/entries/scribing_desk.png",
+			"caption": "The Scribing Desk",
+			"u": 0,
+			"v": 0,
+			"width": 110,
+			"height": 99
+		},
+		"scribing_desk_gui": {
+			"location": "ancientspellcraft:textures/gui/entries/scribing_desk_gui.png",
+			"caption": "The Scribing Desk GUI",
+			"u": 0,
+			"v": 0,
+			"width": 110,
+			"height": 94
+		},
+		"spell_blade": {
+			"location": "ancientspellcraft:textures/items/battlemage_sword_advanced_magic.png",
+			"caption": "An Advanced Spell Blade",
+			"u": 0,
+			"v": 0,
+			"width": 64,
+			"height": 64,
+			"border": false
+		},
+		"spell_blade_crafting": {
+			"location": "ancientspellcraft:textures/gui/entries/spell_blade_crafting.png",
+			"caption": "Crafting a Spell Blade",
+			"u": 0,
+			"v": 0,
+			"width": 110,
+			"height": 49,
+			"border": false
+		}
+	},
+
+	"recipes": {
+		"sphere_cognizance": {
+			"locations": [ "ancientspellcraft:sphere_cognizance" ]
+		},
+		"scribing_desk": {
+			"locations": [ "ancientspellcraft:scribing_desk" ]
+		},
+		"battlemage_sword_blade": {
+			"locations": [ "ancientspellcraft:battlemage_sword_blade" ]
+		},
+		"battlemage_sword_hilt": {
+			"locations": [ "ancientspellcraft:battlemage_sword_hilt" ]
+		}
+	},
+
+
+	"sections": {
+		"ancient_magic": {
+			"title": "Ancient Magic",
+			"include_in_contents": "main_contents",
+			"triggers": [
+				"ancientspellcraft:relics"
+			],
+			"text": [
+			
+				" Only a few remnants of the old wizarding civilizations can be found in this era. Many of their ancient spells and techniques are said to be lost to the ages... the magical seals that bind magic to parchment have decayed and faded away, books and scrolls have been devoured by silverfish and the surviving ones crumble into dust at the slightest disturbance",
+				"Stone Tablets can be studied at a @sphere_cognizance Sphere of Cognizance@ to uncover their secrets. Some scholars theorize that these tablets might be inscribed with knowledge of ancient spells- created and utilized by wizards from long-forgotten civilizations. However, no wizard in recent history has been successful in recreating any of these spells."
+			]
+		},
+		"sphere_cognizance": {
+			"title": "Sphere of Cognizance",
+			"include_in_contents": "main_contents",
+			"text": [
+
+				"The Sphere of Cognizance can be used to research unknown spells or Relic items (Stone Tablets) and it can become an essential tool for identifying unknown spells. ",
+				"By fuelling the process with raw magic crystals and concentrating their mind on the Sphere, a wizard can learn clues regarding the very nature of the spell which was put under the Sphere, without casting it. Not only can the elemental affinity of the spell be revealed this way, but also the its purpose - be it a summoning incantation, or a protective aura around the caster.",
+				"#recipe sphere_cognizance"
+			]
+		},
+		"scribing_desk": {
+			"title": "Scribing Desk",
+			"include_in_contents": "main_contents",
+			"text": [
+				"The Scribing Desk can be used to put the knowledge uncovered from arcane relics into some practical usage...",
+				"Spell type Stone Tablets can be used with the desk to create ancient spell books.",
+				"#image scribing_desk",
+				"The Scribing Desk has 7 item slots.",
+				"- The top left slot is for relics like stone tablets.",
+				"- The bottom left slot is for Magic Crystals.",
+				"- The book slot in the middle is for an empty, regular Book.",
+				"- The bottom right slot is for Ink.",
+				"- The three slots in the middle are for ingredients.",
+				"#image scribing_desk_gui",
+				"#recipe scribing_desk"
+			]
+		},
+		"battlemage_magic": {
+			"title": "Battlemage Magic",
+			"include_in_contents": "main_contents",
+			"text": [
+				"In the world of wizardry, there exists a unique class of magic wielders known as Battlemages. These extraordinary individuals harness the power of magic swords, also known as spell blades, a special kind of weapon that comes in four distinct tiers: Novice, Apprentice, Advanced, and Master. What makes these magic swords truly remarkable is their adaptability to the elements. Unlike other magical items, these swords do not come pre-imbued with a specific element. Instead, they draw their elemental power from the armor set worn by the Battlemage. This dynamic connection between the sword and the armor enables the Battlemage to harness power of the element that aligns with their chosen armor set.",
+				"#image spell_blade",
+				"Spell blades are forged from the finest Crystal Silver and due to their nature, will only work in the hand of a true battlemage, who wears a full set of matching battlemage armour.",
+				"However, wielding such formidable magic swords is not a simple feat. Battlemages must be equipped with not only the sword itself but also a magic source in their off-hand. This source serves as the catalyst for channeling the sword's power, enabling the Battlemage to unleash devastating attacks.",
+				"The magic source can be a @wands wand@ or a Runic Shield"
+			]
+		},
+		"battlemage_swords": {
+			"title": "Battlemage Swords",
+			"include_in_contents": "main_contents",
+			"text": [
+				"Creating a Spell Blade is a two-step process. First, you must craft the sword blade, and then you'll craft the hilt. These two essential components will eventually be merged into a formidable Spell Blade. The anvil where this merging happens is none other than the mighty Runic Anvil.",
+				"The first step involves crafting the blade of your Spell Blade. The Crystal Silver Plates are the key to creating a blade that resonates with magical power. With the shining metal plates, you'll forge the very essence of your sword's might.",
+				"Once the blade is crafted to perfection, it's time to create the hilt that will allow you to wield your Spell Blade with finesse. With the hilt in hand, you'll have all the necessary components for your weapon.",
+				"Now, the most critical moment arrives. Head to the Runic Anvil. Here, you'll assemble the blade and the hilt, uniting them into a single, powerful Spell Blade.",
+				"As you complete this final step, you'll feel the surge of magic emanating from your newly forged Spell Blade. It is now a reflection of your prowess and a testament to your journey as a Battlemage. With this weapon in hand, you are ready to embrace your role on the battlefield, where the clash of magic and steel knows no equal.",
+				"#recipe battlemage_sword_hilt",
+				"#recipe battlemage_sword_blade",
+				"#image spell_blade_crafting",
+				"Spell Blades conjure various effect depending on their current element. They accumulate charges with each strike and spell cast, glowing when fully charged. At full charge, the next physical attack expels all charges for an unique effect, depending on the element.",
+
+				"#colour_fireFire#colour_reset \nBasic Attacks \n Fire Spell Blades turn enemies on flame with each attack and also have 20% chance to split burning embers on hit. This chance increases to 40% on an enemy kill. \nCharged Attack \n A charged attack grants the battlemage a short Fire Resistance and Fireskin effect. Burning enemies are Soul Scorched for a short duration, reducing their healing power.",
+
+				"#colour_iceIce#colour_reset \nBasic Attacks \nIce Spell Blades Freeze their enemies with each attack, with 20% chance with each hit for the effect to stack. A slain enemy has 25% chance to explode into frozen ice shards.\nCharged Attack \nA charged attack causes an eruption of frost, knocking back, damaging and slowing all nearby enemies.",
+
+				"#colour_lightningLightning#colour_reset \nBasic Attacks \nLightning Spell Blades damage all nearby enemies by chaining lighting magic into them. They also receive a static charge by movement, restoring mana as the battlemage moves. These blades have a higher cost of mana for basic attacks.\nCharged Attack \nA charged attack restores 60 mana instantly.",
+
+				"#colour_necromancyNecromancy#colour_reset \nBasic Attacks \nNecromancy Spell Blades Wither enemies with each hit and steal a small amount of life force back to the battlemage. Killing an enemy grants a short speed and strength bonus.\nCharged Attack \nA charged restores more health and also restores some saturation.",
+				"#colour_earthEarth#colour_reset \nBasic Attacks \nEarth Spell Blades poison their targets with each attack, this effect has 20% chance to stack. Each attack has 50% chance to grow a nearby allied magic mushroom of a random effect.\nCharged Attack \nEarth Spell Blades doesn't have a charged effect.",
+				"#colour_sorcerySorcery#colour_reset \nBasic Attacks \nBasic Attacks of a Sorcery Spell Blade doesn't have special effects.\nCharged Attack \nCharged attacks summon conjured weapons for a short duration.",
+				"#colour_healingHealing#colour_reset \nBasic Attacks \nHealing Spell Blades apply Mark Sacrifice on the target with each hit, and set undeads on fire for 2 seconds.\nCharged Attack \nA charged attack of a spell blade applies a random beneficial bonus to all nearby allies."
+			]
+		},
+		"more_crafting_recipes": {
+			"title": "More Crafting Recipes",
+			"include_in_contents": "main_contents",
+			"text": [
+
+				"#recipe sphere_cognizance",
+				"#recipe scribing_desk"
+			]
+		}
+	}
+}

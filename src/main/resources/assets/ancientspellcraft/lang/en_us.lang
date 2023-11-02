@@ -305,6 +305,8 @@ item.ancientspellcraft\:battlemage_sword_blade.name=Crystal Silver Blade
 item.ancientspellcraft\:battlemage_sword_hilt.name=Spell Sword Hilt
 item.ancientspellcraft\:battlemage_sword_master.name=Spell Blade
 item.ancientspellcraft\:battlemage_sword_novice.name=Spell Dagger
+item.ancientspellcraft\:battlemage_shield.name=Runic Shield
+item.ancientspellcraft\:battlemage_shield.desc=Requires a matching set of battlemage armor\nSneak-right click it in the mainhand to open its GUI to place charms
 item.ancientspellcraft\:belt.generic.desc=Equip this belt in the Baubles inventory or by placing it on your hotbar if you don't have Baubles. Only one belt may be equipped at a time.
 item.ancientspellcraft\:belt_enchanter.desc=Increases the duration of Buff spells by 20%%
 item.ancientspellcraft\:belt_enchanter.name=Belt of The Enchanter
@@ -363,6 +365,8 @@ item.ancientspellcraft\:charm_glyph_antigravity.desc=Increases speed by 25%% and
 item.ancientspellcraft\:charm_glyph_antigravity.name=Glyph of Anti-Gravity
 item.ancientspellcraft\:charm_glyph_illumination.desc=The Spell Blade radiates with light, illuminating the nearby area
 item.ancientspellcraft\:charm_glyph_illumination.name=Glyph of Illumination
+item.ancientspellcraft\:charm_glyph_might.desc=Increases the Spell Blade's attack damage by 20%%
+item.ancientspellcraft\:charm_glyph_might.name=Glyph of Might
 item.ancientspellcraft\:charm_glyph_leeching.desc=Grants the Necromancy Spell Blade 30%% chance to steal positive buffs from the target on each empowered attack
 item.ancientspellcraft\:charm_glyph_leeching.name=Glyph of Leeching
 item.ancientspellcraft\:charm_glyph_vitality.desc=Increases the rate of natural health regeneration
@@ -371,6 +375,24 @@ item.ancientspellcraft\:charm_glyph_warden.desc=Hiding inside your own thorn bus
 item.ancientspellcraft\:charm_glyph_warden.name=Glyph of the Warden
 item.ancientspellcraft\:charm_glyph_imbuement.desc=Runeword: Imbue lasts for 6x more hits with the Spell Blade
 item.ancientspellcraft\:charm_glyph_imbuement.name=Glyph of Alchemy
+item.ancientspellcraft\:charm_glyph_fortification.desc=Slowly restores durability to battlemage armour. This effect is 6x more potent during Runeword: Meditate
+item.ancientspellcraft\:charm_glyph_fortification.name=Glyph of Fortification
+
+item.ancientspellcraft\:charm_aura_alacrity.name=Glyph of Alacrity
+item.ancientspellcraft\:charm_aura_alacrity.desc=Increases the movement speed of nearby allies and the battlemage\nOnly battlemages can use this
+item.ancientspellcraft\:charm_aura_hatred.name=Glyph of Hatred
+item.ancientspellcraft\:charm_aura_hatred.desc=Nearby allied undead gain Strength\nOnly battlemages can use this
+item.ancientspellcraft\:charm_aura_life.name=Glyph of Life
+item.ancientspellcraft\:charm_aura_life.desc=Grants regeneration to nearby allies and the battlemage\nOnly battlemages can use this
+item.ancientspellcraft\:charm_aura_purity.name=Glyph of Purity
+item.ancientspellcraft\:charm_aura_purity.desc=Nearby undeads are weakened and slowed\nOnly battlemages can use this
+item.ancientspellcraft\:charm_aura_warding.name=Glyph of Warding
+item.ancientspellcraft\:charm_aura_warding.desc=Increases the magic resistance of nearby allies and the battlemage\nOnly battlemages can use this
+item.ancientspellcraft\:charm_aura_wither.name=Glyph of Death
+item.ancientspellcraft\:charm_aura_wither.desc=Withers all nearby enemies\nOnly battlemages can use this
+item.ancientspellcraft\:charm_aura_tenacity.name=Glyph of Tenacity
+item.ancientspellcraft\:charm_aura_tenacity.desc=Halves the duration of harmful effects for nearby allies and the battlemage
+
 item.ancientspellcraft\:charm_gold_bag.desc=This magically enhanced coin bag refills itself with 3-8 gold nuggets each day
 item.ancientspellcraft\:charm_gold_bag.empty=You search through the bag but it was empty..
 item.ancientspellcraft\:charm_gold_bag.name=Everfull Bag of Gold
@@ -762,6 +784,7 @@ potion.ancientspellcraft\:time_knot=Time Knot
 potion.ancientspellcraft\:unlimited_power=Unlimited Power
 potion.ancientspellcraft\:water_walking=Water Walking
 potion.ancientspellcraft\:wizard_shield=Wizard Shield
+potion.ancientspellcraft\:tenacity=Tenacity
 
 # relic
 relic_type.enchantment.instruction=Hold the table in your main hand and an item in your other hand for 6 seconds to enchant it
@@ -1212,10 +1235,12 @@ spell.ancientspellcraft\:runeword_empower.desc=Instantly charges the Spell Blade
 spell.ancientspellcraft\:runeword_empower=Runeword: Empower
 spell.ancientspellcraft\:runeword_restoration.desc=Draw power from the Spell Blade, restoring 10%% missing health.
 spell.ancientspellcraft\:runeword_restoration=Runeword: Restoration
-spell.ancientspellcraft\:runeword_arcane.desc=Imbue the Spell Blade with arcane energy, causing your next hit to deal 70% weapon damage and bypass armour.
+spell.ancientspellcraft\:runeword_arcane.desc=Imbue the Spell Blade with arcane energy, causing your next hit to deal 70%% weapon damage and bypass armour.
 spell.ancientspellcraft\:runeword_arcane=Runeword: Arcane
 spell.ancientspellcraft\:runeword_disarm.desc=The next attack with the Spell Blade will disable the targeted player's held items for 3 seconds.
 spell.ancientspellcraft\:runeword_disarm=Runeword: Disarm
+spell.ancientspellcraft\:runeword_meditate.desc=Meditates to restore the energy of a Runic Shield in the offhand. Continuous spell.
+spell.ancientspellcraft\:runeword_meditate=Runeword: Meditate
 
 # spell type
 spelltype.contingency=Contingency
@@ -1464,3 +1489,6 @@ item.ancientspellcraft\:charm_wizard_ale.name=Keg of Legendary Ale
 item.ancientspellcraft\:charm_wizard_ale.desc=Travelling Wizards stay for a week instead of a day when you use a Scroll of Bartering
 item.ancientspellcraft\:belt_soul_scorch.name=Scorching Belt
 item.ancientspellcraft\:belt_soul_scorch.desc=Attackers receive the Soul Scorch effect or 3 seconds
+item.ancientspellcraft\:charm_glyph_shield_disable.name=Glyph of Unyielding
+item.ancientspellcraft\:charm_glyph_shield_disable.desc=The Runic Shield cannot be disabled by axes or any other means
+
