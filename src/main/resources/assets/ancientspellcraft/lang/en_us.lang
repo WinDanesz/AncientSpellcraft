@@ -111,6 +111,7 @@ entity.ancientspellcraft\:healing_sigil.name=Magic
 gui.ancientspellcraft:empty_slot=Empty Slot
 gui.ancientspellcraft\:ancient_knowledge_increased=Your knowledge of ancient magic increased by %s
 gui.ancientspellcraft\:element.magic=Ancient
+gui.ancientspellcraft\:element.sage=Sage Spell
 gui.ancientspellcraft\:research=Research
 gui.ancientspellcraft\:sphere_cognizance.already_researched=You've already researched this relic
 gui.ancientspellcraft\:sphere_cognizance.hint.alteration.1=In your hands you hold the key to change the world around you

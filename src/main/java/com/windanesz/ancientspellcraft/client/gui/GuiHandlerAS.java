@@ -5,6 +5,7 @@ import com.windanesz.ancientspellcraft.item.ItemASSpellBook;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageShield;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
 import com.windanesz.ancientspellcraft.item.ItemRunicPlate;
+import com.windanesz.ancientspellcraft.item.ItemSageSpellBook;
 import com.windanesz.ancientspellcraft.item.ItemSageTome;
 import com.windanesz.ancientspellcraft.tileentity.TileArcaneAnvil;
 import com.windanesz.ancientspellcraft.tileentity.TileSageLectern;
@@ -36,6 +37,7 @@ public class GuiHandlerAS implements IGuiHandler {
 	public static final int SPELL_GUI_LECTERN = nextGuiId++;
 	public static final int RUNIC_PLATE = nextGuiId++;
 	public static final int BATTLEMAGE_SHIELD = nextGuiId++;
+	public static final int SPELL_BOOK_SAGE = nextGuiId++;
 
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
@@ -71,6 +73,13 @@ public class GuiHandlerAS implements IGuiHandler {
 				return new GuiAncientElementSpellBook(player.getHeldItemMainhand());
 			} else if (player.getHeldItemOffhand().getItem() instanceof ItemASSpellBook) {
 				return new GuiAncientElementSpellBook(player.getHeldItemOffhand());
+			}
+		}
+		if (id == SPELL_BOOK_SAGE) {
+			if (player.getHeldItemMainhand().getItem() instanceof ItemSageSpellBook) {
+				return new GuiSageSpellBook(player.getHeldItemMainhand());
+			} else if (player.getHeldItemOffhand().getItem() instanceof ItemSageSpellBook) {
+				return new GuiSageSpellBook(player.getHeldItemOffhand());
 			}
 		}
 		if (id == SPHERE_COGNIZANCE) {
