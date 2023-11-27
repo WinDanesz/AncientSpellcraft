@@ -1,6 +1,8 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.BlockUtils;
@@ -10,12 +12,13 @@ import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class ConjureCake extends SpellRay {
+public class ConjureCake extends SpellRay implements IClassSpell {
 
 	public ConjureCake(){
 		super(AncientSpellcraft.MODID, "conjure_cake", SpellActions.POINT, false);
@@ -52,4 +55,13 @@ public class ConjureCake extends SpellRay {
 		return false;
 	}
 
+	@Override
+	public ItemWizardArmour.ArmourClass getArmourClass() {
+		return ItemWizardArmour.ArmourClass.SAGE;
+	}
+
+	@Override
+	public boolean applicableForItem(Item item) {
+		return item == ASItems.mystic_spell_book;
+	}
 }
