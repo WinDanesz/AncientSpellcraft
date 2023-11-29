@@ -36,21 +36,23 @@ public class Beanstalk extends SpellRayAS {
 	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit,
 			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 
-		if (side.getAxis().isHorizontal()) {
+		if (side.getAxis().isHorizontal() && caster != null) {
 
 			if (ticksInUse % 10 == 0) {
 
 				int currOffsetUp = ticksInUse / 10;
 				int maxHeight = getProperty(MAX_HEIGHT_IN_BLOCKS).intValue();
 
+				EnumFacing direction = caster.isSneaking() ? EnumFacing.DOWN : EnumFacing.UP;
+
 				if (currOffsetUp < maxHeight) {
 					boolean isVine = false;
 
-					BlockPos position = pos.offset(EnumFacing.UP, currOffsetUp).offset(side);
+					BlockPos position = pos.offset(direction, currOffsetUp).offset(side);
 
 					isVine = world.getBlockState(position).getBlock() == Blocks.VINE;
 
-					if (!world.isRemote && !world.isAirBlock(pos.offset(EnumFacing.UP, currOffsetUp)) && !isVine && BlockUtils.canBlockBeReplaced(world, position) && BlockUtils.canPlaceBlock(caster, world, position)) {
+					if (!world.isRemote && !world.isAirBlock(pos.offset(direction, currOffsetUp)) && !isVine && BlockUtils.canBlockBeReplaced(world, position) && BlockUtils.canPlaceBlock(caster, world, position)) {
 
 						PropertyBool facing;
 						switch (side) {
