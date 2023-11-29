@@ -397,7 +397,7 @@ public class Experiment extends Spell implements IClassSpell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == ASItems.mystic_spell_book;
+		return item == ASItems.mystic_spell_book || item == ASItems.mystic_scroll;
 	}
 
 	public static void spawnParticle(World world, EntityLivingBase caster, SpellModifiers modifiers, Random rand) {

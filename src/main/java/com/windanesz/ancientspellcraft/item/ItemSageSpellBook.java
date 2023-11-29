@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.WizardryGuiHandler;
 import electroblob.wizardry.item.ItemWizardArmour;
@@ -47,7 +48,7 @@ public class ItemSageSpellBook extends ItemArmourClassSpellHolder {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
 		ItemStack stack = player.getHeldItem(hand);
-		player.openGui(Wizardry.instance, WizardryGuiHandler.SPELL_BOOK, world, 0, 0, 0);
+		player.openGui(AncientSpellcraft.instance, GuiHandlerAS.SPELL_BOOK_SAGE, world, 0, 0, 0);
 		return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
 	}
 

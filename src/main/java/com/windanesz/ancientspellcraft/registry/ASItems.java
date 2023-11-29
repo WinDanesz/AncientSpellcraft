@@ -57,6 +57,7 @@ import com.windanesz.ancientspellcraft.item.ItemMagicShield;
 import com.windanesz.ancientspellcraft.item.ItemManaArtefact;
 import com.windanesz.ancientspellcraft.item.ItemMasterBolt;
 import com.windanesz.ancientspellcraft.item.ItemMoonLetterDictionary;
+import com.windanesz.ancientspellcraft.item.ItemMysticScroll;
 import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.item.ItemOmnicron;
 import com.windanesz.ancientspellcraft.item.ItemOverlordScepter;
@@ -403,6 +404,7 @@ public final class ASItems {
 
 	public static final Item empty_theory_scroll = placeholder();
 	public static final Item theory_scroll = placeholder();
+	public static final Item mystic_scroll = placeholder();
 
 	public static final Item runic_plate = placeholder();
 	public static final Item mystic_spell_book = placeholder();
@@ -810,6 +812,7 @@ public final class ASItems {
 		registerItem(registry, "imbuement_scroll", new ItemImbuementScroll());
 		registerItem(registry, "empty_theory_scroll", new ItemTheoryScroll());
 		registerItem(registry, "theory_scroll", new ItemTheoryScroll());
+		registerItem(registry, "mystic_scroll", new ItemMysticScroll());
 
 		registerItem(registry, "blank_rune", new Item().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT).setMaxStackSize(16));
 		registerItem(registry, "rune_feoh", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));

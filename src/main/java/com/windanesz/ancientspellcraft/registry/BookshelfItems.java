@@ -28,6 +28,7 @@ public class BookshelfItems {
 		registerBookModelTexture(() -> ASItems.soulbound_upgrade, new ResourceLocation(Wizardry.MODID, "blocks/scrolls_wooden"));
 		registerBookModelTexture(() -> ASItems.sentience_upgrade, new ResourceLocation(Wizardry.MODID, "blocks/scrolls_wooden"));
 		registerBookModelTexture(() -> ASItems.empowerment_upgrade, new ResourceLocation(Wizardry.MODID, "blocks/scrolls_wooden"));
+		registerBookModelTexture(() -> ASItems.mystic_scroll, new ResourceLocation(AncientSpellcraft.MODID, "blocks/scrolls_mystic_scroll"));
 
 	}
 
@@ -37,6 +38,7 @@ public class BookshelfItems {
 		ContainerBookshelf.registerBookItem(ASItems.ancient_spellcraft_spell_book);
 		ContainerBookshelf.registerBookItem(ASItems.ancient_spellcraft_scroll);
 		ContainerBookshelf.registerBookItem(ASItems.mystic_spell_book);
+		ContainerBookshelf.registerBookItem(ASItems.mystic_scroll);
 		ContainerBookshelf.registerBookItem(ASItems.empty_theory_scroll);
 		ContainerBookshelf.registerBookItem(ASItems.theory_scroll);
 		ContainerBookshelf.registerBookItem(ASItems.transmutation_scroll);

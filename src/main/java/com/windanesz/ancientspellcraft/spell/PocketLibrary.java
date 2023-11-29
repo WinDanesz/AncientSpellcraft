@@ -161,7 +161,7 @@ public class PocketLibrary extends Spell implements IClassSpell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == ASItems.mystic_spell_book;
+		return item == ASItems.mystic_spell_book || item == ASItems.mystic_scroll;
 	}
 
 	/**
@@ -187,7 +187,7 @@ public class PocketLibrary extends Spell implements IClassSpell {
 
 			BlockPos origin;
 			EnumDyeColor color = EnumDyeColor.values()[world.rand.nextInt(EnumDyeColor.values().length)];
-			switch (WizardArmourUtils.getFullSetElement(caster)) {
+			switch (WizardArmourUtils.getFullSetElementForClass(caster, ItemWizardArmour.ArmourClass.SAGE)) {
 				case MAGIC:
 					color = EnumDyeColor.GRAY;
 					break;

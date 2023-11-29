@@ -19,6 +19,6 @@ public class ConjureCreeper extends SpellMinion<EntityCreeperMinion> implements 
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == ASItems.mystic_spell_book;
+		return item == ASItems.mystic_spell_book || item == ASItems.mystic_scroll;
 	}
 }
