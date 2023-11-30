@@ -112,7 +112,8 @@ public class ItemBeltScrollHolder extends ItemNewArtefact implements ITickableAr
 
 	@Override
 	public void onWornTick(ItemStack itemstack, EntityLivingBase player) {
-		if (!player.world.isRemote && itemstack.getItem() instanceof IManaStoringItem &&  !((IManaStoringItem)itemstack.getItem()).isManaFull(itemstack)
+		if (!player.world.isRemote && getScroll(itemstack).getItem() == WizardryItems.condenser_upgrade &&
+				itemstack.getItem() instanceof IManaStoringItem &&  !((IManaStoringItem)itemstack.getItem()).isManaFull(itemstack)
 				&& player.world.getTotalWorldTime() % 50L == 0L) {
 			((IManaStoringItem)itemstack.getItem()).rechargeMana(itemstack, 1);
 		}
