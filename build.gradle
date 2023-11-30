@@ -150,8 +150,8 @@ dependencies {
 
     //// Dependencies ////
     // For local development
-    implementation fg.deobf("random_placeholder:ElectroblobsWizardry:4.3.12")
-  //  implementation fg.deobf("curse.maven:ElectroblobsWizardry-${wizardry_projectid}:${wizardry_fileid}")
+    // implementation fg.deobf("random_placeholder:ElectroblobsWizardry:4.3.12")
+    implementation fg.deobf("curse.maven:ElectroblobsWizardry-${wizardry_projectid}:${wizardry_fileid}")
     implementation fg.deobf("curse.maven:baubles-${baubles_projectid}:${baubles_fileid}")
     implementation fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}")
     implementation fg.deobf("curse.maven:artemislib-${artemislib_projectid}:${artemislib_fileid}")
