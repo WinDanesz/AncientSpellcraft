@@ -50,7 +50,7 @@ public final class WizardArmourUtils {
 		if (isWearingFullSet(entity, null, armourClass)) {
 			// if it's a full set, we can just check any of the armour pieces
 			ItemStack helmet = entity.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-			return ((ItemWizardArmour) helmet.getItem()).element;
+			return ((ItemWizardArmour) helmet.getItem()).element != null ? ((ItemWizardArmour) helmet.getItem()).element : Element.MAGIC;
 		}
 		return Element.MAGIC;
 	}
