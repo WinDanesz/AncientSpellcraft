@@ -2,8 +2,13 @@ package com.windanesz.ancientspellcraft.block;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
+import com.windanesz.ancientspellcraft.item.ItemRunicHammer;
+import com.windanesz.ancientspellcraft.item.ItemSageTome;
 import com.windanesz.ancientspellcraft.registry.ASTabs;
+import com.windanesz.ancientspellcraft.spell.IRunicHammerSpell;
+import com.windanesz.ancientspellcraft.spell.SpellLecternInteract;
 import com.windanesz.ancientspellcraft.tileentity.TileArcaneAnvil;
+import com.windanesz.ancientspellcraft.tileentity.TileSageLectern;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
@@ -90,6 +95,12 @@ public class BlockArcaneAnvil extends BlockContainer {
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState block, EntityPlayer player, EnumHand hand,
 			EnumFacing side, float hitX, float hitY, float hitZ) {
 
+		// do not intercept spell casts with anvil interacting spells
+		if (player.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemRunicHammer
+				&& ((ItemRunicHammer) player.getHeldItem(EnumHand.MAIN_HAND).getItem()).getCurrentSpell(player.getHeldItem(EnumHand.MAIN_HAND)) instanceof IRunicHammerSpell) {
+			return false;
+		}
+
 		TileEntity tileEntity = world.getTileEntity(pos);
 
 		if (tileEntity == null || player.isSneaking()) {
@@ -162,5 +173,18 @@ public class BlockArcaneAnvil extends BlockContainer {
 		}
 
 		super.breakBlock(world, pos, block);
+	}
+
+	public static ItemStack getItemOnLeftSlot(World world, BlockPos pos) {
+		TileEntity tileentity = world.getTileEntity(pos);
+
+		if (tileentity instanceof TileArcaneAnvil) {
+
+			TileArcaneAnvil anvil = (TileArcaneAnvil) tileentity;
+
+			return anvil.getStackInSlot(0);
+		}
+
+		return ItemStack.EMPTY;
 	}
 }
