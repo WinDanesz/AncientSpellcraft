@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import com.windanesz.ancientspellcraft.util.WizardArmourUtils;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.registry.WizardryPotions;
@@ -49,6 +50,10 @@ public class ItemGlyphAuraArtefact extends ItemGlyphArtefact implements ITickabl
 					applyPotionIfNotActive(player, player, WizardryPotions.ward, 60, 1, false);
 				} else if (this == ASItems.charm_aura_wither) {
 					getNearbyEnemies(wearingEntity).forEach(e -> applyPotionIfNotActive(player, e, MobEffects.WITHER, 60, 0, true));
+				} else if (this == ASItems.charm_aura_defense) {
+					applyPotionIfNotActive(player, player, ASPotions.improved_armor, 60, 3, false);
+				} else if (this == ASItems.charm_aura_vulnerability) {
+					getNearbyEnemies(wearingEntity).stream().forEach(e -> applyPotionIfNotActive(player, e, ASPotions.degraded_armor, 60, 4, false));
 				}
 			}
 		}

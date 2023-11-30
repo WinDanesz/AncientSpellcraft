@@ -16,6 +16,7 @@ import com.windanesz.ancientspellcraft.item.ItemBarterScroll;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageShield;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import com.windanesz.ancientspellcraft.item.ItemBeltScrollHolder;
+import com.windanesz.ancientspellcraft.item.ItemBlankMysticScroll;
 import com.windanesz.ancientspellcraft.item.ItemBlockDevoritiumMaterial;
 import com.windanesz.ancientspellcraft.item.ItemChargedAstralDiamond;
 import com.windanesz.ancientspellcraft.item.ItemCoalBucket;
@@ -66,6 +67,7 @@ import com.windanesz.ancientspellcraft.item.ItemPhiloshopersStone;
 import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
 import com.windanesz.ancientspellcraft.item.ItemRune;
+import com.windanesz.ancientspellcraft.item.ItemRunicHammer;
 import com.windanesz.ancientspellcraft.item.ItemRunicPlate;
 import com.windanesz.ancientspellcraft.item.ItemSacredMace;
 import com.windanesz.ancientspellcraft.item.ItemSageSpellBook;
@@ -319,6 +321,7 @@ public final class ASItems {
 	public static final Item battlemage_shield = placeholder();
 	public static final Item devoritium_chestplate = placeholder();
 	public static final Item master_bolt = placeholder();
+	public static final Item runic_hammer = placeholder();
 
 	public static final Item sacred_mace = placeholder();
 	public static final Item stone_fist = placeholder();
@@ -405,6 +408,7 @@ public final class ASItems {
 	public static final Item empty_theory_scroll = placeholder();
 	public static final Item theory_scroll = placeholder();
 	public static final Item mystic_scroll = placeholder();
+	public static final Item blank_mystic_scroll = placeholder();
 
 	public static final Item runic_plate = placeholder();
 	public static final Item mystic_spell_book = placeholder();
@@ -424,6 +428,7 @@ public final class ASItems {
 	public static final Item charm_glyph_imbuement = placeholder();
 	public static final Item charm_glyph_shield_disable = placeholder();
 	public static final Item charm_glyph_might = placeholder();
+	public static final Item charm_glyph_charge = placeholder();
 	public static final Item charm_aura_alacrity = placeholder();
 	public static final Item charm_aura_hatred = placeholder();
 	public static final Item charm_aura_life = placeholder();
@@ -431,6 +436,8 @@ public final class ASItems {
 	public static final Item charm_aura_warding = placeholder();
 	public static final Item charm_aura_wither = placeholder();
 	public static final Item charm_aura_tenacity = placeholder();
+	public static final Item charm_aura_defense = placeholder();
+	public static final Item charm_aura_vulnerability = placeholder();
 
 	// below registry methods are courtesy of EB
 	public static void registerItem(IForgeRegistry<Item> registry, String name, Item item) {
@@ -734,14 +741,17 @@ public final class ASItems {
 		registerItem(registry, "charm_glyph_shield_disable", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_glyph_fortification", new ItemGlyphArtefact.ItemGlyphFortification(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_glyph_might", new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_charge", new ItemGlyphArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 
 		registerItem(registry, "charm_aura_alacrity", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_aura_hatred", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		registerItem(registry, "charm_aura_life", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_life", new ItemGlyphAuraArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_aura_purity", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_aura_warding", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_aura_wither", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_aura_tenacity", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_defense", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_vulnerability", new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 
 
 		registerItem(registry, "tome_controller", new ItemTomeController());
@@ -812,7 +822,8 @@ public final class ASItems {
 		registerItem(registry, "imbuement_scroll", new ItemImbuementScroll());
 		registerItem(registry, "empty_theory_scroll", new ItemTheoryScroll());
 		registerItem(registry, "theory_scroll", new ItemTheoryScroll());
-		registerItem(registry, "mystic_scroll", new ItemMysticScroll());
+//		registerItem(registry, "mystic_scroll", new ItemMysticScroll());
+//		registerItem(registry, "blank_mystic_scroll", new ItemBlankMysticScroll());
 
 		registerItem(registry, "blank_rune", new Item().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT).setMaxStackSize(16));
 		registerItem(registry, "rune_feoh", new ItemRune().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT));
@@ -854,6 +865,7 @@ public final class ASItems {
 		registerItem(registry, "runic_plate", new ItemRunicPlate(), true);
 		registerItem(registry, "mystic_spell_book", new ItemSageSpellBook());
 		registerItem(registry, "empty_mystic_spell_book", new ItemEmptyMysticSpellBook().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT).setMaxStackSize(16));
+		registerItem(registry, "runic_hammer", new ItemRunicHammer());
 		//registerItem(registry, "forbidden_tome", new ItemWarlockSpellBook()); TODO
 
 		//registerItem(registry, "master_bolt", new ItemMasterBolt());

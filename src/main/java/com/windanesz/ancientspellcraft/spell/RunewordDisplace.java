@@ -22,15 +22,6 @@ public class RunewordDisplace extends Runeword {
 	}
 
 	@Override
-	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		if (caster.getHeldItem(hand).getItem() instanceof ItemBattlemageSword) {
-			ItemBattlemageSword.setActiveRuneword(caster.getHeldItem(hand), this, getProperty(CHARGES).intValue());
-			return true;
-		}
-		return false;
-	}
-
-	@Override
 	public boolean onAboutToHitEntity(World world, EntityLivingBase caster, EntityLivingBase target, EnumHand hand, ItemStack sword, SpellModifiers modifiers, boolean charged) {
 		int charges = ItemBattlemageSword.getRunewordCharges(sword, this);
 		if (charges > 0) {

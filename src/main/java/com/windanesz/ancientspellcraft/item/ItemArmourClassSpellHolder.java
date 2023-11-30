@@ -24,8 +24,6 @@ import java.util.List;
 
 abstract class ItemArmourClassSpellHolder extends ItemSpellBook {
 
-	private static final ResourceLocation SAGE_GUI = new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/todo_sage_gui.png");
-	private static final ResourceLocation WARLOCK_GUI =  new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/todo_warlock_gui.png");
 
 	public ItemArmourClassSpellHolder(){
 		setHasSubtypes(true);

@@ -8,6 +8,7 @@ import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.WizardArmourUtils;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.item.ItemWizardArmour;
+import electroblob.wizardry.registry.WizardryItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -42,9 +43,9 @@ public interface IClassSpell {
 				}
 
 				SpellCastEvent.Source source = event.getSource();
-				boolean allowedSource = source.name().equals(armourClass.name().toUpperCase() + "_ITEM");
+				boolean allowedSource = source.name().equals(armourClass.name().toUpperCase() + "_ITEM") || source == SpellCastEvent.Source.SCROLL && armourClass == ItemWizardArmour.ArmourClass.SAGE;
 
-				if (!(source == SpellCastEvent.Source.COMMAND || source == SpellCastEvent.Source.NPC || allowedSource)) {
+				if (!(source == SpellCastEvent.Source.COMMAND || source == SpellCastEvent.Source.NPC || allowedSource || event.getSpell() instanceof IRunicHammerSpell)) {
 					if (!event.getWorld().isRemote) {
 						((EntityPlayer) event.getCaster()).sendStatusMessage(
 								new TextComponentTranslation("message." + AncientSpellcraft.MODID + ":must_use_class_item",
@@ -77,7 +78,7 @@ public interface IClassSpell {
 	}
 
 	default boolean applicableForItem(Item item) {
-		return item == ASItems.mystic_spell_book;
+		return item == ASItems.mystic_spell_book || item == WizardryItems.scroll;
 	}
 
 	ItemWizardArmour.ArmourClass getArmourClass();

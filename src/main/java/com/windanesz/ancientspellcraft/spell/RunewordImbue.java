@@ -54,7 +54,7 @@ public class RunewordImbue extends Runeword {
 				if (stack.getItem() instanceof ItemPotion) {
 					for (PotionEffect potioneffect : PotionUtils.getEffectsFromStack(stack)) {
 						if (!potioneffect.getPotion().isInstant()) {
-							int charges = getProperty(CHARGES).intValue();
+							int charges = getChargeCount(caster);
 							if ((ItemArtefact.isArtefactActive(caster, ASItems.charm_glyph_imbuement))) {
 								charges *= 6;
 							}

@@ -30,7 +30,7 @@ public class RunewordBlast extends Runeword {
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		if (caster.getHeldItem(hand).getItem() instanceof ItemBattlemageSword) {
-			ItemBattlemageSword.setActiveRuneword(caster.getHeldItem(hand), this, getProperty(CHARGES).intValue());
+			ItemBattlemageSword.setActiveRuneword(caster.getHeldItem(hand), this, getChargeCount(caster));
 
 			if (world.isRemote) {
 

@@ -11,9 +11,11 @@ import com.windanesz.ancientspellcraft.potion.PotionCurseEnder;
 import com.windanesz.ancientspellcraft.potion.PotionCurseGills;
 import com.windanesz.ancientspellcraft.potion.PotionCurseUmbra;
 import com.windanesz.ancientspellcraft.potion.PotionCurseWard;
+import com.windanesz.ancientspellcraft.potion.PotionDegradedArmor;
 import com.windanesz.ancientspellcraft.potion.PotionEagleEye;
 import com.windanesz.ancientspellcraft.potion.PotionFeatherFall;
 import com.windanesz.ancientspellcraft.potion.PotionGrowth;
+import com.windanesz.ancientspellcraft.potion.PotionImprovedArmor;
 import com.windanesz.ancientspellcraft.potion.PotionMageLight;
 import com.windanesz.ancientspellcraft.potion.PotionMagicEffectAS;
 import com.windanesz.ancientspellcraft.potion.PotionManaRegeneration;
@@ -94,6 +96,8 @@ public class ASPotions {
 	public static final Potion curse_of_umbra = placeholder();
 	public static final Potion curse_of_gills = placeholder();
 	public static final Potion tenacity = placeholder();
+	public static final Potion improved_armor = placeholder();
+	public static final Potion degraded_armor = placeholder();
 
 	// artemislib potions
 	public static final Potion shrinkage = placeholder();
@@ -201,6 +205,8 @@ public class ASPotions {
 		registerPotion(registry, "curse_of_gills", new PotionCurseGills());
 
 		registerPotion(registry, "tenacity", new PotionTenacity());
+		registerPotion(registry, "improved_armor", new PotionImprovedArmor());
+		registerPotion(registry, "degraded_armor", new PotionDegradedArmor());
 
 
 		// ---- Artemislib dependent potions ----

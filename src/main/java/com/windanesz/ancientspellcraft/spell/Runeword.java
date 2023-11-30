@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import com.windanesz.ancientspellcraft.registry.ASItems;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
@@ -17,9 +18,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 
 import static electroblob.wizardry.util.WandHelper.SPELL_ARRAY_KEY;
+import static electroblob.wizardry.util.WandHelper.getProgression;
 
 public class Runeword extends Spell implements IClassSpell {
 
@@ -82,7 +85,7 @@ public class Runeword extends Spell implements IClassSpell {
 		// This should cover most of the use cases for Runewords with charges
 		if (!isPassive() && hasProperty(CHARGES)) {
 			if (holdsSword(caster, hand)) {
-				ItemBattlemageSword.setActiveRuneword(caster.getHeldItem(hand), this, getProperty(CHARGES).intValue());
+				ItemBattlemageSword.setActiveRuneword(caster.getHeldItem(hand), this, getChargeCount(caster));
 				return true;
 			}
 		}
@@ -185,6 +188,17 @@ public class Runeword extends Spell implements IClassSpell {
 
 	public static EnumHand getOtherHand(EnumHand hand) {
 		return hand == EnumHand.MAIN_HAND? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
+	}
+
+	public int getChargeCount(@Nullable EntityLivingBase caster) {
+		if (this.hasProperty(CHARGES)) {
+			int charges = getProperty(CHARGES).intValue();
+			if (caster instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.charm_glyph_charge)) {
+				charges *= 2;
+			}
+			return charges;
+		}
+		return 0;
 	}
 }
 
