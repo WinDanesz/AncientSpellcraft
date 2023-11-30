@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.living.EntityPigZombieMinion;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.ItemWizardArmour;
+import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellMinion;
 import net.minecraft.item.Item;
 
@@ -18,6 +19,6 @@ public class SummonZombiePigman extends SpellMinion<EntityPigZombieMinion> imple
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == ASItems.mystic_spell_book || item == ASItems.mystic_scroll;
+		return item == ASItems.mystic_spell_book || item == WizardryItems.scroll;
 	}
 }

@@ -8,6 +8,7 @@ import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.block.BlockReceptacle;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.item.ItemWizardArmour;
+import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -87,7 +88,7 @@ public abstract class SpellLecternInteract extends SpellRay implements IClassSpe
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == ASItems.mystic_spell_book || item == ASItems.mystic_scroll;
+		return item == ASItems.mystic_spell_book || item == WizardryItems.scroll;
 	}
 
 	public static boolean isLecternBlock(World world, BlockPos pos) {

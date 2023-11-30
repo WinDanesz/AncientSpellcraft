@@ -11,6 +11,7 @@ import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.item.SpellActions;
+import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLivingBase;
@@ -103,6 +104,6 @@ public class PerfectTheory extends SpellLecternInteract implements IClassSpell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == ASItems.mystic_spell_book || item == ASItems.mystic_scroll;
+		return item == ASItems.mystic_spell_book || item == WizardryItems.scroll;
 	}
 }

@@ -7,6 +7,7 @@ import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.item.SpellActions;
+import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.spell.Transportation;
 import electroblob.wizardry.util.BlockUtils;
@@ -138,6 +139,6 @@ public class TeleportObject extends SpellRay implements IClassSpell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == ASItems.mystic_spell_book || item == ASItems.mystic_scroll;
+		return item == ASItems.mystic_spell_book || item == WizardryItems.scroll;
 	}
 }

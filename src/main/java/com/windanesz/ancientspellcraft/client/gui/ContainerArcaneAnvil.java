@@ -7,6 +7,7 @@ import electroblob.wizardry.inventory.SlotItemList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -28,12 +29,21 @@ public class ContainerArcaneAnvil extends Container {
 		te.openInventory(player);
 
 		// INPUT_SLOT_0
-		this.addSlotToContainer(new SlotItemList(te, 0, 26, 24, 1, ASItems.battlemage_sword_hilt,
-				ASItems.battlemage_sword_novice,
-				ASItems.battlemage_sword_apprentice,
-				ASItems.battlemage_sword_advanced,
-				ASItems.crystal_silver_ingot
-		));
+		this.addSlotToContainer(new Slot(te, 0, 26, 24
+		) {
+			@Override
+			public boolean isItemValid(ItemStack stack) {
+				if (stack.getItem() == ASItems.battlemage_sword_hilt ||
+						stack.getItem() == ASItems.battlemage_sword_novice ||
+						stack.getItem() == ASItems.battlemage_sword_apprentice ||
+						stack.getItem() == ASItems.battlemage_sword_advanced ||
+						!stack.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).isEmpty()) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		});
 
 		// INPUT_SLOT_1
 		this.addSlotToContainer(new SlotItemList(te, 1, 75, 24, 1, ASItems.battlemage_sword_blade, ASItems.crystal_silver_ingot));
@@ -46,7 +56,7 @@ public class ContainerArcaneAnvil extends Container {
 										ASItems.battlemage_sword_master) {
 									@Override
 									public ItemStack onTake(EntityPlayer player, ItemStack stack) {
-										if (!player.world.isRemote) 			{
+										if (!player.world.isRemote) {
 											player.world.playSound(null, player.getPosition(), SoundEvents.BLOCK_ANVIL_USE, SoundCategory.BLOCKS, 1.0F, player.world.rand.nextFloat() * 0.1F + 0.9F);
 										}
 										return super.onTake(player, stack);
@@ -152,6 +162,6 @@ public class ContainerArcaneAnvil extends Container {
 	 * the sphere of cognizance GUI is pressed.
 	 */
 	@SuppressWarnings("unused")
-	public void onApplyButtonPressed() { }
+	public void onApplyButtonPressed() {}
 }
 

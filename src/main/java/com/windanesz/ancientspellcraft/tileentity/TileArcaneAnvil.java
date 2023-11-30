@@ -14,6 +14,7 @@ import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.util.NBTExtras;
 import electroblob.wizardry.util.WandHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
@@ -290,7 +291,10 @@ public class TileArcaneAnvil extends TileEntity implements IInventory {
 				stack.getItem() == ASItems.battlemage_sword_hilt ||
 				stack.getItem() == ASItems.battlemage_sword_novice ||
 				stack.getItem() == ASItems.battlemage_sword_apprentice ||
-				stack.getItem() == ASItems.battlemage_sword_advanced) {
+				stack.getItem() == ASItems.battlemage_sword_advanced ||
+
+				!stack.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).isEmpty()
+		) {
 			return true;
 		} else if (slotNumber == ContainerSphereCognizance.BOOK_SLOT) {
 			return stack.getItem() instanceof ItemRelic || stack.getItem() instanceof ItemSpellBook || stack.getItem() instanceof ItemScroll;
