@@ -951,15 +951,15 @@ public class ASEventHandler {
 							SpellModifiers modifiers = event.getModifiers();
 
 							float potency = modifiers.get(SpellModifiers.POTENCY);
-							float range = modifiers.get(WizardryItems.range_upgrade);
-							float blast = modifiers.get(WizardryItems.range_upgrade);
+						//	float range = modifiers.get(WizardryItems.range_upgrade);
+						//	float blast = modifiers.get(WizardryItems.range_upgrade);
 
 							int level = effect.getAmplifier() + 1;
 							if (level > 0) {
 
 								modifiers.set(SpellModifiers.POTENCY, potency + level * POTENCY_INCREASE_PER_TIER, true);
-								modifiers.set(WizardryItems.range_upgrade, blast - level * Constants.RANGE_INCREASE_PER_LEVEL, true);
-								modifiers.set(WizardryItems.blast_upgrade, range - level * Constants.BLAST_RADIUS_INCREASE_PER_LEVEL, true);
+							//	modifiers.set(WizardryItems.range_upgrade, blast - level * Constants.RANGE_INCREASE_PER_LEVEL, true);
+							//	modifiers.set(WizardryItems.blast_upgrade, range - level * Constants.BLAST_RADIUS_INCREASE_PER_LEVEL, true);
 							}
 							setCooldown(player, ASSpells.intensifying_focus);
 							//player.removePotionEffect(ASPotions.intensifying_focus);
