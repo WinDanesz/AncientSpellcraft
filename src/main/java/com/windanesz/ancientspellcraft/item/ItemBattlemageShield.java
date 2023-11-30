@@ -248,15 +248,6 @@ public class ItemBattlemageShield extends Item implements ISpellCastingItem, IMa
 
 	@Override
 	public void onUsingTick(ItemStack stack, EntityLivingBase user, int count) {
-		if (user instanceof EntityPlayer) {
-			if (count % 20 == 0) { // every sec
-				consumeMana(stack, 3, user);
-				if (isManaEmpty(stack)) {
-					user.stopActiveHand();
-				}
-			}
-
-		}
 		super.onUsingTick(stack, user, count);
 	}
 
