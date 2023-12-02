@@ -42,11 +42,16 @@ import electroblob.wizardry.util.WandHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentDurability;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentMending;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.Slot;
@@ -796,6 +801,19 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+		// prevent applying mending and unbreaking
+		return !(enchantment instanceof EnchantmentMending) && !(enchantment instanceof EnchantmentDurability) && super.canApplyAtEnchantingTable(stack, enchantment);
+	}
+
+	@Override
+	public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+		// prevent applying mending and unbreaking from books
+		return !(EnchantmentHelper.getEnchantments(book).containsKey(Enchantments.UNBREAKING) || EnchantmentHelper.getEnchantments(book).containsKey(Enchantments.MENDING))
+				&&  super.isBookEnchantable(stack, book);
 	}
 
 	//--------------------------  Helper methods for runewords and glyphs --------------------------//
