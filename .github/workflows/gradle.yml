@@ -53,4 +53,5 @@ jobs:
         id: build
         env: 
           USE_ALPHAS: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: './gradlew setupGithubActions build publish --max-workers=1'
