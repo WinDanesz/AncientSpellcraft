@@ -382,7 +382,7 @@ publishing {
         mavenJava(MavenPublication) {
             from components.java
             groupId = project.maven_group
-            artifactId = project.jar_name
+            artifactId = project.jar_name.toLowerCase()
             version = "${project.mc_version}-${project.mod_version}"
         }
     }
