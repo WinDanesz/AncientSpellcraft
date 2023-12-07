@@ -37,6 +37,18 @@ jobs:
       - name: Setup Build
         run: 'chmod 777 gradlew'
 
+      - name: Determine Version with GitVersion
+        id: gitversion
+        run: |
+          if [ "$GITHUB_ACTIONS" == "true" ]; then
+            wget -q -O GitVersion.Linux.tar.gz https://github.com/GitTools/GitVersion/releases/download/5.12.0/gitversion-linux-x64-5.12.0.tar.gz
+            tar -xvzf GitVersion.Linux.tar.gz
+            chmod +x gitversion
+            export VERSION=$(./gitversion | jq -r '.Patch += 1 | "\(.Major).\(.Minor).\(.Patch)-PreRelease-\(.ShortSha)"')
+            echo "Version: $VERSION"
+            echo "PROJECT_VERSION=$version" >> $GITHUB_OUTPUT
+          fi
+
       - name: Build with Gradle
         id: build
         env: 

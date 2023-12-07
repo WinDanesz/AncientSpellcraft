@@ -1,0 +1,8 @@
+mode: Mainline
+# assembly-versioning-scheme: MajorMinorPatch
+# assembly-file-versioning-scheme: MajorMinorPatchTag
+tag-prefix: '[v]'
+branches:
+  main:
+    regex: '1\.12\.2'
+    increment: None
