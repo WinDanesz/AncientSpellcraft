@@ -315,6 +315,12 @@ processResources {
         version = "${project.mc_version}-" + System.getenv('PROJECT_VERSION')
         project.mod_version = System.getenv('PROJECT_VERSION')
     }
+    if (System.getenv('GITHUB_ACTIONS') == 'true') {
+        println 'Running in GitHub actions'
+        archivesBaseName = "${project.jar_name}".toLowerCase()
+        version = "${project.mc_version}-" + System.getenv('PROJECT_VERSION')
+        project.mod_version = System.getenv('PROJECT_VERSION')
+    }    
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", version.toString()
     inputs.property "mcversion", project.mc_version.toString()
