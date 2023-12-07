@@ -385,8 +385,8 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/WinDanesz/AncientSpellcraft")
             credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME_GITHUB_PACKAGES")
-                password = project.findProperty("gpr.token") ?: System.getenv("TOKEN_GITHUB_PACKAGES")
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }

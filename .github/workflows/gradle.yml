@@ -45,7 +45,7 @@ jobs:
             tar -xvzf GitVersion.Linux.tar.gz
             chmod +x gitversion
             export VERSION=$(./gitversion | jq -r '.Patch += 1 | "\(.Major).\(.Minor).\(.Patch)-PreRelease-\(.ShortSha)"')
-            echo "Version: $VERSION"
+            echo "PROJECT_VERSION: $VERSION"
             echo "PROJECT_VERSION=$version" >> $GITHUB_OUTPUT
           fi
 
@@ -54,3 +54,6 @@ jobs:
         env: 
           USE_ALPHAS: true
         run: './gradlew setupGithubActions build --max-workers=1'
+
+      - name: Publish to GitHub Packages
+        run: './gradlew publish --max-workers=1'
