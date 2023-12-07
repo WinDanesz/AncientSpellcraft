@@ -46,7 +46,7 @@ jobs:
             chmod +x gitversion
             export VERSION=$(./gitversion | jq -r '.Patch += 1 | "\(.Major).\(.Minor).\(.Patch)-PreRelease-\(.ShortSha)"')
             echo "PROJECT_VERSION: $VERSION"
-            echo "PROJECT_VERSION=$version" >> $GITHUB_ENV
+            echo "PROJECT_VERSION=$VERSION" >> $GITHUB_ENV
           fi
 
       - name: Build with Gradle
