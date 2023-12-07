@@ -307,7 +307,12 @@ if (System.getenv('USE_ALPHAS').equals('true')) {
             }
         }
     }
-    version = "${project.mc_version}-${project.mod_version}"
+    if (System.getenv('PROJECT_VERSION') != null) {
+        version = "${project.mc_version}-" + System.getenv('PROJECT_VERSION')
+        project.mod_version = System.getenv('PROJECT_VERSION')
+    } else {
+        version = "${project.mc_version}-${project.mod_version}"
+    }
 }
 
 processResources {
@@ -379,6 +384,7 @@ publishing {
             artifactId = project.jar_name.toLowerCase()
             version = "${project.mc_version}-" + System.getenv('PROJECT_VERSION')
             project.mod_version = System.getenv('PROJECT_VERSION')
+            println "version: " + version
         }
     }
     repositories {
