@@ -317,7 +317,7 @@ processResources {
     }
     if (System.getenv('GITHUB_ACTIONS') == 'true') {
         println 'Running in GitHub actions'
-        archivesBaseName = "${project.jar_name}".toLowerCase()
+        archivesBaseName = project.jar_name.toLowerCase()
         version = "${project.mc_version}-" + System.getenv('PROJECT_VERSION')
         project.mod_version = System.getenv('PROJECT_VERSION')
     }    
