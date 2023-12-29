@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(Side.SERVER)
+@Mod.EventBusSubscriber
 public class PotionCurseDeath extends PotionCurseAS {
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(Wizardry.MODID, "textures/gui/curse_background.png");
 
