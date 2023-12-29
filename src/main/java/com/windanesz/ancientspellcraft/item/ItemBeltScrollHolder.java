@@ -49,7 +49,7 @@ public class ItemBeltScrollHolder extends ItemNewArtefact implements ITickableAr
 			return false;
 		} else {
 			NBTTagCompound nbt = holder.getTagCompound();
-			if (nbt == null) { nbt = new NBTTagCompound(); }
+			if (nbt == null) {nbt = new NBTTagCompound();}
 
 			if (scroll != null && scroll.getItem() instanceof ItemWandUpgrade
 					&& scroll.getItem() != ASItems.soulbound_upgrade
@@ -112,10 +112,13 @@ public class ItemBeltScrollHolder extends ItemNewArtefact implements ITickableAr
 
 	@Override
 	public void onWornTick(ItemStack itemstack, EntityLivingBase player) {
-		if (!player.world.isRemote && getScroll(itemstack).getItem() == WizardryItems.condenser_upgrade &&
-				itemstack.getItem() instanceof IManaStoringItem &&  !((IManaStoringItem)itemstack.getItem()).isManaFull(itemstack)
-				&& player.world.getTotalWorldTime() % 50L == 0L) {
-			((IManaStoringItem)itemstack.getItem()).rechargeMana(itemstack, 1);
+		if (!player.world.isRemote && player.world.getTotalWorldTime() % 50L == 0L && getScroll(itemstack).getItem() == WizardryItems.condenser_upgrade) {
+			if (player.getHeldItemMainhand().getItem() instanceof IManaStoringItem && !((IManaStoringItem) player.getHeldItemMainhand().getItem()).isManaFull(player.getHeldItemMainhand())) {
+				((IManaStoringItem) player.getHeldItemMainhand().getItem()).rechargeMana(player.getHeldItemMainhand(), 1);
+			}
+			if (player.getHeldItemOffhand().getItem() instanceof IManaStoringItem && !((IManaStoringItem) player.getHeldItemOffhand().getItem()).isManaFull(player.getHeldItemMainhand())) {
+				((IManaStoringItem) player.getHeldItemOffhand().getItem()).rechargeMana(player.getHeldItemMainhand(), 1);
+			}
 		}
 	}
 
