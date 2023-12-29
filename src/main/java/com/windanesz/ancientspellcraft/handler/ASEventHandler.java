@@ -112,6 +112,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -602,7 +603,7 @@ public class ASEventHandler {
 				event.setResult(Event.Result.DENY);
 			} else {
 				event.getEntityLiving().getTags().remove(event.getPotionEffect().getPotion().getRegistryName().toString());
-			//	event.setResult(Event.Result.DENY);
+				//	event.setResult(Event.Result.DENY);
 			}
 		}
 
@@ -764,6 +765,25 @@ public class ASEventHandler {
 				Contingency.tryCastContingencySpellAsMob(event.getEntityLiving(), Contingency.Type.DEATH);
 			}
 		}
+
+		if (event.getSource().getTrueSource() instanceof EntityLivingBase && !(event.getSource().getTrueSource() instanceof EntityPlayer)) {
+			EntityLivingBase entityLivingBase = (EntityLivingBase) event.getSource().getTrueSource();
+			List<ItemStack> items = new ArrayList<>(Arrays.asList(entityLivingBase.getHeldItemMainhand(), entityLivingBase.getHeldItemOffhand()));
+			for (ItemStack stack : items) {
+
+				if (stack.getItem() instanceof IManaStoringItem && !((IManaStoringItem) stack.getItem()).isManaFull(stack)
+						&& WandHelper.getUpgradeLevel(stack, WizardryItems.siphon_upgrade) > 0) {
+
+					int mana = Constants.SIPHON_MANA_PER_LEVEL
+							* WandHelper.getUpgradeLevel(stack, WizardryItems.siphon_upgrade)
+							+ entityLivingBase.world.rand.nextInt(Constants.SIPHON_MANA_PER_LEVEL);
+
+					((IManaStoringItem) stack.getItem()).rechargeMana(stack, mana);
+					break; // Only recharge one item per kill
+				}
+			}
+		}
+
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST) // No siphoning if the event is cancelled, that could be exploited...
@@ -951,15 +971,15 @@ public class ASEventHandler {
 							SpellModifiers modifiers = event.getModifiers();
 
 							float potency = modifiers.get(SpellModifiers.POTENCY);
-						//	float range = modifiers.get(WizardryItems.range_upgrade);
-						//	float blast = modifiers.get(WizardryItems.range_upgrade);
+							//	float range = modifiers.get(WizardryItems.range_upgrade);
+							//	float blast = modifiers.get(WizardryItems.range_upgrade);
 
 							int level = effect.getAmplifier() + 1;
 							if (level > 0) {
 
 								modifiers.set(SpellModifiers.POTENCY, potency + level * POTENCY_INCREASE_PER_TIER, true);
-							//	modifiers.set(WizardryItems.range_upgrade, blast - level * Constants.RANGE_INCREASE_PER_LEVEL, true);
-							//	modifiers.set(WizardryItems.blast_upgrade, range - level * Constants.BLAST_RADIUS_INCREASE_PER_LEVEL, true);
+								//	modifiers.set(WizardryItems.range_upgrade, blast - level * Constants.RANGE_INCREASE_PER_LEVEL, true);
+								//	modifiers.set(WizardryItems.blast_upgrade, range - level * Constants.BLAST_RADIUS_INCREASE_PER_LEVEL, true);
 							}
 							setCooldown(player, ASSpells.intensifying_focus);
 							//player.removePotionEffect(ASPotions.intensifying_focus);
