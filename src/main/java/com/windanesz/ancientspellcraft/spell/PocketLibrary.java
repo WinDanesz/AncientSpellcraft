@@ -36,6 +36,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.structure.template.ITemplateProcessor;
@@ -170,7 +171,7 @@ public class PocketLibrary extends Spell implements IClassSpell {
 	 * positions where a block was added.
 	 */
 	private boolean spawnStructureInitially(EntityPlayer caster, World world) {
-		// System.out.println("first cast");
+
 
 		if (!world.isRemote) {
 			NBTTagCompound data = getData(caster);
@@ -236,6 +237,17 @@ public class PocketLibrary extends Spell implements IClassSpell {
 					}
 			);
 
+			BlockPos pos = caster.getPosition().offset(EnumFacing.WEST, 4).offset(EnumFacing.NORTH, 4);
+
+			for (BlockPos currTestPos : BlockPos.getAllInBox(pos,
+					pos.offset(EnumFacing.UP, 15).offset(EnumFacing.SOUTH, 7).offset(EnumFacing.EAST, 7))) {
+				if (!world.canSeeSky(currTestPos)) {
+					caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:ice_tower.no_room"), true);
+					return false;
+				}
+			}
+
+
 			//template.addBlocksToWorld(world, caster.getPosition().offset(caster.getHorizontalFacing(), 4), processor, settings, 2 | 16);
 			template.addBlocksToWorld(world, caster.getPosition().offset(EnumFacing.WEST, 4).offset(EnumFacing.NORTH, 4), processor, settings, 2 | 16);
 
@@ -268,7 +280,7 @@ public class PocketLibrary extends Spell implements IClassSpell {
 
 			Wizardry.proxy.playBlinkEffect(caster);
 		}
-		System.out.println("first cast done");
+
 		return true;
 	}
 
@@ -397,6 +409,16 @@ public class PocketLibrary extends Spell implements IClassSpell {
 
 		if (!world.isRemote) {
 			NBTTagCompound data = getData(caster);
+
+			BlockPos pos = caster.getPosition().offset(EnumFacing.WEST, 4).offset(EnumFacing.NORTH, 4);
+
+			for (BlockPos currTestPos : BlockPos.getAllInBox(pos,
+					pos.offset(EnumFacing.UP, 15).offset(EnumFacing.SOUTH, 7).offset(EnumFacing.EAST, 7))) {
+				if (!world.canSeeSky(currTestPos)) {
+					caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:pocket_library.no_room"), true);
+					return false;
+				}
+			}
 
 			//System.out.println("summoning the library");
 
