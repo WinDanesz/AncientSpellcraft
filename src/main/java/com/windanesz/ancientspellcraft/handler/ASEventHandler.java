@@ -963,8 +963,8 @@ public class ASEventHandler {
 							int level = effect.getAmplifier() + 1;
 
 							if (level > 0) {
-								modifiers.set(WizardryItems.range_upgrade, blast + level * Constants.RANGE_INCREASE_PER_LEVEL, true);
-								modifiers.set(WizardryItems.blast_upgrade, range + level * Constants.BLAST_RADIUS_INCREASE_PER_LEVEL, true);
+								modifiers.set(WizardryItems.range_upgrade, range + level * Constants.RANGE_INCREASE_PER_LEVEL, true);
+								modifiers.set(WizardryItems.blast_upgrade, blast + level * Constants.BLAST_RADIUS_INCREASE_PER_LEVEL, true);
 							}
 							onMetaMagicFinished(player, ASSpells.arcane_augmentation, ASPotions.arcane_augmentation);
 
