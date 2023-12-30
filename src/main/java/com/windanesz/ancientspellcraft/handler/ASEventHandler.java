@@ -308,7 +308,7 @@ public class ASEventHandler {
 					chance += 0.33f;
 				}
 			}
-			if (chance > 0 && player.world.rand.nextFloat() < chance) {
+			if (chance == 0 || chance > 0 && player.world.rand.nextFloat() < chance) {
 				player.removePotionEffect(effect);
 			}
 		}
