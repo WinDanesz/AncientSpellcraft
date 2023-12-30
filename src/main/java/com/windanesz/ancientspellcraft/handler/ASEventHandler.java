@@ -69,6 +69,7 @@ import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WandHelper;
+import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -90,6 +91,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
@@ -1383,6 +1385,27 @@ public class ASEventHandler {
 
 								MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.SCROLL, ASSpells.extinguish, player, modifiers));
 								player.getCooldownTracker().setCooldown(ASItems.ring_prismarine, 1200);
+							}
+						}
+					}
+				}
+			}
+
+			if (!event.player.world.isRemote && event.player.ticksExisted % 6 == 0) {
+				// Contingency - Immobility
+				WizardData data = WizardData.get(player);
+				if (data != null) {
+					NBTTagCompound activeContingencies = data.getVariable(Contingency.ACTIVE_CONTINGENCIES);
+					if (activeContingencies != null) {
+
+						if (activeContingencies.hasKey(Contingency.Type.IMMOBILITY.spellName)) {
+
+							for (BlockPos pos : Arrays.asList(player.getPosition(), player.getPosition().up())) {
+								if (player.world.getBlockState(pos).getMaterial() == Material.WEB || player.world.getBlockState(pos).getBlock() == ASBlocks.QUICKSAND) {
+								Contingency.tryCastContingencySpell(player, data, Contingency.Type.IMMOBILITY);
+								break;
+								}
+
 							}
 						}
 					}
