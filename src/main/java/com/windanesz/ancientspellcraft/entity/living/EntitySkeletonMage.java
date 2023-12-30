@@ -97,7 +97,7 @@ public class EntitySkeletonMage extends AbstractSkeleton implements ISpellCaster
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
 		livingdata = super.onInitialSpawn(difficulty, livingdata);
 		setLeftHanded(false);
-		this.setRare(rand.nextFloat() < 0.15f);
+		this.setRare(rand.nextFloat() < 0.3f);
 		setElement(pickElementForBiome());
 		Element element = this.getElement();
 		populateSpellList(element, null);
