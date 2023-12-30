@@ -7,6 +7,8 @@ import com.windanesz.ancientspellcraft.spell.TomeWarp;
 import com.windanesz.ancientspellcraft.spell.Transplace;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.client.DrawingUtils;
+import electroblob.wizardry.item.IManaStoringItem;
+import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.util.WandHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,6 +42,9 @@ public class ItemTomeController extends Item {
 			Wizardry.proxy.playBlinkEffect(player);
 			Transplace.swapPlace(world, tome, player);
 			player.getCooldownTracker().setCooldown(stack.getItem(), ASSpells.tome_warp.getCooldown());
+			if (tome.getHeldItemMainhand().getItem() instanceof IManaStoringItem) {
+				((IManaStoringItem) tome.getHeldItemMainhand().getItem()).consumeMana(tome.getHeldItemMainhand(), ASSpells.tome_warp.getCost(), tome);
+			}
 			return new ActionResult<>(EnumActionResult.PASS, stack);
 		}
 
