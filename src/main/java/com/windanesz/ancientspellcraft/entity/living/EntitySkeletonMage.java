@@ -323,7 +323,11 @@ public class EntitySkeletonMage extends AbstractSkeleton implements ISpellCaster
 				if (this.isRare()) {
 					spells.add(Spells.ray_of_purification);
 				} else {
-					spells.add(Spells.arcane_jammer);
+					if (Spell.registry.containsKey(new ResourceLocation("morphspellpack", "radiant_spark"))) {
+						spells.add(Spell.registry.getValue(new ResourceLocation("morphspellpack", "radiant_spark")));
+					} else {
+						spells.add(Spells.magic_missile);
+					}
 				}
 				break;
 			case NECROMANCY:
