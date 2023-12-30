@@ -364,6 +364,25 @@ public class Settings {
 				"minecraft:slowness"
 		};
 
+		@Config.Name("Metamagic - Projectile incompatible spells")
+		@Config.RequiresMcRestart
+		public String[] metamagic_projectile_incompatible_spells = {
+				"ancientspellcraft:animate_item",
+				"ancientspellcraft:animate_weapon",
+				"ancientspellcraft:aquatic_agility",
+				"ancientspellcraft:arcane_aegis",
+				"ancientspellcraft:bubble_head",
+				"ancientspellcraft:conjure_ink",
+				"ancientspellcraft:eagle_eye",
+				"ancientspellcraft:experiment",
+				"ancientspellcraft:farsight",
+				"ancientspellcraft:ice_tower",
+				"ancientspellcraft:locating",
+				"ancientspellcraft:magic_sparks",
+				"ancientspellcraft:projectile_ward",
+				"ancientspellcraft:resist_fire",
+		};
+
 		@Config.Name("Duplication Scroll Additonal Items")
 		@Config.Comment("List of registry names (in a 'modid:itemname' format) of additional items that can be duplicated by the Scroll of Duplication")
 		@Config.RequiresMcRestart

@@ -1184,9 +1184,9 @@ public class ASEventHandler {
 
 				// casting the spell as a metamagic projectile
 				if (data.getVariable(MetamagicProjectile.METAMAGIC_PROJECTILE) != null && data.getVariable(MetamagicProjectile.METAMAGIC_PROJECTILE).booleanValue()) {
-
+					String spellName = event.getSpell().getRegistryName().toString();
 					if (event.getSpell() instanceof MetaSpellBuff || event.getSpell() instanceof SpellRay || event.getSpell() instanceof SpellProjectile ||
-							event.getSpell() instanceof MetamagicProjectile) {
+							event.getSpell() instanceof MetamagicProjectile || Arrays.asList(Settings.generalSettings.metamagic_projectile_incompatible_spells).contains(spellName)) {
 						return;
 					}
 

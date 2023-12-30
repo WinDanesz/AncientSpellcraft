@@ -10,6 +10,7 @@ import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.BlockUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.SpellModifiers;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -32,6 +33,33 @@ public class Conflagration extends SpellAreaEffect {
 	public Conflagration() {
 		super(AncientSpellcraft.MODID, "conflagration", SpellActions.SUMMON, false);
 		addProperties(BURN_DURATION, MAX_DAMAGE);
+	}
+
+	@Override
+	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
+		boolean f = super.cast(world, caster, hand, ticksInUse, target, modifiers);
+
+		if (!world.isRemote) {
+
+			float radius = getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
+			List<BlockPos> sphere = BlockUtils.getBlockSphere(caster.getPosition(), radius);
+
+			for (BlockPos currPos : sphere) {
+				if (currPos.distanceSq(caster.posX, caster.posY, caster.posZ) < 2) {
+					continue;
+				}
+				if (world.rand.nextInt(4) <= 2) {
+					if (world.isAirBlock(currPos.offset(EnumFacing.UP))) {
+						world.setBlockState(currPos.offset(EnumFacing.UP), Blocks.FIRE.getDefaultState());
+					}
+				}
+			}
+		} else {
+			world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, caster.posX + 0.5, caster.posY + 0.5, caster.posZ + 0.5, 0, 0, 0);
+
+		}
+
+		return f;
 	}
 
 	@Override
