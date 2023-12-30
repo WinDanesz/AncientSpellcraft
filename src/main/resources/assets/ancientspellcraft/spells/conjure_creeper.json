@@ -12,7 +12,7 @@
     },
     "tier": "advanced",
     "element": "magic",
-    "type": "utility",
+    "type": "minion",
     "cost": 60,
     "chargeup": 20,
     "cooldown": 200,

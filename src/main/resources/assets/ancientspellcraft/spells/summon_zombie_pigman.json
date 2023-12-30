@@ -12,8 +12,8 @@
     },
     "tier": "apprentice",
     "element": "magic",
-    "type": "utility",
-    "cost": 150,
+    "type": "minion",
+    "cost": 120,
     "chargeup": 25,
     "cooldown": 200,
     "base_properties": {
