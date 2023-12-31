@@ -131,7 +131,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	/**
 	 * The number of spell slots a sword has with no attunement upgrades applied.
 	 */
-	public static final int SWORD_BASE_SPELL_SLOTS = 3;
+	public static final int SWORD_BASE_SPELL_SLOTS = 5;
 	public static final String ACTIVE_RUNEWORDS = "active_runewords";
 
 	/**
