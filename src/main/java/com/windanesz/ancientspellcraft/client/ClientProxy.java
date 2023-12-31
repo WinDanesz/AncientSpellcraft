@@ -445,6 +445,6 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerExtraHandbookContent() {
-		// TODO: GuiWizardHandbook.registerAddonHandbookContent(AncientSpellcraft.MODID);
+		GuiWizardHandbook.registerAddonHandbookContent(AncientSpellcraft.MODID);
 	}
 }
