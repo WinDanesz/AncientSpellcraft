@@ -35,9 +35,9 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Map;
 
-public class RunesmithingSpell extends SpellRay implements IRunicHammerSpell, IClassSpell {
+public abstract class RunesmithingSpellBase extends SpellRay implements IRunicHammerSpell, IClassSpell {
 
-	public RunesmithingSpell(String name, EnumAction action, boolean isContinuous) {
+	public RunesmithingSpellBase(String name, EnumAction action, boolean isContinuous) {
 		super(AncientSpellcraft.MODID, name, action, isContinuous);
 	}
 
@@ -57,36 +57,8 @@ public class RunesmithingSpell extends SpellRay implements IRunicHammerSpell, IC
 			EntityPlayer player = (EntityPlayer) caster;
 
 			if (isAnvilBlock(world, pos)) {
-				int[] colours = BlockReceptacle.PARTICLE_COLOURS.get(Element.MAGIC);
 
-				if (world.isRemote) {
-					for (int i = 0; i < (ticksInUse * 0.1 * 2); i++) {
-						ParticleBuilder.create(ParticleBuilder.Type.DUST).pos(pos.getX() + world.rand.nextFloat(), pos.getY() + 1, pos.getZ() + world.rand.nextFloat())
-								.vel(0, 0.05 + (world.rand.nextFloat() * 0.1), 0).clr(colours[1]).fade(colours[2]).time(40).shaded(false).spawn(world);
-					}
-				}
-
-				ItemStack stack = BlockArcaneAnvil.getItemOnLeftSlot(world, pos);
-
-				if (stack.getItem() instanceof ItemTool) {
-
-					TileEntity tile = world.getTileEntity(pos);
-
-					if (tile instanceof TileArcaneAnvil) {
-						ItemStack copy = stack.copy();
-						int level = 2;
-						Enchantment enchantment = Enchantments.EFFICIENCY;
-						if (EnchantmentHelper.getEnchantmentLevel(enchantment, copy) < level) {
-							if (EnchantmentHelper.getEnchantments(copy).containsKey(enchantment)) {
-								Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(copy);
-								enchantments.remove(enchantment);
-								EnchantmentHelper.setEnchantments(enchantments, copy);
-							}
-							copy.addEnchantment(enchantment, 2);
-							((TileArcaneAnvil) tile).setInventorySlotContents(TileSageLectern.BOOK_SLOT, copy);
-							}
-						}
-					}
+				return doAnvilEffect(world, pos, side, hit, caster,  origin, ticksInUse, modifiers);
 
 				} else {
 					// the lectern doesn't have a valid book
@@ -96,6 +68,9 @@ public class RunesmithingSpell extends SpellRay implements IRunicHammerSpell, IC
 			}
 		return true;
 	}
+
+	public abstract boolean doAnvilEffect(World world, BlockPos pos, EnumFacing side, Vec3d hit,
+			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers);
 
 	@Override
 	protected boolean onMiss(World world, @Nullable EntityLivingBase caster, Vec3d origin, Vec3d direction, int ticksInUse, SpellModifiers modifiers) {

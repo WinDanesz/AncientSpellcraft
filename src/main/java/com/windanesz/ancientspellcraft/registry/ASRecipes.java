@@ -21,6 +21,7 @@ public class ASRecipes {
 
 		FurnaceRecipes.instance().addSmeltingRecipeForBlock(ASBlocks.DEVORITIUM_ORE, new ItemStack(ASItems.devoritium_ingot), 0.5f);
 		FurnaceRecipes.instance().addSmelting(WizardryItems.crystal_silver_plating, new ItemStack(ASItems.crystal_silver_ingot, 1), 1.5f);
+		FurnaceRecipes.instance().addSmelting(ASItems.runic_plate, new ItemStack(ASItems.crystal_silver_nugget, 1), 1.5f);
 
 		BrewingRecipeRegistry.addRecipe(new EssenceHealingPotionRecipe());
 		BrewingRecipeRegistry.addRecipe(new EssenceRegenerationPotionRecipe());

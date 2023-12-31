@@ -58,10 +58,9 @@ public class GuiRunicPlate extends GuiScreen {
 				int charges = getSpell().getProperty(Runeword.CHARGES).intValue();
 				String chargesString = I18n.format("gui.ancientspellcraft:runic_plate.charges", charges);
 				this.fontRenderer.drawString(chargesString, left + 24, top + 57, 0x3c2c44);
-			} else if (((Runeword) getSpell()).isPassive()) {
+			} else if (getSpell() instanceof Runeword && ((Runeword) getSpell()).isPassive()) {
 				this.fontRenderer.drawString(I18n.format("gui.ancientspellcraft:runic_plate.passive"), left + 24, top + 57, 0x3c2c44);
-			} else {}
-
+			}
 		} else {
 			this.mc.standardGalacticFontRenderer.drawString(SpellGlyphData.getGlyphName(getSpell(), mc.world), left + 24, top + 30, 0);
 			this.mc.standardGalacticFontRenderer.drawString(getSpell().getType().getDisplayName(), left + 24, top + 26, 0x3c2c44);
