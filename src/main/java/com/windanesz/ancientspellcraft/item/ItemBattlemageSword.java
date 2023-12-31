@@ -470,7 +470,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 			// +0.5f is necessary due to the error in the way floats are calculated.
 			text.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":wand.buff",
 					new Style().setColor(TextFormatting.DARK_GRAY),
-					(int) ((tier.level + 1) * (Constants.POTENCY_INCREASE_PER_TIER / 3) * 100 + 0.5f), element.getDisplayName()));
+					(int) ((tier.level + 1) * (Constants.POTENCY_INCREASE_PER_TIER / 2) * 100 + 0.5f), element.getDisplayName()));
 		}
 
 		Spell spell = WandHelper.getCurrentSpell(stack);
