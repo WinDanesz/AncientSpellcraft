@@ -353,6 +353,11 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public int pocket_biome_registry_id = 168;
 
+		@Config.Name("Runic Shield Durability (mana)")
+		@Config.RequiresMcRestart
+		@Config.RangeInt(min = 1, max = 10000)
+		public int runic_shield_durability = 1000;
+
 		@Config.Name("Immobility Contingency Spell Trigger Effects")
 		@Config.Comment("List of potion effects which can be considered as an immobilizing effect. Receiving one of these will trigger the stored Contingency - Immobility spell")
 		@Config.RequiresMcRestart

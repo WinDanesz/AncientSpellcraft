@@ -70,7 +70,7 @@ public class ItemBattlemageShield extends Item implements ISpellCastingItem, IMa
 		setFull3D();
 		this.maxStackSize = 1;
 		this.setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR);
-		this.setMaxDamage(1000);
+		this.setMaxDamage(Settings.generalSettings.runic_shield_durability);
 		this.addPropertyOverride(new ResourceLocation("blocking"), new IItemPropertyGetter() {
 			@SideOnly(Side.CLIENT)
 			public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
@@ -127,7 +127,7 @@ public class ItemBattlemageShield extends Item implements ISpellCastingItem, IMa
 		if (WandHelper.isWandUpgrade(upgrade.getItem())) {
 			Item specialUpgrade = upgrade.getItem();
 
-			if (specialUpgrade == WizardryItems.storage_upgrade || specialUpgrade == WizardryItems.siphon_upgrade || specialUpgrade == WizardryItems.condenser_upgrade) {
+			if (specialUpgrade == WizardryItems.storage_upgrade || specialUpgrade == WizardryItems.siphon_upgrade || specialUpgrade == WizardryItems.condenser_upgrade || specialUpgrade == ASItems.soulbound_upgrade) {
 
 				int maxUpgrades = 9;
 				if (WandHelper.getTotalUpgrades(shield) < maxUpgrades && WandHelper.getUpgradeLevel(shield, specialUpgrade) < 3) {
