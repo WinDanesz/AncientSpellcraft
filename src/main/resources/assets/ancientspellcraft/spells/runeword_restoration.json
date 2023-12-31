@@ -14,8 +14,8 @@
     "element": "magic",
     "type": "utility",
     "cost": 40,
-    "chargeup": 20,
-    "cooldown": 100,
+    "chargeup": 5,
+    "cooldown": 30,
     "base_properties": {
         "missing_percent_hp_restored": 0.1
     }
