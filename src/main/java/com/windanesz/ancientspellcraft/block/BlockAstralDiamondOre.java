@@ -19,8 +19,8 @@ public class BlockAstralDiamondOre extends Block {
 	public BlockAstralDiamondOre() {
 		super(Material.ROCK);
 		this.setSoundType(SoundType.STONE);
-		setHardness(40);
-	    setResistance(200.0F);
+		setHardness(3f);
+	    setResistance(5f);
 		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		setHarvestLevel("pickaxe", 3);
 	}
@@ -41,7 +41,7 @@ public class BlockAstralDiamondOre extends Block {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random random, int fortune) {
-			return ASItems.crystal_silver_nugget;
+			return ASItems.astral_diamond_shard;
 	}
 
 	@Override

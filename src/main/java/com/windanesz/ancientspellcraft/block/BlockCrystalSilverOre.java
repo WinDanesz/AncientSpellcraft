@@ -20,8 +20,8 @@ public class BlockCrystalSilverOre extends Block {
 	public BlockCrystalSilverOre() {
 		super(Material.ROCK);
 		this.setSoundType(SoundType.STONE);
-		setHardness(40);
-	    setResistance(200.0F);
+		setHardness(3f);
+	    setResistance(5f);
 		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		setHarvestLevel("pickaxe", 3);
 	}
