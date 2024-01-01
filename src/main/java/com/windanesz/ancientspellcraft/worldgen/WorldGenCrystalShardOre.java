@@ -24,36 +24,6 @@ import java.util.Random;
  */
 public class WorldGenCrystalShardOre implements IWorldGenerator {
 
-	@Override
-	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-
-		if (world.provider.getDimension() == 0 && Settings.generalSettings.generate_ore_shards) {
-			Biome biome = world.getBiome(new BlockPos(chunkX * 16, 0, chunkZ * 16));
-
-			if (AncientSpellcraft.settings.shardFireBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_FIRE, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
-			}
-			if (AncientSpellcraft.settings.shardNecromancyShardBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_NECROMANCY, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
-			}
-			if (AncientSpellcraft.settings.shardHealingBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_HEALING, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
-			}
-			if (AncientSpellcraft.settings.shardEarthShardBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_EARTH, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
-			}
-			if (AncientSpellcraft.settings.shardLightningBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_LIGHTNING, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
-			}
-			if (AncientSpellcraft.settings.shardIceBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_ICE, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
-			}
-			if (AncientSpellcraft.settings.shardSorceryShardBiomeWhitelist.contains(biome.getRegistryName())) {
-				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_SORCERY, BlockMatcher.forBlock(Blocks.STONE), 4, 2, 8, 1, 5, 30);
-			}
-		}
-	}
-
 	private static void generateOre(Random seed, int chunkX, int chunkZ, World world, Block ore,
 			Predicate<IBlockState> bed, int size, int frequencyMin, int frequencyMax, float rarity, int layerMin,
 			int layerMax) {
@@ -63,6 +33,36 @@ public class WorldGenCrystalShardOre implements IWorldGenerator {
 				BlockPos pos = new BlockPos(chunkX * 16 + seed.nextInt(16), MathHelper.getInt(seed, layerMin, layerMax),
 						chunkZ * 16 + seed.nextInt(16));
 				(new WorldGenMinable(ore.getDefaultState(), size, bed)).generate(world, seed, pos);
+			}
+		}
+	}
+
+	@Override
+	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+
+		if (world.provider.getDimension() == 0 && Settings.generalSettings.generate_ore_shards) {
+			Biome biome = world.getBiome(new BlockPos(chunkX * 16, 0, chunkZ * 16));
+
+			if (AncientSpellcraft.settings.shardFireBiomeWhitelist.contains(biome.getRegistryName())) {
+				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_FIRE, BlockMatcher.forBlock(Blocks.STONE), Settings.worldgenSettings.elementalOreWorldgenSize, Settings.worldgenSettings.elementalOreFrequencyMin, Settings.worldgenSettings.elementalOreFrequencyMax, Settings.worldgenSettings.elementalOreRarity, Settings.worldgenSettings.elementalOreYLayerMin, Settings.worldgenSettings.elementalOreYLayerMax);
+			}
+			if (AncientSpellcraft.settings.shardNecromancyShardBiomeWhitelist.contains(biome.getRegistryName())) {
+				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_NECROMANCY, BlockMatcher.forBlock(Blocks.STONE), Settings.worldgenSettings.elementalOreWorldgenSize, Settings.worldgenSettings.elementalOreFrequencyMin, Settings.worldgenSettings.elementalOreFrequencyMax, Settings.worldgenSettings.elementalOreRarity, Settings.worldgenSettings.elementalOreYLayerMin, Settings.worldgenSettings.elementalOreYLayerMax);
+			}
+			if (AncientSpellcraft.settings.shardHealingBiomeWhitelist.contains(biome.getRegistryName())) {
+				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_HEALING, BlockMatcher.forBlock(Blocks.STONE), Settings.worldgenSettings.elementalOreWorldgenSize, Settings.worldgenSettings.elementalOreFrequencyMin, Settings.worldgenSettings.elementalOreFrequencyMax, Settings.worldgenSettings.elementalOreRarity, Settings.worldgenSettings.elementalOreYLayerMin, Settings.worldgenSettings.elementalOreYLayerMax);
+			}
+			if (AncientSpellcraft.settings.shardEarthShardBiomeWhitelist.contains(biome.getRegistryName())) {
+				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_EARTH, BlockMatcher.forBlock(Blocks.STONE), Settings.worldgenSettings.elementalOreWorldgenSize, Settings.worldgenSettings.elementalOreFrequencyMin, Settings.worldgenSettings.elementalOreFrequencyMax, Settings.worldgenSettings.elementalOreRarity, Settings.worldgenSettings.elementalOreYLayerMin, Settings.worldgenSettings.elementalOreYLayerMax);
+			}
+			if (AncientSpellcraft.settings.shardLightningBiomeWhitelist.contains(biome.getRegistryName())) {
+				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_LIGHTNING, BlockMatcher.forBlock(Blocks.STONE), Settings.worldgenSettings.elementalOreWorldgenSize, Settings.worldgenSettings.elementalOreFrequencyMin, Settings.worldgenSettings.elementalOreFrequencyMax, Settings.worldgenSettings.elementalOreRarity,  Settings.worldgenSettings.elementalOreYLayerMin, Settings.worldgenSettings.elementalOreYLayerMax);
+			}
+			if (AncientSpellcraft.settings.shardIceBiomeWhitelist.contains(biome.getRegistryName())) {
+				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_ICE, BlockMatcher.forBlock(Blocks.STONE), Settings.worldgenSettings.elementalOreWorldgenSize, Settings.worldgenSettings.elementalOreFrequencyMin, Settings.worldgenSettings.elementalOreFrequencyMax, Settings.worldgenSettings.elementalOreRarity, Settings.worldgenSettings.elementalOreYLayerMin, Settings.worldgenSettings.elementalOreYLayerMax);
+			}
+			if (AncientSpellcraft.settings.shardSorceryShardBiomeWhitelist.contains(biome.getRegistryName())) {
+				generateOre(random, chunkX, chunkZ, world, ASBlocks.CRYSTAL_ORE_SORCERY, BlockMatcher.forBlock(Blocks.STONE), Settings.worldgenSettings.elementalOreWorldgenSize, Settings.worldgenSettings.elementalOreFrequencyMin, Settings.worldgenSettings.elementalOreFrequencyMax, Settings.worldgenSettings.elementalOreRarity, Settings.worldgenSettings.elementalOreYLayerMin, Settings.worldgenSettings.elementalOreYLayerMax);
 			}
 		}
 	}
