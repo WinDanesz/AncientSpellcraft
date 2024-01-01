@@ -1,0 +1,6 @@
+{
+	"forge_marker": 1,
+    "variants": {
+        "normal": { "model": "ancientspellcraft:astral_diamond_ore" }
+    }
+}

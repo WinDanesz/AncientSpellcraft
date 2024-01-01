@@ -21,9 +21,11 @@ import com.windanesz.ancientspellcraft.registry.BookshelfItems;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
 import com.windanesz.ancientspellcraft.util.RitualProperties;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenAncientTemple;
+import com.windanesz.ancientspellcraft.worldgen.WorldGenAstralDiamondOre;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenBattlemageCamp;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenBattlemageKeep;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenCrystalShardOre;
+import com.windanesz.ancientspellcraft.worldgen.WorldGenCrystalSilverOre;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenDevoritiumOre;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenSageHill;
 import com.windanesz.ancientspellcraft.worldgen.WorldgenAncientVault;
@@ -114,6 +116,8 @@ public class AncientSpellcraft {
 		// World generators
 		GameRegistry.registerWorldGenerator(new WorldGenCrystalShardOre(), 0);
 		GameRegistry.registerWorldGenerator(new WorldGenDevoritiumOre(), 0);
+		GameRegistry.registerWorldGenerator(new WorldGenCrystalSilverOre(), 0);
+		GameRegistry.registerWorldGenerator(new WorldGenAstralDiamondOre(), 0);
 
 		// Weight is a misnomer, it's actually the priority (where lower numbers get generated first)
 		GameRegistry.registerWorldGenerator(new WorldGenBattlemageCamp(), 20);

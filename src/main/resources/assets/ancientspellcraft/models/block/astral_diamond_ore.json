@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "ancientspellcraft:blocks/astral_diamond_ore"
+    }
+}

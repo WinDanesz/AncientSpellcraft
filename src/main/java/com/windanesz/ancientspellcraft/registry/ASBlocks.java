@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.block.BlockArcaneAnvil;
 import com.windanesz.ancientspellcraft.block.BlockArcaneWall;
 import com.windanesz.ancientspellcraft.block.BlockArtefactPensive;
+import com.windanesz.ancientspellcraft.block.BlockAstralDiamondOre;
 import com.windanesz.ancientspellcraft.block.BlockCandleLight;
 import com.windanesz.ancientspellcraft.block.BlockConcealedBlock;
 import com.windanesz.ancientspellcraft.block.BlockConjuredDirt;
@@ -12,6 +13,7 @@ import com.windanesz.ancientspellcraft.block.BlockCrystalLeaves;
 import com.windanesz.ancientspellcraft.block.BlockCrystalLog;
 import com.windanesz.ancientspellcraft.block.BlockCrystalMine;
 import com.windanesz.ancientspellcraft.block.BlockCrystalOre;
+import com.windanesz.ancientspellcraft.block.BlockCrystalSilverOre;
 import com.windanesz.ancientspellcraft.block.BlockDevoritium;
 import com.windanesz.ancientspellcraft.block.BlockDevoritiumBars;
 import com.windanesz.ancientspellcraft.block.BlockDevoritiumDoor;
@@ -119,6 +121,8 @@ public class ASBlocks {
 	public static final Block CRYSTAL_ORE_LIGHTNING = placeholder();
 	public static final Block CRYSTAL_ORE_NECROMANCY = placeholder();
 	public static final Block CRYSTAL_ORE_SORCERY = placeholder();
+	public static final Block CRYSTAL_SILVER_ORE = placeholder();
+	public static final Block ASTRAL_DIAMOND_ORE = placeholder();
 
 	public static final Block DEVORITIUM_BLOCK = placeholder();
 	public static final Block DEVORITIUM_ORE = placeholder();
@@ -203,6 +207,8 @@ public class ASBlocks {
 		registerBlock(registry, "crystal_ore_lightning", new BlockCrystalOre(Element.LIGHTNING));
 		registerBlock(registry, "crystal_ore_necromancy", new BlockCrystalOre(Element.NECROMANCY));
 		registerBlock(registry, "crystal_ore_sorcery", new BlockCrystalOre(Element.SORCERY));
+		registerBlock(registry, "crystal_silver_ore", new BlockCrystalSilverOre());
+		registerBlock(registry, "astral_diamond_ore", new BlockAstralDiamondOre());
 
 		registerBlock(registry, "devoritium_block", new BlockDevoritium());
 		registerBlock(registry, "devoritium_door", new BlockDevoritiumDoor());

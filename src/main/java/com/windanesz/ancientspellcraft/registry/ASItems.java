@@ -524,6 +524,8 @@ public final class ASItems {
 		registerItemBlock(registry, ASBlocks.CRYSTAL_ORE_LIGHTNING, new ItemBlock(ASBlocks.CRYSTAL_ORE_LIGHTNING));
 		registerItemBlock(registry, ASBlocks.CRYSTAL_ORE_NECROMANCY, new ItemBlock(ASBlocks.CRYSTAL_ORE_NECROMANCY));
 		registerItemBlock(registry, ASBlocks.CRYSTAL_ORE_SORCERY, new ItemBlock(ASBlocks.CRYSTAL_ORE_SORCERY));
+		registerItemBlock(registry, ASBlocks.CRYSTAL_SILVER_ORE, new ItemBlock(ASBlocks.CRYSTAL_SILVER_ORE));
+		registerItemBlock(registry, ASBlocks.ASTRAL_DIAMOND_ORE, new ItemBlock(ASBlocks.ASTRAL_DIAMOND_ORE));
 
 		registerItemBlock(registry, ASBlocks.DEVORITIUM_ORE, new ItemBlockDevoritiumMaterial(ASBlocks.DEVORITIUM_ORE));
 		registerItemBlock(registry, ASBlocks.DEVORITIUM_BLOCK, new ItemBlockDevoritiumMaterial(ASBlocks.DEVORITIUM_BLOCK));

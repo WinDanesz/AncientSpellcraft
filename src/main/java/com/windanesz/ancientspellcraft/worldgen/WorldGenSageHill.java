@@ -74,7 +74,7 @@ public class WorldGenSageHill extends WorldGenSurfaceStructureAS {
 
 	@Override
 	public boolean canGenerate(Random random, World world, int chunkX, int chunkZ) {
-		return ArrayUtils.contains(Settings.worldgenSettings.battlemageKeepDimensions, world.provider.getDimension())
+		return ArrayUtils.contains(Settings.worldgenSettings.sageHillDimensions, world.provider.getDimension())
 				&& Settings.worldgenSettings.sageHillRarity > 0 && random.nextInt(Settings.worldgenSettings.sageHillRarity) == 0;
 	}
 
