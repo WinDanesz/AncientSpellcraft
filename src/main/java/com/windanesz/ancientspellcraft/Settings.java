@@ -577,6 +577,96 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public int ancientVaultRarity = 2500;
 
+		@Config.Name("Elemental Ore Worldgen Size")
+		@Config.RequiresMcRestart
+		public int elementalOreWorldgenSize = 4;
+
+		@Config.Name("Elemental Ore Frequency Min")
+		@Config.RequiresMcRestart
+		public int elementalOreFrequencyMin = 2;
+
+		@Config.Name("Elemental Ore Frequency Max")
+		@Config.RequiresMcRestart
+		public int elementalOreFrequencyMax = 8;
+
+		@Config.Name("Elemental Ore Rarity")
+		@Config.RequiresMcRestart
+		public int elementalOreRarity = 1;
+
+		@Config.Name("Elemental Ore Y Layer Min")
+		@Config.RequiresMcRestart
+		public int elementalOreYLayerMin = 5;
+
+		@Config.Name("Elemental Ore Y Layer Max")
+		@Config.RequiresMcRestart
+		public int elementalOreYLayerMax = 30;
+
+		@Config.Name("Devoritium Ore Max Vein Size")
+		@Config.RequiresMcRestart
+		public int devoritiumOreMaxVeinSize = 3;
+
+		@Config.Name("Devoritium Ore Y Layer Min")
+		@Config.RequiresMcRestart
+		public int devoritiumOreYLayerMin = 5;
+
+		@Config.Name("Devoritium Ore Y Layer Max")
+		@Config.RequiresMcRestart
+		public int devoritiumOreYLayerMax = 30;
+
+		@Config.Name("Devoritium Ore Chances to Spawn")
+		@Config.RequiresMcRestart
+		public int devoritiumOreChancesToSpawn = 4;
+
+		@Config.Name("Generate Crystal Silver Ore")
+		@Config.RequiresMcRestart
+		public boolean generateCrystalSilverOre = true;
+
+		@Config.Name("Crystal Silver Ore Ore Dimensions")
+		@Config.Comment("[Server-only] List of dimension ids")
+		@Config.RequiresMcRestart
+		public int[] crystalSilverOreDimensions = {0};
+
+		@Config.Name("Crystal Silver Ore Max Vein Size")
+		@Config.RequiresMcRestart
+		public int crystalSilverOreMaxVeinSize = 3;
+
+		@Config.Name("Crystal Silver Ore Y Layer Min")
+		@Config.RequiresMcRestart
+		public int crystalSilverOreYLayerMin = 5;
+
+		@Config.Name("Crystal Silver Ore Y Layer Max")
+		@Config.RequiresMcRestart
+		public int crystalSilverOreYLayerMax = 20;
+
+		@Config.Name("Crystal Silver Ore Chances to Spawn")
+		@Config.RequiresMcRestart
+		public int crystalSilverOreChancesToSpawn = 4;
+
+		@Config.Name("Generate Astral Diamond Ore")
+		@Config.RequiresMcRestart
+		public boolean generateAstralDiamondOre = true;
+
+		@Config.Name("Astral Diamond Ore Dimensions")
+		@Config.Comment("[Server-only] List of dimension ids")
+		@Config.RequiresMcRestart
+		public int[] astralDiamondOreDimensions = {0};
+
+		@Config.Name("Astral Diamond Ore Max Vein Size")
+		@Config.RequiresMcRestart
+		public int astralDiamondOreMaxVeinSize = 3;
+
+		@Config.Name("Astral Diamond Ore Y Layer Min")
+		@Config.RequiresMcRestart
+		public int astralDiamondOreYLayerMin = 5;
+
+		@Config.Name("Astral Diamond Ore Y Layer Max")
+		@Config.RequiresMcRestart
+		public int astralDiamondOreYLayerMax = 15;
+
+		@Config.Name("Astral Diamond Ore Chances to Spawn")
+		@Config.RequiresMcRestart
+		public int astralDiamondOreChancesToSpawn = 3;
+
 	}
 
 }
