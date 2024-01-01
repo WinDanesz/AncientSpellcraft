@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "ebwizardry:crystal_shard",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "ebwizardry:magic_crystal",
+    "data": 0
+  }
+}
