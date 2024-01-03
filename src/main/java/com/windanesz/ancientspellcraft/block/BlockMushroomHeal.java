@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.block;
 
 import com.windanesz.ancientspellcraft.registry.ASSounds;
+import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.block.Block;
@@ -22,7 +23,8 @@ public class BlockMushroomHeal extends BlockMagicMushroom {
 	public boolean applyBeneficialEffect(World world,
 			@Nullable Block block, BlockPos pos, DamageSource source, float damage, IBlockState state,
 			@Nullable EntityLivingBase caster, EntityLivingBase target, float potency) {
-		if (target.getHealth() < target.getMaxHealth()) {
+		if (!(ASUtils.isEntityConsideredUndead(target) && applyHarmfulEffect(world, block, pos, source, damage, state, caster, target, potency)) ||
+				target.getHealth() < target.getMaxHealth()) {
 			if (!world.isRemote) {
 				target.heal(1.5f * potency);
 			} else {
@@ -38,9 +40,9 @@ public class BlockMushroomHeal extends BlockMagicMushroom {
 	public boolean applyHarmfulEffect(World world,
 			@Nullable Block block, BlockPos pos, DamageSource source, float damage, IBlockState state,
 			@Nullable EntityLivingBase caster, EntityLivingBase target, float potency) {
-		if (target.isEntityUndead()) {
+		if (!world.isRemote && target.isEntityUndead()) {
 
-			EntityUtils.attackEntityWithoutKnockback(target, source, damage * 2f);
+			EntityUtils.attackEntityWithoutKnockback(target, source, damage * 4f);
 			return true;
 		}
 		// living entities are not affected
