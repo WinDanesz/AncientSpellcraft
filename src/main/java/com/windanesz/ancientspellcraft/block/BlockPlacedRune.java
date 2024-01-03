@@ -108,7 +108,9 @@ public class BlockPlacedRune extends Block implements ITileEntityProvider {
 		if (tile instanceof TileRune && stack.getItem() instanceof ItemRune) {
 			((TileRune) tile).setRune(stack.getItem());
 			if (placer instanceof EntityPlayer) {
+				EnumFacing enumfacing = placer.getHorizontalFacing().getOpposite();
 				((TileRune) tile).setPlacer((EntityPlayer) placer);
+				((TileRune) tile).setDirection(enumfacing);
 			}
 		}
 	}

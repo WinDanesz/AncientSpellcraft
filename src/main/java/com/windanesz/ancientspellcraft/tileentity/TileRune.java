@@ -34,52 +34,32 @@ import java.util.stream.Collectors;
 // maybe draw lines between the ground between each rune to connect them
 public class TileRune extends TileEntity implements ITickable {
 
+	List<TileRune> ritualRunes;
 	private Item rune = Items.AIR;
 	private String RUNE_TAG = "rune";
 	private String MASTER_TAG = "is_master";
 	private String RITUAL_DATA = "ritual_data";
-
 	private TileRune master;
 	private boolean isMaster;
-
 	private int casterId;
 	private UUID casterUUID;
-
 	// used for initializing master/slave tiles
 	private boolean firstRun = true;
 	private TileRune centerPiece;
-
 	private List<TileRune> connectedRunes;
 	private Ritual ritual;
-
+	private EnumFacing direction = EnumFacing.NORTH;
 	private int ritualCurrentLifeTime = 0;
-
-	List<TileRune> ritualRunes;
-
-	public void setRitualRunes(List<TileRune> ritualRunes) {
-		if (isMaster) {
-			this.ritualRunes = ritualRunes;
-		} else {
-			getMaster().ritualRunes = ritualRunes;
-		}
-	}
-
-	public void setRitualData(NBTTagCompound ritualData) {
-		this.ritualData = ritualData;
-	}
-
 	private NBTTagCompound ritualData;
 
-	public void setRitual(Ritual ritual) {
-		if (isMaster()) {
-			this.ritual = ritual;
-		} else {
-			getMaster().setRitual(ritual);
-		}
+	public TileRune() {}
+
+	public EnumFacing getDirection() {
+		return direction;
 	}
 
-	public TileRune() {
-
+	public void setDirection(EnumFacing direction) {
+		this.direction = direction;
 	}
 
 	public boolean isMaster() {
@@ -251,7 +231,7 @@ public class TileRune extends TileEntity implements ITickable {
 						} else {
 							if (((IRitualIngredient) ritual).shouldConsumeIngredients()) {
 								actualIngredients.stream().forEach(i -> i.getItem().shrink(1));
-//								actualIngredients.forEach(i -> i.setDead());
+								//								actualIngredients.forEach(i -> i.setDead());
 							}
 						}
 					}
@@ -372,14 +352,14 @@ public class TileRune extends TileEntity implements ITickable {
 		}
 	}
 
-	// ============================================ Tile data methods ==============================================
-
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		rune = ForgeRegistries.ITEMS.getValue(new ResourceLocation(compound.getString(RUNE_TAG)));
 		isMaster = compound.getBoolean(MASTER_TAG);
-
+		if (compound.hasKey("rotation")) {
+			direction = EnumFacing.byIndex(compound.getInteger("rotation"));
+		}
 		if (isMaster) {
 			centerPiece = this;
 			if (compound.hasKey(RITUAL_DATA)) {
@@ -422,6 +402,7 @@ public class TileRune extends TileEntity implements ITickable {
 		//			compound.setUniqueId("caster_uuid", casterUUID);
 		//		}
 		compound.setTag("caster_uuid", NBTUtil.createUUIDTag(casterUUID));
+		compound.setInteger("rotation", direction.getIndex());
 		return compound;
 	}
 
@@ -432,8 +413,10 @@ public class TileRune extends TileEntity implements ITickable {
 		markDirty();
 	}
 
+	// ============================================ Tile data methods ==============================================
+
 	@Override
-	public NBTTagCompound getUpdateTag() { return this.writeToNBT(new NBTTagCompound()); }
+	public NBTTagCompound getUpdateTag() {return this.writeToNBT(new NBTTagCompound());}
 
 	@Nullable
 	@Override
@@ -446,21 +429,23 @@ public class TileRune extends TileEntity implements ITickable {
 		readFromNBT(pkt.getNbtCompound());
 	}
 
+	public Item getRune() {return rune;}
+
+	public void setRune(Item rune) {this.rune = rune;}
+
+	public int getX() {return getPos().getX();}
+
 	// ============================================ Getter methods ==============================================
 
-	public Item getRune() { return rune; }
+	public int getY() {return getPos().getY();}
 
-	public int getX() { return getPos().getX(); }
+	public int getZ() {return getPos().getZ();}
 
-	public int getY() { return getPos().getY(); }
+	public float getXCenter() {return getPos().getX() + 0.5F;}
 
-	public int getZ() { return getPos().getZ(); }
+	public float getYCenter() {return getPos().getY() + 0.5F;}
 
-	public float getXCenter() { return getPos().getX() + 0.5F; }
-
-	public float getYCenter() { return getPos().getY() + 0.5F; }
-
-	public float getZCenter() { return getPos().getZ() + 0.5F; }
+	public float getZCenter() {return getPos().getZ() + 0.5F;}
 
 	public Ritual getRitual() {
 		if (isMaster()) {
@@ -473,6 +458,14 @@ public class TileRune extends TileEntity implements ITickable {
 		return Rituals.none;
 	}
 
+	public void setRitual(Ritual ritual) {
+		if (isMaster()) {
+			this.ritual = ritual;
+		} else {
+			getMaster().setRitual(ritual);
+		}
+	}
+
 	public NBTTagCompound getRitualData() {
 		NBTTagCompound compound = isMaster() ? ritualData : getMaster().ritualData;
 		if (compound != null) {
@@ -482,11 +475,23 @@ public class TileRune extends TileEntity implements ITickable {
 		}
 	}
 
-	public List<TileRune> getRitualRunes() { return isMaster() ? ritualRunes : getMaster().ritualRunes; }
+	public void setRitualData(NBTTagCompound ritualData) {
+		this.ritualData = ritualData;
+	}
 
-	public int getRitualCurrentLifeTime() { return isMaster() ? ritualCurrentLifeTime : getMaster().getRitualCurrentLifeTime(); }
+	public List<TileRune> getRitualRunes() {return isMaster() ? ritualRunes : getMaster().ritualRunes;}
 
-	public List<TileRune> getConnectedRunes() { return isMaster() ? connectedRunes : getMaster().connectedRunes; }
+	public void setRitualRunes(List<TileRune> ritualRunes) {
+		if (isMaster) {
+			this.ritualRunes = ritualRunes;
+		} else {
+			getMaster().ritualRunes = ritualRunes;
+		}
+	}
+
+	public int getRitualCurrentLifeTime() {return isMaster() ? ritualCurrentLifeTime : getMaster().getRitualCurrentLifeTime();}
+
+	public List<TileRune> getConnectedRunes() {return isMaster() ? connectedRunes : getMaster().connectedRunes;}
 
 	@Nullable
 	public EntityPlayer getCaster() {
@@ -501,21 +506,18 @@ public class TileRune extends TileEntity implements ITickable {
 		return null;
 	}
 
+	// ============================================ Setter methods ==============================================
+
 	public TileRune getMaster() {
-		if (master == null)
-			initializeRuneMultiBlockIfNecessary();
+		if (master == null) {initializeRuneMultiBlockIfNecessary();}
 		if (master != null && master == this && !isMaster) {this.isMaster = true;}
 		return master;
 	}
-
-	// ============================================ Setter methods ==============================================
 
 	private void setMaster(TileRune master) {
 		this.master = master;
 		isMaster = master == this;
 	}
-
-	public void setRune(Item rune) { this.rune = rune; }
 
 	public void setPlacer(EntityPlayer placer) {
 		casterId = placer.getEntityId();

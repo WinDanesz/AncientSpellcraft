@@ -19,7 +19,7 @@ public class RenderRune extends TileEntitySpecialRenderer<TileRune> {
 		GlStateManager.pushMatrix();
 
 		GlStateManager.translate((float) x + 0.5F, (float) y + 0F, (float) z + 0.5F);
-
+		GlStateManager.rotate(tileentity.getDirection().getHorizontalAngle(),0,-1, 0);
 		float t = Minecraft.getMinecraft().player.ticksExisted + partialTicks;
 		//		GlStateManager.translate(0, 0.05f * MathHelper.sin(t/15), 0);
 		this.renderItem(tileentity, t);
