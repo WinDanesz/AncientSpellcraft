@@ -40,7 +40,7 @@ public class WildSporeling extends SpellRay {
 			ParticleBuilder.create(Type.FLASH).pos(pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5).scale(2).time(20).face(EnumFacing.UP).clr(78, 168, 50).spawn(world);
 		} else {
 			BlockMagicMushroom mushroom = BlockMagicMushroom.getRandomMushroom(0.05f, 0.03f, BlockMagicMushroom.MushroomType.COMBAT);
-			return BlockMagicMushroom.tryPlaceMushroom(world, pos, null, mushroom, getProperty(BLOCK_LIFETIME).intValue());
+			return BlockMagicMushroom.tryPlaceMushroom(world, pos, null, mushroom, getProperty(BLOCK_LIFETIME).intValue(), modifiers);
 		}
 
 		return false;

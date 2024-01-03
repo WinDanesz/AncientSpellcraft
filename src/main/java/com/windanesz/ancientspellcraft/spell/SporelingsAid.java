@@ -41,10 +41,10 @@ public class SporelingsAid extends SpellRay {
 		} else {
 			if (caster.isSneaking()) {
 				BlockMagicMushroom mushroom = BlockMagicMushroom.getRandomMushroom(0.05f, 0.03f, BlockMagicMushroom.MushroomType.BUFF);
-				return BlockMagicMushroom.tryPlaceMushroom(world, pos, caster, mushroom, getProperty(BLOCK_LIFETIME).intValue());
+				return BlockMagicMushroom.tryPlaceMushroom(world, pos, caster, mushroom, getProperty(BLOCK_LIFETIME).intValue(), modifiers);
 			} else {
 				BlockMagicMushroom mushroom = BlockMagicMushroom.getRandomMushroom(0.05f, 0.03f, BlockMagicMushroom.MushroomType.COMBAT);
-				return BlockMagicMushroom.tryPlaceMushroom(world, pos, caster, mushroom, getProperty(BLOCK_LIFETIME).intValue());
+				return BlockMagicMushroom.tryPlaceMushroom(world, pos, caster, mushroom, getProperty(BLOCK_LIFETIME).intValue(), modifiers);
 			}
 		}
 

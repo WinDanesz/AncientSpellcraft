@@ -167,10 +167,7 @@ public abstract class BlockMagicMushroom extends BlockBush implements ITileEntit
 			}
 		}
 
-		BlockMagicMushroom mushroom = (BlockMagicMushroom) block;
 		Entity casterEntity = null;
-		int potionDuration = 80;
-		int effectAmplifier = 0;
 		DamageSource source = DamageSource.CACTUS;
 		float damage = ASSpells.fairy_ring.getProperty(Spell.DAMAGE).floatValue();
 
@@ -180,9 +177,6 @@ public abstract class BlockMagicMushroom extends BlockBush implements ITileEntit
 
 			float potency = ((TileEntityMagicMushroom) tileentity).potency;
 			damage *= potency;
-			effectAmplifier = (int) ((potency - 1) / Constants.POTENCY_INCREASE_PER_TIER + 0.5f);
-
-			potionDuration *= ((TileEntityMagicMushroom) tileentity).durationMultiplier;
 
 			EntityLivingBase caster = ((TileEntityMagicMushroom) tileentity).getCaster();
 			casterEntity = ((TileEntityMagicMushroom) tileentity).getCaster();

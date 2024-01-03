@@ -105,7 +105,7 @@ public class FairyRing extends Spell {
 				if (!singleType) // get a new random mushroom
 					mushroom = BlockMagicMushroom.getRandomMushroom(0.05f, 0.03f);
 
-				BlockMagicMushroom.tryPlaceMushroom(world, pos, caster, mushroom, lifetime);
+				BlockMagicMushroom.tryPlaceMushroom(world, pos, caster, mushroom, lifetime, modifiers);
 			}
 		}
 
