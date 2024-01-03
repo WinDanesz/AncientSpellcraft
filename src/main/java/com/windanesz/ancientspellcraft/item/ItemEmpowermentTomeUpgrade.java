@@ -15,6 +15,6 @@ public class ItemEmpowermentTomeUpgrade extends ItemWandUpgradeAS {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, net.minecraft.client.util.ITooltipFlag flag) {
-		Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc", (float) Settings.generalSettings.empowerment_upgrade_potency_gain);
+		Wizardry.proxy.addMultiLineDescription(tooltip, "item." + this.getRegistryName() + ".desc", (int) (Settings.generalSettings.empowerment_upgrade_potency_gain * 100f));
 	}
 }
