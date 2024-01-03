@@ -24,7 +24,7 @@ import java.util.Arrays;
 import static electroblob.wizardry.util.WandHelper.SPELL_ARRAY_KEY;
 import static electroblob.wizardry.util.WandHelper.getProgression;
 
-public class Runeword extends Spell implements IClassSpell {
+public class Runeword extends Spell implements IClassSpell, IRuneword {
 
 	public static final String POTENCY_ATTRIBUTE_MODIFIER = "potency";
 	public static final String EFFECT_TRIGGER_CHANCE = "effect_trigger_chance";

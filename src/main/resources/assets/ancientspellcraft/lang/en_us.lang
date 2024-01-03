@@ -1215,6 +1215,8 @@ spell.ancientspellcraft\:zombification=Zombification
 # runewords
 spell.ancientspellcraft\:runeword_blast.desc=The next hit of the Spell Blade blasts the enemy away over a large distance.
 spell.ancientspellcraft\:runeword_blast=Runeword: Blast
+spell.ancientspellcraft\:runeword_sealbreaker.desc=Dispels an arcane wall which protects a structure.
+spell.ancientspellcraft\:runeword_sealbreaker=Runeword: Sealbreaker
 spell.ancientspellcraft\:runeword_briar.desc=Hitting an enemy with the Spell Blade has a chance to cause thorn bushes to sprout near the enemy.
 spell.ancientspellcraft\:runeword_briar=Runeword: Briar
 spell.ancientspellcraft\:runeword_displace.desc=The next 3 hits of the Spell Blade teleports the target to a nearby location.
@@ -1270,6 +1272,8 @@ tile.ancientspellcraft\:crystal_ore_ice.name=Icy Crystal Ore
 tile.ancientspellcraft\:crystal_ore_lightning.name=Stormy Crystal Ore
 tile.ancientspellcraft\:crystal_ore_necromancy.name=Dark Crystal Ore
 tile.ancientspellcraft\:crystal_ore_sorcery.name=Mystical Crystal Ore
+tile.ancientspellcraft\:crystal_silver_ore.name=Crystal Silver Ore
+tile.ancientspellcraft\:astral_diamond_ore.name=Astral Diamond Ore
 tile.ancientspellcraft\:devoritium_bars.name=Devoritium Bars
 tile.ancientspellcraft\:devoritium_block.desc_extended=This darkish metal block seems to suppress any forms of magic when stepped on
 tile.ancientspellcraft\:devoritium_block.name=Devoritium Block

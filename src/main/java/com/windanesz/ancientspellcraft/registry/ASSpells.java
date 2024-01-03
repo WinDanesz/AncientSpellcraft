@@ -491,8 +491,9 @@ public final class ASSpells {
 		registry.register(new RunewordDisarm());
 		registry.register(new RunewordMeditate());
 		registry.register(new RunewordExpose());
-		
-		registry.register(new RunesmithingSpell("runesmithing_improve", EnumAction.BOW, false));
+		registry.register(new RunewordSealbreaker());
+
+		registry.register(new RunesmithingImprove("runesmithing_improve", EnumAction.BOW, false));
 
 		registry.register(new TurnUndead());
 		registry.register(new RevealUndead());

@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.client.gui;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.item.ItemRunicPlate;
+import com.windanesz.ancientspellcraft.spell.IRuneword;
 import com.windanesz.ancientspellcraft.spell.Runeword;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.client.DrawingUtils;
@@ -58,7 +59,7 @@ public class GuiRunicPlate extends GuiScreen {
 				int charges = getSpell().getProperty(Runeword.CHARGES).intValue();
 				String chargesString = I18n.format("gui.ancientspellcraft:runic_plate.charges", charges);
 				this.fontRenderer.drawString(chargesString, left + 24, top + 57, 0x3c2c44);
-			} else if (getSpell() instanceof Runeword && ((Runeword) getSpell()).isPassive()) {
+			} else if (getSpell() instanceof IRuneword && ((IRuneword) getSpell()).isPassive()) {
 				this.fontRenderer.drawString(I18n.format("gui.ancientspellcraft:runic_plate.passive"), left + 24, top + 57, 0x3c2c44);
 			}
 		} else {
