@@ -71,6 +71,14 @@
 				"ebwizardry:on_subsection_unlock"
 			]
 		},
+		"magic_crystal_ores": {
+			"title": "Magic Crystal Ores",
+			"include_in_contents": "ancient_spellcraft",
+			"text": [
+				"Dark Crystal\nBuried deep under the muck of the darkest, murkiest Swamps can the Dark Crystals of Necromancy be found. They were infused with dark, unpleasant energies during its formation. Some say the souls of creatures that drowned in the swamps are trapped in these crystals.",
+				"TODO: Add the other missin ores"
+			]
+		},
 		"ancient_magic": {
 			"title": "Ancient Magic",
 			"include_in_contents": "ancient_spellcraft",
@@ -78,10 +86,10 @@
 				"ancientspellcraft:relics"
 			],
 			"text": [
-				" Only a few remnants of the old wizarding civilizations can be found in this era. Many of their ancient spells and techniques are said to be lost to the ages... the magical seals that bind magic to parchment have decayed and faded away, books and scrolls have been devoured by silverfish and the surviving ones crumble into dust at the slightest disturbance",
-				"Stone Tablets can be studied at a @sphere_cognizance Sphere of Cognizance@ to uncover their secrets. Some scholars theorize that these tablets might be inscribed with knowledge of ancient spells- created and utilized by wizards from long-forgotten civilizations. However, no wizard in recent history has been successful in recreating any of these spells.",
-				"Stone Tablets can be found in four sizes - Small Stone Tablets, (normal) Stone Tablets, Large Stone Tablets, Grand Stone Tablets. The larger the Tablet is, the more powerful effect (or spell) it can contain. You won't know what type of a stone tablet is, until you research it with the @sphere_cognizance Sphere of Cognizance@ and they cannot be used before researching.",
-				"There are four types of these relics: Spell, Enchantment, Power and Incantation.",
+				" Only a few remnants of the old wizarding civilizations can be found in this era. Many of their ancient spells and techniques are said to be lost to the ages... the magical seals that bind magic to parchment have decayed and faded away, books and scrolls have been devoured by silverfish and the surviving ones crumble into dust at the slightest disturbance.",
+				"Stone Tablets can only be found in chest loot in various Wizardry-related chests - wherever you can find spell books, usually there is a chance to find a Stone Tablet.. Stone Tablets can be studied at a @sphere_cognizance Sphere of Cognizance@ to uncover their secrets. Some scholars theorize that these tablets might be inscribed with knowledge of ancient spells- created and utilized by wizards from long-forgotten civilizations. However, no wizard in recent history has been successful in recreating any of these spells.",
+				"Stone Tablets can be found in four sizes - Small Stone Tablets, (normal) Stone Tablets, Large Stone Tablets, Grand Stone Tablets. The larger the Tablet is, the more powerful effect (or spell) it can contain. You won't know what type of a stone tablet is, until you research it with the @sphere_cognizance Sphere of Cognizance@, and they cannot be used before researching.",
+				"There are four types of Tablets: Spell, Enchantment, Power and Incantation.",
 				"Spell Stone Tablet\nSpell stone tablets contain a blueprint of an ancient spell. Before the spell could be used, you must write the spell book at the Scribing Desk by supplying all the required spell ingredients at the desk and crafting it.",
 				"Enchantment Stone Tablet\nEnchantment Stone Tablets can bear powerful enchantments. To release the enchantment of these tablets and enchant an item, hold the tablet in your main hand and the item to be enchanted in your offhand and right click the stone tablet for ~8 seconds to apply it.",
 				"Power Stone Tablet\n Power Stone Tablets can temporarily augment your magical abilities. To use them, cast the Stone Tablet for ~8 seconds (by holding right click).",
