@@ -77,7 +77,10 @@
 			"text": [
 				"Elemental Crystal Shards can be found all around the Overworld. These small veins of crystal drop 1-2 Crystal Shards of their element, 9 of the same element can be combined into a full elemental crystal in a Crafting Bench.",
 				"Dark Crystal (Necromancy)\nBuried deep under the muck of the darkest, murkiest Swamps can the Dark Crystals of Necromancy be found. They were infused with dark, unpleasant energies during its formation. Some say the souls of creatures that drowned in the swamps are trapped in these crystals.",
-				"TODO: Add the other missin ores"
+				"Fiery Crystal (Fire)\nFiery Crystal ore can be found within the scorching, unforgiving Deserts of the land. It has thoroughly absorbed the baking desert heat during its birth, and seems to emanate a burning aura.",
+				"Icy Crystal (Ice)\nIcy Crystal ore can be found in the frozen abyss of the Tundra. They are frozen to the core, and imbued with the powers of frost.",
+				"Mystical Crystal\nThe Crystal Veins of Sorcery naturally occur in the Plains biome, deep underground. Perhaps the simplicity of this natural habitat is what helps these Mystical crystals to manifest.",
+				"Radiant Crystal\nRadiant Crystal ore can be found beneath the lush, green Jungles of the world. They seem to have been blessed with healing properties, making them a prized possession among healers. The connection between Jungles and Healing magic is unclear- some scholars believe it is due to the abundance of life energy in these Jungles.",
 			]
 		},
 		"ancient_magic": {
