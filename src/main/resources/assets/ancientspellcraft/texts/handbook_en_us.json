@@ -79,7 +79,13 @@
 			],
 			"text": [
 				" Only a few remnants of the old wizarding civilizations can be found in this era. Many of their ancient spells and techniques are said to be lost to the ages... the magical seals that bind magic to parchment have decayed and faded away, books and scrolls have been devoured by silverfish and the surviving ones crumble into dust at the slightest disturbance",
-				"Stone Tablets can be studied at a @sphere_cognizance Sphere of Cognizance@ to uncover their secrets. Some scholars theorize that these tablets might be inscribed with knowledge of ancient spells- created and utilized by wizards from long-forgotten civilizations. However, no wizard in recent history has been successful in recreating any of these spells. Ancient spells are "
+				"Stone Tablets can be studied at a @sphere_cognizance Sphere of Cognizance@ to uncover their secrets. Some scholars theorize that these tablets might be inscribed with knowledge of ancient spells- created and utilized by wizards from long-forgotten civilizations. However, no wizard in recent history has been successful in recreating any of these spells.",
+				"Stone Tablets can be found in four sizes - Small Stone Tablets, (normal) Stone Tablets, Large Stone Tablets, Grand Stone Tablets. The larger the Tablet is, the more powerful effect (or spell) it can contain. You won't know what type of a stone tablet is, until you research it with the @sphere_cognizance Sphere of Cognizance@ and they cannot be used before researching.",
+				"There are four types of these relics: Spell, Enchantment, Power and Incantation.",
+				"Spell Stone Tablet\nSpell stone tablets contain a blueprint of an ancient spell. Before the spell could be used, you must write the spell book at the Scribing Desk by supplying all the required spell ingredients at the desk and crafting it.",
+				"Enchantment Stone Tablet\nEnchantment Stone Tablets can bear powerful enchantments. To release the enchantment of these tablets and enchant an item, hold the tablet in your main hand and the item to be enchanted in your offhand and right click the stone tablet for ~8 seconds to apply it.",
+				"Power Stone Tablet\n Power Stone Tablets can temporarily augment your magical abilities. To use them, cast the Stone Tablet for ~8 seconds (by holding right click).",
+				"Incantation Stone Tablet\nIncantation Stone Tablets can bear a random effect which can be either harmful or beneficial. To use them, cast the Stone Tablet for ~8 seconds (by holding right click)."
 			]
 		},
 		"sphere_cognizance": {
@@ -96,14 +102,16 @@
 			"include_in_contents": "ancient_spellcraft",
 			"text": [
 				"The Scribing Desk can be used to put the knowledge uncovered from arcane relics into some practical usage...",
-				"Spell type Stone Tablets can be used with the desk to create ancient spell books.",
+				"A scribing desk can be crafted from any wooden slabs, a bookshelf, a vanilla writable book, any wood blocks and glass bottle.",
+				"Researched Relics (Stone Tablets of various sizes, but only those which contain spells) can be put into the top left slot of the Scribing Desk, allowing to recreate Ancient spells. To research a Relic, you must first study it at a Sphere of Cognizance.",
 				"#image scribing_desk",
 				"The Scribing Desk has 7 item slots.",
-				"- The top left slot is for relics like stone tablets.",
+				"- The top left slot is for relics like researched Stone Tablets.",
 				"- The bottom left slot is for Magic Crystals.",
 				"- The book slot in the middle is for an empty, regular Book.",
 				"- The bottom right slot is for Ink.",
-				"- The three slots in the middle are for ingredients.",
+				"- The three slots in the middle are for ingredients. Each spell has its own ingredient requirements which can range from 0 to 3 items.",
+				"- The scribing button becomes available when all requirements are met to craft the spell book.",
 				"#image scribing_desk_gui",
 				"#recipe scribing_desk"
 			]
