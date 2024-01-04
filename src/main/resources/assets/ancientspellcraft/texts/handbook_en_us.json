@@ -75,7 +75,8 @@
 			"title": "Magic Crystal Ores",
 			"include_in_contents": "ancient_spellcraft",
 			"text": [
-				"Dark Crystal\nBuried deep under the muck of the darkest, murkiest Swamps can the Dark Crystals of Necromancy be found. They were infused with dark, unpleasant energies during its formation. Some say the souls of creatures that drowned in the swamps are trapped in these crystals.",
+				"Elemental Crystal Shards can be found all around the Overworld. These small veins of crystal drop 1-2 Crystal Shards of their element, 9 of the same element can be combined into a full elemental crystal in a Crafting Bench.",
+				"Dark Crystal (Necromancy)\nBuried deep under the muck of the darkest, murkiest Swamps can the Dark Crystals of Necromancy be found. They were infused with dark, unpleasant energies during its formation. Some say the souls of creatures that drowned in the swamps are trapped in these crystals.",
 				"TODO: Add the other missin ores"
 			]
 		},
