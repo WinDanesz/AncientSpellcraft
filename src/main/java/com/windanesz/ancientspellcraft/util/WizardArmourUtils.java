@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
+import java.util.Optional;
 
 public final class WizardArmourUtils {
 
@@ -53,6 +54,15 @@ public final class WizardArmourUtils {
 			return ((ItemWizardArmour) helmet.getItem()).element != null ? ((ItemWizardArmour) helmet.getItem()).element : Element.MAGIC;
 		}
 		return Element.MAGIC;
+	}
+
+	public static Optional<Element> getFullSetElementForClassOptional(EntityLivingBase entity, ItemWizardArmour.ArmourClass armourClass) {
+		if (isWearingFullSet(entity, null, armourClass)) {
+			// if it's a full set, we can just check any of the armour pieces
+			ItemStack helmet = entity.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+			return Optional.of(((ItemWizardArmour) helmet.getItem()).element != null ? ((ItemWizardArmour) helmet.getItem()).element : Element.MAGIC);
+		}
+		return Optional.empty();
 	}
 
 	public static ItemWizardArmour.ArmourClass getArmourClass(EntityLivingBase entity) {

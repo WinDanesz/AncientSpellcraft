@@ -85,6 +85,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import scala.xml.Elem;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -204,19 +205,18 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 					powered = true;
 				}
 
-				element = WizardArmourUtils.getFullSetElementForClass(entityLiving, ItemWizardArmour.ArmourClass.BATTLEMAGE);
+				Optional<Element> optionalElement = WizardArmourUtils.getFullSetElementForClassOptional(entityLiving, ItemWizardArmour.ArmourClass.BATTLEMAGE);
+				element = optionalElement.orElse(Element.MAGIC);
+				if (!optionalElement.isPresent()) {
+					powered = false;
+				}
 
-				if (element == null) {element = Element.MAGIC;}
 				// Triggering the elemental effect of this sword each tick
 				EnumElementalSwordEffect.onUpdate(element, stack, world, entityLiving, slot, true);
 			}
 
-			if (element == null) {element = Element.MAGIC;}
-
 			// setting the current element type, each tick
-			if (element != null) {
-				compound.setString(WizardClassWeaponHelper.ELEMENT_TAG, element.getName().toLowerCase());
-			}
+			compound.setString(WizardClassWeaponHelper.ELEMENT_TAG, element.getName().toLowerCase());
 			compound.setBoolean(MANA_AVAILABLE_TAG, powered);
 
 			// Ticks runewords
