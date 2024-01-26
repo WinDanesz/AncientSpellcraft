@@ -161,6 +161,14 @@ public class Settings {
 		public String[] extension_spell_blacklist = {
 		};
 
+		@Config.Name("Scroll Items Bought By Wizards Using The Crown of The Merchant King Artefact")
+		@Config.Comment("Wizards will always offer 1 magic crystal for these items. Be sure to not remove all scrolls (that are instance of ItemScroll) or the item won't work, but otherwise,"
+				+ "you can add pretty much any items, not just scrolls")
+		public String[] scroll_items_for_crown_of_the_merchant_king = {
+				"ebwizardry:scroll",
+				"ancientspellcraft:ancient_spellcraft_scroll"
+		};
+
 		@Config.Name("Expertiment Debuff Blacklist")
 		@Config.Comment("List of negative potion effect which cannot occur as a side effect of the Experiment spell. Must be in a 'modid:potion_registry_name' format.")
 		public String[] experiment_debuff_blacklist = {
