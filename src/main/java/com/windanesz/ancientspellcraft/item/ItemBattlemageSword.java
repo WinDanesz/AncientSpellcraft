@@ -379,7 +379,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		}
 		cost = cost + level * 6;
 
-		if (this.getMana(stack) > 0) {
+		if (this.getMana(stack) > 0 && !(wielder.getHeldItemOffhand().getItem() instanceof ItemBattlemageShield)) {
 			// consume mana from the sword
 			this.consumeMana(stack, cost, wielder);
 		} else if (otherStack.getItem() instanceof ItemWand && !((ItemWand) otherStack.getItem()).isManaEmpty(otherStack)) {

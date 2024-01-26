@@ -1512,5 +1512,5 @@ item.ancientspellcraft\:belt_soul_scorch.desc=Attackers receive the Soul Scorch 
 item.ancientspellcraft\:charm_glyph_shield_disable.name=Glyph of Unyielding
 item.ancientspellcraft\:charm_glyph_shield_disable.desc=The Runic Shield cannot be disabled by axes or any other means
 item.ancientspellcraft\:runic_hammer.name=Runic Hammer
-generic.ancientspellcraft\:runic_hammer_spell.no_anvil=You must cast this spell on an Arcane Anvil
+generic.ancientspellcraft\:runic_hammer_spell.no_anvil=Battlemage tool used to cast Runesmithing spells on Arcane Anvils
 
