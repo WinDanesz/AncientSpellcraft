@@ -5,6 +5,7 @@ import com.windanesz.ancientspellcraft.entity.construct.EntitySilencingSigil;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellConstructRanged;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.RayTracer;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,12 +30,6 @@ public class SilencingSigil extends SpellConstructRanged<EntitySilencingSigil> {
 
 		double range = getProperty(RANGE).doubleValue() * modifiers.get(WizardryItems.range_upgrade);
 		RayTraceResult rayTrace = RayTracer.standardBlockRayTrace(world, caster, range, hitLiquids, ignoreUncollidables, false);
-		if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.ENTITY) {
-			if (rayTrace.entityHit instanceof EntitySilencingSigil) {
-				rayTrace.entityHit.setDead();
-				return true;
-			}
-		}
 		if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.BLOCK && (rayTrace.sideHit == EnumFacing.UP || !requiresFloor)) {
 
 			if (!world.isRemote) {
@@ -42,6 +37,11 @@ public class SilencingSigil extends SpellConstructRanged<EntitySilencingSigil> {
 				double x = rayTrace.hitVec.x;
 				double y = rayTrace.hitVec.y;
 				double z = rayTrace.hitVec.z;
+
+				if (!EntityUtils.getEntitiesWithinRadius(1, x, y, z, world, EntitySilencingSigil.class).isEmpty()) {
+					EntityUtils.getEntitiesWithinRadius(1, x, y, z, world, EntitySilencingSigil.class).get(0).setDead();
+					return true;
+				}
 
 				if (!spawnConstruct(world, x, y, z, rayTrace.sideHit, caster, modifiers))
 					return false;
