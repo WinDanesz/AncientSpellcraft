@@ -239,8 +239,8 @@ public class Settings {
 		@Config.Comment("The amount of mana required & consumed when the spellblade is used to hit a target, based on the tier of the blade\n"
 				+ "Example: if the cost is 5, a novice blade will consume 5 mana, an apprentice sword will consume 2x5 mana, a master blade will consume 20 mana")
 		@Config.RequiresMcRestart
-		@Config.RangeInt(min = 1, max = 100)
-		public int spellblade_base_mana_cost = 5;
+		@Config.RangeInt(min = 0, max = 100)
+		public int spellblade_base_mana_cost = 0;
 
 		@Config.Name("Orb Artefact Potency Percent Bonus")
 		@Config.Comment("Determines the potency bonus of the elemental orb artefacts in a percentage value")
