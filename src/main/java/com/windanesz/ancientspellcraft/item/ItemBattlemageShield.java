@@ -157,6 +157,7 @@ public class ItemBattlemageShield extends Item implements ISpellCastingItem, IMa
 	@Override
 	public void setDamage(ItemStack stack, int damage) {
 		// Overridden to do nothing to stop repair things from 'repairing' the mana in a wand
+		super.setDamage(stack, damage);
 	}
 
 	@Override
