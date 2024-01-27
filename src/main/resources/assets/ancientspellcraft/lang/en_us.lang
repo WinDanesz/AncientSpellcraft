@@ -1474,7 +1474,11 @@ spell.ancientspellcraft\:death_mark.desc=Places a magical glyph on the targeted 
 spell.ancientspellcraft\:death_mark.entity_death_message=Death-marked %1$s died at %2$s, %3$s, %4$s
 spell.ancientspellcraft\:death_mark.entity_marked=Death-marked %1$s
 spell.ancientspellcraft\:runesmithing_improve=Runesmithing: Improve
-spell.ancientspellcraft\:runesmithing_improve.desc=Enchants a tool in an Arcane Anvil with Efficiency. It also always restores 5%% durability to the tool.
+spell.ancientspellcraft\:runesmithing_improve.desc=Enchants a tool at an Arcane Anvil with Efficiency.
+spell.ancientspellcraft\:runesmithing_sharpen=Runesmithing: Sharpen
+spell.ancientspellcraft\:runesmithing_sharpen.desc=Enchants a weapon at an Arcane Anvil with Sharpness.
+spell.ancientspellcraft\:runesmithing_mend=Runesmithing: Mend
+spell.ancientspellcraft\:runesmithing_mend.desc=Restores 5%% durability to an item an Arcane Anvil.
 
 spell.ancientspellcraft\:tome_warp=Tome Warp
 spell.ancientspellcraft\:tome_warp.desc=Swaps place with your Awakened Tome by sneak-using the Tome Controller.
