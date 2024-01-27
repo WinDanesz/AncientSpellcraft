@@ -17,7 +17,7 @@
     "chargeup": 0,
     "cooldown": 60,
     "base_properties": {
-        "effect_trigger_chance": 0.6,
+        "effect_trigger_chance": 0.2,
         "effect_duration": 100
     }
 }

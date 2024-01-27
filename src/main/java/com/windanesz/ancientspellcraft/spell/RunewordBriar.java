@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import electroblob.wizardry.block.BlockThorns;
+import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.registry.WizardryBlocks;
 import electroblob.wizardry.tileentity.TileEntityThorns;
 import electroblob.wizardry.util.BlockUtils;
@@ -31,7 +32,7 @@ public class RunewordBriar extends Runeword {
 
 			if (pos != null) {
 
-				if (castSuccessful(this, world, caster, hand, sword, modifiers)) {
+				//if (castSuccessful(this, world, caster, hand, sword, modifiers)) {
 
 					if (BlockUtils.canBlockBeReplaced(world, pos) && BlockUtils.canBlockBeReplaced(world, pos.up())) {
 
@@ -47,9 +48,10 @@ public class RunewordBriar extends Runeword {
 							((TileEntityThorns) tileentity).damageMultiplier = 1f;
 
 							((TileEntityThorns) tileentity).sync();
+							((IManaStoringItem) sword.getItem()).consumeMana(sword, this.getCost(), caster);
 						}
 					}
-				}
+				//}
 			}
 		}
 		return false;
