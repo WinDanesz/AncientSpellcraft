@@ -1401,7 +1401,8 @@ public class ASEventHandler {
 						if (activeContingencies.hasKey(Contingency.Type.IMMOBILITY.spellName)) {
 
 							for (BlockPos pos : Arrays.asList(player.getPosition(), player.getPosition().up())) {
-								if (player.world.getBlockState(pos).getMaterial() == Material.WEB || player.world.getBlockState(pos).getBlock() == ASBlocks.QUICKSAND) {
+								if (player.world.getBlockState(pos).getMaterial() == Material.WEB || player.world.getBlockState(pos).getBlock() == ASBlocks.QUICKSAND
+								||  player.world.getBlockState(pos).getBlock().getRegistryName().toString().equals("biomesoplenty:quicksand")) {
 								Contingency.tryCastContingencySpell(player, data, Contingency.Type.IMMOBILITY);
 								break;
 								}
