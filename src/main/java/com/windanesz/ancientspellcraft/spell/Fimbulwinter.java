@@ -39,7 +39,7 @@ public class Fimbulwinter extends SpellAreaEffect {
 			List<BlockPos> sphere = BlockUtils.getBlockSphere(caster.getPosition().up(12), radius);
 			int yPos = caster.getPosition().getY() + 10;
 
-			List<BlockPos> list = sphere.stream().filter(p -> p.getY() == yPos && p.getX() != caster.getPosition().getX() && p.getZ() != caster.getPosition().getZ())
+			List<BlockPos> list = sphere.stream().filter(p -> p.getY() == yPos && p.distanceSq(new BlockPos(caster.posX, p.getY(), caster.posZ)) > 12)
 					.collect(Collectors.toList());
 
 			for (int i = 0; i < 3; i++) {
@@ -62,12 +62,18 @@ public class Fimbulwinter extends SpellAreaEffect {
 			world.spawnEntity(charge);
 
 		} else {
-			ParticleBuilder.create(ParticleBuilder.Type.ICE).vel(0, 0.1, 0).fade(1f, 1f, 1f).spin(0.8f, 0.03f).time(40).entity(caster).scale(1.2f).spawn(world);
-			ParticleBuilder.create(ParticleBuilder.Type.ICE).vel(0, 0.1, 0).fade(1f, 1f, 1f).spin(0.8f, -0.03f).time(40).entity(caster).scale(1.2f).spawn(world);
+			ParticleBuilder.create(ParticleBuilder.Type.SNOW).vel(0, 0.1, 0).fade(1f, 1f, 1f).spin(0.8f, 0.03f).time(40).entity(caster).scale(1.2f).spawn(world);
+			ParticleBuilder.create(ParticleBuilder.Type.SNOW).vel(0, 0.1, 0).fade(1f, 1f, 1f).spin(0.8f, -0.03f).time(40).entity(caster).scale(1.2f).spawn(world);
+			
+			for(int i=0; i<6; i++){
+				double speed = (caster.world.rand.nextBoolean() ? 1 : -1) * (0.1 + 0.05 * caster.world.rand.nextDouble());
+				ParticleBuilder.create(ParticleBuilder.Type.SNOW).pos(caster.posX, caster.posY + caster.world.rand.nextDouble() * 18, caster.posZ).vel(0, 0, 0)
+						.time(100).scale(2).spin(caster.world.rand.nextDouble() * (18 - 0.5) + 0.5, speed * 0.1).shaded(true).spawn(world);
+			}
 		}
 
 		this.playSound(world, caster, ticksInUse, -1, modifiers);
-		return f;
+		return true;
 	}
 
 	@Override
