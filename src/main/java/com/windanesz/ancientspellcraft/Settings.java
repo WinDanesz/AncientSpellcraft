@@ -235,12 +235,16 @@ public class Settings {
 		@Config.RangeInt(min = 0, max = 100)
 		public int spellblade_charge_gain_per_hit = 5;
 
-		@Config.Name("Spellblade base hit mana cost per tier")
-		@Config.Comment("The amount of mana required & consumed when the spellblade is used to hit a target, based on the tier of the blade\n"
-				+ "Example: if the cost is 5, a novice blade will consume 5 mana, an apprentice sword will consume 2x5 mana, a master blade will consume 20 mana")
+		@Config.Name("Spellblade basic attack mana cost")
+		@Config.Comment("The amount of mana required & consumed when the spellblade is used to hit a target")
 		@Config.RequiresMcRestart
 		@Config.RangeInt(min = 0, max = 100)
-		public int spellblade_base_mana_cost = 0;
+		public int spellblade_base_mana_cost = 1;
+
+		@Config.Name("Spellblade base mana per tier")
+		@Config.Comment("The amount of mana a spell blade has by default for each tier,")
+		@Config.RequiresMcRestart
+		public int[] spell_blade_base_mana_per_tier = {150, 300, 600, 900};
 
 		@Config.Name("Orb Artefact Potency Percent Bonus")
 		@Config.Comment("Determines the potency bonus of the elemental orb artefacts in a percentage value")
@@ -375,6 +379,13 @@ public class Settings {
 				"ebwizardry:slow_time",
 				"ebwizardry:frost",
 				"minecraft:slowness"
+		};
+
+		@Config.Name("Curses that the Dispel Item Curse spell can remove. Should work with modded enchantments as well.")
+		@Config.RequiresMcRestart
+		public String[] dispel_item_curse_list = {
+				"minecraft:vanishing_curse",
+				"minecraft:binding_curse"
 		};
 
 		@Config.Name("Metamagic - Projectile incompatible spells")

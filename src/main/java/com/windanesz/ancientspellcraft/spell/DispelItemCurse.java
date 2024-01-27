@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.spell;
 
+import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.spell.SpellBuff;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -12,7 +13,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +38,7 @@ public class DispelItemCurse extends SpellBuff {
 			if (!player.getHeldItemOffhand().isEmpty()) {
 				ItemStack offHandItemStack = player.getHeldItemOffhand();
 				return attemptRemoveCurseFromItemStack(offHandItemStack);
-			}
-			else {
+			} else {
 				List<ItemStack> itemStackList = new ArrayList<>();
 				for (ItemStack stack : player.getArmorInventoryList()) {
 					if (!stack.isEmpty()) {
@@ -53,19 +55,18 @@ public class DispelItemCurse extends SpellBuff {
 	}
 
 	private static boolean attemptRemoveCurseFromItemStack(ItemStack stack) {
-		if (EnchantmentHelper.hasBindingCurse(stack)) {
-			Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
-			enchantments.remove(Enchantments.BINDING_CURSE);
-			EnchantmentHelper.setEnchantments(enchantments, stack);
-			return true;
-		} else if (EnchantmentHelper.hasVanishingCurse(stack)) {
-			Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
-			enchantments.remove(Enchantments.VANISHING_CURSE);
-			EnchantmentHelper.setEnchantments(enchantments, stack);
-			return true;
-		} else {
-			return false;
+		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(stack);
+		for (String registryName : Settings.generalSettings.dispel_item_curse_list) {
+			if (ForgeRegistries.ENCHANTMENTS.containsKey(new ResourceLocation(registryName))) {
+				Enchantment currEnchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(registryName));
+				if (enchantments.containsKey(currEnchantment)) {
+					enchantments.remove(currEnchantment);
+					EnchantmentHelper.setEnchantments(enchantments, stack);
+					return true;
+				}
+			}
 		}
+		return false;
 	}
 
 	@Override
