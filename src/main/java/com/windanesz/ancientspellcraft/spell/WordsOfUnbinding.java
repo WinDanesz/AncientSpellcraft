@@ -3,9 +3,12 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.ISpellCastingItem;
+import electroblob.wizardry.item.IWorkbenchItem;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemWandUpgrade;
 import electroblob.wizardry.item.SpellActions;
+import electroblob.wizardry.registry.Spells;
+import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.NBTExtras;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -174,6 +177,19 @@ public class WordsOfUnbinding extends Spell {
 					upgrades.setInteger(upgradeToDecrease, counter);
 				} else {
 					upgrades.removeTag(upgradeToDecrease);
+				}
+
+				if (upgradeToDecrease == "attunement") {
+					if (wand.getItem() instanceof IWorkbenchItem) {
+						Spell[] spells = WandHelper.getSpells(wand);
+						Spell[] newSpells = new Spell[((IWorkbenchItem) wand.getItem()).getSpellSlotCount(wand)];
+
+						for(int i = 0; i < newSpells.length; i++){
+							newSpells[i] = i < spells.length && spells[i] != null ? spells[i] : Spells.none;
+						}
+
+						WandHelper.setSpells(wand, newSpells);
+					}
 				}
 
 				NBTExtras.storeTagSafely(wand.getTagCompound(), WandHelper.UPGRADES_KEY, upgrades);
