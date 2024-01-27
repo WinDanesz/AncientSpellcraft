@@ -1,11 +1,17 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.item.ItemBattlemageShield;
+import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
+import com.windanesz.ancientspellcraft.item.WizardClassWeaponHelper;
 import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.util.WizardArmourUtils;
+import electroblob.wizardry.block.BlockReceptacle;
+import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.item.SpellActions;
+import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -26,7 +32,7 @@ public class RunewordMeditate extends Runeword {
 				((IManaStoringItem) caster.getHeldItemOffhand().getItem()).rechargeMana(caster.getHeldItemOffhand(), 3);
 
 				if (ItemArtefact.isArtefactActive(caster, ASItems.charm_glyph_fortification)) {
-					for(ItemStack stack : caster.getArmorInventoryList()){
+					for (ItemStack stack : caster.getArmorInventoryList()) {
 
 						if (stack.getItem() instanceof ItemWizardArmour && ((ItemWizardArmour) stack.getItem()).armourClass == ItemWizardArmour.ArmourClass.BATTLEMAGE) {
 							((IManaStoringItem) stack.getItem()).rechargeMana(stack, 6);
@@ -35,6 +41,20 @@ public class RunewordMeditate extends Runeword {
 				}
 			}
 		}
-		return super.cast(world, caster, hand, ticksInUse, modifiers);
+		if (world.isRemote) {
+
+			if (caster.getHeldItem(hand).getItem() instanceof ItemBattlemageSword) {
+				Element element = WizardClassWeaponHelper.getElement(caster.getHeldItem(hand));
+				int[] colours = BlockReceptacle.PARTICLE_COLOURS.get(element);
+
+				if (element != Element.MAGIC) {
+					for (int i = 0; i < 2; i++) {
+						ParticleBuilder.create(ParticleBuilder.Type.DUST).pos(caster.posX -0.5f +  caster.world.rand.nextFloat(), caster.posY, caster.posZ -0.5f + caster.world.rand.nextFloat())
+								.vel(0, 0.05 + (caster.world.rand.nextFloat() * 0.1), 0).clr(colours[1]).fade(colours[2]).time(40).shaded(false).spawn(world);
+					}
+				}
+			}
+		}
+		return true;
 	}
 }
