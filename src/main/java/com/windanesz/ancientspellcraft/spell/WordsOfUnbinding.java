@@ -8,7 +8,6 @@ import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemWandUpgrade;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.Spells;
-import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.NBTExtras;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -55,8 +54,7 @@ public class WordsOfUnbinding extends Spell {
 						return true;
 					}
 				}
-				if (world.isRemote)
-					spawnParticles(world, caster);
+				if (world.isRemote) {spawnParticles(world, caster);}
 				return true;
 			} else {
 				if (!world.isRemote) {
@@ -67,42 +65,40 @@ public class WordsOfUnbinding extends Spell {
 		}
 
 		if (caster.getHeldItem(hand).isEmpty() || !(caster.getHeldItem(hand).getItem() instanceof ISpellCastingItem)) {
-			if (!world.isRemote)
-				caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:words_of_unbinding.no_wand"), false);
+			if (!world.isRemote) {caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:words_of_unbinding.no_wand"), false);}
 			return false;
 		}
 
 		ItemStack stack = caster.getHeldItem(hand);
-			if (stack.getItem() instanceof ISpellCastingItem) {
-				if (WandHelper.getTotalUpgrades(stack) > 0) {
-					if (!world.isRemote) {
+		if (stack.getItem() instanceof ISpellCastingItem) {
+			if (WandHelper.getTotalUpgrades(stack) > 0) {
+				if (!world.isRemote) {
 
-						if (!caster.getHeldItemOffhand().isEmpty() && caster.getHeldItemOffhand().getItem() instanceof ItemWandUpgrade) {
-							boolean action = removeUpgrade(caster, stack, caster.getHeldItemOffhand().getItem());
-							if (action) {
-								this.playSound(world, caster, ticksInUse, -1, modifiers);
-							}
-							return action;
-						} else {
-							boolean action = removeUpgrade(caster, stack, null);
-							if (action) {
-								this.playSound(world, caster, ticksInUse, -1, modifiers);
-							}
-							return action;
+					if (!caster.getHeldItemOffhand().isEmpty() && caster.getHeldItemOffhand().getItem() instanceof ItemWandUpgrade) {
+						boolean action = removeUpgrade(caster, stack, caster.getHeldItemOffhand().getItem());
+						if (action) {
+							this.playSound(world, caster, ticksInUse, -1, modifiers);
 						}
+						return action;
+					} else {
+						boolean action = removeUpgrade(caster, stack, null);
+						if (action) {
+							this.playSound(world, caster, ticksInUse, -1, modifiers);
+						}
+						return action;
 					}
 				}
-
-			} else {
-				if (!world.isRemote)
-					caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:words_of_unbinding.no_upgrade_to_remove"), false);
-				return false;
-
 			}
 
+		} else {
+			if (!world.isRemote) {
+				caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:words_of_unbinding.no_upgrade_to_remove"), false);
+			}
+			return false;
 
-		if (world.isRemote)
-			spawnParticles(world, caster);
+		}
+
+		if (world.isRemote) {spawnParticles(world, caster);}
 
 		return true;
 	}
@@ -110,8 +106,7 @@ public class WordsOfUnbinding extends Spell {
 	public static boolean removeUpgrade(EntityPlayer player, ItemStack wand, @Nullable Item upgrade) {
 		boolean returnItem = player.world.rand.nextDouble() < 0.2 && ItemArtefact.isArtefactActive(player, ASItems.ring_unbinding);
 
-		if (wand.getTagCompound() == null)
-			wand.setTagCompound((new NBTTagCompound()));
+		if (wand.getTagCompound() == null) {wand.setTagCompound((new NBTTagCompound()));}
 
 		if (!wand.getTagCompound().hasKey(WandHelper.UPGRADES_KEY)) {
 			return false;
@@ -179,12 +174,12 @@ public class WordsOfUnbinding extends Spell {
 					upgrades.removeTag(upgradeToDecrease);
 				}
 
-				if (upgradeToDecrease == "attunement") {
+				if (upgradeToDecrease.equals("attunement")) {
 					if (wand.getItem() instanceof IWorkbenchItem) {
 						Spell[] spells = WandHelper.getSpells(wand);
 						Spell[] newSpells = new Spell[((IWorkbenchItem) wand.getItem()).getSpellSlotCount(wand)];
 
-						for(int i = 0; i < newSpells.length; i++){
+						for (int i = 0; i < newSpells.length; i++) {
 							newSpells[i] = i < spells.length && spells[i] != null ? spells[i] : Spells.none;
 						}
 

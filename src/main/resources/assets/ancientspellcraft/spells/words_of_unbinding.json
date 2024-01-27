@@ -1,11 +1,11 @@
 {
     "enabled": {
         "book": true,
-        "scroll": true,
+        "scroll": false,
         "wands": true,
         "npcs": false,
-        "dispensers": true,
-        "commands": true,
+        "dispensers": false,
+        "commands": false,
         "treasure": false,
         "trades": false,
         "looting": false
