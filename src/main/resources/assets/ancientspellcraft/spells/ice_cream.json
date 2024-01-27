@@ -3,7 +3,7 @@
     "book": true,
     "scroll": true,
     "wands": true,
-    "npcs": true,
+    "npcs": false,
     "dispensers": true,
     "commands": true,
     "treasure": true,
