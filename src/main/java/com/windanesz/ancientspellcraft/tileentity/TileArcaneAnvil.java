@@ -292,6 +292,7 @@ public class TileArcaneAnvil extends TileEntity implements IInventory {
 				stack.getItem() == ASItems.battlemage_sword_novice ||
 				stack.getItem() == ASItems.battlemage_sword_apprentice ||
 				stack.getItem() == ASItems.battlemage_sword_advanced ||
+				stack.getItem() == ASItems.crystal_silver_ingot ||
 
 				!stack.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).isEmpty()
 		) {
