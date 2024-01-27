@@ -210,6 +210,8 @@ public final class ASSpells {
 	public static final Spell runeword_meditate = placeholder();
 	public static final Spell runeword_expose = placeholder();
 	public static final Spell runesmithing_improve = placeholder();
+	public static final Spell runesmithing_sharpen = placeholder();
+	public static final Spell runesmithing_mend = placeholder();
 
 	public static final Spell conjure_ink = placeholder();
 	public static final Spell vanish = placeholder();
@@ -494,6 +496,8 @@ public final class ASSpells {
 		registry.register(new RunewordSealbreaker());
 
 		registry.register(new RunesmithingImprove("runesmithing_improve", EnumAction.BOW, false));
+		registry.register(new RunesmithingSharpen("runesmithing_sharpen", EnumAction.BOW, false));
+		registry.register(new RunesmithingMend("runesmithing_mend", EnumAction.BOW, false));
 
 		registry.register(new TurnUndead());
 		registry.register(new RevealUndead());

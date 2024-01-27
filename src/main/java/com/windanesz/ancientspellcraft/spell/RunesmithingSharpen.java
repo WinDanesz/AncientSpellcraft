@@ -2,7 +2,6 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.block.BlockArcaneAnvil;
 import com.windanesz.ancientspellcraft.tileentity.TileArcaneAnvil;
-import com.windanesz.ancientspellcraft.tileentity.TileSageLectern;
 import electroblob.wizardry.block.BlockReceptacle;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -15,7 +14,6 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;

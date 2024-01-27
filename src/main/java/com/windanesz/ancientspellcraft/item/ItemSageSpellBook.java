@@ -2,8 +2,6 @@ package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.gui.GuiHandlerAS;
-import electroblob.wizardry.Wizardry;
-import electroblob.wizardry.WizardryGuiHandler;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.client.Minecraft;

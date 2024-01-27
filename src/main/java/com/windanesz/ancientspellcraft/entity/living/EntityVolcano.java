@@ -1,6 +1,5 @@
 package com.windanesz.ancientspellcraft.entity.living;
 
-import com.windanesz.ancientspellcraft.entity.living.EntityFireAnt;
 import electroblob.wizardry.entity.living.EntitySummonedCreature;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.block.material.EnumPushReaction;

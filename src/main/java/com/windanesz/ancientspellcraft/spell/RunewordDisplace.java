@@ -5,7 +5,6 @@ import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.spell.Banish;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;

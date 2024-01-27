@@ -1,9 +1,6 @@
 package com.windanesz.ancientspellcraft.entity.ai;
 
-import com.windanesz.ancientspellcraft.item.ItemSageTome;
-import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.SpellcastUtils;
-import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.entity.living.ISpellCaster;
 import electroblob.wizardry.entity.living.ISummonedCreature;
@@ -19,7 +16,6 @@ import electroblob.wizardry.spell.SpellBuff;
 import electroblob.wizardry.spell.SpellMinion;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WandHelper;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;

@@ -44,6 +44,8 @@ public class CommonProxy {
 
 	public void registerAtlasMarkers() {}
 
+	public void initialiseAnimations(){}
+
 	/**
 	 * Translates the given key and formats it with the given style. Client-side only; on the server this simply returns
 	 * the given translation key. Useful whenever translation from common classes is required, e.g. item tooltips.

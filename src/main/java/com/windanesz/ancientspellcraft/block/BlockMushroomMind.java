@@ -1,6 +1,5 @@
 package com.windanesz.ancientspellcraft.block;
 
-import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.spell.Intimidate;
 import electroblob.wizardry.spell.MindControl;

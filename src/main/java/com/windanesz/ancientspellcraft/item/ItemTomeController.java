@@ -8,7 +8,6 @@ import com.windanesz.ancientspellcraft.spell.Transplace;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.client.DrawingUtils;
 import electroblob.wizardry.item.IManaStoringItem;
-import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.util.WandHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

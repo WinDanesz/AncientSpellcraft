@@ -1,6 +1,5 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
@@ -11,9 +10,6 @@ import com.windanesz.ancientspellcraft.util.ASUtils;
 import com.windanesz.ancientspellcraft.util.WizardArmourUtils;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Constants;
-import electroblob.wizardry.constants.Element;
-import electroblob.wizardry.constants.Tier;
-import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ISpellCastingItem;

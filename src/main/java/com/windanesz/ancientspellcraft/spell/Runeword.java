@@ -22,7 +22,6 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 
 import static electroblob.wizardry.util.WandHelper.SPELL_ARRAY_KEY;
-import static electroblob.wizardry.util.WandHelper.getProgression;
 
 public class Runeword extends Spell implements IClassSpell, IRuneword {
 

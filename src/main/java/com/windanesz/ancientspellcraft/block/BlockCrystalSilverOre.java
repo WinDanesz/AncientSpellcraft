@@ -2,7 +2,6 @@ package com.windanesz.ancientspellcraft.block;
 
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASTabs;
-import electroblob.wizardry.constants.Element;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

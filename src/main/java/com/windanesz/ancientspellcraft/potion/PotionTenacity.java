@@ -1,17 +1,9 @@
 package com.windanesz.ancientspellcraft.potion;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.potion.PotionMagicEffect;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class PotionTenacity extends PotionMagicEffect {
 

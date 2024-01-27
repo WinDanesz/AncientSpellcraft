@@ -2,7 +2,6 @@ package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.enchantment.EnchantmentDegradeSword;
-import electroblob.wizardry.enchantment.EnchantmentMagicSword;
 import electroblob.wizardry.enchantment.EnchantmentTimed;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraftforge.event.RegistryEvent;

@@ -127,7 +127,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
-import javax.swing.event.AncestorEvent;
 import java.util.Collection;
 import java.util.List;
 
@@ -375,6 +374,12 @@ public class ClientProxy extends CommonProxy {
 
 	public void registerAtlasMarkers() {
 		ASAntiqueAtlasIntegration.registerMarkers();
+	}
+
+	@Override
+	public void initialiseAnimations(){
+		// TODO
+		// ASActionAnimation.register();
 	}
 
 	/**

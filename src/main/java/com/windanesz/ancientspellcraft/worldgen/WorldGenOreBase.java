@@ -1,9 +1,5 @@
 package com.windanesz.ancientspellcraft.worldgen;
 
-import com.google.common.primitives.Ints;
-import com.windanesz.ancientspellcraft.Settings;
-import com.windanesz.ancientspellcraft.registry.ASBlocks;
-import electroblob.wizardry.Wizardry;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
