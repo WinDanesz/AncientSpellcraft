@@ -38,35 +38,35 @@ public class Armageddon extends SpellAreaEffect {
 		boolean f = super.cast(world, caster, hand, ticksInUse, modifiers);
 
 		if (!world.isRemote) {
-
 			float radius = getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
 			List<BlockPos> sphere = BlockUtils.getBlockSphere(caster.getPosition().up(6), radius);
-			int yPos = caster.getPosition().getY() + 6;
-			List<BlockPos> list = sphere.stream().filter(p -> p.getY() == yPos)
+
+			int yPos = caster.getPosition().getY() + 16;
+			List<BlockPos> validSpawnLocations = sphere.stream()
+					.filter(p -> p.getY() == yPos && p.distanceSq(new BlockPos(caster.posX, p.getY(), caster.posZ)) > 9) // 3 block radius squared
 					.collect(Collectors.toList());
 
-			for (int i = 0; i < 4; i++) {
-				BlockPos currPos = list.get(world.rand.nextInt(list.size()));
+			for (int i = 0; i < 1 && !validSpawnLocations.isEmpty(); i++) {
+				BlockPos currPos = validSpawnLocations.remove(world.rand.nextInt(validSpawnLocations.size()));
+				System.out.println("distance: " + currPos.distanceSq(caster.getPosition()));
 
-				EntityMeteor meteor = new EntityMeteor(world, currPos.getX(), currPos.getY(),currPos.getZ(),
-						0.5f, false);
+				EntityMeteor meteor = new EntityMeteor(world, currPos.getX() + 0.5, currPos.getY(), currPos.getZ() + 0.5, 0.5f, true);
 
-				Vec3d direction = caster.getLookVec().scale(2 * modifiers.get(WizardryItems.range_upgrade));
-				meteor.motionX = direction.x;
-				meteor.motionY = direction.y;
-				meteor.motionZ = direction.z;
+				meteor.motionX = 0;
+				meteor.motionY = -1;
+				meteor.motionZ = 0;
 
 				world.spawnEntity(meteor);
 			}
-
 		} else {
 			ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).clr(255, 255, 247).vel(0, 0.1, 0).fade(1f, 1f, 1f).spin(0.8f, 0.03f).time(40).entity(caster).scale(1.2f).spawn(world);
 			ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).clr(255, 255, 247).vel(0, 0.1, 0).fade(1f, 1f, 1f).spin(0.8f, -0.03f).time(40).entity(caster).scale(1.2f).spawn(world);
 		}
 
 		this.playSound(world, caster, ticksInUse, -1, modifiers);
-		return f;
+		return true;
 	}
+
 
 	@Override
 	protected boolean affectEntity(World world, Vec3d origin,
