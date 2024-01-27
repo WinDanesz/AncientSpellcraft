@@ -9,6 +9,7 @@ import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASSpells;
 import com.windanesz.ancientspellcraft.registry.ASTabs;
+import com.windanesz.ancientspellcraft.spell.RunesmithingSpellBase;
 import com.windanesz.ancientspellcraft.spell.Runeword;
 import com.windanesz.ancientspellcraft.spell.RunewordFury;
 import com.windanesz.ancientspellcraft.util.WizardArmourUtils;
@@ -1016,7 +1017,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 
 				Spell spell = Spell.byMetadata(spellBooks[i].getStack().getItemDamage());
 				// If the sword is powerful enough for the spell, it's not already bound to that slot and it's enabled for swords
-				if (!(spell.getTier().level > this.tier.level) && spells[i] != spell && spell.isEnabled()) {
+				if (!(spell.getTier().level > this.tier.level) && spells[i] != spell && spell.isEnabled() && !(spell instanceof RunesmithingSpellBase)) {
 					spells[i] = spell;
 					changed = true;
 				}
