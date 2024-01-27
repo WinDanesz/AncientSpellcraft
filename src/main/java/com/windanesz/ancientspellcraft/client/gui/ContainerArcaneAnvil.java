@@ -11,6 +11,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 
@@ -38,6 +39,7 @@ public class ContainerArcaneAnvil extends Container {
 						stack.getItem() == ASItems.battlemage_sword_apprentice ||
 						stack.getItem() == ASItems.battlemage_sword_advanced ||
 						stack.getItem() == ASItems.crystal_silver_ingot ||
+						stack.getItem() instanceof ItemArmor ||
 						!stack.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).isEmpty()) {
 					return true;
 				} else {

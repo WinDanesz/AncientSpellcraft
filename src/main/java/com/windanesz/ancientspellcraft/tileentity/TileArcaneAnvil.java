@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -293,7 +294,7 @@ public class TileArcaneAnvil extends TileEntity implements IInventory {
 				stack.getItem() == ASItems.battlemage_sword_apprentice ||
 				stack.getItem() == ASItems.battlemage_sword_advanced ||
 				stack.getItem() == ASItems.crystal_silver_ingot ||
-
+				stack.getItem() instanceof ItemArmor ||
 				!stack.getAttributeModifiers(EntityEquipmentSlot.MAINHAND).isEmpty()
 		) {
 			return true;
