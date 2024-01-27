@@ -53,11 +53,6 @@ public class RunesmithingSharpen extends RunesmithingSpellBase implements IRunic
 				ItemStack copy = stack.copy();
 
 				boolean flag = false;
-				if (stack.getItemDamage() != 0) {
-					float percentToRestore = stack.getMaxDamage() * 0.05f;
-					stack.setItemDamage((int) (stack.getItemDamage() - percentToRestore));
-					flag = true;
-				}
 
 				int level = 2;
 				Enchantment enchantment = Enchantments.SHARPNESS;
