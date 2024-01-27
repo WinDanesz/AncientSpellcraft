@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "NIN",
+    " S ",
+    " S "
+  ],
+  "key": {
+    "I": {
+      "item": "ancientspellcraft:crystal_silver_ingot"
+    },
+    "N": {
+      "item": "ancientspellcraft:crystal_silver_nugget"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "ancientspellcraft:runic_hammer"
+  }
+}
