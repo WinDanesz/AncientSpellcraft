@@ -1479,6 +1479,8 @@ spell.ancientspellcraft\:runesmithing_sharpen=Runesmithing: Sharpen
 spell.ancientspellcraft\:runesmithing_sharpen.desc=Enchants a weapon at an Arcane Anvil with Sharpness.
 spell.ancientspellcraft\:runesmithing_mend=Runesmithing: Mend
 spell.ancientspellcraft\:runesmithing_mend.desc=Restores 5%% durability to an item an Arcane Anvil.
+spell.ancientspellcraft\:runesmithing_fortify=Runesmithing: Fortify
+spell.ancientspellcraft\:runesmithing_fortify.desc=Enchants an armor piece on an Arcane Anvil with Protection.
 
 spell.ancientspellcraft\:tome_warp=Tome Warp
 spell.ancientspellcraft\:tome_warp.desc=Swaps place with your Awakened Tome by sneak-using the Tome Controller.
@@ -1516,5 +1518,5 @@ item.ancientspellcraft\:belt_soul_scorch.desc=Attackers receive the Soul Scorch 
 item.ancientspellcraft\:charm_glyph_shield_disable.name=Glyph of Unyielding
 item.ancientspellcraft\:charm_glyph_shield_disable.desc=The Runic Shield cannot be disabled by axes or any other means
 item.ancientspellcraft\:runic_hammer.name=Runic Hammer
-generic.ancientspellcraft\:runic_hammer_spell.no_anvil=Battlemage tool used to cast Runesmithing spells on Arcane Anvils
+generic.ancientspellcraft\:runic_hammer_spell.no_anvil=Must be used on an Arcane Anvil
 

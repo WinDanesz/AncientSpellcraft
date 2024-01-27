@@ -52,8 +52,8 @@ public class RunesmithingFortify extends RunesmithingSpellBase implements IRunic
 		}
 
 		ItemStack stack = BlockArcaneAnvil.getItemOnLeftSlot(world, pos);
-		System.out.println("ha");
-		if (!(stack.getItem() instanceof ItemArmor)) {
+
+		if (stack.getItem() instanceof ItemArmor) {
 
 			TileEntity tile = world.getTileEntity(pos);
 
