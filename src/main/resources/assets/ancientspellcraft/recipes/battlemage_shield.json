@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LPL",
+    "LCL",
+    " L "
+  ],
+  "key": {
+    "P": {
+      "item": "ebwizardry:crystal_silver_plating"
+    },
+    "C": {
+      "item": "ebwizardry:grand_crystal"
+    },
+    "L": {
+      "type": "forge:ore_dict",
+      "ore": "plankWood"
+    }
+  },
+  "result": {
+    "item": "ancientspellcraft:battlemage_shield"
+  }
+}
