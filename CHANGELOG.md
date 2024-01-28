@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.6.1] - 2024-01-28
+### :sparkles: New Features
+- [`e1bacf4`](https://github.com/WinDanesz/AncientSpellcraft/commit/e1bacf41256f34c75eb1e1d2c49d94e0193a84ce) - Added recipe for Runic Hammer *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`a52488a`](https://github.com/WinDanesz/AncientSpellcraft/commit/a52488a1a994334ffce0272d839f3d7980eedacd) - Smelting Recipe for Arcane Anvils (=2x Crystal Silver Nuggets). Closes [#242](https://github.com/WinDanesz/AncientSpellcraft/pull/242) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`e128ca4`](https://github.com/WinDanesz/AncientSpellcraft/commit/e128ca4612d937cd4e53b3c73b0e1f812a874915) - Crafting recipe for Runic Shield. Closes [#240](https://github.com/WinDanesz/AncientSpellcraft/pull/240) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`0e32c32`](https://github.com/WinDanesz/AncientSpellcraft/commit/0e32c32415d344b46f4ce8774e3eee124f650ce1) - Removed Ancient Compendium Patchouli book, use the Wizard's Handbook for A.S. documentation *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+
 ## [v1.6.0] - 2024-01-27
 ### :sparkles: New Features
 - [`fb18515`](https://github.com/WinDanesz/AncientSpellcraft/commit/fb185158f21fda244c7a25cac71a0f36f972decf) - Small buff to Candlelight's light level *(commit by [@WinDanesz](https://github.com/WinDanesz))*
@@ -318,3 +326,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v1.5.9]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.8...v1.5.9
 [v1.5.10]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.9...v1.5.10
 [v1.6.0]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.10...v1.6.0
+[v1.6.1]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.6.0...v1.6.1
