@@ -154,7 +154,6 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		int bonus = tier.level == 0 ? 2 : tier.level == 1 ? 1 : 0;
 		this.attackDamage = Settings.generalSettings.spellblade_base_damage + tier.level * Settings.generalSettings.spellblade_damage_increase_per_tier + bonus;
 		WizardData.registerStoredVariables(LAST_POS);
-		setMaxDamage(Settings.generalSettings.spell_blade_base_mana_per_tier[tier.ordinal()]);
 
 		this.addPropertyOverride(new ResourceLocation(WizardClassWeaponHelper.ELEMENT_TAG), new IItemPropertyGetter() {
 			@SideOnly(Side.CLIENT)
@@ -258,11 +257,15 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		}
 	}
 
+	// Max damage is modifiable with upgrades.
 	@Override
-	public int getMaxDamage(ItemStack stack){
-		// + 0.5f corrects small float errors rounding down
-		return (int)(super.getMaxDamage(stack) * (1.0f + Constants.STORAGE_INCREASE_PER_LEVEL
-				* WandHelper.getUpgradeLevel(stack, WizardryItems.storage_upgrade)) + 0.5f);
+	public int getMaxDamage(ItemStack stack) {
+		if (hasManaStorage(stack)) {
+			// + 0.5f corrects small float errors rounding down
+			return (int) (super.getMaxDamage(stack) * (1.0f + Constants.STORAGE_INCREASE_PER_LEVEL
+					* WandHelper.getUpgradeLevel(stack, WizardryItems.storage_upgrade)) + 0.5f);
+		}
+		return 0;
 	}
 
 	//	/** Does nothing, use {@link ItemWand#setMana(ItemStack, int)} to modify wand mana. */
@@ -365,7 +368,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 		ItemStack otherStack = wielder.getHeldItem(otherHand);
 
 		// base cost, this is consumed for each hit
-		int cost = Settings.generalSettings.spellblade_base_mana_cost; // * (this.tier.level + 1);
+		int cost = Settings.generalSettings.spellblade_base_mana_cost * (this.tier.level + 1);
 
 		// cost increase per melee upgrade
 		int level = WandHelper.getUpgradeLevel(stack, WizardryItems.melee_upgrade);
@@ -1167,7 +1170,7 @@ public class ItemBattlemageSword extends ItemSword implements ISpellCastingItem,
 	}
 
 	public static boolean hasManaStorage(ItemStack stack) {
-		return WandHelper.getUpgradeLevel(stack, WizardryItems.storage_upgrade) > 0 || stack.getMaxDamage() > 0;
+		return WandHelper.getUpgradeLevel(stack, WizardryItems.storage_upgrade) > 0;
 	}
 
 	private static boolean hasManaAvailable(ItemStack stack) {
