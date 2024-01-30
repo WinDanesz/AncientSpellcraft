@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.6.2] - 2024-01-30
+### :bug: Bug Fixes
+- [`36212f8`](https://github.com/WinDanesz/AncientSpellcraft/commit/36212f896c9005dec2f47bb30afab450bb04a0eb) - Revert Change: Spell Blade base mana cost for a basic hit is set to 0 (can be changed in config). Relates to [#228](https://github.com/WinDanesz/AncientSpellcraft/pull/228)" *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+
 ## [v1.6.1] - 2024-01-28
 ### :sparkles: New Features
 - [`e1bacf4`](https://github.com/WinDanesz/AncientSpellcraft/commit/e1bacf41256f34c75eb1e1d2c49d94e0193a84ce) - Added recipe for Runic Hammer *(commit by [@WinDanesz](https://github.com/WinDanesz))*
@@ -327,3 +332,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v1.5.10]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.9...v1.5.10
 [v1.6.0]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.10...v1.6.0
 [v1.6.1]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.6.0...v1.6.1
+[v1.6.2]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.6.1...v1.6.2

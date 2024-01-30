@@ -1,12 +1,9 @@
-<h2>Version v1.6.1 - 1/28/2024</h2>
+<h2>Version v1.6.2 - 1/30/2024</h2>
 <p>&nbsp;</p>
 <h3>What's Changed</h3>
 <p><span style="font-size: 1.2rem;">&nbsp;</span></p>
-<h4><strong>Features</strong></h4>
-<p>- Added recipe for Runic Hammer</p>
-<p>- Smelting Recipe for Arcane Anvils (=2x Crystal Silver Nuggets). Closes #242</p>
-<p>- Crafting recipe for Runic Shield. Closes #240</p>
-<p>- Removed Ancient Compendium Patchouli book, use the Wizard's Handbook for A.S. documentation</p>
+<h4><strong>Bug Fixes</strong></h4>
+<p>- Revert Change: Spell Blade base mana cost for a basic hit is set to 0 (can be changed in config). Relates to #228"</p>
 <p>&nbsp;</p>
 <p>As always, the easiest way to get help or feedback is through the Discord server! Find the link on the CurseForge page.</p>
 <p>&nbsp;</p>
