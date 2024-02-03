@@ -1519,4 +1519,5 @@ item.ancientspellcraft\:charm_glyph_shield_disable.name=Glyph of Unyielding
 item.ancientspellcraft\:charm_glyph_shield_disable.desc=The Runic Shield cannot be disabled by axes or any other means
 item.ancientspellcraft\:runic_hammer.name=Runic Hammer
 generic.ancientspellcraft\:runic_hammer_spell.no_anvil=Must be used on an Arcane Anvil
+interact.ancientspellcraft\:arcane_barrier=This arcane barrier can only be dispelled by a Scroll of Unsealing
 

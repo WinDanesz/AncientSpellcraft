@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.block;
 
 import com.windanesz.ancientspellcraft.tileentity.TileArcaneWall;
+import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -16,6 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -109,5 +111,20 @@ public class BlockArcaneWall extends Block implements ITileEntityProvider, ITemp
 	@Nullable
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
 		return FULL_BLOCK_AABB;
+	}
+
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (playerIn != null) {
+			ASUtils.sendMessage(playerIn, "interact.ancientspellcraft:arcane_barrier", true);
+		}
+		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+	}
+
+	@Override
+	public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
+		if (playerIn != null) {
+			ASUtils.sendMessage(playerIn, "interact.ancientspellcraft:arcane_barrier", true);
+		}
 	}
 }
