@@ -385,7 +385,25 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public String[] dispel_item_curse_list = {
 				"minecraft:vanishing_curse",
-				"minecraft:binding_curse"
+				"minecraft:binding_curse",
+				"somanyenchantments:bluntness",
+				"somanyenchantments:curseofdecay",
+				"somanyenchantments:curseofholding",
+				"somanyenchantments:curseofinaccuracy",
+				"somanyenchantments:curseofpossession",
+				"somanyenchantments:curseofvulnerability",
+				"somanyenchantments:cursededge",
+				"somanyenchantments:inefficent",
+				"somanyenchantments:instability",
+				"somanyenchantments:powerless",
+				"somanyenchantments:rusted",
+				"somanyenchantments:heavyweight",
+				"somanyenchantments:curseofvulnerability",
+				"somanyenchantments:unpredictable",
+				"charm:clumsiness_curse",
+				"charm:harming_curse",
+				"charm:haunting_curse",
+				"charm:rusting_curse"
 		};
 
 		@Config.Name("Metamagic - Projectile incompatible spells")
