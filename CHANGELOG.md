@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.6.3] - 2024-02-03
+### :sparkles: New Features
+- [`e927c27`](https://github.com/WinDanesz/AncientSpellcraft/commit/e927c27f387fb9d5719520a6a3cad89a8cdfcc65) - Added a help message upon interacting with an arcane barrier *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`67c4bef`](https://github.com/WinDanesz/AncientSpellcraft/commit/67c4bef6c2bfca6c02a5a9bd2e3d28d4c870e7b2) - Added support for modded curses for the Dispel Item Curse spell (support for Charm mod and So Many Enchantments by default). Fixes [#227](https://github.com/WinDanesz/AncientSpellcraft/pull/227) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+### :bug: Bug Fixes
+- [`479f7ed`](https://github.com/WinDanesz/AncientSpellcraft/commit/479f7ed7799942cc026f2abd4ca29aba4a406379) - Added missing spell icon for Withdraw Life *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`7503e31`](https://github.com/WinDanesz/AncientSpellcraft/commit/7503e31def9d6ecb1584fbb560ba3c4385cfcd45) - Added name and description for Runeword: Expose spell. Fixes [#243](https://github.com/WinDanesz/AncientSpellcraft/pull/243) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`2f4485b`](https://github.com/WinDanesz/AncientSpellcraft/commit/2f4485b0a183dfcf3ec26ebb5b925308807b7bf1) - Added missing icon for Sufferance spell. Fixes [#243](https://github.com/WinDanesz/AncientSpellcraft/pull/243) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+
 ## [v1.6.2] - 2024-01-30
 ### :bug: Bug Fixes
 - [`36212f8`](https://github.com/WinDanesz/AncientSpellcraft/commit/36212f896c9005dec2f47bb30afab450bb04a0eb) - Revert Change: Spell Blade base mana cost for a basic hit is set to 0 (can be changed in config). Relates to [#228](https://github.com/WinDanesz/AncientSpellcraft/pull/228)" *(commit by [@WinDanesz](https://github.com/WinDanesz))*
@@ -333,3 +344,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v1.6.0]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.5.10...v1.6.0
 [v1.6.1]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.6.0...v1.6.1
 [v1.6.2]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.6.1...v1.6.2
+[v1.6.3]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.6.2...v1.6.3
