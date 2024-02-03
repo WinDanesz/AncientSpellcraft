@@ -7,8 +7,8 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 
 public class ItemCoalBucket extends ItemDailyArtefact {
-	public static int MIN_COAL_AMOUNT = 2;
-	public static int MAX_COAL_AMOUNT = 5;
+	public static int MIN_COAL_AMOUNT = 5;
+	public static int MAX_COAL_AMOUNT = 10;
 
 	public ItemCoalBucket(EnumRarity rarity) {
 		super(rarity);
