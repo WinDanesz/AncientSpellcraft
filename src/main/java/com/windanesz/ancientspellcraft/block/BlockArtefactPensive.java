@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.block;
 
 import com.windanesz.ancientspellcraft.tileentity.TileArtefactPensive;
 import com.windanesz.ancientspellcraft.util.ASUtils;
+import electroblob.wizardry.block.BlockCrystal;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -48,27 +49,31 @@ public class BlockArtefactPensive extends BlockContainer {
 		TileArtefactPensive tilePensive = (TileArtefactPensive) world.getTileEntity(pos);
 
 		// retrieve XP
-		if (player.isSneaking() && tilePensive.getStoredXP() < MAX_XP) {
+		if (player.isSneaking()) {
 			player.addExperience(tilePensive.getStoredXP());
 			tilePensive.setStoredXP(0);
+			world.setBlockState(pos, state.withProperty(EMPTY, true), 2);
 		} else {
+			// add xp
 			int currentPlayerXP = player.experienceTotal;
-			int currentPlayerXPLevel = player.experienceLevel;
 
 			if (tilePensive.getStoredXP() < MAX_XP) {
 				int maxAmountToAdd = MAX_XP - tilePensive.getStoredXP();
 				if (maxAmountToAdd >= currentPlayerXP) {
 					tilePensive.setStoredXP(tilePensive.getStoredXP() + currentPlayerXP);
-					removePlayerXP(player, currentPlayerXP);
+					removePlayerXP(player, tilePensive.getStoredXP() + currentPlayerXP);
 				} else {
 					tilePensive.setStoredXP(tilePensive.getStoredXP() + maxAmountToAdd);
 					removePlayerXP(player, maxAmountToAdd);
 				}
+				if (currentPlayerXP > 0) {
+					world.setBlockState(pos, state.withProperty(EMPTY, false), 2);
+				}
+				tilePensive.markDirty();
+				world.notifyBlockUpdate(pos, state, state, 3);
 			}
 		}
 
-		tilePensive.markDirty();
-		world.notifyBlockUpdate(pos, state, state, 3);
 		// store xp
 		return true;
 	}
@@ -90,13 +95,19 @@ public class BlockArtefactPensive extends BlockContainer {
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		return 0;
+		return (state.getValue(EMPTY) ? 0 : 1);
+	}
+
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return getDefaultState().withProperty(EMPTY, meta == 0);
 	}
 
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-		return super.getActualState(state, world, pos).withProperty(EMPTY, ASUtils.getTile(world, pos, TileArtefactPensive.class)
-				.map(TileArtefactPensive::isEmpty).orElse(true));
+		return super.getActualState(state, world, pos);
+		//return super.getActualState(state, world, pos).withProperty(EMPTY, ASUtils.getTile(world, pos, TileArtefactPensive.class)
+		//		.map(TileArtefactPensive::isEmpty).orElse(true));
 	}
 
 	/**

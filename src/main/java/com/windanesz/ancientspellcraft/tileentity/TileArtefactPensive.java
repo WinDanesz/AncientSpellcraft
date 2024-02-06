@@ -1,8 +1,10 @@
 package com.windanesz.ancientspellcraft.tileentity;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class TileArtefactPensive extends TileEntity {
@@ -15,6 +17,11 @@ public class TileArtefactPensive extends TileEntity {
 		compound.setInteger(AMOUNT, storedXP);
 
 		return compound;
+	}
+
+	@Override
+	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
+		return (oldState.getBlock() != newSate.getBlock());
 	}
 
 	protected void setWorldCreate(World worldIn) {
