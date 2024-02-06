@@ -48,7 +48,7 @@ public class BlockArtefactPensive extends BlockContainer {
 		TileArtefactPensive tilePensive = (TileArtefactPensive) world.getTileEntity(pos);
 
 		// retrieve XP
-		if (player.isSneaking()) {
+		if (player.isSneaking() && tilePensive.getStoredXP() < MAX_XP) {
 			player.addExperience(tilePensive.getStoredXP());
 			tilePensive.setStoredXP(0);
 		} else {
