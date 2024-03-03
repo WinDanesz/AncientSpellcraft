@@ -60,7 +60,7 @@ public class PocketLibrary extends Spell implements IClassSpell {
 	public static final String LIBRARY_BLOCKS = "libraryBlocks";
 	public static final String CENTER_POS = "centerPos";
 	public static final String SAVED_DATA = "savedData";
-	private static final IStoredVariable<NBTTagCompound> POCKET_LIBRARY_DATA_NBT = IStoredVariable.StoredVariable.ofNBT("pocketLibraryData", Persistence.ALWAYS).setSynced();
+	private static final IStoredVariable<NBTTagCompound> POCKET_LIBRARY_DATA_NBT = IStoredVariable.StoredVariable.ofNBT("pocketLibraryData", Persistence.ALWAYS);
 	private static final ResourceLocation POCKET_LIBRARY = new ResourceLocation(AncientSpellcraft.MODID, "pocket_library");
 	public static final String LIBRARY_IS_SUMMONED = "library_is_summoned";
 

@@ -47,15 +47,16 @@ function Add-SpellJsonFile {
     "chargeup": 0,
     "cooldown": 20,
     "base_properties": {
+        "range": 5
     }
 }
 "@
 
     $filePath = "$($script:srcPath)\main\resources\assets\$($script:modid)\spells\$($script:spellName).json"
-    if (!(Test-Path -Path $filePath)) {
+    #if (!(Test-Path -Path $filePath)) {
         $json | Out-File $filePath -Encoding utf8 -NoNewline
         Write-Host "Generated $filePath spell json"
-    }
+    #}
 }
 
 function Add-LangFileEntry {

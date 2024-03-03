@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.entity.ai;
 
 import com.windanesz.ancientspellcraft.data.SpellCategorization;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.entity.living.ISpellCaster;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.event.SpellCastEvent.Source;
@@ -208,7 +209,6 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 					while (!spells.isEmpty()) {
 
 						spell = selectSpellConditionally(attacker.world, attacker, target, spells);
-
 						SpellModifiers modifiers = attacker.getModifiers();
 
 						if (spell != null && attemptCastSpell(spell, modifiers)) {

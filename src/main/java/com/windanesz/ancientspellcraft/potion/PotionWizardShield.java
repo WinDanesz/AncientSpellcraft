@@ -1,8 +1,8 @@
 package com.windanesz.ancientspellcraft.potion;
 
-import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASPotions;
+import electroblob.wizardry.item.ItemArtefact;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,7 +36,7 @@ public class PotionWizardShield extends PotionMagicEffectAS {
 		super.performEffect(entity, amplifier);
 
 		if (entity instanceof EntityPlayer) {
-			boolean hasArtefact = ItemNewArtefact.isNewArtefactActive((EntityPlayer) entity, ASItems.head_shield);
+			boolean hasArtefact = ItemArtefact.isArtefactActive((EntityPlayer) entity, ASItems.head_shield);
 			int newAmplifier = amplifier - (hasArtefact ? 1 : 2);
 			if (newAmplifier >= 0) {
 				PotionEffect newEffect = new PotionEffect(ASPotions.wizard_shield, hasArtefact ? 70 : 60, newAmplifier);

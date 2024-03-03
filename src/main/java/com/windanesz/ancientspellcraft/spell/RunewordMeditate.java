@@ -4,7 +4,6 @@ import com.windanesz.ancientspellcraft.item.ItemBattlemageShield;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import com.windanesz.ancientspellcraft.item.WizardClassWeaponHelper;
 import com.windanesz.ancientspellcraft.registry.ASItems;
-import com.windanesz.ancientspellcraft.util.WizardArmourUtils;
 import electroblob.wizardry.block.BlockReceptacle;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.item.IManaStoringItem;

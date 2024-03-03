@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
+import com.windanesz.ancientspellcraft.entity.EntityChaosOrb;
 import com.windanesz.ancientspellcraft.entity.EntityMageLight;
 import com.windanesz.ancientspellcraft.entity.EntityWisp;
 import com.windanesz.ancientspellcraft.entity.construct.EntityAntiMagicField;
@@ -113,6 +114,7 @@ public class ASEntities {
 
 		registry.register(createEntry(EntityDevoritiumArrow.class, "devoritium_arrow", ASEntities.TrackingType.PROJECTILE).build());
 		registry.register(createEntry(EntityFlint.class, "flint_projectile", ASEntities.TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntityChaosOrb.class, "chaos_orb", ASEntities.TrackingType.PROJECTILE).build());
 		registry.register(createEntry(EntitySafeIceShard.class, "safe_ice_shard", ASEntities.TrackingType.PROJECTILE).build());
 		//		registry.register(createEntry(EntitySpectralFishHook.class, "spectral_fish_hook", AncientSpellcraftEntities.TrackingType.PROJECTILE).build());
 

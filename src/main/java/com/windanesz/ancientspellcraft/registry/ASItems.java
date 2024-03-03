@@ -57,7 +57,6 @@ import com.windanesz.ancientspellcraft.item.ItemMagicShield;
 import com.windanesz.ancientspellcraft.item.ItemManaArtefact;
 import com.windanesz.ancientspellcraft.item.ItemMasterBolt;
 import com.windanesz.ancientspellcraft.item.ItemMoonLetterDictionary;
-import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.item.ItemOmnicron;
 import com.windanesz.ancientspellcraft.item.ItemOverlordScepter;
 import com.windanesz.ancientspellcraft.item.ItemPhialOfEternalFlame;
@@ -83,6 +82,7 @@ import com.windanesz.ancientspellcraft.item.ItemTomeController;
 import com.windanesz.ancientspellcraft.item.ItemTransmutationScroll;
 import com.windanesz.ancientspellcraft.item.ItemUnsealingScroll;
 import com.windanesz.ancientspellcraft.item.ItemWandUpgradeAS;
+import com.windanesz.ancientspellcraft.item.ItemWarlockOrb;
 import com.windanesz.ancientspellcraft.item.ItemWizardTankard;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
@@ -166,6 +166,7 @@ public final class ASItems {
 	public static final Item ring_griefing = placeholder();
 	public static final Item ring_metamagic_preserve = placeholder();
 	public static final Item ring_rare_scroll = placeholder();
+	public static final Item ring_absorb_crystal = placeholder();
 
 	/// amulet
 	public static final Item charm_cryostasis = placeholder();
@@ -186,6 +187,7 @@ public final class ASItems {
 	public static final Item amulet_domus = placeholder();
 	public static final Item amulet_searing_skin = placeholder();
 	public static final Item amulet_cursed_mirror = placeholder();
+	public static final Item amulet_absorb_potion = placeholder();
 
 	/// charm
 	public static final Item charm_rift_bottle = placeholder();
@@ -580,6 +582,42 @@ public final class ASItems {
 		registerItem(registry, "sage_tome_advanced_healing", new ItemSageTome(Tier.ADVANCED, Element.HEALING));
 		registerItem(registry, "sage_tome_master_healing", new ItemSageTome(Tier.MASTER, Element.HEALING));
 
+		registerItem(registry, "warlock_orb_novice_magic", new ItemWarlockOrb(Tier.NOVICE, Element.MAGIC));
+		registerItem(registry, "warlock_orb_apprentice_magic", new ItemWarlockOrb(Tier.APPRENTICE, Element.MAGIC));
+		registerItem(registry, "warlock_orb_advanced_magic", new ItemWarlockOrb(Tier.ADVANCED, Element.MAGIC));
+		registerItem(registry, "warlock_orb_master_magic", new ItemWarlockOrb(Tier.MASTER, Element.MAGIC));
+
+		registerItem(registry, "warlock_orb_novice_earth", new ItemWarlockOrb(Tier.NOVICE, Element.EARTH));
+		registerItem(registry, "warlock_orb_apprentice_earth", new ItemWarlockOrb(Tier.APPRENTICE, Element.EARTH));
+		registerItem(registry, "warlock_orb_advanced_earth", new ItemWarlockOrb(Tier.ADVANCED, Element.EARTH));
+		registerItem(registry, "warlock_orb_master_earth", new ItemWarlockOrb(Tier.MASTER, Element.EARTH));
+		registerItem(registry, "warlock_orb_novice_sorcery", new ItemWarlockOrb(Tier.NOVICE, Element.SORCERY));
+		registerItem(registry, "warlock_orb_apprentice_sorcery", new ItemWarlockOrb(Tier.APPRENTICE, Element.SORCERY));
+		registerItem(registry, "warlock_orb_advanced_sorcery", new ItemWarlockOrb(Tier.ADVANCED, Element.SORCERY));
+		registerItem(registry, "warlock_orb_master_sorcery", new ItemWarlockOrb(Tier.MASTER, Element.SORCERY));
+		registerItem(registry, "warlock_orb_novice_fire", new ItemWarlockOrb(Tier.NOVICE, Element.FIRE));
+		registerItem(registry, "warlock_orb_apprentice_fire", new ItemWarlockOrb(Tier.APPRENTICE, Element.FIRE));
+		registerItem(registry, "warlock_orb_advanced_fire", new ItemWarlockOrb(Tier.ADVANCED, Element.FIRE));
+		registerItem(registry, "warlock_orb_master_fire", new ItemWarlockOrb(Tier.MASTER, Element.FIRE));
+		registerItem(registry, "warlock_orb_novice_ice", new ItemWarlockOrb(Tier.NOVICE, Element.ICE));
+		registerItem(registry, "warlock_orb_apprentice_ice", new ItemWarlockOrb(Tier.APPRENTICE, Element.ICE));
+		registerItem(registry, "warlock_orb_advanced_ice", new ItemWarlockOrb(Tier.ADVANCED, Element.ICE));
+		registerItem(registry, "warlock_orb_master_ice", new ItemWarlockOrb(Tier.MASTER, Element.ICE));
+		registerItem(registry, "warlock_orb_novice_lightning", new ItemWarlockOrb(Tier.NOVICE, Element.LIGHTNING));
+		registerItem(registry, "warlock_orb_apprentice_lightning", new ItemWarlockOrb(Tier.APPRENTICE, Element.LIGHTNING));
+		registerItem(registry, "warlock_orb_advanced_lightning", new ItemWarlockOrb(Tier.ADVANCED, Element.LIGHTNING));
+		registerItem(registry, "warlock_orb_master_lightning", new ItemWarlockOrb(Tier.MASTER, Element.LIGHTNING));
+		registerItem(registry, "warlock_orb_novice_necromancy", new ItemWarlockOrb(Tier.NOVICE, Element.NECROMANCY));
+		registerItem(registry, "warlock_orb_apprentice_necromancy", new ItemWarlockOrb(Tier.APPRENTICE, Element.NECROMANCY));
+		registerItem(registry, "warlock_orb_advanced_necromancy", new ItemWarlockOrb(Tier.ADVANCED, Element.NECROMANCY));
+		registerItem(registry, "warlock_orb_master_necromancy", new ItemWarlockOrb(Tier.MASTER, Element.NECROMANCY));
+		registerItem(registry, "warlock_orb_novice_healing", new ItemWarlockOrb(Tier.NOVICE, Element.HEALING));
+		registerItem(registry, "warlock_orb_apprentice_healing", new ItemWarlockOrb(Tier.APPRENTICE, Element.HEALING));
+		registerItem(registry, "warlock_orb_advanced_healing", new ItemWarlockOrb(Tier.ADVANCED, Element.HEALING));
+		registerItem(registry, "warlock_orb_master_healing", new ItemWarlockOrb(Tier.MASTER, Element.HEALING));
+
+
+
 		registerItem(registry, "spectral_shield", new ItemSpectralShield());
 		registerItem(registry, "ancient_spellcraft_spell_book", new ItemASSpellBook());
 		registerItem(registry, "ancient_spell_book", new ItemASSpellBook());
@@ -653,6 +691,7 @@ public final class ASItems {
 		registerItem(registry, "ring_griefing", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_metamagic_preserve", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_rare_scroll", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_absorb_crystal", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 
 		/// amulet
 		registerItem(registry, "amulet_mana", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
@@ -673,6 +712,7 @@ public final class ASItems {
 		registerItem(registry, "amulet_searing_skin",	new ItemSearingSkinAmulet(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_elemental_aura", new ItemElementalAuraAmulet(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_cursed_mirror", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_absorb_potion", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 
 		/// charm
 		registerItem(registry, "charm_seed_bag", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
@@ -761,22 +801,22 @@ public final class ASItems {
 		registerItem(registry, "large_mana_flask_recipe", new ItemLostRecipe(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 
 
-		registerItem(registry, "belt_enchanter", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
-		registerItem(registry, "belt_stone", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
-		registerItem(registry, "belt_vortex", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
-		registerItem(registry, "belt_horse", new ItemNewArtefact(EnumRarity.UNCOMMON, ItemNewArtefact.AdditionalType.BELT));
-		registerItem(registry, "belt_scroll_holder", new ItemBeltScrollHolder(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
-		registerItem(registry, "belt_spring_charge", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
-		registerItem(registry, "belt_soul_scorch", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.BELT));
+		registerItem(registry, "belt_enchanter", new ItemArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_stone", new ItemArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_vortex", new ItemArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_horse", new ItemArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_scroll_holder", new ItemBeltScrollHolder(EnumRarity.RARE, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_spring_charge", new ItemArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_soul_scorch", new ItemArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
 
-		registerItem(registry, "head_curse", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.HEAD));
-		registerItem(registry, "head_merchant", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.HEAD));
-		registerItem(registry, "head_minions", new ItemNewArtefact(EnumRarity.EPIC, ItemNewArtefact.AdditionalType.HEAD));
-		registerItem(registry, "head_riftstone", new ItemNewArtefact(EnumRarity.EPIC, ItemNewArtefact.AdditionalType.HEAD));
-		registerItem(registry, "head_fortune", new ItemNewArtefact(EnumRarity.EPIC, ItemNewArtefact.AdditionalType.HEAD));
-		registerItem(registry, "head_shield", new ItemNewArtefact(EnumRarity.EPIC, ItemNewArtefact.AdditionalType.HEAD));
-		registerItem(registry, "head_magelight", new ItemNewArtefact(EnumRarity.RARE, ItemNewArtefact.AdditionalType.HEAD));
-		registerItem(registry, "head_lightning", new ItemNewArtefact(EnumRarity.EPIC, ItemNewArtefact.AdditionalType.HEAD));
+		registerItem(registry, "head_curse", new ItemArtefact(EnumRarity.RARE, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_merchant", new ItemArtefact(EnumRarity.RARE, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_minions", new ItemArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_riftstone", new ItemArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_fortune", new ItemArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_shield", new ItemArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_magelight", new ItemArtefact(EnumRarity.RARE, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_lightning", new ItemArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
 
 		/// misc
 
@@ -866,6 +906,8 @@ public final class ASItems {
 		registerItem(registry, "mystic_spell_book", new ItemSageSpellBook());
 		registerItem(registry, "empty_mystic_spell_book", new ItemEmptyMysticSpellBook().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT).setMaxStackSize(16));
 		registerItem(registry, "runic_hammer", new ItemRunicHammer());
+
+
 		//registerItem(registry, "forbidden_tome", new ItemWarlockSpellBook()); TODO
 
 		//registerItem(registry, "master_bolt", new ItemMasterBolt());

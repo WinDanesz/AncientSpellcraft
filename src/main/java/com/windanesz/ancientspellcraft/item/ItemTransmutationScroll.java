@@ -184,14 +184,14 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 										if (isArtefactActive) {
 											if (charm == ASItems.charm_scissors) { // AMULET or BELT
 												if (item instanceof ItemArtefact && ((ItemArtefact) item).getType() == ItemArtefact.Type.AMULET
-														|| item instanceof ItemNewArtefact && ((ItemNewArtefact) item).getType() == ItemNewArtefact.AdditionalType.BELT) {
+														|| item instanceof ItemArtefact && ((ItemArtefact) item).getType() == ItemArtefact.Type.BELT) {
 													transmuted = true;
 													transmutedItem = artefactCandidate;
 													break;
 												}
 											} else if (charm == ASItems.charm_fabrikator_toolkit) { // CHARM or HEAD
 												if (item instanceof ItemArtefact && ((ItemArtefact) item).getType() == ItemArtefact.Type.CHARM
-														|| item instanceof ItemNewArtefact && ((ItemNewArtefact) item).getType() == ItemNewArtefact.AdditionalType.HEAD
+														|| item instanceof ItemArtefact && ((ItemArtefact) item).getType() == ItemArtefact.Type.HEAD
 														|| item instanceof ItemDailyArtefact) { // these are considered as charms
 													transmuted = true;
 													transmutedItem = artefactCandidate;
@@ -226,8 +226,8 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 
 							if (relatedArtefact instanceof ItemArtefact) {
 								applyArtefactEffect = ItemArtefact.isArtefactActive(player, relatedArtefact);
-							} else if (relatedArtefact instanceof ItemNewArtefact) {
-								applyArtefactEffect = ItemNewArtefact.isNewArtefactActive(player, relatedArtefact);
+							} else if (relatedArtefact instanceof ItemArtefact) {
+								applyArtefactEffect = ItemArtefact.isArtefactActive(player, relatedArtefact);
 							}
 						}
 
@@ -396,8 +396,8 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 							return Items.AIR;
 					}
 				}
-				if (item instanceof ItemNewArtefact) {
-					switch (((ItemNewArtefact) item).getType()) {
+				if (item instanceof ItemArtefact) {
+					switch (((ItemArtefact) item).getType()) {
 						case HEAD:
 							return AncientSpellcraftItems.charm_fabrikator_toolkit;
 						case BELT:
@@ -414,7 +414,7 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 			}
 
 			boolean matches(ItemStack stack) {
-				return stack.getItem() instanceof ItemArtefact || stack.getItem() instanceof ItemNewArtefact || stack.getItem() instanceof ItemDailyArtefact;
+				return stack.getItem() instanceof ItemArtefact || stack.getItem() instanceof ItemArtefact || stack.getItem() instanceof ItemDailyArtefact;
 			}
 		},
 

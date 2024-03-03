@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
+import com.windanesz.ancientspellcraft.entity.EntityChaosOrb;
 import com.windanesz.ancientspellcraft.entity.construct.EntityHealingSigil;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
@@ -10,6 +11,8 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelGreaterMagi
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelMagic;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
 import com.windanesz.ancientspellcraft.spell.*;
+import electroblob.wizardry.constants.Constants;
+import electroblob.wizardry.entity.projectile.EntityThunderbolt;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
@@ -29,6 +32,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 @SuppressWarnings("unused")
 @ObjectHolder(AncientSpellcraft.MODID)
@@ -252,6 +256,18 @@ public final class ASSpells {
     public static final Spell ternary_storm = placeholder();
     public static final Spell arcane_wall = placeholder();
     public static final Spell tome_warp = placeholder();
+    public static final Spell absorb_armor = placeholder();
+    public static final Spell absorb_artefact = placeholder();
+    public static final Spell absorb_crystal = placeholder();
+    public static final Spell absorb_object = placeholder();
+    public static final Spell absorb_potion = placeholder();
+    public static final Spell absorb_projetile = placeholder();
+    public static final Spell chaos_storm = placeholder();
+    public static final Spell confusion = placeholder();
+    public static final Spell orb_space = placeholder();
+    public static final Spell psychic_slash = placeholder();
+    public static final Spell scrying_orb = placeholder();
+    public static final Spell chaos_orb = placeholder();
 
 	@SuppressWarnings("unchecked")
 	@SubscribeEvent
@@ -563,7 +579,18 @@ public final class ASSpells {
 		registry.register(new TernaryStorm());
 		registry.register(new ArcaneWall());
 		registry.register(new TomeWarp());
-
+		registry.register(new ChaosOrb<>(AncientSpellcraft.MODID, "chaos_orb", EntityChaosOrb::new));
+		registry.register(new AbsorbObject());
+		registry.register(new WarlockSpellPlaceholder("absorb_armor"));
+		registry.register(new AbsorbArtefact());
+		registry.register(new AbsorbCrystal());
+		registry.register(new AbsorbPotion());
+		registry.register(new WarlockSpellPlaceholder("absorb_projectile"));
+		registry.register(new WarlockSpellPlaceholder("chaos_storm"));
+		registry.register(new WarlockSpellPlaceholder("confusion"));
+		registry.register(new OrbSpace());
+		registry.register(new WarlockSpellPlaceholder("psychic_slash"));
+		registry.register(new WarlockSpellPlaceholder("scrying_orb"));
 		// registry.register(new HeatFurnace()); TODO
 		//registry.register(new WarpWeapon()); TODO
 
@@ -577,8 +604,10 @@ public final class ASSpells {
 		}
 		if (Settings.spellCompatSettings.chargeSpellOverride) {
 			registry.register(new ChargeAS());
+
 		}
 
 		/// BASE SPELL MODIFICATION OVERRIDES ///
 	}
 }
+

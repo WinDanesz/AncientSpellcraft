@@ -1,8 +1,6 @@
 package com.windanesz.ancientspellcraft.integration.jei;
 
-import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
-import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.Wizardry;
@@ -17,7 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
 import java.util.Arrays;
-import java.util.Locale;
 
 @JEIPlugin
 public class ASJEIIntegration implements IModPlugin {
@@ -66,15 +63,15 @@ public class ASJEIIntegration implements IModPlugin {
 		addItemInfo(registry, ASItems.stone_tablet_large, ".desc_extended");
 		addItemInfo(registry, ASItems.stone_tablet_grand, ".desc_extended");
 
-		for (Item item : Item.REGISTRY) {
-
-			if (item instanceof ItemNewArtefact) {
-
-				ItemStack stack = new ItemStack(item);
-				registry.addIngredientInfo(stack, VanillaTypes.ITEM, "item." + AncientSpellcraft.MODID + ":"
-						+ ((ItemNewArtefact) item).getType().toString().toLowerCase(Locale.ROOT) + ".generic.desc");
-			}
-		}
+//		for (Item item : Item.REGISTRY) {
+//
+//			if (item instanceof ItemNewArtefact) {
+//
+//				ItemStack stack = new ItemStack(item);
+//				registry.addIngredientInfo(stack, VanillaTypes.ITEM, "item." + AncientSpellcraft.MODID + ":"
+//						+ ((ItemNewArtefact) item).getType().toString().toLowerCase(Locale.ROOT) + ".generic.desc");
+//			}
+//		}
 	}
 
 	private static void addItemInfo(IModRegistry registry, Item item, String... suffixes) {

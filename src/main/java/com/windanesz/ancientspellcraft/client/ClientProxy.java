@@ -33,6 +33,7 @@ import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderSkullWat
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderTileSentinel;
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderTileSphereCognizance;
 import com.windanesz.ancientspellcraft.data.RitualDiscoveryData;
+import com.windanesz.ancientspellcraft.entity.EntityChaosOrb;
 import com.windanesz.ancientspellcraft.entity.EntityMageLight;
 import com.windanesz.ancientspellcraft.entity.EntityWisp;
 import com.windanesz.ancientspellcraft.entity.construct.EntityAntiMagicField;
@@ -74,7 +75,6 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjecti
 import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityStoneGuardianShard;
 import com.windanesz.ancientspellcraft.integration.antiqueatlas.ASAntiqueAtlasIntegration;
-import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.packet.PacketContinuousRitual;
 import com.windanesz.ancientspellcraft.packet.PacketMushroomActivation;
 import com.windanesz.ancientspellcraft.packet.PacketStartRitual;
@@ -96,7 +96,6 @@ import electroblob.wizardry.client.renderer.entity.RenderSigil;
 import electroblob.wizardry.client.renderer.entity.layers.LayerTiledOverlay;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.ISpellCastingItem;
-import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -215,6 +214,10 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityHeart.class, manager -> new RenderProjectile(manager, 0.7f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/healing_heart.png"), false));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDevoritiumBomb.class, manager -> new RenderProjectile(manager, 0.6f, new ResourceLocation(AncientSpellcraft.MODID, "textures/items/devoritium_bomb.png"), false));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlint.class, manager -> new RenderMagicArrow(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/flint_shard.png"), false, 6.0, 1.0, 9, 8, true));
+
+		RenderingRegistry.registerEntityRenderingHandler(EntityChaosOrb.class,
+				manager -> new RenderProjectile(manager, 0.4f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/chaos_orb.png"), true));
+
 		RenderingRegistry.registerEntityRenderingHandler(EntityAOEProjectile.class, manager -> new RenderProjectile(manager, 0.7f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/aoe_projectile.png"), false));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySafeIceShard.class, manager -> new RenderMagicArrow(manager,
 				new ResourceLocation(Wizardry.MODID, "textures/entity/ice_shard.png"), false, 8.0, 2.0, 16, 5, false));
@@ -427,14 +430,6 @@ public class ClientProxy extends CommonProxy {
 
 				if (nameKey.equals(localizedName)) {
 					missingKeyWarning("Item", registryName, nameKey);
-				}
-
-				if (item instanceof ItemArtefact || item instanceof ItemNewArtefact) {
-					String descKey = "item." + registryName + ".desc";
-					String localizedDesc = net.minecraft.client.resources.I18n.format(descKey);
-					if (descKey.equals(localizedDesc)) {
-						missingKeyWarning("Artefact", registryName, descKey);
-					}
 				}
 			}
 		}

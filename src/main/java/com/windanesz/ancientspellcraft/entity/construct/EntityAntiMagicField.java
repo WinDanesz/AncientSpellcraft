@@ -1,7 +1,5 @@
 package com.windanesz.ancientspellcraft.entity.construct;
 
-import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
-import com.windanesz.ancientspellcraft.item.WizardClassWeaponHelper;
 import com.windanesz.ancientspellcraft.registry.ASPotions;
 import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.block.BlockReceptacle;
@@ -9,7 +7,6 @@ import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.potion.Curse;
 import electroblob.wizardry.potion.PotionMagicEffect;
-import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.BlockUtils;

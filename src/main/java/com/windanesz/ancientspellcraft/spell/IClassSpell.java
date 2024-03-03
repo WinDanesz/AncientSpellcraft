@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import com.windanesz.ancientspellcraft.item.ItemSageTome;
+import com.windanesz.ancientspellcraft.item.ItemWarlockOrb;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.WizardArmourUtils;
 import electroblob.wizardry.event.SpellCastEvent;
@@ -35,7 +36,7 @@ public interface IClassSpell {
 					if (!event.getWorld().isRemote) {
 						((EntityPlayer) event.getCaster()).sendStatusMessage(
 								new TextComponentTranslation("message." + AncientSpellcraft.MODID + ":must_have_full_matching_set",
-								new TextComponentTranslation("wizard_armour_class." + armourClass.name().toLowerCase())), false);
+										new TextComponentTranslation("wizard_armour_class." + armourClass.name().toLowerCase())), false);
 					}
 
 					event.setCanceled(true);
@@ -44,6 +45,8 @@ public interface IClassSpell {
 
 				SpellCastEvent.Source source = event.getSource();
 				boolean allowedSource = source.name().equals(armourClass.name().toUpperCase() + "_ITEM") || source == SpellCastEvent.Source.SCROLL && armourClass == ItemWizardArmour.ArmourClass.SAGE;
+
+
 
 				if (!(source == SpellCastEvent.Source.COMMAND || source == SpellCastEvent.Source.NPC || allowedSource || event.getSpell() instanceof IRunicHammerSpell)) {
 					if (!event.getWorld().isRemote) {
@@ -67,11 +70,11 @@ public interface IClassSpell {
 							event.setCanceled(true);
 							return;
 						}
-						// TODO
-						// case WARLOCK:
-						// if (!(item instanceof ???)) {
-						// 	event.setCanceled(true); return;
-						// }
+					case WARLOCK:
+						if (!(item instanceof ItemWarlockOrb)) {
+							event.setCanceled(true);
+							return;
+						}
 				}
 			}
 		}
@@ -91,6 +94,5 @@ public interface IClassSpell {
 	//			if (stack.getItem() instanceof ItemSpellBook)
 	//		}
 	//	}
-
 
 }

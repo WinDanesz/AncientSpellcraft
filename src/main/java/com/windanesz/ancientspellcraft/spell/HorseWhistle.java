@@ -2,12 +2,12 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.google.common.base.Predicate;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.data.IStoredVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.entity.living.EntitySpiritHorse;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.BlockUtils;
@@ -61,7 +61,7 @@ public class HorseWhistle extends Spell {
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 
-		if (caster.isRiding() && caster.getRidingEntity() instanceof EntityHorse && ItemNewArtefact.isNewArtefactActive(caster, ASItems.belt_horse)) {
+		if (caster.isRiding() && caster.getRidingEntity() instanceof EntityHorse && ItemArtefact.isArtefactActive(caster, ASItems.belt_horse)) {
 
 			EntityHorse horse = (EntityHorse) caster.getRidingEntity();
 			horse.addPotionEffect(new PotionEffect(MobEffects.SPEED, 600, 0));

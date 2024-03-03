@@ -23,6 +23,7 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:5.+'
         classpath 'org.ajoberstar.grgit:grgit-gradle:3.1.1'
         classpath group: 'wtf.gofancy.fancygradle', name: 'wtf.gofancy.fancygradle.gradle.plugin', version: '1.1.+'
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 
     repositories.each {
@@ -33,6 +34,7 @@ buildscript {
 }
 
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 apply plugin: org.ajoberstar.grgit.gradle.GrgitPlugin
@@ -61,6 +63,10 @@ minecraft {
 
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
+    def args = ["-Dmixin.debug.export=true",
+                '-Dmixin.hotSwap=true',
+                '-Dmixin.checks.interfaces=true',
+                '--username', 'WinDanesz', '--user', 'WinDanesz', '--uuid', '7faee354-8c60-4f5c-9862-fc0ce5f7f575']
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
     runs {
@@ -72,7 +78,6 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'info'
-            args '--username', 'WinDanesz', '--user', 'WinDanesz', '--uuid', '7faee354-8c60-4f5c-9862-fc0ce5f7f575'
         }
 
         server {
@@ -156,11 +161,13 @@ dependencies {
     implementation fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}")
     implementation fg.deobf("curse.maven:artemislib-${artemislib_projectid}:${artemislib_fileid}")
     implementation fg.deobf("curse.maven:antique-atlas-${antiqueatlas_projectid}:${antiqueatlas_fileid}")
+    implementation fg.deobf("curse.maven:MixinBooter-${mixinbooter_projectid}:${mixinbooter_fileid}")
 }
 
-//// Project manifest data ////
+mixin {
+    add sourceSets.main, "ancientspellcraft.refmap.json"
+}
 
-// Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
         attributes([

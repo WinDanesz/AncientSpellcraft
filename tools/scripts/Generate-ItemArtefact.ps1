@@ -25,7 +25,7 @@ $script:itemName = $Item
 function New-SimpleModelFile {
     $json = @"
 {
-    "parent": "item/generated",
+    "parent": "item/handheld",
     "textures": {
         "layer0": "$script:modid`:items/$script:itemName"
     }
@@ -67,5 +67,5 @@ function Create-Texture {
 
 New-SimpleModelFile
  Add-LangFileEntry -Entry "item.$($script:modid)\:$($script:itemName).name=TODO"
- Add-LangFileEntry -Entry "item.$($script:modid)\:$($script:itemName).desc=TODO"
+#  Add-LangFileEntry -Entry "item.$($script:modid)\:$($script:itemName).desc=TODO"
  Create-Texture

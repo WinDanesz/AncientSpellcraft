@@ -1,8 +1,6 @@
 package com.windanesz.ancientspellcraft.block;
 
 import com.windanesz.ancientspellcraft.tileentity.TileArtefactPensive;
-import com.windanesz.ancientspellcraft.util.ASUtils;
-import electroblob.wizardry.block.BlockCrystal;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;

@@ -2,9 +2,9 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
-import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.constants.Constants;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.spell.SpellConjuration;
 import electroblob.wizardry.util.SpellModifiers;
@@ -36,7 +36,7 @@ public class ConjurePickaxe extends SpellConjuration {
 	@Override
 	protected void addItemExtras(EntityPlayer caster, ItemStack stack, SpellModifiers modifiers) {
 
-		if (ItemNewArtefact.isNewArtefactActive(caster, ASItems.head_fortune)) {
+		if (ItemArtefact.isArtefactActive(caster, ASItems.head_fortune)) {
 
 			// The maximum harvest level as determined by the potency multiplier. The + 0.5f is so that
 			// weird float processing doesn't incorrectly round it down.

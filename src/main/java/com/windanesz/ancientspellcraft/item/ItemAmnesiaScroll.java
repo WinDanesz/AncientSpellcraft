@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft.item;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.entity.living.EntityWizard;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemScroll;
 import electroblob.wizardry.misc.WildcardTradeList;
 import electroblob.wizardry.registry.WizardryItems;
@@ -42,7 +43,7 @@ public class ItemAmnesiaScroll extends ItemRareScroll {
 		if (event.getTarget() instanceof EntityWizard) {
 			if (event.getItemStack().getItem() == ASItems.amnesia_scroll) {
 				handleAmnesiaScroll(event);
-			} else if (ItemNewArtefact.isNewArtefactActive(event.getEntityPlayer(), ASItems.head_merchant)) {
+			} else if (ItemArtefact.isArtefactActive(event.getEntityPlayer(), ASItems.head_merchant)) {
 				handleCrown(event);
 			}
 		}

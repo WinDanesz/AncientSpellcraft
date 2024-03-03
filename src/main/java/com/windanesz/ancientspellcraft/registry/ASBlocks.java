@@ -111,6 +111,7 @@ public class ASBlocks {
 	public static final Block SKULL_WATCH = placeholder();
 	public static final Block DIMENSION_BOUNDARY = placeholder();
 	public static final Block DIMENSION_FOCUS = placeholder();
+	public static final Block DIMENSION_FOCUS_GOLD = placeholder();
 	public static final Block SCRIBING_DESK = placeholder();
 	public static final Block IMBUEMENT_ALTAR_RUINED = placeholder();
 
@@ -196,8 +197,17 @@ public class ASBlocks {
 		registerBlock(registry, "skull_watch", new BlockSkullWatch());
 		registerBlock(registry, "magelight", new BlockMageLight());
 		registerBlock(registry, "candlelight", new BlockCandleLight());
-		registerBlock(registry, "dimension_boundary", new BlockDimensionBoundary());
-		registerBlock(registry, "dimension_focus", new BlockDimensionFocus());
+		registerBlock(registry, "dimension_boundary", new BlockDimensionBoundary(0.8f));
+		registerBlock(registry, "dimension_boundary_magic", new BlockDimensionBoundary(0.4f));
+		registerBlock(registry, "dimension_boundary_fire", new BlockDimensionBoundary(0.4f));
+		registerBlock(registry, "dimension_boundary_ice", new BlockDimensionBoundary(0.4f));
+		registerBlock(registry, "dimension_boundary_lightning", new BlockDimensionBoundary(0.4f));
+		registerBlock(registry, "dimension_boundary_necromancy", new BlockDimensionBoundary(0.4f));
+		registerBlock(registry, "dimension_boundary_earth", new BlockDimensionBoundary(0.4f));
+		registerBlock(registry, "dimension_boundary_sorcery", new BlockDimensionBoundary(0.4f));
+		registerBlock(registry, "dimension_boundary_healing", new BlockDimensionBoundary(0.4f));
+		registerBlock(registry, "dimension_focus", new BlockDimensionFocus(0.8f));
+		registerBlock(registry, "dimension_focus_gold", new BlockDimensionFocus(0.4f));
 		registerBlock(registry, "scribing_desk", new BlockScribingDesk());
 
 		registerBlock(registry, "crystal_ore_fire", new BlockCrystalOre(Element.FIRE));

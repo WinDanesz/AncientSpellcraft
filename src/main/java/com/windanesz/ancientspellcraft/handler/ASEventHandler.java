@@ -11,7 +11,6 @@ import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageShield;
 import com.windanesz.ancientspellcraft.item.ItemBeltScrollHolder;
 import com.windanesz.ancientspellcraft.item.ItemManaArtefact;
-import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.item.ItemRitualBook;
 import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
 import com.windanesz.ancientspellcraft.potion.PotionMetamagicEffect;
@@ -21,6 +20,8 @@ import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASPotions;
 import com.windanesz.ancientspellcraft.registry.ASSpells;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
+import com.windanesz.ancientspellcraft.spell.AbsorbCrystal;
+import com.windanesz.ancientspellcraft.spell.AbsorbPotion;
 import com.windanesz.ancientspellcraft.spell.Contingency;
 import com.windanesz.ancientspellcraft.spell.DimensionalAnchor;
 import com.windanesz.ancientspellcraft.spell.Martyr;
@@ -89,6 +90,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -119,10 +121,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-import static com.windanesz.ancientspellcraft.item.ItemNewArtefact.getActiveNewArtefacts;
 import static electroblob.wizardry.constants.Constants.*;
 import static electroblob.wizardry.item.ItemArtefact.getActiveArtefacts;
 import static electroblob.wizardry.item.ItemArtefact.isArtefactActive;
@@ -609,7 +611,7 @@ public class ASEventHandler {
 			}
 		}
 
-		if (event.getPotionEffect().getPotion() == ASPotions.eagle_eye && !(event.getEntityLiving() instanceof EntityPlayer)) {
+		if ((event.getPotionEffect().getPotion() == ASPotions.astral_projection || event.getPotionEffect().getPotion() == ASPotions.eagle_eye) && !(event.getEntityLiving() instanceof EntityPlayer)) {
 			event.setResult(Event.Result.DENY);
 		}
 
@@ -650,6 +652,12 @@ public class ASEventHandler {
 								target.addPotionEffect(event.getPotionEffect());
 							}
 						}
+					}
+				} else if (artefact == ASItems.amulet_absorb_potion && event.getPotionEffect().getPotion().isBadEffect()) {
+					WizardData data = WizardData.get(player);
+					String potionName = data.getVariable(AbsorbPotion.EFFECT);
+					if (potionName != null && potionName.equals(event.getPotionEffect().getPotion().getRegistryName().toString())) {
+						event.setResult(Event.Result.DENY);
 					}
 				}
 			}
@@ -1037,14 +1045,14 @@ public class ASEventHandler {
 			int jewelsSetCount = 0;
 
 			/// custom artefact types
-			if (ItemNewArtefact.isNewArtefactActive(player, ASItems.belt_enchanter)) {
+			if (ItemArtefact.isArtefactActive(player, ASItems.belt_enchanter)) {
 				if (event.getSpell().getType() == SpellType.BUFF) {
 					modifiers.set(WizardryItems.duration_upgrade, modifiers.get(WizardryItems.duration_upgrade) * 1.2f, false);
 				}
 			}
 
 			/// custom artefact types
-			for (ItemNewArtefact artefact : getActiveNewArtefacts(player)) {
+			for (ItemArtefact artefact : getActiveArtefacts(player)) {
 
 				if (artefact == ASItems.head_curse) {
 					float potency = modifiers.get(SpellModifiers.POTENCY);
@@ -1059,18 +1067,20 @@ public class ASEventHandler {
 						modifiers.set(SpellModifiers.POTENCY, (1 + modifier) * potency, false);
 					}
 				} else if (artefact == ASItems.belt_scroll_holder && ASBaublesIntegration.enabled()) {
-					ItemStack holder = ASBaublesIntegration.getBeltSlotItemStack(player);
-					if (holder.getItem() instanceof ItemBeltScrollHolder) {
-						ItemStack scroll = ItemBeltScrollHolder.getScroll(holder);
-						if (scroll.getItem() instanceof ItemWandUpgrade) {
-							if (scroll.getItem() == WizardryItems.blast_upgrade) {
-								modifiers.set(WizardryItems.blast_upgrade, modifiers.get(WizardryItems.blast_upgrade) + 0.25F, true);
-							} else if (scroll.getItem() == WizardryItems.range_upgrade) {
-								modifiers.set(WizardryItems.range_upgrade, modifiers.get(WizardryItems.range_upgrade) + 0.25F, true);
-							} else if (scroll.getItem() == WizardryItems.duration_upgrade) {
-								modifiers.set(WizardryItems.duration_upgrade, modifiers.get(WizardryItems.duration_upgrade) + 0.25F, true);
-							} else if (scroll.getItem() == WizardryItems.cooldown_upgrade) {
-								modifiers.set(WizardryItems.cooldown_upgrade, modifiers.get(WizardryItems.cooldown_upgrade) - 0.15F, true);
+					List<ItemStack> holder = ASBaublesIntegration.getEquippedArtefactStacks(player, ItemArtefact.Type.BELT);
+					if (!holder.isEmpty()) {
+						if (holder.get(0).getItem() instanceof ItemBeltScrollHolder) {
+							ItemStack scroll = ItemBeltScrollHolder.getScroll(holder.get(0));
+							if (scroll.getItem() instanceof ItemWandUpgrade) {
+								if (scroll.getItem() == WizardryItems.blast_upgrade) {
+									modifiers.set(WizardryItems.blast_upgrade, modifiers.get(WizardryItems.blast_upgrade) + 0.25F, true);
+								} else if (scroll.getItem() == WizardryItems.range_upgrade) {
+									modifiers.set(WizardryItems.range_upgrade, modifiers.get(WizardryItems.range_upgrade) + 0.25F, true);
+								} else if (scroll.getItem() == WizardryItems.duration_upgrade) {
+									modifiers.set(WizardryItems.duration_upgrade, modifiers.get(WizardryItems.duration_upgrade) + 0.25F, true);
+								} else if (scroll.getItem() == WizardryItems.cooldown_upgrade) {
+									modifiers.set(WizardryItems.cooldown_upgrade, modifiers.get(WizardryItems.cooldown_upgrade) - 0.15F, true);
+								}
 							}
 						}
 					}
@@ -1082,9 +1092,6 @@ public class ASEventHandler {
 						modifiers.set(WizardryItems.duration_upgrade, modifiers.get(WizardryItems.duration_upgrade) + 0.25F, true);
 					}
 				}
-			}
-
-			for (ItemArtefact artefact : getActiveArtefacts(player)) {
 
 				float potency = modifiers.get(SpellModifiers.POTENCY);
 				float cost = modifiers.get(SpellModifiers.COST);
@@ -1180,92 +1187,102 @@ public class ASEventHandler {
 
 			WizardData data = WizardData.get(player);
 
-			if (data != null && !(event.getSpell() instanceof Contingency)) {
+			if (data != null) {
 
-				// casting the spell as a metamagic projectile
-				if (data.getVariable(MetamagicProjectile.METAMAGIC_PROJECTILE) != null && data.getVariable(MetamagicProjectile.METAMAGIC_PROJECTILE).booleanValue()) {
-					String spellName = event.getSpell().getRegistryName().toString();
-					if (event.getSpell() instanceof MetaSpellBuff || event.getSpell() instanceof SpellRay || event.getSpell() instanceof SpellProjectile ||
-							event.getSpell() instanceof MetamagicProjectile || Arrays.asList(Settings.generalSettings.metamagic_projectile_incompatible_spells).contains(spellName)) {
-						return;
-					}
+				Optional<Element> elementOptional = AbsorbCrystal.getElement(data);
+				if (elementOptional.isPresent() && event.getSpell().getElement() == elementOptional.get()) {
 
-					EntityMetamagicProjectile projectile = new EntityMetamagicProjectile(player.world);
-					projectile.setCaster(player);
-					projectile.setStoredSpell(event.getSpell());
-					projectile.aim(player, calculateVelocity(projectile, modifiers, player.getEyeHeight() - (float) EntityMagicProjectile.LAUNCH_Y_OFFSET));
-					projectile.damageMultiplier = modifiers.get(SpellModifiers.POTENCY);
-
-					// Spawns the projectile in the world
-					if (!player.world.isRemote) {player.world.spawnEntity(projectile);}
-					data.setVariable(MetamagicProjectile.METAMAGIC_PROJECTILE, null);
-					event.setCanceled(true);
-
-					return;
+					System.out.println("potency before: " + modifiers.get(SpellModifiers.POTENCY));
+					modifiers.set(SpellModifiers.POTENCY, AbsorbCrystal.isBlock(data) ? 1.10f : 1.05f, false);
+					System.out.println("potency after: " + modifiers.get(SpellModifiers.POTENCY));
 				}
 
-				// Contingency
-				NBTTagCompound activeContingencyListener = data.getVariable(Contingency.ACTIVE_CONTINGENCY_LISTENER);
-				if (activeContingencyListener != null && activeContingencyListener.hasKey(Contingency.ACTIVE_LISTENER_TAG)) {
+				if (!(event.getSpell() instanceof Contingency)) {
+					// casting the spell as a metamagic projectile
+					if (data.getVariable(MetamagicProjectile.METAMAGIC_PROJECTILE) != null && data.getVariable(MetamagicProjectile.METAMAGIC_PROJECTILE).booleanValue()) {
+						String spellName = event.getSpell().getRegistryName().toString();
+						if (event.getSpell() instanceof MetaSpellBuff || event.getSpell() instanceof SpellRay || event.getSpell() instanceof SpellProjectile ||
+								event.getSpell() instanceof MetamagicProjectile || Arrays.asList(Settings.generalSettings.metamagic_projectile_incompatible_spells).contains(spellName)) {
+							return;
+						}
 
-					// casting the contingency as a projectile
-					if (player.isSneaking() && Contingency.Type.fromName(activeContingencyListener.getString(Contingency.ACTIVE_LISTENER_TAG)) == Contingency.Type.DEATH) {
-
-						EntityContingencyProjectile projectile = new EntityContingencyProjectile(player.world);
+						EntityMetamagicProjectile projectile = new EntityMetamagicProjectile(player.world);
 						projectile.setCaster(player);
 						projectile.setStoredSpell(event.getSpell());
-						projectile.setContingencyType(Contingency.Type.fromName(activeContingencyListener.getString(Contingency.ACTIVE_LISTENER_TAG)));
 						projectile.aim(player, calculateVelocity(projectile, modifiers, player.getEyeHeight() - (float) EntityMagicProjectile.LAUNCH_Y_OFFSET));
 						projectile.damageMultiplier = modifiers.get(SpellModifiers.POTENCY);
 
 						// Spawns the projectile in the world
-						if (!event.getWorld().isRemote) {player.world.spawnEntity(projectile);}
-						data.setVariable(Contingency.ACTIVE_CONTINGENCY_LISTENER, null);
-						Contingency.playSound(event.getWorld(), player.getPosition());
+						if (!player.world.isRemote) {player.world.spawnEntity(projectile);}
+						data.setVariable(MetamagicProjectile.METAMAGIC_PROJECTILE, null);
 						event.setCanceled(true);
 
 						return;
 					}
 
-					String spellTag = activeContingencyListener.getString(Contingency.ACTIVE_LISTENER_TAG);
-					Spell contingency = Spell.registry.getValue(new ResourceLocation(spellTag));
+					// Contingency
+					NBTTagCompound activeContingencyListener = data.getVariable(Contingency.ACTIVE_CONTINGENCY_LISTENER);
+					if (activeContingencyListener != null && activeContingencyListener.hasKey(Contingency.ACTIVE_LISTENER_TAG)) {
 
-					// storing the contingency on the player
-					Spell spellToStore = event.getSpell();
-					NBTTagCompound activeContingencies = data.getVariable(Contingency.ACTIVE_CONTINGENCIES);
-					if (activeContingencies == null) {
-						activeContingencies = new NBTTagCompound();
-					}
-					activeContingencies.setString(contingency.getRegistryName().toString(), spellToStore.getRegistryName().toString());
+						// casting the contingency as a projectile
+						if (player.isSneaking() && Contingency.Type.fromName(activeContingencyListener.getString(Contingency.ACTIVE_LISTENER_TAG)) == Contingency.Type.DEATH) {
 
-					if (event.getSource() == SpellCastEvent.Source.WAND) {
-						if (player.getHeldItemMainhand().getItem() instanceof ItemWand) {
-							((ItemWand) player.getHeldItemMainhand().getItem()).consumeMana(player.getHeldItemMainhand(), spellToStore.getCost(), player);
-							if (!spellToStore.isContinuous && !player.isCreative()) { // Spells only have a cooldown in survival
-								WandHelper.setCurrentCooldown(player.getHeldItemMainhand(), (int) (spellToStore.getCooldown() * modifiers.get(WizardryItems.cooldown_upgrade)));
+							EntityContingencyProjectile projectile = new EntityContingencyProjectile(player.world);
+							projectile.setCaster(player);
+							projectile.setStoredSpell(event.getSpell());
+							projectile.setContingencyType(Contingency.Type.fromName(activeContingencyListener.getString(Contingency.ACTIVE_LISTENER_TAG)));
+							projectile.aim(player, calculateVelocity(projectile, modifiers, player.getEyeHeight() - (float) EntityMagicProjectile.LAUNCH_Y_OFFSET));
+							projectile.damageMultiplier = modifiers.get(SpellModifiers.POTENCY);
+
+							// Spawns the projectile in the world
+							if (!event.getWorld().isRemote) {player.world.spawnEntity(projectile);}
+							data.setVariable(Contingency.ACTIVE_CONTINGENCY_LISTENER, null);
+							Contingency.playSound(event.getWorld(), player.getPosition());
+							event.setCanceled(true);
+
+							return;
+						}
+
+						String spellTag = activeContingencyListener.getString(Contingency.ACTIVE_LISTENER_TAG);
+						Spell contingency = Spell.registry.getValue(new ResourceLocation(spellTag));
+
+						// storing the contingency on the player
+						Spell spellToStore = event.getSpell();
+						NBTTagCompound activeContingencies = data.getVariable(Contingency.ACTIVE_CONTINGENCIES);
+						if (activeContingencies == null) {
+							activeContingencies = new NBTTagCompound();
+						}
+						activeContingencies.setString(contingency.getRegistryName().toString(), spellToStore.getRegistryName().toString());
+
+						if (event.getSource() == SpellCastEvent.Source.WAND) {
+							if (player.getHeldItemMainhand().getItem() instanceof ItemWand) {
+								((ItemWand) player.getHeldItemMainhand().getItem()).consumeMana(player.getHeldItemMainhand(), spellToStore.getCost(), player);
+								if (!spellToStore.isContinuous && !player.isCreative()) { // Spells only have a cooldown in survival
+									WandHelper.setCurrentCooldown(player.getHeldItemMainhand(), (int) (spellToStore.getCooldown() * modifiers.get(WizardryItems.cooldown_upgrade)));
+								}
+							} else if (player.getHeldItemOffhand().getItem() instanceof ItemWand) {
+								((ItemWand) player.getHeldItemOffhand().getItem()).consumeMana(player.getHeldItemOffhand(), spellToStore.getCost(), player);
+								if (!spellToStore.isContinuous && !player.isCreative()) { // Spells only have a cooldown in survival
+									WandHelper.setCurrentCooldown(player.getHeldItemOffhand(), (int) (spellToStore.getCooldown() * modifiers.get(WizardryItems.cooldown_upgrade)));
+								}
 							}
-						} else if (player.getHeldItemOffhand().getItem() instanceof ItemWand) {
-							((ItemWand) player.getHeldItemOffhand().getItem()).consumeMana(player.getHeldItemOffhand(), spellToStore.getCost(), player);
-							if (!spellToStore.isContinuous && !player.isCreative()) { // Spells only have a cooldown in survival
-								WandHelper.setCurrentCooldown(player.getHeldItemOffhand(), (int) (spellToStore.getCooldown() * modifiers.get(WizardryItems.cooldown_upgrade)));
+						} else if (event.getSource() == SpellCastEvent.Source.SCROLL) {
+							if (player.getHeldItemMainhand().getItem() instanceof ItemScroll) {
+								player.getHeldItemMainhand().shrink(1);
+								player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), spellToStore.getCooldown());
+							} else if (player.getHeldItemOffhand().getItem() instanceof ItemScroll) {
+								player.getHeldItemOffhand().shrink(1);
+								player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), spellToStore.getCooldown());
 							}
 						}
-					} else if (event.getSource() == SpellCastEvent.Source.SCROLL) {
-						if (player.getHeldItemMainhand().getItem() instanceof ItemScroll) {
-							player.getHeldItemMainhand().shrink(1);
-							player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), spellToStore.getCooldown());
-						} else if (player.getHeldItemOffhand().getItem() instanceof ItemScroll) {
-							player.getHeldItemOffhand().shrink(1);
-							player.getCooldownTracker().setCooldown(player.getHeldItemMainhand().getItem(), spellToStore.getCooldown());
-						}
-					}
-					if (event.getWorld().isRemote) {Contingency.spawnParticles(event.getWorld(), player, Contingency.Type.fromName(spellTag));}
-					Contingency.playSound(event.getWorld(), player.getPosition());
+						if (event.getWorld().isRemote) {Contingency.spawnParticles(event.getWorld(), player, Contingency.Type.fromName(spellTag));}
+						Contingency.playSound(event.getWorld(), player.getPosition());
 
-					data.setVariable(Contingency.ACTIVE_CONTINGENCY_LISTENER, null);
-					data.setVariable(Contingency.ACTIVE_CONTINGENCIES, activeContingencies);
-					data.sync();
-					event.setCanceled(true);
+						data.setVariable(Contingency.ACTIVE_CONTINGENCY_LISTENER, null);
+						data.setVariable(Contingency.ACTIVE_CONTINGENCIES, activeContingencies);
+						data.sync();
+						event.setCanceled(true);
+					}
 				}
 			}
 		}
@@ -1402,12 +1419,39 @@ public class ASEventHandler {
 
 							for (BlockPos pos : Arrays.asList(player.getPosition(), player.getPosition().up())) {
 								if (player.world.getBlockState(pos).getMaterial() == Material.WEB || player.world.getBlockState(pos).getBlock() == ASBlocks.QUICKSAND
-								||  player.world.getBlockState(pos).getBlock().getRegistryName().toString().equals("biomesoplenty:quicksand")) {
-								Contingency.tryCastContingencySpell(player, data, Contingency.Type.IMMOBILITY);
-								break;
+										|| player.world.getBlockState(pos).getBlock().getRegistryName().toString().equals("biomesoplenty:quicksand")) {
+									Contingency.tryCastContingencySpell(player, data, Contingency.Type.IMMOBILITY);
+									break;
 								}
 
 							}
+						}
+					}
+				}
+			}
+			if (player.world.isRemote && player.ticksExisted % 21 == 0 && WizardData.get(player) != null && WizardData.get(player).getVariable(AbsorbPotion.EFFECT) != null) {
+				WizardData data = WizardData.get(player);
+
+				String potionName = data.getVariable(AbsorbPotion.EFFECT);
+				Integer duration = data.getVariable(AbsorbPotion.DURATION);
+
+				if (duration != null && duration > 0 && potionName != null) {
+
+					Potion potion = ForgeRegistries.POTIONS.getValue(new ResourceLocation(potionName));
+					if (potion != null) {
+						for (int i = 0; i < 4; i++) {
+							ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(0, 0.2, 0).entity(player).clr(potion.getLiquidColor())
+									.spin(ASSpells.absorb_potion.getProperty(Spell.EFFECT_RADIUS).intValue(), 0.02).time(60).spawn(player.world);
+						}
+						for (EntityLivingBase target : EntityUtils.getEntitiesWithinRadius(ASSpells.absorb_potion.getProperty(AbsorbPotion.EFFECT_RADIUS).floatValue(), player.posX, player.posY, player.posZ, player.world, EntityLivingBase.class)) {
+							ParticleBuilder.create(ParticleBuilder.Type.SCORCH)
+									.pos(target.posX, target.posY + 0.101, target.posZ)
+									.face(EnumFacing.UP)
+									.clr(potion.getLiquidColor())
+									.collide(false)
+									.scale(2.3F)
+									.time(40)
+									.spawn(event.player.world);
 						}
 					}
 				}
@@ -1431,6 +1475,9 @@ public class ASEventHandler {
 				event.setResult(Event.Result.ALLOW);
 			}
 		}
+		//		if (event.getPlayer() != null && AbsorbArtefact.isArtefactActive(event.getPlayer(), event.getArtefact())) {
+		//			event.setResult(Event.Result.ALLOW);
+		//		}
 	}
 
 	/**
@@ -1483,8 +1530,8 @@ public class ASEventHandler {
 			if (event.getEntity() instanceof EntityCreature && ((ISummonedCreature) event.getEntity()).getOwner() != null) {
 				Entity owner = ((ISummonedCreature) event.getEntity()).getOwner();
 
-				if (owner instanceof EntityPlayer && ItemNewArtefact.isNewArtefactActive(((EntityPlayer) owner), ASItems.head_minions)) {
-					if (ItemNewArtefact.isNewArtefactActive(((EntityPlayer) owner), ASItems.head_minions)) {
+				if (owner instanceof EntityPlayer && ItemArtefact.isArtefactActive(((EntityPlayer) owner), ASItems.head_minions)) {
+					if (ItemArtefact.isArtefactActive(((EntityPlayer) owner), ASItems.head_minions)) {
 						EntityCreature creature = (EntityCreature) event.getEntity();
 						EntitySummonAIFollowOwner task = new EntitySummonAIFollowOwner(creature, 1.0D, 10.0F, 2.0F);
 						creature.tasks.addTask(5, task);

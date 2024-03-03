@@ -4,8 +4,10 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellImproved;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIBattlemageMelee;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIBattlemageSpellcasting;
+import com.windanesz.ancientspellcraft.item.ItemWarlockOrb;
 import com.windanesz.ancientspellcraft.item.WizardClassWeaponHelper;
 import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.entity.living.EntityAIAttackSpell;
@@ -35,6 +37,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,7 +140,7 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 
 		// All wizards know magic missile, even if it is disabled.
 
-		spells.add(Spells.magic_missile);
+
 
 		int spellCount;
 		switch (this.getArmourClass()) {
@@ -150,6 +153,11 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 		}
 
 		Tier maxTier = IArmourClassWizard.populateSpells(this, spells, element, this.getArmourClass() == ItemWizardArmour.ArmourClass.SAGE, spellCount, rand);
+		if (armourClass == ItemWizardArmour.ArmourClass.WARLOCK) {
+			spells.remove(Spells.magic_missile);
+			spells.add(ASSpells.chaos_orb);
+			spells.add(ASSpells.chaos_orb);
+		}
 
 		// Now done after the spells so it can take the tier into account.
 		ItemStack wand = new ItemStack(WizardryItems.getWand(maxTier, element));
@@ -170,6 +178,15 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 			this.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, wand);
 			setAITask(ItemWizardArmour.ArmourClass.BATTLEMAGE);
 		} else {
+			if (getArmourClass() == ItemWizardArmour.ArmourClass.WARLOCK) {
+				wand = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(AncientSpellcraft.MODID, "warlock_orb_" + Tier.values()[rand.nextInt(4)].toString().toLowerCase()+ "_" + element.name().toLowerCase())));
+				NBTTagCompound nbt = wand.getTagCompound();
+				if (nbt == null) {
+					nbt = new NBTTagCompound();
+				}
+				nbt.setString(WizardClassWeaponHelper.ELEMENT_TAG, element.name());
+				wand.setTagCompound(nbt);
+			}
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, wand);
 			setAITask(ItemWizardArmour.ArmourClass.WIZARD);
 		}
@@ -234,7 +251,10 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 
 	private SpellModifiers getWarlockSpellModifiers() {
 		SpellModifiers modifiers = new SpellModifiers();
-		modifiers.set(SpellModifiers.POTENCY, 1.4f, false);
+		if (this.getHeldItemMainhand().getItem() instanceof ItemWarlockOrb) {
+			float potency = (float) (1 + ((((ItemWarlockOrb) this.getHeldItemMainhand().getItem()).tier.ordinal() + 1) * 0.15));
+			modifiers.set(SpellModifiers.POTENCY, potency, false);
+		}
 		return modifiers;
 	}
 

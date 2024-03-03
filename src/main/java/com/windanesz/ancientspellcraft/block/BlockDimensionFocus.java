@@ -21,14 +21,14 @@ import static com.windanesz.ancientspellcraft.spell.PocketDimension.teleportPlay
 
 public class BlockDimensionFocus extends Block {
 
-	public BlockDimensionFocus() {
+	public BlockDimensionFocus(float lightLevel) {
 		super(Material.ROCK, MapColor.OBSIDIAN);
 		this.setBlockUnbreakable();
 		this.setResistance(6000001.0F);
 		this.setSoundType(SoundType.STONE);
 		this.setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		this.disableStats();
-		setLightLevel(0.8F);
+		setLightLevel(lightLevel);
 	}
 
 	/**

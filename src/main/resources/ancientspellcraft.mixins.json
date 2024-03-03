@@ -1,0 +1,7 @@
+{
+    "package": "com.windanesz.ancientspellcraft.mixin",
+    "refmap": "ancientspellcraft.refmap.json",
+    "minVersion": "0.8",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": ["ItemArtefactMixins"]
+}

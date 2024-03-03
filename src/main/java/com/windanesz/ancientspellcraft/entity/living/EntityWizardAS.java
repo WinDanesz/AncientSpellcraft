@@ -2,10 +2,10 @@ package com.windanesz.ancientspellcraft.entity.living;
 
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellImproved;
-import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.entity.living.EntityAIAttackSpell;
 import electroblob.wizardry.entity.living.EntityWizard;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -61,7 +61,7 @@ public class EntityWizardAS extends EntityWizard {
 			}
 		}
 
-		if (ItemNewArtefact.isNewArtefactActive(player, ASItems.head_merchant)) {
+		if (ItemArtefact.isArtefactActive(player, ASItems.head_merchant)) {
 
 			List<Item> scrollList = new ArrayList<>();
 			scrollList.add(WizardryItems.scroll);

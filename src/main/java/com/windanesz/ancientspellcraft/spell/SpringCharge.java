@@ -1,7 +1,6 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.SpellcastUtils;
 import electroblob.wizardry.event.SpellCastEvent;
@@ -84,7 +83,7 @@ public class SpringCharge extends Spell {
 			}
 		}
 
-		if (ticksInUse > 5 && caster instanceof EntityPlayer && caster.onGround && ItemNewArtefact.isNewArtefactActive((EntityPlayer) caster, ASItems.belt_spring_charge)) {
+		if (ticksInUse > 5 && caster instanceof EntityPlayer && caster.onGround && ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.belt_spring_charge)) {
 			SpellModifiers modifiers1 = new SpellModifiers();
 			modifiers1.set(WizardryItems.blast_upgrade, ticksInUse * 0.1f, true);
 			modifiers1.set(SpellModifiers.POTENCY, 0.5f, true);

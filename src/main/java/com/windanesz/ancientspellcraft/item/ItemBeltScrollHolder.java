@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.item.IManaStoringItem;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemWandUpgrade;
 import electroblob.wizardry.registry.WizardryItems;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,11 +26,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemBeltScrollHolder extends ItemNewArtefact implements ITickableArtefact {
+public class ItemBeltScrollHolder extends ItemArtefact implements ITickableArtefact {
 
 	public static final String SCROLL_TAG = "scroll";
 
-	public ItemBeltScrollHolder(EnumRarity rarity, AdditionalType type) {
+	public ItemBeltScrollHolder(EnumRarity rarity, Type type) {
 		super(rarity, type);
 	}
 

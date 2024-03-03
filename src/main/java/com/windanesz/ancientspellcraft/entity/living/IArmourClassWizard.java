@@ -111,7 +111,6 @@ public interface IArmourClassWizard {
 			// If the list is still empty now, there must be less than 3 enabled spells that can be cast by wizards
 			// (excluding magic missile). In this case, having empty slots seems reasonable.
 			if (!list.isEmpty()) { spells.add(list.get(random.nextInt(list.size()))); }
-
 		}
 
 		return maxTier;

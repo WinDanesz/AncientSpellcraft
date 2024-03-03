@@ -1,6 +1,5 @@
 package com.windanesz.ancientspellcraft.entity.projectile;
 
-import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.Wizardry;
@@ -67,7 +66,7 @@ public class EntityManaVortex extends EntityScaledConstruct {
 				damage = ASSpells.mana_vortex.getProperty(Spell.DAMAGE).floatValue() * damageMultiplier;
 
 				// reduce on-hit damage if the artefact is active
-				if (getCaster() instanceof EntityPlayer && ItemNewArtefact.isNewArtefactActive((EntityPlayer) getCaster(), ASItems.belt_vortex)) {
+				if (getCaster() instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) getCaster(), ASItems.belt_vortex)) {
 					damage = damage * 0.5f;
 				}
 			}
@@ -149,7 +148,7 @@ public class EntityManaVortex extends EntityScaledConstruct {
 			}
 		} else {
 			float explosion = 1;
-			if (getCaster() instanceof EntityPlayer && ItemNewArtefact.isNewArtefactActive((EntityPlayer) getCaster(), ASItems.belt_vortex)) {
+			if (getCaster() instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) getCaster(), ASItems.belt_vortex)) {
 				explosion = 3.2f;
 			}
 			world.createExplosion(getCaster() != null ? getCaster() : this, this.posX, this.posY + 1, this.posZ, explosion, false);

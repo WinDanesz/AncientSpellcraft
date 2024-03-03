@@ -1,7 +1,6 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.entity.construct.EntityTransportationPortal;
-import com.windanesz.ancientspellcraft.item.ItemNewArtefact;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.block.BlockTransportationStone;
 import electroblob.wizardry.data.WizardData;
@@ -191,7 +190,7 @@ public class TransportationPortal extends SpellConstructRanged<EntityTransportat
 			// Sets the various parameters
 			construct.setCaster(caster);
 
-			construct.lifetime = (caster instanceof EntityPlayer && ItemNewArtefact.isNewArtefactActive((EntityPlayer) caster, ASItems.head_riftstone) ? -1 :
+			construct.lifetime = (caster instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.head_riftstone) ? -1 :
 					(int) (getProperty(DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade)));
 
 			construct.setTargetDim(location.dimension);
