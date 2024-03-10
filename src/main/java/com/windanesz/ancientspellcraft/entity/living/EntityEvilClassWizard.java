@@ -65,7 +65,7 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 	// Field implementations
 	private List<Spell> spells = new ArrayList<Spell>(4);
 
-	private EntityAIAttackSpellImproved<EntityEvilClassWizard> spellCastingAIImproved = new EntityAIAttackSpellImproved<>(this, 0.5D, 14.0F, 30, 50);
+	private EntityAIAttackSpellImproved<EntityEvilClassWizard> spellCastingAIImproved = new EntityAIAttackSpellImproved<>(this, 0.5D, 14.0F, 30, 80);
 	private final EntityAIBattlemageMelee entityAIBattlemageMelee = new EntityAIBattlemageMelee(this, 0.6D, false);
 	private final EntityAIBattlemageSpellcasting entityAIBattlemageSpellcasting = new EntityAIBattlemageSpellcasting(this, 0.6D, 14.0F, 30, 50);
 
@@ -125,7 +125,7 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 		if (hasStructure) {
 			this.setArmourClass(this.armourClass);
 		} else {
-			this.setArmourClass(ItemWizardArmour.ArmourClass.values()[rand.nextInt(ItemWizardArmour.ArmourClass.values().length - 1) + 1]);
+			this.setArmourClass(ItemWizardArmour.ArmourClass.values()[world.rand.nextInt(3) + 1]);
 		}
 
 		Element element = this.getElement();
@@ -140,8 +140,6 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 
 		// All wizards know magic missile, even if it is disabled.
 
-
-
 		int spellCount;
 		switch (this.getArmourClass()) {
 			case SAGE:
@@ -152,10 +150,15 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 				spellCount = 4;
 		}
 
-		Tier maxTier = IArmourClassWizard.populateSpells(this, spells, element, this.getArmourClass() == ItemWizardArmour.ArmourClass.SAGE, spellCount, rand);
-		if (armourClass == ItemWizardArmour.ArmourClass.WARLOCK) {
+		Tier maxTier = IArmourClassWizard.populateSpells(this, spells, element, this.getArmourClass() == ItemWizardArmour.ArmourClass.SAGE
+				|| this.getArmourClass() == ItemWizardArmour.ArmourClass.WARLOCK, spellCount, rand);
+
+		if (this.getArmourClass() == ItemWizardArmour.ArmourClass.WARLOCK) {
 			spells.remove(Spells.magic_missile);
-			spells.add(ASSpells.chaos_orb);
+			if (rand.nextBoolean()) {
+				spells.add(ASSpells.chaos_blast);
+			}
+			//spells.add(ASSpells.chaos_orb);
 			spells.add(ASSpells.chaos_orb);
 		}
 

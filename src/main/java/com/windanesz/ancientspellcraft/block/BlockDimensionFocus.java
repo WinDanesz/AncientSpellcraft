@@ -1,7 +1,11 @@
 package com.windanesz.ancientspellcraft.block;
 
 import com.windanesz.ancientspellcraft.registry.ASDimensions;
+import com.windanesz.ancientspellcraft.registry.ASPotions;
 import com.windanesz.ancientspellcraft.registry.ASTabs;
+import com.windanesz.ancientspellcraft.spell.OrbSpace;
+import com.windanesz.ancientspellcraft.util.ASUtils;
+import electroblob.wizardry.data.WizardData;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
@@ -10,6 +14,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -38,9 +44,19 @@ public class BlockDimensionFocus extends Block {
 		return Item.getItemFromBlock(Blocks.STONE);
 	}
 
-
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		return playerIn.dimension == ASDimensions.POCKET_DIM_ID && teleportPlayer(playerIn);
+		if (playerIn.dimension == ASDimensions.POCKET_DIM_ID) {
+			playerIn.removeActivePotionEffect(ASPotions.dimensional_anchor);
+			if (teleportPlayer(playerIn)) {
+				WizardData data = WizardData.get(playerIn);
+				NBTTagCompound nbt = data.getVariable(OrbSpace.LAST_ORB);
+				if (nbt != null) {
+					ASUtils.giveStackToPlayer(playerIn, new ItemStack(nbt));
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 }

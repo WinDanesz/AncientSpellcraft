@@ -492,6 +492,14 @@ public class Settings {
 		@Config.Name("Runic Shield Armor Toughness Amount")
 		@Config.RequiresMcRestart
 		public float runic_shield_armor_toughness = 5.0f;
+
+		@Config.Name("Warlock Bonus Override")
+		@Config.RequiresMcRestart
+		public boolean warlock_bonus_override = true;
+
+		@Config.Name("Warlock Bonus Potency Amount")
+		@Config.RequiresMcRestart
+		public float warlock_bonus_potency_amount = 0.15f;
 	}
 
 	public static class ClientSettings {

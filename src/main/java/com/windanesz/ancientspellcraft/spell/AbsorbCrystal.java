@@ -31,7 +31,7 @@ import net.minecraft.world.World;
 import java.util.Optional;
 import java.util.Random;
 
-public class AbsorbCrystal extends Spell {
+public class AbsorbCrystal extends Spell implements IClassSpell {
 
 	public static final IStoredVariable<Integer> ELEMENT = IStoredVariable.StoredVariable.ofInt("AbsorbCrystalElement", Persistence.ALWAYS);
 
@@ -65,15 +65,15 @@ public class AbsorbCrystal extends Spell {
 			if (world.isRemote) {
 
 				if (world.getTotalWorldTime() % 3 == 0) {
-					ParticleBuilder.create(WarlockSpellVisuals.ELEMENTAL_PARTICLES.get(element), rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
-									posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(WarlockSpellVisuals.PARTICLE_COLOURS.get(element)[0])
+					ParticleBuilder.create(WarlockElementalSpellEffects.getElementalParticle(element), rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
+									posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[0])
 							.time(20 + rand.nextInt(50)).spawn(world);
-					ParticleBuilder.create(WarlockSpellVisuals.ELEMENTAL_PARTICLES.get(element), rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
-									posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(WarlockSpellVisuals.PARTICLE_COLOURS.get(element)[1])
+					ParticleBuilder.create(WarlockElementalSpellEffects.getElementalParticle(element), rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
+									posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[1])
 							.time(20 + rand.nextInt(50)).spawn(world);
 
-					ParticleBuilder.create(WarlockSpellVisuals.ELEMENTAL_PARTICLES.get(element), rand, posX + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), posY,
-									posZ + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), 0.03, true).spin(0.7, 0.05).vel(0, 0.3, 0).clr(WarlockSpellVisuals.PARTICLE_COLOURS.get(element)[2])
+					ParticleBuilder.create(WarlockElementalSpellEffects.getElementalParticle(element), rand, posX + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), posY,
+									posZ + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), 0.03, true).spin(0.7, 0.05).vel(0, 0.3, 0).clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[2])
 							.time(20 + rand.nextInt(50)).spawn(world);
 				}
 
@@ -81,7 +81,7 @@ public class AbsorbCrystal extends Spell {
 				ParticleBuilder.create(ParticleBuilder.Type.FLASH)
 						.pos(caster.posX, caster.posY + 0.101, caster.posZ)
 						.face(EnumFacing.UP)
-						.clr(DrawingUtils.mix(WarlockSpellVisuals.PARTICLE_COLOURS.get(element)[1], WarlockSpellVisuals.PARTICLE_COLOURS.get(element)[2], 0.5f))
+						.clr(DrawingUtils.mix(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[1], WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[2], 0.5f))
 						.collide(false)
 						.scale(2.3F)
 						.time(10)
@@ -119,8 +119,8 @@ public class AbsorbCrystal extends Spell {
 	}
 
 	@Override
-	public boolean applicableForItem(Item item) {
-		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
+	public ItemWizardArmour.ArmourClass getArmourClass() {
+		return ItemWizardArmour.ArmourClass.WARLOCK;
 	}
 
 	public static Optional<Element> getElement(WizardData data) {
@@ -141,6 +141,7 @@ public class AbsorbCrystal extends Spell {
 
 	}
 
-
-
+	public boolean applicableForItem(Item item) {
+		return item == ASItems.forbidden_tome;
+	}
 }

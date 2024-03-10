@@ -1,17 +1,21 @@
 package com.windanesz.ancientspellcraft.entity;
 
+import com.windanesz.ancientspellcraft.registry.ASSpells;
+import com.windanesz.ancientspellcraft.spell.WarlockElementalSpellEffects;
+import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
-import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.MagicDamage;
-import electroblob.wizardry.util.MagicDamage.DamageType;
 import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.ParticleBuilder.Type;
+import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -24,21 +28,36 @@ public class EntityChaosOrb extends EntityMagicProjectile {
 	private boolean canSeeTarget = false;
 	int generation  = 7;
 	int redirections = 0;
+	Element element = Element.MAGIC;
+
+	private static final DataParameter<Integer> ELEMENT_ID = EntityDataManager.<Integer>createKey(EntityChaosOrb.class, DataSerializers.VARINT);
+
 	public EntityChaosOrb(World world) {
 		super(world);
 	}
 
 	@Override
+	protected void entityInit() {
+		super.entityInit();
+		dataManager.register(ELEMENT_ID, 0);
+	}
+
+	@Override
 	public void onUpdate() {
 		super.onUpdate();
-
+		Element element = Element.values()[dataManager.get(ELEMENT_ID)];
+//		this.dataManager.set(ELEMENT_ID, element.ordinal());
 		if (world.isRemote && this.ticksExisted > 1) { // Don't spawn particles behind where it started!
 			//			ParticleBuilder.create(Type.SPARKLE, rand, posX, posY, posZ, 0.03, true).clr(1, 1, 0.65f).fade(0.7f, 0, 1)
 			//				.time(20 + rand.nextInt(10)).spawn(world);
 			double x = posX - motionX / 2;
 			double y = posY - motionY / 2;
 			double z = posZ - motionZ / 2;
-			ParticleBuilder.create(Type.SPARKLE, rand, x, y, z, 0.03, true).clr(0xfc0303).scale(0.3f).fade(0x400101)
+			ParticleBuilder.create(WarlockElementalSpellEffects.getElementalParticle(element), rand, x, y, z, 0.03, true)
+					.clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[0])
+//					.clr(0xfc0303)
+					.scale(0.3f)
+					.fade(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[2])
 					.time(20 + rand.nextInt(10)).spawn(world);
 		}
 
@@ -67,6 +86,7 @@ public class EntityChaosOrb extends EntityMagicProjectile {
 					orb.motionY = (this.motionY);
 					orb.motionZ = (this.motionZ);
 					orb.generation = this.generation;
+					orb.setElement(element);
 					world.spawnEntity(orb);
 				}
 
@@ -91,12 +111,15 @@ public class EntityChaosOrb extends EntityMagicProjectile {
 	protected void onImpact(RayTraceResult rayTrace) {
 
 		Entity entityHit = rayTrace.entityHit;
+		Element element = Element.values()[dataManager.get(ELEMENT_ID)];
 
-		if (entityHit != null) {
-
-			float damage = Spells.homing_spark.getProperty(Spell.DAMAGE).floatValue() * damageMultiplier;
+		if (entityHit instanceof EntityLivingBase) {
+			float damage = ASSpells.chaos_orb.getProperty(Spell.DAMAGE).floatValue() * damageMultiplier;
 			entityHit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(this, this.getThrower(),
-					DamageType.SHOCK), damage);
+					WarlockElementalSpellEffects.getDamageType(getElement())), damage);
+			if (element != Element.SORCERY) {
+				WarlockElementalSpellEffects.affectEntity((EntityLivingBase) entityHit, element, this.getThrower(), new SpellModifiers(), false);
+			}
 
 		}
 
@@ -108,7 +131,7 @@ public class EntityChaosOrb extends EntityMagicProjectile {
 				double x = this.posX + rand.nextDouble() - 0.5;
 				double y = this.posY + this.height / 2 + rand.nextDouble() - 0.5;
 				double z = this.posZ + rand.nextDouble() - 0.5;
-				ParticleBuilder.create(Type.SPARK).pos(x, y, z).clr(0xfc0303).spawn(world);
+				ParticleBuilder.create(WarlockElementalSpellEffects.getElementalParticle(element)).pos(x, y, z).clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[0]).spawn(world);
 			}
 		}
 
@@ -137,5 +160,13 @@ public class EntityChaosOrb extends EntityMagicProjectile {
 
 	public void setGeneration(int generation) {
 		this.generation = generation;
+	}
+
+	public void setElement(Element element) {
+		this.dataManager.set(ELEMENT_ID, element.ordinal());
+	}
+
+	public Element getElement() {
+		return Element.values()[this.dataManager.get(ELEMENT_ID)];
 	}
 }

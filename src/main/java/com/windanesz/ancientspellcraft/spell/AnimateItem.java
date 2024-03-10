@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft.spell;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
 import com.windanesz.ancientspellcraft.material.IDevoritium;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.util.SpellModifiers;
@@ -75,7 +76,25 @@ public class AnimateItem extends Animate {
 		if (caster instanceof EntityPlayer) {
 			equipFromOffhand(minion, pos, caster, modifiers);
 		} else {
-			equipWith(minion, conjureItem(new SpellModifiers(), WizardryItems.spectral_pickaxe));
+			int choice = minion.world.rand.nextInt(4);
+
+			switch (choice) {
+				case 0:
+					equipWith(minion, conjureItem(new SpellModifiers(), WizardryItems.spectral_sword));
+					break;
+				case 1:
+					equipWith(minion, conjureItem(new SpellModifiers(), WizardryItems.spectral_bow));
+					break;
+				case 2:
+					equipWith(minion, conjureItem(new SpellModifiers(), ASItems.spectral_shield));
+					break;
+				case 3:
+					equipWith(minion, conjureItem(new SpellModifiers(), ASItems.spectral_shovel));
+					break;
+				default:
+					equipWith(minion, conjureItem(new SpellModifiers(), WizardryItems.spectral_pickaxe));
+					break;
+			}
 		}
 	}
 }

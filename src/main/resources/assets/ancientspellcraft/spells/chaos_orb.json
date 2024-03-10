@@ -19,6 +19,7 @@
     "base_properties": {
         "range": 15,
         "damage": 6,
-        "knockback_strength": 0.5
+        "knockback_strength": 0.5,
+        "max_split_generations": 6
     }
 }

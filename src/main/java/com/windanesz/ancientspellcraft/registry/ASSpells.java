@@ -11,8 +11,6 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelGreaterMagi
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelMagic;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
 import com.windanesz.ancientspellcraft.spell.*;
-import electroblob.wizardry.constants.Constants;
-import electroblob.wizardry.entity.projectile.EntityThunderbolt;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
@@ -32,7 +30,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 @SuppressWarnings("unused")
 @ObjectHolder(AncientSpellcraft.MODID)
@@ -262,12 +259,15 @@ public final class ASSpells {
     public static final Spell absorb_object = placeholder();
     public static final Spell absorb_potion = placeholder();
     public static final Spell absorb_projetile = placeholder();
+    public static final Spell absorb_spell = placeholder();
     public static final Spell chaos_storm = placeholder();
     public static final Spell confusion = placeholder();
     public static final Spell orb_space = placeholder();
     public static final Spell psychic_slash = placeholder();
     public static final Spell scrying_orb = placeholder();
     public static final Spell chaos_orb = placeholder();
+    public static final Spell chaos_blast = placeholder();
+    public static final Spell chaos_vortex = placeholder();
 
 	@SuppressWarnings("unchecked")
 	@SubscribeEvent
@@ -585,7 +585,10 @@ public final class ASSpells {
 		registry.register(new AbsorbArtefact());
 		registry.register(new AbsorbCrystal());
 		registry.register(new AbsorbPotion());
-		registry.register(new WarlockSpellPlaceholder("absorb_projectile"));
+		registry.register(new AbsorbSpell());
+		registry.register(new ChaosBlast());
+		registry.register(new ChaosVortex());
+		registry.register(new AbsorbProjectile());
 		registry.register(new WarlockSpellPlaceholder("chaos_storm"));
 		registry.register(new WarlockSpellPlaceholder("confusion"));
 		registry.register(new OrbSpace());

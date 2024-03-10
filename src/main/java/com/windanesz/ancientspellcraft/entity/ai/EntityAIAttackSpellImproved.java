@@ -1,7 +1,6 @@
 package com.windanesz.ancientspellcraft.entity.ai;
 
 import com.windanesz.ancientspellcraft.data.SpellCategorization;
-import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.entity.living.ISpellCaster;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.event.SpellCastEvent.Source;
@@ -373,7 +372,7 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 			List<Spell> spellList = new ArrayList<>(spells);
 
 			// shuffle the list so we won't always pick the first match
-			Collections.shuffle(spellList);
+			Collections.shuffle(spellList, world.rand);
 
 			while (spellToPick == Spells.none && !spellPreferenceQueue.isEmpty()) {
 

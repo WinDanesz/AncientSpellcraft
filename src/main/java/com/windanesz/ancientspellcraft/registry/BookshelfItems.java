@@ -28,6 +28,8 @@ public class BookshelfItems {
 		registerBookModelTexture(() -> ASItems.soulbound_upgrade, new ResourceLocation(Wizardry.MODID, "blocks/scrolls_wooden"));
 		registerBookModelTexture(() -> ASItems.sentience_upgrade, new ResourceLocation(Wizardry.MODID, "blocks/scrolls_wooden"));
 		registerBookModelTexture(() -> ASItems.empowerment_upgrade, new ResourceLocation(Wizardry.MODID, "blocks/scrolls_wooden"));
+		registerBookModelTexture(() -> ASItems.runic_plate, new ResourceLocation(AncientSpellcraft.MODID, "blocks/runic_plates"));
+		registerBookModelTexture(() -> ASItems.forbidden_tome, new ResourceLocation(AncientSpellcraft.MODID, "blocks/forbidden_tome"));
 //		registerBookModelTexture(() -> ASItems.mystic_scroll, new ResourceLocation(AncientSpellcraft.MODID, "blocks/scrolls_mystic_scroll"));
 
 	}
@@ -52,5 +54,7 @@ public class BookshelfItems {
 		ContainerBookshelf.registerBookItem(ASItems.soulbound_upgrade);
 		ContainerBookshelf.registerBookItem(ASItems.sentience_upgrade);
 		ContainerBookshelf.registerBookItem(ASItems.empowerment_upgrade);
+		ContainerBookshelf.registerBookItem(ASItems.runic_plate);
+		ContainerBookshelf.registerBookItem(ASItems.forbidden_tome);
 	}
 }

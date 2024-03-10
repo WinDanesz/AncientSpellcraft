@@ -10,7 +10,7 @@
         "trades": true,
         "looting": true
     },
-    "tier": "novice",
+    "tier": "apprentice",
     "element": "magic",
     "type": "attack",
     "cost": 10,

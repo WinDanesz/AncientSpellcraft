@@ -7,12 +7,16 @@ import com.windanesz.ancientspellcraft.registry.ASDimensions;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.SpellTeleporter;
 import electroblob.wizardry.constants.Element;
+import electroblob.wizardry.data.IStoredVariable;
+import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
+import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.Location;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -20,6 +24,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -30,15 +35,22 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.Random;
 
-public class OrbSpace extends Spell {
+public class OrbSpace extends Spell implements IClassSpell {
+
+	public static final IStoredVariable<NBTTagCompound> LAST_ORB = IStoredVariable.StoredVariable.ofNBT("LastOrbFromOrbSpace", Persistence.ALWAYS);
+	public static final String ORB_SPACE_LOCATION = "OrbSpaceLocation";
 
 	public OrbSpace() {
 		super(AncientSpellcraft.MODID, "orb_space", EnumAction.BLOCK, true);
 		soundValues(0.8f, 1.2f, 0.2f);
+		WizardData.registerStoredVariables(LAST_ORB);
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		if (hand != EnumHand.MAIN_HAND) {
+			return false;
+		}
 		// Only return on the server side or the client probably won't spawn particles
 		if (ticksInUse == 0) {
 			this.playSound(world, caster, ticksInUse, -1, modifiers);
@@ -69,7 +81,7 @@ public class OrbSpace extends Spell {
 			if (data != null) {
 
 				// teleport player back from the pocket
-				if (((EntityPlayer) caster).dimension == ASDimensions.POCKET_DIM_ID) {
+				if (caster.dimension == ASDimensions.POCKET_DIM_ID) {
 					if (data.getVariable(PocketDimension.POCKET_DIM_PREVIOUS_LOCATION) != null) {
 
 						Location previousPos = Location.fromNBT(data.getVariable(PocketDimension.POCKET_DIM_PREVIOUS_LOCATION));
@@ -81,13 +93,15 @@ public class OrbSpace extends Spell {
 
 				// teleport player to pocket and store old location
 				data.setVariable(PocketDimension.POCKET_DIM_PREVIOUS_LOCATION, new Location(player.getPosition(), player.dimension).toNBT());
-				data.sync();
 
 				ItemStack stack = player.getHeldItemMainhand();
-				if (stack.hasTagCompound() && stack.getTagCompound().hasKey("OrbSpaceLocation")) {
-					NBTTagCompound location = stack.getTagCompound().getCompoundTag("OrbSpaceLocation");
+				if (stack.hasTagCompound() && stack.getTagCompound().hasKey(ORB_SPACE_LOCATION)) {
+					NBTTagCompound location = stack.getTagCompound().getCompoundTag(ORB_SPACE_LOCATION);
 					if (location != null) {
 						BlockPos pocketPos = NBTUtil.getPosFromTag(location);
+						data.setVariable(LAST_ORB, stack.serializeNBT());
+						stack.shrink(1);
+						data.sync();
 						SpellTeleporter.teleportEntity(ASDimensions.POCKET_DIM_ID, pocketPos.getX(), pocketPos.getY(), pocketPos.getZ(), true, player);
 						return true;
 					}
@@ -108,9 +122,9 @@ public class OrbSpace extends Spell {
 			double dy = (world.rand.nextDouble() * (world.rand.nextBoolean() ? 1 : -1)) * 0.1;
 			double dz = (world.rand.nextDouble() * (world.rand.nextBoolean() ? 1 : -1)) * 0.1;
 
-			ParticleBuilder.create(WarlockSpellVisuals.ELEMENTAL_PARTICLES.get(element))
+			ParticleBuilder.create(WarlockElementalSpellEffects.getElementalParticle(element))
 					.entity(caster)
-					.clr(WarlockSpellVisuals.PARTICLE_COLOURS.get(element)[0])
+					.clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[0])
 					.pos(0, caster.height / 2, 0)
 					.vel(dx, dy, dz)
 					.spawn(world);
@@ -124,11 +138,11 @@ public class OrbSpace extends Spell {
 
 			NBTTagCompound nbt = player.getHeldItemMainhand().getTagCompound();
 			if (nbt == null) {nbt = new NBTTagCompound();}
-			NBTTagCompound compound = nbt.hasKey("OrbSpaceLocation") ? nbt.getCompoundTag("OrbSpaceLocation") : null;
+			NBTTagCompound compound = nbt.hasKey(ORB_SPACE_LOCATION) ? nbt.getCompoundTag(ORB_SPACE_LOCATION) : null;
 			if (compound == null) {
 				BlockPos pocketLocation = findSuitablePocketPos(pocketWorld);
 				createPocket(pocketLocation, pocketWorld, ((ItemWarlockOrb) player.getHeldItemMainhand().getItem()).element);
-				nbt.setTag("OrbSpaceLocation", NBTUtil.createPosTag(pocketLocation.offset(EnumFacing.UP, 6)));
+				nbt.setTag(ORB_SPACE_LOCATION, NBTUtil.createPosTag(pocketLocation.offset(EnumFacing.UP, 6)));
 				player.getHeldItemMainhand().setTagCompound(nbt);
 			}
 		}
@@ -144,6 +158,16 @@ public class OrbSpace extends Spell {
 			createWalls(pos, pocketWorld, pocketSize, pocketHeight, block);
 			createPlatform(pos.offset(EnumFacing.UP, pocketHeight + 1), pocketWorld, pocketSize, block); // roof
 			pocketWorld.setBlockState(pos, ASBlocks.DIMENSION_FOCUS_GOLD.getDefaultState());
+		}
+	}
+
+	public static void createPocket(BlockPos pos, World pocketWorld, IBlockState block, IBlockState focusBlock, int radius) {
+		for (int i = 0; i < 5; i++) {
+			int pocketHeight = radius + 1;
+			createPlatform(pos.offset(EnumFacing.DOWN, i), pocketWorld, pocketHeight, block);
+			createWalls(pos, pocketWorld, radius, pocketHeight, block);
+			createPlatform(pos.offset(EnumFacing.UP, pocketHeight + 1), pocketWorld, radius, block); // roof
+			pocketWorld.setBlockState(pos, focusBlock);
 		}
 	}
 
@@ -215,7 +239,22 @@ public class OrbSpace extends Spell {
 	}
 
 	@Override
+	public ItemWizardArmour.ArmourClass getArmourClass() {
+		return ItemWizardArmour.ArmourClass.WARLOCK;
+	}
+
 	public boolean applicableForItem(Item item) {
-		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
+		return item == ASItems.forbidden_tome;
+	}
+
+
+	@Override
+	public boolean canBeCastBy(TileEntityDispenser dispenser) {
+		return false;
+	}
+
+	@Override
+	public boolean canBeCastBy(EntityLiving npc, boolean override) {
+		return false;
 	}
 }

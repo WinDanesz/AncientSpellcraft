@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.entity.living;
 
+import com.google.common.base.Predicate;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackRangedBowNoStrafing;
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellWithCost;
@@ -39,6 +40,7 @@ import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WandHelper;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -132,9 +134,18 @@ public class EntityAnimatedItem extends EntitySummonedCreature implements ISpell
 	}
 
 	@Override
+	public Predicate<Entity> getTargetSelector() {
+		return entity -> !entity.isInvisible() && !(entity instanceof EntityPlayer && ((EntityPlayer)entity).isCreative()) && isValidTarget(entity);
+	}
+
+	@Override
 	public void onUpdate() {
 		super.onUpdate();
 
+		if (ticksExisted % 60 == 0 && getAttackTarget() == null && getCaster() != null) {
+			this.getNavigator().clearPath();
+			this.getNavigator().tryMoveToXYZ(getCaster().posX, getCaster().posY, getCaster().posZ, 1);
+		}
 		// Animated items die if their item is removed or break or their caster is not present
 		if (this.ticksExisted > 20 && (this.getCaster() == null || this.getCaster().isDead || (!this.hasArmour() && this.getHeldItemMainhand().isEmpty()) || (this.hasArmour() && lostArmour()))) {
 			this.setDead();

@@ -8,6 +8,7 @@ import com.windanesz.ancientspellcraft.ritual.Forest;
 import com.windanesz.ancientspellcraft.ritual.None;
 import com.windanesz.ancientspellcraft.ritual.Rejuvenation;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
+import com.windanesz.ancientspellcraft.ritual.WarlockAttunement;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -48,6 +49,7 @@ public final class Rituals {
 	public static final Ritual bonfire = placeholder();
 	public static final Ritual condensing = placeholder();
 	public static final Ritual arcane_barrier = placeholder();
+	public static final Ritual warlock_attunement = placeholder();
 
 
 	@SubscribeEvent
@@ -63,6 +65,7 @@ public final class Rituals {
 		registry.register(new Bonfire());
 		registry.register(new Condensing());
 		registry.register(new ArcaneBarrier());
+		registry.register(new WarlockAttunement());
 	}
 
 }

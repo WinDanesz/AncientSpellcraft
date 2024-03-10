@@ -15,11 +15,13 @@ import com.windanesz.ancientspellcraft.item.ItemRitualBook;
 import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
 import com.windanesz.ancientspellcraft.potion.PotionMetamagicEffect;
 import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASDimensions;
 import com.windanesz.ancientspellcraft.registry.ASEnchantments;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASPotions;
 import com.windanesz.ancientspellcraft.registry.ASSpells;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
+import com.windanesz.ancientspellcraft.spell.AbsorbArtefact;
 import com.windanesz.ancientspellcraft.spell.AbsorbCrystal;
 import com.windanesz.ancientspellcraft.spell.AbsorbPotion;
 import com.windanesz.ancientspellcraft.spell.Contingency;
@@ -949,6 +951,12 @@ public class ASEventHandler {
 
 		if (event.getCaster() instanceof EntityPlayer) {
 
+			int gems = AbsorbArtefact.getPowerGemCount((EntityPlayer) event.getCaster());
+			if (gems > 0) {
+				SpellModifiers modifiers = event.getModifiers();
+				modifiers.set(SpellModifiers.POTENCY, modifiers.get(SpellModifiers.POTENCY) + gems * 0.01f, false);
+			}
+
 			if (!(event.getSpell() instanceof MetaSpellBuff)) {
 
 				EntityPlayer player = (EntityPlayer) event.getCaster();
@@ -1056,15 +1064,15 @@ public class ASEventHandler {
 
 				if (artefact == ASItems.head_curse) {
 					float potency = modifiers.get(SpellModifiers.POTENCY);
-					int modifier = 0;
+					float potencyBonus = 1;
 					for (Potion potion : player.getActivePotionMap().keySet()) {
 						if (potion instanceof Curse) {
-							modifier += 0.1;
+							potencyBonus += 0.1f;
 						}
 					}
 
-					if (modifier >= 0) {
-						modifiers.set(SpellModifiers.POTENCY, (1 + modifier) * potency, false);
+					if (potencyBonus >= 1) {
+						modifiers.set(SpellModifiers.POTENCY, (potencyBonus) * potency, false);
 					}
 				} else if (artefact == ASItems.belt_scroll_holder && ASBaublesIntegration.enabled()) {
 					List<ItemStack> holder = ASBaublesIntegration.getEquippedArtefactStacks(player, ItemArtefact.Type.BELT);
@@ -1101,6 +1109,9 @@ public class ASEventHandler {
 
 				} else if (artefact == ASItems.amulet_mana) {
 					modifiers.set(SpellModifiers.COST, 0.90f * cost, false);
+
+				} else if (artefact == ASItems.ring_mana_cost) {
+					modifiers.set(SpellModifiers.COST, 0.95f * cost, false);
 
 				} else if (artefact == ASItems.ring_blast) {
 					modifiers.set(SpellModifiers.COST, 1.25f * cost, false);
@@ -1409,6 +1420,11 @@ public class ASEventHandler {
 			}
 
 			if (!event.player.world.isRemote && event.player.ticksExisted % 6 == 0) {
+
+				if (event.player.dimension == ASDimensions.POCKET_DIM_ID && !event.player.isPotionActive(ASPotions.dimensional_anchor)){
+					event.player.addPotionEffect(new PotionEffect(ASPotions.dimensional_anchor, 200000));
+				}
+
 				// Contingency - Immobility
 				WizardData data = WizardData.get(player);
 				if (data != null) {
@@ -1435,15 +1451,17 @@ public class ASEventHandler {
 				String potionName = data.getVariable(AbsorbPotion.EFFECT);
 				Integer duration = data.getVariable(AbsorbPotion.DURATION);
 
-				if (duration != null && duration > 0 && potionName != null) {
+				if (potionName != null && !potionName.equals("none")) {
 
 					Potion potion = ForgeRegistries.POTIONS.getValue(new ResourceLocation(potionName));
 					if (potion != null) {
-						for (int i = 0; i < 4; i++) {
-							ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(0, 0.2, 0).entity(player).clr(potion.getLiquidColor())
+						for (int i = 0; i < 10; i++) {
+							ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).scale(1).pos(0, 0.2, 0).entity(player).clr(potion.getLiquidColor())
 									.spin(ASSpells.absorb_potion.getProperty(Spell.EFFECT_RADIUS).intValue(), 0.02).time(60).spawn(player.world);
 						}
 						for (EntityLivingBase target : EntityUtils.getEntitiesWithinRadius(ASSpells.absorb_potion.getProperty(AbsorbPotion.EFFECT_RADIUS).floatValue(), player.posX, player.posY, player.posZ, player.world, EntityLivingBase.class)) {
+							if (target == player || potion != MobEffects.INVISIBILITY) {
+
 							ParticleBuilder.create(ParticleBuilder.Type.SCORCH)
 									.pos(target.posX, target.posY + 0.101, target.posZ)
 									.face(EnumFacing.UP)
@@ -1452,6 +1470,8 @@ public class ASEventHandler {
 									.scale(2.3F)
 									.time(40)
 									.spawn(event.player.world);
+
+							}
 						}
 					}
 				}

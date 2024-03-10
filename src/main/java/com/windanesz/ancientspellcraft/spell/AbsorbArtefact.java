@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import com.windanesz.ancientspellcraft.util.WizardArmourUtils;
+import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.client.DrawingUtils;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.data.IStoredVariable;
@@ -37,9 +38,10 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import java.util.Optional;
 import java.util.Random;
 
-public class AbsorbArtefact extends Spell {
+public class AbsorbArtefact extends Spell implements IClassSpell {
 
 	public static final IStoredVariable<String> ARTEFACT = IStoredVariable.StoredVariable.ofString("AbsorbArtefact", Persistence.ALWAYS);
+	public static final IStoredVariable<Integer> POWER_GEM_COUNT = IStoredVariable.StoredVariable.ofInt("PowerGemCount", Persistence.ALWAYS);
 	public static final String TIER_LIMIT = "tier_limit";
 
 	public static enum Rarities {
@@ -59,7 +61,7 @@ public class AbsorbArtefact extends Spell {
 
 	public AbsorbArtefact() {
 		super(AncientSpellcraft.MODID, "absorb_artefact", SpellActions.SUMMON, true);
-		WizardData.registerStoredVariables(ARTEFACT);
+		WizardData.registerStoredVariables(ARTEFACT, POWER_GEM_COUNT);
 		addProperties(TIER_LIMIT);
 	}
 
@@ -92,15 +94,15 @@ public class AbsorbArtefact extends Spell {
 			if (world.isRemote) {
 
 				if (world.getTotalWorldTime() % 3 == 0) {
-					ParticleBuilder.create(WarlockSpellVisuals.ELEMENTAL_PARTICLES.get(element), rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
-									posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(WarlockSpellVisuals.PARTICLE_COLOURS.get(element)[0])
+					ParticleBuilder.create(WarlockElementalSpellEffects.getElementalParticle(element), rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
+									posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[0])
 							.time(20 + rand.nextInt(50)).spawn(world);
-					ParticleBuilder.create(WarlockSpellVisuals.ELEMENTAL_PARTICLES.get(element), rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
-									posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(WarlockSpellVisuals.PARTICLE_COLOURS.get(element)[1])
+					ParticleBuilder.create(WarlockElementalSpellEffects.getElementalParticle(element), rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
+									posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[1])
 							.time(20 + rand.nextInt(50)).spawn(world);
 
-					ParticleBuilder.create(WarlockSpellVisuals.ELEMENTAL_PARTICLES.get(element), rand, posX + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), posY,
-									posZ + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), 0.03, true).spin(0.7, 0.05).vel(0, 0.3, 0).clr(WarlockSpellVisuals.PARTICLE_COLOURS.get(element)[2])
+					ParticleBuilder.create(WarlockElementalSpellEffects.getElementalParticle(element), rand, posX + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), posY,
+									posZ + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), 0.03, true).spin(0.7, 0.05).vel(0, 0.3, 0).clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[2])
 							.time(20 + rand.nextInt(50)).spawn(world);
 				}
 
@@ -108,7 +110,7 @@ public class AbsorbArtefact extends Spell {
 				ParticleBuilder.create(ParticleBuilder.Type.FLASH)
 						.pos(caster.posX, caster.posY + 0.101, caster.posZ)
 						.face(EnumFacing.UP)
-						.clr(DrawingUtils.mix(WarlockSpellVisuals.PARTICLE_COLOURS.get(element)[1], WarlockSpellVisuals.PARTICLE_COLOURS.get(element)[2], 0.5f))
+						.clr(DrawingUtils.mix(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[1], WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[2], 0.5f))
 						.collide(false)
 						.scale(2.3F)
 						.time(10)
@@ -116,7 +118,12 @@ public class AbsorbArtefact extends Spell {
 			}
 			if (ticksInUse == 60) {
 			WizardData data = WizardData.get(caster);
-			data.setVariable(ARTEFACT, caster.getHeldItemOffhand().getItem().getRegistryName().toString());
+				if (caster.getHeldItemOffhand().getItem() == ASItems.body_power_gem) {
+					addToPowerGemCount(caster);
+				} else {
+					data.setVariable(ARTEFACT, caster.getHeldItemOffhand().getItem().getRegistryName().toString());
+				}
+			Wizardry.proxy.shakeScreen(caster, 10);
 			caster.stopActiveHand();
 			ASUtils.sendMessage(caster, "Absorbed " + caster.getHeldItemOffhand().getDisplayName(), true);
 			spawnParticleEffect(world, 5, caster, modifiers);
@@ -137,19 +144,36 @@ public class AbsorbArtefact extends Spell {
 		this.playSoundLoop(world, x, y, z, ticksInUse, duration);
 	}
 
-	@Override
-	public boolean canBeCastBy(EntityLiving npc, boolean override) {
-		return false;
+	public static int getPowerGemCount(EntityPlayer player) {
+		WizardData data = WizardData.get(player);
+		if (data.getVariable(POWER_GEM_COUNT) != null) {
+			return data.getVariable(POWER_GEM_COUNT);
+		}
+
+		return 0;
+	}
+
+	public static int getPowerGemCount(WizardData data) {
+		if (data.getVariable(POWER_GEM_COUNT) != null) {
+			return data.getVariable(POWER_GEM_COUNT);
+		}
+		return 0;
+	}
+
+	public static void addToPowerGemCount(EntityPlayer player) {
+		WizardData data = WizardData.get(player);
+		int count = 0;
+		if (data.getVariable(POWER_GEM_COUNT) != null) {
+			count = data.getVariable(POWER_GEM_COUNT);
+		}
+		count++;
+		data.setVariable(POWER_GEM_COUNT, count);
+		data.sync();
 	}
 
 	@Override
 	public boolean canBeCastBy(TileEntityDispenser dispenser) {
 		return false;
-	}
-
-	@Override
-	public boolean applicableForItem(Item item) {
-		return item == ASItems.ancient_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
 
 	public static Optional<Item> getArtefact(WizardData data) {
@@ -195,5 +219,18 @@ public class AbsorbArtefact extends Spell {
 		ParticleBuilder.create(ParticleBuilder.Type.SPHERE).pos(origin.add(0, 0.1, 0)).scale((float)radius * 0.8f).clr(0.8f, 0, 0.05f).spawn(world);
 	}
 
+	@Override
+	public ItemWizardArmour.ArmourClass getArmourClass() {
+		return ItemWizardArmour.ArmourClass.WARLOCK;
+	}
 
+	@Override
+	public boolean applicableForItem(Item item) {
+		return item == ASItems.forbidden_tome;
+	}
+
+	@Override
+	public boolean canBeCastBy(EntityLiving npc, boolean override) {
+		return canBeCastByClassNPC(npc);
+	}
 }

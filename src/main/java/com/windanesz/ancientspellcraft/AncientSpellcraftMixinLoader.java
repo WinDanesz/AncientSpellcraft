@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import zone.rong.mixinbooter.IEarlyMixinLoader;
@@ -11,7 +12,7 @@ import java.util.Map;
 @IFMLLoadingPlugin.Name("AncientSpellcraftCore")
 @IFMLLoadingPlugin.MCVersion(ForgeVersion.mcVersion)
 @IFMLLoadingPlugin.SortingIndex(Integer.MIN_VALUE)
-public class MixinLoader implements IFMLLoadingPlugin, IEarlyMixinLoader {
+public class AncientSpellcraftMixinLoader implements IFMLLoadingPlugin, IEarlyMixinLoader {
 	@Override
 	public String[] getASMTransformerClass() {
 		return new String[0];
@@ -38,6 +39,6 @@ public class MixinLoader implements IFMLLoadingPlugin, IEarlyMixinLoader {
 
 	@Override
 	public List<String> getMixinConfigs() {
-		return null;
+		return ImmutableList.of("ancientspellcraft.mixins.json");
 	}
 }

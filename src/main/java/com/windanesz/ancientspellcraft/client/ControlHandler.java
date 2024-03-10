@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
 import com.windanesz.ancientspellcraft.packet.PacketActivateBauble;
+import com.windanesz.ancientspellcraft.packet.PacketCastWarlockSpell;
 import electroblob.wizardry.item.ItemArtefact;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
@@ -23,6 +24,7 @@ import java.util.List;
 public class ControlHandler {
 
 	static boolean charmKeyPressed = false;
+	static boolean warlockSpellPressed = false;
 
 	@SubscribeEvent
 	public static void onTickEvent(TickEvent.ClientTickEvent event) {
@@ -46,6 +48,18 @@ public class ControlHandler {
 						charmKeyPressed = false;
 					}
 				}
+
+
+				if (com.windanesz.ancientspellcraft.client.ClientProxy.KEY_WARLOCK_CAST.isKeyDown() && Minecraft.getMinecraft().inGameHasFocus) {
+					if (!warlockSpellPressed) {
+						warlockSpellPressed = true;
+						castOrStopWarlockSpell(player, true);
+					}
+				} else {
+					warlockSpellPressed = false;
+					castOrStopWarlockSpell(player, false);
+				}
+
 
 				boolean resetTimeout = false;
 				// Astral Travel movement logic
@@ -77,6 +91,11 @@ public class ControlHandler {
 				}
 			}
 		}
+	}
+
+	private static void castOrStopWarlockSpell(EntityPlayer player, boolean shouldCast) {
+		IMessage msg = new PacketCastWarlockSpell.Message(shouldCast ? PacketCastWarlockSpell.ControlType.START : PacketCastWarlockSpell.ControlType.END);
+		ASPacketHandler.net.sendToServer(msg);
 	}
 
 	private static void activateBauble(ItemArtefact.Type type, EntityPlayer player) {

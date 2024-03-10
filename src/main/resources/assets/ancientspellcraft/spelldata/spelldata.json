@@ -8,7 +8,7 @@
         "banish": "disengage",
         "black_hole": "ranged_attack",
         "blinding_flash": "disable",
-        "blink": "ranged_attack",
+        "blink": "disengage",
         "blizzard": "ranged_attack",
         "boulder": "ranged_attack",
         "bubble": "disable",
@@ -188,6 +188,10 @@
         "wither": "ranged_attack",
         "withering_totem": "close_combat",
         "wither_skull": "ranged_attack",
-        "zombie_apocalypse": "minion"
+        "zombie_apocalypse": "minion",
+        "chaos_orb": "ranged_attack",
+        "chaos_blast": "ranged_attack",
+        "animate_item": "ranged_attack",
+        "chaos_vortex": "disengage"
     }
 }

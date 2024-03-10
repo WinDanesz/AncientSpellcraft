@@ -220,7 +220,7 @@ public class ItemWarlockOrb extends Item implements ISpellCastingItem, IWorkbenc
 					Wizardry.proxy.translate("item.ancientspellcraft:all_other_elements")));
 		}
 		// +0.5f is necessary due to the error in the way floats are calculated.
-		text.add(Wizardry.proxy.translate("item." + AncientSpellcraft.MODID + ":sage_tome.buff",
+		text.add(Wizardry.proxy.translate("item." + AncientSpellcraft.MODID + ":warlock_orb.buff",
 				new Style().setColor(TextFormatting.DARK_GRAY),
 				(int) ((tier.level + 1) * (Constants.POTENCY_INCREASE_PER_TIER) * 100 + 0.5f)));
 
@@ -233,7 +233,7 @@ public class ItemWarlockOrb extends Item implements ISpellCastingItem, IWorkbenc
 				discovered ? spell.getDisplayNameWithFormatting() : "#" + TextFormatting.BLUE + SpellGlyphData.getGlyphName(spell, player.world)));
 
 		if (GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak)) {
-			AncientSpellcraft.proxy.addMultiLineDescription(text, I18n.format("tooltip.ancientspellcraft:sage_tome.more_info"));
+			AncientSpellcraft.proxy.addMultiLineDescription(text, I18n.format("tooltip.ancientspellcraft:warlock_orb.more_info"));
 		} else {
 			text.add(I18n.format("tooltip.ancientspellcraft:more_info"));
 		}
@@ -792,8 +792,7 @@ public class ItemWarlockOrb extends Item implements ISpellCastingItem, IWorkbenc
 			progressionModifier *= ELEMENTAL_PROGRESSION_MODIFIER;
 		}
 
-		// Mystic Spells
-		if (spell instanceof IClassSpell && ((IClassSpell) spell).getArmourClass() == ItemWizardArmour.ArmourClass.SAGE) {
+		if (spell instanceof IClassSpell && ((IClassSpell) spell).getArmourClass() == ItemWizardArmour.ArmourClass.WARLOCK) {
 			modifiers.set(SpellModifiers.POTENCY, 1.0f + (this.tier.level + 1) * Constants.POTENCY_INCREASE_PER_TIER, true);
 			progressionModifier *= ELEMENTAL_PROGRESSION_MODIFIER;
 		} else if (this.element != spell.getElement() && WandHelper.getUpgradeLevel(stack, ASItems.empowerment_upgrade) > 0) {

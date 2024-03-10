@@ -10,12 +10,12 @@
         "trades": true,
         "looting": true
     },
-    "tier": "novice",
+    "tier": "master",
     "element": "magic",
-    "type": "attack",
-    "cost": 10,
+    "type": "alteration",
+    "cost": 100,
     "chargeup": 0,
-    "cooldown": 20,
+    "cooldown": 200,
     "base_properties": {
         "tier_limit": 2
     }

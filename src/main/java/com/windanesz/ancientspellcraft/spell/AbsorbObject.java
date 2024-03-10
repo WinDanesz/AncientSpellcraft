@@ -2,6 +2,8 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.google.common.collect.Sets;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.registry.ASItems;
+import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.BlockUtils;
@@ -10,17 +12,20 @@ import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -30,7 +35,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Set;
 
-public class AbsorbObject extends SpellRay {
+public class AbsorbObject extends SpellRay implements IClassSpell {
 
 	public AbsorbObject() {
 		super(AncientSpellcraft.MODID, "absorb_object", SpellActions.POINT, true);
@@ -225,5 +230,25 @@ public class AbsorbObject extends SpellRay {
 			//			.clr(0.5f, 0, 0).spawn(world);
 		}
 
+	}
+
+	@Override
+	public ItemWizardArmour.ArmourClass getArmourClass() {
+		return ItemWizardArmour.ArmourClass.WARLOCK;
+	}
+
+	public boolean applicableForItem(Item item) {
+		return item == ASItems.forbidden_tome;
+	}
+
+
+	@Override
+	public boolean canBeCastBy(EntityLiving npc, boolean override) {
+		return false;
+	}
+
+	@Override
+	public boolean canBeCastBy(TileEntityDispenser dispenser) {
+		return false;
 	}
 }

@@ -1,0 +1,44 @@
+{
+    "enabled": true,
+    "lifetime": 20,
+    "size": 5,
+    "pattern": [
+        "  W  ",
+        "A R O",
+        "  L  ",
+        " C K ",
+        "POWER"
+    ],
+    "centerpiece": {
+        "item": "ancientspellcraft:rune_wynn"
+    },
+    "key": {
+        "O": {
+            "item": "ancientspellcraft:rune_odal"
+        },
+        "P": {
+            "item": "ancientspellcraft:rune_peorth"
+        },
+        "A": {
+            "item": "ancientspellcraft:rune_ansuz"
+        },
+        "W": {
+            "item": "ancientspellcraft:rune_wynn"
+        },
+        "L": {
+            "item": "ancientspellcraft:rune_laguz"
+        },
+        "C": {
+            "item": "ancientspellcraft:rune_gyfu"
+        },
+        "K": {
+            "item": "ancientspellcraft:rune_kaunan"
+        },
+        "E": {
+            "item": "ancientspellcraft:rune_ehwaz"
+        },
+        "R": {
+            "item": "ancientspellcraft:rune_raido"
+        }
+    }
+}

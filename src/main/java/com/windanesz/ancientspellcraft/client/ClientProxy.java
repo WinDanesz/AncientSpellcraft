@@ -10,6 +10,7 @@ import com.windanesz.ancientspellcraft.client.particle.ParticleConstantBeam;
 import com.windanesz.ancientspellcraft.client.particle.ParticleSoulChain;
 import com.windanesz.ancientspellcraft.client.particle.ParticleTimeKnot;
 import com.windanesz.ancientspellcraft.client.renderer.RenderArcaneBarrierEventBased;
+import com.windanesz.ancientspellcraft.client.renderer.RenderChaosOrb;
 import com.windanesz.ancientspellcraft.client.renderer.RenderMerchantWizard;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderAnimatedItem;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderDevoritiumArrow;
@@ -134,6 +135,7 @@ public class ClientProxy extends CommonProxy {
 	private static final int TOOLTIP_WRAP_WIDTH = 140;
 
 	public static KeyBinding KEY_ACTIVATE_CHARM_BAUBLE;
+	public static KeyBinding KEY_WARLOCK_CAST;
 	public static KeyBinding KEY_ACTIVATE_RING1_BAUBLE;
 	public static KeyBinding KEY_ACTIVATE_RING2_BAUBLE;
 	public static KeyBinding KEY_ACTIVATE_RADIAL_SPELL_MENU;
@@ -182,6 +184,9 @@ public class ClientProxy extends CommonProxy {
 		KEY_ACTIVATE_CHARM_BAUBLE = new KeyBinding("key.ancientspellcraft.charm_bauble_activate", Keyboard.KEY_K, "key.ancientspellcraft.category");
 		ClientRegistry.registerKeyBinding(KEY_ACTIVATE_CHARM_BAUBLE);
 
+		KEY_WARLOCK_CAST = new KeyBinding("key.ancientspellcraft.key_warlock_cast", Keyboard.KEY_I, "key.ancientspellcraft.category");
+		ClientRegistry.registerKeyBinding(KEY_WARLOCK_CAST);
+
 		KEY_ACTIVATE_RING1_BAUBLE = new KeyBinding("key.ancientspellcraft.charm_ring_1_activate", Keyboard.KEY_U, "key.ancientspellcraft.category");
 		ClientRegistry.registerKeyBinding(KEY_ACTIVATE_RING1_BAUBLE);
 
@@ -216,7 +221,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlint.class, manager -> new RenderMagicArrow(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/flint_shard.png"), false, 6.0, 1.0, 9, 8, true));
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityChaosOrb.class,
-				manager -> new RenderProjectile(manager, 0.4f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/chaos_orb.png"), true));
+				manager -> new RenderChaosOrb(manager, 0.4f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/chaos_orb.png"), true));
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityAOEProjectile.class, manager -> new RenderProjectile(manager, 0.7f, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/aoe_projectile.png"), false));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySafeIceShard.class, manager -> new RenderMagicArrow(manager,
