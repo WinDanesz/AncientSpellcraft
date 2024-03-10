@@ -15,6 +15,7 @@ import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.entity.living.EntitySummonedCreature;
 import electroblob.wizardry.entity.living.ISpellCaster;
+import electroblob.wizardry.entity.projectile.EntityConjuredArrow;
 import electroblob.wizardry.entity.projectile.EntityFlamecatcherArrow;
 import electroblob.wizardry.item.IConjuredItem;
 import electroblob.wizardry.item.ISpellCastingItem;
@@ -718,6 +719,9 @@ public class EntityAnimatedItem extends EntitySummonedCreature implements ISpell
 		// Spectral Bows and bows with Infinity enchantment get free arrows
 		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, this.getHeldItemMainhand()) > 0 || this.getHeldItemMainhand().getItem() instanceof ItemSpectralBow) {
 			EntityArrow entityArrow = ((ItemArrow) Items.ARROW).createArrow(this.world, new ItemStack(Items.ARROW), this);
+			if (this.getHeldItemMainhand().getItem() instanceof ItemSpectralBow) {
+				entityArrow = new EntityConjuredArrow(world, this);
+			}
 			entityArrow.setEnchantmentEffectsFromEntity(this, distanceFactor);
 			return Optional.of(entityArrow);
 		}
