@@ -1,6 +1,8 @@
 package com.windanesz.ancientspellcraft.entity.construct;
 
+import com.google.common.base.Optional;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
 import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.entity.ICustomHitbox;
@@ -59,11 +61,12 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 
 	private static final float BOUNCINESS = 0.2f;
 	private static String RADIUS_TAG = "radius";
-	private float radius;
+	private float radius = 1f;
 
 	private static final DataParameter<Integer> COLOUR = EntityDataManager.<Integer>createKey(EntityArcaneBarrier.class, DataSerializers.VARINT);
 
 	private static final DataParameter<Float> RADIUS = EntityDataManager.<Float>createKey(EntityArcaneBarrier.class, DataSerializers.FLOAT);
+	protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityArcaneBarrier.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 
 	private Colour colour = Colour.MAGENTA;
 
@@ -71,7 +74,7 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 
 	public EntityArcaneBarrier(World world) {
 		super(world);
-		setRadius(1); // Shouldn't be needed but it's a good failsafe
+		//setRadius(1); // Shouldn't be needed but it's a good failsafe
 		this.ignoreFrustumCheck = true;
 		this.noClip = true;
 
@@ -81,6 +84,7 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 		super.entityInit();
 		this.dataManager.register(COLOUR, 13);
 		this.dataManager.register(RADIUS, 1f);
+		this.dataManager.register(OWNER_UNIQUE_ID, Optional.absent());
 	}
 
 	public void setColour(int newColour) {
@@ -136,9 +140,6 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 			AncientSpellcraft.proxy.handleAddBarrier(this);
 		}
 
-		if(this.ticksExisted > lifetime && lifetime != -1){
-			this.despawn();
-		}
 
 
 		// TODO: maybe add some kind of caching mechanism, to store the recently affected entities and only check for new ones less frequently
@@ -332,11 +333,6 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 		return closestPoint.subtract(line.normalize().scale(MathHelper.sqrt(rsquared - dsquared)));
 	}
 
-	@Override
-	public void writeSpawnData(ByteBuf data) {
-		super.writeSpawnData(data);
-		data.writeFloat(getRadius());
-	}
 
 	@Override
 	public boolean isRidingOrBeingRiddenBy(Entity entityIn) {
@@ -344,21 +340,33 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 	}
 
 	@Override
-	public void readSpawnData(ByteBuf data) {
-		super.readSpawnData(data);
-		setRadius(data.readFloat());
-	}
-
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound nbt) {
-		super.writeEntityToNBT(nbt);
+	protected void writeEntityToNBT(NBTTagCompound nbt){
+		nbt.setInteger("lifetime", lifetime);
 		nbt.setFloat(RADIUS_TAG, radius);
+		if (dataManager.get(OWNER_UNIQUE_ID).isPresent()) {
+			nbt.setUniqueId("owner", dataManager.get(OWNER_UNIQUE_ID).get());
+		}
 	}
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound nbt) {
-		super.readEntityFromNBT(nbt);
-		radius = nbt.getFloat(RADIUS_TAG);
+		setRadius(nbt.getFloat(RADIUS_TAG));
+		lifetime = nbt.getInteger("lifetime");
+		if (nbt.hasUniqueId("owner")) {
+			this.dataManager.set(OWNER_UNIQUE_ID, Optional.of(nbt.getUniqueId("owner")));
+		}
+	}
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		writeEntityToNBT(nbt);
+		return super.writeToNBT(nbt);
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		readEntityFromNBT(nbt);
 	}
 
 	@Override
@@ -455,15 +463,36 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 	}
 
 	@Nullable
-	@Override
-	public UUID getOwnerId() {
-		return null;
+	public EntityLivingBase getOwner() {
+		return 	getCaster();
 	}
 
 	@Nullable
 	@Override
-	public Entity getOwner() {
-		return null;
+	public UUID getOwnerId() {
+		return this.dataManager.get(OWNER_UNIQUE_ID).orNull();
+	}
+
+	@Override
+	public void setCaster(@Nullable EntityLivingBase caster) {
+		if (caster != null) {
+			this.dataManager.set(OWNER_UNIQUE_ID, Optional.of(caster.getUniqueID()));
+		}
+	}
+
+
+
+	@Override
+	public void readSpawnData(ByteBuf data){
+		lifetime = data.readInt();
+		setRadius(data.readFloat());
+
+	}
+
+	@Override
+	public void writeSpawnData(ByteBuf data) {
+		data.writeInt(lifetime);
+		data.writeFloat(getRadius());
 	}
 
 	public enum Colour {

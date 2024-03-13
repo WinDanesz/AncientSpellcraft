@@ -75,8 +75,53 @@ public class ArcaneBarrier extends Ritual implements IRitualIngredient, IRitualB
 	@Override
 	public void effect(World world, EntityPlayer caster, TileRune centerPiece) {
 		super.effect(world, caster, centerPiece);
+		// Find the barrier entity
 
-		// every 5 seconds
+		EntityArcaneBarrier barrier = findBarrier(world, centerPiece);
+		if (barrier == null) {
+			return;
+		}
+
+		handleContinuousRequirements(world, centerPiece);
+		handleColorSetting(world, barrier, centerPiece);
+		updateBarrierRadius(world, barrier, centerPiece);
+		renderEffects(world, barrier, centerPiece);
+
+	}
+
+	// Helper method to find the Arcane Barrier entity
+	private EntityArcaneBarrier findBarrier(World world, TileRune centerPiece) {
+		List<EntityArcaneBarrier> barriers = EntityUtils.getEntitiesWithinRadius(1, centerPiece.getX(), centerPiece.getY(), centerPiece.getZ(), world, EntityArcaneBarrier.class);
+		return barriers.isEmpty() ? null : barriers.get(0);
+	}
+
+	// Helper method to update barrier radius
+	private void updateBarrierRadius(World world, EntityArcaneBarrier barrier, TileRune centerPiece) {
+		float currentRadius = barrier.getRadius();
+		barrier.lifetime += 1;
+		if (currentRadius < getSizeLimit(centerPiece) && !world.isRemote) {
+			barrier.setRadius(currentRadius * 1.001f);
+		}
+	}
+
+	// Helper method to handle color setting with donor perk
+	private void handleColorSetting(World world, EntityArcaneBarrier barrier, TileRune centerPiece) {
+		if (world.getTotalWorldTime() % 100L == 0) {
+			List<EntityItem> entityItemList = EntityUtils.getEntitiesWithinRadius(1, centerPiece.getPos().getX(), centerPiece.getPos().getY(), centerPiece.getPos().getZ(), world, EntityItem.class);
+			if (!entityItemList.isEmpty()) {
+				EntityItem dye = entityItemList.get(0);
+				if (dye.getItem().getItem() == Items.DYE) {
+					int index = dye.getItem().getMetadata();
+					if (barrier.getOwnerId() != null && !DonorPerks.isDonor(barrier.getOwnerId())) {
+						barrier.setColour(index);
+						dye.getItem().shrink(1);
+					}
+				}
+			}
+		}
+	}
+
+	private void handleContinuousRequirements(World world, TileRune centerPiece) {
 		if (world.getTotalWorldTime() % 100L == 0) {
 
 			// check for the integrity of the supporting blocks
@@ -86,81 +131,41 @@ public class ArcaneBarrier extends Ritual implements IRitualIngredient, IRitualB
 					world.setBlockState(centerPiece.getPos(), ASBlocks.RUNE_USED.getDefaultState());
 				}
 			}
-
-			// donor perk to set the colour
-			List<EntityItem> entityItemList = EntityUtils.getEntitiesWithinRadius(1, centerPiece.getPos().getX(), centerPiece.getPos().getY(), centerPiece.getPos().getZ(), world, EntityItem.class);
-			if (!entityItemList.isEmpty()) {
-				EntityItem dye = entityItemList.get(0);
-
-				if (dye.getItem().getItem() == Items.DYE) {
-					int index = dye.getItem().getMetadata();
-					List<EntityArcaneBarrier> barriers = EntityUtils.getEntitiesWithinRadius(1, centerPiece.getX(), centerPiece.getY(), centerPiece.getZ(), world, EntityArcaneBarrier.class);
-
-					if (!barriers.isEmpty()) {
-						EntityArcaneBarrier barrier = barriers.get(0);
-						if (barrier.getOwnerId() != null && !DonorPerks.isDonor(barrier.getOwnerId())) {
-							barrier.setColour(index);
-							dye.getItem().shrink(1);
-						}
-					}
-				}
-			}
 		}
+	}
 
-		List<EntityArcaneBarrier> barriers = EntityUtils.getEntitiesWithinRadius(1, centerPiece.getX(), centerPiece.getY(), centerPiece.getZ(), world, EntityArcaneBarrier.class);
-		EntityArcaneBarrier barrier;
+	private void renderEffects(World world, EntityArcaneBarrier barrier, TileRune centerPiece) {
+		if (world.isRemote) {
+			float r = barrier.getColour().getR(), g = barrier.getColour().getG(), b = barrier.getColour().getB();
 
-		if (!barriers.isEmpty()) {
-			barrier = barriers.get(0);
-		} else {
-			return;
-		}
+			double posX = centerPiece.getXCenter();
+			double posY = centerPiece.getY();
+			double posZ = centerPiece.getZCenter();
+			Random rand = world.rand;
 
-		if (barrier != null) {
+			if (world.getBlockState(new BlockPos(posX, posY + 1, posZ)).isTranslucent()) {
+				float radius = barrier.getRadius();
 
-			float currentRadius = barrier.getRadius();
-			barriers.get(0).lifetime += 1;
+				if (world.getTotalWorldTime() % 3 == 0) {
+					ParticleBuilder.create(ParticleBuilder.Type.SPARKLE, rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
+									posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(r, g, b)
+							.time(20 + rand.nextInt((int) radius)).spawn(world);
 
-			if (currentRadius < getSizeLimit(centerPiece) && !world.isRemote) {
-				barriers.get(0).setRadius(currentRadius * 1.001f);
-			}
-
-			if (world.isRemote) {
-
-				float r = barrier.getColour().getR(), g = barrier.getColour().getG(), b = barrier.getColour().getB();
-				//				float r = 0.67f, g = 0.23f + 0.05f, b = 0.85f;
-
-				double posX = centerPiece.getXCenter();
-				double posY = centerPiece.getY();
-				double posZ = centerPiece.getZCenter();
-				Random rand = world.rand;
-
-				if (!barriers.isEmpty()) {
-
-					float radius = barriers.get(0).getRadius();
-
-					if (world.getTotalWorldTime() % 3 == 0) {
-						ParticleBuilder.create(ParticleBuilder.Type.SPARKLE, rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
-								posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(r, g, b)
-								.time(20 + rand.nextInt((int) radius)).spawn(world);
-
-						ParticleBuilder.create(ParticleBuilder.Type.SPARKLE, rand, posX + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), posY,
-								posZ + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), 0.03, true).spin(0.7, 0.05).vel(0, 0.3, 0).clr(r, g, b).fade(230, 230, 230)
-								.time(20 + rand.nextInt((int) radius)).spawn(world);
-					}
-
-					ParticleBuilder.create(ParticleBuilder.Type.FLASH).clr(r, g, b).face(EnumFacing.UP).pos(posX, posY + 0.01f, posZ).scale(2f).spawn(world);
-
-					ParticleBuilder.create(ParticleBuilder.Type.FLASH).clr(r, g, b).pos(posX, posY + 0.01f, posZ).scale(0.9f).spawn(world);
-
-					ParticleBuilder.create(ParticleBuilder.Type.FLASH).clr(r, g, b).face(EnumFacing.UP).pos(posX, centerPiece.getY() + radius - 0.4f, posZ).scale(Math.min(4, radius * 0.3f)).spawn(world);
-					Vec3d target = new Vec3d(posX, centerPiece.getY() + radius - 0.4f, posZ);
-					ParticleBuilder.create(ASParticles.CONSTANT_BEAM).clr(r, g, b).pos(posX, posY, posZ).target(target).scale(1.5f).shaded(true).time(2).spawn(world);
+					ParticleBuilder.create(ParticleBuilder.Type.SPARKLE, rand, posX + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), posY,
+									posZ + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), 0.03, true).spin(0.7, 0.05).vel(0, 0.3, 0).clr(r, g, b).fade(230, 230, 230)
+							.time(20 + rand.nextInt((int) radius)).spawn(world);
 				}
 
+				ParticleBuilder.create(ParticleBuilder.Type.FLASH).clr(r, g, b).face(EnumFacing.UP).pos(posX, posY + 0.01f, posZ).scale(2f).spawn(world);
+
+				ParticleBuilder.create(ParticleBuilder.Type.FLASH).clr(r, g, b).pos(posX, posY + 0.01f, posZ).scale(0.9f).spawn(world);
+
+				ParticleBuilder.create(ParticleBuilder.Type.FLASH).clr(r, g, b).face(EnumFacing.UP).pos(posX, centerPiece.getY() + radius - 0.4f, posZ).scale(Math.min(4, radius * 0.3f)).spawn(world);
+				Vec3d target = new Vec3d(posX, centerPiece.getY() + radius - 0.4f, posZ);
+
+				ParticleBuilder.create(ASParticles.CONSTANT_BEAM).clr(r, g, b).pos(posX, posY, posZ).target(target).scale(1.5f).shaded(true).time(2).spawn(world);
 			}
 		}
-
 	}
 
 	@Override
@@ -184,7 +189,7 @@ public class ArcaneBarrier extends Ritual implements IRitualIngredient, IRitualB
 				}
 			}
 
-			if (allMatches = true) {
+			if (allMatches) {
 				NBTTagCompound ritualData = centerPiece.getRitualData();
 				Block currBlock = world.getBlockState(centerPiece.getPos().down()).getBlock();
 				if (currBlock.getRegistryName() != null) {
@@ -247,4 +252,8 @@ public class ArcaneBarrier extends Ritual implements IRitualIngredient, IRitualB
 		}
 	}
 
+	@Override
+	public boolean shouldConsumeIngredients() {
+		return true;
+	}
 }
