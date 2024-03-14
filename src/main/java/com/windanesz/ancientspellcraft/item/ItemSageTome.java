@@ -648,7 +648,8 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 
 				Spell spell = Spell.byMetadata(spellBooks[i].getStack().getItemDamage());
 				// If the wand is powerful enough for the spell, it's not already bound to that slot and it's enabled for wands
-				if (!(spell.getTier().level > this.tier.level) && spells[i] != spell && spell.isEnabled(SpellProperties.Context.WANDS)) {
+				if (spell.getTier().level <= this.tier.level && (spell instanceof PerfectTheorySpell || spells[i] != spell)
+						&& spell.isEnabled(SpellProperties.Context.WANDS)) {
 					spells[i] = spell;
 					changed = true;
 
@@ -665,7 +666,7 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 			NBTTagCompound tomeTheoryData = new NBTTagCompound();
 
 			if (centre.getStack().hasTagCompound() && centre.getStack().getTagCompound().hasKey("perfectTheoryData")) {
-				NBTTagCompound theorySpells = centre.getStack().getTagCompound().getCompoundTag("perfectTheoryData");
+				NBTTagCompound theorySpells = centre.getStack().getTagCompound().getCompoundTag(PerfectTheorySpell.PERFECT_THEORY_DATA);
 				for (String key : theorySpells.getKeySet()) {
 					theorySpellData.put(Integer.parseInt(key), theorySpells.getCompoundTag(key));
 				}
@@ -674,7 +675,7 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 			for (Map.Entry<Integer, NBTTagCompound> entry : theorySpellData.entrySet()) {
 				if (entry.getValue() != null) { tomeTheoryData.setTag(entry.getKey().toString(), entry.getValue()); }
 			}
-			centre.getStack().getTagCompound().setTag("perfectTheoryData", tomeTheoryData);
+			centre.getStack().getTagCompound().setTag(PerfectTheorySpell.PERFECT_THEORY_DATA, tomeTheoryData);
 		}
 
 		// Charges wand by appropriate amount

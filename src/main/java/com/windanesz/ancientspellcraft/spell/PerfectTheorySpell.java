@@ -30,7 +30,8 @@ import static electroblob.wizardry.util.WandHelper.SELECTED_SPELL_KEY;
 
 public class PerfectTheorySpell extends Spell implements IClassSpell {
 
-	private static final IStoredVariable<NBTTagCompound> PERFECT_THEORY = IStoredVariable.StoredVariable.ofNBT("perfectTheoryData", Persistence.ALWAYS).setSynced();
+	public static final String PERFECT_THEORY_DATA = "perfectTheoryData";
+	private static final IStoredVariable<NBTTagCompound> PERFECT_THEORY = IStoredVariable.StoredVariable.ofNBT(PERFECT_THEORY_DATA, Persistence.ALWAYS).setSynced();
 
 	public PerfectTheorySpell() {
 		super(AncientSpellcraft.MODID, "perfect_theory_spell", SpellActions.SUMMON, false);
@@ -56,14 +57,13 @@ public class PerfectTheorySpell extends Spell implements IClassSpell {
 	public boolean castTheory(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		ItemStack tome = caster.getHeldItem(hand);
 
-		if (tome.getItem() instanceof ItemSageTome && tome.getTagCompound().hasKey("perfectTheoryData")) {
+		if (tome.getItem() instanceof ItemSageTome && tome.getTagCompound().hasKey(PERFECT_THEORY_DATA)) {
 			int selectedSpell = tome.getTagCompound().getInteger(SELECTED_SPELL_KEY);
-			NBTTagCompound theories = tome.getTagCompound().getCompoundTag("perfectTheoryData");
+			NBTTagCompound theories = tome.getTagCompound().getCompoundTag(PERFECT_THEORY_DATA);
 			if (theories.hasKey(String.valueOf(selectedSpell))) {
 
 				NBTTagCompound data = theories.getCompoundTag(String.valueOf(selectedSpell));
 
-				System.out.println("normal cast"); // TODO: REMOVE DEBUG
 				//NBTTagCompound data = Experiment.getLastExperiment(caster);
 				String effectType = data.getString("effectType");
 				String effect = data.getString("effect");
