@@ -164,6 +164,7 @@ dependencies {
     implementation fg.deobf("curse.maven:artemislib-${artemislib_projectid}:${artemislib_fileid}")
     implementation fg.deobf("curse.maven:antique-atlas-${antiqueatlas_projectid}:${antiqueatlas_fileid}")
     implementation fg.deobf("curse.maven:MixinBooter-${mixinbooter_projectid}:${mixinbooter_fileid}")
+    implementation fg.deobf("curse.maven:WizardryUtils-${wizardryutils_projectid}:${wizardryutils_fileid}")
 }
 
 mixin {

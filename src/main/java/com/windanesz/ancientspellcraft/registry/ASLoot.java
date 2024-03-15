@@ -30,9 +30,9 @@ import java.util.List;
 @Mod.EventBusSubscriber
 public class ASLoot {
 
-	private static LootTable UNCOMMON_ARTEFACTS;
-	private static LootTable RARE_ARTEFACTS;
-	private static LootTable EPIC_ARTEFACTS;
+	//private static LootTable UNCOMMON_ARTEFACTS;
+	//private static LootTable RARE_ARTEFACTS;
+	//private static LootTable EPIC_ARTEFACTS;
 	private static LootTable ANCIENTSPELLCRAFT_BOOKS_AND_SCROLLS;
 	private static LootTable LIBRARY_RUINS_BOOKSHELF;
 	private static LootTable OBELISK;
@@ -57,9 +57,9 @@ public class ASLoot {
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "chests/ancient_vault"));
 
 		// subsets
-		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/uncommon_artefacts"));
-		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/rare_artefacts"));
-		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/epic_artefacts"));
+		//LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/uncommon_artefacts"));
+		//LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/rare_artefacts"));
+		//LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/epic_artefacts"));
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/ritual_books"));
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/wand_upgrades"));
 		LootTableList.register(new ResourceLocation(AncientSpellcraft.MODID, "subsets/rare_scrolls"));
@@ -86,13 +86,14 @@ public class ASLoot {
 		}
 
 		// Fortunately the loot tables of Ancient Spellcraft load before wizardry so we can make a static reference to them and reuse it
-		if (event.getName().toString().equals(AncientSpellcraft.MODID + ":subsets/uncommon_artefacts")) {
-			UNCOMMON_ARTEFACTS = event.getTable();
-		} else if (event.getName().toString().equals(AncientSpellcraft.MODID + ":subsets/rare_artefacts")) {
-			RARE_ARTEFACTS = event.getTable();
-		} else if (event.getName().toString().equals(AncientSpellcraft.MODID + ":subsets/epic_artefacts")) {
-			EPIC_ARTEFACTS = event.getTable();
-		} else if (event.getName().toString().equals(AncientSpellcraft.MODID + ":inject/as_library_ruins_bookshelf")) {
+//		if (event.getName().toString().equals(AncientSpellcraft.MODID + ":subsets/uncommon_artefacts")) {
+//			UNCOMMON_ARTEFACTS = event.getTable();
+//		} else if (event.getName().toString().equals(AncientSpellcraft.MODID + ":subsets/rare_artefacts")) {
+//			RARE_ARTEFACTS = event.getTable();
+//		} else if (event.getName().toString().equals(AncientSpellcraft.MODID + ":subsets/epic_artefacts")) {
+//			EPIC_ARTEFACTS = event.getTable();
+//		} else
+			if (event.getName().toString().equals(AncientSpellcraft.MODID + ":inject/as_library_ruins_bookshelf")) {
 			LIBRARY_RUINS_BOOKSHELF = event.getTable();
 		} else if (event.getName().toString().equals(AncientSpellcraft.MODID + ":inject/as_obelisk")) {
 			OBELISK = event.getTable();
@@ -132,27 +133,27 @@ public class ASLoot {
 			injectEntries(sourcePool, targetPool);
 
 		}
+//
+//		// inject artefacts to ebwiz tables
+//		if (Arrays.asList(AncientSpellcraft.settings.artefactInjectionLocations).contains(event.getName())) {
+//			if (event.getName().toString().equals(Wizardry.MODID + ":subsets/uncommon_artefacts") && UNCOMMON_ARTEFACTS != null) {
+//				LootPool targetPool = event.getTable().getPool("uncommon_artefacts");
+//				LootPool sourcePool = UNCOMMON_ARTEFACTS.getPool("main");
+//				injectEntries(sourcePool, targetPool);
+//			}
+//			if (event.getName().toString().equals(Wizardry.MODID + ":subsets/rare_artefacts") && RARE_ARTEFACTS != null) {
+//				LootPool targetPool = event.getTable().getPool("rare_artefacts");
+//				LootPool sourcePool = RARE_ARTEFACTS.getPool("main");
+//
+//				injectEntries(sourcePool, targetPool);
+//			}
+//			if (event.getName().toString().equals(Wizardry.MODID + ":subsets/epic_artefacts") && EPIC_ARTEFACTS != null) {
+//				LootPool targetPool = event.getTable().getPool("epic_artefacts");
+//				LootPool sourcePool = EPIC_ARTEFACTS.getPool("main");
+//				injectEntries(sourcePool, targetPool);
+//			}
 
-		// inject artefacts to ebwiz tables
-		if (Arrays.asList(AncientSpellcraft.settings.artefactInjectionLocations).contains(event.getName())) {
-			if (event.getName().toString().equals(Wizardry.MODID + ":subsets/uncommon_artefacts") && UNCOMMON_ARTEFACTS != null) {
-				LootPool targetPool = event.getTable().getPool("uncommon_artefacts");
-				LootPool sourcePool = UNCOMMON_ARTEFACTS.getPool("main");
-				injectEntries(sourcePool, targetPool);
-			}
-			if (event.getName().toString().equals(Wizardry.MODID + ":subsets/rare_artefacts") && RARE_ARTEFACTS != null) {
-				LootPool targetPool = event.getTable().getPool("rare_artefacts");
-				LootPool sourcePool = RARE_ARTEFACTS.getPool("main");
-
-				injectEntries(sourcePool, targetPool);
-			}
-			if (event.getName().toString().equals(Wizardry.MODID + ":subsets/epic_artefacts") && EPIC_ARTEFACTS != null) {
-				LootPool targetPool = event.getTable().getPool("epic_artefacts");
-				LootPool sourcePool = EPIC_ARTEFACTS.getPool("main");
-				injectEntries(sourcePool, targetPool);
-			}
-
-		}
+//		}
 	}
 
 	/**
