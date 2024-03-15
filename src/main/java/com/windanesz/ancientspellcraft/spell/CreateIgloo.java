@@ -14,6 +14,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -143,6 +144,9 @@ public class CreateIgloo extends Spell {
 		blockPosList.sort(Comparator.comparingInt(Vec3i::getY));
 		builder.setBuildList(blockPosList);
 		builder.setBlockToBuild(ASBlocks.CONJURED_SNOW.getDefaultState());
+		if (world.getBiome(pos).getTempCategory() == Biome.TempCategory.COLD) {
+			builder.blockLifetime = 24000;
+		}
 		// check claims because we are using the non reverting blocks here...!
 		builder.setIgnoreClaims(false);
 		world.spawnEntity(builder);

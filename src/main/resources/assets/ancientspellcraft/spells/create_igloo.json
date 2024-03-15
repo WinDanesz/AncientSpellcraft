@@ -15,6 +15,6 @@
     "type": "utility",
     "cost": 40,
     "chargeup": 80,
-    "cooldown": 200,
+    "cooldown": 2000,
     "base_properties": {}
 }

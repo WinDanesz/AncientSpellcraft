@@ -88,7 +88,7 @@ public abstract class SpellLecternInteract extends SpellRay implements IClassSpe
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == ASItems.mystic_spell_book || item == WizardryItems.scroll;
+		return item == ASItems.mystic_spell_book;
 	}
 
 	public static boolean isLecternBlock(World world, BlockPos pos) {

@@ -107,6 +107,6 @@ public class PerfectTheory extends SpellLecternInteract implements IClassSpell {
 
 	@Override
 	public boolean applicableForItem(Item item) {
-		return item == ASItems.mystic_spell_book || item == WizardryItems.scroll;
+		return item == ASItems.mystic_spell_book;
 	}
 }

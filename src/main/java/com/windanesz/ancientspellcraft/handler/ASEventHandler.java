@@ -893,10 +893,10 @@ public class ASEventHandler {
 			ItemStack wand = event.getCaster().getHeldItemMainhand().getItem() instanceof ItemWand ? event.getCaster().getHeldItemMainhand() :
 					event.getCaster().getHeldItemOffhand();
 
-			if (wand.getItem() instanceof ItemWand) {
+			if (wand.getItem() instanceof IManaStoringItem) {
 
-				int wandMana = ((ItemWand) wand.getItem()).getMana(wand);
-				if (wandMana < cost) {
+				int wandMana = ((IManaStoringItem) wand.getItem()).getMana(wand);
+				if (wandMana <= cost) {
 
 					if (ASBaublesIntegration.enabled()) {
 						List<ItemStack> list = ASBaublesIntegration.getEquippedArtefactStacks(player, ItemArtefact.Type.RING);

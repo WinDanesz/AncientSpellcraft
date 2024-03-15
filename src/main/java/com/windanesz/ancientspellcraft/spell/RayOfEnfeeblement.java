@@ -90,5 +90,5 @@ public class RayOfEnfeeblement extends SpellRay implements IClassSpell {
 	public ItemWizardArmour.ArmourClass getArmourClass() { return ItemWizardArmour.ArmourClass.SAGE; }
 
 	@Override
-	public boolean applicableForItem(Item item) { return item == ASItems.mystic_spell_book || item == WizardryItems.scroll; }
+	public boolean applicableForItem(Item item) { return item == ASItems.mystic_spell_book; }
 }

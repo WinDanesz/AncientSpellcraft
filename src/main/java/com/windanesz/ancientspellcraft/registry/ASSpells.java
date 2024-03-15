@@ -589,11 +589,11 @@ public final class ASSpells {
 		registry.register(new ChaosBlast());
 		registry.register(new ChaosVortex());
 		registry.register(new AbsorbProjectile());
-		registry.register(new WarlockSpellPlaceholder("chaos_storm"));
-		registry.register(new WarlockSpellPlaceholder("confusion"));
+		//registry.register(new WarlockSpellPlaceholder("chaos_storm"));
+		//registry.register(new WarlockSpellPlaceholder("confusion"));
 		registry.register(new OrbSpace());
-		registry.register(new WarlockSpellPlaceholder("psychic_slash"));
-		registry.register(new WarlockSpellPlaceholder("scrying_orb"));
+		///registry.register(new WarlockSpellPlaceholder("psychic_slash"));
+		//registry.register(new WarlockSpellPlaceholder("scrying_orb"));
 		// registry.register(new HeatFurnace()); TODO
 		//registry.register(new WarpWeapon()); TODO
 

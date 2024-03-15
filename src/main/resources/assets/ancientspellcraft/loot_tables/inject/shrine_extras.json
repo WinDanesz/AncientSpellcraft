@@ -7,7 +7,7 @@
                 {
                     "type": "loot_table",
                     "name": "ebwizardry:subsets/uncommon_artefacts",
-                    "weight": 5,
+                    "weight": 1,
                     "conditions": [
                         {
                             "condition": "ancientspellcraft:artefact_condition",
@@ -15,11 +15,6 @@
                             "chance": 0.05
                         }
                     ]
-                },
-                {
-                    "type": "loot_table",
-                    "name": "ancientspellcraft:subsets/rare_scrolls",
-                    "weight": 2
                 }
             ]
         }
