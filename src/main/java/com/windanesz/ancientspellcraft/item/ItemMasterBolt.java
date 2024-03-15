@@ -60,11 +60,11 @@ public class ItemMasterBolt extends ItemBlock {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
 
+		if (player.isSneaking()) {return super.onItemRightClick(world, player, hand);}
+
 		ItemStack stack = player.getHeldItem(hand);
 
-		if(!player.isCreative()){
-			stack.shrink(1);
-		}
+		stack.shrink(1);
 
 		player.playSound(WizardrySounds.ENTITY_SPARK_BOMB_THROW, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 

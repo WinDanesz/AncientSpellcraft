@@ -17,6 +17,6 @@
     "chargeup": 0,
     "cooldown": 200,
     "base_properties": {
-        "tier_limit": 2
+        "tier_limit": 3
     }
 }

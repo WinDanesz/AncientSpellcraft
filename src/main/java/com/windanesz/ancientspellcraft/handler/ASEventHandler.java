@@ -20,12 +20,14 @@ import com.windanesz.ancientspellcraft.registry.ASEnchantments;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASPotions;
 import com.windanesz.ancientspellcraft.registry.ASSpells;
+import com.windanesz.ancientspellcraft.ritual.ElementalAttunement;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
 import com.windanesz.ancientspellcraft.spell.AbsorbArtefact;
 import com.windanesz.ancientspellcraft.spell.AbsorbCrystal;
 import com.windanesz.ancientspellcraft.spell.AbsorbPotion;
 import com.windanesz.ancientspellcraft.spell.Contingency;
 import com.windanesz.ancientspellcraft.spell.DimensionalAnchor;
+import com.windanesz.ancientspellcraft.spell.IClassSpell;
 import com.windanesz.ancientspellcraft.spell.Martyr;
 import com.windanesz.ancientspellcraft.spell.MetaSpellBuff;
 import com.windanesz.ancientspellcraft.spell.MetamagicProjectile;
@@ -54,9 +56,11 @@ import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemScroll;
 import electroblob.wizardry.item.ItemWand;
 import electroblob.wizardry.item.ItemWandUpgrade;
+import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.potion.Curse;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardryItems;
+import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.ImbueWeapon;
 import electroblob.wizardry.spell.Spell;
@@ -507,6 +511,14 @@ public class ASEventHandler {
 					}
 				} else if (artefact == ASItems.belt_soul_scorch && event.getSource().getImmediateSource() instanceof EntityLivingBase) {
 					((EntityLivingBase) event.getSource().getImmediateSource()).addPotionEffect(new PotionEffect(ASPotions.soul_scorch, 60));
+				} else if (artefact == ASItems.ring_undeath && !player.isPotionActive(WizardryPotions.curse_of_undeath)) {
+					if (player.getHealth() - event.getAmount() <= 0 && !player.getCooldownTracker().hasCooldown(ASItems.ring_undeath))  {
+						player.addPotionEffect(new PotionEffect(WizardryPotions.curse_of_undeath, Integer.MAX_VALUE, 0));
+						player.getCooldownTracker().setCooldown(ASItems.ring_undeath, 6000);
+						ASUtils.sendMessage(player, "item.ancientspellcraft:ring_undeath.resurrect", true);
+						event.setAmount(0);
+						player.heal(player.getMaxHealth() * Settings.generalSettings.ring_of_undeath_heal_amount);
+					}
 				}
 			}
 
@@ -1121,6 +1133,10 @@ public class ASEventHandler {
 					modifiers.set(SpellModifiers.COST, 1.25f * cost, false);
 					event.getModifiers().set(WizardryItems.range_upgrade, event.getModifiers().get(WizardryItems.range_upgrade) + 0.25F, true);
 
+				} else if (artefact == ASItems.ring_duration) {
+					modifiers.set(SpellModifiers.COST, 1.25f * cost, false);
+					event.getModifiers().set(WizardryItems.duration_upgrade, event.getModifiers().get(WizardryItems.duration_upgrade) + 0.25F, true);
+
 				} else if (artefact == ASItems.charm_elemental_grimoire) {
 					if (event.getSpell().getElement() == Element.FIRE || event.getSpell().getElement() == Element.ICE || event.getSpell().getElement() == Element.LIGHTNING) {
 						modifiers.set(SpellModifiers.POTENCY, 0.1f + potency, false);
@@ -1167,6 +1183,10 @@ public class ASEventHandler {
 					} else {
 						modifiers.set(SpellModifiers.POTENCY, -0.5f + potency, false);
 					}
+				} else if (artefact == ASItems.head_chaos_magic) {
+					if (event.getSpell() instanceof IClassSpell && (((IClassSpell) event.getSpell()).getArmourClass() == ItemWizardArmour.ArmourClass.WARLOCK)) {
+						modifiers.set(SpellModifiers.POTENCY, 1.25f * potency, false);
+					}
 				}
 
 				if (artefact == ASItems.ring_power) {
@@ -1202,10 +1222,17 @@ public class ASEventHandler {
 
 				Optional<Element> elementOptional = AbsorbCrystal.getElement(data);
 				if (elementOptional.isPresent() && event.getSpell().getElement() == elementOptional.get()) {
+					modifiers.set(SpellModifiers.POTENCY, modifiers.get(SpellModifiers.POTENCY) + (AbsorbCrystal.isBlock(data) ? 0.10f : 0.05f), false);
+				}
 
-					System.out.println("potency before: " + modifiers.get(SpellModifiers.POTENCY));
-					modifiers.set(SpellModifiers.POTENCY, AbsorbCrystal.isBlock(data) ? 1.10f : 1.05f, false);
-					System.out.println("potency after: " + modifiers.get(SpellModifiers.POTENCY));
+				elementOptional = ElementalAttunement.getElement(player);
+				if (elementOptional.isPresent()) {
+					int mod = event.getSpell().getElement() == elementOptional.get() ? 1 : -1;
+					// buffs modifiers for the matching element, weakens others
+						modifiers.set(WizardryItems.blast_upgrade, modifiers.get(WizardryItems.blast_upgrade) + (mod * 0.25f), false);
+						modifiers.set(WizardryItems.range_upgrade, modifiers.get(WizardryItems.range_upgrade) + (mod * 0.25f), false);
+						modifiers.set(WizardryItems.duration_upgrade, modifiers.get(WizardryItems.duration_upgrade) + (mod * 0.25f), false);
+						modifiers.set(WizardryItems.siphon_upgrade, modifiers.get(WizardryItems.siphon_upgrade) + (mod * 0.25f), false);
 				}
 
 				if (!(event.getSpell() instanceof Contingency)) {

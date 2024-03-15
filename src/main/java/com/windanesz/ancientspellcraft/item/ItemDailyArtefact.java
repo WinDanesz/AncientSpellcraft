@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.Wizardry;
+import electroblob.wizardry.item.ItemArtefact;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -22,12 +23,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class ItemDailyArtefact extends Item {
+public abstract class ItemDailyArtefact extends ItemArtefact {
 	private static final String LAST_OPEN_TIME_TAG = "last_open_time";
 
 	private final EnumRarity rarity;
 
 	public ItemDailyArtefact(EnumRarity rarity) {
+		super(rarity, Type.CHARM);
 		setMaxStackSize(1);
 		this.rarity = rarity;
 		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR);

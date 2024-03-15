@@ -37,6 +37,9 @@ public class TileMageLight extends TileEntity implements ITickable {
 	@Override
 	public void update() {
 
+		if (world.getBlockState(pos.down()).getBlock() == ASBlocks.PLACED_RUNE) {
+			return;
+		}
 		// check if player has moved away from the tile entity
 		EntityPlayer thePlayer = world.getClosestPlayer(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5, 4.0D, false);
 

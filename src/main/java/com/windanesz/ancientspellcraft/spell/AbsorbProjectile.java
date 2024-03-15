@@ -112,7 +112,6 @@ public class AbsorbProjectile extends Spell implements IClassSpell {
 								f = true;
 							}
 							if (f) {
-								System.out.println("size: " + tagList.tagCount());
 								tagList.removeTag(0);
 								projs.setTag("List", tagList);
 								data.setVariable(ABSORBED_PROJECTILES, projs);
@@ -138,9 +137,6 @@ public class AbsorbProjectile extends Spell implements IClassSpell {
 							} else {
 								absorbedProjectile = projectile.serializeNBT();
 							}
-							//	(absorbedProjectile); // Serialize the projectile entity into NBT
-							// absorbedProjectile.setTag("projectile_" + projectile.getEntityId(), projs);
-							//pr/ojs.setTag("projectile_" + projectile.getEntityId(), absorbedProjectile);
 
 							NBTTagList tagList = new NBTTagList();
 							if (projs.hasKey("List")) {
@@ -162,7 +158,6 @@ public class AbsorbProjectile extends Spell implements IClassSpell {
 							}
 
 							world.removeEntity(projectile);
-							System.out.println("test");
 						}
 					}
 				}
@@ -189,9 +184,9 @@ public class AbsorbProjectile extends Spell implements IClassSpell {
 			}
 		}
 
-		if (world.isRemote) {
+		if (world.isRemote && !caster.isSneaking()) {
 			Element element = getElementOrMagicElement(caster);
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < 5; i++) {
 				ParticleBuilder.create(ParticleBuilder.Type.FLASH).entity(caster).spin(1, 0.006f)
 						.scale(Math.max(0.5f, world.rand.nextFloat()))
 						.clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[world.rand.nextInt(2)])
@@ -234,7 +229,7 @@ public class AbsorbProjectile extends Spell implements IClassSpell {
 	}
 
 	private static int update(EntityPlayer player, Integer duration) {
-		return duration;
+		return duration != null ? duration : 0;
 	}
 
 	protected NBTTagList newDoubleNBTList(double... numbers) {

@@ -5,6 +5,7 @@ import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.entity.ICustomHitbox;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
@@ -35,6 +36,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -100,20 +102,25 @@ public class ChaosBlast extends SpellRay implements IClassSpell {
 
 		List<RayTraceResult> rayTraces = rayTraceMultiple(world, origin, endpoint, 1, this.hitLiquids, this.ignoreUncollidables,
 				false, false, Entity.class, this.ignoreLivingEntities ? EntityUtils::isLiving : RayTracer.ignoreEntityFilter(caster));
+		Collections.reverse(rayTraces);
 		boolean flag;
 		if (!rayTraces.isEmpty()) {
+			int i = 1;
 			for (RayTraceResult rayTrace : rayTraces) {
 				// Doesn't matter which way round these are, they're mutually exclusive
 				if (rayTrace.typeOfHit == RayTraceResult.Type.ENTITY) {
 
 					// Do whatever the spell does when it hits an entity
 					// FIXME: Some spells (e.g. lightning web) seem to not render when aimed at item frames
-					flag = onEntityHit(world, rayTrace.entityHit, rayTrace.hitVec, caster, origin, ticksInUse, modifiers, element);
 
-					//	raytraceChain(world, origin, caster, ticksInUse, modifiers, endpoint);
-
-					// If the spell succeeded, clip the particles to the correct distance so they don't go through the entity
-					if (flag) {range = origin.distanceTo(rayTrace.hitVec);}
+					if (i == 1 || caster instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.ring_chaos_blast_multitarget)) {
+						if (i == 2) {
+							modifiers.set(SpellModifiers.POTENCY, modifiers.get(SpellModifiers.POTENCY) * 0.6f, false);
+						}
+						flag = onEntityHit(world, rayTrace.entityHit, rayTrace.hitVec, caster, origin, ticksInUse, modifiers, element);
+						if (flag) {range = origin.distanceTo(rayTrace.hitVec);}
+						i++;
+					}
 
 				} else if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
 					// Do whatever the spell does when it hits an block
@@ -230,6 +237,7 @@ public class ChaosBlast extends SpellRay implements IClassSpell {
 
 		List<Entity> entities = world.getEntitiesWithinAABB(entityType, searchVolume);
 		entities.removeIf(filter);
+		entities.removeIf(e -> !(e instanceof EntityLivingBase));
 		List<RayTraceResult> result = new ArrayList<>();
 		RayTraceResult rayTraceResult = world.rayTraceBlocks(origin, endpoint, hitLiquids, ignoreUncollidables, returnLastUncollidable);
 		if (rayTraceResult != null && !penetratesBlocks) {

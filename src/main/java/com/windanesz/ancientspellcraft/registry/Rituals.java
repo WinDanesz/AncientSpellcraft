@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.ritual.ArcaneBarrier;
 import com.windanesz.ancientspellcraft.ritual.Bonfire;
 import com.windanesz.ancientspellcraft.ritual.Condensing;
+import com.windanesz.ancientspellcraft.ritual.ElementalAttunement;
 import com.windanesz.ancientspellcraft.ritual.Forest;
 import com.windanesz.ancientspellcraft.ritual.None;
 import com.windanesz.ancientspellcraft.ritual.Rejuvenation;
@@ -50,6 +51,7 @@ public final class Rituals {
 	public static final Ritual condensing = placeholder();
 	public static final Ritual arcane_barrier = placeholder();
 	public static final Ritual warlock_attunement = placeholder();
+	public static final Ritual elemental_attunement = placeholder();
 
 
 	@SubscribeEvent
@@ -66,6 +68,7 @@ public final class Rituals {
 		registry.register(new Condensing());
 		registry.register(new ArcaneBarrier());
 		registry.register(new WarlockAttunement());
+		registry.register(new ElementalAttunement());
 	}
 
 }

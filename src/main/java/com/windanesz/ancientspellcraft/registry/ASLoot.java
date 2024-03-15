@@ -115,7 +115,7 @@ public class ASLoot {
 			injectEntries(sourcePool, targetPool);
 		} else if (event.getName().toString().equals(Wizardry.MODID + ":chests/shrine") && SHRINE_EXTRAS != null) {
 			// add shrine extras
-			event.getTable().addPool(SHRINE_EXTRAS.getPool("shrine_extras"));
+		//	event.getTable().addPool(SHRINE_EXTRAS.getPool("shrine_extras"));
 		} else if (event.getName().toString().equals(Wizardry.MODID + ":chests/wizard_tower") && WIZARD_TOWER != null) {
 			LootPool targetPool = event.getTable().getPool("wizardry");
 			LootPool sourcePool = WIZARD_TOWER.getPool("ancientspellcraft");

@@ -1,5 +1,5 @@
 ﻿{
-    "parent": "item/handheld",
+    "parent": "ancientspellcraft:item/warlock_orb_generic",
     "textures": {
         "layer0": "ancientspellcraft:items/warlock_orb_novice_necromancy"
     }

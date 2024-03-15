@@ -161,6 +161,17 @@ public class Settings {
 		public String[] extension_spell_blacklist = {
 		};
 
+		@Config.Name("Absorb Artefact Blacklist")
+		@Config.Comment("Artefacts Which cannot be absorbed. The default list contains artefacts which won't work in an absorbed form. You can add entries for balancing.")
+		public String[] absorb_artefact_blacklist = {
+				"ancientspellcraft:charm_philosophers_stone",
+				"ancientspellcraft:cornucopia",
+				"ancientspellcraft:charm_bucket_coal",
+				"ancientspellcraft:charm_evergrowing_crystal",
+				"ancientspellcraft:charm_gold_bag",
+
+		};
+
 		@Config.Name("Scroll Items Bought By Wizards Using The Crown of The Merchant King Artefact")
 		@Config.Comment("Wizards will always offer 1 magic crystal for these items. Be sure to not remove all scrolls (that are instance of ItemScroll) or the item won't work, but otherwise,"
 				+ "you can add pretty much any items, not just scrolls")
@@ -480,6 +491,10 @@ public class Settings {
 		@Config.RangeDouble(min = 0, max = 10)
 		public double empowerment_upgrade_potency_gain = 0.05f;
 
+		@Config.Name("Master Bolt impact deals block damage")
+		@Config.Comment("")
+		public boolean master_bolt_impact_deals_block_damage = false;
+
 		@Config.Name("Wild Catalyst max distance ")
 		@Config.Comment("[Server-only] The max destination distance in blocks where the Wild Catalyst artefact can redirect Transportation Portals.")
 		@Config.RequiresMcRestart
@@ -500,6 +515,14 @@ public class Settings {
 		@Config.Name("Warlock Bonus Potency Amount")
 		@Config.RequiresMcRestart
 		public float warlock_bonus_potency_amount = 0.15f;
+
+		@Config.Name("Ring of Undeath max HP percent restore amount")
+		@Config.RequiresMcRestart
+		public float ring_of_undeath_heal_amount = 0.5f;
+
+		@Config.Name("Cursed Pendant summon chance (1 == 100%)")
+		@Config.RequiresMcRestart
+		public float cursed_pendant_summon_chance = 0.5f;
 	}
 
 	public static class ClientSettings {

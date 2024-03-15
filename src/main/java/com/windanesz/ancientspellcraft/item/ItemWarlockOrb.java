@@ -664,8 +664,8 @@ public class ItemWarlockOrb extends Item implements ISpellCastingItem, IWorkbenc
 		if (!theorySpellData.isEmpty()) {
 			NBTTagCompound tomeTheoryData = new NBTTagCompound();
 
-			if (centre.getStack().hasTagCompound() && centre.getStack().getTagCompound().hasKey("perfectTheoryData")) {
-				NBTTagCompound theorySpells = centre.getStack().getTagCompound().getCompoundTag("perfectTheoryData");
+			if (centre.getStack().hasTagCompound() && centre.getStack().getTagCompound().hasKey(PerfectTheorySpell.PERFECT_THEORY_DATA)) {
+				NBTTagCompound theorySpells = centre.getStack().getTagCompound().getCompoundTag(PerfectTheorySpell.PERFECT_THEORY_DATA);
 				for (String key : theorySpells.getKeySet()) {
 					theorySpellData.put(Integer.parseInt(key), theorySpells.getCompoundTag(key));
 				}
@@ -674,7 +674,7 @@ public class ItemWarlockOrb extends Item implements ISpellCastingItem, IWorkbenc
 			for (Map.Entry<Integer, NBTTagCompound> entry : theorySpellData.entrySet()) {
 				if (entry.getValue() != null) { tomeTheoryData.setTag(entry.getKey().toString(), entry.getValue()); }
 			}
-			centre.getStack().getTagCompound().setTag("perfectTheoryData", tomeTheoryData);
+			centre.getStack().getTagCompound().setTag(PerfectTheorySpell.PERFECT_THEORY_DATA, tomeTheoryData);
 		}
 
 		// Charges wand by appropriate amount

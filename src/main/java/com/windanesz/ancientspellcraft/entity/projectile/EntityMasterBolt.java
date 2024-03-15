@@ -26,13 +26,13 @@ public class EntityMasterBolt extends EntityMagicArrow {
 
 	@Override public double getDamage(){ return ASSpells.master_bolt.getProperty(Spell.DAMAGE).doubleValue(); }
 
-	@Override public int getLifetime(){ return 20; }
+	@Override public int getLifetime(){ return -1; }
 
 	@Override public DamageType getDamageType(){ return DamageType.SHOCK; }
 
-	@Override public boolean doGravity(){ return true; }
+	@Override public boolean doGravity(){ return false; }
 
-	@Override public boolean doDeceleration(){ return true; }
+	@Override public boolean doDeceleration(){ return false; }
 
 	@Override
 	public boolean doOverpenetration() {
@@ -75,6 +75,15 @@ public class EntityMasterBolt extends EntityMagicArrow {
 	public void tickInAir(){
 		if(world.isRemote){
 			ParticleBuilder.create(ParticleBuilder.Type.SPARK).pos(posX, posY, posZ).spawn(world);
+		} else {
+			if (getCaster() != null && getCaster().isAirBorne) {
+				this.motionX *= 1.1f;
+				this.motionY *= 1.1f;
+				this.motionZ *= 1.1f;
+			}
+			if (this.posY > 255) {
+				this.setDead();
+			}
 		}
 	}
 

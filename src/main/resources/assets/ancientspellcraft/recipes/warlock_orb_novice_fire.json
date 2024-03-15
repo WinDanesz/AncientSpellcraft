@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "CEC",
+        "EAE",
+        "CEC"
+    ],
+    "key": {
+        "A": {
+            "item": "ebwizardry:astral_diamond"
+        },
+        "C": {
+            "item": "ebwizardry:magic_crystal",
+            "data": 1
+        },
+        "E": {
+            "item": "ancientspellcraft:ethereal_essence"
+        }
+    },
+    "result": {
+        "item": "ancientspellcraft:warlock_orb_novice_fire"
+    }
+}

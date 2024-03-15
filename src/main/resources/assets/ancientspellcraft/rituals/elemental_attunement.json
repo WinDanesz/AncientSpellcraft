@@ -1,0 +1,32 @@
+{
+    "enabled": true,
+    "lifetime": 100,
+    "size": 5,
+    "pattern": [
+        "  E  ",
+        "L M E",
+        "  N  ",
+        "  T  ",
+        "     "
+    ],
+    "centerpiece": {
+        "item": "ancientspellcraft:rune_mannaz"
+    },
+    "key": {
+        "M": {
+            "item": "ancientspellcraft:rune_mannaz"
+        },
+        "L": {
+            "item": "ancientspellcraft:rune_laguz"
+        },
+        "E": {
+            "item": "ancientspellcraft:rune_ehwaz"
+        },
+        "N": {
+            "item": "ancientspellcraft:rune_naudiz"
+        },
+        "T": {
+            "item": "ancientspellcraft:rune_tiwaz"
+        }
+    }
+}

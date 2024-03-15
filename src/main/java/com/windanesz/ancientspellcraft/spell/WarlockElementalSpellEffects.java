@@ -44,7 +44,7 @@ public class WarlockElementalSpellEffects {
 			.build();
 
 	public static ImmutableMap<Element, ResourceLocation> ELEMENTAL_PARTICLES = ImmutableMap.<Element, ResourceLocation>builder()
-			.put(Element.MAGIC, ParticleBuilder.Type.SPARK)
+			.put(Element.MAGIC, ParticleBuilder.Type.FLASH)
 			.put(Element.FIRE, ParticleBuilder.Type.MAGIC_FIRE)
 			.put(Element.ICE, ParticleBuilder.Type.SNOW)
 			.put(Element.LIGHTNING, ParticleBuilder.Type.SPARK)

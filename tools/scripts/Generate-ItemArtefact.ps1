@@ -25,7 +25,7 @@ $script:itemName = $Item
 function New-SimpleModelFile {
     $json = @"
 {
-    "parent": "item/handheld",
+    "parent": "item/generated",
     "textures": {
         "layer0": "$script:modid`:items/$script:itemName"
     }
@@ -40,7 +40,7 @@ function New-SimpleModelFile {
 function Set-CRLF {
     [CmdletBinding()]
     Param([Parameter(ValueFromPipeline)]$string
-    )   
+    )
     return $string -Replace ("`n", "`r`n")
 }
 
@@ -67,5 +67,6 @@ function Create-Texture {
 
 New-SimpleModelFile
  Add-LangFileEntry -Entry "item.$($script:modid)\:$($script:itemName).name=TODO"
+ Add-LangFileEntry -Entry "item.$($script:modid)\:$($script:itemName).desc=TODO"
 #  Add-LangFileEntry -Entry "item.$($script:modid)\:$($script:itemName).desc=TODO"
  Create-Texture

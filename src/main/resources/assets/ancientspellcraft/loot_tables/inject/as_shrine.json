@@ -112,6 +112,21 @@
                     ]
                 },
                 {
+                    "type": "item",
+                    "name": "ancientspellcraft:ethereal_essence",
+                    "entryName": "ethereal_essence",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 4
+                            }
+                        }
+                    ]
+                },
+                {
                     "type": "loot_table",
                     "name": "ancientspellcraft:subsets/rare_scrolls",
                     "weight": 1

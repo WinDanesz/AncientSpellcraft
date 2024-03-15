@@ -3,5 +3,5 @@
 	"refmap": "ancientspellcraft.refmap.json",
 	"minVersion": "0.8",
 	"compatibilityLevel": "JAVA_8",
-	"mixins": ["GuiSpellInfoMixin", "IsEntityUndeadMixin", "ItemArtefactMixins", "ItemWizardArmourMixin"]
+	"mixins": ["GuiSpellInfoMixin", "IsEntityUndeadMixin", "ItemArtefactMixins", "ItemWandMixin", "ItemWizardArmourMixin"]
 }

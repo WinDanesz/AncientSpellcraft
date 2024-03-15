@@ -10,9 +10,11 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -23,16 +25,18 @@ import java.util.Random;
 
 public class BlockMasterBolt extends Block {
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
+	protected static final AxisAlignedBB AXIS_ALIGNED_BB = new AxisAlignedBB(0.3125D, 0.0D, 0.3125D, 0.6875D, 0.375D, 0.6875D);
 
 	public BlockMasterBolt() {
 		super(Material.GROUND);
-		setHardness(0.5f);
+		setHardness(0.1f);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		this.setSoundType(SoundType.ANVIL);
 
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState stateIn, World world, BlockPos pos, Random rand) {
 		//if(world.isRemote && this.ticksExisted % 3 == 0){
 			ParticleBuilder.create(ParticleBuilder.Type.SPARK)
@@ -90,6 +94,12 @@ public class BlockMasterBolt extends Block {
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, new IProperty[] {FACING});
+	}
+
+
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+	{
+		return AXIS_ALIGNED_BB;
 	}
 
 }

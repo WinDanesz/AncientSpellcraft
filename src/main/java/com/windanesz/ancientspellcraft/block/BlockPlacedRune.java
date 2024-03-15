@@ -104,11 +104,15 @@ public class BlockPlacedRune extends Block implements ITileEntityProvider {
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		super.onBlockPlacedBy(world, pos, state, placer, stack);
+		EnumFacing enumfacing = placer.getHorizontalFacing().getOpposite();
+		if (placer.isSneaking()) {
+			enumfacing = enumfacing.rotateY();
+		}
 		TileEntity tile = world.getTileEntity(pos);
 		if (tile instanceof TileRune && stack.getItem() instanceof ItemRune) {
 			((TileRune) tile).setRune(stack.getItem());
 			if (placer instanceof EntityPlayer) {
-				EnumFacing enumfacing = placer.getHorizontalFacing().getOpposite();
+
 				((TileRune) tile).setPlacer((EntityPlayer) placer);
 				((TileRune) tile).setDirection(enumfacing);
 			}

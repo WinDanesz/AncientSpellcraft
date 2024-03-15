@@ -1,9 +1,11 @@
 package com.windanesz.ancientspellcraft.packet;
 
 import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.spell.AbsorbSpell;
 import com.windanesz.ancientspellcraft.util.SpellcastUtils;
 import electroblob.wizardry.event.SpellCastEvent;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemSpellBook;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
@@ -57,6 +59,9 @@ public class PacketCastWarlockSpell implements IMessageHandler<PacketCastWarlock
 					player.getCooldownTracker().setCooldown(ItemSpellBook.getItemFromBlock(ASBlocks.DIMENSION_FOCUS), spellOptional.get().getCooldown());
 					if (!player.isCreative()) {
 						int hunger = Math.max(1, (int) ((spellOptional.get().getCost() * spellModifier.get(SpellModifiers.COST) + 0.1f) / 5)); // Weird floaty rounding
+						if (ItemArtefact.isArtefactActive(player, ASItems.amulet_spellbinding)) {
+							hunger = (Math.max(1, hunger / 2));
+						}
 						if (player.getFoodStats().getFoodLevel() == 0) {
 							player.attackEntityFrom(DamageSource.STARVE, (float) spellOptional.get().getCost() / 5);
 						} else if (player.getFoodStats().getFoodLevel() >= hunger) {

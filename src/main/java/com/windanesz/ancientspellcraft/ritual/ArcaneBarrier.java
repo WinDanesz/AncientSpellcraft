@@ -100,7 +100,7 @@ public class ArcaneBarrier extends Ritual implements IRitualIngredient, IRitualB
 		float currentRadius = barrier.getRadius();
 		barrier.lifetime += 1;
 		if (currentRadius < getSizeLimit(centerPiece) && !world.isRemote) {
-			barrier.setRadius(currentRadius * 1.001f);
+			barrier.setRadius(currentRadius * 1.006f);
 		}
 	}
 

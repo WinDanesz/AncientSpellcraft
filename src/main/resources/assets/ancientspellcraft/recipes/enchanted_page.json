@@ -1,15 +1,23 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "#"
+    " C ",
+    "FPC",
+    " C "
   ],
   "key": {
-    "#": {
-      "item": "ebwizardry:resplendent_thread"
+    "F": {
+      "item": "ancientspellcraft:enchanted_filament"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "C": {
+      "item": "ebwizardry:magic_crystal",
+      "data": 32767
     }
   },
   "result": {
-    "item": "ancientspellcraft:enchanted_filament",
-    "count": 9
+    "item": "ancientspellcraft:enchanted_page"
   }
 }

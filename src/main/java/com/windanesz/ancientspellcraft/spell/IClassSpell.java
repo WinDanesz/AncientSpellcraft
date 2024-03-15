@@ -6,11 +6,13 @@ import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
 import com.windanesz.ancientspellcraft.item.ItemBattlemageSword;
 import com.windanesz.ancientspellcraft.item.ItemSageTome;
 import com.windanesz.ancientspellcraft.item.ItemWarlockOrb;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.ritual.WarlockAttunement;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import com.windanesz.ancientspellcraft.util.WizardArmourUtils;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.event.SpellCastEvent;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemWizardArmour;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -85,6 +87,9 @@ public interface IClassSpell {
 	ItemWizardArmour.ArmourClass getArmourClass();
 
 	default Element getElementOrMagicElement(EntityLivingBase caster) {
+		if (caster instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.head_chaos_magic)) {
+			return Element.MAGIC;
+		}
 		Optional<Element> e = WizardArmourUtils.getFullSetElementForClassOptional(caster, getArmourClass());
 		return e.orElse(Element.MAGIC);
 	}

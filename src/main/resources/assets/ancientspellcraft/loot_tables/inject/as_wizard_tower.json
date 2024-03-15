@@ -82,6 +82,18 @@
                     "weight": 1
                 },
                 {
+                    "type": "item",
+                    "name": "ancientspellcraft:enchanted_filament",
+                    "entryName": "enchanted_filament",
+                    "weight": 1
+                },
+                {
+                    "type": "item",
+                    "name": "ancientspellcraft:ethereal_essence",
+                    "entryName": "ethereal_essence",
+                    "weight": 1
+                },
+                {
                     "type": "loot_table",
                     "name": "ancientspellcraft:subsets/ritual_books",
                     "weight": 1

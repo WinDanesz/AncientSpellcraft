@@ -1,69 +1,73 @@
 {
-    "pools": [
-        {
-            "name": "common",
-            "rolls": 1,
-            "entries": [
-                {
-                    "type": "item",
-                    "name": "ebwizardry:magic_crystal",
-                    "weight": 5,
-                    "functions": [
-                        {
-                            "function": "set_count",
-                            "count": {
-                                "min": 0,
-                                "max": 3
-                            },
-                            "function": "looting_enchant",
-                            "count": {
-                                "min": 0,
-                                "max": 1
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:astral_diamond_shard",
-                    "weight": 2,
-                    "functions": [
-                        {
-                            "function": "set_count",
-                            "count": {
-                                "min": 0,
-                                "max": 1
-                            },
-                            "function": "looting_enchant",
-                            "count": {
-                                "min": 0,
-                                "max": 1
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "rare",
-            "conditions": [
-                {
-                    "condition": "killed_by_player"
-                },
-                {
-                    "condition": "random_chance_with_looting",
-                    "chance": 0.03,
-                    "looting_multiplier": 0.01
-                }
-            ],
-            "rolls": 1,
-            "entries": [
-                {
-                    "type": "item",
-                    "name": "ebwizardry:grand_crystal",
-                    "weight": 1
-                }
-            ]
-        }
-    ]
+	"pools": [
+		{
+			"name": "common",
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "item",
+					"name": "ebwizardry:magic_crystal",
+					"weight": 5,
+					"functions": [
+						{
+							"function": "set_count",
+							"count": {
+								"min": 0,
+								"max": 3
+							}
+						},
+						{
+							"function": "looting_enchant",
+							"count": {
+								"min": 0,
+								"max": 1
+							}
+						}
+					]
+				},
+				{
+					"type": "item",
+					"name": "ancientspellcraft:astral_diamond_shard",
+					"weight": 2,
+					"functions": [
+						{
+							"function": "set_count",
+							"count": {
+								"min": 0,
+								"max": 1
+							}
+						},
+						{
+							"function": "looting_enchant",
+							"count": {
+								"min": 0,
+								"max": 1
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "rare",
+			"conditions": [
+				{
+					"condition": "killed_by_player"
+				},
+				{
+					"condition": "random_chance_with_looting",
+					"chance": 0.03,
+					"looting_multiplier": 0.01
+				}
+			],
+			"rolls": 1,
+			"entries": [
+				{
+					"type": "item",
+					"name": "ebwizardry:grand_crystal",
+					"weight": 1
+				}
+			]
+		}
+	]
 }

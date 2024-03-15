@@ -142,8 +142,8 @@ public abstract class Ritual extends IForgeRegistryEntry.Impl<Ritual> {
 				IMessage msg = new PacketContinuousRitual.Message(caster.getEntityId(), this, centerPiece.getX(), centerPiece.getY(), centerPiece.getZ());
 				ASPacketHandler.net.sendToDimension(msg, caster.world.provider.getDimension());
 			}
-			if (BlockUtils.canBlockBeReplaced(world, centerPiece.getPos().up())) {
-				world.setBlockState(centerPiece.getPos().up(), ASBlocks.MAGELIGHT.getDefaultState());
+			if (BlockUtils.canBlockBeReplaced(world, centerPiece.getPos().up()) && world.getBlockState(centerPiece.getPos().up()) != ASBlocks.MAGELIGHT.getDefaultState()) {
+			world.setBlockState(centerPiece.getPos().up(), ASBlocks.MAGELIGHT.getDefaultState());
 			}
 		}
 	}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "resplendent_thread",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "ancientspellcraft:ethereal_essence"
+    }
+  },
+  "result": {
+    "item": "ebwizardry:ethereal_crystalweave"
+  }
+}

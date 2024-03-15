@@ -19,6 +19,6 @@
     "base_properties": {
         "range": 12,
         "damage": 13,
-        "charging_time": 50
+        "charging_time": 35
     }
 }

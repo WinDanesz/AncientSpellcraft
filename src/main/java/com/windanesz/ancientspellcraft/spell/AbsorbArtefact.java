@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import com.windanesz.ancientspellcraft.util.WizardArmourUtils;
@@ -35,6 +36,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -72,7 +76,7 @@ public class AbsorbArtefact extends Spell implements IClassSpell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		Optional<Element> elementOptional = WizardArmourUtils.getFullSetElementForClassOptional(caster, ItemWizardArmour.ArmourClass.WARLOCK);
+		Element element = getElementOrMagicElement(caster);
 		ItemStack artefact = caster.getHeldItemOffhand();
 		if (!(artefact.getItem() instanceof ItemArtefact)) {
 			ASUtils.sendMessage(caster, "You must hold an artefact in your offhand", true);
@@ -83,55 +87,56 @@ public class AbsorbArtefact extends Spell implements IClassSpell {
 			ASUtils.sendMessage(caster, "This artefact is too powerful to be absorbed", true);
 			return false;
 		}
-		if (elementOptional.isPresent()) {
-			Element element = elementOptional.get();
+		List<String> blacklist = new ArrayList<>(Arrays.asList(Settings.generalSettings.absorb_artefact_blacklist));
 
-			Random rand = caster.world.rand;
-			double posX = caster.posX;
-			double posY = caster.posY;
-			double posZ = caster.posZ;
+		if (blacklist.contains(artefact.getItem().getRegistryName().toString())) {
+			ASUtils.sendMessage(caster, "This artefact cannot be absorbed", true);
+			return false;
+		}
 
-			if (world.isRemote) {
+		Random rand = caster.world.rand;
+		double posX = caster.posX;
+		double posY = caster.posY;
+		double posZ = caster.posZ;
 
-				if (world.getTotalWorldTime() % 3 == 0) {
-					ParticleBuilder.create(WarlockElementalSpellEffects.getElementalParticle(element), rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
-									posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[0])
-							.time(20 + rand.nextInt(50)).spawn(world);
-					ParticleBuilder.create(WarlockElementalSpellEffects.getElementalParticle(element), rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
-									posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[1])
-							.time(20 + rand.nextInt(50)).spawn(world);
+		if (world.isRemote) {
+			if (world.getTotalWorldTime() % 3 == 0) {
+				ParticleBuilder.create(WarlockElementalSpellEffects.getElementalParticle(element), rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
+								posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[0])
+						.time(20 + rand.nextInt(50)).spawn(world);
+				ParticleBuilder.create(WarlockElementalSpellEffects.getElementalParticle(element), rand, posX + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), posY,
+								posZ + rand.nextDouble() * 0.5d * (rand.nextBoolean() ? 1 : -1), 0.03, true).vel(0, 0.3, 0).clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[0])
+						.time(20 + rand.nextInt(50)).spawn(world);
 
-					ParticleBuilder.create(WarlockElementalSpellEffects.getElementalParticle(element), rand, posX + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), posY,
-									posZ + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), 0.03, true).spin(0.7, 0.05).vel(0, 0.3, 0).clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[2])
-							.time(20 + rand.nextInt(50)).spawn(world);
-				}
-
-				// horizontal particle on the floor, always visible
-				ParticleBuilder.create(ParticleBuilder.Type.FLASH)
-						.pos(caster.posX, caster.posY + 0.101, caster.posZ)
-						.face(EnumFacing.UP)
-						.clr(DrawingUtils.mix(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[1], WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[2], 0.5f))
-						.collide(false)
-						.scale(2.3F)
-						.time(10)
-						.spawn(world);
+				ParticleBuilder.create(WarlockElementalSpellEffects.getElementalParticle(element), rand, posX + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), posY,
+								posZ + rand.nextDouble() * 0.2d * (rand.nextBoolean() ? 1 : -1), 0.03, true).spin(0.7, 0.05).vel(0, 0.3, 0).clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[0])
+						.time(20 + rand.nextInt(50)).spawn(world);
 			}
-			if (ticksInUse == 60) {
+
+			// horizontal particle on the floor, always visible
+			ParticleBuilder.create(ParticleBuilder.Type.FLASH)
+					.pos(caster.posX, caster.posY + 0.101, caster.posZ)
+					.face(EnumFacing.UP)
+					.clr(WarlockElementalSpellEffects.PARTICLE_COLOURS.get(element)[1])
+					.collide(false)
+					.scale(2.3F)
+					.time(10)
+					.spawn(world);
+		}
+		if (ticksInUse == 60) {
 			WizardData data = WizardData.get(caster);
-				if (caster.getHeldItemOffhand().getItem() == ASItems.body_power_gem) {
-					addToPowerGemCount(caster);
-				} else {
-					data.setVariable(ARTEFACT, caster.getHeldItemOffhand().getItem().getRegistryName().toString());
-				}
+			if (caster.getHeldItemOffhand().getItem() == ASItems.body_power_gem) {
+				addToPowerGemCount(caster);
+			} else {
+				data.setVariable(ARTEFACT, caster.getHeldItemOffhand().getItem().getRegistryName().toString());
+			}
 			Wizardry.proxy.shakeScreen(caster, 10);
 			caster.stopActiveHand();
 			ASUtils.sendMessage(caster, "Absorbed " + caster.getHeldItemOffhand().getDisplayName(), true);
 			spawnParticleEffect(world, 5, caster, modifiers);
 			caster.getHeldItemOffhand().shrink(1);
-			}
-			return true;
 		}
-		return false;
+		return true;
 	}
 
 	@Override
@@ -177,23 +182,23 @@ public class AbsorbArtefact extends Spell implements IClassSpell {
 	}
 
 	public static Optional<Item> getArtefact(WizardData data) {
-		return data.getVariable(ARTEFACT) == null ? Optional.empty() :  Optional.of(ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getVariable(ARTEFACT).toString())));
+		return data.getVariable(ARTEFACT) == null ? Optional.empty() : Optional.of(ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getVariable(ARTEFACT).toString())));
 	}
 
 	public static boolean isArtefactActive(EntityPlayer player, Item artefact) {
 		WizardData data = WizardData.get(player);
 		if (data != null && data.getVariable(ARTEFACT) != null) {
-			return  (ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getVariable(ARTEFACT))) != null && ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getVariable(ARTEFACT)))  == artefact);
+			return (ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getVariable(ARTEFACT))) != null && ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getVariable(ARTEFACT))) == artefact);
 		}
 		return false;
 	}
 
-	protected void spawnParticleEffect(World world, double radius, EntityLivingBase caster, SpellModifiers modifiers){
-		if (!world.isRemote) return;
+	protected void spawnParticleEffect(World world, double radius, EntityLivingBase caster, SpellModifiers modifiers) {
+		if (!world.isRemote) {return;}
 
 		double particleX, particleZ;
 		Vec3d origin = caster.getPositionVector();
-		for(int i = 0; i < 40 * modifiers.get(WizardryItems.blast_upgrade); i++){
+		for (int i = 0; i < 40 * modifiers.get(WizardryItems.blast_upgrade); i++) {
 
 			particleX = origin.x - 1.0d + 2 * world.rand.nextDouble();
 			particleZ = origin.z - 1.0d + 2 * world.rand.nextDouble();
@@ -208,15 +213,24 @@ public class AbsorbArtefact extends Spell implements IClassSpell {
 			particleX = origin.x - 1.0d + 2 * world.rand.nextDouble();
 			particleZ = origin.z - 1.0d + 2 * world.rand.nextDouble();
 
+			ParticleBuilder.create(ParticleBuilder.Type.SCORCH)
+					.pos(caster.posX, caster.posY + 0.101, caster.posZ)
+					.face(EnumFacing.UP)
+					.clr(0.1f, 0, 0.05f)
+					.collide(false)
+					.scale(4.3F)
+					.time(100)
+					.spawn(world);
+
 			IBlockState block = world.getBlockState(new BlockPos(origin.x, origin.y - 0.5, origin.z));
 
-			if(block != null){
+			if (block != null) {
 				world.spawnParticle(EnumParticleTypes.BLOCK_DUST, particleX, origin.y,
 						particleZ, particleX - origin.x, 0, particleZ - origin.z, Block.getStateId(block));
 			}
 		}
 
-		ParticleBuilder.create(ParticleBuilder.Type.SPHERE).pos(origin.add(0, 0.1, 0)).scale((float)radius * 0.8f).clr(0.8f, 0, 0.05f).spawn(world);
+		ParticleBuilder.create(ParticleBuilder.Type.SPHERE).pos(origin.add(0, 0.1, 0)).scale((float) radius * 0.8f).clr(0.8f, 0, 0.05f).spawn(world);
 	}
 
 	@Override

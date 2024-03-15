@@ -10,6 +10,7 @@ import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.SpellRay;
 import electroblob.wizardry.util.AllyDesignationSystem;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -25,6 +26,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class ForceShove extends SpellRay {
 
 	public static final String REPULSION_VELOCITY = "repulsion_velocity";
@@ -36,68 +39,77 @@ public class ForceShove extends SpellRay {
 	}
 
 	@Override
-	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers){
+	protected boolean onEntityHit(World world, Entity originalTarget, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers){
 
-		if(target instanceof EntityPlayer && ((caster instanceof EntityPlayer && !Wizardry.settings.playersMoveEachOther)
-				|| ItemArtefact.isArtefactActive((EntityPlayer)target, WizardryItems.amulet_anchoring))){
+		if(originalTarget instanceof EntityPlayer && ((caster instanceof EntityPlayer && !Wizardry.settings.playersMoveEachOther)
+				|| ItemArtefact.isArtefactActive((EntityPlayer)originalTarget, WizardryItems.amulet_anchoring))){
 
 			if(!world.isRemote && caster instanceof EntityPlayer) ((EntityPlayer)caster).sendStatusMessage(
-					new TextComponentTranslation("spell.resist", target.getName(), this.getNameForTranslationFormatted()), true);
+					new TextComponentTranslation("spell.resist", originalTarget.getName(), this.getNameForTranslationFormatted()), true);
 			return false;
 		}
 
-		// Left as EntityLivingBase because why not be able to move armour stands around?
-		if(target instanceof EntityLivingBase && !AllyDesignationSystem.isAllied(caster, (EntityLivingBase) target)){
-			
-			Vec3d vec = target.getPositionEyes(1).subtract(origin).normalize();
 
-			if(!world.isRemote){
+		if (caster instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.ring_of_force)) {
+			List<EntityLivingBase> targets = EntityUtils.getEntitiesWithinRadius(4, caster.posX, caster.posY, caster.posZ, world, EntityLivingBase.class);
 
-				float velocity = getProperty(REPULSION_VELOCITY).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-
-				target.motionX = vec.x * velocity;
-				target.motionY = vec.y * velocity + 0.4;
-				target.motionZ = vec.z * velocity;
-
-				// Player motion is handled on that player's client so needs packets
-				if(target instanceof EntityPlayerMP){
-					((EntityPlayerMP)target).connection.sendPacket(new SPacketEntityVelocity(target));
-				}
-
-				double motionX = target.motionX;
-				double motionY = target.motionY;
-				double motionZ = target.motionZ;
-				target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FORCE),
-						getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY));
-				target.motionX = motionX;
-				target.motionY = motionY;
-				target.motionZ = motionZ;
+			for (EntityLivingBase target : targets) {
+				affectEntity(world, target, origin, caster, ticksInUse, modifiers);
 			}
-
-			if(world.isRemote){
-				
-				double distance = target.getDistance(origin.x, origin.y, origin.z);
-				
-				int[] colours = BlockReceptacle.PARTICLE_COLOURS.get(Element.SORCERY);
-				for(int i = 0; i < 25; i++){
-					double x = origin.x + world.rand.nextDouble() - 0.3 + vec.x * distance * 0.3;
-					double y = origin.y + world.rand.nextDouble() - 0.3 + vec.y * distance * 0.3;
-					double z = origin.z + world.rand.nextDouble() - 0.3 + vec.z * distance * 0.3;
-
-					ParticleBuilder.create(ParticleBuilder.Type.DUST, world.rand,x, y, z, 1, false).scale(world.rand.nextFloat() * 4)
-							.clr(colours[1]).fade(colours[2]).time(10).vel(vec.x * 0.8, vec.y * 0.8,vec.z * 0.8).spawn(world);
-
-					//world.spawnParticle(EnumParticleTypes.CLOUD, x, y, z, vec.x, vec.y, vec.z);
-
-				}
-			}
-
-			this.playSound(world, (EntityLivingBase) target, ticksInUse, -1, modifiers);
-
 			return true;
+		} else {
+			return affectEntity(world, originalTarget, origin, caster, ticksInUse, modifiers);
 		}
-		
-		return false;
+	}
+
+	private boolean affectEntity(World world, Entity target, Vec3d origin, EntityLivingBase caster, int ticksInUse, SpellModifiers modifiers) {
+		if (target == caster || !(target instanceof EntityLivingBase)) return false;
+
+		Vec3d vec = target.getPositionEyes(1).subtract(origin).normalize();
+
+		if(!world.isRemote){
+
+			float velocity = getProperty(REPULSION_VELOCITY).floatValue() * (1.2f *  modifiers.get(SpellModifiers.POTENCY));
+
+			target.motionX = vec.x * velocity;
+			target.motionY = vec.y * velocity + 0.4;
+			target.motionZ = vec.z * velocity;
+
+			// Player motion is handled on that player's client so needs packets
+			if(target instanceof EntityPlayerMP){
+				((EntityPlayerMP)target).connection.sendPacket(new SPacketEntityVelocity(target));
+			}
+
+			double motionX = target.motionX;
+			double motionY = target.motionY;
+			double motionZ = target.motionZ;
+			target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FORCE),
+					getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY));
+			target.motionX = motionX;
+			target.motionY = motionY;
+			target.motionZ = motionZ;
+		}
+
+		if(world.isRemote){
+
+			double distance = target.getDistance(origin.x, origin.y, origin.z);
+
+			int[] colours = BlockReceptacle.PARTICLE_COLOURS.get(Element.SORCERY);
+			for(int i = 0; i < 25; i++){
+				double x = origin.x + world.rand.nextDouble() - 0.3 + vec.x * distance * 0.3;
+				double y = origin.y + world.rand.nextDouble() - 0.3 + vec.y * distance * 0.3;
+				double z = origin.z + world.rand.nextDouble() - 0.3 + vec.z * distance * 0.3;
+
+				ParticleBuilder.create(ParticleBuilder.Type.DUST, world.rand,x, y, z, 1, false).scale(world.rand.nextFloat() * 4)
+						.clr(colours[1]).fade(colours[2]).time(10).vel(vec.x * 0.8, vec.y * 0.8,vec.z * 0.8).spawn(world);
+
+				//world.spawnParticle(EnumParticleTypes.CLOUD, x, y, z, vec.x, vec.y, vec.z);
+
+			}
+		}
+
+		this.playSound(world, (EntityLivingBase) target, ticksInUse, -1, modifiers);
+		return true;
 	}
 
 	@Override

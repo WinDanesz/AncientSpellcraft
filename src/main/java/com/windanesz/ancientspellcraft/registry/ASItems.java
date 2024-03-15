@@ -9,6 +9,7 @@ import com.windanesz.ancientspellcraft.item.ItemAdvancedStoneFist;
 import com.windanesz.ancientspellcraft.item.ItemAlchemicalEssence;
 import com.windanesz.ancientspellcraft.item.ItemAmberMushroomAmulet;
 import com.windanesz.ancientspellcraft.item.ItemAmnesiaScroll;
+import com.windanesz.ancientspellcraft.item.ItemAmuletCursedPendant;
 import com.windanesz.ancientspellcraft.item.ItemAmuletOaken;
 import com.windanesz.ancientspellcraft.item.ItemAncientHat;
 import com.windanesz.ancientspellcraft.item.ItemArmourUpgradeMaterial;
@@ -149,6 +150,7 @@ public final class ASItems {
 	public static final Item ring_mana_transfer = placeholder();
 	public static final Item ring_blast = placeholder();
 	public static final Item ring_range = placeholder();
+	public static final Item ring_duration = placeholder();
 	public static final Item ring_focus_crystal = placeholder();
 	public static final Item ring_permanent_shrinkage = placeholder();
 	public static final Item ring_permanent_growth = placeholder();
@@ -170,6 +172,9 @@ public final class ASItems {
 	public static final Item ring_rare_scroll = placeholder();
 	public static final Item ring_absorb_crystal = placeholder();
 	public static final Item ring_mana_cost = placeholder();
+	public static final Item ring_chaos_blast_multitarget = placeholder();
+	public static final Item ring_undeath = placeholder();
+	public static final Item ring_of_force = placeholder();
 
 	/// amulet
 	public static final Item charm_cryostasis = placeholder();
@@ -191,6 +196,8 @@ public final class ASItems {
 	public static final Item amulet_searing_skin = placeholder();
 	public static final Item amulet_cursed_mirror = placeholder();
 	public static final Item amulet_absorb_potion = placeholder();
+	public static final Item amulet_spellbinding = placeholder();
+	public static final Item amulet_cursed_pendant = placeholder();
 
 	/// charm
 	public static final Item charm_rift_bottle = placeholder();
@@ -277,6 +284,7 @@ public final class ASItems {
 	public static final Item head_shield = placeholder();
 	public static final Item head_magelight = placeholder();
 	public static final Item head_lightning = placeholder();
+	public static final Item head_chaos_magic = placeholder();
 
 	/// misc
 	public static final Item magic_shield = placeholder();
@@ -373,6 +381,7 @@ public final class ASItems {
 
 	public static final Item enchanted_filament = placeholder();
 	public static final Item enchanted_page = placeholder();
+	public static final Item ethereal_essence = placeholder();
 
 	public static final Item sage_tome_novice_fire = placeholder();
 	public static final Item sage_tome_apprentice_fire = placeholder();
@@ -711,6 +720,14 @@ public final class ASItems {
 				tooltip.add("\u00A7c" + net.minecraft.client.resources.I18n.format("item." + this.getRegistryName() + ".desc2"));
 			}
 		});
+		registerItem(registry, "ring_duration", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING) {
+			@Override
+			@SideOnly(Side.CLIENT)
+			public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+				tooltip.add(net.minecraft.client.resources.I18n.format("item." + this.getRegistryName() + ".desc"));
+				tooltip.add("\u00A7c" + net.minecraft.client.resources.I18n.format("item." + this.getRegistryName() + ".desc2"));
+			}
+		});
 		registerItem(registry, "ring_focus_crystal", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_unbinding", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_disenchanter", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
@@ -733,6 +750,9 @@ public final class ASItems {
 		registerItem(registry, "ring_metamagic_preserve", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_rare_scroll", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_absorb_crystal", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_chaos_blast_multitarget", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_undeath", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_of_force", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 
 		/// amulet
 		registerItem(registry, "amulet_mana", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
@@ -754,6 +774,8 @@ public final class ASItems {
 		registerItem(registry, "amulet_elemental_aura", new ItemElementalAuraAmulet(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_cursed_mirror", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_absorb_potion", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_spellbinding", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_cursed_pendant", new ItemAmuletCursedPendant(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 
 		/// charm
 		registerItem(registry, "charm_seed_bag", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
@@ -859,6 +881,7 @@ public final class ASItems {
 		registerItem(registry, "head_shield", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
 		registerItem(registry, "head_magelight", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.HEAD));
 		registerItem(registry, "head_lightning", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_chaos_magic", new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
 
 		/// misc
 
@@ -892,6 +915,7 @@ public final class ASItems {
 		registerItem(registry, "crystal_silver_ingot", new ItemArmourUpgradeMaterial());
 		registerItem(registry, "enchanted_filament", new ItemArmourUpgradeMaterial());
 		registerItem(registry, "enchanted_page", new ItemArmourUpgradeMaterial());
+		registerItem(registry, "ethereal_essence", new ItemArmourUpgradeMaterial());
 
 		registerItem(registry, "wand_channeling", new Item().setMaxDamage(0).setCreativeTab(null));
 
