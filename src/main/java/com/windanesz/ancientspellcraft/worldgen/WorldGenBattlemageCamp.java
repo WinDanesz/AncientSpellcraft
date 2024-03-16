@@ -85,7 +85,7 @@ public class WorldGenBattlemageCamp extends WorldGenSurfaceStructureAS {
 
 		final EnumDyeColor colour = EnumDyeColor.values()[random.nextInt(EnumDyeColor.values().length)];
 		final Biome biome = world.getBiome(origin);
-
+		origin = origin.up();
 		final IBlockState wallMaterial = specialWallBlocks.keySet().stream().filter(t -> BiomeDictionary.hasType(biome, t))
 				.findFirst().map(specialWallBlocks::get).orElse(Blocks.COBBLESTONE.getDefaultState());
 
