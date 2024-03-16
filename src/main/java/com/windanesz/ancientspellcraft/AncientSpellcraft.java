@@ -27,6 +27,7 @@ import com.windanesz.ancientspellcraft.worldgen.WorldGenBattlemageKeep;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenCrystalShardOre;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenCrystalSilverOre;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenDevoritiumOre;
+import com.windanesz.ancientspellcraft.worldgen.WorldGenSageFlax;
 import com.windanesz.ancientspellcraft.worldgen.WorldGenSageHill;
 import com.windanesz.ancientspellcraft.worldgen.WorldgenAncientVault;
 import electroblob.wizardry.event.SpellCastEvent;
@@ -125,6 +126,7 @@ public class AncientSpellcraft {
 		GameRegistry.registerWorldGenerator(new WorldGenSageHill(), 20);
 		GameRegistry.registerWorldGenerator(new WorldgenAncientVault(), 20);
 		GameRegistry.registerWorldGenerator(new WorldGenAncientTemple(), 20);
+		GameRegistry.registerWorldGenerator(new WorldGenSageFlax(), 0);
 
 		ASItems.registerDispenseBehaviours();
 		MinecraftForge.EVENT_BUS.register(instance); // Since there's already an instance we might as well use it
