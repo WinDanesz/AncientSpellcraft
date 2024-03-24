@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
+import com.windanesz.ancientspellcraft.client.ISpecialHandRenderItem;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASSpells;
 import com.windanesz.ancientspellcraft.registry.ASTabs;
@@ -33,6 +34,7 @@ import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.SpellProperties;
 import electroblob.wizardry.util.WandHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
@@ -65,8 +67,13 @@ import java.util.Map;
 import static com.windanesz.ancientspellcraft.item.WizardClassWeaponHelper.getDistributedCost;
 
 @Mod.EventBusSubscriber
-public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchItem, IWizardClassWeapon, IManaStoringItem {
+public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchItem, IWizardClassWeapon, IManaStoringItem, ISpecialHandRenderItem {
 
+	public ModelResourceLocation getSpecialModel() {
+		return MODEL_3D;
+	}
+
+	public final ModelResourceLocation MODEL_3D;
 	/**
 	 * The number of spell slots a tome has with no attunement upgrades applied.
 	 */
@@ -110,6 +117,8 @@ public class ItemSageTome extends Item implements ISpellCastingItem, IWorkbenchI
 		// TODO: expose to settings
 		this.upgradeLimit = this.tier.upgradeLimit;
 		WizardryRecipes.addToManaFlaskCharging(this);
+		MODEL_3D = new ModelResourceLocation(String.format("ancientspellcraft:sage_tome_%s_%s_3d_model", tier.name().toLowerCase(), element.name().toLowerCase()), "3d_model");
+
 	}
 
 	private static EnumHand getOtherHandForSword(ItemStack stack, EntityLivingBase entity) {

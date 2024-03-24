@@ -49,6 +49,9 @@ public final class ASModels {
 	private static void registerItemModel(Item item) {
 		// Changing the last parameter from null to "inventory" fixed the item/block model weirdness. No idea why!
 		ModelBakery.registerItemVariants(item, new ModelResourceLocation(item.getRegistryName(), "inventory"));
+		if (item instanceof ISpecialHandRenderItem) {
+			ModelBakery.registerItemVariants(item, ((ISpecialHandRenderItem) item).getSpecialModel());
+		}
 		// Assigns the model for all metadata values
 		ModelLoader.setCustomMeshDefinition(item, s -> new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		registeredItems.add(item);
