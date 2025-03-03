@@ -6,7 +6,7 @@ buildscript {
         gradlePluginPortal()
         maven {
             name 'MinecraftForge'
-            url 'https://maven.minecraftforge.net/'
+            url 'https://maven.neoforged.net/'
         }
         maven {
             name 'Garden of Fancy'
@@ -161,20 +161,27 @@ dependencies {
     //// Dependencies ////
     // For local development
     // implementation fg.deobf("random_placeholder:ElectroblobsWizardry:4.3.12")
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     implementation fg.deobf("curse.maven:ElectroblobsWizardry-${wizardry_projectid}:${wizardry_fileid}")
     implementation fg.deobf("curse.maven:baubles-${baubles_projectid}:${baubles_fileid}")
     implementation fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}")
     implementation fg.deobf("curse.maven:artemislib-${artemislib_projectid}:${artemislib_fileid}")
     implementation fg.deobf("curse.maven:antique-atlas-${antiqueatlas_projectid}:${antiqueatlas_fileid}")
-    implementation fg.deobf("curse.maven:MixinBooter-${mixinbooter_projectid}:${mixinbooter_fileid}")
+
+    implementation ('zone.rong:mixinbooter:10.0') {
+        transitive = false
+    }
+    annotationProcessor ('zone.rong:mixinbooter:10.0') {
+        transitive = false
+    }
+
+
     implementation fg.deobf("curse.maven:WizardryUtils-${wizardryutils_projectid}:${wizardryutils_fileid}")
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     annotationProcessor 'org.ow2.asm:asm-debug-all:5.2'
-    annotationProcessor 'com.google.guava:guava:24.1.1-jre'
-    annotationProcessor 'com.google.code.gson:gson:2.8.6'
+    annotationProcessor 'com.google.guava:guava:32.1.2-jre'
+    annotationProcessor 'com.google.code.gson:gson:2.8.9'
 }
 
 tasks.named('test', Test) {
