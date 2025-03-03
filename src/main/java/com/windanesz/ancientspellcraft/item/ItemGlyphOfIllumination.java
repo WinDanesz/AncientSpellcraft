@@ -11,11 +11,27 @@ public class ItemGlyphOfIllumination extends ItemGlyphArtefact implements ITicka
 		super(rarity, type);
 	}
 
+	@Override
 	public void onWornTick(ItemStack itemstack, EntityLivingBase player) {
- 		if (!player.world.isRemote && (player.getHeldItemOffhand().getItem() instanceof ItemBattlemageShield || player.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword && player.world.isAirBlock(player.getPosition().up()))) {
-			if (!player.world.getBlockState(player.getPosition().up()).equals(ASBlocks.MAGELIGHT.getDefaultState())) {
-				player.world.setBlockState(player.getPosition().up(), ASBlocks.MAGELIGHT.getDefaultState());
-			}
+		if (!player.world.isRemote && shouldPlaceMagelight(player)) {
+			placeMagelightIfNeeded(player);
+		}
+	}
+
+	private boolean shouldPlaceMagelight(EntityLivingBase player) {
+		boolean isHoldingRequiredItem = isHoldingBattlemageWeapon(player);
+		boolean isAboveAir = player.world.isAirBlock(player.getPosition().up());
+		return isHoldingRequiredItem && isAboveAir;
+	}
+
+	private boolean isHoldingBattlemageWeapon(EntityLivingBase player) {
+		return player.getHeldItemOffhand().getItem() instanceof ItemBattlemageShield
+				|| player.getHeldItemMainhand().getItem() instanceof ItemBattlemageSword;
+	}
+
+	private void placeMagelightIfNeeded(EntityLivingBase player) {
+		if (!player.world.getBlockState(player.getPosition().up()).equals(ASBlocks.MAGELIGHT.getDefaultState())) {
+			player.world.setBlockState(player.getPosition().up(), ASBlocks.MAGELIGHT.getDefaultState());
 		}
 	}
 }
