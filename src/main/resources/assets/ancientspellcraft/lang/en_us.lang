@@ -1602,7 +1602,7 @@ spell.ancientspellcraft\:absorb_spell=Absorb Spell
 spell.ancientspellcraft\:absorb_projectile.desc=Continuously absorbs approaching projectiles, allowing the warlock to release them with a second cast using the sneak button.
 spell.ancientspellcraft\:absorb_projectile=Absorb Projectile
 
-spell.ancientspellcraft\:absorb_crystal.desc=TODO
+spell.ancientspellcraft\:absorb_crystal.desc=Absorbs an elemental crystal or crystal block to permanently gain 5% or 10% potency, respectively. Limited to one crystal at a time.
 spell.ancientspellcraft\:absorb_crystal=Absorb Crystal
 spell.ancientspellcraft\:absorb_object.desc=Sneak-cast absorbs the object the warlock is pointing at into their orb. Regular cast conjures the absorbed object.
 spell.ancientspellcraft\:absorb_object=Absorb Object
