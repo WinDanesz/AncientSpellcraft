@@ -29,6 +29,8 @@ import java.util.Map;
 
 public class Harvest extends Spell {
 
+	private static final float DEFAULT_RADIUS = 5.0f;
+
 	public Harvest() {
 		super(AncientSpellcraft.MODID, "harvest", EnumAction.NONE, false);
 		addProperties(EFFECT_RADIUS);
@@ -47,89 +49,81 @@ public class Harvest extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		boolean hasActionOccurred = false;
 
-		boolean flag = false;
+		float radius = getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
+		List<BlockPos> sphere = BlockUtils.getBlockSphere(caster.getPosition(), radius);
+		Map<BlockPos, Block> replantList = new HashMap<>();
 
-		List<BlockPos> sphere = BlockUtils.getBlockSphere(caster.getPosition(),
-				getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade));
-
-		HashMap<BlockPos, Block> replantList = new HashMap<>();
-
+		// Process the blocks in the spell's radius
 		for (BlockPos pos : sphere) {
-
 			IBlockState state = world.getBlockState(pos);
+			Block block = state.getBlock();
 
-			if (state.getBlock() instanceof IGrowable) {
-
-				IGrowable plant = (IGrowable) state.getBlock();
-
-				if (!plant.canGrow(world, pos, state, world.isRemote)) {
-					if (!world.isRemote) {
-						replantList.put(new BlockPos(pos.getX(), pos.getY(), pos.getZ()), world.getBlockState(pos).getBlock());
-
-						world.destroyBlock(pos, true);
-						flag = true;
-
-					}
-				}
-
-			} else if (state.getBlock() instanceof IPlantable) {
-				if (world.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() == state.getBlock()) {
-					if (!world.isRemote) {
-
-						world.destroyBlock(pos, true);
-						flag = true;
-
-					}
-				}
+			if (block instanceof IGrowable && !((IGrowable) block).canGrow(world, pos, state, world.isRemote)) {
+				handleHarvest(world, pos, replantList);
+				hasActionOccurred = true;
+			} else if (block instanceof IPlantable && isPlantableBlock(state, world, pos)) {
+				handleHarvest(world, pos, replantList);
+				hasActionOccurred = true;
 			}
 		}
-		if (flag & !replantList.isEmpty() && ItemArtefact.isArtefactActive(caster, ASItems.charm_seed_bag)) {
 
-			for (Map.Entry<BlockPos, Block> currentEntry : replantList.entrySet()) {
-				Item seedItem = null;
-
-				Block currCrop = currentEntry.getValue();
-				if (currCrop == Blocks.WHEAT) {
-					seedItem = Items.WHEAT_SEEDS;
-				} else if (currCrop == Blocks.CARROTS) {
-					seedItem = Items.CARROT;
-				} else if (currCrop == Blocks.BEETROOTS) {
-					seedItem = Items.BEETROOT_SEEDS;
-				} else if (currCrop == Blocks.MELON_BLOCK) {
-					seedItem = Items.MELON_SEEDS;
-				} else if (currCrop == Blocks.POTATOES) {
-					seedItem = Items.POTATO;
-				} else if (currCrop == Blocks.PUMPKIN) {
-					seedItem = Items.PUMPKIN_SEEDS;
-				} else if (currCrop == Blocks.REEDS) {
-					seedItem = Items.REEDS;
-				} else if (currCrop == Blocks.NETHER_WART) {
-					seedItem = Items.NETHER_WART;
-				}
-
-				for (int i = 0; i < caster.inventory.getSizeInventory(); ++i) {
-					ItemStack itemstack = caster.inventory.getStackInSlot(i);
-
-					if (seedItem != null && itemstack.getItem() == seedItem) {
-						world.setBlockState(currentEntry.getKey(), currentEntry.getValue().getDefaultState());
-						caster.inventory.decrStackSize(i, 1);
-					}
-				}
-				flag = true;
-			}
-
+		// Replant harvested crops if necessary
+		if (hasActionOccurred && !replantList.isEmpty() && ItemArtefact.isArtefactActive(caster, ASItems.charm_seed_bag)) {
+			replantCrops(world, caster, replantList);
 		}
-		if (flag) {
+
+		// Play the sound effect if any action occurred
+		if (hasActionOccurred) {
 			this.playSound(world, caster, ticksInUse, -1, modifiers);
 		}
 
-		return flag;
+		return hasActionOccurred;
+	}
+
+	private void handleHarvest(World world, BlockPos pos, Map<BlockPos, Block> replantList) {
+		if (!world.isRemote) {
+			replantList.put(pos, world.getBlockState(pos).getBlock());
+			world.destroyBlock(pos, true);
+		}
+	}
+
+	private boolean isPlantableBlock(IBlockState state, World world, BlockPos pos) {
+		return world.getBlockState(pos.offset(EnumFacing.DOWN)).getBlock() == state.getBlock();
+	}
+
+	private void replantCrops(World world, EntityPlayer caster, Map<BlockPos, Block> replantList) {
+		for (Map.Entry<BlockPos, Block> entry : replantList.entrySet()) {
+			Item seedItem = getSeedItem(entry.getValue());
+
+			if (seedItem != null) {
+				for (int i = 0; i < caster.inventory.getSizeInventory(); ++i) {
+					ItemStack itemStack = caster.inventory.getStackInSlot(i);
+					if (itemStack.getItem() == seedItem) {
+						world.setBlockState(entry.getKey(), entry.getValue().getDefaultState());
+						caster.inventory.decrStackSize(i, 1);
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	private Item getSeedItem(Block crop) {
+		if (crop == Blocks.WHEAT) return Items.WHEAT_SEEDS;
+		if (crop == Blocks.CARROTS) return Items.CARROT;
+		if (crop == Blocks.BEETROOTS) return Items.BEETROOT_SEEDS;
+		if (crop == Blocks.MELON_BLOCK) return Items.MELON_SEEDS;
+		if (crop == Blocks.POTATOES) return Items.POTATO;
+		if (crop == Blocks.PUMPKIN) return Items.PUMPKIN_SEEDS;
+		if (crop == Blocks.REEDS) return Items.REEDS;
+		if (crop == Blocks.NETHER_WART) return Items.NETHER_WART;
+		return null;
 	}
 
 	@Override
 	public boolean applicableForItem(Item item) {
 		return item == ASItems.ancient_spellcraft_spell_book || item == ASItems.ancient_spellcraft_scroll;
 	}
-
 }
