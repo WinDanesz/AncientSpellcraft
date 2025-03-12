@@ -102,7 +102,6 @@ public class AncientSpellcraft {
 
 		proxy.registerRenderers();
 		proxy.registerExtraHandbookContent();
-		FMLInterModComms.sendMessage("ebwizardry", "addon_content", "I have stuff");
 		ASLoot.preInit();
 		ASBlocks.registerTileEntities();
 		ASBiomes.preInit();

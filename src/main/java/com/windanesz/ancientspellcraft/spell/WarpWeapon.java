@@ -75,7 +75,6 @@ public class WarpWeapon extends SpellRay {
 					// weird float processing doesn't incorrectly round it down.
 					if (livingTarget instanceof EntityPlayer) {
 						int duration = (int)(600 * modifiers.get(WizardryItems.duration_upgrade));
-						System.out.println(duration);
 						WizardData.get((EntityPlayer) livingTarget).setImbuementDuration(ASEnchantments.degrade_sword, duration);
 //						WizardData.get((EntityPlayer) livingTarget).setImbuementDuration(WizardryEnchantments.magic_sword,
 //								(int) (600 * modifiers.get(WizardryItems.duration_upgrade)));
