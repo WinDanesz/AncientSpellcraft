@@ -24,8 +24,12 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SkullSentinel extends SpellRay {
+	private final Map<String, Long> lastNotificationTime = new HashMap<>();
+	private static final long NOTIFICATION_COOLDOWN = 10000L; // 10 seconds cooldown
 
 	public SkullSentinel() {
 		super(AncientSpellcraft.MODID, "skull_sentinel", SpellActions.POINT, false);
@@ -33,65 +37,63 @@ public class SkullSentinel extends SpellRay {
 	}
 
 	@Override
-	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit,
-			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-		if (world.getBlockState(pos).getBlock() == Blocks.SKULL && world.getTileEntity(pos) != null &&
-				world.getTileEntity(pos) instanceof TileEntitySkull) {
+	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, @Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
+		if (isSkullBlock(world, pos)) {
 			TileEntitySkull skullTe = (TileEntitySkull) world.getTileEntity(pos);
-
-			// regular skeleton 0, wither = 1 (net.minecraft.block.BlockSkull.checkWitherSpawn)
-			if (skullTe.getSkullType() == 0) {
-				world.setBlockToAir(pos);
-
-				if (world.isRemote) {
-					int radius = 15;
-					int particleCount = (int)Math.round(Math.PI * radius * radius);
-
-					for(int i=0; i<particleCount; i++){
-
-						double r = (1 + world.rand.nextDouble() * (radius - 1));
-						float angle = world.rand.nextFloat() * (float)Math.PI * 2f;
-
-						spawnParticle(world, pos.getX() + r * MathHelper.cos(angle), pos.getY(), pos.getZ() + r * MathHelper.sin(angle));
-					}
-				}
-				if (world.isAirBlock(pos.offset(EnumFacing.UP))) {
-					if (caster instanceof EntityPlayer) {
-						world.setBlockState(pos.offset(EnumFacing.UP), ASBlocks.SKULL_WATCH.getDefaultState());
-						if (!world.isRemote) {
-							((TileSkullWatch) world.getTileEntity(pos.up())).setCaster(caster);
-							if (ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.charm_sentinel_eye)) {
-								((TileSkullWatch) world.getTileEntity(pos.up())).setMarkEntities(true);
-							}
-							if (ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.amulet_domus)) {
-								((TileSkullWatch) world.getTileEntity(pos.up())).setSummonSkeleton(true);
-							}
-						}
-						return true;
-					}
-				} else {
-					if (caster instanceof EntityPlayer) {
-						world.setBlockState(pos, ASBlocks.SKULL_WATCH.getDefaultState());
-						if (!world.isRemote) {
-							((TileSkullWatch) world.getTileEntity(pos)).setCaster(caster);
-							if (ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.charm_sentinel_eye)) {
-								((TileSkullWatch) world.getTileEntity(pos.up())).setMarkEntities(true);
-							}
-							if (ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.amulet_domus)) {
-								((TileSkullWatch) world.getTileEntity(pos.up())).setSummonSkeleton(true);
-							}
-						}
-						return true;
-					}
-				}
+			if (skullTe != null && skullTe.getSkullType() == 0) {
+				handleSkullHit(world, pos, caster);
+				return true;
 			}
 		}
 		return false;
 	}
 
+	private boolean isSkullBlock(World world, BlockPos pos) {
+		return world.getBlockState(pos).getBlock() == Blocks.SKULL && world.getTileEntity(pos) instanceof TileEntitySkull;
+	}
+
+	private void handleSkullHit(World world, BlockPos pos, @Nullable EntityLivingBase caster) {
+		world.setBlockToAir(pos);
+		if (world.isRemote) {
+			spawnParticles(world, pos);
+		}
+		if (world.isAirBlock(pos.offset(EnumFacing.UP))) {
+			placeSkullWatch(world, pos.offset(EnumFacing.UP), caster);
+		} else {
+			placeSkullWatch(world, pos, caster);
+		}
+	}
+
+	private void spawnParticles(World world, BlockPos pos) {
+		int radius = 15;
+		int particleCount = (int) Math.round(Math.PI * radius * radius);
+		for (int i = 0; i < particleCount; i++) {
+			double r = (1 + world.rand.nextDouble() * (radius - 1));
+			float angle = world.rand.nextFloat() * (float) Math.PI * 2f;
+			spawnParticle(world, pos.getX() + r * MathHelper.cos(angle), pos.getY(), pos.getZ() + r * MathHelper.sin(angle));
+		}
+	}
+
+	private void placeSkullWatch(World world, BlockPos pos, @Nullable EntityLivingBase caster) {
+		if (caster instanceof EntityPlayer) {
+			world.setBlockState(pos, ASBlocks.SKULL_WATCH.getDefaultState());
+			if (!world.isRemote) {
+				TileSkullWatch skullWatch = (TileSkullWatch) world.getTileEntity(pos);
+				if (skullWatch != null) {
+					skullWatch.setCaster(caster);
+					if (ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.charm_sentinel_eye)) {
+						skullWatch.setMarkEntities(true);
+					}
+					if (ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.amulet_domus)) {
+						skullWatch.setSummonSkeleton(true);
+					}
+				}
+			}
+		}
+	}
+
 	@Override
-	protected boolean onEntityHit(World world, Entity entity, Vec3d vec3d,
-			@Nullable EntityLivingBase entityLivingBase, Vec3d vec3d1, int i, SpellModifiers spellModifiers) {
+	protected boolean onEntityHit(World world, Entity entity, Vec3d vec3d, @Nullable EntityLivingBase entityLivingBase, Vec3d vec3d1, int i, SpellModifiers spellModifiers) {
 		return false;
 	}
 
@@ -100,7 +102,7 @@ public class SkullSentinel extends SpellRay {
 		return false;
 	}
 
-	protected void spawnParticle(World world, double x, double y, double z){
+	protected void spawnParticle(World world, double x, double y, double z) {
 		ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x, y, z).vel(0, 0.03, 0).time(100).clr(0.5f, 0.4f, 0.75f).spawn(world);
 	}
 
@@ -110,8 +112,12 @@ public class SkullSentinel extends SpellRay {
 	}
 
 	@Override
-	public boolean canBeCastBy(TileEntityDispenser dispenser) { return false; }
+	public boolean canBeCastBy(TileEntityDispenser dispenser) {
+		return false;
+	}
 
 	@Override
-	public boolean canBeCastBy(EntityLiving npc, boolean override) { return false; }
+	public boolean canBeCastBy(EntityLiving npc, boolean override) {
+		return false;
+	}
 }

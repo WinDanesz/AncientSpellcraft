@@ -25,12 +25,20 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-
+import java.util.UUID;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 @SuppressWarnings("Duplicates")
 public class TileSkullWatch extends TileEntityPlayerSave implements ITickable {
 
@@ -39,7 +47,8 @@ public class TileSkullWatch extends TileEntityPlayerSave implements ITickable {
 	public static final String SUMMON_SKELETON_TAG = "SummonSkeleton";
 
 	private final String OWNER_TAG = "OwnerUUID";
-
+	private Map<UUID, Integer> detectedEntities = new HashMap<>();
+	private static final int NOTIFICATION_COOLDOWN = 20 * 12; // 12 seconds in ticks
 	private final double DETECT_BASE_RADIUS = 15D;
 
 	private int currentSummonCooldown;
@@ -121,6 +130,33 @@ public class TileSkullWatch extends TileEntityPlayerSave implements ITickable {
 		}
 
 		if (target != null) {
+
+			// Add notification logic
+			if (!world.isRemote && getCaster() instanceof EntityPlayer) {
+				if (detectedEntities.size() > 30) {
+					detectedEntities.clear();
+				}
+
+				UUID targetId = target.getUniqueID();
+				int currentTick = tickCount;
+
+				// Check if we should notify about this entity
+				if (!detectedEntities.containsKey(targetId) ||
+						(currentTick - detectedEntities.get(targetId) > NOTIFICATION_COOLDOWN)) {
+
+					// Update the last notification time
+					detectedEntities.put(targetId, currentTick);
+					// Send message to the caster
+					getCaster().sendMessage(new TextComponentTranslation("message.ancientspellcraft:skull_sentinel.detected",
+								target.getName(),
+								MathHelper.floor(target.posX),
+								MathHelper.floor(target.posY),
+								MathHelper.floor(target.posZ)).setStyle(new Style().setColor(TextFormatting.DARK_PURPLE)));
+
+
+				}
+			}
+
 			// Domus Amulet effect
 			if (summonSkeleton && currentSummonCooldown == 0) {
 				// summon a skeleton
