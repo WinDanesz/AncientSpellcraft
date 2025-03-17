@@ -1640,7 +1640,7 @@ item.ancientspellcraft\:amulet_absorb_potion.desc=Absorb Potion grants immunity 
 item.ancientspellcraft\:ring_absorb_crystal.name=Ring of Compression
 item.ancientspellcraft\:ring_absorb_crystal.desc=Absorb Crystal can absorb a crystal block, increasing a warlock's potency by 10%%
 
-item.ancientspellcraft\:ring_chaos_blast_multitarget.name=Chaos Gem Ring
+item.ancientspellcraft\:ring_chaos_blast_multitarget.name=Chaos Piercer
 item.ancientspellcraft\:ring_chaos_blast_multitarget.desc=The beam of Chaos Blast hits all enemies in its path, but deals 40%% less damage to secondary targets
 item.ancientspellcraft\:head_chaos_magic.name=Scarlet Crown
 item.ancientspellcraft\:head_chaos_magic.desc=Increases chaos spell potency by 25%%\nChaos spells always use their pure form
@@ -1667,7 +1667,7 @@ item.ancientspellcraft\:ring_shivering.name=Shivering
 item.ancientspellcraft\:ring_shivering.desc=With each ice spell, extreme cold emanates from this ring, chilling nearby enemies.\n5 seconds cooldown
 
 item.ancientspellcraft\:charm_crystal_sickle.name=Crystal Sickle
-item.ancientspellcraft\:charm_crystal_sickle.desc=Crystal Flowers harvested with this always yield 3-4 magic crystals
+item.ancientspellcraft\:charm_crystal_sickle.desc=Crystal Flowers harvested with this always yield 3-4 magic crystals (Right-click to harvest)
 item.ancientspellcraft\:charm_thousand_anvils.name=Seal of a Thousand Anvils
 item.ancientspellcraft\:charm_thousand_anvils.desc=The Pocket Furnace spell can smelt 9 blocks of coal into a diamond
 item.ancientspellcraft\:charm_vault_key.name=Vault Key
