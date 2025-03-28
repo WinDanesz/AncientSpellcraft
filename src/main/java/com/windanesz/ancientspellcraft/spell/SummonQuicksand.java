@@ -64,7 +64,9 @@ public class SummonQuicksand extends SpellRay {
 			}
 
 		}
-		this.playSound(world, caster, ticksInUse, -1, modifiers);
+		if (caster != null) {
+			this.playSound(world, caster, ticksInUse, -1, modifiers);
+		}
 
 		return true;
 	}
