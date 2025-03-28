@@ -46,6 +46,11 @@ public class ItemDimensionalDisk extends ItemASArtefact {
 					}
 				}
 
+				if (currentRadius > 31) {
+					ASUtils.sendMessage(player, "You have reached the maximum radius!", true);
+					return new ActionResult<>(EnumActionResult.FAIL, stack);
+				}
+
 				if (currentRadius != 0) {
 					player.getCooldownTracker().setCooldown(this, 40);
 
