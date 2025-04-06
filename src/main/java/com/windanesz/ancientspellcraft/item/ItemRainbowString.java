@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.item;
 
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.registry.ASPotions;
+import com.windanesz.ancientspellcraft.ritual.ElementalAttunement;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryPotions;
@@ -20,6 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mod.EventBusSubscriber
 public class ItemRainbowString extends ItemASArtefact {
@@ -58,7 +60,12 @@ public class ItemRainbowString extends ItemASArtefact {
         nbt.setString(CURRENT_ELEMENT_TAG, newElement.getName());
     }
 
-    private static Element getElement(ItemStack stack) {
+    private static Element getElement(ItemStack stack, EntityPlayer player) {
+        Optional<Element> element = ElementalAttunement.getElement(player);
+        if (element.isPresent()) {
+            return element.get();
+        }
+
         NBTTagCompound nbt = stack.getTagCompound();
         if (nbt != null) {
             String currentElementName = nbt.getString(CURRENT_ELEMENT_TAG);
@@ -105,10 +112,10 @@ public class ItemRainbowString extends ItemASArtefact {
         if (event.getEntity() instanceof EntityArrow) {
             EntityArrow arrow = (EntityArrow) event.getEntity();
             if (arrow.shootingEntity instanceof EntityPlayer) {
-                EntityLivingBase shooter = (EntityLivingBase) arrow.shootingEntity;
-                List<ItemStack> charmStacks = ASBaublesIntegration.getEquippedArtefactStacks((EntityPlayer) shooter, ItemArtefact.Type.CHARM);
+                EntityPlayer shooter = (EntityPlayer) arrow.shootingEntity;
+                List<ItemStack> charmStacks = ASBaublesIntegration.getEquippedArtefactStacks(shooter, ItemArtefact.Type.CHARM);
                 if (!charmStacks.isEmpty() && charmStacks.get(0).getItem() instanceof ItemRainbowString) {
-                    Element currentElement = getElement(charmStacks.get(0));
+                    Element currentElement = getElement(charmStacks.get(0), shooter);
                     PotionEffect effect = getEffect(currentElement);
                     createOrModifyTippedArrow(arrow, effect);
                 }
