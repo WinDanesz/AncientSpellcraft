@@ -236,7 +236,7 @@ public class Settings {
 		@Config.Name("Skeleton Mage Spawn Rate")
 		@Config.Comment("Spawn rate for naturally-spawned void Skeleton Mages; higher numbers mean more Skeleton Mages will spawn. Set to 0 do disable spawning entirely")
 		@Config.RequiresMcRestart
-		public int skeleton_mage_spawn_rate = 20;
+		public int skeleton_mage_spawn_rate = 5;
 
 		@Config.Name("Skeleton Mage Max Group Size")
 		@Config.Comment("Max group size for naturally-spawned Skeleton Mages; higher numbers mean more Skeleton Mages will spawn. Set to 0 do disable spawning entirely")
@@ -289,6 +289,12 @@ public class Settings {
 		@Config.RequiresMcRestart
 		@Config.RangeInt(min = 0, max = 100)
 		public int orb_artefact_potency_bonus = 30;
+
+		@Config.Name("Talisman of Affinity Percent Chance for Elemental Spells")
+		@Config.Comment("Determines the chance of getting the talisman's currently bound crystal's element when looting spell books. Note that even at 100% this is not guaranteed to be always the desired element.")
+		@Config.RequiresMcRestart
+		@Config.RangeDouble(min = 0, max = 1)
+		public double talisman_of_affinity_chance = 0.4;
 
 		@Config.Name("Void Creeper Biome Blacklist")
 		@Config.Comment("List of Biomes where Void Creepers will never spawn.")
