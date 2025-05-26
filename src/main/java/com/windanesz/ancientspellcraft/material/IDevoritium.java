@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.material;
 
 import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
 import com.windanesz.ancientspellcraft.registry.ASPotions;
+import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.entity.living.EntityRemnant;
 import electroblob.wizardry.entity.living.EntitySpiritWolf;
 import electroblob.wizardry.entity.living.ISummonedCreature;
@@ -15,10 +16,19 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public interface IDevoritium {
 
 	int DEFAULT_SUMMON_DAMAGE = 3;
+
+	@SubscribeEvent
+	static void onEntityJoinWorld(EntityJoinWorldEvent event) {
+		if (event.getEntity() instanceof EntityMagicConstruct && event.getEntity().world.getBlockState(event.getEntity().getPosition().down()).getBlock() instanceof IDevoritium) {
+			((EntityMagicConstruct) event.getEntity()).lifetime = 20;
+		}
+	}
 
 	default void onEntityWalkDelegate(World worldIn, BlockPos pos, Entity entityIn) {
 		if (entityIn instanceof EntityLivingBase) {

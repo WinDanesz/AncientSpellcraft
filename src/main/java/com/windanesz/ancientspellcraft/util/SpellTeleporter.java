@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.util;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import electroblob.wizardry.util.Location;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -34,6 +35,47 @@ public class SpellTeleporter implements ITeleporter {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+	}
+
+	/**
+	 * Teleports an entity to the target location
+	 * @param entity The entity to teleport
+	 * @param destination The destination to teleport to
+	 */
+	public static void teleportPlayerOrMob(EntityLivingBase entity, Location destination) {
+		if (entity instanceof EntityPlayer) {
+			// For players, use the specialized player teleportation
+			EntityPlayer player =
+					(EntityPlayer) entity;
+
+			// Teleport player with SpellTeleporter
+			teleportEntity(
+				destination.dimension,
+				destination.pos.getX(),
+				destination.pos.getY(),
+				destination.pos.getZ(),
+				true, // Apply blindness effect
+				player
+			);
+		} else {
+			// For non-player entities
+			teleportEntity(
+				entity,
+				destination.dimension,
+				destination.pos.getX(),
+				destination.pos.getY(),
+				destination.pos.getZ()
+			);
+		}
+
+		// Spawn portal particles at origin
+		if (entity.world instanceof WorldServer) {
+			((WorldServer) entity.world).spawnParticle(
+				net.minecraft.util.EnumParticleTypes.PORTAL,
+				entity.posX, entity.posY + 1.0, entity.posZ,
+				40, 0.2, 0.8, 0.2, 0.1
+			);
+		}
 	}
 
 	@Override

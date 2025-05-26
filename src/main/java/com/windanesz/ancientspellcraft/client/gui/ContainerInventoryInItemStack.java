@@ -19,7 +19,8 @@ public class ContainerInventoryInItemStack extends Container {
 			this.addSlotToContainer(new Slot(itemInventory, 0, 80, 36) {
 				@Override
 				public boolean isItemValid(ItemStack stack) {
-					return ((IItemWithSlots) ((InventoryInItemStack) itemInventory).getStack().getItem()).isItemValid(stack.getItem());
+					return ((IItemWithSlots) ((InventoryInItemStack) itemInventory).getStack().getItem()).isItemValid(stack.getItem()) &&
+							((IItemWithSlots) ((InventoryInItemStack) itemInventory).getStack().getItem()).isItemStackValid(stack);
 				}
 
 				@Override

@@ -1,15 +1,16 @@
 {
-	"package": "com.windanesz.ancientspellcraft.mixin.ebwizardry",
-	"refmap": "ancientspellcraft.refmap.json",
-	"minVersion": "0.8",
-	"compatibilityLevel": "JAVA_8",
-	"mixins": [
-		"MixinItemArtefact",
-		"MixinItemWizardArmour",
-		"MixinConjureBlock",
-		"MixinLifeDrain",
-		"MixinPocketFurnace",
-		"MixinPotionSlowTime"
-	],
-	"client": []
+  "package": "com.windanesz.ancientspellcraft.mixin.ebwizardry",
+  "refmap": "ancientspellcraft.refmap.json",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinConjureBlock",
+    "MixinItemArtefact",
+    "MixinItemWizardArmour",
+    "MixinLifeDrain",
+    "MixinPocketFurnace",
+    "MixinPotionSlowTime",
+    "MixinRandomSpell"
+  ],
+  "client": []
 }

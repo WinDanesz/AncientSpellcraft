@@ -78,7 +78,7 @@ public class InventoryInItemStack extends InventoryBasic {
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		if (((IItemWithSlots) (stack.getItem())).isItemValid(stack.getItem())) {
+		if (((IItemWithSlots) (stack.getItem())).isItemValid(stack.getItem()) && ((IItemWithSlots) (stack.getItem())).isItemStackValid(stack)) {
 			return false;
 		}
 		return super.isItemValidForSlot(index, stack);

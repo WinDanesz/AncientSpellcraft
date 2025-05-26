@@ -1,0 +1,7 @@
+{
+    "parent": "ancientspellcraft:block/teleportation_flame_floor",
+    "textures": {
+        "particle": "ancientspellcraft:blocks/teleportation_flame_1",
+        "fire": "ancientspellcraft:blocks/teleportation_flame_1"
+    }
+}

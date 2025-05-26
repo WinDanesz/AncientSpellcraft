@@ -9,7 +9,7 @@ param (
 
 ###############################################
 # Static
-$script:srcPath = "C:\git\AncientSpellcraft\src"
+$script:srcPath = "C:\dev\AncientSpellcraft\src"
 $script:modid = "ancientspellcraft"
 ###############################################
 
