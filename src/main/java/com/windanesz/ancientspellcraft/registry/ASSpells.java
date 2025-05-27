@@ -534,7 +534,9 @@ public final class ASSpells {
 		registry.register(new WithdrawLife());
 		registry.register(new Beanstalk());
 		registry.register(new ConjureLava());
-		registry.register(new LilyPad());		registry.register(new MassPyrokinesis());		registry.register(new ArcaneFlame());
+		registry.register(new LilyPad());
+		registry.register(new MassPyrokinesis());
+		registry.register(new ArcaneFlame());
 		registry.register(new EnchantFireplace());
 		registry.register(new WildfireFlame());
 		registry.register(new Fluorescence());

@@ -1241,6 +1241,14 @@ public class ASEventHandler {
 					if (event.getSpell() instanceof IClassSpell && (((IClassSpell) event.getSpell()).getArmourClass() == ItemWizardArmour.ArmourClass.WARLOCK)) {
 						modifiers.set(SpellModifiers.POTENCY, 1.25f * potency, false);
 					}
+				} else if (artefact == ASItems.charm_infernal_stone &&event.getSpell().getElement() == Element.FIRE && player.isBurning()) {
+					// Boost fire spell potency
+					event.getModifiers().set(SpellModifiers.POTENCY,
+							event.getModifiers().get(SpellModifiers.POTENCY) * 1.2f, false);
+					// Extinguish the player
+					player.extinguish();
+					// Apply fire resistance
+					player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 100)); // 5 seconds
 				}
 
 				if (artefact == ASItems.ring_power) {
@@ -1260,6 +1268,14 @@ public class ASEventHandler {
 
 					modifiers.set(SpellModifiers.POTENCY, 0.20f + potency, false);
 					modifiers.set(SpellModifiers.COST, 0.20f + cost, false);
+				} else if (artefact instanceof ItemElementalCloak) {
+					ItemElementalCloak cloak = (ItemElementalCloak) artefact;
+					Element element = cloak.getElement();
+					int mod = element == event.getSpell().getElement() ? 1 : -1;
+					modifiers.set(WizardryItems.blast_upgrade, modifiers.get(WizardryItems.blast_upgrade) + BLAST_RADIUS_INCREASE_PER_LEVEL * mod, true);
+					modifiers.set(WizardryItems.range_upgrade, modifiers.get(WizardryItems.range_upgrade) + Constants.RANGE_INCREASE_PER_LEVEL * mod, true);
+					modifiers.set(WizardryItems.duration_upgrade, modifiers.get(WizardryItems.duration_upgrade) + DURATION_INCREASE_PER_LEVEL * mod, false);
+					modifiers.set(WizardryItems.siphon_upgrade, modifiers.get(WizardryItems.siphon_upgrade) + SIPHON_MANA_PER_LEVEL * mod, false);
 				}
 
 			}
