@@ -199,6 +199,7 @@ public final class ASItems {
 	public static final Item charm_rainbowstring = placeholder();
 	public static final Item charm_pale_flame = placeholder();
 	public static final Item charm_arcane_mirror = placeholder();
+	public static final Item charm_infernal_stone = placeholder();
 	public static final Item charm_transmutation_cube = placeholder();
 	public static final Item charm_ancient_wand = placeholder();
 	public static final Item charm_specterlight_torch = placeholder();
@@ -795,6 +796,7 @@ public final class ASItems {
 		ItemRegistry.registerItemArtefact(registry, "charm_potion_kit", AncientSpellcraft.MODID, new ItemDimensionalDisk(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		ItemRegistry.registerItemArtefact(registry, "charm_crystal_sickle", AncientSpellcraft.MODID, new ItemCrystalSickle(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		ItemRegistry.registerItemArtefact(registry, "charm_focus_stone", AncientSpellcraft.MODID, new ItemFocusStone(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		ItemRegistry.registerItemArtefact(registry, "charm_infernal_stone", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItemBlock(registry, ASBlocks.ARTEFACT_PENSIVE, new ItemBlock(ASBlocks.ARTEFACT_PENSIVE) {
 			@Override
 			public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {

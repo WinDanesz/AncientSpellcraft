@@ -1241,6 +1241,14 @@ public class ASEventHandler {
 					if (event.getSpell() instanceof IClassSpell && (((IClassSpell) event.getSpell()).getArmourClass() == ItemWizardArmour.ArmourClass.WARLOCK)) {
 						modifiers.set(SpellModifiers.POTENCY, 1.25f * potency, false);
 					}
+				} else if (artefact == ASItems.charm_infernal_stone &&event.getSpell().getElement() == Element.FIRE && player.isBurning()) {
+					// Boost fire spell potency
+					event.getModifiers().set(SpellModifiers.POTENCY,
+							event.getModifiers().get(SpellModifiers.POTENCY) * 1.2f, false);
+					// Extinguish the player
+					player.extinguish();
+					// Apply fire resistance
+					player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 100)); // 5 seconds
 				}
 
 				if (artefact == ASItems.ring_power) {
