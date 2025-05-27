@@ -585,6 +585,11 @@ public class Settings {
 		@Config.Name("Cursed Pendant summon chance (1 == 100%)")
 		@Config.RequiresMcRestart
 		public float cursed_pendant_summon_chance = 0.5f;
+
+		@Config.Name("Diamond Goose Detection Range")
+		@Config.Comment("The maximum range in blocks at which the Diamond Goose artefact can detect bound blocks")
+		@Config.RangeInt(min = 2, max = 32)
+		public int diamondGooseDetectionRange = 8;
 	}
 
 	public static class ClientSettings {
