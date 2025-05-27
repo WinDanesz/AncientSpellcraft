@@ -1778,6 +1778,7 @@ item.ancientspellcraft\:charm_diamond_goose.left=The goose excitedly leans left!
 item.ancientspellcraft\:charm_diamond_goose.right=The goose excitedly leans right!
 item.ancientspellcraft\:charm_diamond_goose.up=The goose excitedly looks up!
 item.ancientspellcraft\:charm_diamond_goose.down=The goose excitedly looks down!
+item.ancientspellcraft\:charm_diamond_goose.already_bound=This goose is imprinted to a block already!
 item.ancientspellcraft\:charm_diamond_goose.nearby=The goose gets excited!
 item.ancientspellcraft\:charm_diamond_goose.tooltip.imprinted=This goose is imprinted to: %s
 item.ancientspellcraft\:charm_diamond_goose.tooltip.quack=It will quack when near its favorite block!
