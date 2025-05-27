@@ -153,7 +153,7 @@ public class SpellTeleporter implements ITeleporter {
 			if (targetDim == 0) {
 				BlockPos blockPos = (new BlockPos(x, y, z));
 				if (!(player.world.isAirBlock(blockPos) && player.world.isAirBlock(blockPos.up()) && !player.world.isAirBlock(blockPos.down()))) {
-					while (player.world.isAirBlock(blockPos.down())) {
+					while (player.world.isAirBlock(blockPos.down()) && y > 0) {
 						blockPos = blockPos.add(0, -1, 0);
 						y--;
 					}
