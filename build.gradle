@@ -205,7 +205,7 @@ jar {
                     "FMLCorePlugin"              : "com.windanesz.ancientspellcraft.core.ASLoadingPlugin",
                     "FMLCorePluginContainsFMLMod": true,
                     "FMLAT"                      : "ancientspellcraft_at.cfg",
-                    "ForceLoadAsMod"             : project.gradle.startParameter.taskNames[0] == "build",])
+                    "ForceLoadAsMod"             : true])
     }
 }
 
