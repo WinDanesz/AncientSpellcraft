@@ -103,10 +103,25 @@ public class Pyrokinesis extends SpellRay {
 		return false;
 	}
 
-	@Override
-	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-		return false;
-	}
+@Override
+protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
+    // Check if the block is TNT
+    if (world.getBlockState(pos).getBlock() == net.minecraft.init.Blocks.TNT) {
+        // Ignite TNT
+        if (!world.isRemote) {
+            world.setBlockToAir(pos);
+            net.minecraft.entity.item.EntityTNTPrimed entityTNTPrimed = new net.minecraft.entity.item.EntityTNTPrimed(world,
+                    (double)pos.getX() + 0.5D,
+                    (double)pos.getY() + 0.75D,
+                    (double)pos.getZ() + 0.5D,
+                    caster instanceof EntityLiving ? (EntityLiving)caster : null);
+            world.spawnEntity(entityTNTPrimed);
+            world.playSound(null, pos, net.minecraft.init.SoundEvents.ENTITY_TNT_PRIMED, net.minecraft.util.SoundCategory.BLOCKS, 1.0F, 1.0F);
+        }
+        return true;
+    }
+    return false;
+}
 
 	@Override
 	protected boolean onMiss(World world, EntityLivingBase caster, Vec3d origin, Vec3d direction, int ticksInUse, SpellModifiers modifiers) {

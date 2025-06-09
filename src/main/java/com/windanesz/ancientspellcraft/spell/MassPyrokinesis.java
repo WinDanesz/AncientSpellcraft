@@ -52,43 +52,81 @@ public class MassPyrokinesis extends Spell {
 		return pyrokinesis(world, caster, hand, ticksInUse, modifiers);
 	}
 
-	public boolean pyrokinesis(World world, EntityLivingBase caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		boolean damaged = false;
-		for (EntityLivingBase entity : EntityUtils.getEntitiesWithinRadius(getProperty(EFFECT_RADIUS).floatValue(), caster.posX, caster.posY, caster.posZ, world, EntityLivingBase.class)) {
+public boolean pyrokinesis(World world, EntityLivingBase caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+    boolean affected = false;
 
-			if (AllyDesignationSystem.isAllied(caster, entity)) {continue;}
+    // Affect entities as before
+    for (EntityLivingBase entity : EntityUtils.getEntitiesWithinRadius(getProperty(EFFECT_RADIUS).floatValue(), caster.posX, caster.posY, caster.posZ, world, EntityLivingBase.class)) {
+        if (AllyDesignationSystem.isAllied(caster, entity)) {continue;}
 
-			if (MagicDamage.isEntityImmune(MagicDamage.DamageType.FIRE, entity)) {
+        if (MagicDamage.isEntityImmune(MagicDamage.DamageType.FIRE, entity)) {
 
-			} else if (entity != caster && ticksInUse % entity.maxHurtResistantTime == 1) {
-				entity.setFire((int) (getProperty(BURN_DURATION).floatValue()));
-				EntityUtils.attackEntityWithoutKnockback(entity,
-						MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FIRE),
-						getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY));
+        } else if (entity != caster && ticksInUse % entity.maxHurtResistantTime == 1) {
+            entity.setFire((int) (getProperty(BURN_DURATION).floatValue()));
+            EntityUtils.attackEntityWithoutKnockback(entity,
+                MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FIRE),
+                getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY));
 
-				((EntityLivingBase) entity).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS,
-						(int) (getProperty(SLOW_DURATION).floatValue()), 1));
-			}
+            ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS,
+                (int) (getProperty(SLOW_DURATION).floatValue()), 1));
+        }
 
-			if (world.isRemote) {
+        if (world.isRemote) {
+            for (int i = 0; i < 10; i++) {
+                double dx = (world.rand.nextDouble() * (world.rand.nextBoolean() ? 1 : -1)) * 0.1;
+                double dy = (world.rand.nextDouble() * (world.rand.nextBoolean() ? 1 : -1)) * 0.1;
+                double dz = (world.rand.nextDouble() * (world.rand.nextBoolean() ? 1 : -1)) * 0.1;
 
-				for (int i = 0; i < 10; i++) {
-					double dx = (world.rand.nextDouble() * (world.rand.nextBoolean() ? 1 : -1)) * 0.1;
-					double dy = (world.rand.nextDouble() * (world.rand.nextBoolean() ? 1 : -1)) * 0.1;
-					double dz = (world.rand.nextDouble() * (world.rand.nextBoolean() ? 1 : -1)) * 0.1;
+                ParticleBuilder.create(Type.MAGIC_FIRE)
+                    .entity(entity)
+                    .pos(0, entity.height / 2, 0)
+                    .vel(dx, dy, dz)
+                    .spawn(world);
+            }
+        }
+        affected = true;
+    }
 
-					ParticleBuilder.create(Type.MAGIC_FIRE)
-							.entity(entity)
-							.pos(0, entity.height / 2, 0)
-							.vel(dx, dy, dz)
-							.spawn(world);
+    // Ignite nearby TNT blocks
+    if (!world.isRemote) {
+        int radius = (int) getProperty(EFFECT_RADIUS).floatValue();
+        int x0 = (int) caster.posX;
+        int y0 = (int) caster.posY;
+        int z0 = (int) caster.posZ;
 
-				}
-			}
-			damaged =  true;
-		}
-		return damaged;
-	}
+        // Check all blocks within radius
+        for (int x = x0 - radius; x <= x0 + radius; x++) {
+            for (int y = y0 - radius; y <= y0 + radius; y++) {
+                for (int z = z0 - radius; z <= z0 + radius; z++) {
+                    net.minecraft.util.math.BlockPos pos = new net.minecraft.util.math.BlockPos(x, y, z);
+
+                    // Check if the block is TNT
+                    if (world.getBlockState(pos).getBlock() == net.minecraft.init.Blocks.TNT) {
+                        // Calculate distance from caster
+                        double dist = Math.sqrt(pos.distanceSq(x0, y0, z0));
+                        if (dist <= radius) {
+                            // Ignite TNT
+                            world.setBlockToAir(pos);
+                            net.minecraft.entity.item.EntityTNTPrimed tnt = new net.minecraft.entity.item.EntityTNTPrimed(
+                                world,
+                                (double)pos.getX() + 0.5D,
+                                (double)pos.getY() + 0.75D,
+                                (double)pos.getZ() + 0.5D,
+                                caster instanceof EntityLiving ? (EntityLiving)caster : null
+                            );
+                            world.spawnEntity(tnt);
+                            world.playSound(null, pos, net.minecraft.init.SoundEvents.ENTITY_TNT_PRIMED,
+                                          net.minecraft.util.SoundCategory.BLOCKS, 1.0F, 1.0F);
+                            affected = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return affected;
+}
 
 	@Override
 	public boolean applicableForItem(Item item) {

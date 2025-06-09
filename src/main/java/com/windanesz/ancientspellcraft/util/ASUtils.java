@@ -408,9 +408,36 @@ public final class ASUtils {
 	public static boolean isInjured(EntityLivingBase entityLivingBase) {
 		return entityLivingBase.getMaxHealth() > entityLivingBase.getHealth();
 	}
-
 	public static boolean isEntityConsideredUndead(Entity entity) {
-		return entity instanceof EntityLivingBase && (((EntityLivingBase) entity).isEntityUndead() || ((EntityLivingBase) entity).isPotionActive(WizardryPotions.curse_of_undeath));
+		if (!(entity instanceof EntityLivingBase)) {
+			return false;
+		}
+		
+		EntityLivingBase livingEntity = (EntityLivingBase) entity;
+		
+		// Skip if entity is still being constructed
+		if (livingEntity.world == null || livingEntity.ticksExisted == 0) {
+			return false;
+		}
+		
+		try {
+			boolean isUndead = livingEntity.isEntityUndead();
+			boolean hasCurse = false;
+			
+			// Only check for curse if the entity is fully initialized
+			if (WizardryPotions.curse_of_undeath != null) {
+				try {
+					hasCurse = livingEntity.isPotionActive(WizardryPotions.curse_of_undeath);
+				} catch (NullPointerException e) {
+					// Safely handle null pointer if potion map isn't initialized yet
+				}
+			}
+			
+			return isUndead || hasCurse;
+		} catch (Exception e) {
+			// Return false if any exception occurs during undead status check
+			return false;
+		}
 	}
 
 	public static List<BlockPos> getHollowSphere(EntityLivingBase caster, SpellModifiers modifiers, float radius) {
