@@ -9,8 +9,7 @@ buildscript {
             url 'https://maven.neoforged.net/'
         }
         maven {
-            name 'Garden of Fancy'
-            url 'https://maven.gofancy.wtf/releases'
+            url 'https://gitlab.com/api/v4/projects/70917004/packages/maven'
         }
         //fallback for fancygradle maven
         //mavenLocal()
