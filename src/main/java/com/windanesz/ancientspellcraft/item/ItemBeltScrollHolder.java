@@ -5,6 +5,7 @@ import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ItemWandUpgrade;
 import electroblob.wizardry.registry.WizardryItems;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -33,11 +34,20 @@ public class ItemBeltScrollHolder extends AbstractItemArtefactWithSlots implemen
 
 	@Override
 	public boolean isItemValid(Item item) {
-		return item instanceof ItemWandUpgrade
-				&& item != ASItems.soulbound_upgrade
-				&& item != WizardryItems.melee_upgrade
-				&& item != WizardryItems.storage_upgrade
-				&& item != WizardryItems.siphon_upgrade
-				&& item != WizardryItems.attunement_upgrade;
+		return (
+			item instanceof ItemWandUpgrade &&
+			item != ASItems.soulbound_upgrade &&
+			item != WizardryItems.melee_upgrade &&
+			item != WizardryItems.storage_upgrade &&
+			item != WizardryItems.siphon_upgrade &&
+			item != WizardryItems.attunement_upgrade
+		)
+		|| item == Items.PAPER
+		|| item == Items.MAP
+		|| item == Items.FILLED_MAP
+		|| item == Items.BOOK
+		|| item == Items.ENCHANTED_BOOK
+		|| item == Items.WRITABLE_BOOK
+		|| item == Items.WRITTEN_BOOK;
 	}
 }
