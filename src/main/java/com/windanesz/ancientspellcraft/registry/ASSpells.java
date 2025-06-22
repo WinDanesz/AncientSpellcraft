@@ -184,6 +184,7 @@ public final class ASSpells {
 	public static final Spell force_shove = placeholder();
 	public static final Spell corpse_bomb = placeholder();
 	public static final Spell death_mark = placeholder();
+	public static final Spell compulsion = placeholder();
 	//public static final Spell heat_furnace = placeholder();
 
 
@@ -548,6 +549,7 @@ public final class ASSpells {
 		registry.register(new ShockZone());
 		registry.register(new ForceShove());
 		registry.register(new CorpseBomb());
+		registry.register(new Compulsion());
 		registry.register(new CurseOfUmbra());
 		registry.register(new CurseOfGills());
 		registry.register(new CursedTouch());

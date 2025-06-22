@@ -290,6 +290,12 @@ public class Settings {
 		@Config.RangeInt(min = 0, max = 100)
 		public int orb_artefact_potency_bonus = 30;
 
+		@Config.Name("Cloak Potency Percent Bonus")
+		@Config.Comment("Determines the potency bonus of the elemental cloaks in a percentage value")
+		@Config.RequiresMcRestart
+		@Config.RangeInt(min = 0, max = 100)
+		public int cloak_potency_bonus = 15;
+
 		@Config.Name("Talisman of Affinity Percent Chance for Elemental Spells")
 		@Config.Comment("Determines the chance of getting the talisman's currently bound crystal's element when looting spell books. Note that even at 100% this is not guaranteed to be always the desired element.")
 		@Config.RequiresMcRestart
@@ -483,6 +489,24 @@ public class Settings {
 				"minecraft:jump_boost|minecraft:levitation",
 				"minecraft:night_vision|minecraft:blindness",
 				"ebwizardry:empowerment|ancientspellcraft:magical_exhaustion",
+		};
+
+		@Config.Name("Sorcery Cloak Potion Effects")
+		@Config.Comment("List of potion effects that can be granted by the Cloak of Spellweaving. Must be in 'modid:potion_registry_name' format. Default includes beneficial vanilla and mod potions.")
+		@Config.RequiresMcRestart
+		public String[] sorcery_cloak_potion_effects = {
+				"minecraft:speed",
+				"minecraft:jump_boost", 
+				"minecraft:strength",
+				"minecraft:regeneration",
+				"minecraft:absorption",
+				"minecraft:night_vision",
+				"minecraft:water_breathing",
+				"minecraft:resistance",
+				"ancientspellcraft:spell_range",
+				"ancientspellcraft:spell_blast",
+				"ancientspellcraft:spell_duration",
+				"ancientspellcraft:spell_siphon"
 		};
 
 		@Config.Name("Duplication Scroll Additonal Items")

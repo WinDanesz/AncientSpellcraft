@@ -1237,6 +1237,14 @@ public class ASEventHandler {
 					} else {
 						modifiers.set(SpellModifiers.POTENCY, -0.5f + potency, false);
 					}
+				} else if (artefact instanceof ItemElementalCloak) {
+					ItemElementalCloak cloak = (ItemElementalCloak) artefact;
+					Element cloakElement = cloak.getElement();
+					if (event.getSpell().getElement() == cloakElement) {
+						// Configurable potency bonus for matching element
+						float potencyBonus = 1.0f + (Settings.generalSettings.cloak_potency_bonus / 100.0f);
+						modifiers.set(SpellModifiers.POTENCY, potency * potencyBonus, false);
+					}
 				} else if (artefact == ASItems.head_chaos_magic) {
 					if (event.getSpell() instanceof IClassSpell && (((IClassSpell) event.getSpell()).getArmourClass() == ItemWizardArmour.ArmourClass.WARLOCK)) {
 						modifiers.set(SpellModifiers.POTENCY, 1.25f * potency, false);
@@ -1268,8 +1276,8 @@ public class ASEventHandler {
 
 					modifiers.set(SpellModifiers.POTENCY, 0.20f + potency, false);
 					modifiers.set(SpellModifiers.COST, 0.20f + cost, false);
-				} else if (artefact instanceof ItemElementalCloak) {
-					ItemElementalCloak cloak = (ItemElementalCloak) artefact;
+				} else if (artefact instanceof ItemElementalBelt) {
+					ItemElementalBelt cloak = (ItemElementalBelt) artefact;
 					Element element = cloak.getElement();
 					int mod = element == event.getSpell().getElement() ? 1 : -1;
 					modifiers.set(WizardryItems.blast_upgrade, modifiers.get(WizardryItems.blast_upgrade) + BLAST_RADIUS_INCREASE_PER_LEVEL * mod, true);
@@ -1426,6 +1434,8 @@ public class ASEventHandler {
 
 			EntityPlayer player = (EntityPlayer) event.getCaster();
 
+			// Handle cloak effects
+			handleCloakEffects(player, event.getSpell());
 
 			if (isArtefactActive(player, ASItems.charm_knowledge_orb)) {
 
@@ -1463,6 +1473,164 @@ public class ASEventHandler {
 					}
 				}
 			}
+		}
+	}
+
+	/**
+	 * Handles the effects of elemental cloaks when casting spells
+	 */
+	private static void handleCloakEffects(EntityPlayer player, Spell spell) {
+		// Check for each cloak type and apply effects based on spell element
+		for (ItemArtefact artefact : getActiveArtefacts(player)) {
+			if (artefact instanceof ItemElementalCloak && !player.world.isRemote) {
+				ItemElementalCloak cloak = (ItemElementalCloak) artefact;
+				Element cloakElement = cloak.getElement();
+				
+				// Only apply effects if the spell matches the cloak's element
+				if (spell.getElement() == cloakElement) {
+					applyCloakEffect(player, cloakElement, spell);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Applies the specific effect for each cloak type
+	 */
+	private static void applyCloakEffect(EntityPlayer player, Element element, Spell spell) {
+		switch (element) {
+			case EARTH:
+				// Cloak of Verdure: +15% Earth spell potency, cleanse poison, chance to poison nearby creatures
+				player.removePotionEffect(MobEffects.POISON);
+				if (player.world.rand.nextFloat() < 0.3f) { // 30% chance
+					List<EntityLivingBase> nearbyEntities = EntityUtils.getEntitiesWithinRadius(6, player.posX, player.posY, player.posZ, player.world, EntityLivingBase.class);
+					for (EntityLivingBase entity : nearbyEntities) {
+						if (entity != player && !(entity instanceof EntityPlayer)) {
+							entity.addPotionEffect(new PotionEffect(MobEffects.POISON, 100, 0));
+						}
+					}
+				}
+				break;
+				
+			case FIRE:
+				// Cloak of Scorching: +15% Fire spell potency, 3 seconds fire resistance, chance to ignite nearby creatures
+				player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 60, 0)); // 3 seconds
+				if (player.world.rand.nextFloat() < 0.4f) { // 40% chance
+					List<EntityLivingBase> nearbyEntities = EntityUtils.getEntitiesWithinRadius(5, player.posX, player.posY, player.posZ, player.world, EntityLivingBase.class);
+					for (EntityLivingBase entity : nearbyEntities) {
+						if (entity != player && !(entity instanceof EntityPlayer)) {
+							entity.setFire(3); // 3 seconds of fire
+						}
+					}
+				}
+				break;
+				
+			case HEALING:
+				// Cloak of Restoration: +15% Healing spell potency, restore 5% max health of nearby allies, absorption for full health allies
+				List<EntityLivingBase> entitiesWithinRadius = EntityUtils.getEntitiesWithinRadius(8, player.posX, player.posY, player.posZ, player.world, EntityLivingBase.class);
+				for (EntityLivingBase ally : entitiesWithinRadius) {
+					if (ally != player && AllyDesignationSystem.isAllied(player, ally)) {
+						float healAmount = ally.getMaxHealth() * 0.05f; // 5% of max health
+						ally.heal(healAmount);
+						
+						// If ally has full health, give absorption
+						if (ally.getHealth() >= ally.getMaxHealth()) {
+							ally.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 100, 0)); // 5 seconds of absorption
+						}
+					}
+				}
+				break;
+				
+			case ICE:
+				// Cloak of Glaciation: +15% Ice spell potency, put off fire, heal when affected by Frostbite or in snowy biome
+				player.extinguish();
+				
+				// Check if in snowy biome
+				boolean inSnowyBiome = false;
+				try {
+					net.minecraft.world.biome.Biome biome = player.world.getBiome(player.getPosition());
+					if (biome.getRegistryName() != null) {
+						String biomeName = biome.getRegistryName().toString().toLowerCase();
+						inSnowyBiome = biomeName.contains("tundra") || biomeName.contains("snow") || biomeName.contains("ice") || biomeName.contains("frozen") || biomeName.contains("cold");
+					}
+				} catch (Exception e) {
+					// Ignore biome check errors
+				}
+				
+				// Heal if in snowy biome or has frostbite effect
+				if (inSnowyBiome || player.isPotionActive(MobEffects.SLOWNESS)) {
+					player.heal(2.0f); // Heal 1 heart
+				}
+				break;
+				
+			case NECROMANCY:
+				// Cloak of Conjuration: +15% Necromancy spell potency, increase lifetime of nearby minions by 3 seconds
+				List<EntityLivingBase> nearbyEntities = EntityUtils.getEntitiesWithinRadius(10, player.posX, player.posY, player.posZ, player.world, EntityLivingBase.class);
+				for (EntityLivingBase entity : nearbyEntities) {
+					if (entity instanceof ISummonedCreature) {
+						ISummonedCreature minion = (ISummonedCreature) entity;
+						if (minion.getCaster() == player) {
+							// Extend lifetime by 3 seconds (60 ticks)
+							int currentLifetime = minion.getLifetime();
+							if (currentLifetime > 0) {
+								minion.setLifetime(currentLifetime + 60);
+							}
+						}
+					}
+				}
+				break;
+				
+			case SORCERY:
+				// Cloak of Spellweaving: +15% Sorcery spell potency, chance to grant random beneficial potion effect for 5 seconds
+				if (player.world.rand.nextFloat() < 0.25f) { // 25% chance
+					List<Potion> beneficialPotions = new ArrayList<>();
+					
+					// Load potions from config
+					for (String potionName : Settings.generalSettings.sorcery_cloak_potion_effects) {
+						try {
+							Potion potion = ForgeRegistries.POTIONS.getValue(new ResourceLocation(potionName));
+							if (potion != null) {
+								beneficialPotions.add(potion);
+							} else {
+								AncientSpellcraft.logger.warn("Potion not found for sorcery cloak effect: " + potionName);
+							}
+						} catch (Exception e) {
+							AncientSpellcraft.logger.warn("Invalid potion registry name for sorcery cloak effect: " + potionName);
+						}
+					}
+					
+					// Fallback to vanilla potions if config list is empty or invalid
+					if (beneficialPotions.isEmpty()) {
+						beneficialPotions.addAll(Arrays.asList(
+							MobEffects.SPEED,
+							MobEffects.JUMP_BOOST,
+							MobEffects.STRENGTH,
+							MobEffects.REGENERATION,
+							MobEffects.ABSORPTION,
+							MobEffects.LUCK,
+							MobEffects.NIGHT_VISION,
+							MobEffects.WATER_BREATHING,
+							MobEffects.RESISTANCE
+						));
+					}
+					
+					Potion randomPotion = beneficialPotions.get(player.world.rand.nextInt(beneficialPotions.size()));
+					player.addPotionEffect(new PotionEffect(randomPotion, 100, 0)); // 5 seconds
+				}
+				break;
+				
+			case LIGHTNING:
+				// Cloak of Energy: +15% Lightning spell potency, Speed II for 2 seconds, chance to slow nearby creatures
+				player.addPotionEffect(new PotionEffect(MobEffects.SPEED, 60, 1)); // Speed II for 2 seconds
+				if (player.world.rand.nextFloat() < 0.35f) { // 35% chance
+					List<EntityLivingBase> nearbyEntities2 = EntityUtils.getEntitiesWithinRadius(6, player.posX, player.posY, player.posZ, player.world, EntityLivingBase.class);
+					for (EntityLivingBase entity : nearbyEntities2) {
+						if (entity != player && !(entity instanceof EntityPlayer)) {
+							entity.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 80, 0)); // 4 seconds of slowness
+						}
+					}
+				}
+				break;
 		}
 	}
 
