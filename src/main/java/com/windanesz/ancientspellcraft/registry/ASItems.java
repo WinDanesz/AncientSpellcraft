@@ -462,6 +462,8 @@ public final class ASItems {
 	public static final Item belt_enchanted_whetstone = placeholder();
 	public static final Item battlemage_contract = placeholder();
 
+	public static final Item charm_conjuration_inhibitor = placeholder();
+
 	// below registry methods are courtesy of EB
 	public static void registerItem(IForgeRegistry<Item> registry, String name, Item item) {
 		registerItem(registry, name, item, false);
@@ -1028,6 +1030,7 @@ public final class ASItems {
 		ItemRegistry.registerItemArtefact(registry, "body_sorcery", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.SORCERY));
 		ItemRegistry.registerItemArtefact(registry, "body_healing", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.HEALING));
 
+		ItemRegistry.registerItemArtefact(registry, "charm_conjuration_inhibitor", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 
 	}
 

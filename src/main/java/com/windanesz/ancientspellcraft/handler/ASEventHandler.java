@@ -1408,6 +1408,27 @@ public class ASEventHandler {
 			event.setCanceled(true);
 		}
 
+		// Conjuration Inhibitor effect
+		if (event.getSpell().getType() == SpellType.MINION && event.getCaster() instanceof EntityPlayer) {
+			List<EntityPlayer> playersNearby = EntityUtils.getEntitiesWithinRadius(20, event.getCaster().posX, event.getCaster().posY, event.getCaster().posZ, event.getWorld(), EntityPlayer.class);
+			for (EntityPlayer player : playersNearby) {
+				if (ItemArtefact.isArtefactActive(player, ASItems.charm_conjuration_inhibitor)) {
+					// Count minions in radius
+					List<Entity> entities = EntityUtils.getEntitiesWithinRadius(20, event.getCaster().posX, event.getCaster().posY, event.getCaster().posZ, event.getWorld(), Entity.class);
+					int minionCount = 0;
+					for (Entity entity : entities) {
+						if (entity instanceof ISummonedCreature) {
+							minionCount++;
+						}
+					}
+					if (minionCount >= 2) {
+						ASUtils.sendMessage(event.getCaster(), "item.ancientspellcraft:charm_conjuration_inhibitor.message", true);
+						event.setCanceled(true);
+						return;
+					}
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent

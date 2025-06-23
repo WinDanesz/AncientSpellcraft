@@ -1824,3 +1824,6 @@ item.ancientspellcraft\:amulet_holy_aura.name=Amulet of Holy Aura
 item.ancientspellcraft\:amulet_holy_aura.desc=Sets nearby undead on fire
 item.ancientspellcraft\:charm_wardrobe.name=Wizard's Shrunken Wardrobe
 item.ancientspellcraft\:charm_wardrobe.desc=The Attire Alteration spell cycles through 5 sets of apparel instead of just swapping with a single stored set
+item.ancientspellcraft\:charm_conjuration_inhibitor.name=Conjuration Inhibitor
+item.ancientspellcraft\:charm_conjuration_inhibitor.desc=Prevents the conjuring of more than 2 minions within a 20-block radius
+item.ancientspellcraft\:charm_conjuration_inhibitor.message=You cannot conjure more than 2 minions within a 20-block radius due to a Conjuration Inhibitor.
