@@ -614,6 +614,20 @@ public class Settings {
 		@Config.Comment("The maximum range in blocks at which the Diamond Goose artefact can detect bound blocks")
 		@Config.RangeInt(min = 2, max = 32)
 		public int diamondGooseDetectionRange = 8;
+
+		@Config.Name("Verdant Crucible Ingredient List")
+		@Config.Comment("List of alchemical ingredients and their min/max quantities for the Verdant Crucible. Format: modid:itemname|meta|nbt|min|max, e.g. minecraft:redstone|0||1|3. Meta is required (use 0 for default), nbt is optional (empty for none).")
+		public String[] verdant_crucible_ingredients = {
+				"minecraft:redstone|0||1|3",
+				"minecraft:glowstone_dust|0||1|2",
+				"minecraft:magma_cream|0||1|2",
+				"minecraft:carrot|0||1|2",
+				"minecraft:spider_eye|0||1|2",
+				"minecraft:sugar|0||1|2",
+				"minecraft:blaze_powder|0||1|2",
+				"minecraft:ghast_tear|0||1|1",
+				"minecraft:glistering_melon_slice|0||1|1"
+		};
 	}
 
 	public static class ClientSettings {

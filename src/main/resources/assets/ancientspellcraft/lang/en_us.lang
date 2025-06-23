@@ -1829,3 +1829,6 @@ item.ancientspellcraft\:charm_conjuration_inhibitor.desc=Prevents the conjuring 
 item.ancientspellcraft\:charm_conjuration_inhibitor.message=You cannot conjure more than 2 minions within a 20-block radius due to a Conjuration Inhibitor.
 item.ancientspellcraft\:head_disruptor_crown.name=Disruptor Crown
 item.ancientspellcraft\:head_disruptor_crown.desc=Disables all magical effects (removes potion effects from creatures) and banishes summons within 16 blocks. Respawns constructs and conjured creatures. 5 min cooldown.
+
+item.ancientspellcraft\:charm_verdant_crucible.name=Verdant Crucible
+item.ancientspellcraft\:charm_verdant_crucible.desc=This ancient crucible nurtures alchemical ingredients with each passing day.

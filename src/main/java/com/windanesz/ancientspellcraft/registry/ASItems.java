@@ -465,6 +465,8 @@ public final class ASItems {
 
 	public static final Item charm_conjuration_inhibitor = placeholder();
 
+	public static final Item charm_verdant_crucible = placeholder();
+
 	// below registry methods are courtesy of EB
 	public static void registerItem(IForgeRegistry<Item> registry, String name, Item item) {
 		registerItem(registry, name, item, false);
@@ -1033,6 +1035,8 @@ public final class ASItems {
 		ItemRegistry.registerItemArtefact(registry, "body_healing", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.HEALING));
 
 		ItemRegistry.registerItemArtefact(registry, "charm_conjuration_inhibitor", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+
+		ItemRegistry.registerItemArtefact(registry, "charm_verdant_crucible", AncientSpellcraft.MODID, new ItemVerdantCrucible(EnumRarity.RARE));
 
 	}
 
