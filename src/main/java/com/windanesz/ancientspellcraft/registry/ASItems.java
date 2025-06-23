@@ -247,6 +247,7 @@ public final class ASItems {
 	public static final Item head_chaos_magic = placeholder();
 	public static final Item head_minion_circle = placeholder();
 	public static final Item head_whispering_veil = placeholder();
+	public static final Item head_disruptor_crown = placeholder();
 
 	/// misc
 	public static final Item magic_shield = placeholder();
@@ -929,6 +930,7 @@ public final class ASItems {
 		ItemRegistry.registerItemArtefact(registry, "head_chaos_magic", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
 		ItemRegistry.registerItemArtefact(registry, "head_minion_circle", AncientSpellcraft.MODID, new ItemCircletOfCircling(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
 		ItemRegistry.registerItemArtefact(registry, "head_whispering_veil", AncientSpellcraft.MODID, new ItemWhisperingVeil(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		ItemRegistry.registerItemArtefact(registry, "head_disruptor_crown", AncientSpellcraft.MODID, new ItemDisruptorCrown(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
 
 		/// misc
 
