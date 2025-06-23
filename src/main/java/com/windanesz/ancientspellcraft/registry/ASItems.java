@@ -127,6 +127,7 @@ public final class ASItems {
 	public static final Item amulet_elemental_offense = placeholder();
 	public static final Item amulet_talisman_of_affinity = placeholder();
 	public static final Item amulet_black_tongue = placeholder();
+	public static final Item amulet_holy_aura = placeholder();
 
 	/// charm
 	public static final Item charm_rift_bottle = placeholder();
@@ -773,6 +774,7 @@ public final class ASItems {
 		ItemRegistry.registerItemArtefact(registry, "amulet_arcane_catalyst", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 		ItemRegistry.registerItemArtefact(registry, "amulet_elemental_aura", AncientSpellcraft.MODID, new ItemElementalAuraAmulet(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 		ItemRegistry.registerItemArtefact(registry, "amulet_time_slow", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
+		ItemRegistry.registerItemArtefact(registry, "amulet_holy_aura", AncientSpellcraft.MODID, new ItemAmuletHolyAura(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 
 		/// charm
 		ItemRegistry.registerItemArtefact(registry, "charm_mana_flask", AncientSpellcraft.MODID, new ItemEverfullManaFlask());

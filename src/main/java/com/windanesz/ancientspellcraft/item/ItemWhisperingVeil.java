@@ -28,8 +28,14 @@ public class ItemWhisperingVeil extends ItemASArtefact {
 			(NBTTagList t) -> new ArrayList<>(NBTExtras.NBTToList(t, NBTUtil::getUUIDFromTag)),
 			Persistence.ALWAYS);
 	
+	// Store the UUIDs of wizards that have been used permanently (never resets)
+	public static final IStoredVariable<List<UUID>> USED_WIZARDS_PERMANENT = new IStoredVariable.StoredVariable<>("whispering_veil_used_wizards_permanent",
+			s -> NBTExtras.listToNBT(s, NBTUtil::createUUIDTag),
+			(NBTTagList t) -> new ArrayList<>(NBTExtras.NBTToList(t, NBTUtil::getUUIDFromTag)),
+			Persistence.ALWAYS);
+	
 	static {
-		WizardData.registerStoredVariables(USED_WIZARDS_TODAY, USED_VILLAGERS_TODAY);
+		WizardData.registerStoredVariables(USED_WIZARDS_TODAY, USED_VILLAGERS_TODAY, USED_WIZARDS_PERMANENT);
 	}
 	
 	public ItemWhisperingVeil(EnumRarity rarity, Type type) {
@@ -37,31 +43,31 @@ public class ItemWhisperingVeil extends ItemASArtefact {
 	}
 	
 	/**
-	 * Checks if a wizard has been used today by this player
+	 * Checks if a wizard has been used permanently by this player
 	 */
 	public static boolean hasUsedWizardToday(EntityPlayer player, UUID wizardUUID) {
 		WizardData data = WizardData.get(player);
 		if (data == null) return false;
 		
-		List<UUID> usedWizards = data.getVariable(USED_WIZARDS_TODAY);
+		List<UUID> usedWizards = data.getVariable(USED_WIZARDS_PERMANENT);
 		return usedWizards != null && usedWizards.contains(wizardUUID);
 	}
 	
 	/**
-	 * Marks a wizard as used today by this player
+	 * Marks a wizard as used permanently by this player
 	 */
 	public static void markWizardAsUsedToday(EntityPlayer player, UUID wizardUUID) {
 		WizardData data = WizardData.get(player);
 		if (data == null) return;
 		
-		List<UUID> usedWizards = data.getVariable(USED_WIZARDS_TODAY);
+		List<UUID> usedWizards = data.getVariable(USED_WIZARDS_PERMANENT);
 		if (usedWizards == null) {
 			usedWizards = new ArrayList<>();
 		}
 		
 		if (!usedWizards.contains(wizardUUID)) {
 			usedWizards.add(wizardUUID);
-			data.setVariable(USED_WIZARDS_TODAY, usedWizards);
+			data.setVariable(USED_WIZARDS_PERMANENT, usedWizards);
 		}
 	}
 	

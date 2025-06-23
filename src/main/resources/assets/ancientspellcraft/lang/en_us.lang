@@ -1350,7 +1350,7 @@ spell.ancientspellcraft\:compulsion.select_target_location=Select a target locat
 spell.ancientspellcraft\:compulsion.select_villager_or_wizard=Select a villager or wizard for free trade
 spell.ancientspellcraft\:compulsion.villager_forced_trade=Forced %s to give you %s for free
 spell.ancientspellcraft\:compulsion.wizard_forced_trade=Forced %s to give you %s for free
-spell.ancientspellcraft\:compulsion.wizard_already_used_today=This wizard has already been used today
+spell.ancientspellcraft\:compulsion.wizard_already_used_today=This wizard has already been used permanently
 spell.ancientspellcraft\:compulsion.villager_already_used_today=This villager has already been used today
 spell.ancientspellcraft\:compulsion.select_entity_to_control=Select an entity to control (sneak-cast on a creature)
 
@@ -1818,9 +1818,9 @@ item.ancientspellcraft\:charm_meteorite_stone.desc=Bestows mastery over the Livi
 
 item.ancientspellcraft\:amulet_black_tongue.desc=Enhances the Compulsion spell to allow controlling other creatures. First cast selects a target, sneak-cast selects who will control them, second cast makes the controlled entity attack the target.
 item.ancientspellcraft\:amulet_black_tongue.name=Black Tongue Amulet
-item.ancientspellcraft\:head_whispering_veil.desc=Every day, the Compulsion spell can force a villager or wizard to give a random trade item for free. This only works once on each wizard.
+item.ancientspellcraft\:head_whispering_veil.desc=Every day, the Compulsion spell can force a villager to give a random trade item for free. Wizards can be forced once permanently. This only works once on each villager per day and once ever on each wizard.
 item.ancientspellcraft\:head_whispering_veil.name=Whispering Veil
-item.ancientspellcraft\:amulet_holy_aura.name=TODO
-item.ancientspellcraft\:amulet_holy_aura.desc=TODO
+item.ancientspellcraft\:amulet_holy_aura.name=Amulet of Holy Aura
+item.ancientspellcraft\:amulet_holy_aura.desc=Sets nearby undead on fire
 item.ancientspellcraft\:charm_wardrobe.name=Wizard's Shrunken Wardrobe
 item.ancientspellcraft\:charm_wardrobe.desc=The Attire Alteration spell cycles through 5 sets of apparel instead of just swapping with a single stored set
