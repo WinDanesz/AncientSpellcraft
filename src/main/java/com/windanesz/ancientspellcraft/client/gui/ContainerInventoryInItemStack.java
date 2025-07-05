@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ContainerInventoryInItemStack extends Container {
@@ -19,8 +20,11 @@ public class ContainerInventoryInItemStack extends Container {
 			this.addSlotToContainer(new Slot(itemInventory, 0, 80, 36) {
 				@Override
 				public boolean isItemValid(ItemStack stack) {
-					return ((IItemWithSlots) ((InventoryInItemStack) itemInventory).getStack().getItem()).isItemValid(stack.getItem()) &&
-							((IItemWithSlots) ((InventoryInItemStack) itemInventory).getStack().getItem()).isItemStackValid(stack);
+					Item item = ((InventoryInItemStack) itemInventory).getStack().getItem();
+					if (item instanceof IItemWithSlots) {
+						return ((IItemWithSlots) item).isItemValid(stack.getItem()) && ((IItemWithSlots) item).isItemStackValid(stack);
+					}
+					return false;
 				}
 
 				@Override

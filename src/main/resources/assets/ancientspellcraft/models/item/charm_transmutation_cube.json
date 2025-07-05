@@ -2,5 +2,8 @@
     "parent": "item/generated",
     "textures": {
         "layer0": "ancientspellcraft:items/charm_transmutation_cube"
-    }
+    },
+    "overrides": [
+        {"predicate": {"ready": 1.0}, "model": "ancientspellcraft:item/charm_transmutation_cube_not_ready"}
+    ]
 }

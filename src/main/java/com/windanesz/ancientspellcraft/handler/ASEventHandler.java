@@ -83,6 +83,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.Set;
 
 import static com.windanesz.ancientspellcraft.item.EnumElementalSwordEffect.getAngleBetweenEntities;
 import static electroblob.wizardry.constants.Constants.*;
@@ -1458,6 +1459,9 @@ public class ASEventHandler {
 			// Handle cloak effects
 			handleCloakEffects(player, event.getSpell());
 
+			// Handle ring of healer effect
+			handleRingOfHealerEffect(player, event.getSpell(), event.getModifiers());
+
 			if (isArtefactActive(player, ASItems.charm_knowledge_orb)) {
 
 				boolean flag = false;
@@ -1510,6 +1514,58 @@ public class ASEventHandler {
 				// Only apply effects if the spell matches the cloak's element
 				if (spell.getElement() == cloakElement) {
 					applyCloakEffect(player, cloakElement, spell);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Handles the ring of healer effect - applies beneficial effects to nearby allies when casting buff spells
+	 */
+	private static void handleRingOfHealerEffect(EntityPlayer player, Spell spell, SpellModifiers modifiers) {
+		// Check if player has the ring of healer artefact active
+		if (isArtefactActive(player, ASItems.ring_healer)) {
+			// Check if the spell is a buff spell
+			if (spell.getType() == SpellType.BUFF || spell instanceof SpellBuff) {
+				// Get nearby allies using AllyDesignationSystem
+				List<EntityLivingBase> nearbyAllies = EntityUtils.getEntitiesWithinRadius(10, player.posX, player.posY, player.posZ, player.world, EntityLivingBase.class);
+				
+				for (EntityLivingBase ally : nearbyAllies) {
+					// Skip the caster and non-allies
+					if (ally == player || !AllyDesignationSystem.isAllied(player, ally)) {
+						continue;
+					}
+					
+					// Apply beneficial effects that the caster receives to allies for 10% of the duration
+					if (spell instanceof SpellBuff) {
+						SpellBuff buffSpell = (SpellBuff) spell;
+						
+						try {
+							// Use reflection to access the potion set (same pattern as existing code)
+							Field field = ASUtils.ReflectionUtil.getField(buffSpell.getClass(), "potionSet");
+							ASUtils.ReflectionUtil.makeAccessible(field);
+							Set<Potion> potionSet = (Set<Potion>) field.get(buffSpell);
+							
+							for (Potion potion : potionSet) {
+								// Only apply beneficial effects
+								if (!potion.isBadEffect()) {
+									// Calculate 10% of the original duration
+									int originalDuration = (int) (buffSpell.getProperty(potion.getRegistryName().getPath() + "_duration").floatValue() * modifiers.get(WizardryItems.duration_upgrade));
+									int allyDuration = (int) Math.max(1, originalDuration * 0.2); // 20% of duration
+									
+									// Calculate amplifier (same as original)
+									int bonusAmplifier = buffSpell.getStandardBonusAmplifier(modifiers.get(SpellModifiers.POTENCY));
+									int amplifier = (int) buffSpell.getProperty(potion.getRegistryName().getPath() + "_strength").floatValue() + bonusAmplifier;
+									
+									// Apply the effect to the ally
+									ally.addPotionEffect(new PotionEffect(potion, allyDuration, amplifier, false, true));
+								}
+							}
+						} catch (Exception e) {
+							// Log error but don't crash
+							AncientSpellcraft.logger.warn("Failed to apply ring of healer effect: " + e.getMessage());
+						}
+					}
 				}
 			}
 		}

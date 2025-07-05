@@ -167,6 +167,10 @@ public class Settings {
 				"minecraft:chests/woodland_mansion",
 				"minecraft:chests/end_city_treasure"};
 
+		@Config.Name("Amulet of Resistance Mana Capacity")
+		@Config.Comment("List of loot tables to inject Ancient Spellcraft artefacts into.")
+		public int amulet_of_resistance_mana_capacity = 600;
+
 		@Config.Name("Artefact Inject locations")
 		@Config.Comment("List of loot tables to inject Ancient Spellcraft artefacts into.")
 		private String[] ARTEFACT_INJECTION_LOCATIONS = {
@@ -236,7 +240,7 @@ public class Settings {
 		@Config.Name("Skeleton Mage Spawn Rate")
 		@Config.Comment("Spawn rate for naturally-spawned void Skeleton Mages; higher numbers mean more Skeleton Mages will spawn. Set to 0 do disable spawning entirely")
 		@Config.RequiresMcRestart
-		public int skeleton_mage_spawn_rate = 5;
+		public int skeleton_mage_spawn_rate = 3;
 
 		@Config.Name("Skeleton Mage Max Group Size")
 		@Config.Comment("Max group size for naturally-spawned Skeleton Mages; higher numbers mean more Skeleton Mages will spawn. Set to 0 do disable spawning entirely")
@@ -496,7 +500,7 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public String[] sorcery_cloak_potion_effects = {
 				"minecraft:speed",
-				"minecraft:jump_boost", 
+				"minecraft:jump_boost",
 				"minecraft:strength",
 				"minecraft:regeneration",
 				"minecraft:absorption",
@@ -618,15 +622,30 @@ public class Settings {
 		@Config.Name("Verdant Crucible Ingredient List")
 		@Config.Comment("List of alchemical ingredients and their min/max quantities for the Verdant Crucible. Format: modid:itemname|meta|nbt|min|max, e.g. minecraft:redstone|0||1|3. Meta is required (use 0 for default), nbt is optional (empty for none).")
 		public String[] verdant_crucible_ingredients = {
-				"minecraft:redstone|0||1|3",
+				"minecraft:redstone|0||3|6",
 				"minecraft:glowstone_dust|0||1|2",
 				"minecraft:magma_cream|0||1|2",
 				"minecraft:carrot|0||1|2",
 				"minecraft:spider_eye|0||1|2",
-				"minecraft:sugar|0||1|2",
+				"minecraft:sugar|0||1|4",
 				"minecraft:blaze_powder|0||1|2",
 				"minecraft:ghast_tear|0||1|1",
-				"minecraft:glistering_melon_slice|0||1|1"
+				"minecraft:fish|3||1|1",
+				"minecraft:rabbit_foot|0||1|1",
+				"minecraft:speckled_melon|0||1|1",
+				"rustic:aloe_vera:0:1:2",
+				"rustic:blood_orchid:0:1:2",
+				"rustic:chamomile:0:1:2",
+				"rustic:cohosh:0:1:2",
+				"rustic:deathstalk:0:1:2",
+				"rustic:horsetail:0:1:2",
+				"rustic:mooncap:0:1:2",
+				"rustic:wind_thistle:0:1:2",
+				"rustic:vanta_lily:0:1:2",
+				"rustic:cloudsbluff:0:1:2",
+				"rustic:core_root:0:1:2",
+				"rustic:ginseng:0:1:2",
+				"rustic:marsh_mallow:0:1:2"
 		};
 	}
 
@@ -688,6 +707,12 @@ public class Settings {
 				+ "\nDisabling this feature will cause the game to load the default Charge spell class which can be helpful if you are having issues, but it also makes the related artefact useless!")
 		@Config.RequiresMcRestart
 		public boolean chargeSpellOverride = true;
+
+		@Config.Name("Clairvoyance Spell Override")
+		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Charge spell to add compatibility for the related artefact."
+				+ "\nDisabling this feature will cause the game to load the default Clairvoyance spell class which can be helpful if you are having issues, but it also makes the related artefact useless!")
+		@Config.RequiresMcRestart
+		public boolean clairvoyanceSpellOverride = true;
 
 		@Config.Name("Conjure Pickaxe Spell Override")
 		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Conjure Pickaxe spell to add compatibility to the Fortune related artefact."

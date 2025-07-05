@@ -1,14 +1,14 @@
 package com.windanesz.ancientspellcraft.item;
 
-import electroblob.wizardry.entity.living.ISummonedCreature;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
+import electroblob.wizardry.entity.living.ISummonedCreature;
 import electroblob.wizardry.util.EntityUtils;
+import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -45,6 +45,12 @@ public class ItemDisruptorCrown extends ItemASArtefact {
             }
             player.getCooldownTracker().setCooldown(this, COOLDOWN_TICKS);
             // Optionally, send a message to the player
+        }
+
+        if (world.isRemote && !player.getCooldownTracker().hasCooldown(this)) {
+            if(world.isRemote){
+                ParticleBuilder.create(ParticleBuilder.Type.SPHERE).entity(player).scale(10).clr(0xfff098).time(20).spawn(world);
+            }
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, stack);
     }

@@ -94,6 +94,8 @@ public class SpellTeleporter implements ITeleporter {
 
 		EntityPlayerMP player = (entity instanceof EntityPlayerMP) ? (EntityPlayerMP) entity : null;
 
+		if (player == null) { return; }
+
 		boolean sameDim = (player.dimension == targetDim);
 
 		if (!player.world.isRemote && causeBlindness) {

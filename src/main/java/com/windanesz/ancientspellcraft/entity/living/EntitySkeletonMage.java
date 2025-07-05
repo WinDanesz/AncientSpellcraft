@@ -433,7 +433,7 @@ public class EntitySkeletonMage extends AbstractSkeleton implements ISpellCaster
 
 	@Override
 	protected boolean canDespawn() {
-		return false;
+		return true;
 	}
 
 	@Override

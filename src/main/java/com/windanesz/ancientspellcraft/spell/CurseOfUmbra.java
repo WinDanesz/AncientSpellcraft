@@ -25,7 +25,7 @@ public class CurseOfUmbra extends SpellRayAS {
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 
 		// This will actually run out in the end, but only if you leave Minecraft running for 3.4 years
-		if (!world.isRemote) {
+		if (!world.isRemote && target instanceof EntityLivingBase) {
 			((EntityLivingBase) target).addPotionEffect(new PotionEffect(ASPotions.curse_of_umbra, Integer.MAX_VALUE,
 					getProperty(EFFECT_STRENGTH).intValue() + SpellBuff.getStandardBonusAmplifier(modifiers.get(SpellModifiers.POTENCY))));
 		}

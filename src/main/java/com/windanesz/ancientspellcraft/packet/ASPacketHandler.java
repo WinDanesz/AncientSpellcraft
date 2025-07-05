@@ -21,6 +21,7 @@ public class ASPacketHandler {
 		registerMessage(PacketMushroomActivation.class, PacketMushroomActivation.Message.class);
 		registerMessage(PacketExtendedSwordReach.class, PacketExtendedSwordReach.Message.class);
 		registerMessage(PacketCastWarlockSpell.class, PacketCastWarlockSpell.Message.class);
+		registerMessage(PacketItemGuiButton.class, PacketItemGuiButton.Message.class);
 	}
 
 	private static int nextPacketId = 0;

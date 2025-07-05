@@ -626,7 +626,9 @@ public final class ASSpells {
 		}
 		if (Settings.spellCompatSettings.chargeSpellOverride) {
 			registry.register(new ChargeAS());
-
+		}
+		if (Settings.spellCompatSettings.clairvoyanceSpellOverride) {
+			registry.register(new ClairvoyanceAS());
 		}
 
 		/// BASE SPELL MODIFICATION OVERRIDES ///
