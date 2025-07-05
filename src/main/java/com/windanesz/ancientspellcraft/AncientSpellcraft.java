@@ -12,26 +12,11 @@ import com.windanesz.ancientspellcraft.item.ItemRelic;
 import com.windanesz.ancientspellcraft.item.ItemWandUpgradeAS;
 import com.windanesz.ancientspellcraft.misc.ASForfeits;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
-import com.windanesz.ancientspellcraft.registry.ASBiomes;
-import com.windanesz.ancientspellcraft.registry.ASBlocks;
-import com.windanesz.ancientspellcraft.registry.ASDimensions;
-import com.windanesz.ancientspellcraft.registry.ASItems;
-import com.windanesz.ancientspellcraft.registry.ASLoot;
-import com.windanesz.ancientspellcraft.registry.BookshelfItems;
+import com.windanesz.ancientspellcraft.registry.*;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
 import com.windanesz.ancientspellcraft.util.RitualProperties;
-import com.windanesz.ancientspellcraft.worldgen.WorldGenAncientTemple;
-import com.windanesz.ancientspellcraft.worldgen.WorldGenAstralDiamondOre;
-import com.windanesz.ancientspellcraft.worldgen.WorldgenWarlockCamp;
-import com.windanesz.ancientspellcraft.worldgen.WorldGenBattlemageKeep;
-import com.windanesz.ancientspellcraft.worldgen.WorldGenBookVault;
-import com.windanesz.ancientspellcraft.worldgen.WorldGenCrystalShardOre;
-import com.windanesz.ancientspellcraft.worldgen.WorldGenCrystalSilverOre;
-import com.windanesz.ancientspellcraft.worldgen.WorldGenDevoritiumOre;
-import com.windanesz.ancientspellcraft.worldgen.WorldGenSageFlax;
-import com.windanesz.ancientspellcraft.worldgen.WorldGenSageHill;
-import com.windanesz.ancientspellcraft.worldgen.WorldgenAncientVault;
-import com.windanesz.ancientspellcraft.worldgen.WorldgenFallenTower;
+import com.windanesz.ancientspellcraft.worldgen.*;
+import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.event.SpellCastEvent;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -44,7 +29,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -59,30 +43,19 @@ public class AncientSpellcraft {
 
 	public static final String MODID = "ancientspellcraft";
 	public static final String NAME = "Ancient Spellcraft by Dan";
-	public static final String DEPENDENCIES = "required-after:mixinbooter;"
-			+ "required-after:ebwizardry@[@WIZARDRY_VERSION@,4.4);"
-			+ "required-after:wizardryutils@[1.2.2,);"
-			+ "required-after:baubles;"
-			+ "after:jei@[4.15.0,);"
-			+ "after:artemislib;";
-
+	public static final String DEPENDENCIES = "required-after:mixinbooter;" + "required-after:ebwizardry@[@WIZARDRY_VERSION@,4.4);" + "required-after:wizardryutils@[1.2.2,);" + "required-after:baubles;" + "after:jei@[4.15.0,);" + "after:artemislib;";
 
 	public static final Random rand = new Random();
 	public static final Material DEVORITIUM = (new Material(MapColor.BLACK));
+	public static final SpellType METAMATIC = EnumHelper.addEnum(SpellType.class, "METAMAGIC", new Class[]{String.class}, "metamagic");
 	public static final Item.ToolMaterial DEVORITIUM_TOOL_MATERIAL = EnumHelper.addToolMaterial("devoritium", 2, 250, 6.0F, 2.0F, 0);
-	public static final ItemArmor.ArmorMaterial DEVORITIUM_ARMOR_MATERIAL = EnumHelper.addArmorMaterial(
-			AncientSpellcraft.MODID + ":" + "devoritium_armor",
-			AncientSpellcraft.MODID + ":devoritium_armor",
-			16,
-			new int[] {2, 5, 6, 3}, // reductionAmounts
-			0,
-			SoundEvents.ITEM_ARMOR_EQUIP_GENERIC,
-			1);
+	public static final ItemArmor.ArmorMaterial DEVORITIUM_ARMOR_MATERIAL = EnumHelper.addArmorMaterial(AncientSpellcraft.MODID + ":" + "devoritium_armor", AncientSpellcraft.MODID + ":devoritium_armor", 16, new int[]{2, 5, 6, 3}, // reductionAmounts
+			0, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 1);
 
 	public static final SpellCastEvent.Source BATTLEMAGE_ITEM = EnumHelper.addEnum(SpellCastEvent.Source.class, "BATTLEMAGE_ITEM", new Class[]{});
 	public static final SpellCastEvent.Source SAGE_ITEM = EnumHelper.addEnum(SpellCastEvent.Source.class, "SAGE_ITEM", new Class[]{});
 	public static final SpellCastEvent.Source WARLOCK_ITEM = EnumHelper.addEnum(SpellCastEvent.Source.class, "WARLOCK_ITEM", new Class[]{});
-	
+
 	/**
 	 * Static instance of the {@link Settings} object for AncientSpellcraft.
 	 */
