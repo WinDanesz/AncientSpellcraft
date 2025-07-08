@@ -1252,7 +1252,7 @@ public class ASEventHandler {
 					}
 				} else if (artefact == ASItems.charm_infernal_stone) {
 					// Get the actual item stack for the infernal stone
-					ItemStack stoneStack = getArtefactItemStack(player, (ItemArtefact) artefact);
+					ItemStack stoneStack = ASBaublesIntegration.getEquippedArtefactStacks(player, ItemArtefact.Type.CHARM).get(0);
 					
 					if (event.getSpell().getElement() == Element.FIRE) {
 						// Apply heat-based bonuses for fire spells
@@ -1759,10 +1759,6 @@ public class ASEventHandler {
 				}
 			}
 		}
-	}
-
-	private static ItemStack getArtefactItemStack(EntityPlayer player, ItemArtefact artefact) {
-		return ASUtils.getItemStackFromInventoryHotbar(player, artefact);
 	}
 
 	private static Spell getCurrentSpellFromSpellBearingArtefact(Item item, ItemStack stack) {
