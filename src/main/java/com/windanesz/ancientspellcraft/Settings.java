@@ -171,6 +171,10 @@ public class Settings {
 		@Config.Comment("List of loot tables to inject Ancient Spellcraft artefacts into.")
 		public int amulet_of_resistance_mana_capacity = 600;
 
+		@Config.Name("Ancient Wand Max Spell Tier")
+		@Config.Comment("Max Spell Tier for Ancient Wands (0-3")
+		public int ancient_wand_max_spell_tier = 2;
+
 		@Config.Name("Artefact Inject locations")
 		@Config.Comment("List of loot tables to inject Ancient Spellcraft artefacts into.")
 		private String[] ARTEFACT_INJECTION_LOCATIONS = {
@@ -726,6 +730,13 @@ public class Settings {
 				+ "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
 		@Config.RequiresMcRestart
 		public int conjurePickaxeSpellNetworkID = 41;
+
+		@Config.Name("Plague of Darkenss Spell Network ID")
+		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! "
+				+ "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update."
+				+ "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
+		@Config.RequiresMcRestart
+		public int plagueOfDarknessSpellNetworkID = 99;
 
 	}
 

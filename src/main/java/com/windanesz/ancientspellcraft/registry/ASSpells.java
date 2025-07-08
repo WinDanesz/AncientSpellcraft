@@ -630,6 +630,7 @@ public final class ASSpells {
 		if (Settings.spellCompatSettings.clairvoyanceSpellOverride) {
 			registry.register(new ClairvoyanceAS());
 		}
+		registry.register(new PlagueOfDarknessAS());
 
 		/// BASE SPELL MODIFICATION OVERRIDES ///
 	}

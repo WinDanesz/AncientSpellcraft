@@ -4,301 +4,99 @@
             "name": "main",
             "rolls": 1,
             "entries": [
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_lodestone",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_berserker",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_prismarine",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_mana_transfer",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_blast",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_range",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_focus_crystal",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_unbinding",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_disenchanter",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_quicksand",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:amulet_power",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:amulet_healing_mushroom",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:amulet_persistence",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:amulet_shield",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_mana_flask",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_enchanted_needle",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:cornucopia",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_gold_bag",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_magic_light",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_bucket_coal",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_seed_bag",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_burrow",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_quicksand_walker",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:belt_enchanter",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:belt_vortex",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:belt_stone",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:head_curse",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:head_magelight",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:head_merchant",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_wizard_tankard",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_mana_greater",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:belt_spring_charge",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:belt_scroll_holder",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_clover",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:amulet_imbued_marble",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_kinetic",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_spirit_ward",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_glyph_illumination",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_glyph_leeching",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_glyph_antigravity",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_glyph_vitality",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_glyph_warden",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_cloudwalker",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_withdraw_life",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_devotion",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_majestic_mana",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_metamagic_amplifier",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_hoarders_orb",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:amulet_inspiration",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:amulet_oakflesh",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_metamagic_preserve",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_griefing",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:amulet_domus",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_plunderers_mark",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:belt_soul_scorch",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:large_mana_flask_recipe",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:amulet_cursed_mirror",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:charm_wizard_ale",
-                    "weight": 1
-                },
-                {
-                    "type": "item",
-                    "name": "ancientspellcraft:ring_rare_scroll",
-                    "weight": 1
-                }
+                { "type": "item", "name": "ancientspellcraft:amulet_absorb_potion", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_black_tongue", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_cursed_mirror", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_cursed_pendant", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_domus", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_elemental_defense", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_healing_mushroom", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_imbued_marble", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_inspiration", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_oakflesh", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_of_resistance" , "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_persistence", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_power", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_searing_skin", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_shield", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_spellbinding", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:belt_emberguard", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:belt_enchanted_whetstone", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:belt_enchanter", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:belt_scroll_holder", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:belt_soul_scorch", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:belt_spring_charge", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:belt_stone", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:belt_temporal_anchor", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:belt_vortex", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_aura_alacrity", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_aura_defense", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_aura_hatred", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_aura_purity", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_aura_tenacity", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_aura_vulnerability", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_aura_warding", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_aura_wither", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_bucket_coal", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_burrow", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_clover", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_conjuration_inhibitor", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_crystal_sickle", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_diamond_goose", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_enchanted_needle", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_focus_stone", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_glyph_antigravity", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_glyph_fortification", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_glyph_illumination", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_glyph_imbuement", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_glyph_leeching", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_glyph_might", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_glyph_shield_disable", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_glyph_vitality", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_glyph_warden", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_gold_bag", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_hoarders_orb", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_magic_light", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_majestic_mana", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_metamagic_amplifier", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_meteorite_stone", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_monster_charm", "weight": 1 },
+                
+                { "type": "item", "name": "ancientspellcraft:charm_plunderers_mark", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_potion_kit", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_quicksand_walker", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_seed_bag", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_teleportation_stone", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_wardrobe", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_wizard_ale", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_wizard_tankard", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:head_curse", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:head_magelight", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:head_mask_of_perseigni", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:head_merchant", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_rare_scroll", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_absorb_crystal", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_berserker", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_blast", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_chaos_blast_multitarget", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_cloudwalker", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_devotion", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_disenchanter", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_duration", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_focus_crystal", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_griefing", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_healer", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_kinetic", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_life_drain", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_lodestone", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_mana_greater", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_metamagic_preserve", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_of_force", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_quicksand", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_range", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_spirit_ward", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_unbinding", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_withdraw_life", "weight": 1 }
             ]
         }
     ]

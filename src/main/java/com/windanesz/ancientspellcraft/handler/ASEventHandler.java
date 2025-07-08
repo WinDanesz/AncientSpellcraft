@@ -1250,14 +1250,30 @@ public class ASEventHandler {
 					if (event.getSpell() instanceof IClassSpell && (((IClassSpell) event.getSpell()).getArmourClass() == ItemWizardArmour.ArmourClass.WARLOCK)) {
 						modifiers.set(SpellModifiers.POTENCY, 1.25f * potency, false);
 					}
-				} else if (artefact == ASItems.charm_infernal_stone &&event.getSpell().getElement() == Element.FIRE && player.isBurning()) {
-					// Boost fire spell potency
-					event.getModifiers().set(SpellModifiers.POTENCY,
-							event.getModifiers().get(SpellModifiers.POTENCY) * 1.2f, false);
-					// Extinguish the player
-					player.extinguish();
-					// Apply fire resistance
-					player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 100)); // 5 seconds
+				} else if (artefact == ASItems.charm_infernal_stone) {
+					// Get the actual item stack for the infernal stone
+					ItemStack stoneStack = getArtefactItemStack(player, (ItemArtefact) artefact);
+					
+					if (event.getSpell().getElement() == Element.FIRE) {
+						// Apply heat-based bonuses for fire spells
+						if (ItemInfernalStone.isHot(stoneStack)) {
+							// Reduce mana cost by 25%
+							ItemInfernalStone.applyFireSpellBonuses(event.getModifiers(), stoneStack);
+							// Consume heat for the spell cast
+							ItemInfernalStone.consumeHeatForSpell(stoneStack);
+						}
+						
+						// If player is burning, extinguish and grant bonuses
+						if (player.isBurning()) {
+							// Boost fire spell potency by 15%
+							event.getModifiers().set(SpellModifiers.POTENCY,
+									event.getModifiers().get(SpellModifiers.POTENCY) * 1.15f, false);
+							// Extinguish the player
+							player.extinguish();
+							// Apply fire resistance for 2 seconds (40 ticks)
+							player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 40));
+						}
+					}
 				}
 
 				if (artefact == ASItems.ring_power) {
@@ -1845,6 +1861,8 @@ public class ASEventHandler {
 			if (ASBaublesIntegration.enabled()) {
 				ASBaublesIntegration.tickWornArtefacts(player);
 			}
+			
+
 		}
 
 	}

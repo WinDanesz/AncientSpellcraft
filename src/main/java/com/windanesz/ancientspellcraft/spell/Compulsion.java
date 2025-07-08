@@ -89,20 +89,33 @@ public class Compulsion extends SpellRayAS {
 				return false;
 			}
 			
+			// Ensure villager trades are initialized by setting the customer first
+			villager.setCustomer(player);
 			MerchantRecipeList recipes = villager.getRecipes(player);
+			
 			if (recipes != null && !recipes.isEmpty()) {
+				// Use the original simple approach but with better initialization
 				MerchantRecipe randomRecipe = recipes.get(world.rand.nextInt(recipes.size()));
 				ItemStack freeItem = randomRecipe.getItemToSell().copy();
 				
-				if (!player.addItemStackToInventory(freeItem)) {
-					player.dropItem(freeItem, false);
+				// Only proceed if we actually got a valid item
+				if (!freeItem.isEmpty()) {
+					if (!player.addItemStackToInventory(freeItem)) {
+						player.dropItem(freeItem, false);
+					}
+					
+					// Mark this villager as used today
+					ItemWhisperingVeil.markVillagerAsUsedToday(player, villager.getUniqueID());
+					
+					player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.villager_forced_trade", villager.getName(), freeItem.getDisplayName()), true);
+					return true;
+				} else {
+					player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.villager_no_valid_trades"), true);
+					return false;
 				}
-				
-				// Mark this villager as used today
-				ItemWhisperingVeil.markVillagerAsUsedToday(player, villager.getUniqueID());
-				
-				player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.villager_forced_trade", villager.getName(), freeItem.getDisplayName()), true);
-				return true;
+			} else {
+				player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.villager_no_trades"), true);
+				return false;
 			}
 		} else if (hasWhisperingVeil && target instanceof EntityWizard) {
 			EntityWizard wizard = (EntityWizard) target;
@@ -113,20 +126,33 @@ public class Compulsion extends SpellRayAS {
 				return false;
 			}
 			
+			// Ensure wizard trades are initialized by setting the customer first
+			wizard.setCustomer(player);
 			MerchantRecipeList recipes = wizard.getRecipes(player);
+			
 			if (recipes != null && !recipes.isEmpty()) {
+				// Use the original simple approach but with better initialization
 				MerchantRecipe randomRecipe = recipes.get(world.rand.nextInt(recipes.size()));
 				ItemStack freeItem = randomRecipe.getItemToSell().copy();
 				
-				if (!player.addItemStackToInventory(freeItem)) {
-					player.dropItem(freeItem, false);
+				// Only proceed if we actually got a valid item
+				if (!freeItem.isEmpty()) {
+					if (!player.addItemStackToInventory(freeItem)) {
+						player.dropItem(freeItem, false);
+					}
+					
+					// Mark this wizard as used today
+					ItemWhisperingVeil.markWizardAsUsedToday(player, wizard.getUniqueID());
+					
+					player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.wizard_forced_trade", wizard.getName(), freeItem.getDisplayName()), true);
+					return true;
+				} else {
+					player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.wizard_no_valid_trades"), true);
+					return false;
 				}
-				
-				// Mark this wizard as used today
-				ItemWhisperingVeil.markWizardAsUsedToday(player, wizard.getUniqueID());
-				
-				player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.wizard_forced_trade", wizard.getName(), freeItem.getDisplayName()), true);
-				return true;
+			} else {
+				player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.wizard_no_trades"), true);
+				return false;
 			}
 		}
 		

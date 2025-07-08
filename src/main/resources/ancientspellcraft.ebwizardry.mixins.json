@@ -10,7 +10,8 @@
     "MixinLifeDrain",
     "MixinPocketFurnace",
     "MixinPotionSlowTime",
-    "MixinRandomSpell"
+    "MixinRandomSpell",
+    "MixinWizardryItems"
   ],
   "client": []
 }

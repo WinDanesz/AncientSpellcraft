@@ -31,9 +31,10 @@ public class RitualDiscoveryData {
 	}
 
 	public static boolean hasRitualBeenDiscovered(EntityPlayer player, Ritual ritual) {
-		List<String> knownRituals = getKnownRituals(player);
-
-		return knownRituals.contains(Ritual.getRegistryNameString(ritual));
+		return true;
+		//List<String> knownRituals = getKnownRituals(player);
+//
+ //		return knownRituals.contains(Ritual.getRegistryNameString(ritual));
 	}
 
 	public static List<String> getKnownRituals(EntityPlayer player) {
