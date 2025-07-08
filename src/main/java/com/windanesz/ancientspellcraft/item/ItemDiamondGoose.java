@@ -63,7 +63,7 @@ public class ItemDiamondGoose extends ItemASArtefact implements ITickableArtefac
 									  float hitX, float hitY, float hitZ) {
 		ItemStack stack = player.getHeldItem(hand);
 
-		if (!world.isRemote) {
+		if (!world.isRemote && player.isSneaking()) {
 			// Check if already bound to a block
 			String existingBlock = getNBTString(stack);
 			if (existingBlock != null && !existingBlock.isEmpty()) {

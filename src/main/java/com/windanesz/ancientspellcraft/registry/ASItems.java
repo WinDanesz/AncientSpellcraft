@@ -3,8 +3,6 @@ package com.windanesz.ancientspellcraft.registry;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDevoritiumBomb;
 import com.windanesz.ancientspellcraft.item.*;
-import com.windanesz.ancientspellcraft.item.ItemTeleportationStone;
-import com.windanesz.wizardryutils.registry.ItemRegistry;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
@@ -204,7 +202,7 @@ public final class ASItems {
 	public static final Item charm_arcane_diffuser = placeholder();
 	public static final Item charm_skeleton_ghosts = placeholder();
 	public static final Item charm_rainbowstring = placeholder();
-	public static final Item charm_pale_flame = placeholder();
+
 	public static final Item charm_arcane_mirror = placeholder();
 	public static final Item charm_infernal_stone = placeholder();
 	public static final Item charm_meteorite_stone = placeholder();
@@ -472,6 +470,8 @@ public final class ASItems {
 
 	public static final Item charm_verdant_crucible = placeholder();
 
+	public static final Item charm_vessel_of_the_withered_oath = placeholder();
+
 	// below registry methods are courtesy of EB
 	public static void registerItem(IForgeRegistry<Item> registry, String name, Item item) {
 		registerItem(registry, name, item, false);
@@ -496,7 +496,7 @@ public final class ASItems {
 		}
 	}
 
-	public static void registerItem(IForgeRegistry<Item> registry, String modid, String name, Item item, boolean setTabIcon) {
+	public static void registerItem(IForgeRegistry<Item> registry, String name, String modid, Item item, boolean setTabIcon) {
 		item.setRegistryName(modid, name);
 		item.setTranslationKey(item.getRegistryName().toString());
 		registry.register(item);
@@ -688,13 +688,13 @@ public final class ASItems {
 		registerItem(registry, "ring_poison_arrow", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_power", new ItemSetArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING, "jewels_of_power", 4, new ArrayList<String>(Arrays.asList("ring_power", "amulet_power", "charm_power_orb"))));
 		registerItem(registry, "ring_prismarine", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
-		registerItem(registry, "ring_mana_transfer", new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_mana_lesser", AncientSpellcraft.MODID, new ItemManaArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING, 500));
-		ItemRegistry.registerItemArtefact(registry, "ring_protector", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_lily_flower", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_mana_cost", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_charge", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_solid_air", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_mana_transfer", new ItemRingManaTransfer(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_mana_lesser", AncientSpellcraft.MODID, new ItemManaArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING, 500));
+		registerItem(registry, "ring_protector", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_lily_flower", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_mana_cost", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_charge", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_solid_air", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_lodestone", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_berserker", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_blast", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING) {
@@ -723,101 +723,101 @@ public final class ASItems {
 			}
 		});
 
-		ItemRegistry.registerItemArtefact(registry, "ring_focus_crystal", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_unbinding", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_disenchanter", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_quicksand", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_mana_greater", AncientSpellcraft.MODID, new ItemManaArtefact(EnumRarity.RARE, ItemArtefact.Type.RING, 1000));
-		ItemRegistry.registerItemArtefact(registry, "ring_devotion", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_withdraw_life", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_cloudwalker", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_spirit_ward", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_kinetic", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_griefing", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_metamagic_preserve", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_rare_scroll", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_absorb_crystal", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_chaos_blast_multitarget", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_of_force", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_life_drain", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_undeath", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_eternal_contingency", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_shivering", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_permanent_shrinkage", AncientSpellcraft.MODID, new ItemASArtemisLibArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_permanent_growth", AncientSpellcraft.MODID, new ItemASArtemisLibArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_arcane_flames", AncientSpellcraft.MODID, new ItemArcaneFlameRing(EnumRarity.EPIC, ItemArtefact.Type.RING));
-		ItemRegistry.registerItemArtefact(registry, "ring_healer", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_focus_crystal", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_unbinding", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_disenchanter", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_quicksand", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_mana_greater", AncientSpellcraft.MODID, new ItemManaArtefact(EnumRarity.RARE, ItemArtefact.Type.RING, 1000));
+		registerItem(registry, "ring_devotion", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_withdraw_life", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_cloudwalker", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_spirit_ward", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_kinetic", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_griefing", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_metamagic_preserve", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_rare_scroll", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_absorb_crystal", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_chaos_blast_multitarget", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_of_force", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_life_drain", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_undeath", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_eternal_contingency", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_shivering", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_permanent_shrinkage", AncientSpellcraft.MODID, new ItemASArtemisLibArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_permanent_growth", AncientSpellcraft.MODID, new ItemASArtemisLibArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_arcane_flames", AncientSpellcraft.MODID, new ItemArcaneFlameRing(EnumRarity.EPIC, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_healer", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 
 		/// amulet
-		ItemRegistry.registerItemArtefact(registry, "amulet_mana", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_rabbit", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_elemental_offense", AncientSpellcraft.MODID, new AbstractItemArtefactWithSlots(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET, 1, 1, true) {
+		registerItem(registry, "amulet_mana", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_rabbit", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_elemental_offense", AncientSpellcraft.MODID, new AbstractItemArtefactWithSlots(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET, 1, 1, true) {
 			@Override
 			public boolean isItemValid(Item item) {
 				return item instanceof ItemCrystal;
 			}
 		});
-		ItemRegistry.registerItemArtefact(registry, "amulet_talisman_of_affinity", AncientSpellcraft.MODID, new ItemTalismanOfAffinity(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_poison_resistance", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_power", AncientSpellcraft.MODID, new ItemSetArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET, "jewels_of_power", 4, new ArrayList<String>(Arrays.asList("ring_power", "amulet_power", "charm_power_orb"))));
-		ItemRegistry.registerItemArtefact(registry, "amulet_persistence", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_healing_mushroom", AncientSpellcraft.MODID, new ItemAmberMushroomAmulet(EnumRarity.RARE, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_shield", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_imbued_marble", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_oakflesh", AncientSpellcraft.MODID, new ItemAmuletOaken(EnumRarity.RARE, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_inspiration", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_domus", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_searing_skin", AncientSpellcraft.MODID, new ItemSearingSkinAmulet(EnumRarity.RARE, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_cursed_mirror", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_absorb_potion", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_spellbinding", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_cursed_pendant", AncientSpellcraft.MODID, new ItemAmuletCursedPendant(EnumRarity.RARE, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_elemental_defense", AncientSpellcraft.MODID, new AbstractItemArtefactWithSlots(EnumRarity.RARE, ItemArtefact.Type.AMULET, 1, 1, true) {
+		registerItem(registry, "amulet_talisman_of_affinity", AncientSpellcraft.MODID, new ItemTalismanOfAffinity(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_poison_resistance", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_power", AncientSpellcraft.MODID, new ItemSetArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET, "jewels_of_power", 4, new ArrayList<String>(Arrays.asList("ring_power", "amulet_power", "charm_power_orb"))));
+		registerItem(registry, "amulet_persistence", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_healing_mushroom", AncientSpellcraft.MODID, new ItemAmberMushroomAmulet(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_shield", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_imbued_marble", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_oakflesh", AncientSpellcraft.MODID, new ItemAmuletOaken(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_inspiration", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_domus", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_searing_skin", AncientSpellcraft.MODID, new ItemSearingSkinAmulet(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_cursed_mirror", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_absorb_potion", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_spellbinding", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_cursed_pendant", AncientSpellcraft.MODID, new ItemAmuletCursedPendant(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_elemental_defense", AncientSpellcraft.MODID, new AbstractItemArtefactWithSlots(EnumRarity.RARE, ItemArtefact.Type.AMULET, 1, 1, true) {
 				@Override
 				public boolean isItemValid(Item item) {
 					return item instanceof ItemCrystal;
 				}
 		});
-		ItemRegistry.registerItemArtefact(registry, "amulet_black_tongue", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_curse_ward", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_pendant_of_eternity", AncientSpellcraft.MODID, new ItemEternityPendant(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_time_knot", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_arcane_catalyst", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_elemental_aura", AncientSpellcraft.MODID, new ItemElementalAuraAmulet(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_time_slow", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_holy_aura", AncientSpellcraft.MODID, new ItemAmuletHolyAura(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "amulet_of_resistance", AncientSpellcraft.MODID, new ItemAmuletOfResistance());
+		registerItem(registry, "amulet_black_tongue", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_of_resistance", AncientSpellcraft.MODID, new ItemAmuletOfResistance(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_curse_ward", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_pendant_of_eternity", AncientSpellcraft.MODID, new ItemEternityPendant(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_time_knot", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_arcane_catalyst", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_elemental_aura", AncientSpellcraft.MODID, new ItemElementalAuraAmulet(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_time_slow", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_holy_aura", AncientSpellcraft.MODID, new ItemAmuletHolyAura(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 
 		/// charm
-		ItemRegistry.registerItemArtefact(registry, "charm_mana_flask", AncientSpellcraft.MODID, new ItemEverfullManaFlask());
-		ItemRegistry.registerItemArtefact(registry, "charm_ice_cream", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_wild_catalyst", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_sentinel_eye", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_transcribing_tome", AncientSpellcraft.MODID, new ItemTranscribingTome(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_mana_orb", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_specterlight_torch", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_hungry_chest", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_diamond_goose", AncientSpellcraft.MODID, new ItemDiamondGoose(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_wardrobe", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_seed_bag", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_wizard_tankard", AncientSpellcraft.MODID, new ItemWizardTankard(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_enchanted_needle", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_bucket_coal", AncientSpellcraft.MODID, new ItemCoalBucket(EnumRarity.RARE));
-		ItemRegistry.registerItemArtefact(registry, "cornucopia", AncientSpellcraft.MODID, new ItemCornucopia(EnumRarity.RARE));
-		ItemRegistry.registerItemArtefact(registry, "charm_gold_bag", AncientSpellcraft.MODID, new ItemGoldBag(EnumRarity.RARE));
-		ItemRegistry.registerItemArtefact(registry, "charm_quicksand_walker", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_magic_light", AncientSpellcraft.MODID, new ItemPhialOfEternalFlame(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_burrow", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_hoarders_orb", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_metamagic_amplifier", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_majestic_mana", AncientSpellcraft.MODID, new ItemManaArtefact(EnumRarity.RARE, ItemArtefact.Type.RING, 2500));
-		ItemRegistry.registerItemArtefact(registry, "charm_plunderers_mark", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_wizard_ale", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_potion_kit", AncientSpellcraft.MODID, new ItemDimensionalDisk(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_crystal_sickle", AncientSpellcraft.MODID, new ItemCrystalSickle(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_focus_stone", AncientSpellcraft.MODID, new ItemFocusStone(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_infernal_stone", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_meteorite_stone", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_mana_flask", AncientSpellcraft.MODID, new ItemEverfullManaFlask(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_ice_cream", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_wild_catalyst", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_sentinel_eye", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_transcribing_tome", AncientSpellcraft.MODID, new ItemTranscribingTome(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_mana_orb", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_specterlight_torch", AncientSpellcraft.MODID, new ItemSpecterLightTorch(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_hungry_chest", AncientSpellcraft.MODID, new ItemHungryChest(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_diamond_goose", AncientSpellcraft.MODID, new ItemDiamondGoose(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_wardrobe", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_seed_bag", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_wizard_tankard", AncientSpellcraft.MODID, new ItemWizardTankard(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_enchanted_needle", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_bucket_coal", AncientSpellcraft.MODID, new ItemCoalBucket(EnumRarity.RARE));
+		registerItem(registry, "cornucopia", AncientSpellcraft.MODID, new ItemCornucopia(EnumRarity.RARE));
+		registerItem(registry, "charm_gold_bag", AncientSpellcraft.MODID, new ItemGoldBag(EnumRarity.RARE));
+		registerItem(registry, "charm_quicksand_walker", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_magic_light", AncientSpellcraft.MODID, new ItemPhialOfEternalFlame(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_burrow", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_hoarders_orb", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_metamagic_amplifier", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_majestic_mana", AncientSpellcraft.MODID, new ItemManaArtefact(EnumRarity.RARE, ItemArtefact.Type.RING, 2500));
+		registerItem(registry, "charm_plunderers_mark", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_wizard_ale", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_potion_kit", AncientSpellcraft.MODID, new ItemDimensionalDisk(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_crystal_sickle", AncientSpellcraft.MODID, new ItemCrystalSickle(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_focus_stone", AncientSpellcraft.MODID, new ItemFocusStone(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_infernal_stone", AncientSpellcraft.MODID, new ItemInfernalStone(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_meteorite_stone", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItemBlock(registry, ASBlocks.ARTEFACT_PENSIVE, new ItemBlock(ASBlocks.ARTEFACT_PENSIVE) {
 			@Override
 			public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
@@ -829,100 +829,114 @@ public final class ASItems {
 				return EnumRarity.EPIC;
 			}
 		});
-		ItemRegistry.registerItemArtefact(registry, "charm_knowledge_orb", AncientSpellcraft.MODID, new ItemKnowledgeOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_power_orb", AncientSpellcraft.MODID, new ItemSetArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "jewels_of_power", 4, new ArrayList<String>(Arrays.asList("ring_power", "amulet_power", "charm_power_orb"))));
-		ItemRegistry.registerItemArtefact(registry, "charm_progression_orb", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_suppression_orb", AncientSpellcraft.MODID, new ItemDevoritiumOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_lightning_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:thunderstorm", 6000, Element.LIGHTNING));
-		ItemRegistry.registerItemArtefact(registry, "charm_ice_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:ice_age", 6000, Element.ICE));
-		ItemRegistry.registerItemArtefact(registry, "charm_earth_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:earthquake", 6000, Element.EARTH));
-		ItemRegistry.registerItemArtefact(registry, "charm_healing_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:font_of_vitality", 6000, Element.HEALING));
-		ItemRegistry.registerItemArtefact(registry, "charm_necromancy_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:plague_of_darkness", 6000, Element.NECROMANCY));
-		ItemRegistry.registerItemArtefact(registry, "charm_fire_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:firestorm", 6000, Element.FIRE));
-		ItemRegistry.registerItemArtefact(registry, "charm_sorcery_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:shockwave", 6000, Element.SORCERY));
-		ItemRegistry.registerItemArtefact(registry, "charm_rift_bottle", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
-		ItemRegistry.registerItemArtefact(registry, "charm_reanimation", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_evergrowing_crystal", AncientSpellcraft.MODID, new ItemEvergrowingCrystal(EnumRarity.EPIC));
-		ItemRegistry.registerItemArtefact(registry, "charm_shadow_blade", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_elemental_grimoire", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_war_horn", AncientSpellcraft.MODID, new ItemHorn(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_wand_upgrade", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_cryostasis", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_prismatic_spray", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_runic_hammer", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_fabrikator_toolkit", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_scissors", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_philosophers_stone", AncientSpellcraft.MODID, new ItemPhiloshopersStone(EnumRarity.EPIC));
-		ItemRegistry.registerItemArtefact(registry, "charm_omnicron", AncientSpellcraft.MODID, new ItemOmnicron(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_cube_phasing", AncientSpellcraft.MODID, new ItemCubePhasing(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_cube_duplication", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_spectral_army", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_spectral_tome", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_clover", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_stone_tablet", AncientSpellcraft.MODID, new ItemMoonLetterDictionary(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_elemental_alkahest", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_sage_diary", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_devoritium_magnet", AncientSpellcraft.MODID, new ItemDevoritiumMagnet(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_thousand_anvils", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_dimensional_disk", AncientSpellcraft.MODID, new ItemDimensionalDisk(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_vault_key", AncientSpellcraft.MODID, new ItemVaultKey(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_arcane_diffuser", AncientSpellcraft.MODID, new ItemFocusStone(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_skeleton_ghosts", AncientSpellcraft.MODID, new ItemFocusStone(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_guardian_blade", AncientSpellcraft.MODID, new ItemGuardianBlade(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_rainbowstring", AncientSpellcraft.MODID, new ItemRainbowString(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_pale_flame", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_arcane_mirror", AncientSpellcraft.MODID, new ItemArcaneMirror(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_ancient_wand", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_transmutation_cube", AncientSpellcraft.MODID, new ItemCubeTransmutation());
-		ItemRegistry.registerItemArtefact(registry, "scepter_mind_control", AncientSpellcraft.MODID, new ItemOverlordScepter());
-		ItemRegistry.registerItemArtefact(registry, "purifying_elixir_recipe", AncientSpellcraft.MODID, new ItemLostRecipe(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "large_mana_flask_recipe", AncientSpellcraft.MODID, new ItemLostRecipe(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_knowledge_orb", AncientSpellcraft.MODID, new ItemKnowledgeOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_power_orb", AncientSpellcraft.MODID, new ItemSetArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "jewels_of_power", 4, new ArrayList<String>(Arrays.asList("ring_power", "amulet_power", "charm_power_orb"))));
+		registerItem(registry, "charm_progression_orb", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_suppression_orb", AncientSpellcraft.MODID, new ItemDevoritiumOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_lightning_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:thunderstorm", 6000, Element.LIGHTNING));
+		registerItem(registry, "charm_ice_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:ice_age", 6000, Element.ICE));
+		registerItem(registry, "charm_earth_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:earthquake", 6000, Element.EARTH));
+		registerItem(registry, "charm_healing_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:font_of_vitality", 6000, Element.HEALING));
+		registerItem(registry, "charm_necromancy_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:plague_of_darkness", 6000, Element.NECROMANCY));
+		registerItem(registry, "charm_fire_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:firestorm", 6000, Element.FIRE));
+		registerItem(registry, "charm_sorcery_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:shockwave", 6000, Element.SORCERY));
+		registerItem(registry, "charm_rift_bottle", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
+		registerItem(registry, "charm_reanimation", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_evergrowing_crystal", AncientSpellcraft.MODID, new ItemEvergrowingCrystal(EnumRarity.EPIC));
+		registerItem(registry, "charm_shadow_blade", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_elemental_grimoire", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_war_horn", AncientSpellcraft.MODID, new ItemHorn(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_wand_upgrade", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_cryostasis", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_prismatic_spray", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_runic_hammer", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_fabrikator_toolkit", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_scissors", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_philosophers_stone", AncientSpellcraft.MODID, new ItemPhiloshopersStone(EnumRarity.EPIC));
+		registerItem(registry, "charm_omnicron", AncientSpellcraft.MODID, new ItemOmnicron(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_cube_phasing", AncientSpellcraft.MODID, new ItemCubePhasing(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_cube_duplication", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_spectral_army", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_spectral_tome", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_clover", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_stone_tablet", AncientSpellcraft.MODID, new ItemMoonLetterDictionary(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_elemental_alkahest", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_sage_diary", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_devoritium_magnet", AncientSpellcraft.MODID, new ItemDevoritiumMagnet(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_thousand_anvils", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_dimensional_disk", AncientSpellcraft.MODID, new ItemDimensionalDisk(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_vault_key", AncientSpellcraft.MODID, new ItemVaultKey(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_arcane_diffuser", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_skeleton_ghosts", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_guardian_blade", AncientSpellcraft.MODID, new ItemGuardianBlade(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_rainbowstring", AncientSpellcraft.MODID, new ItemRainbowString(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 
-		ItemRegistry.registerItemArtefact(registry, "charm_glyph_illumination", AncientSpellcraft.MODID, new ItemGlyphOfIllumination(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_glyph_leeching", AncientSpellcraft.MODID, new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_glyph_antigravity", AncientSpellcraft.MODID, new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_glyph_vitality", AncientSpellcraft.MODID, new ItemGlyphArtefact.ItemGlyphViality(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_glyph_warden", AncientSpellcraft.MODID, new ItemGlyphArtefact.ItemGlyphWarden(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_glyph_imbuement", AncientSpellcraft.MODID, new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_glyph_shield_disable", AncientSpellcraft.MODID, new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_glyph_fortification", AncientSpellcraft.MODID, new ItemGlyphArtefact.ItemGlyphFortification(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_glyph_might", AncientSpellcraft.MODID, new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_glyph_charge", AncientSpellcraft.MODID, new ItemGlyphArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_arcane_mirror", AncientSpellcraft.MODID, new ItemArcaneMirror(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_ancient_wand", AncientSpellcraft.MODID, new ItemAncientWand(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_transmutation_cube", AncientSpellcraft.MODID, new ItemCubeTransmutation(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "scepter_mind_control", AncientSpellcraft.MODID, new ItemOverlordScepter());
+		registerItem(registry, "purifying_elixir_recipe", AncientSpellcraft.MODID, new ItemLostRecipe(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "large_mana_flask_recipe", AncientSpellcraft.MODID, new ItemLostRecipe(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 
-		ItemRegistry.registerItemArtefact(registry, "charm_aura_alacrity", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_aura_hatred", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_aura_life", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_aura_purity", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_aura_warding", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_aura_wither", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_aura_tenacity", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_aura_defense", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_aura_vulnerability", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_monster_charm", AncientSpellcraft.MODID, new ItemMonsterCharm(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		ItemRegistry.registerItemArtefact(registry, "charm_teleportation_stone", AncientSpellcraft.MODID, new ItemTeleportationStone(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_illumination", AncientSpellcraft.MODID, new ItemGlyphOfIllumination(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_leeching", AncientSpellcraft.MODID, new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_antigravity", AncientSpellcraft.MODID, new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_vitality", AncientSpellcraft.MODID, new ItemGlyphArtefact.ItemGlyphViality(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_warden", AncientSpellcraft.MODID, new ItemGlyphArtefact.ItemGlyphWarden(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_imbuement", AncientSpellcraft.MODID, new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_shield_disable", AncientSpellcraft.MODID, new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_fortification", AncientSpellcraft.MODID, new ItemGlyphArtefact.ItemGlyphFortification(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_might", AncientSpellcraft.MODID, new ItemGlyphArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_glyph_charge", AncientSpellcraft.MODID, new ItemGlyphArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 
+		registerItem(registry, "charm_aura_alacrity", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_hatred", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_life", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_purity", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_warding", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_wither", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_tenacity", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_defense", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aura_vulnerability", AncientSpellcraft.MODID, new ItemGlyphAuraArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_monster_charm", AncientSpellcraft.MODID, new ItemMonsterCharm(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_teleportation_stone", AncientSpellcraft.MODID, new ItemTeleportationStone(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+
+		registerItem(registry, "charm_conjuration_inhibitor", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_vessel_of_the_withered_oath", AncientSpellcraft.MODID, new ItemVesselOfTheWitheredOath(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+
+		registerItem(registry, "charm_verdant_crucible", AncientSpellcraft.MODID, new ItemVerdantCrucible(EnumRarity.UNCOMMON));
+
+
+		registerItem(registry, "body_power_gem", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.BODY));
+		registerItem(registry, "body_fire", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.FIRE));
+		registerItem(registry, "body_ice", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.ICE));
+		registerItem(registry, "body_lightning", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.LIGHTNING));
+		registerItem(registry, "body_necromancy", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.NECROMANCY));
+		registerItem(registry, "body_earth", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.EARTH));
+		registerItem(registry, "body_sorcery", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.SORCERY));
+		registerItem(registry, "body_healing", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.HEALING));
 		registerItem(registry, "tome_controller", new ItemTomeController());
 
-		ItemRegistry.registerItemArtefact(registry, "belt_scroll_holder", AncientSpellcraft.MODID, new ItemBeltScrollHolder(EnumRarity.RARE, ItemArtefact.Type.BELT));
-		ItemRegistry.registerItemArtefact(registry, "belt_horse", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.BELT));
-		ItemRegistry.registerItemArtefact(registry, "belt_enchanter", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
-		ItemRegistry.registerItemArtefact(registry, "belt_stone", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
-		ItemRegistry.registerItemArtefact(registry, "belt_vortex", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
-		ItemRegistry.registerItemArtefact(registry, "belt_spring_charge", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
-		ItemRegistry.registerItemArtefact(registry, "belt_soul_scorch", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
-		ItemRegistry.registerItemArtefact(registry, "belt_temporal_anchor", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
-		ItemRegistry.registerItemArtefact(registry, "belt_emberguard", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_scroll_holder", AncientSpellcraft.MODID, new ItemBeltScrollHolder(EnumRarity.RARE, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_horse", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_enchanter", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_stone", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_vortex", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_spring_charge", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_soul_scorch", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_temporal_anchor", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_emberguard", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.BELT));
 
-		ItemRegistry.registerItemArtefact(registry, "belt_fire", AncientSpellcraft.MODID, new ItemElementalBelt(EnumRarity.EPIC, ItemArtefact.Type.BELT, Element.FIRE));
-		ItemRegistry.registerItemArtefact(registry, "belt_ice", AncientSpellcraft.MODID, new ItemElementalBelt(EnumRarity.EPIC, ItemArtefact.Type.BELT, Element.ICE));
-		ItemRegistry.registerItemArtefact(registry, "belt_lightning", AncientSpellcraft.MODID, new ItemElementalBelt(EnumRarity.EPIC, ItemArtefact.Type.BELT, Element.LIGHTNING));
-		ItemRegistry.registerItemArtefact(registry, "belt_necromancy", AncientSpellcraft.MODID, new ItemElementalBelt(EnumRarity.EPIC, ItemArtefact.Type.BELT, Element.NECROMANCY));
-		ItemRegistry.registerItemArtefact(registry, "belt_earth", AncientSpellcraft.MODID, new ItemElementalBelt(EnumRarity.EPIC, ItemArtefact.Type.BELT, Element.EARTH));
-		ItemRegistry.registerItemArtefact(registry, "belt_sorcery", AncientSpellcraft.MODID, new ItemElementalBelt(EnumRarity.EPIC, ItemArtefact.Type.BELT, Element.SORCERY));
-		ItemRegistry.registerItemArtefact(registry, "belt_healing", AncientSpellcraft.MODID, new ItemElementalBelt(EnumRarity.EPIC, ItemArtefact.Type.BELT, Element.HEALING));
+		registerItem(registry, "belt_fire", AncientSpellcraft.MODID, new ItemElementalBelt(EnumRarity.EPIC, ItemArtefact.Type.BELT, Element.FIRE));
+		registerItem(registry, "belt_ice", AncientSpellcraft.MODID, new ItemElementalBelt(EnumRarity.EPIC, ItemArtefact.Type.BELT, Element.ICE));
+		registerItem(registry, "belt_lightning", AncientSpellcraft.MODID, new ItemElementalBelt(EnumRarity.EPIC, ItemArtefact.Type.BELT, Element.LIGHTNING));
+		registerItem(registry, "belt_necromancy", AncientSpellcraft.MODID, new ItemElementalBelt(EnumRarity.EPIC, ItemArtefact.Type.BELT, Element.NECROMANCY));
+		registerItem(registry, "belt_earth", AncientSpellcraft.MODID, new ItemElementalBelt(EnumRarity.EPIC, ItemArtefact.Type.BELT, Element.EARTH));
+		registerItem(registry, "belt_sorcery", AncientSpellcraft.MODID, new ItemElementalBelt(EnumRarity.EPIC, ItemArtefact.Type.BELT, Element.SORCERY));
+		registerItem(registry, "belt_healing", AncientSpellcraft.MODID, new ItemElementalBelt(EnumRarity.EPIC, ItemArtefact.Type.BELT, Element.HEALING));
 
-		ItemRegistry.registerItemArtefact(registry, "belt_enchanted_whetstone", AncientSpellcraft.MODID, new ItemBeltEnchantedWhetstone(EnumRarity.RARE, ItemArtefact.Type.BELT));
-		ItemRegistry.registerItemArtefact(registry, "belt_hook", AncientSpellcraft.MODID, new AbstractItemArtefactWithSlots(EnumRarity.EPIC, ItemArtefact.Type.BELT, 1, 1, true) {
+		registerItem(registry, "belt_enchanted_whetstone", AncientSpellcraft.MODID, new ItemBeltEnchantedWhetstone(EnumRarity.RARE, ItemArtefact.Type.BELT));
+		registerItem(registry, "belt_hook", AncientSpellcraft.MODID, new AbstractItemArtefactWithSlots(EnumRarity.EPIC, ItemArtefact.Type.BELT, 1, 1, true) {
 					@Override
 					public boolean isItemValid(Item item) {
 						return item instanceof ItemArtefact;
@@ -930,19 +944,20 @@ public final class ASItems {
 				}
 		);
 
-		ItemRegistry.registerItemArtefact(registry, "head_curse", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.HEAD));		ItemRegistry.registerItemArtefact(registry, "head_merchant", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.HEAD));
-		ItemRegistry.registerItemArtefact(registry, "head_minions", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
-		ItemRegistry.registerItemArtefact(registry, "head_ardor_crown", AncientSpellcraft.MODID, new ItemArdorCrown(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
-		ItemRegistry.registerItemArtefact(registry, "head_riftstone", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
-		ItemRegistry.registerItemArtefact(registry, "head_fortune", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
-		ItemRegistry.registerItemArtefact(registry, "head_shield", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
-		ItemRegistry.registerItemArtefact(registry, "head_magelight", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.HEAD));
-		ItemRegistry.registerItemArtefact(registry, "head_lightning", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
-		ItemRegistry.registerItemArtefact(registry, "head_chaos_magic", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
-		ItemRegistry.registerItemArtefact(registry, "head_minion_circle", AncientSpellcraft.MODID, new ItemCircletOfCircling(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
-		ItemRegistry.registerItemArtefact(registry, "head_whispering_veil", AncientSpellcraft.MODID, new ItemWhisperingVeil(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
-		ItemRegistry.registerItemArtefact(registry, "head_disruptor_crown", AncientSpellcraft.MODID, new ItemDisruptorCrown(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
-		ItemRegistry.registerItemArtefact(registry, "head_mask_of_perseigni", AncientSpellcraft.MODID, new ItemMaskOfPerseigni(EnumRarity.RARE, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_curse", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_merchant", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_minions", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_ardor_crown", AncientSpellcraft.MODID, new ItemArdorCrown(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_riftstone", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_fortune", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_shield", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_magelight", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_lightning", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_chaos_magic", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_minion_circle", AncientSpellcraft.MODID, new ItemCircletOfCircling(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_whispering_veil", AncientSpellcraft.MODID, new ItemWhisperingVeil(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_disruptor_crown", AncientSpellcraft.MODID, new ItemDisruptorCrown(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_mask_of_perseigni", AncientSpellcraft.MODID, new ItemMaskOfPerseigni(EnumRarity.RARE, ItemArtefact.Type.HEAD));
 
 		/// misc
 
@@ -1034,20 +1049,6 @@ public final class ASItems {
 		registerItem(registry, "mystic_spell_book", new ItemSageSpellBook());
 		registerItem(registry, "empty_mystic_spell_book", new ItemEmptyMysticSpellBook().setCreativeTab(ASTabs.ANCIENTSPELLCRAFT).setMaxStackSize(16));
 		registerItem(registry, "forbidden_tome", new ItemWarlockSpellBook());
-
-		ItemRegistry.registerItemArtefact(registry, "body_power_gem", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.BODY));
-		ItemRegistry.registerItemArtefact(registry, "body_fire", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.FIRE));
-		ItemRegistry.registerItemArtefact(registry, "body_ice", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.ICE));
-		ItemRegistry.registerItemArtefact(registry, "body_lightning", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.LIGHTNING));
-		ItemRegistry.registerItemArtefact(registry, "body_necromancy", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.NECROMANCY));
-		ItemRegistry.registerItemArtefact(registry, "body_earth", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.EARTH));
-		ItemRegistry.registerItemArtefact(registry, "body_sorcery", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.SORCERY));
-		ItemRegistry.registerItemArtefact(registry, "body_healing", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.HEALING));
-
-		ItemRegistry.registerItemArtefact(registry, "charm_conjuration_inhibitor", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-
-		ItemRegistry.registerItemArtefact(registry, "charm_verdant_crucible", AncientSpellcraft.MODID, new ItemVerdantCrucible(EnumRarity.UNCOMMON));
-
 
 	}
 

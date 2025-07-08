@@ -1,15 +1,22 @@
 package com.windanesz.ancientspellcraft.item;
 
+import com.windanesz.ancientspellcraft.Settings;
+import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.item.ISpellCastingItem;
+import electroblob.wizardry.item.IWorkbenchItem;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.packet.PacketCastSpell;
 import electroblob.wizardry.packet.WizardryPacketHandler;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
+import electroblob.wizardry.util.SpellProperties;
+import electroblob.wizardry.util.WandHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -23,14 +30,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 
-public class ItemArcaneMirror extends ItemASArtefact implements ISpellCastingItem {
+public class ItemAncientWand extends ItemASArtefact implements ISpellCastingItem, IWorkbenchItem {
+	public static final int BASE_SPELL_SLOTS = 5;
 
-	public ItemArcaneMirror(EnumRarity rarity, Type type) {
-		super(rarity, type);
+	public ItemAncientWand(EnumRarity enumRarity, ItemArtefact.Type type) {
+		super(enumRarity, type);
 	}
 
 	@Override
@@ -45,7 +53,7 @@ public class ItemArcaneMirror extends ItemASArtefact implements ISpellCastingIte
 		}
 	}
 
-	 @Override
+	@Override
 	public EnumAction getItemUseAction(ItemStack stack) {
 		return SpellActions.POINT;
 	}
@@ -74,8 +82,7 @@ public class ItemArcaneMirror extends ItemASArtefact implements ISpellCastingIte
 	@Override
 	public boolean canContinueUsing(ItemStack oldStack, ItemStack newStack) {
 		// Ignore durability changes
-		if (ItemStack.areItemsEqualIgnoreDurability(oldStack, newStack))
-			return true;
+		if (ItemStack.areItemsEqualIgnoreDurability(oldStack, newStack)) return true;
 		return super.canContinueUsing(oldStack, newStack);
 	}
 
@@ -102,13 +109,12 @@ public class ItemArcaneMirror extends ItemASArtefact implements ISpellCastingIte
 
 		World world = caster.world;
 
-		if (world.isRemote && !spell.isContinuous && spell.requiresPacket())
-			return false;
+		if (world.isRemote && !spell.isContinuous && spell.requiresPacket()) return false;
 
 		if (spell.cast(world, caster, hand, castingTick, modifiers)) {
 
 			if (castingTick == 0)
-				MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.OTHER, spell, caster, modifiers));
+				MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.COMMAND, spell, caster, modifiers));
 
 			if (!world.isRemote) {
 
@@ -129,16 +135,6 @@ public class ItemArcaneMirror extends ItemASArtefact implements ISpellCastingIte
 		return false;
 	}
 
-	@Nonnull
-	@Override
-	public Spell getCurrentSpell(ItemStack stack) {
-		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt != null && nbt.hasKey("Spell")) {
-			return Spell.get(nbt.getString("Spell"));
-		}
-		return Spells.none;
-	}
-
 	public void setSpell(ItemStack stack, Spell spell) {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) {
@@ -149,13 +145,109 @@ public class ItemArcaneMirror extends ItemASArtefact implements ISpellCastingIte
 	}
 
 	@Override
+	public Spell getCurrentSpell(ItemStack stack) {
+		return WandHelper.getCurrentSpell(stack);
+	}
+
+	@Override
+	public Spell getNextSpell(ItemStack stack) {
+		return WandHelper.getNextSpell(stack);
+	}
+
+	@Override
+	public Spell getPreviousSpell(ItemStack stack) {
+		return WandHelper.getPreviousSpell(stack);
+	}
+
+	@Override
+	public Spell[] getSpells(ItemStack stack) {
+		return WandHelper.getSpells(stack);
+	}
+
+	@Override
+	public void selectNextSpell(ItemStack stack) {
+		WandHelper.selectNextSpell(stack);
+	}
+
+	@Override
+	public void selectPreviousSpell(ItemStack stack) {
+		WandHelper.selectPreviousSpell(stack);
+	}
+
+	@Override
+	public boolean selectSpell(ItemStack stack, int index) {
+		return WandHelper.selectSpell(stack, index);
+	}
+
+	@Override
+	public int getCurrentCooldown(ItemStack stack) {
+		return WandHelper.getCurrentCooldown(stack);
+	}
+
+	@Override
+	public int getCurrentMaxCooldown(ItemStack stack) {
+		return WandHelper.getCurrentMaxCooldown(stack);
+	}
+
+	@Override
+	public boolean canCast(ItemStack stack, Spell spell, EntityPlayer caster, EnumHand hand, int castingTick, SpellModifiers modifiers) {
+		return !caster.getCooldownTracker().hasCooldown(stack.getItem());
+	}
+
+	@Override
 	public boolean showSpellHUD(EntityPlayer player, ItemStack stack) {
 		return true;
 	}
 
 	@Override
-	public boolean canCast(ItemStack stack, Spell spell, EntityPlayer caster, EnumHand hand, int castingTick, SpellModifiers modifiers) {
-		//unused
-		return getCurrentSpell(stack) != Spells.none;
+	public int getSpellSlotCount(ItemStack stack) {
+		return 1;
 	}
+
+	@Override
+	public boolean onApplyButtonPressed(EntityPlayer player, Slot centre, Slot crystals, Slot upgrade, Slot[] spellBooks) {
+		boolean changed = false; // Used for advancements
+
+		Spell[] spells = WandHelper.getSpells(centre.getStack());
+
+		if (spells.length == 0) {
+			// Base value here because if the spell array doesn't exist, the wand can't possibly have attunement upgrades
+			spells = new Spell[BASE_SPELL_SLOTS];
+		} else {
+			return false;
+		}
+
+		for (int i = 0; i < spells.length; i++) {
+			if (spellBooks[i].getStack() != ItemStack.EMPTY) {
+
+				Spell spell = Spell.byMetadata(spellBooks[i].getStack().getItemDamage());
+				// If the wand is powerful enough for the spell, it's not already bound to that slot, and it's enabled for wands
+				if (!(spell.getTier().level > Settings.generalSettings.ancient_wand_max_spell_tier) && spells[i] != spell && spell.isEnabled(SpellProperties.Context.WANDS)) {
+
+					// Decide if we can bind this multiple times
+					if (Wizardry.settings.preventBindingSameSpellTwiceToWands && Arrays.stream(spells).anyMatch(s -> s == spell)) {
+						continue;
+					}
+
+					spells[i] = spell;
+					changed = true;
+
+					// setting to consume books upon use
+					if (Wizardry.settings.singleUseSpellBooks) {
+						spellBooks[i].getStack().shrink(1);
+					}
+				}
+			}
+		}
+
+		WandHelper.setSpells(centre.getStack(), spells);
+		return changed;
+	}
+
+	@Override
+	public boolean showTooltip(ItemStack stack) {
+		return false;
+	}
+
+
 }

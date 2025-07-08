@@ -1103,8 +1103,11 @@ public class ASEventHandler {
 						ItemStack stack = list.get(0);
 						float charge = ItemFocusStone.getCharge(stack);
 						if (charge < 1f) {
-							if (charge + 0.1f >= 0.9f) {
-								ASUtils.sendMessage(player, "item.ancientspellcraft:charm_focus_stone.charged_n", false, (int) ((charge + 0.1f) * 100));
+							float newCharge = charge + 0.1f;
+							if (newCharge >= 1f && charge < 1f) {
+								ASUtils.sendMessage(player, "item.ancientspellcraft:charm_focus_stone.fully_charged", false);
+							} else if (newCharge >= 0.8f) {
+								ASUtils.sendMessage(player, "item.ancientspellcraft:charm_focus_stone.charged_n", false, (int) (newCharge * 100));
 							}
 							ItemFocusStone.addCharge(stack, 0.1f);
 							ASBaublesIntegration.setArtefactToSlot(player, stack, ItemArtefact.Type.CHARM);
@@ -1250,14 +1253,30 @@ public class ASEventHandler {
 					if (event.getSpell() instanceof IClassSpell && (((IClassSpell) event.getSpell()).getArmourClass() == ItemWizardArmour.ArmourClass.WARLOCK)) {
 						modifiers.set(SpellModifiers.POTENCY, 1.25f * potency, false);
 					}
-				} else if (artefact == ASItems.charm_infernal_stone &&event.getSpell().getElement() == Element.FIRE && player.isBurning()) {
-					// Boost fire spell potency
-					event.getModifiers().set(SpellModifiers.POTENCY,
-							event.getModifiers().get(SpellModifiers.POTENCY) * 1.2f, false);
-					// Extinguish the player
-					player.extinguish();
-					// Apply fire resistance
-					player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 100)); // 5 seconds
+				} else if (artefact == ASItems.charm_infernal_stone) {
+					// Get the actual item stack for the infernal stone
+					ItemStack stoneStack = ASBaublesIntegration.getEquippedArtefactStacks(player, ItemArtefact.Type.CHARM).get(0);
+					
+					if (event.getSpell().getElement() == Element.FIRE) {
+						// Apply heat-based bonuses for fire spells
+						if (ItemInfernalStone.isHot(stoneStack)) {
+							// Reduce mana cost by 25%
+							ItemInfernalStone.applyFireSpellBonuses(event.getModifiers(), stoneStack);
+							// Consume heat for the spell cast
+							ItemInfernalStone.consumeHeatForSpell(stoneStack);
+						}
+						
+						// If player is burning, extinguish and grant bonuses
+						if (player.isBurning()) {
+							// Boost fire spell potency by 15%
+							event.getModifiers().set(SpellModifiers.POTENCY,
+									event.getModifiers().get(SpellModifiers.POTENCY) * 1.15f, false);
+							// Extinguish the player
+							player.extinguish();
+							// Apply fire resistance for 2 seconds (40 ticks)
+							player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 40));
+						}
+					}
 				}
 
 				if (artefact == ASItems.ring_power) {
@@ -1745,10 +1764,6 @@ public class ASEventHandler {
 		}
 	}
 
-	private static ItemStack getArtefactItemStack(EntityPlayer player, ItemArtefact artefact) {
-		return ASUtils.getItemStackFromInventoryHotbar(player, artefact);
-	}
-
 	private static Spell getCurrentSpellFromSpellBearingArtefact(Item item, ItemStack stack) {
 		return Spell.byMetadata(stack.getItemDamage());
 	}
@@ -1845,6 +1860,8 @@ public class ASEventHandler {
 			if (ASBaublesIntegration.enabled()) {
 				ASBaublesIntegration.tickWornArtefacts(player);
 			}
+			
+
 		}
 
 	}

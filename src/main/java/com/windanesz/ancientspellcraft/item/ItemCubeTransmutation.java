@@ -37,12 +37,12 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemCubeTransmutation extends AbstractItemArtefactWithSlots implements IManaStoringItem, IWorkbenchItem {
-	private static final int MANA_COST = 2000;
-	private static final int MANA_CAPACITY = 2000;
+	private static final int MANA_COST = 4000;
+	private static final int MANA_CAPACITY = 4000;
 	private static final String LAST_OPEN_TIME_TAG = "last_open_time";
 
-	public ItemCubeTransmutation() {
-		super(EnumRarity.EPIC, Type.CHARM, 1, 1, true);
+	public ItemCubeTransmutation(EnumRarity rarity, Type type) {
+		super(rarity, type, 1, 1, true);
 		setMaxDamage(MANA_CAPACITY);
 		addReadinessPropertyOverride();
 	}

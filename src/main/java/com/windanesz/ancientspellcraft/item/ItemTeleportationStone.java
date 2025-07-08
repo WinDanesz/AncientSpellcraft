@@ -422,7 +422,7 @@ public class ItemTeleportationStone extends ItemASArtefact implements IManaStori
             }
             tooltip.add(TextFormatting.YELLOW + "Right-click to teleport (Cost: " + TELEPORTATION_COST + ")");
         } else {
-            tooltip.add(TextFormatting.YELLOW + "Sneak + Right-click to bind tw2o current location (3s charge)");
+            tooltip.add(TextFormatting.YELLOW + "Sneak + Right-click to bind to current location (3s charge)");
         }
         
         if (!Settings.isArtefactEnabled(this)) {

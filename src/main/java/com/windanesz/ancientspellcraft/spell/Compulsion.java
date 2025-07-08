@@ -21,6 +21,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -89,20 +90,33 @@ public class Compulsion extends SpellRayAS {
 				return false;
 			}
 			
+			// Ensure villager trades are initialized by setting the customer first
+			villager.setCustomer(player);
 			MerchantRecipeList recipes = villager.getRecipes(player);
+			
 			if (recipes != null && !recipes.isEmpty()) {
+				// Use the original simple approach but with better initialization
 				MerchantRecipe randomRecipe = recipes.get(world.rand.nextInt(recipes.size()));
 				ItemStack freeItem = randomRecipe.getItemToSell().copy();
 				
-				if (!player.addItemStackToInventory(freeItem)) {
-					player.dropItem(freeItem, false);
+				// Only proceed if we actually got a valid item
+				if (!freeItem.isEmpty()) {
+					if (!player.addItemStackToInventory(freeItem)) {
+						player.dropItem(freeItem, false);
+					}
+					
+					// Mark this villager as used today
+					ItemWhisperingVeil.markVillagerAsUsedToday(player, villager.getUniqueID());
+					
+					player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.villager_forced_trade", villager.getName(), freeItem.getDisplayName()), true);
+					return true;
+				} else {
+					player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.villager_no_valid_trades"), true);
+					return false;
 				}
-				
-				// Mark this villager as used today
-				ItemWhisperingVeil.markVillagerAsUsedToday(player, villager.getUniqueID());
-				
-				player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.villager_forced_trade", villager.getName(), freeItem.getDisplayName()), true);
-				return true;
+			} else {
+				player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.villager_no_trades"), true);
+				return false;
 			}
 		} else if (hasWhisperingVeil && target instanceof EntityWizard) {
 			EntityWizard wizard = (EntityWizard) target;
@@ -113,20 +127,33 @@ public class Compulsion extends SpellRayAS {
 				return false;
 			}
 			
+			// Ensure wizard trades are initialized by setting the customer first
+			wizard.setCustomer(player);
 			MerchantRecipeList recipes = wizard.getRecipes(player);
+			
 			if (recipes != null && !recipes.isEmpty()) {
+				// Use the original simple approach but with better initialization
 				MerchantRecipe randomRecipe = recipes.get(world.rand.nextInt(recipes.size()));
 				ItemStack freeItem = randomRecipe.getItemToSell().copy();
 				
-				if (!player.addItemStackToInventory(freeItem)) {
-					player.dropItem(freeItem, false);
+				// Only proceed if we actually got a valid item
+				if (!freeItem.isEmpty()) {
+					if (!player.addItemStackToInventory(freeItem)) {
+						player.dropItem(freeItem, false);
+					}
+					
+					// Mark this wizard as used today
+					ItemWhisperingVeil.markWizardAsUsedToday(player, wizard.getUniqueID());
+					
+					player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.wizard_forced_trade", wizard.getName(), freeItem.getDisplayName()), true);
+					return true;
+				} else {
+					player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.wizard_no_valid_trades"), true);
+					return false;
 				}
-				
-				// Mark this wizard as used today
-				ItemWhisperingVeil.markWizardAsUsedToday(player, wizard.getUniqueID());
-				
-				player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.wizard_forced_trade", wizard.getName(), freeItem.getDisplayName()), true);
-				return true;
+			} else {
+				player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.wizard_no_trades"), true);
+				return false;
 			}
 		}
 		
@@ -144,12 +171,42 @@ public class Compulsion extends SpellRayAS {
 			return false;
 		}
 		
-		if (hasBlackTongueAmulet) {
+		if (hasBlackTongueAmulet && !world.isRemote) {
 			// Black Tongue Amulet: Make controlled entity attack the target
 			if (controlledEntity instanceof EntityLivingBase && target instanceof EntityLivingBase) {
 				// Make the controlled entity attack the target
 				if (controlledEntity instanceof net.minecraft.entity.EntityLiving) {
-					((net.minecraft.entity.EntityLiving) controlledEntity).setAttackTarget((EntityLivingBase) target);
+					net.minecraft.entity.EntityLiving livingEntity = (net.minecraft.entity.EntityLiving) controlledEntity;
+					
+					// Clear any existing targets first
+					livingEntity.setRevengeTarget(null);
+					livingEntity.setAttackTarget(null);
+					
+					// Set the new attack target
+					livingEntity.setAttackTarget((EntityLivingBase) target);
+					livingEntity.setRevengeTarget((EntityLivingBase) target);
+					
+					// Force the entity to look at the target
+					livingEntity.getLookHelper().setLookPositionWithEntity((EntityLivingBase) target, 30.0F, 30.0F);
+					
+					// Clear any existing pathfinding to ensure the entity focuses on attacking
+					livingEntity.getNavigator().clearPath();
+					
+					// Force the entity to move towards the target and attack
+					double distance = livingEntity.getDistance((EntityLivingBase) target);
+					if (distance > 2.0) {
+						// If target is far, move towards it
+						livingEntity.getNavigator().tryMoveToEntityLiving((EntityLivingBase) target, 1.0D);
+					} else {
+						// If target is close, attack it directly
+						livingEntity.attackEntityAsMob((EntityLivingBase) target);
+						livingEntity.swingArm(EnumHand.MAIN_HAND);
+					}
+					
+					// Debug: Check if targets are actually set
+					player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.debug_targets", 
+						livingEntity.getAttackTarget() != null ? livingEntity.getAttackTarget().getName() : "null",
+						livingEntity.getRevengeTarget() != null ? livingEntity.getRevengeTarget().getName() : "null"), true);
 				}
 				player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.target_attacking", controlledEntity.getName(), target.getName()), true);
 				
@@ -163,7 +220,7 @@ public class Compulsion extends SpellRayAS {
 				livingEntity.setRevengeTarget(null);
 				livingEntity.setAttackTarget(null);
 
-				((EntityLivingBase)target).addPotionEffect(new PotionEffect(WizardryPotions.mind_trick, 200, 0));
+			//	((EntityLivingBase)target).addPotionEffect(new PotionEffect(WizardryPotions.mind_trick, 200, 0));
 
 				// Move the entity to the target location
 				if (livingEntity instanceof net.minecraft.entity.EntityLiving) {
@@ -231,35 +288,26 @@ public class Compulsion extends SpellRayAS {
 			return false;
 		}
 		
-		if (hasBlackTongueAmulet) {
-			// Black Tongue Amulet: Make controlled entity attack the block (not very useful, but consistent)
-			player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.target_attacking_block", controlledEntity.getName()), true);
-			
+		// Normal behavior: Move controlled entity to block location
+		if (controlledEntity instanceof EntityLivingBase) {
+			EntityLivingBase livingEntity = (EntityLivingBase) controlledEntity;
+			// Move the entity to the block location
+			if (livingEntity instanceof net.minecraft.entity.EntityLiving) {
+				((net.minecraft.entity.EntityLiving) livingEntity).getNavigator().clearPath();
+				((net.minecraft.entity.EntityLiving) livingEntity).getNavigator().tryMoveToXYZ(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1.0f);
+			}
+
+			// Spawn the directional line showing the path
+			if (world.isRemote) {
+				spawnDirectionalLine(world, livingEntity, pos);
+			}
+
+			player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.target_moved", controlledEntity.getName()), true);
+
 			// Keep the controlled entity selected for multiple uses
 			return true;
-		} else {
-			// Normal behavior: Move controlled entity to block location
-			if (controlledEntity instanceof EntityLivingBase) {
-				EntityLivingBase livingEntity = (EntityLivingBase) controlledEntity;
-				
-				// Move the entity to the block location
-				if (livingEntity instanceof net.minecraft.entity.EntityLiving) {
-					((net.minecraft.entity.EntityLiving) livingEntity).getNavigator().clearPath();
-					((net.minecraft.entity.EntityLiving) livingEntity).getNavigator().tryMoveToXYZ(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1.0f);
-				}
-				
-				// Spawn the directional line showing the path
-				if (world.isRemote) {
-					spawnDirectionalLine(world, livingEntity, pos);
-				}
-				
-				player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.target_moved", controlledEntity.getName()), true);
-				
-				// Keep the controlled entity selected for multiple uses
-				return true;
-			}
 		}
-		
+
 		return false;
 	}
 
