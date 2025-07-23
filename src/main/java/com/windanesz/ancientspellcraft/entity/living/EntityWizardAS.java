@@ -22,12 +22,15 @@ import java.util.List;
 
 public class EntityWizardAS extends EntityWizard {
 
-	private EntityAIAttackSpellImproved<EntityWizard> spellCastingAIImproved = new EntityAIAttackSpellImproved<>(this, 0.5D, 14.0F, 30, 50);
+	private EntityAIAttackSpellImproved<EntityWizardAS> spellCastingAIImproved = new EntityAIAttackSpellImproved<>(this, 0.5D, 14.0F, 30, 50);
 
 	public EntityWizardAS(World world) {
 		super(world);
-		this.tasks.taskEntries.removeIf(t -> t.action instanceof EntityAIAttackSpell);
-		this.tasks.addTask(3, this.spellCastingAIImproved);
+		// Thread-safe task management to prevent crashes during entity spawning
+		synchronized (this.tasks) {
+			this.tasks.taskEntries.removeIf(t -> t.action instanceof EntityAIAttackSpell);
+			this.tasks.addTask(3, this.spellCastingAIImproved);
+		}
 	}
 
 	@Override
