@@ -257,35 +257,26 @@ public class Compulsion extends SpellRayAS {
 			return false;
 		}
 		
-		if (hasBlackTongueAmulet) {
-			// Black Tongue Amulet: Make controlled entity attack the block (not very useful, but consistent)
-			player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.target_attacking_block", controlledEntity.getName()), true);
-			
+		// Normal behavior: Move controlled entity to block location
+		if (controlledEntity instanceof EntityLivingBase) {
+			EntityLivingBase livingEntity = (EntityLivingBase) controlledEntity;
+			// Move the entity to the block location
+			if (livingEntity instanceof net.minecraft.entity.EntityLiving) {
+				((net.minecraft.entity.EntityLiving) livingEntity).getNavigator().clearPath();
+				((net.minecraft.entity.EntityLiving) livingEntity).getNavigator().tryMoveToXYZ(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1.0f);
+			}
+
+			// Spawn the directional line showing the path
+			if (world.isRemote) {
+				spawnDirectionalLine(world, livingEntity, pos);
+			}
+
+			player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.target_moved", controlledEntity.getName()), true);
+
 			// Keep the controlled entity selected for multiple uses
 			return true;
-		} else {
-			// Normal behavior: Move controlled entity to block location
-			if (controlledEntity instanceof EntityLivingBase) {
-				EntityLivingBase livingEntity = (EntityLivingBase) controlledEntity;
-				
-				// Move the entity to the block location
-				if (livingEntity instanceof net.minecraft.entity.EntityLiving) {
-					((net.minecraft.entity.EntityLiving) livingEntity).getNavigator().clearPath();
-					((net.minecraft.entity.EntityLiving) livingEntity).getNavigator().tryMoveToXYZ(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 1.0f);
-				}
-				
-				// Spawn the directional line showing the path
-				if (world.isRemote) {
-					spawnDirectionalLine(world, livingEntity, pos);
-				}
-				
-				player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.target_moved", controlledEntity.getName()), true);
-				
-				// Keep the controlled entity selected for multiple uses
-				return true;
-			}
 		}
-		
+
 		return false;
 	}
 

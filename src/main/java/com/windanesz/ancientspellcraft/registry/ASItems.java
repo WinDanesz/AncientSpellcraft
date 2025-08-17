@@ -796,7 +796,7 @@ public final class ASItems {
 		registerItem(registry, "charm_transcribing_tome", AncientSpellcraft.MODID, new ItemTranscribingTome(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_mana_orb", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_specterlight_torch", AncientSpellcraft.MODID, new ItemSpecterLightTorch(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
-		registerItem(registry, "charm_hungry_chest", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_hungry_chest", AncientSpellcraft.MODID, new ItemHungryChest(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_diamond_goose", AncientSpellcraft.MODID, new ItemDiamondGoose(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_wardrobe", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_seed_bag", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
