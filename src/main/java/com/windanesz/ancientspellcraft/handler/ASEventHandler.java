@@ -1103,8 +1103,11 @@ public class ASEventHandler {
 						ItemStack stack = list.get(0);
 						float charge = ItemFocusStone.getCharge(stack);
 						if (charge < 1f) {
-							if (charge + 0.1f >= 0.9f) {
-								ASUtils.sendMessage(player, "item.ancientspellcraft:charm_focus_stone.charged_n", false, (int) ((charge + 0.1f) * 100));
+							float newCharge = charge + 0.1f;
+							if (newCharge >= 1f && charge < 1f) {
+								ASUtils.sendMessage(player, "item.ancientspellcraft:charm_focus_stone.fully_charged", false);
+							} else if (newCharge >= 0.8f) {
+								ASUtils.sendMessage(player, "item.ancientspellcraft:charm_focus_stone.charged_n", false, (int) (newCharge * 100));
 							}
 							ItemFocusStone.addCharge(stack, 0.1f);
 							ASBaublesIntegration.setArtefactToSlot(player, stack, ItemArtefact.Type.CHARM);

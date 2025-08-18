@@ -1,6 +1,6 @@
 {
     "enabled": true,
-    "lifetime": 1200,
+    "lifetime": 36000,
     "size": 5,
     "pattern": [
         " M ",
