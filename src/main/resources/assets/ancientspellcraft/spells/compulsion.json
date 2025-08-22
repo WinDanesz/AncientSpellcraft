@@ -13,7 +13,7 @@
     "tier": "master",
     "element": "necromancy",
     "type": "utility",
-    "cost": 80,
+    "cost": 40,
     "chargeup": 0,
     "cooldown": 40,
     "base_properties": {

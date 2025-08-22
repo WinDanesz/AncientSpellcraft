@@ -779,6 +779,7 @@ public final class ASItems {
 				}
 		});
 		registerItem(registry, "amulet_black_tongue", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_of_resistance", AncientSpellcraft.MODID, new ItemAmuletOfResistance(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_curse_ward", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_pendant_of_eternity", AncientSpellcraft.MODID, new ItemEternityPendant(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_time_knot", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
@@ -786,7 +787,6 @@ public final class ASItems {
 		registerItem(registry, "amulet_elemental_aura", AncientSpellcraft.MODID, new ItemElementalAuraAmulet(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_time_slow", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_holy_aura", AncientSpellcraft.MODID, new ItemAmuletHolyAura(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
-		registerItem(registry, "amulet_of_resistance", AncientSpellcraft.MODID, new ItemAmuletOfResistance(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 
 		/// charm
 		registerItem(registry, "charm_mana_flask", AncientSpellcraft.MODID, new ItemEverfullManaFlask(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
@@ -946,7 +946,7 @@ public final class ASItems {
 
 		registerItem(registry, "head_curse", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.HEAD));
 		registerItem(registry, "head_merchant", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.HEAD));
-		registerItem(registry, "head_minions", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_minions", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.HEAD));
 		registerItem(registry, "head_ardor_crown", AncientSpellcraft.MODID, new ItemArdorCrown(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
 		registerItem(registry, "head_riftstone", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
 		registerItem(registry, "head_fortune", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));

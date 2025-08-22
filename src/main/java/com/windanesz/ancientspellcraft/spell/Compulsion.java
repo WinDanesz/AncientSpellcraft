@@ -21,6 +21,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -170,12 +171,42 @@ public class Compulsion extends SpellRayAS {
 			return false;
 		}
 		
-		if (hasBlackTongueAmulet) {
+		if (hasBlackTongueAmulet && !world.isRemote) {
 			// Black Tongue Amulet: Make controlled entity attack the target
 			if (controlledEntity instanceof EntityLivingBase && target instanceof EntityLivingBase) {
 				// Make the controlled entity attack the target
 				if (controlledEntity instanceof net.minecraft.entity.EntityLiving) {
-					((net.minecraft.entity.EntityLiving) controlledEntity).setAttackTarget((EntityLivingBase) target);
+					net.minecraft.entity.EntityLiving livingEntity = (net.minecraft.entity.EntityLiving) controlledEntity;
+					
+					// Clear any existing targets first
+					livingEntity.setRevengeTarget(null);
+					livingEntity.setAttackTarget(null);
+					
+					// Set the new attack target
+					livingEntity.setAttackTarget((EntityLivingBase) target);
+					livingEntity.setRevengeTarget((EntityLivingBase) target);
+					
+					// Force the entity to look at the target
+					livingEntity.getLookHelper().setLookPositionWithEntity((EntityLivingBase) target, 30.0F, 30.0F);
+					
+					// Clear any existing pathfinding to ensure the entity focuses on attacking
+					livingEntity.getNavigator().clearPath();
+					
+					// Force the entity to move towards the target and attack
+					double distance = livingEntity.getDistance((EntityLivingBase) target);
+					if (distance > 2.0) {
+						// If target is far, move towards it
+						livingEntity.getNavigator().tryMoveToEntityLiving((EntityLivingBase) target, 1.0D);
+					} else {
+						// If target is close, attack it directly
+						livingEntity.attackEntityAsMob((EntityLivingBase) target);
+						livingEntity.swingArm(EnumHand.MAIN_HAND);
+					}
+					
+					// Debug: Check if targets are actually set
+					player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.debug_targets", 
+						livingEntity.getAttackTarget() != null ? livingEntity.getAttackTarget().getName() : "null",
+						livingEntity.getRevengeTarget() != null ? livingEntity.getRevengeTarget().getName() : "null"), true);
 				}
 				player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.target_attacking", controlledEntity.getName(), target.getName()), true);
 				
@@ -189,7 +220,7 @@ public class Compulsion extends SpellRayAS {
 				livingEntity.setRevengeTarget(null);
 				livingEntity.setAttackTarget(null);
 
-				((EntityLivingBase)target).addPotionEffect(new PotionEffect(WizardryPotions.mind_trick, 200, 0));
+			//	((EntityLivingBase)target).addPotionEffect(new PotionEffect(WizardryPotions.mind_trick, 200, 0));
 
 				// Move the entity to the target location
 				if (livingEntity instanceof net.minecraft.entity.EntityLiving) {

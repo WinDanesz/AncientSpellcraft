@@ -194,8 +194,8 @@ public class ItemInfernalStone extends ItemASArtefact implements ITickableArtefa
     public int getItemBurnTime(ItemStack itemStack) {
         // Only provide fuel when the stone is hot (at least 50% heat)
         if (getHeatPercentage(itemStack) >= 50) {
-            // Return a burn time equivalent to 2 coal (1600 ticks)
-            return 60;
+            // Return a burn time equivalent to 10 coal (1600 ticks)
+            return 8000;
         }
         return 0; // Not hot enough to use as fuel
     }
