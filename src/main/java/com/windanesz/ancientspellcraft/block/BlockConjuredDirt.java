@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.block;
 
+import com.windanesz.ancientspellcraft.registry.ASTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -19,13 +20,19 @@ public class BlockConjuredDirt extends Block implements ITileEntityProvider, ITe
 	public BlockConjuredDirt() {
 		super(Material.GROUND);
 		setHardness(0.5f);
-		//setTemporaryBlockProperties(this);
+		// Custom temporary block properties - breakable but time-limited
+		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
+		// Note: NOT calling setTemporaryBlockProperties(this) to keep it breakable
+		// The block will still be time-limited via TileEntityRevertingBlock
 	}
 
 	//////////////// ITemporaryBlock Interface implementation ////////////////
 
 	@Override
-	public boolean isToolEffective(String type, IBlockState state) { return false; }
+	public boolean isToolEffective(String type, IBlockState state) { 
+		// Allow tools to be effective on this block (makes it breakable)
+		return type.equals("shovel"); 
+	}
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) { return getItemDroppedDelegate(state, rand, fortune); }
