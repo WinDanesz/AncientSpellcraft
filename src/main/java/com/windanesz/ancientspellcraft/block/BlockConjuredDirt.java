@@ -20,7 +20,6 @@ public class BlockConjuredDirt extends Block implements ITileEntityProvider, ITe
 	public BlockConjuredDirt() {
 		super(Material.GROUND);
 		setHardness(0.5f);
-		// Custom temporary block properties - breakable but time-limited
 		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT);
 		// Note: NOT calling setTemporaryBlockProperties(this) to keep it breakable
 		// The block will still be time-limited via TileEntityRevertingBlock
@@ -30,7 +29,7 @@ public class BlockConjuredDirt extends Block implements ITileEntityProvider, ITe
 
 	@Override
 	public boolean isToolEffective(String type, IBlockState state) { 
-		// Allow tools to be effective on this block (makes it breakable)
+		// Allow shovels to be effective on this block (makes it properly breakable)
 		return type.equals("shovel"); 
 	}
 

@@ -9,6 +9,7 @@ import com.windanesz.ancientspellcraft.block.BlockCandleLight;
 import com.windanesz.ancientspellcraft.block.BlockConcealedBlock;
 import com.windanesz.ancientspellcraft.block.BlockConjuredDirt;
 import com.windanesz.ancientspellcraft.block.BlockConjuredMagma;
+import com.windanesz.ancientspellcraft.block.BlockConjuredSnow;
 import com.windanesz.ancientspellcraft.block.BlockCrystalLeaves;
 import com.windanesz.ancientspellcraft.block.BlockCrystalLog;
 import com.windanesz.ancientspellcraft.block.BlockCrystalMine;
@@ -267,8 +268,8 @@ public class ASBlocks {
 
 		registerBlock(registry, "quicksand", new BlockQuickSand());
 		registerBlock(registry, "conjured_magma", new BlockConjuredMagma());
-		registerBlock(registry, "conjured_dirt", new BlockConjuredMagma());
-		registerBlock(registry, "conjured_snow", new BlockConjuredDirt());
+		registerBlock(registry, "conjured_dirt", new BlockConjuredDirt());
+		registerBlock(registry, "conjured_snow", new BlockConjuredSnow());
 		registerBlock(registry, "master_bolt", new BlockMasterBolt());
 		registerBlock(registry, "lightning_block", new BlockLightning());
 		registerBlock(registry, "concealed_block", new BlockConcealedBlock());
