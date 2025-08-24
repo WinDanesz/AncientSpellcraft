@@ -1,17 +1,12 @@
 package com.windanesz.ancientspellcraft.loot;
 
 import com.google.gson.*;
-import com.windanesz.ancientspellcraft.item.ItemAncientWand;
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
-import electroblob.wizardry.data.WizardData;
-import electroblob.wizardry.item.ItemArtefact;
-import electroblob.wizardry.item.ItemScroll;
-import electroblob.wizardry.item.ItemSpellBook;
 import electroblob.wizardry.registry.Spells;
-import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellProperties;
 import electroblob.wizardry.util.WandHelper;
@@ -31,23 +26,24 @@ import java.util.Random;
 public class RandomBoundAncientSpell extends LootFunction {
 
 	private final List<Spell> spells;
-	private final boolean ignoreWeighting;
-	private final float undiscoveredBias;
+	private final float chance;
 	private final List<Tier> tiers;
 
-	protected RandomBoundAncientSpell(LootCondition[] conditions, List<Spell> spells, boolean ignoreWeighting, float undiscoveredBias, List<Tier> tiers) {
+	protected RandomBoundAncientSpell(LootCondition[] conditions, List<Spell> spells, boolean ignoreWeighting, float chance, List<Tier> tiers) {
 		super(conditions);
 		this.spells = spells;
-		this.ignoreWeighting = ignoreWeighting;
-		this.undiscoveredBias = undiscoveredBias;
+		this.chance = chance;
 		this.tiers = tiers;
 	}
 
 	@Override
 	public ItemStack apply(ItemStack stack, Random random, LootContext context) {
 
-		if (!(stack.getItem() instanceof ItemSpellBook) && !(stack.getItem() instanceof ItemScroll))
-			Wizardry.logger.warn("Applying the random_bound_ancient_spell loot function to an item that isn't a spell book or scroll.");
+		if (random.nextFloat() >= chance) {
+			return stack;
+		}
+		//if (!(stack.getItem() instanceof ItemSpellBook) && !(stack.getItem() instanceof ItemScroll))
+		//	Wizardry.logger.warn("Applying the random_bound_ancient_spell loot function to an item that isn't a spell book or scroll.");
 
 		SpellProperties.Context spellContext = context.getLootedEntity() == null ? SpellProperties.Context.TREASURE : SpellProperties.Context.LOOTING;
 
@@ -60,9 +56,7 @@ public class RandomBoundAncientSpell extends LootFunction {
 		if (spell == Spells.none)
 			Wizardry.logger.warn("Tried to apply the random_bound_ancient_spell loot function to an item, but no" + " enabled spells matched the criteria specified.");
 
-		if (stack.getItem() instanceof ItemAncientWand && random.nextBoolean()) {
-			WandHelper.setSpells(stack, new Spell[spell.metadata()]);
-		}
+		WandHelper.setSpells(stack, new Spell[]{spell});
 
 		return stack;
 	}
@@ -70,9 +64,8 @@ public class RandomBoundAncientSpell extends LootFunction {
 	private Spell pickRandomSpell(ItemStack stack, Random random, SpellProperties.Context spellContext, EntityPlayer player) {
 
 		// We're now doing this first because we need to know which spells we have to play with before selecting a tier and element
-		List<Spell> possibleSpells = Spell.getSpells(s -> s.isEnabled(spellContext) && s.applicableForItem(stack.getItem())
-				// Remove excluded tiers
-				&& (tiers == null || tiers.contains(s.getTier())) && s.getElement() == Element.MAGIC && s.applicableForItem(ASItems.ancient_spell_book));
+		List<Spell> possibleSpells = Spell.getSpells(s -> s.applicableForItem(ASItems.ancient_spell_book)
+				&& (tiers == null || tiers.contains(s.getTier())));
 
 		if (spells != null && !spells.isEmpty()) {
 			possibleSpells.retainAll(spells); // Normally you wouldn't specify a spells list AND tiers/elements... but you could!
@@ -92,34 +85,13 @@ public class RandomBoundAncientSpell extends LootFunction {
 
 		if (possibleTiers.isEmpty()) return Spells.none; // Gotta disable a lot of spells for this to happen
 
-		Tier tier = ignoreWeighting ? possibleTiers.get(random.nextInt(possibleTiers.size())) : Tier.getWeightedRandomTier(random, possibleTiers.toArray(new Tier[0]));
+		Tier tier = possibleTiers.get(random.nextInt(possibleTiers.size()));
 
 		// Remove all spells that aren't of the selected tier
 		possibleSpells.removeIf(s -> s.getTier() != tier);
 
+		possibleSpells.removeIf(s -> s.getElement() != Element.MAGIC);
 		if (possibleSpells.isEmpty()) return Spells.none; // If it fails anywhere, it'll most likely be here
-
-		if (player != null) {
-
-			float bias = undiscoveredBias;
-			// Archivist's eyeglass increases undiscovered bias by 0.4 up to a maximum of 0.9
-			if (ItemArtefact.isArtefactActive(player, WizardryItems.charm_spell_discovery))
-				bias = Math.min(bias + 0.4f, 0.9f);
-
-			// Remove either the undiscovered spells or the discovered ones, depending on the bias
-			if (bias > 0) {
-
-				WizardData data = WizardData.get(player);
-
-				int discoveredCount = (int) possibleSpells.stream().filter(data::hasSpellBeenDiscovered).count();
-				// If none have been discovered or they've all been discovered, don't bother!
-				if (discoveredCount > 0 && discoveredCount < possibleSpells.size()) {
-					// Kinda unintuitive but it's very neat!
-					boolean keepDiscovered = random.nextFloat() > 0.5f + 0.5f * bias;
-					possibleSpells.removeIf(s -> keepDiscovered != data.hasSpellBeenDiscovered(s));
-				}
-			}
-		}
 
 		return possibleSpells.get(random.nextInt(possibleSpells.size())); // Finally pick a spell
 	}
@@ -127,7 +99,7 @@ public class RandomBoundAncientSpell extends LootFunction {
 	public static class Serializer extends LootFunction.Serializer<RandomBoundAncientSpell> {
 
 		public Serializer() {
-			super(new ResourceLocation(Wizardry.MODID, "random_bound_ancient_spell"), RandomBoundAncientSpell.class);
+			super(new ResourceLocation(AncientSpellcraft.MODID, "random_bound_ancient_spell"), RandomBoundAncientSpell.class);
 		}
 
 		public void serialize(JsonObject object, RandomBoundAncientSpell function, JsonSerializationContext serializationContext) {
@@ -143,9 +115,7 @@ public class RandomBoundAncientSpell extends LootFunction {
 				object.add("spells", jsonarray);
 			}
 
-			object.addProperty("ignore_weighting", function.ignoreWeighting);
-
-			object.addProperty("undiscovered_bias", function.undiscoveredBias);
+			object.addProperty("chance", function.chance);
 
 			if (function.tiers != null && !function.tiers.isEmpty()) {
 
@@ -187,7 +157,7 @@ public class RandomBoundAncientSpell extends LootFunction {
 
 			boolean ignoreWeighting = JsonUtils.getBoolean(object, "ignore_weighting", false);
 
-			float undiscoveredBias = JsonUtils.getFloat(object, "undiscovered_bias", 0);
+			float chance = JsonUtils.getFloat(object, "chance", 0);
 
 			if (object.has("tiers")) {
 
@@ -206,7 +176,7 @@ public class RandomBoundAncientSpell extends LootFunction {
 				}
 			}
 
-			return new RandomBoundAncientSpell(conditions, spells, ignoreWeighting, undiscoveredBias, tiers);
+			return new RandomBoundAncientSpell(conditions, spells, ignoreWeighting, chance, tiers);
 		}
 	}
 

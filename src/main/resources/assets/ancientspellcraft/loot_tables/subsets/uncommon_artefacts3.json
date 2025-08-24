@@ -1,0 +1,35 @@
+{
+    "pools": [
+        {
+            "name": "main",
+            "rolls": 1,
+            "entries": [
+                { "type": "item", "name": "ancientspellcraft:amulet_elemental_offense", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:amulet_mana", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:amulet_poison_resistance", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:amulet_rabbit", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:amulet_talisman_of_affinity", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:belt_horse", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:charm_hungry_chest", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:charm_ice_cream", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:charm_mana_flask", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:charm_mana_orb", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:charm_sentinel_eye", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:charm_specterlight_torch", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:charm_transcribing_tome", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:charm_verdant_crucible", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:charm_wild_catalyst", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:ring_charge", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:ring_lily_flower", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:ring_mana_cost", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:ring_mana_lesser", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:ring_mana_transfer", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:ring_poison_arrow", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:ring_power", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:ring_prismarine", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:ring_protector", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:ring_solid_air", "weight": 1}
+            ]
+        }
+    ]
+}
