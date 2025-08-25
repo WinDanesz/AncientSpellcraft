@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASSounds;
 import electroblob.wizardry.Wizardry;
+import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.block.BlockCrystal;
 import electroblob.wizardry.client.DrawingUtils;
 import electroblob.wizardry.constants.Element;
@@ -216,6 +217,48 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 						}
 					}
 
+					// Special case: Circlet of the Unknown for spell books
+					if (!transmuted && offhandStack.getItem() instanceof ItemSpellBook && ItemArtefact.isArtefactActive(player, ASItems.head_circlet_of_the_unknown)) {
+						WizardData data = WizardData.get(player);
+						if (data != null) {
+							Spell oldSpell = Spell.byMetadata(offhandStack.getItemDamage());
+							
+							// Check if amulet_arcane_catalyst is also active to respect element constraint
+							Element elementConstraint = null;
+							if (ItemArtefact.isArtefactActive(player, ASItems.amulet_arcane_catalyst)) {
+								elementConstraint = oldSpell.getElement();
+							}
+							
+							// Get unknown spells of the same tier first (with element constraint if applicable)
+							List<Spell> unknownSpells = Spell.getSpells(new Spell.TierElementFilter(oldSpell.getTier(), elementConstraint, SpellProperties.Context.BOOK));
+							unknownSpells.removeIf((new Spell.TierElementFilter(oldSpell.getTier(), elementConstraint, SpellProperties.Context.LOOTING)).negate());
+							unknownSpells.removeIf(data::hasSpellBeenDiscovered);
+							
+							// If no unknown spells of same tier, try other tiers ONLY if no element constraint
+							if (unknownSpells.isEmpty() && elementConstraint == null) {
+								unknownSpells = Spell.getSpells(s -> !data.hasSpellBeenDiscovered(s) && s.isEnabled());
+								unknownSpells.removeIf((new Spell.TierElementFilter(null, null, SpellProperties.Context.LOOTING)).negate());
+							}
+							
+							if (!unknownSpells.isEmpty()) {
+								Spell newSpell = unknownSpells.get(world.rand.nextInt(unknownSpells.size()));
+								
+								// Find appropriate book type for the spell
+								Item book = offhandStack.getItem();
+								List<Item> bookTypeList = ForgeRegistries.ITEMS.getValuesCollection().stream().filter(i -> i instanceof ItemSpellBook).collect(Collectors.toList());
+								for (Item currentBook : bookTypeList) {
+									if (newSpell.applicableForItem(currentBook)) {
+										book = currentBook;
+										break;
+									}
+								}
+								
+								transmutedItem = new ItemStack(book, 1, newSpell.metadata());
+								transmuted = true;
+							}
+						}
+					}
+
 					// all the other cases (including armour upgrade transmutation WITHOUT an artefact
 					if (!transmuted) {
 
@@ -317,6 +360,8 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 
 				return new ItemStack(book, 1, newSpell.metadata());
 			}
+
+
 
 			@Override
 			protected Item getRelatedArtefact(Item item) {
@@ -610,6 +655,8 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 			}
 			return newSpell;
 		}
+
+
 
 		private static ItemStack transmuteStandardItemWithElementMetadata(ItemStack oldStack) {
 			Element newElement = Transmutation.getRandomOtherElementFromMeta(oldStack);
