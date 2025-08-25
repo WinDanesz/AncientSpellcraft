@@ -234,12 +234,10 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 							unknownSpells.removeIf((new Spell.TierElementFilter(oldSpell.getTier(), elementConstraint, SpellProperties.Context.LOOTING)).negate());
 							unknownSpells.removeIf(data::hasSpellBeenDiscovered);
 							
-							// If no unknown spells of same tier, get any unknown spells (still respecting element constraint)
-							if (unknownSpells.isEmpty()) {
-								unknownSpells = Spell.getSpells(new Spell.TierElementFilter(null, elementConstraint, SpellProperties.Context.BOOK));
-								unknownSpells.removeIf((new Spell.TierElementFilter(null, elementConstraint, SpellProperties.Context.LOOTING)).negate());
-								unknownSpells.removeIf(data::hasSpellBeenDiscovered);
-								unknownSpells.removeIf(s -> !s.isEnabled());
+							// If no unknown spells of same tier, try other tiers ONLY if no element constraint
+							if (unknownSpells.isEmpty() && elementConstraint == null) {
+								unknownSpells = Spell.getSpells(s -> !data.hasSpellBeenDiscovered(s) && s.isEnabled());
+								unknownSpells.removeIf((new Spell.TierElementFilter(null, null, SpellProperties.Context.LOOTING)).negate());
 							}
 							
 							if (!unknownSpells.isEmpty()) {
