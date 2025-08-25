@@ -217,6 +217,42 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 						}
 					}
 
+					// Special case: Circlet of the Unknown for spell books
+					if (!transmuted && offhandStack.getItem() instanceof ItemSpellBook && ItemArtefact.isArtefactActive(player, ASItems.head_circlet_of_the_unknown)) {
+						WizardData data = WizardData.get(player);
+						if (data != null) {
+							Spell oldSpell = Spell.byMetadata(offhandStack.getItemDamage());
+							
+							// Get unknown spells of the same tier first
+							List<Spell> unknownSpells = Spell.getSpells(new Spell.TierElementFilter(oldSpell.getTier(), null, SpellProperties.Context.BOOK));
+							unknownSpells.removeIf((new Spell.TierElementFilter(oldSpell.getTier(), null, SpellProperties.Context.LOOTING)).negate());
+							unknownSpells.removeIf(data::hasSpellBeenDiscovered);
+							
+							// If no unknown spells of same tier, get any unknown spells
+							if (unknownSpells.isEmpty()) {
+								unknownSpells = Spell.getSpells(s -> !data.hasSpellBeenDiscovered(s) && s.isEnabled());
+								unknownSpells.removeIf((new Spell.TierElementFilter(null, null, SpellProperties.Context.LOOTING)).negate());
+							}
+							
+							if (!unknownSpells.isEmpty()) {
+								Spell newSpell = unknownSpells.get(world.rand.nextInt(unknownSpells.size()));
+								
+								// Find appropriate book type for the spell
+								Item book = offhandStack.getItem();
+								List<Item> bookTypeList = ForgeRegistries.ITEMS.getValuesCollection().stream().filter(i -> i instanceof ItemSpellBook).collect(Collectors.toList());
+								for (Item currentBook : bookTypeList) {
+									if (newSpell.applicableForItem(currentBook)) {
+										book = currentBook;
+										break;
+									}
+								}
+								
+								transmutedItem = new ItemStack(book, 1, newSpell.metadata());
+								transmuted = true;
+							}
+						}
+					}
+
 					// all the other cases (including armour upgrade transmutation WITHOUT an artefact
 					if (!transmuted) {
 
@@ -232,7 +268,7 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 							}
 						}
 
-						transmutedItem = Transmutation.transmuteStack(offhandStack, applyArtefactEffect, player);
+						transmutedItem = Transmutation.transmuteStack(offhandStack, applyArtefactEffect);
 					}
 
 					if (transmutedItem != ItemStack.EMPTY) {
@@ -319,36 +355,7 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 				return new ItemStack(book, 1, newSpell.metadata());
 			}
 
-			@Override
-			protected ItemStack transmute(ItemStack bookStack, boolean applyArtefactEffects, EntityPlayer player) {
-				if (!matches(bookStack))
-					return bookStack;
 
-				if (bookStack.getItem() == ASItems.ancient_spell_book) {
-					return bookStack;
-				}
-
-				Element element = applyArtefactEffects ? Spell.byMetadata(bookStack.getItemDamage()).getElement() : null;
-				Item book = bookStack.getItem();
-				List<Item> bookTypeList = ForgeRegistries.ITEMS.getValuesCollection().stream().filter(i -> i instanceof ItemSpellBook).collect(Collectors.toList());
-				
-				// Check if Circlet of the Unknown is active
-				Spell newSpell;
-				if (player != null && ItemArtefact.isArtefactActive(player, ASItems.head_circlet_of_the_unknown)) {
-					newSpell = Transmutation.getRandomUnknownSpell(bookStack, element, player);
-				} else {
-					newSpell = Transmutation.getRandomSpell(bookStack, element, SpellProperties.Context.BOOK);
-				}
-
-				for (int i = 0; i < bookTypeList.size(); i++) {
-					Item currentBook = bookTypeList.get(i);
-					if (newSpell.applicableForItem(currentBook)) {
-						book = currentBook;
-					}
-				}
-
-				return new ItemStack(book, 1, newSpell.metadata());
-			}
 
 			@Override
 			protected Item getRelatedArtefact(Item item) {
@@ -581,13 +588,9 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 		////////////////// public methods /////////////////////
 
 		public static ItemStack transmuteStack(ItemStack stack, boolean applyArtefactEffects) {
-			return transmuteStack(stack, applyArtefactEffects, null);
-		}
-
-		public static ItemStack transmuteStack(ItemStack stack, boolean applyArtefactEffects, EntityPlayer player) {
 			for (Transmutation t : Transmutation.values()) {
 				if (t.matches(stack)) {
-					return t.transmute(stack, applyArtefactEffects, player);
+					return t.transmute(stack, applyArtefactEffects);
 				}
 			}
 
@@ -620,10 +623,6 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 
 		protected abstract ItemStack transmute(ItemStack stack, boolean applyArtefactEffects);
 
-		protected ItemStack transmute(ItemStack stack, boolean applyArtefactEffects, EntityPlayer player) {
-			return transmute(stack, applyArtefactEffects);
-		}
-
 		abstract protected Item getRelatedArtefact(Item item);
 
 		////////////////// enum methods /////////////////////
@@ -651,43 +650,7 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 			return newSpell;
 		}
 
-		private static Spell getRandomUnknownSpell(ItemStack oldStack, Element element, EntityPlayer player) {
-			if (!(oldStack.getItem() instanceof ItemSpellBook) && !(oldStack.getItem() instanceof ItemScroll)) {
-				return Spells.none;
-			}
 
-			WizardData data = WizardData.get(player);
-			if (data == null) {
-				return getRandomSpell(oldStack, element, SpellProperties.Context.BOOK);
-			}
-
-			Spell oldSpell = Spell.byMetadata(oldStack.getItemDamage());
-			List<Spell> spells = Spell.getSpells(new Spell.TierElementFilter(oldSpell.getTier(), element, SpellProperties.Context.BOOK));
-			spells.removeIf((new Spell.TierElementFilter(oldSpell.getTier(), element, SpellProperties.Context.LOOTING)).negate());
-			
-			// Filter to only unknown spells
-			spells.removeIf(data::hasSpellBeenDiscovered);
-
-			// If no unknown spells of the same tier, fall back to all unknown spells
-			if (spells.isEmpty()) {
-				spells = Spell.getSpells(s -> !data.hasSpellBeenDiscovered(s) && s.isEnabled());
-				spells.removeIf((new Spell.TierElementFilter(null, null, SpellProperties.Context.LOOTING)).negate());
-			}
-
-			// If still no spells, fall back to the regular method
-			if (spells.isEmpty()) {
-				return getRandomSpell(oldStack, element, SpellProperties.Context.BOOK);
-			}
-
-			Spell newSpell = oldSpell;
-			int remainingTries = 30;
-			while (newSpell == oldSpell && remainingTries > 0) {
-				newSpell = spells.get(itemRand.nextInt(spells.size()));
-				remainingTries--;
-			}
-			
-			return newSpell;
-		}
 
 		private static ItemStack transmuteStandardItemWithElementMetadata(ItemStack oldStack) {
 			Element newElement = Transmutation.getRandomOtherElementFromMeta(oldStack);

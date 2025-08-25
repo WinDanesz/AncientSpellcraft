@@ -321,7 +321,7 @@ public class ItemCubeTransmutation extends AbstractItemArtefactWithSlots impleme
 						}
 					}
 
-					transmutedItem = ItemTransmutationScroll.Transmutation.transmuteStack(slotItem, applyArtefactEffect, player);
+					transmutedItem = ItemTransmutationScroll.Transmutation.transmuteStack(slotItem, applyArtefactEffect);
 				}
 
 				if (transmutedItem != ItemStack.EMPTY) {
