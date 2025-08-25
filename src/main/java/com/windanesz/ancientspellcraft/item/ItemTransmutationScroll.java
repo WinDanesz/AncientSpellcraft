@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASSounds;
 import electroblob.wizardry.Wizardry;
+import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.block.BlockCrystal;
 import electroblob.wizardry.client.DrawingUtils;
 import electroblob.wizardry.constants.Element;
@@ -231,7 +232,7 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 							}
 						}
 
-						transmutedItem = Transmutation.transmuteStack(offhandStack, applyArtefactEffect);
+						transmutedItem = Transmutation.transmuteStack(offhandStack, applyArtefactEffect, player);
 					}
 
 					if (transmutedItem != ItemStack.EMPTY) {
@@ -307,6 +308,37 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 				Item book = bookStack.getItem();
 				List<Item> bookTypeList = ForgeRegistries.ITEMS.getValuesCollection().stream().filter(i -> i instanceof ItemSpellBook).collect(Collectors.toList());
 				Spell newSpell = Transmutation.getRandomSpell(bookStack, element, SpellProperties.Context.BOOK);
+
+				for (int i = 0; i < bookTypeList.size(); i++) {
+					Item currentBook = bookTypeList.get(i);
+					if (newSpell.applicableForItem(currentBook)) {
+						book = currentBook;
+					}
+				}
+
+				return new ItemStack(book, 1, newSpell.metadata());
+			}
+
+			@Override
+			protected ItemStack transmute(ItemStack bookStack, boolean applyArtefactEffects, EntityPlayer player) {
+				if (!matches(bookStack))
+					return bookStack;
+
+				if (bookStack.getItem() == ASItems.ancient_spell_book) {
+					return bookStack;
+				}
+
+				Element element = applyArtefactEffects ? Spell.byMetadata(bookStack.getItemDamage()).getElement() : null;
+				Item book = bookStack.getItem();
+				List<Item> bookTypeList = ForgeRegistries.ITEMS.getValuesCollection().stream().filter(i -> i instanceof ItemSpellBook).collect(Collectors.toList());
+				
+				// Check if Circlet of the Unknown is active
+				Spell newSpell;
+				if (player != null && ItemArtefact.isArtefactActive(player, ASItems.head_circlet_of_the_unknown)) {
+					newSpell = Transmutation.getRandomUnknownSpell(bookStack, element, player);
+				} else {
+					newSpell = Transmutation.getRandomSpell(bookStack, element, SpellProperties.Context.BOOK);
+				}
 
 				for (int i = 0; i < bookTypeList.size(); i++) {
 					Item currentBook = bookTypeList.get(i);
@@ -549,9 +581,13 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 		////////////////// public methods /////////////////////
 
 		public static ItemStack transmuteStack(ItemStack stack, boolean applyArtefactEffects) {
+			return transmuteStack(stack, applyArtefactEffects, null);
+		}
+
+		public static ItemStack transmuteStack(ItemStack stack, boolean applyArtefactEffects, EntityPlayer player) {
 			for (Transmutation t : Transmutation.values()) {
 				if (t.matches(stack)) {
-					return t.transmute(stack, applyArtefactEffects);
+					return t.transmute(stack, applyArtefactEffects, player);
 				}
 			}
 
@@ -584,6 +620,10 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 
 		protected abstract ItemStack transmute(ItemStack stack, boolean applyArtefactEffects);
 
+		protected ItemStack transmute(ItemStack stack, boolean applyArtefactEffects, EntityPlayer player) {
+			return transmute(stack, applyArtefactEffects);
+		}
+
 		abstract protected Item getRelatedArtefact(Item item);
 
 		////////////////// enum methods /////////////////////
@@ -608,6 +648,44 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 					remainingTries--;
 				}
 			}
+			return newSpell;
+		}
+
+		private static Spell getRandomUnknownSpell(ItemStack oldStack, Element element, EntityPlayer player) {
+			if (!(oldStack.getItem() instanceof ItemSpellBook) && !(oldStack.getItem() instanceof ItemScroll)) {
+				return Spells.none;
+			}
+
+			WizardData data = WizardData.get(player);
+			if (data == null) {
+				return getRandomSpell(oldStack, element, SpellProperties.Context.BOOK);
+			}
+
+			Spell oldSpell = Spell.byMetadata(oldStack.getItemDamage());
+			List<Spell> spells = Spell.getSpells(new Spell.TierElementFilter(oldSpell.getTier(), element, SpellProperties.Context.BOOK));
+			spells.removeIf((new Spell.TierElementFilter(oldSpell.getTier(), element, SpellProperties.Context.LOOTING)).negate());
+			
+			// Filter to only unknown spells
+			spells.removeIf(data::hasSpellBeenDiscovered);
+
+			// If no unknown spells of the same tier, fall back to all unknown spells
+			if (spells.isEmpty()) {
+				spells = Spell.getSpells(s -> !data.hasSpellBeenDiscovered(s) && s.isEnabled());
+				spells.removeIf((new Spell.TierElementFilter(null, null, SpellProperties.Context.LOOTING)).negate());
+			}
+
+			// If still no spells, fall back to the regular method
+			if (spells.isEmpty()) {
+				return getRandomSpell(oldStack, element, SpellProperties.Context.BOOK);
+			}
+
+			Spell newSpell = oldSpell;
+			int remainingTries = 30;
+			while (newSpell == oldSpell && remainingTries > 0) {
+				newSpell = spells.get(itemRand.nextInt(spells.size()));
+				remainingTries--;
+			}
+			
 			return newSpell;
 		}
 
