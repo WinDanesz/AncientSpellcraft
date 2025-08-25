@@ -223,15 +223,23 @@ public class ItemTransmutationScroll extends ItemRareScroll {
 						if (data != null) {
 							Spell oldSpell = Spell.byMetadata(offhandStack.getItemDamage());
 							
-							// Get unknown spells of the same tier first
-							List<Spell> unknownSpells = Spell.getSpells(new Spell.TierElementFilter(oldSpell.getTier(), null, SpellProperties.Context.BOOK));
-							unknownSpells.removeIf((new Spell.TierElementFilter(oldSpell.getTier(), null, SpellProperties.Context.LOOTING)).negate());
+							// Check if amulet_arcane_catalyst is also active to respect element constraint
+							Element elementConstraint = null;
+							if (ItemArtefact.isArtefactActive(player, ASItems.amulet_arcane_catalyst)) {
+								elementConstraint = oldSpell.getElement();
+							}
+							
+							// Get unknown spells of the same tier first (with element constraint if applicable)
+							List<Spell> unknownSpells = Spell.getSpells(new Spell.TierElementFilter(oldSpell.getTier(), elementConstraint, SpellProperties.Context.BOOK));
+							unknownSpells.removeIf((new Spell.TierElementFilter(oldSpell.getTier(), elementConstraint, SpellProperties.Context.LOOTING)).negate());
 							unknownSpells.removeIf(data::hasSpellBeenDiscovered);
 							
-							// If no unknown spells of same tier, get any unknown spells
+							// If no unknown spells of same tier, get any unknown spells (still respecting element constraint)
 							if (unknownSpells.isEmpty()) {
-								unknownSpells = Spell.getSpells(s -> !data.hasSpellBeenDiscovered(s) && s.isEnabled());
-								unknownSpells.removeIf((new Spell.TierElementFilter(null, null, SpellProperties.Context.LOOTING)).negate());
+								unknownSpells = Spell.getSpells(new Spell.TierElementFilter(null, elementConstraint, SpellProperties.Context.BOOK));
+								unknownSpells.removeIf((new Spell.TierElementFilter(null, elementConstraint, SpellProperties.Context.LOOTING)).negate());
+								unknownSpells.removeIf(data::hasSpellBeenDiscovered);
+								unknownSpells.removeIf(s -> !s.isEnabled());
 							}
 							
 							if (!unknownSpells.isEmpty()) {
