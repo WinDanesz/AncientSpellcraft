@@ -4,6 +4,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.8.0] - 2025-08-30
+### :sparkles: New Features
+- [`f6cd39e`](https://github.com/WinDanesz/AncientSpellcraft/commit/f6cd39eea1ad8808a0dfe6363a9f673dea048ee1) - Skull sentinels now notify the caster about the detected entity's name and position periodically. *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`da3f1ff`](https://github.com/WinDanesz/AncientSpellcraft/commit/da3f1ff6ef7ddf2fa73c9d9721541899cf2de92d) - renamed Chaos Gem Ring (-> Chaos Piercer) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`4852eba`](https://github.com/WinDanesz/AncientSpellcraft/commit/4852eba19d29368deb6d1f4dbd090f8b828e0a1c) - New artefacts: Circlet of Circling, Rainbow String *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`3d0081d`](https://github.com/WinDanesz/AncientSpellcraft/commit/3d0081da8f7913a17cbd0521e6e868653e26900e) - Added more spells, mostly for Fire element *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`f09fe14`](https://github.com/WinDanesz/AncientSpellcraft/commit/f09fe14a04bf872bddda01ec813ca634a6b225a1) - Added more new artefacts *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`635a931`](https://github.com/WinDanesz/AncientSpellcraft/commit/635a931675100365de8b65b86be0b94043cab404) - Added more new artefacts *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`09154df`](https://github.com/WinDanesz/AncientSpellcraft/commit/09154dfedfe8272ce026c9001a65aaa09fd344b8) - (Mass) Pyrokinesis lits TNT blocks *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`1a89fb4`](https://github.com/WinDanesz/AncientSpellcraft/commit/1a89fb45828a8ccb48be6bb501302984864e5db0) - Fix situational crash with Curse of Umbra *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`28774e9`](https://github.com/WinDanesz/AncientSpellcraft/commit/28774e97235a39b3b421b754295e71cab7190ef6) - More new artefacts *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`8902ec2`](https://github.com/WinDanesz/AncientSpellcraft/commit/8902ec222ec457948f0acfe3b78a231f19f7351b) - Added "metamagic" Spell type, changed existing metamagic spells' type *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`658b726`](https://github.com/WinDanesz/AncientSpellcraft/commit/658b72617bb21630fa6769c1693b2dd0c69d4af2) - Added Ancient Wand *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`6f9e616`](https://github.com/WinDanesz/AncientSpellcraft/commit/6f9e6162f26d6f779e629f33ce8a839cc297f0b2) - Added Circlet of the Unknown *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`0340128`](https://github.com/WinDanesz/AncientSpellcraft/commit/03401281ddaeaac4e2fb91415300f4a3637e7031) - Golden Scroll Holder can accept additional items (if configured in the configs). These have no effect. *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`d8e772a`](https://github.com/WinDanesz/AncientSpellcraft/commit/d8e772ab5b4d4b4692a4ebf327485cb5c53e08f2) - Russian handbook translation and updated mod translation by K-LAgama *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+### :bug: Bug Fixes
+- [`f289b6a`](https://github.com/WinDanesz/AncientSpellcraft/commit/f289b6a9060aad883de345538fc4f1cbac1e5a0a) - Added missing spell description for Absorb Crystal. Fixes [#263](https://github.com/WinDanesz/AncientSpellcraft/pull/263) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`ddc9d19`](https://github.com/WinDanesz/AncientSpellcraft/commit/ddc9d198a262ff4c536b5d36c7bb0b925d1d49d1) - Fix Glyph of Illumination n no longer causes doors/buttons/etc to fall to ground when going through block. Fixes [#269](https://github.com/WinDanesz/AncientSpellcraft/pull/269) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`2979c42`](https://github.com/WinDanesz/AncientSpellcraft/commit/2979c42071663186db95d93cb7d3d19a8f4db042) - Updated the incorrect description of the Harvest spell. Fixes [#190](https://github.com/WinDanesz/AncientSpellcraft/pull/190) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`59b180e`](https://github.com/WinDanesz/AncientSpellcraft/commit/59b180e5855ce864b7025c634a8f8ab029ca49b1) - Summon Quicksand can be cast using dispensers *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`5540863`](https://github.com/WinDanesz/AncientSpellcraft/commit/55408631853ace966b7c2db04fb3e9d633410a48) - Limit pocket dimension size. Fixes [#273](https://github.com/WinDanesz/AncientSpellcraft/pull/273) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`f897531`](https://github.com/WinDanesz/AncientSpellcraft/commit/f897531036749340a1a797f52a2f8fc8987056ff) - Lowered skeleton mage spawnratet *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`7eca478`](https://github.com/WinDanesz/AncientSpellcraft/commit/7eca47836b6296366de5b0b340d1470b94a269fd) - Temporal Anchor is now Baubles belt slot *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`c689d5b`](https://github.com/WinDanesz/AncientSpellcraft/commit/c689d5bbb43b5e58bea7d6037d099bfa2a4b634a) - Prevent infinite loops with Spell teleporter when y is less than 0. *(PR [#266](https://github.com/WinDanesz/AncientSpellcraft/pull/266) by [@KasumiNova](https://github.com/KasumiNova))*
+- [`f5b8093`](https://github.com/WinDanesz/AncientSpellcraft/commit/f5b8093f86cbf6ee15b7876c5f812e82be977b80) - Add message for already bound Diamond Goose and improve detection range logic *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`23e0ab0`](https://github.com/WinDanesz/AncientSpellcraft/commit/23e0ab011b5441df3674366f05b6e66c143c64b9) - Fixed critical bug causing skeleton mages to never despawn, eating up all spawn caps eventually *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`b395c4b`](https://github.com/WinDanesz/AncientSpellcraft/commit/b395c4b88337ef4fd66d00170befe666d1f5130d) - Fixed some wizard entity AI crashes *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`96931ab`](https://github.com/WinDanesz/AncientSpellcraft/commit/96931abfdeae01b4bea2b587d5782801d24280f9) - Soulbound Wands are now returned if the player self-resurrects. Fixes [#277](https://github.com/WinDanesz/AncientSpellcraft/pull/277) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`71841f3`](https://github.com/WinDanesz/AncientSpellcraft/commit/71841f3ccafeaebdf3891d5cecebbe85a71c5e93) - Arcane Barrier color alterations are permanent and synchronized on servers *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`c7eaa1a`](https://github.com/WinDanesz/AncientSpellcraft/commit/c7eaa1a04112739862739f1dc9675144c0e17372) - Arcane Barrier color alterations are permanent and synchronized on servers *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+### :white_check_mark: Tests
+- [`4412a39`](https://github.com/WinDanesz/AncientSpellcraft/commit/4412a39fa01f81ccbb79414c4387359a3360aee9) - bump to actions/upload-artifact@v4 *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`1a799b5`](https://github.com/WinDanesz/AncientSpellcraft/commit/1a799b5dbb5e42561d3e436ef3d104dee438ccdd) - Added test for artefact loot table registration *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+### :wrench: Chores
+- [`37abecb`](https://github.com/WinDanesz/AncientSpellcraft/commit/37abecb4617d89c9da44f5eb88754c0ffa1a58a5) - cleanup *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`8c8d457`](https://github.com/WinDanesz/AncientSpellcraft/commit/8c8d457c205efac7eadd3f038edda1a9b9531b79) - Added missing artefact loot entries *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`ddd4fbc`](https://github.com/WinDanesz/AncientSpellcraft/commit/ddd4fbc00f7103b4e6b1d68a188cf731f21326cf) - Add options.txt *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+
 ## [v1.7.1] - 2024-03-31
 ### :sparkles: New Features
 - [`614c974`](https://github.com/WinDanesz/AncientSpellcraft/commit/614c97480510780cb1d9e0f0f77216a00f9b70c6) - Baubles is now a required dependency, added warlock books to shrine loot *(commit by [@WinDanesz](https://github.com/WinDanesz))*
@@ -380,3 +423,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v1.6.3]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.6.2...v1.6.3
 [v1.7.0]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.6.3...v1.7.0
 [v1.7.1]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.7.0...v1.7.1
+[v1.8.0]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.7.8...v1.8.0
