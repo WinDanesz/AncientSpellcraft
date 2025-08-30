@@ -7,7 +7,7 @@ on:
 
 jobs:
   call-release-workflow:
-    uses: WinDanesz/ModTools/.github/workflows/create_and_publish_release.yml@github_only
+    uses: WinDanesz/ModTools/.github/workflows/create_and_publish_release.yml@1.12.2
     secrets:
       CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
       DISCORD_ANNOUNCER_WEBHOOK: ${{ secrets.DISCORD_ANNOUNCER_WEBHOOK }}
