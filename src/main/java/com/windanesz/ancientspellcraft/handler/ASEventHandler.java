@@ -30,6 +30,7 @@ import electroblob.wizardry.entity.living.ISpellCaster;
 import electroblob.wizardry.entity.living.ISummonedCreature;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.event.ArtefactCheckEvent;
+import electroblob.wizardry.event.ResurrectionEvent;
 import electroblob.wizardry.event.SpellBindEvent;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.integration.DamageSafetyChecker;
@@ -1983,6 +1984,12 @@ public class ASEventHandler {
 	public static void onPlayerRespawnEvent(PlayerEvent.PlayerRespawnEvent event) {
 		// Soulbound Wand Upgrade - give back stored items
 		ItemSoulboundWandUpgrade.restoreStoredWandsToInventory(event.player);
+	}
+
+	@SubscribeEvent
+	public static void onResurrectionEvent(ResurrectionEvent event) {
+		// Soulbound Wand Upgrade - give back stored items
+		ItemSoulboundWandUpgrade.restoreStoredWandsToInventory(event.getEntityPlayer());
 	}
 
 	public static float calculateVelocity(EntityMagicProjectile projectile, SpellModifiers modifiers, float launchHeight) {
