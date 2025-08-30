@@ -1,6 +1,5 @@
 package com.windanesz.ancientspellcraft.item;
 
-import com.windanesz.ancientspellcraft.Settings;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.item.ISpellCastingItem;
@@ -12,7 +11,6 @@ import electroblob.wizardry.packet.WizardryPacketHandler;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.SpellProperties;
 import electroblob.wizardry.util.WandHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -208,39 +206,46 @@ public class ItemAncientWand extends ItemASArtefact implements ISpellCastingItem
 	public boolean onApplyButtonPressed(EntityPlayer player, Slot centre, Slot crystals, Slot upgrade, Slot[] spellBooks) {
 		boolean changed = false; // Used for advancements
 
+		// Reads NBT spell metadata array to variable, edits this, then writes it back to NBT.
+		// Original spells are preserved; if a slot is left empty the existing spell binding will remain.
+		// Accounts for spells which cannot be applied because they are above the wand's tier; these spells
+		// will not bind but the existing spell in that slot will remain and other applicable spells will
+		// be bound as normal, along with any upgrades and crystals.
 		Spell[] spells = WandHelper.getSpells(centre.getStack());
 
-		if (spells.length == 0) {
+		if (spells.length <= 0) {
 			// Base value here because if the spell array doesn't exist, the wand can't possibly have attunement upgrades
-			spells = new Spell[BASE_SPELL_SLOTS];
-		} else {
-			return false;
+			spells = new Spell[1];
 		}
 
 		for (int i = 0; i < spells.length; i++) {
 			if (spellBooks[i].getStack() != ItemStack.EMPTY) {
 
 				Spell spell = Spell.byMetadata(spellBooks[i].getStack().getItemDamage());
-				// If the wand is powerful enough for the spell, it's not already bound to that slot, and it's enabled for wands
-				if (!(spell.getTier().level > Settings.generalSettings.ancient_wand_max_spell_tier) && spells[i] != spell && spell.isEnabled(SpellProperties.Context.WANDS)) {
+				// Decide if we can bind this multiple times
+				if (Wizardry.settings.preventBindingSameSpellTwiceToWands && Arrays.stream(spells).anyMatch(s -> s == spell)) {
+					continue;
+				}
 
-					// Decide if we can bind this multiple times
-					if (Wizardry.settings.preventBindingSameSpellTwiceToWands && Arrays.stream(spells).anyMatch(s -> s == spell)) {
-						continue;
-					}
+				spells[i] = spell;
+				changed = true;
 
-					spells[i] = spell;
-					changed = true;
-
-					// setting to consume books upon use
-					if (Wizardry.settings.singleUseSpellBooks) {
-						spellBooks[i].getStack().shrink(1);
-					}
+				// setting to consume books upon use
+				if (Wizardry.settings.singleUseSpellBooks) {
+					spellBooks[i].getStack().shrink(1);
 				}
 			}
 		}
 
-		WandHelper.setSpells(centre.getStack(), spells);
+		//if (spells.length <= 0) {
+			WandHelper.setSpells(centre.getStack(), spells);
+		//}
+
+		// Charges wand by appropriate amount
+		if (WandHelper.rechargeManaOnApplyButtonPressed(centre, crystals)) {
+			changed = true;
+		}
+
 		return changed;
 	}
 
