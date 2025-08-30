@@ -100,6 +100,10 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 
 	@Override
 	public boolean shouldExecute() {
+		// Null safety checks to prevent crashes
+		if (this.attacker == null || this.attacker.world == null || this.attacker.isDead) {
+			return false;
+		}
 
 		EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
 
@@ -113,6 +117,10 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 
 	@Override
 	public boolean shouldContinueExecuting() {
+		// Additional null checks for safety
+		if (this.attacker == null || this.attacker.world == null || this.attacker.isDead) {
+			return false;
+		}
 		return this.shouldExecute() || !this.attacker.getNavigator().noPath();
 	}
 
@@ -139,6 +147,10 @@ public class EntityAIAttackSpellImproved<T extends EntityLiving & ISpellCaster> 
 	public void updateTask() {
 
 		// Only executed server side.
+		// Null safety checks to prevent crashes during task execution
+		if (this.attacker == null || this.attacker.world == null || this.attacker.isDead || this.target == null || this.target.isDead) {
+			return;
+		}
 
 		double distanceSq = this.attacker.getDistanceSq(this.target.posX, this.target.posY,
 				this.target.posZ);
