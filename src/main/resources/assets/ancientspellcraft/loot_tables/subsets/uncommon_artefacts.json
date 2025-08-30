@@ -10,7 +10,6 @@
                 { "type": "item", "name": "ancientspellcraft:amulet_rabbit", "weight": 1},
                 { "type": "item", "name": "ancientspellcraft:amulet_talisman_of_affinity", "weight": 1},
                 { "type": "item", "name": "ancientspellcraft:belt_horse", "weight": 1},
-                { "type": "item", "name": "ancientspellcraft:charm_hungry_chest", "weight": 1},
                 { "type": "item", "name": "ancientspellcraft:charm_ice_cream", "weight": 1},
                 { "type": "item", "name": "ancientspellcraft:charm_mana_flask", "weight": 1},
                 { "type": "item", "name": "ancientspellcraft:charm_mana_orb", "weight": 1},

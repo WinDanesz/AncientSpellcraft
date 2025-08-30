@@ -29,6 +29,7 @@
                 { "type": "item", "name": "ancientspellcraft:belt_stone", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:belt_temporal_anchor", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:belt_vortex", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_hungry_chest", "weight": 1},
                 { "type": "item", "name": "ancientspellcraft:charm_aura_alacrity", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:charm_aura_defense", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:charm_aura_hatred", "weight": 1 },
@@ -97,7 +98,8 @@
                 { "type": "item", "name": "ancientspellcraft:ring_range", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:ring_spirit_ward", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:ring_unbinding", "weight": 1 },
-                { "type": "item", "name": "ancientspellcraft:ring_withdraw_life", "weight": 1 }
+                { "type": "item", "name": "ancientspellcraft:ring_withdraw_life", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_vessel_of_the_withered_oath", "weight": 1 }
             ]
         }
     ]

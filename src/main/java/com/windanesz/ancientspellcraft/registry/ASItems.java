@@ -129,6 +129,7 @@ public final class ASItems {
 	public static final Item amulet_black_tongue = placeholder();
 	public static final Item amulet_holy_aura = placeholder();
 	public static final Item amulet_of_resistance = placeholder();
+	public static final Item amulet_elemental_aura = placeholder();
 
 	/// charm
 	public static final Item charm_rift_bottle = placeholder();
@@ -252,6 +253,8 @@ public final class ASItems {
 	public static final Item head_whispering_veil = placeholder();
 	public static final Item head_disruptor_crown = placeholder();
 	public static final Item head_circlet_of_the_unknown = placeholder();
+	public static final Item head_ardor_crown = placeholder();
+	public static final Item head_mask_of_perseigni = placeholder();
 
 	/// misc
 	public static final Item magic_shield = placeholder();
