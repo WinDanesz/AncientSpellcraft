@@ -129,7 +129,7 @@ public class ASEntities {
 
 		registry.register(createEntry(EntitySkeletonMageMinion.class, "skeleton_mage_minion", TrackingType.LIVING).build());
 		registry.register(createEntry(EntitySkeletonMage.class, "skeleton_mage", TrackingType.LIVING).egg(0x868087, 0x8b0c9c)
-				.spawn(EnumCreatureType.MONSTER, Settings.generalSettings.skeleton_mage_spawn_rate, 1, 3, ForgeRegistries.BIOMES.getValuesCollection().stream()
+				.spawn(EnumCreatureType.MONSTER, Settings.generalSettings.skeleton_mage_spawn_rate, 1, 1, ForgeRegistries.BIOMES.getValuesCollection().stream()
 				.filter(b -> !Arrays.asList(AncientSpellcraft.settings.skeletonMageBiomeBlacklist).contains(b.getRegistryName()))
 				.collect(Collectors.toSet())).build());
 
