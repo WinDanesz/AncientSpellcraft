@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.item;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public interface IItemWithSlots {
 
@@ -12,5 +13,11 @@ public interface IItemWithSlots {
 
 	int getColumnCount();
 
-	boolean isItemValid(Item item);
+	default boolean isItemValid(Item item) {
+		return true;
+	}
+
+	default boolean isItemStackValid(ItemStack stack) {
+		return true;
+	}
 }
