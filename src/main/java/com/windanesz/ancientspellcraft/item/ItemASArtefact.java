@@ -68,8 +68,7 @@ public class ItemASArtefact extends ItemArtefact {
 					return BaubleType.HEAD;
 				case BODY:
 					return BaubleType.BODY;
-				case TRINKET:
-					return BaubleType.TRINKET;
+
 				default:
 					return BaubleType.CHARM;
 			}
