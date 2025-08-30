@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
 import com.windanesz.ancientspellcraft.misc.DonorPerks;
 import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.tileentity.TileRune;
 import com.windanesz.ancientspellcraft.util.ASParticles;
 import electroblob.wizardry.item.SpellActions;
@@ -46,11 +47,15 @@ public class ArcaneBarrier extends Ritual implements IRitualIngredient, IRitualB
 			barrier.lifetime = 40;
 			barrier.setRadius(1);
 
-			// Apply stored color from ritual data if it exists
+			// Apply stored color and allow_players flag from ritual data if it exists
 			NBTTagCompound ritualData = centerPiece.getRitualData();
 			if (ritualData.hasKey("color")) {
 				int storedColor = ritualData.getInteger("color");
 				barrier.setColour(storedColor);
+			}
+			if (ritualData.hasKey("allow_players")) {
+				boolean allowPlayers = ritualData.getBoolean("allow_players");
+				barrier.setAllowPlayers(allowPlayers);
 			}
 
 			world.spawnEntity(barrier);
@@ -94,7 +99,25 @@ public class ArcaneBarrier extends Ritual implements IRitualIngredient, IRitualB
 		handleColorSetting(world, barrier, centerPiece);
 		updateBarrierRadius(world, barrier, centerPiece);
 		renderEffects(world, barrier, centerPiece);
+		handleBarrierAlterations(world, barrier, centerPiece);
+	}
 
+	private void handleBarrierAlterations(World world, EntityArcaneBarrier barrier, TileRune centerPiece) {
+		if (world.getTotalWorldTime() % 100L == 0) {
+			List<EntityItem> entityItemList = EntityUtils.getEntitiesWithinRadius(1, centerPiece.getPos().getX(), centerPiece.getPos().getY(), centerPiece.getPos().getZ(), world, EntityItem.class);
+			if (!entityItemList.isEmpty()) {
+				EntityItem item = entityItemList.get(0);
+				if (item.getItem().getItem() == ASItems.rune_yngvi) {
+					// Store allow_players flag in tile entity ritual data for persistence and synchronization
+					NBTTagCompound ritualData = centerPiece.getRitualData();
+					ritualData.setBoolean("allow_players", true);
+					centerPiece.setRitualData(ritualData);
+					centerPiece.sendUpdates(); // Mark tile entity dirty for persistence and sync
+					barrier.setAllowPlayers(true);
+					item.getItem().shrink(1);
+				}
+			}
+		}
 	}
 
 	// Helper method to find the Arcane Barrier entity
@@ -102,11 +125,15 @@ public class ArcaneBarrier extends Ritual implements IRitualIngredient, IRitualB
 		List<EntityArcaneBarrier> barriers = EntityUtils.getEntitiesWithinRadius(1, centerPiece.getX(), centerPiece.getY(), centerPiece.getZ(), world, EntityArcaneBarrier.class);
 		if (!barriers.isEmpty()) {
 			EntityArcaneBarrier barrier = barriers.get(0);
-			// Apply stored color from ritual data if it exists
+			// Apply stored color and allow_players flag from ritual data if it exists
 			NBTTagCompound ritualData = centerPiece.getRitualData();
 			if (ritualData.hasKey("color")) {
 				int storedColor = ritualData.getInteger("color");
 				barrier.setColour(storedColor);
+			}
+			if (ritualData.hasKey("allow_players")) {
+				boolean allowPlayers = ritualData.getBoolean("allow_players");
+				barrier.setAllowPlayers(allowPlayers);
 			}
 			return barrier;
 		}

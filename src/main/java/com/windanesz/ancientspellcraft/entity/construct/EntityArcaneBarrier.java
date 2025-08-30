@@ -66,6 +66,7 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 
 	private static final DataParameter<Float> RADIUS = EntityDataManager.<Float>createKey(EntityArcaneBarrier.class, DataSerializers.FLOAT);
 	protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityArcaneBarrier.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+	private static final DataParameter<Boolean> ALLOW_PLAYERS = EntityDataManager.<Boolean>createKey(EntityArcaneBarrier.class, DataSerializers.BOOLEAN);
 
 	private Colour colour = Colour.MAGENTA;
 
@@ -84,6 +85,7 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 		this.dataManager.register(COLOUR, 13);
 		this.dataManager.register(RADIUS, 1f);
 		this.dataManager.register(OWNER_UNIQUE_ID, Optional.absent());
+		this.dataManager.register(ALLOW_PLAYERS, false);
 	}
 
 	public void setColour(int newColour) {
@@ -92,6 +94,14 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 
 	public Colour getColour() {
 		return Colour.getByIndex(this.dataManager.get(COLOUR).intValue());
+	}
+
+	public void setAllowPlayers(boolean allowPlayers) {
+		this.dataManager.set(ALLOW_PLAYERS, allowPlayers);
+	}
+
+	public boolean getAllowPlayers() {
+		return this.dataManager.get(ALLOW_PLAYERS);
 	}
 
 	public void setRadius(float radius) {
@@ -155,7 +165,7 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 
 		if (ticksExisted % 80 == 0) {
 
-			targets = EntityUtils.getEntitiesWithinRadius(radius + SEARCH_BORDER_SIZE, posX, posY, posZ, world, Entity.class);
+			targets = EntityUtils.getEntitiesWithinRadius(radius + 4, posX, posY, posZ, world, Entity.class);
 			//			System.out.println("large search");
 			useCache = true;
 		} else {
@@ -167,7 +177,11 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 
 		targets.remove(this);
 
-		targets.removeIf(t -> !(t instanceof EntityLivingBase) || t instanceof EntityArmorStand || t instanceof EntityLivingBase && AllyDesignationSystem.isAllied((EntityLivingBase) t, getCaster()) || t instanceof EntityMagicConstruct || t instanceof EntityXPOrb || t instanceof EntityAnimal || t instanceof EntityMagicArrow && !this.isValidTarget(((EntityMagicArrow) t).getCaster())
+		targets.removeIf(t -> !(t instanceof EntityLivingBase) || t instanceof EntityArmorStand ||
+				(t instanceof EntityLivingBase && AllyDesignationSystem.isAllied((EntityLivingBase) t, getCaster())) ||
+				(t instanceof EntityPlayer && !getAllowPlayers()) ||
+				t instanceof EntityMagicConstruct || t instanceof EntityXPOrb || t instanceof EntityAnimal ||
+				t instanceof EntityMagicArrow && !this.isValidTarget(((EntityMagicArrow) t).getCaster())
 				|| t instanceof EntityThrowable && !this.isValidTarget(((EntityThrowable) t).getThrower())
 				|| t instanceof EntityArrow && !this.isValidTarget(((EntityArrow) t).shootingEntity));
 
@@ -342,6 +356,7 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 	protected void writeEntityToNBT(NBTTagCompound nbt){
 		nbt.setInteger("lifetime", lifetime);
 		nbt.setFloat(RADIUS_TAG, radius);
+		nbt.setBoolean("allow_players", getAllowPlayers());
 		if (dataManager.get(OWNER_UNIQUE_ID).isPresent()) {
 			nbt.setUniqueId("owner", dataManager.get(OWNER_UNIQUE_ID).get());
 		}
@@ -351,6 +366,9 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 	protected void readEntityFromNBT(NBTTagCompound nbt) {
 		setRadius(nbt.getFloat(RADIUS_TAG));
 		lifetime = nbt.getInteger("lifetime");
+		if (nbt.hasKey("allow_players")) {
+			setAllowPlayers(nbt.getBoolean("allow_players"));
+		}
 		if (nbt.hasUniqueId("owner")) {
 			this.dataManager.set(OWNER_UNIQUE_ID, Optional.of(nbt.getUniqueId("owner")));
 		}
@@ -485,6 +503,7 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 	public void readSpawnData(ByteBuf data){
 		lifetime = data.readInt();
 		setRadius(data.readFloat());
+		setAllowPlayers(data.readBoolean());
 
 	}
 
@@ -492,6 +511,7 @@ public class EntityArcaneBarrier extends EntityMagicConstruct implements ICustom
 	public void writeSpawnData(ByteBuf data) {
 		data.writeInt(lifetime);
 		data.writeFloat(getRadius());
+		data.writeBoolean(getAllowPlayers());
 	}
 
 	public enum Colour {
