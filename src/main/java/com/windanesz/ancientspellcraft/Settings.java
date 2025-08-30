@@ -215,6 +215,18 @@ public class Settings {
 				"ancientspellcraft:ancient_spellcraft_scroll"
 		};
 
+		@Config.Name("Additional Items Accepted by the Golden Scroll Holder")
+		@Config.Comment("These have no effect and they are just included for roleplay."
+				+ "you can add pretty much any items, not just scrolls")
+		public String[] golden_scroll_holder_additional_items = {
+				"minecraft:paper",
+				"minecraft:map",
+				"minecraft:filled_map",
+				"minecraft:enchanted_book",
+				"minecraft:writable_book",
+				"minecraft:written_book"
+		};
+
 		@Config.Name("Expertiment Debuff Blacklist")
 		@Config.Comment("List of negative potion effect which cannot occur as a side effect of the Experiment spell. Must be in a 'modid:potion_registry_name' format.")
 		public String[] experiment_debuff_blacklist = {

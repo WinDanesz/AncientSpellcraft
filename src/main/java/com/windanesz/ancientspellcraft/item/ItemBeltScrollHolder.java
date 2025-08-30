@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.item;
 
+import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ItemWandUpgrade;
@@ -8,6 +9,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemBeltScrollHolder extends AbstractItemArtefactWithSlots implements ITickableArtefact {
 
@@ -33,11 +39,13 @@ public class ItemBeltScrollHolder extends AbstractItemArtefactWithSlots implemen
 
 	@Override
 	public boolean isItemValid(Item item) {
-		return item instanceof ItemWandUpgrade
-				&& item != ASItems.soulbound_upgrade
-				&& item != WizardryItems.melee_upgrade
-				&& item != WizardryItems.storage_upgrade
-				&& item != WizardryItems.siphon_upgrade
-				&& item != WizardryItems.attunement_upgrade;
+		List<Item> itemList = new ArrayList<>();
+		for (String itemName : Settings.generalSettings.golden_scroll_holder_additional_items) {
+			if (ForgeRegistries.ITEMS.containsKey(new ResourceLocation(itemName))) {
+				itemList.add(ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName)));
+			}
+		}
+
+		return (item instanceof ItemWandUpgrade && item != ASItems.soulbound_upgrade && item != WizardryItems.melee_upgrade && item != WizardryItems.storage_upgrade && item != WizardryItems.siphon_upgrade && item != WizardryItems.attunement_upgrade) || itemList.contains(item.getRegistryName().toString());
 	}
 }
