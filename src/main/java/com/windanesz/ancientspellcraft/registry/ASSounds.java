@@ -38,6 +38,7 @@ public class ASSounds {
 	public static final SoundEvent BARTERING_SCROLL = createSound("bartering_scroll");
 	public static final SoundEvent TRANSMUTATION = createSound("transmutation");
 	public static final SoundEvent spell_chaos_blast_charge = createSound("spell.chaos_blast_charge");
+	public static final SoundEvent GOOSE = createSound("goose");
 
 
 	public static SoundEvent createSound(String name) {
@@ -77,5 +78,6 @@ public class ASSounds {
 		event.getRegistry().register(CONTINGENCY_ACTIVATE);
 		event.getRegistry().register(BARTERING_SCROLL);
 		event.getRegistry().register(TRANSMUTATION);
+		event.getRegistry().register(GOOSE);
 	}
 }

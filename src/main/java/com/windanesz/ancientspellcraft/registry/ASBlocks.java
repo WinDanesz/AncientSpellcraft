@@ -48,6 +48,9 @@ import com.windanesz.ancientspellcraft.block.BlockSealedStone;
 import com.windanesz.ancientspellcraft.block.BlockSentinel;
 import com.windanesz.ancientspellcraft.block.BlockSkullWatch;
 import com.windanesz.ancientspellcraft.block.BlockSnowSlab;
+import com.windanesz.ancientspellcraft.block.BlockArcaneFlame;
+import com.windanesz.ancientspellcraft.block.BlockTeleportationFlame;
+import com.windanesz.ancientspellcraft.block.BlockWildfireFlame;
 import com.windanesz.ancientspellcraft.block.BlockSphereCognizance;
 import com.windanesz.ancientspellcraft.block.BlockUnsealButton;
 import com.windanesz.ancientspellcraft.block.BlockUnsealedStone;
@@ -57,6 +60,9 @@ import com.windanesz.ancientspellcraft.tileentity.TileArcaneWall;
 import com.windanesz.ancientspellcraft.tileentity.TileArtefactPensive;
 import com.windanesz.ancientspellcraft.tileentity.TileCandleLight;
 import com.windanesz.ancientspellcraft.tileentity.TileConcealedBlock;
+import com.windanesz.ancientspellcraft.tileentity.TileEntityArcaneFlame;
+import com.windanesz.ancientspellcraft.tileentity.TileEntityTeleportationFlame;
+import com.windanesz.ancientspellcraft.tileentity.TileEntityWildfireFlame;
 import com.windanesz.ancientspellcraft.tileentity.TileEntityLightningBlock;
 import com.windanesz.ancientspellcraft.tileentity.TileEntityMagicMushroom;
 import com.windanesz.ancientspellcraft.tileentity.TileEntityRevertingBlock;
@@ -86,13 +92,16 @@ import javax.annotation.Nonnull;
 public class ASBlocks {
 
 
+
 	private ASBlocks() {} // no instances
 
 	@Nonnull
 	@SuppressWarnings("ConstantConditions")
 	private static <T> T placeholder() { return null; }
-
 	public static final Block NETHER_FIRE = placeholder();
+	public static final Block ARCANE_FLAME = placeholder();
+	public static final Block TELEPORTATION_FLAME = placeholder();
+	public static final Block WILDFIRE_FLAME = placeholder();
 	public static final Block SNOW_DOUBLE_SLAB = placeholder();
 	public static final Block SNOW_SLAB = placeholder();
 	public static final Block ICE_DOOR = placeholder();
@@ -264,9 +273,11 @@ public class ASBlocks {
 		registerBlock(registry, "lightning_block", new BlockLightning());
 		registerBlock(registry, "concealed_block", new BlockConcealedBlock());
 		registerBlock(registry, "arcane_wall", new BlockArcaneWall());
-		registerBlock(registry, "sealed_stone", new BlockSealedStone());
-		registerBlock(registry, "unsealed_stone", new BlockUnsealedStone());
+		registerBlock(registry, "sealed_stone", new BlockSealedStone());		registerBlock(registry, "unsealed_stone", new BlockUnsealedStone());
 		registerBlock(registry, "unseal_button", new BlockUnsealButton());
+		registerBlock(registry, "arcane_flame", new BlockArcaneFlame());
+		registerBlock(registry, "teleportation_flame", new BlockTeleportationFlame());
+		registerBlock(registry, "wildfire_flame", new BlockWildfireFlame());
 	}
 
 	/**
@@ -286,11 +297,13 @@ public class ASBlocks {
 		GameRegistry.registerTileEntity(TileEntityMagicMushroom.class, new ResourceLocation(AncientSpellcraft.MODID, "magic_mushroom_tile"));
 		GameRegistry.registerTileEntity(TileSageLectern.class, new ResourceLocation(AncientSpellcraft.MODID, "sage_lectern"));
 		GameRegistry.registerTileEntity(TileEntityLightningBlock.class, new ResourceLocation(AncientSpellcraft.MODID, "lightning_block_tile"));
-
 		GameRegistry.registerTileEntity(TileEntityRevertingBlock.class, new ResourceLocation(AncientSpellcraft.MODID, "reverting_tile"));
 		GameRegistry.registerTileEntity(TileArcaneAnvil.class, new ResourceLocation(AncientSpellcraft.MODID, "arcane_anvil"));
 		GameRegistry.registerTileEntity(TileConcealedBlock.class, new ResourceLocation(AncientSpellcraft.MODID, "concealed_block"));
 		GameRegistry.registerTileEntity(TileArcaneWall.class, new ResourceLocation(AncientSpellcraft.MODID, "arcane_wall"));
+		GameRegistry.registerTileEntity(TileEntityArcaneFlame.class, new ResourceLocation(AncientSpellcraft.MODID, "arcane_flame"));
+		GameRegistry.registerTileEntity(TileEntityTeleportationFlame.class, new ResourceLocation(AncientSpellcraft.MODID, "teleportation_flame"));
+		GameRegistry.registerTileEntity(TileEntityWildfireFlame.class, new ResourceLocation(AncientSpellcraft.MODID, "wildfire_flame"));
 	}
 
 }

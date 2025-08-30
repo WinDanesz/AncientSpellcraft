@@ -8,32 +8,12 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityContingencyProjec
 import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
 import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
-import com.windanesz.ancientspellcraft.item.AbstractItemArtefactWithSlots;
-import com.windanesz.ancientspellcraft.item.ItemBattlemageShield;
-import com.windanesz.ancientspellcraft.item.ItemBeltScrollHolder;
-import com.windanesz.ancientspellcraft.item.ItemFocusStone;
-import com.windanesz.ancientspellcraft.item.ItemManaArtefact;
-import com.windanesz.ancientspellcraft.item.ItemRitualBook;
-import com.windanesz.ancientspellcraft.item.ItemSoulboundWandUpgrade;
+import com.windanesz.ancientspellcraft.item.*;
 import com.windanesz.ancientspellcraft.potion.PotionMetamagicEffect;
-import com.windanesz.ancientspellcraft.registry.ASBlocks;
-import com.windanesz.ancientspellcraft.registry.ASDimensions;
-import com.windanesz.ancientspellcraft.registry.ASEnchantments;
-import com.windanesz.ancientspellcraft.registry.ASItems;
-import com.windanesz.ancientspellcraft.registry.ASPotions;
-import com.windanesz.ancientspellcraft.registry.ASSpells;
+import com.windanesz.ancientspellcraft.registry.*;
 import com.windanesz.ancientspellcraft.ritual.ElementalAttunement;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
-import com.windanesz.ancientspellcraft.spell.AbsorbArtefact;
-import com.windanesz.ancientspellcraft.spell.AbsorbCrystal;
-import com.windanesz.ancientspellcraft.spell.AbsorbPotion;
-import com.windanesz.ancientspellcraft.spell.Contingency;
-import com.windanesz.ancientspellcraft.spell.DimensionalAnchor;
-import com.windanesz.ancientspellcraft.spell.IClassSpell;
-import com.windanesz.ancientspellcraft.spell.Martyr;
-import com.windanesz.ancientspellcraft.spell.MetaSpellBuff;
-import com.windanesz.ancientspellcraft.spell.MetamagicProjectile;
-import com.windanesz.ancientspellcraft.spell.TimeKnot;
+import com.windanesz.ancientspellcraft.spell.*;
 import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Constants;
@@ -53,32 +33,14 @@ import electroblob.wizardry.event.ArtefactCheckEvent;
 import electroblob.wizardry.event.SpellBindEvent;
 import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.integration.DamageSafetyChecker;
-import electroblob.wizardry.item.IManaStoringItem;
-import electroblob.wizardry.item.ItemArtefact;
-import electroblob.wizardry.item.ItemCrystal;
-import electroblob.wizardry.item.ItemScroll;
-import electroblob.wizardry.item.ItemWand;
-import electroblob.wizardry.item.ItemWandUpgrade;
-import electroblob.wizardry.item.ItemWizardArmour;
+import electroblob.wizardry.item.*;
 import electroblob.wizardry.potion.Curse;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.spell.ImbueWeapon;
-import electroblob.wizardry.spell.Spell;
-import electroblob.wizardry.spell.SpellBuff;
-import electroblob.wizardry.spell.SpellMinion;
-import electroblob.wizardry.spell.SpellProjectile;
-import electroblob.wizardry.spell.SpellRay;
-import electroblob.wizardry.util.AllyDesignationSystem;
-import electroblob.wizardry.util.EntityUtils;
-import electroblob.wizardry.util.IElementalDamage;
-import electroblob.wizardry.util.InventoryUtils;
-import electroblob.wizardry.util.MagicDamage;
-import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WandHelper;
+import electroblob.wizardry.spell.*;
+import electroblob.wizardry.util.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -109,11 +71,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.PotionEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -124,15 +82,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static com.windanesz.ancientspellcraft.item.EnumElementalSwordEffect.getAngleBetweenEntities;
 import static electroblob.wizardry.constants.Constants.*;
@@ -1438,9 +1388,28 @@ public class ASEventHandler {
 
 	@SubscribeEvent
 	public static void onSpellCastPostEvent(SpellCastEvent.Post event) {
+		EntityLivingBase caster = event.getCaster();
+
+		if (caster != null) {
+			List<EntityPlayer> nearbyPlayers = EntityUtils.getEntitiesWithinRadius(15, caster.posX, caster.posY, caster.posZ, caster.world, EntityPlayer.class);
+			for (EntityPlayer nearbyPlayer : nearbyPlayers) {
+				boolean offhand = nearbyPlayer.getHeldItemOffhand().getItem() == ASItems.charm_arcane_mirror;
+				if (offhand) {
+					// if the player is holding the mirror in their offhand, set the current spell to the one cast by the other player, if the mirror is empty
+					if (nearbyPlayer.getHeldItemOffhand().getItem() == ASItems.charm_arcane_mirror) {
+						Spell spell = ((ISpellCastingItem) (nearbyPlayer.getHeldItemOffhand().getItem())).getCurrentSpell(nearbyPlayer.getHeldItemOffhand());
+						if (spell == Spells.none){
+							((ItemArcaneMirror) nearbyPlayer.getHeldItemOffhand().getItem()).setSpell(nearbyPlayer.getHeldItemOffhand(), event.getSpell());
+						}
+					}
+				}
+			}
+		}
+
 		if (event.getCaster() instanceof EntityPlayer) {
 
 			EntityPlayer player = (EntityPlayer) event.getCaster();
+
 
 			if (isArtefactActive(player, ASItems.charm_knowledge_orb)) {
 
@@ -1676,6 +1645,21 @@ public class ASEventHandler {
 		//			event.setCanceled(true);
 		//		}
 
+		// belt_emberguard
+		if (event.getEntity() instanceof EntityItem) {
+			EntityItem entityItem = (EntityItem) event.getEntity();
+			for (EntityPlayer player : event.getWorld().playerEntities) { // Iterate directly over playerEntities
+				if (player.dimension == entityItem.dimension &&
+						player.getEntityBoundingBox().intersects(entityItem.getEntityBoundingBox().grow(20.0)) &&
+						ItemArtefact.isArtefactActive(player, ASItems.belt_emberguard)) {
+					entityItem.setEntityInvulnerable(true);
+					break;
+				}
+			}
+		}
+
+
+		// covenant
 		// We have no way of checking if it's a spawner in getCanSpawnHere() so this has to be done here instead
 		if (event.getEntity() instanceof ISummonedCreature) {
 			if (event.getEntity() instanceof EntityCreature && ((ISummonedCreature) event.getEntity()).getOwner() != null) {

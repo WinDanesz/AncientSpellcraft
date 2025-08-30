@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "normal": [
+      { "model": "ancientspellcraft:wildfire_flame_floor0" },
+      { "model": "ancientspellcraft:wildfire_flame_floor1" }
+    ]
+  }
+}

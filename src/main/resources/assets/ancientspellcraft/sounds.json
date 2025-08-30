@@ -44,11 +44,11 @@
     "shadow_magic_charge":                      {"category": "spells", "sounds": ["ancientspellcraft:shadow_magic_charge"]},
     "shadow_magic_loop":                        {"category": "spells", "sounds": ["ancientspellcraft:shadow_magic_loop"]},
     "skull_watch_alarm":                        {"category": "player", "sounds": ["ancientspellcraft:skull_watch_alarm"]},
-    "skull_watch_scream":                       {"category": "player", "sounds": ["ancientspellcraft:skull_watch_scream"]},
-    "spell.animate_item": 				        {"category": "spells", "sounds": ["ebwizardry:conjure"]},
+    "skull_watch_scream":                       {"category": "player", "sounds": ["ancientspellcraft:skull_watch_scream"]},    "spell.animate_item": 				        {"category": "spells", "sounds": ["ebwizardry:conjure"]},
     "spell.animate_weapon": 				    {"category": "spells", "sounds": ["ebwizardry:conjure"]},
     "spell.antimagic_field":                    {"category": "spells", "sounds": ["ancientspellcraft:shield"]},
     "spell.aquatic_agility": 		        	{"category": "spells", "sounds": ["ebwizardry:buff"]},
+    "spell.arcane_flame":                       {"category": "spells", "sounds": ["ebwizardry:fire"]},
     "spell.arcane_aegis":                       {"category": "spells", "sounds": ["ancientspellcraft:magic_shield_greater"]},
     "spell.arcane_augmentation":                {"category": "spells", "sounds": ["ancientspellcraft:metamagic"]},
     "spell.arcane_beam.end":                    {"category": "spells", "sounds": ["ebwizardry:lightning_ray_end"]},
@@ -274,5 +274,6 @@
     "stone_fist":                               {"category": "player", "sounds": ["ancientspellcraft:stone_fist"]},
     "transmutation":                            {"category": "spells", "sounds": ["ancientspellcraft:transmutation"]},
     "transportation_portal_teleports":          {"category": "spells", "sounds": ["ancientspellcraft:transportation_portal"]},
+    "goose":                                    {"category": "player", "sounds": ["ancientspellcraft:goose_1", "ancientspellcraft:goose_2"]},
     "war_horn":                                 {"category": "player", "sounds": ["ancientspellcraft:war_horn"]}
 }
