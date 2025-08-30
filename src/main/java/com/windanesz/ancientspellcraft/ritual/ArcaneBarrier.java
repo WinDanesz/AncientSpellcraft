@@ -45,6 +45,14 @@ public class ArcaneBarrier extends Ritual implements IRitualIngredient, IRitualB
 			barrier.setCaster(caster);
 			barrier.lifetime = 40;
 			barrier.setRadius(1);
+
+			// Apply stored color from ritual data if it exists
+			NBTTagCompound ritualData = centerPiece.getRitualData();
+			if (ritualData.hasKey("color")) {
+				int storedColor = ritualData.getInteger("color");
+				barrier.setColour(storedColor);
+			}
+
 			world.spawnEntity(barrier);
 
 		}
@@ -92,7 +100,17 @@ public class ArcaneBarrier extends Ritual implements IRitualIngredient, IRitualB
 	// Helper method to find the Arcane Barrier entity
 	private EntityArcaneBarrier findBarrier(World world, TileRune centerPiece) {
 		List<EntityArcaneBarrier> barriers = EntityUtils.getEntitiesWithinRadius(1, centerPiece.getX(), centerPiece.getY(), centerPiece.getZ(), world, EntityArcaneBarrier.class);
-		return barriers.isEmpty() ? null : barriers.get(0);
+		if (!barriers.isEmpty()) {
+			EntityArcaneBarrier barrier = barriers.get(0);
+			// Apply stored color from ritual data if it exists
+			NBTTagCompound ritualData = centerPiece.getRitualData();
+			if (ritualData.hasKey("color")) {
+				int storedColor = ritualData.getInteger("color");
+				barrier.setColour(storedColor);
+			}
+			return barrier;
+		}
+		return null;
 	}
 
 	// Helper method to update barrier radius
@@ -113,6 +131,11 @@ public class ArcaneBarrier extends Ritual implements IRitualIngredient, IRitualB
 				if (dye.getItem().getItem() == Items.DYE) {
 					int index = dye.getItem().getMetadata();
 					if (barrier.getOwnerId() != null && !DonorPerks.isDonor(barrier.getOwnerId())) {
+						// Store color in tile entity ritual data for persistence and synchronization
+						NBTTagCompound ritualData = centerPiece.getRitualData();
+						ritualData.setInteger("color", index);
+						centerPiece.setRitualData(ritualData);
+						centerPiece.sendUpdates(); // Mark tile entity dirty for persistence and sync
 						barrier.setColour(index);
 						dye.getItem().shrink(1);
 					}
