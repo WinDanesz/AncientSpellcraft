@@ -1,0 +1,9 @@
+﻿{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "ancientspellcraft:items/charm_verdant_crucible"
+    },
+    "overrides": [
+        {"predicate": {"ready": 1.0}, "model": "ancientspellcraft:item/charm_verdant_crucible_not_ready"}
+    ]
+}

@@ -3,16 +3,23 @@ package com.windanesz.ancientspellcraft.client;
 import com.windanesz.ancientspellcraft.client.entity.ASFakePlayer;
 import com.windanesz.ancientspellcraft.registry.ASPotions;
 import com.windanesz.ancientspellcraft.spell.ScryingOrb;
+import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.client.layer.LayerCloak;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.FOVUpdateEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod.EventBusSubscriber(Side.CLIENT)
+@Mod.EventBusSubscriber(modid = AncientSpellcraft.MODID, value = Side.CLIENT)
+@SideOnly(Side.CLIENT)
 public class ClientEventHandler {
 	public static int x, y, z;
 
@@ -30,6 +37,8 @@ public class ClientEventHandler {
 
 	// True when the continuous spell Farsight is being casted
 	public static boolean FARSIGHT_ACTIVE = false;
+
+	private static boolean layersInitialized = false;
 
 	@SubscribeEvent
 	public static void PlayerTick(TickEvent.PlayerTickEvent event) {
@@ -89,6 +98,39 @@ public class ClientEventHandler {
 		} else {
 			FARSIGHT_ACTIVE = false;
 		}
+	}
+
+	@SubscribeEvent
+	public static void onPlayerRender(RenderPlayerEvent.Pre event) {
+		//if (!layersInitialized) {
+		//	initializeCloakLayers();
+		//	layersInitialized = true;
+		//}
+	}
+
+	private static void initializeCloakLayers() {
+		RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
+		
+		// Add cloak layer to all player renderers
+		if (renderManager.getSkinMap().containsKey("default")) {
+			RenderPlayer defaultRenderer = renderManager.getSkinMap().get("default");
+			if (!hasCloakLayer(defaultRenderer)) {
+				defaultRenderer.addLayer(new LayerCloak(defaultRenderer));
+			}
+		}
+		
+		if (renderManager.getSkinMap().containsKey("slim")) {
+			RenderPlayer slimRenderer = renderManager.getSkinMap().get("slim");
+			if (!hasCloakLayer(slimRenderer)) {
+				slimRenderer.addLayer(new LayerCloak(slimRenderer));
+			}
+		}
+	}
+
+	private static boolean hasCloakLayer(RenderPlayer renderer) {
+		// Since layerRenderers is not accessible, we'll just add the layer
+		// and let it handle duplicates internally
+		return false; // Always return false to ensure layer is added
 	}
 }
 

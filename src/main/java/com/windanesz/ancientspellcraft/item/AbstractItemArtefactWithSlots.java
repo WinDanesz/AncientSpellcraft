@@ -90,28 +90,20 @@ public abstract class AbstractItemArtefactWithSlots extends ItemArtefact impleme
 		return ItemStack.EMPTY;
 	}
 
-	public static void setItemForSlot(ItemStack bag, ItemStack itemStack, int slot) {
-		if (bag.getItem() instanceof AbstractItemArtefactWithSlots) {
-			int maxCount = ((AbstractItemArtefactWithSlots) bag.getItem()).getSlotCount();
+	public static void setItemForSlot(ItemStack stack, int slot, ItemStack item) {
+		if (stack.getItem() instanceof AbstractItemArtefactWithSlots) {
+			int maxCount = ((AbstractItemArtefactWithSlots) stack.getItem()).getSlotCount();
 
 			if (slot <= maxCount) {
-				NBTTagCompound nbt = bag.getTagCompound();
-				if (nbt == null) {
-					nbt = new NBTTagCompound();
+				NBTTagCompound nbt = stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
+				NBTTagList items = nbt.getTagList("Items", 10);
+				while (items.tagCount() <= slot) {
+					items.appendTag(new NBTTagCompound());
 				}
-
-				NBTTagList items = new NBTTagList();
-				if (nbt.hasKey("Items")) {
-					items = bag.getTagCompound().getTagList("Items", 10);
-				}
-				NBTTagCompound nbttagcompound = new NBTTagCompound();
-				nbttagcompound.setByte("Slot", (byte) slot);
-				itemStack.writeToNBT(nbttagcompound);
-				items.appendTag(nbttagcompound);
-
+				items.set(slot, item.writeToNBT(new NBTTagCompound()));
 				nbt.setTag("Items", items);
-				bag.setTagCompound(nbt);
 			}
 		}
 	}
+
 }
