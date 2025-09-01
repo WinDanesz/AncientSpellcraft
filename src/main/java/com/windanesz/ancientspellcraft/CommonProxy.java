@@ -6,6 +6,7 @@ import com.windanesz.ancientspellcraft.packet.PacketContinuousRitual;
 import com.windanesz.ancientspellcraft.packet.PacketExtendedSwordReach;
 import com.windanesz.ancientspellcraft.packet.PacketMushroomActivation;
 import com.windanesz.ancientspellcraft.packet.PacketStartRitual;
+import com.windanesz.ancientspellcraft.registry.ASDimensions;
 import com.windanesz.ancientspellcraft.ritual.Ritual;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -107,4 +108,13 @@ public class CommonProxy {
 	public void openBookGUI(EntityPlayer player, ItemStack book) {}
 
 	public void registerExtraHandbookContent() {}
+
+	/**
+	 * Checks if the current player is in the pocket dimension.
+	 * Server-side implementation always returns false for safety.
+	 * @return true if the player is in the pocket dimension, false otherwise
+	 */
+	public boolean isPlayerInPocketDimension() {
+		return false;
+	}
 }

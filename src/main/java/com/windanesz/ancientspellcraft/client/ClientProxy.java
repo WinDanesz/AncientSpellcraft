@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft.client;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.CommonProxy;
 import com.windanesz.ancientspellcraft.Settings;
+import com.windanesz.ancientspellcraft.registry.ASDimensions;
 import com.windanesz.ancientspellcraft.block.BlockCrystalLeaves;
 import com.windanesz.ancientspellcraft.block.BlockMagicMushroom;
 import com.windanesz.ancientspellcraft.client.model.ItemColorizer;
@@ -456,5 +457,11 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerExtraHandbookContent() {
 		GuiWizardHandbook.registerAddonHandbookContent(AncientSpellcraft.MODID);
+	}
+
+	@Override
+	public boolean isPlayerInPocketDimension() {
+		Minecraft mc = Minecraft.getMinecraft();
+		return mc.player != null && mc.player.dimension == ASDimensions.POCKET_DIM_ID;
 	}
 }
