@@ -28,6 +28,7 @@
                 { "type": "item", "name": "ancientspellcraft:body_power_gem", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:body_sorcery", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:charm_ancient_wand", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_aurelian_cup", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:charm_arcane_diffuser", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:charm_arcane_mirror", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:charm_aura_life", "weight": 1 },

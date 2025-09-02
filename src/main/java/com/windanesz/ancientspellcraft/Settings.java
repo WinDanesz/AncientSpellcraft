@@ -171,6 +171,18 @@ public class Settings {
 		@Config.Comment("List of loot tables to inject Ancient Spellcraft artefacts into.")
 		public int amulet_of_resistance_mana_capacity = 600;
 
+		@Config.Name("Amulet of Celerity Speed Bonus")
+		@Config.Comment("The movement speed bonus granted by the Amulet of Celerity, as a multiplier (0.1 = +10% speed)")
+		@Config.RequiresMcRestart
+		@Config.RangeDouble(min = 0.0, max = 2.0)
+		public double amulet_of_celerity_speed_bonus = 0.1D;
+
+		@Config.Name("Aurelian Cup Absorption Duration")
+		@Config.Comment("The duration in seconds of the Absorption effect granted by the Aurelian Cup when drinking potions")
+		@Config.RequiresMcRestart
+		@Config.RangeInt(min = 1, max = 300)
+		public int aurelian_cup_absorption_duration = 10;
+
 		@Config.Name("Ancient Wand Max Spell Tier")
 		@Config.Comment("Max Spell Tier for Ancient Wands (0-3")
 		public int ancient_wand_max_spell_tier = 2;

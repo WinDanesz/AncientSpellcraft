@@ -197,6 +197,7 @@ public final class ASItems {
 	public static final Item belt_hook = placeholder();
 	public static final Item charm_potion_kit = placeholder();
 	public static final Item charm_thousand_anvils = placeholder();
+	public static final Item charm_aurelian_cup = placeholder();
 	public static final Item charm_vault_key = placeholder();
 	public static final Item charm_transcribing_tome = placeholder();
 	public static final Item charm_focus_stone = placeholder();
@@ -867,6 +868,7 @@ public final class ASItems {
 		registerItem(registry, "charm_elemental_alkahest", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_sage_diary", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_devoritium_magnet", AncientSpellcraft.MODID, new ItemDevoritiumMagnet(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_aurelian_cup", AncientSpellcraft.MODID, new ItemAurelianCup(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_thousand_anvils", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_dimensional_disk", AncientSpellcraft.MODID, new ItemDimensionalDisk(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_vault_key", AncientSpellcraft.MODID, new ItemVaultKey(EnumRarity.EPIC, ItemArtefact.Type.CHARM));

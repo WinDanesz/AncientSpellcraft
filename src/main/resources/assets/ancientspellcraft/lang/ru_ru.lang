@@ -1688,6 +1688,8 @@ item.ancientspellcraft\:amulet_elemental_defense.desc=В него можно п�
 
 item.ancientspellcraft\:charm_arcane_diffuser.name=Магический диффузор
 item.ancientspellcraft\:charm_arcane_diffuser.desc=Когда Вы пьёте зелье, союзные существа и игроки также получают этот эффект на 30%% от его длительности.
+item.ancientspellcraft\:charm_aurelian_cup.name=Аврелианский Кубок
+item.ancientspellcraft\:charm_aurelian_cup.desc=Даёт эффект Поглощения III на 15 секунд при употреблении любого зелья
 
 item.ancientspellcraft\:amulet_elemental_offense.name=Кулон с выемкой
 item.ancientspellcraft\:amulet_elemental_offense.desc=В этот кулон можно вставить стихийный кристалл within it, получая 5%% бонус мощи к заклинаниям этой стихии. Более того, он также влиет на элемент призванного Мага-скелета (ПКМ для открытия)

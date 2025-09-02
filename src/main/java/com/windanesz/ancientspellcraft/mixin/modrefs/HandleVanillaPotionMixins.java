@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.mixin.modrefs;
 
+import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.util.AllyDesignationSystem;
@@ -7,6 +8,7 @@ import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
@@ -15,7 +17,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class HandleDiffuserRef {
+public class HandleVanillaPotionMixins {
 
 	public static void diffuser(ItemStack stack, World world, EntityLivingBase entityLiving) {
 		if (entityLiving instanceof EntityPlayer) {
@@ -46,6 +48,19 @@ public class HandleDiffuserRef {
 						particleZ = origin.z - 1.0 + 2.0 * world.rand.nextDouble();
 						ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(particleX, origin.y + 0.5, particleZ).vel(particleX - origin.x, 0.0, particleZ - origin.z).time(30).clr(0xa522c9).spawn(world);
 					}
+				}
+			}
+		}
+	}
+
+	public static void mixinAurelianCup(World world, EntityLivingBase entityLiving) {
+		// Aurelian Cup: Apply Absorption II for configurable duration when drinking potions
+		if (entityLiving instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) entityLiving;
+			if (ItemArtefact.isArtefactActive(player, ASItems.charm_aurelian_cup)) {
+				if (!world.isRemote) {
+					int durationTicks = Settings.generalSettings.aurelian_cup_absorption_duration * 20; // Convert seconds to ticks
+					player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, durationTicks, 1)); // Absorption II
 				}
 			}
 		}
