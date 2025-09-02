@@ -792,6 +792,7 @@ public final class ASItems {
 		registerItem(registry, "amulet_elemental_aura", AncientSpellcraft.MODID, new ItemElementalAuraAmulet(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_time_slow", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_holy_aura", AncientSpellcraft.MODID, new ItemAmuletHolyAura(EnumRarity.EPIC, ItemArtefact.Type.AMULET));
+		registerItem(registry, "amulet_celerity", AncientSpellcraft.MODID, new ItemAmuletOfCelerity(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 
 		/// charm
 		registerItem(registry, "charm_mana_flask", AncientSpellcraft.MODID, new ItemEverfullManaFlask(EnumRarity.UNCOMMON, ItemArtefact.Type.CHARM));
