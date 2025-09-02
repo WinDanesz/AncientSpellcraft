@@ -158,6 +158,7 @@ public final class ASSpells {
 	public static final Spell animate_item = placeholder();
 	public static final Spell animate_weapon = placeholder();
 	public static final Spell spectral_army = placeholder();
+	public static final Spell summon_spectral_soldier = placeholder();
 	public static final Spell dirt_wall = placeholder();
 	public static final Spell fist_of_wind = placeholder();
 	public static final Spell healing_sigil = placeholder();
@@ -489,6 +490,7 @@ public final class ASSpells {
 		registry.register(new AnimateItem());
 		registry.register(new AnimateWeapon());
 		registry.register(new SpectralArmy());
+		registry.register(new SummonSpectralSoldier());
 		registry.register(new DirtWall());
 		registry.register(new WindBlast());
 		registry.register(new SpellConstructRangedAS<>("healing_sigil", EntityHealingSigil::new, true).floor(true).addProperties(Spell.EFFECT_RADIUS, Spell.HEALTH));
