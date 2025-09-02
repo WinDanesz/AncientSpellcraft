@@ -183,6 +183,12 @@ public class Settings {
 		@Config.RangeInt(min = 1, max = 300)
 		public int aurelian_cup_absorption_duration = 10;
 
+		@Config.Name("Beastcaller's Flute Cooldown")
+		@Config.Comment("The cooldown in seconds for the Beastcaller's Flute charm")
+		@Config.RequiresMcRestart
+		@Config.RangeInt(min = 60, max = 3600)
+		public int beastcallers_flute_cooldown = 300;
+
 		@Config.Name("Ancient Wand Max Spell Tier")
 		@Config.Comment("Max Spell Tier for Ancient Wands (0-3")
 		public int ancient_wand_max_spell_tier = 2;

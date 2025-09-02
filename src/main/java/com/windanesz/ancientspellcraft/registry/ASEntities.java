@@ -5,49 +5,9 @@ import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.entity.EntityChaosOrb;
 import com.windanesz.ancientspellcraft.entity.EntityMageLight;
 import com.windanesz.ancientspellcraft.entity.EntityWisp;
-import com.windanesz.ancientspellcraft.entity.construct.EntityAntiMagicField;
-import com.windanesz.ancientspellcraft.entity.construct.EntityArcaneBarrier;
-import com.windanesz.ancientspellcraft.entity.construct.EntityBarterConstruct;
-import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;
-import com.windanesz.ancientspellcraft.entity.construct.EntityChaosField;
-import com.windanesz.ancientspellcraft.entity.construct.EntityHealingSigil;
-import com.windanesz.ancientspellcraft.entity.construct.EntityMoltenBoulder;
-import com.windanesz.ancientspellcraft.entity.construct.EntitySentinel;
-import com.windanesz.ancientspellcraft.entity.construct.EntitySilencingSigil;
-import com.windanesz.ancientspellcraft.entity.construct.EntitySpellTicker;
-import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
-import com.windanesz.ancientspellcraft.entity.construct.EntityTransportationPortal;
-import com.windanesz.ancientspellcraft.entity.construct.EntityVenusFlyTrap;
-import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
-import com.windanesz.ancientspellcraft.entity.living.EntityClassWizard;
-import com.windanesz.ancientspellcraft.entity.living.EntityCreeperMinion;
-import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
-import com.windanesz.ancientspellcraft.entity.living.EntityFireAnt;
-import com.windanesz.ancientspellcraft.entity.living.EntityOrdinarySpiderMinion;
-import com.windanesz.ancientspellcraft.entity.living.EntityPigZombieMinion;
-import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonHorseMinion;
-import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMage;
-import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
-import com.windanesz.ancientspellcraft.entity.living.EntitySpellCaster;
-import com.windanesz.ancientspellcraft.entity.living.EntitySpiritBear;
-import com.windanesz.ancientspellcraft.entity.living.EntityStoneGuardian;
-import com.windanesz.ancientspellcraft.entity.living.EntityVoidCreeper;
-import com.windanesz.ancientspellcraft.entity.living.EntityVolcano;
-import com.windanesz.ancientspellcraft.entity.living.EntityWizardMerchant;
-import com.windanesz.ancientspellcraft.entity.living.EntityWolfMinion;
-import com.windanesz.ancientspellcraft.entity.projectile.EntityAOEProjectile;
-import com.windanesz.ancientspellcraft.entity.projectile.EntityContingencyProjectile;
-import com.windanesz.ancientspellcraft.entity.projectile.EntityDevoritiumArrow;
-import com.windanesz.ancientspellcraft.entity.projectile.EntityDevoritiumBomb;
-import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelGreaterMagic;
-import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelMagic;
-import com.windanesz.ancientspellcraft.entity.projectile.EntityFlint;
-import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
-import com.windanesz.ancientspellcraft.entity.projectile.EntityManaVortex;
-import com.windanesz.ancientspellcraft.entity.projectile.EntityMasterBolt;
-import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjectile;
-import com.windanesz.ancientspellcraft.entity.projectile.EntitySafeIceShard;
-import com.windanesz.ancientspellcraft.entity.projectile.EntityStoneGuardianShard;
+import com.windanesz.ancientspellcraft.entity.construct.*;
+import com.windanesz.ancientspellcraft.entity.living.*;
+import com.windanesz.ancientspellcraft.entity.projectile.*;
 import electroblob.wizardry.Wizardry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
@@ -68,7 +28,8 @@ import java.util.stream.Collectors;
 @Mod.EventBusSubscriber
 public class ASEntities {
 
-	private ASEntities() {}
+	private ASEntities() {
+	}
 
 	private final static int VOID_CREEPER_SPAWN_RATE = 30;
 
@@ -130,8 +91,8 @@ public class ASEntities {
 		registry.register(createEntry(EntitySkeletonMageMinion.class, "skeleton_mage_minion", TrackingType.LIVING).build());
 		registry.register(createEntry(EntitySkeletonMage.class, "skeleton_mage", TrackingType.LIVING).egg(0x868087, 0x8b0c9c)
 				.spawn(EnumCreatureType.MONSTER, Settings.generalSettings.skeleton_mage_spawn_rate, 1, 1, ForgeRegistries.BIOMES.getValuesCollection().stream()
-				.filter(b -> !Arrays.asList(AncientSpellcraft.settings.skeletonMageBiomeBlacklist).contains(b.getRegistryName()))
-				.collect(Collectors.toSet())).build());
+						.filter(b -> !Arrays.asList(AncientSpellcraft.settings.skeletonMageBiomeBlacklist).contains(b.getRegistryName()))
+						.collect(Collectors.toSet())).build());
 
 		registry.register(createEntry(EntityWolfMinion.class, "wolf_minion", TrackingType.LIVING).egg(0xcc6f47, 0x676767).build());
 		registry.register(createEntry(EntitySpiritBear.class, "spirit_bear", TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());
@@ -159,7 +120,7 @@ public class ASEntities {
 		registry.register(createEntry(EntitySpellTicker.class, "mushroom_forest", TrackingType.LIVING).build());
 		registry.register(createEntry(EntityBuilder.class, "builder_entity", TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntityAnimatedItem.class, "animated_item", TrackingType.LIVING).build());
-		registry.register(createEntry(EntityMasterBolt.class, 	"master_bolt", 	TrackingType.PROJECTILE).build());
+		registry.register(createEntry(EntityMasterBolt.class, "master_bolt", TrackingType.PROJECTILE).build());
 		registry.register(createEntry(EntityMoltenBoulder.class, "molten_boulder").tracker(160, 1, true).build()); // Vertical velocity is not constant
 		registry.register(createEntry(EntityCreeperMinion.class, "creeper_minion", TrackingType.LIVING).build());
 		registry.register(createEntry(EntityPigZombieMinion.class, "pig_zombie_minion", TrackingType.LIVING).build());
@@ -177,12 +138,12 @@ public class ASEntities {
 //		}
 		registry.register(createEntry(EntityWizardMerchant.class, "wizardmerchant", AncientSpellcraft.MODID, TrackingType.LIVING).build());
 		//registry.register(createEntry(EntityClassWizard.class, "class_wizard", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());
-		registry.register(createEntry(EntityEvilClassWizard.class, 		"evil_class_wizard", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0x290404, 0xee9312)
+		registry.register(createEntry(EntityEvilClassWizard.class, "evil_class_wizard", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0x290404, 0xee9312)
 				// For reference: 5, 1, 1 are the parameters for the witch in vanilla
 				.spawn(EnumCreatureType.MONSTER, Settings.generalSettings.evil_class_wizard_spawn_rate, 1, 1, ForgeRegistries.BIOMES.getValuesCollection().stream()
 						.filter(b -> !Arrays.asList(Wizardry.settings.mobSpawnBiomeBlacklist).contains(b.getRegistryName()))
 						.collect(Collectors.toSet())).build());
-		registry.register(createEntry(EntityClassWizard.class, 		"class_wizard", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0xffffff, 0xee9312).build());
+		registry.register(createEntry(EntityClassWizard.class, "class_wizard", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0xffffff, 0xee9312).build());
 
 
 		registry.register(createEntry(EntityBarterConstruct.class, "barter_entity", AncientSpellcraft.MODID, TrackingType.CONSTRUCT).build());

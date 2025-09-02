@@ -99,7 +99,8 @@
                 { "type": "item", "name": "ancientspellcraft:ring_spirit_ward", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:ring_unbinding", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:ring_withdraw_life", "weight": 1 },
-                { "type": "item", "name": "ancientspellcraft:charm_vessel_of_the_withered_oath", "weight": 1 }
+                { "type": "item", "name": "ancientspellcraft:charm_vessel_of_the_withered_oath", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_beastcallers_flute", "weight": 1 }
             ]
         }
     ]

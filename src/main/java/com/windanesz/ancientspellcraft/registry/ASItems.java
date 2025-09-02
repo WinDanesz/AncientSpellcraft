@@ -208,6 +208,7 @@ public final class ASItems {
 	public static final Item charm_arcane_mirror = placeholder();
 	public static final Item charm_infernal_stone = placeholder();
 	public static final Item charm_meteorite_stone = placeholder();
+	public static final Item charm_beastcallers_horn = placeholder();
 	public static final Item charm_transmutation_cube = placeholder();
 	public static final Item charm_ancient_wand = placeholder();
 	public static final Item charm_specterlight_torch = placeholder();
@@ -822,8 +823,8 @@ public final class ASItems {
 		registerItem(registry, "charm_potion_kit", AncientSpellcraft.MODID, new ItemDimensionalDisk(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_crystal_sickle", AncientSpellcraft.MODID, new ItemCrystalSickle(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_focus_stone", AncientSpellcraft.MODID, new ItemFocusStone(EnumRarity.RARE, ItemArtefact.Type.CHARM));
-		registerItem(registry, "charm_infernal_stone", AncientSpellcraft.MODID, new ItemInfernalStone(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_meteorite_stone", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_beastcallers_horn", AncientSpellcraft.MODID, new ItemBeastcallersHorn(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItemBlock(registry, ASBlocks.ARTEFACT_PENSIVE, new ItemBlock(ASBlocks.ARTEFACT_PENSIVE) {
 			@Override
 			public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
@@ -841,6 +842,7 @@ public final class ASItems {
 		registerItem(registry, "charm_suppression_orb", AncientSpellcraft.MODID, new ItemDevoritiumOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_lightning_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:thunderstorm", 6000, Element.LIGHTNING));
 		registerItem(registry, "charm_ice_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:ice_age", 6000, Element.ICE));
+		registerItem(registry, "charm_infernal_stone", AncientSpellcraft.MODID, new ItemInfernalStone(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_earth_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:earthquake", 6000, Element.EARTH));
 		registerItem(registry, "charm_healing_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:font_of_vitality", 6000, Element.HEALING));
 		registerItem(registry, "charm_necromancy_orb", AncientSpellcraft.MODID, new ItemElementalOrb(EnumRarity.EPIC, ItemArtefact.Type.CHARM, "ebwizardry:plague_of_darkness", 6000, Element.NECROMANCY));
