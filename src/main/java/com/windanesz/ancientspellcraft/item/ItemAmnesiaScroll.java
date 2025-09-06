@@ -132,7 +132,9 @@ public class ItemAmnesiaScroll extends ItemRareScroll {
 		if (mob != null) {
 			if (!event.getWorld().isRemote) {
 				event.getWorld().removeEntity(event.getTarget());
-				event.getEntityPlayer().setHeldItem(event.getHand(), ItemStack.EMPTY);
+				ItemStack copy = event.getEntityPlayer().getHeldItem(event.getHand());
+				copy.shrink(1);
+				event.getEntityPlayer().setHeldItem(event.getHand(), copy);
 				event.getWorld().spawnEntity(mob);
 				event.setCanceled(true);
 				consumeScroll(event.getEntityPlayer(), event.getHand());
