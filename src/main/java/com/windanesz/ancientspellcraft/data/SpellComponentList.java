@@ -77,7 +77,8 @@ public enum SpellComponentList {
 	ASTRAL_PROJECTION(ASSpells.astral_projection, new ItemStack(Items.GHAST_TEAR), new ItemStack(WizardryItems.grand_crystal), new ItemStack(Items.GOLDEN_APPLE)),
 	DIMENSIONAL_ANCHOR(ASSpells.dimensional_anchor, PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), PotionTypes.WEAKNESS)),
 	CONJURE_LESSER_SENTRY(ASSpells.conjure_lesser_sentry, new ItemStack(Item.getItemFromBlock(Blocks.GOLD_BLOCK)), new ItemStack(WizardryItems.magic_crystal, 1,0)),
-	CONJURE_GREATER_SENTRY(ASSpells.conjure_greater_sentry, new ItemStack(Item.getItemFromBlock(Blocks.DIAMOND_BLOCK)), new ItemStack(WizardryItems.grand_crystal));
+	CONJURE_GREATER_SENTRY(ASSpells.conjure_greater_sentry, new ItemStack(Item.getItemFromBlock(Blocks.DIAMOND_BLOCK)), new ItemStack(WizardryItems.grand_crystal)),
+	SUMMON_REMNANT(ASSpells.summon_remnant, new ItemStack(Item.getItemFromBlock(Blocks.DIAMOND_BLOCK)), new ItemStack(WizardryItems.grand_crystal));
 
 
 	public static final Map<Spell, SpellComponentList> nameIndex =

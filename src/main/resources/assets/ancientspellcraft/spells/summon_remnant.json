@@ -1,0 +1,24 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": false,
+        "dispensers": true,
+        "commands": true,
+        "treasure": false,
+        "trades": false,
+        "looting": false
+    },
+    "tier": "novice",
+    "element": "magic",
+    "type": "minion",
+    "cost": 50,
+    "chargeup": 20,
+    "cooldown": 100,
+    "base_properties": {
+        "summon_radius": 2,
+        "minion_lifetime": 900,
+        "minion_count": 1
+    }
+}

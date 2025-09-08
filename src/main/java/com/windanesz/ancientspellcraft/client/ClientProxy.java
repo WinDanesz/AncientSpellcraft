@@ -27,6 +27,7 @@ import com.windanesz.ancientspellcraft.client.renderer.entity.RenderStoneGuardia
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderVoidCreeper;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderVolcano;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderWisp;
+import electroblob.wizardry.client.renderer.entity.RenderRemnant;
 import com.windanesz.ancientspellcraft.client.renderer.entity.RenderWolfMinion;
 import com.windanesz.ancientspellcraft.client.renderer.entity.layers.LayerFire;
 import com.windanesz.ancientspellcraft.client.renderer.tileentity.RenderArcaneWall;
@@ -56,6 +57,7 @@ import com.windanesz.ancientspellcraft.entity.living.EntityCreeperMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntityEvilClassWizard;
 import com.windanesz.ancientspellcraft.entity.living.EntityFireAnt;
 import com.windanesz.ancientspellcraft.entity.living.EntityPigZombieMinion;
+import com.windanesz.ancientspellcraft.entity.living.EntityRemnantMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonHorseMinion;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMage;
 import com.windanesz.ancientspellcraft.entity.living.EntitySkeletonMageMinion;
@@ -212,6 +214,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityFireAnt.class, RenderFireSpider::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityCreeperMinion.class, RenderCreeper::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityPigZombieMinion.class, RenderPigZombie::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityRemnantMinion.class, manager -> new RenderRemnant(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityStoneGuardian.class, RenderStoneGuardian::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityVolcano.class, RenderVolcano::new);
 

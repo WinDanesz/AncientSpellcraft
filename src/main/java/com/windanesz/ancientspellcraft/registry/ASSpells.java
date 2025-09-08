@@ -237,7 +237,8 @@ public final class ASSpells {
     public static final Spell counterspell = placeholder();
     public static final Spell transplace = placeholder();
     public static final Spell magic_sparks = placeholder();
-    public static final Spell summon_zombie_pigman = placeholder();
+	public static final Spell summon_zombie_pigman = placeholder();
+	public static final Spell summon_remnant = placeholder();
     public static final Spell nether_guard = placeholder();
     public static final Spell forced_channel = placeholder();
     public static final Spell conjure_cake = placeholder();
@@ -579,6 +580,7 @@ public final class ASSpells {
 		registry.register(new Transplace());
 		registry.register(new MagicSparks());
 		registry.register(new SummonZombiePigman());
+		registry.register(new SummonRemnant());
 		registry.register(new NetherGuard());
 		registry.register(new ForcedChannel());
 		registry.register(new ConjureCake());

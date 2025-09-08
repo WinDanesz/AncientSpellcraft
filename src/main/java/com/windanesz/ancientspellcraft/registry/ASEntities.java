@@ -124,6 +124,7 @@ public class ASEntities {
 		registry.register(createEntry(EntityMoltenBoulder.class, "molten_boulder").tracker(160, 1, true).build()); // Vertical velocity is not constant
 		registry.register(createEntry(EntityCreeperMinion.class, "creeper_minion", TrackingType.LIVING).build());
 		registry.register(createEntry(EntityPigZombieMinion.class, "pig_zombie_minion", TrackingType.LIVING).build());
+		registry.register(createEntry(EntityRemnantMinion.class, "remnant_minion", TrackingType.LIVING).build());
 		registry.register(createEntry(EntityStoneGuardian.class, "stone_guardian", TrackingType.LIVING).egg(0x86848c, 0xa100e6).build());
 		registry.register(createEntry(EntityStoneGuardianShard.class, "stone_guardian_shard", TrackingType.PROJECTILE).build());
 
