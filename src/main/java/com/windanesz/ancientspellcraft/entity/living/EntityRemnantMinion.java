@@ -1,41 +1,39 @@
 package com.windanesz.ancientspellcraft.entity.living;
 
-import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.block.BlockReceptacle;
 import electroblob.wizardry.constants.Element;
-import electroblob.wizardry.entity.living.EntityZombieMinion;
+import electroblob.wizardry.entity.living.EntityRemnant;
 import electroblob.wizardry.entity.living.ISummonedCreature;
-import electroblob.wizardry.registry.WizardrySounds;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
+import com.windanesz.wizardryutils.entity.ai.EntityAIMinionOwnerHurtByTarget;
+import com.windanesz.wizardryutils.entity.ai.EntityAIMinionOwnerHurtTarget;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.pathfinding.PathNavigateFlying;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
+import com.google.common.base.Predicate;
 import javax.annotation.Nullable;
+
+import java.util.List;
 import java.util.UUID;
 
-public class EntityRemnantMinion extends EntityCreature implements ISummonedCreature, IEntityOwnable {
+public class EntityRemnantMinion extends EntityRemnant implements ISummonedCreature {
 
-	/** Data parameter for the remnant's element. */
-	private static final DataParameter<Integer> ELEMENT = EntityDataManager.createKey(EntityRemnantMinion.class, DataSerializers.VARINT);
-	/** Data parameter that tracks whether the remnant is currently attacking (charging). */
-	private static final DataParameter<Boolean> ATTACKING = EntityDataManager.createKey(EntityRemnantMinion.class, DataSerializers.BOOLEAN);
-
-
-	private static final DataParameter<Boolean> SPAWN_PARTICLES = EntityDataManager.createKey(EntityZombieMinion.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> SPAWN_PARTICLES = EntityDataManager.createKey(EntityRemnantMinion.class, DataSerializers.BOOLEAN);
 
 	// Field implementations
 	private int lifetime = -1;
@@ -47,44 +45,55 @@ public class EntityRemnantMinion extends EntityCreature implements ISummonedCrea
 	@Override public UUID getOwnerId(){ return casterUUID; }
 	@Override public void setOwnerId(UUID uuid){ this.casterUUID = uuid; }
 
+	@Override
+	public EntityLivingBase getCaster(){
+		return casterUUID == null ? null : EntityUtils.getEntityByUUID(world, casterUUID) instanceof EntityLivingBase ? (EntityLivingBase) EntityUtils.getEntityByUUID(world, casterUUID) : null;
+	}
 
-	private ResourceLocation lootTable;
+	@Override
+	public void setRevengeTarget(EntityLivingBase entity) {
+		if (this.shouldRevengeTarget(entity)) { super.setRevengeTarget(entity); }
+	}
 
-	@Nullable
-	private BlockPos boundOrigin;
 
 	public EntityRemnantMinion(World world){
 		super(world);
-		this.setSize(0.8f, 0.8f);
 		this.moveHelper = new EntityRemnantMinion.AIMoveControl(this);
 		this.experienceValue = 0;
+
+	}
+
+	protected PathNavigate createNavigator(World worldIn)
+	{
+		PathNavigateFlying pathnavigateflying = new PathNavigateFlying(this, worldIn);
+		pathnavigateflying.setCanOpenDoors(false);
+		pathnavigateflying.setCanFloat(true);
+		pathnavigateflying.setCanEnterDoors(true);
+		return pathnavigateflying;
 	}
 
 	@Override
 	protected void entityInit(){
 		super.entityInit();
-		this.dataManager.register(ELEMENT, 1); // Default to fire
-		this.dataManager.register(ATTACKING, false); // Default to fire
 		this.dataManager.register(SPAWN_PARTICLES, true);
 	}
 
 	@Override
 	protected void initEntityAI(){
-		super.initEntityAI();
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(4, new EntityRemnantMinion.AIChargeAttack());
 		this.tasks.addTask(8, new EntityRemnantMinion.AIMoveRandom());
 		this.tasks.addTask(9, new EntityAIWatchClosest(this, EntityPlayer.class, 3.0F, 1.0F));
 		this.tasks.addTask(10, new EntityAIWatchClosest(this, EntityLiving.class, 8.0F));
-		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true, EntityRemnantMinion.class));
-		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<>(this, EntityPlayer.class, true));
-	}
 
-	@Override
-	protected void applyEntityAttributes(){
-		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(16);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4);
+		// Enhanced minion AI tasks from wizardryutils
+		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true, EntityRemnantMinion.class));
+		this.targetTasks.addTask(2, new EntityAIMinionOwnerHurtByTarget(this));
+		this.targetTasks.addTask(3, new EntityAIMinionOwnerHurtTarget(this));
+
+		// Add the automatic target finding task - directly in initEntityAI like other minions
+		this.targetTasks.addTask(4, new EntityAINearestAttackableTarget<EntityLivingBase>(this, EntityLivingBase.class,
+				0, false, true, this.getTargetSelector()));
 	}
 
 	@Nullable
@@ -95,30 +104,12 @@ public class EntityRemnantMinion extends EntityCreature implements ISummonedCrea
 		return super.onInitialSpawn(difficulty, livingdata);
 	}
 
-	public Element getElement(){
-		return Element.values()[this.dataManager.get(ELEMENT)];
-	}
-
-	public void setElement(Element element){
-		this.dataManager.set(ELEMENT, element.ordinal());
-		this.lootTable = new ResourceLocation(Wizardry.MODID, "entities/remnant/" + element.getName());
-	}
-
-	public boolean isAttacking(){
-		return this.dataManager.get(ATTACKING);
-	}
-
-	public void setAttacking(boolean attacking){
-		this.dataManager.set(ATTACKING, attacking);
-	}
-
-	@Nullable
+	@Override
 	public BlockPos getBoundOrigin(){
-		return this.boundOrigin;
-	}
-
-	public void setBoundOrigin(@Nullable BlockPos boundOriginIn){
-		this.boundOrigin = boundOriginIn;
+		if (this.getCaster() != null) {
+			return new BlockPos(this.getCaster());
+		}
+		return super.getBoundOrigin();
 	}
 
 	@Override
@@ -136,92 +127,48 @@ public class EntityRemnantMinion extends EntityCreature implements ISummonedCrea
 
 	@Override
 	public void onUpdate(){
-
-		// Use the same trick as EntityVex to fly through stuff
-		this.noClip = true;
 		super.onUpdate();
-		this.noClip = false;
-
-		this.setNoGravity(true);
-
-		if(world.isRemote){
-
-			Vec3d centre = this.getPositionVector().add(0, height/2, 0);
-
-			int[] colours = BlockReceptacle.PARTICLE_COLOURS.get(this.getElement());
-
-			if(rand.nextInt(10) == 0){
-				ParticleBuilder.create(ParticleBuilder.Type.FLASH).entity(this).pos(0, height/2, 0).scale(width).time(48).clr(colours[0]).spawn(world);
-			}
-
-			double r = width/3;
-
-			double x = r * (rand.nextDouble() * 2 - 1);
-			double y = r * (rand.nextDouble() * 2 - 1);
-			double z = r * (rand.nextDouble() * 2 - 1);
-
-			if(this.deathTime > 0){
-				// Spew out particles on death
-				for(int i = 0; i < 8; i++){
-					ParticleBuilder.create(ParticleBuilder.Type.DUST, rand, centre.x + x, centre.y + y, centre.z + z, 0.1, true)
-							.time(12).clr(colours[1]).fade(colours[2]).spawn(world);
-				}
-			}else{
-				ParticleBuilder.create(ParticleBuilder.Type.DUST).pos(centre.x + x, centre.y + y, centre.z + z)
-						.vel(x * -0.03, 0.02, z * -0.03).time(24 + rand.nextInt(8)).clr(colours[1]).fade(colours[2]).spawn(world);
-			}
-		}
-
+		this.updateDelegate();
 	}
 
-	@Override
-	protected SoundEvent getAmbientSound(){
-		return WizardrySounds.ENTITY_REMNANT_AMBIENT;
-	}
-
-	@Override
-	protected SoundEvent getDeathSound(){
-		return WizardrySounds.ENTITY_REMNANT_DEATH;
-	}
-
-	@Override
-	protected SoundEvent getHurtSound(DamageSource source){
-		return WizardrySounds.ENTITY_REMNANT_HURT;
-	}
-
-	@Nullable
-	@Override
-	protected ResourceLocation getLootTable(){
-		return lootTable;
-	}
-
-	@Override
-	public void readEntityFromNBT(NBTTagCompound nbt){
-		super.readEntityFromNBT(nbt);
-		this.setElement(Element.values()[nbt.getInteger("Element")]);
-		if(nbt.hasKey("BoundOrigin")) boundOrigin = NBTUtil.getPosFromTag(nbt.getCompoundTag("BoundOrigin"));
-	}
-
-	@Override
-	public void writeEntityToNBT(NBTTagCompound nbt){
-		super.writeEntityToNBT(nbt);
-		nbt.setInteger("Element", this.getElement().ordinal());
-		if(boundOrigin != null) nbt.setTag("BoundOrigin", NBTUtil.createPosTag(boundOrigin));
-	}
 
 	@Override
 	public void onSpawn() {
-
 	}
 
 	@Override
 	public void onDespawn() {
+		this.spawnParticleEffect();
+	}
 
+	private void spawnParticleEffect() {
+		if (this.world.isRemote) {
+			for (int i = 0; i < 15; i++) {
+				this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + this.rand.nextFloat() - 0.5f,
+						this.posY + this.rand.nextFloat() * 2, this.posZ + this.rand.nextFloat() - 0.5f, 0, 0, 0);
+			}
+		}
+	}
+
+	@Override
+	public boolean processInteract(EntityPlayer player, EnumHand hand) {
+		// In this case, the delegate method determines whether super is called.
+		// Rather handily, we can make use of Java's short-circuiting method of evaluating OR statements.
+		return this.interactDelegate(player, hand) || super.processInteract(player, hand);
 	}
 
 	@Override
 	public boolean hasParticleEffect() {
-		return false;
+		return true;
+	}
+
+	@Override
+	public boolean hasAnimation() {
+		return this.dataManager.get(SPAWN_PARTICLES) || this.ticksExisted > 20;
+	}
+
+	public void hideParticles() {
+		this.dataManager.set(SPAWN_PARTICLES, false);
 	}
 
 	// AI classes (copied from EntityVex)
@@ -253,7 +200,7 @@ public class EntityRemnantMinion extends EntityCreature implements ISummonedCrea
 			Vec3d vec3d = entitylivingbase.getPositionEyes(1.0F);
 			EntityRemnantMinion.this.moveHelper.setMoveTo(vec3d.x, vec3d.y, vec3d.z, 1.0D);
 			EntityRemnantMinion.this.setAttacking(true);
-//			EntityRemnant.this.playSound(SoundEvents.ENTITY_VEX_CHARGE, 1.0F, 1.0F);
+//			EntityRemnantMinion.this.playSound(SoundEvents.ENTITY_VEX_CHARGE, 1.0F, 1.0F);
 		}
 
 		@Override
