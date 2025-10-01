@@ -10,6 +10,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -57,20 +58,21 @@ public class ClientEventHandler {
 			}
 
 			if (EAGLE_EYE_ENABLED || ASTRAL_TRAVEL_ENABLED) {
-
+				World world = Minecraft.getMinecraft().world;
+				ASFakePlayer fakePlayer = ASFakePlayer.get(world);
  //else {
-					ASFakePlayer.FAKE_PLAYER.setLocationAndAngles(x, y, z, Minecraft.getMinecraft().player.rotationYaw,
+					fakePlayer.setLocationAndAngles(x, y, z, Minecraft.getMinecraft().player.rotationYaw,
 							Minecraft.getMinecraft().player.rotationPitch);
 				//}
 
 
-				ASFakePlayer.FAKE_PLAYER.prevRotationPitch = previousPitch;
-				ASFakePlayer.FAKE_PLAYER.prevRotationYaw = pirevousYaw;
-				ASFakePlayer.FAKE_PLAYER.rotationYawHead = Minecraft.getMinecraft().player.rotationYawHead;
-				ASFakePlayer.FAKE_PLAYER.prevPosX = previousX;
-				ASFakePlayer.FAKE_PLAYER.prevPosY = previousY;
-				ASFakePlayer.FAKE_PLAYER.prevPosZ = previousZ;
-				Minecraft.getMinecraft().setRenderViewEntity(ASFakePlayer.FAKE_PLAYER);
+				fakePlayer.prevRotationPitch = previousPitch;
+				fakePlayer.prevRotationYaw = pirevousYaw;
+				fakePlayer.rotationYawHead = Minecraft.getMinecraft().player.rotationYawHead;
+				fakePlayer.prevPosX = previousX;
+				fakePlayer.prevPosY = previousY;
+				fakePlayer.prevPosZ = previousZ;
+				Minecraft.getMinecraft().setRenderViewEntity(fakePlayer);
 
 				previousX = x;
 				previousY = y;
@@ -79,11 +81,11 @@ public class ClientEventHandler {
 				pirevousYaw = Minecraft.getMinecraft().player.rotationYaw;
 				if (ScryingOrb.isScrying(event.player)) {
 					BlockPos pos = ScryingOrb.getBlockPos(event.player);
-					ASFakePlayer.FAKE_PLAYER.setLocationAndAngles(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, Minecraft.getMinecraft().player.rotationYaw,
+					fakePlayer.setLocationAndAngles(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, Minecraft.getMinecraft().player.rotationYaw,
 							Minecraft.getMinecraft().player.rotationPitch);
 
 				}
-			} else if (Minecraft.getMinecraft().getRenderViewEntity() == ASFakePlayer.FAKE_PLAYER) {
+			} else if (Minecraft.getMinecraft().getRenderViewEntity() instanceof ASFakePlayer) {
 
 				Minecraft.getMinecraft().setRenderViewEntity(Minecraft.getMinecraft().player);
 			}
@@ -133,4 +135,3 @@ public class ClientEventHandler {
 		return false; // Always return false to ensure layer is added
 	}
 }
-

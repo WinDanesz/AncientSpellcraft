@@ -1,6 +1,5 @@
 package com.windanesz.ancientspellcraft.client.entity;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -8,13 +7,20 @@ import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
+import java.util.Map;
+import java.util.WeakHashMap;
+
 public class ASFakePlayer extends EntityLivingBase {
+
+	private static final Map<World, ASFakePlayer> FAKE_PLAYERS = new WeakHashMap<>();
 
 	private ASFakePlayer(World world) {
 		super(world);
 	}
 
-	public static ASFakePlayer FAKE_PLAYER = new ASFakePlayer(Minecraft.getMinecraft().player.world);
+	public static ASFakePlayer get(World world) {
+		return FAKE_PLAYERS.computeIfAbsent(world, ASFakePlayer::new);
+	}
 
 	@Override
 	public EnumHandSide getPrimaryHand() { return EnumHandSide.RIGHT; }
