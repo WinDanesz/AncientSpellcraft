@@ -82,7 +82,10 @@ public class ContainerSphereCognizance extends Container {
 				ASItems.stone_tablet_large,
 				ASItems.stone_tablet_grand,
 				ASItems.ancient_mana_flask,
-				ASItems.ancient_bound_stone
+				ASItems.ancient_bound_stone,
+				ASItems.mystic_spell_book,
+				ASItems.forbidden_tome,
+				ASItems.runic_plate
 		));
 
 		int n = 75;
