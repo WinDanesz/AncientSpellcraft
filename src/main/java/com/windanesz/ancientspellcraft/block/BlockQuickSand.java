@@ -64,7 +64,7 @@ public class BlockQuickSand extends Block implements ITileEntityProvider, ITempo
 	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes,
 			@Nullable Entity entityIn, boolean isActualState) {
 
-		if (entityIn instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) entityIn, ASItems.charm_quicksand_walker) ) {
+		if (entityIn instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) entityIn, ASItems.charm_quicksand_walker) || entityIn instanceof net.minecraft.entity.item.EntityItem) {
 			super.addCollisionBoxToList(state,worldIn, pos,entityBox, collidingBoxes, entityIn, isActualState);
 		}
 
