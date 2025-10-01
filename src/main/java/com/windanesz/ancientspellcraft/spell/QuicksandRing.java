@@ -71,24 +71,12 @@ public class QuicksandRing extends Spell {
 	public static boolean summonQuickSandRing(World world, @Nullable EntityLivingBase caster, BlockPos origin, SpellModifiers modifiers) {
 		if (!world.isRemote) {
 
-			double radius = ASSpells.quicksand_ring.getProperty(EFFECT_RADIUS).doubleValue() * modifiers.get(WizardryItems.blast_upgrade);
-
-			List<BlockPos> ring = new ArrayList<>((int) (7 * radius)); // 7 is a bit more than 2 pi
-
-			for (int x = -(int) radius; x <= radius; x++) {
-
-				for (int z = -(int) radius; z <= radius; z++) {
-
-					double distance = MathHelper.sqrt(x * x + z * z);
-
-					if (distance > radius || distance < radius - 1.5)
-						continue;
-
-					Integer y = BlockUtils.getNearestSurface(world, origin.add(x, 0, z), EnumFacing.UP, (int) radius, true, BlockUtils.SurfaceCriteria.BUILDABLE);
-					if (y != null)
-						ring.add(new BlockPos(origin.getX() + x, y, origin.getZ() + z));
-				}
-			}
+			List<BlockPos> ring = new ArrayList<>();
+			ring.add(origin);
+			ring.add(origin.add(1, 0, 0));
+			ring.add(origin.add(-1, 0, 0));
+			ring.add(origin.add(0, 0, 1));
+			ring.add(origin.add(0, 0, -1));
 
 			if (ring.isEmpty())
 				return false;
@@ -102,7 +90,7 @@ public class QuicksandRing extends Spell {
 					ITemporaryBlock.placeTemporaryBlock(caster, world, ASBlocks.QUICKSAND, pos, 800);
 				}
 
-				if (!(caster instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.ring_quicksand))) {
+				if (caster instanceof EntityPlayer && !ItemArtefact.isArtefactActive((EntityPlayer) caster, ASItems.ring_quicksand)) {
 					break;
 				}
 			}
