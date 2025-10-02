@@ -774,7 +774,31 @@ public class Settings {
 	@Config.LangKey("settings.ancientspellcraft:worldgen_settings")
 	public static WorldgenSettings worldgenSettings = new WorldgenSettings();
 
-	public static class WorldgenSettings {
+	@Config.Name("Entity Spawn Settings")
+	@Config.LangKey("settings.ancientspellcraft:entity_spawn_settings")
+	public static EntitySpawnSettings entitySpawnSettings = new EntitySpawnSettings();
+
+	public static class EntitySpawnSettings {
+
+		@Config.Name("Enable Wizard Merchant Spawns")
+		@Config.Comment("Set to true to enable natural spawning of the Wizard Merchant NPC.")
+		public boolean wizardMerchantSpawnEnabled = true;
+
+		@Config.Name("Wizard Merchant Spawn Weight")
+		@Config.Comment("Controls the rarity of the Wizard Merchant NPC. Higher values mean more frequent spawns. (Default: 1, very rare)")
+		@Config.RangeInt(min = 0, max = 100)
+		public int wizardMerchantSpawnWeight = 1;
+
+		@Config.Name("Wizard Merchant Min Group Size")
+		@Config.Comment("Minimum number of Wizard Merchants that can spawn in a group.")
+		@Config.RangeInt(min = 1, max = 5)
+		public int wizardMerchantMinGroupSize = 1;
+
+		@Config.Name("Wizard Merchant Max Group Size")
+		@Config.Comment("Maximum number of Wizard Merchants that can spawn in a group.")
+		@Config.RangeInt(min = 1, max = 5)
+		public int wizardMerchantMaxGroupSize = 1;
+	}
 
 		@Config.Name("Battlemage Camp Dimensions")
 		@Config.Comment("[Server-only] List of dimension ids in which to spawn battlemage camps.")

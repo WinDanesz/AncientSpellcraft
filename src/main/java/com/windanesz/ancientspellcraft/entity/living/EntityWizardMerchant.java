@@ -57,7 +57,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class EntityWizardMerchant extends EntityWizard {
+	@Override
+	public boolean getCanSpawnHere() {
+		return this.world.canSeeSky(new BlockPos(this)) && this.world.getLightBrightness(new BlockPos(this)) >= 0.5f && super.getCanSpawnHere();
+	}
 
 	public int lifetime = 24000; // a full MC day
 
