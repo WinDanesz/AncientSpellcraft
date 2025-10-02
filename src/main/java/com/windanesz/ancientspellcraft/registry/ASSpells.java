@@ -158,6 +158,7 @@ public final class ASSpells {
 	public static final Spell animate_item = placeholder();
 	public static final Spell animate_weapon = placeholder();
 	public static final Spell spectral_army = placeholder();
+	public static final Spell summon_spectral_soldier = placeholder();
 	public static final Spell dirt_wall = placeholder();
 	public static final Spell fist_of_wind = placeholder();
 	public static final Spell healing_sigil = placeholder();

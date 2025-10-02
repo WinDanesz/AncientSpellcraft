@@ -137,7 +137,10 @@ public class ASEntities {
 //			AncientSpellcraft.logger.info("Applying ebwizardry:evil_wizard entity overrides by Ancient Spellcraft");
 //			registry.register(createEntry(EntityEvilWizardAS.class, "evil_wizard_as", AncientSpellcraft.MODID, TrackingType.LIVING).build());
 //		}
-		registry.register(createEntry(EntityWizardMerchant.class, "wizardmerchant", AncientSpellcraft.MODID, TrackingType.LIVING).build());
+		registry.register(createEntry(EntityWizardMerchant.class, "wizardmerchant", AncientSpellcraft.MODID, TrackingType.LIVING)
+				.spawn(EnumCreatureType.CREATURE, Settings.entitySpawnSettings.wizardMerchantSpawnWeight, Settings.entitySpawnSettings.wizardMerchantMinGroupSize, Settings.entitySpawnSettings.wizardMerchantMaxGroupSize, ForgeRegistries.BIOMES.getValuesCollection().stream()
+						.filter(b -> Settings.entitySpawnSettings.wizardMerchantSpawnEnabled)
+						.collect(Collectors.toSet())).build());
 		//registry.register(createEntry(EntityClassWizard.class, "class_wizard", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());
 		registry.register(createEntry(EntityEvilClassWizard.class, "evil_class_wizard", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0x290404, 0xee9312)
 				// For reference: 5, 1, 1 are the parameters for the witch in vanilla

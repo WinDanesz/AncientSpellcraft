@@ -16,13 +16,13 @@ import java.util.List;
 import static electroblob.wizardry.Settings.ARTEFACTS_CATEGORY;
 import static electroblob.wizardry.Settings.toResourceLocations;
 
-@Config(modid = AncientSpellcraft.MODID, name = "AncientSpellcraft") // No fancy configs here so we can use the annotation, hurrah!
+@Config(modid = AncientSpellcraft.MODID, name = "AncientSpellcraft")
+// No fancy configs here so we can use the annotation, hurrah!
 public class Settings {
 
 	public ResourceLocation[] lootInjectionLocations = toResourceLocations(generalSettings.DEFAULT_LOOT_INJECTION_LOCATIONS);
 
-	public ResourceLocation[] artefactInjectionLocations = toResourceLocations(generalSettings.
-			ARTEFACT_INJECTION_LOCATIONS);
+	public ResourceLocation[] artefactInjectionLocations = toResourceLocations(generalSettings.ARTEFACT_INJECTION_LOCATIONS);
 
 	public ResourceLocation[] voidCreeperBiomeBlacklist = toResourceLocations(generalSettings.void_creeper_biome_blacklist);
 	public ResourceLocation[] skeletonMageBiomeBlacklist = toResourceLocations(generalSettings.skeleton_mage_biome_blacklist);
@@ -35,34 +35,10 @@ public class Settings {
 	public List<ResourceLocation> shardFireBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.fire_shard_biome_whitelist));
 	public List<ResourceLocation> shardIceBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.ice_shard_biome_whitelist));
 
-	public ResourceLocation[] battlemageCampFiles = {
-			new ResourceLocation(AncientSpellcraft.MODID, "battlemage_camp_chest_0"),
-			new ResourceLocation(AncientSpellcraft.MODID, "battlemage_camp_0")
-	};
-	public ResourceLocation[] battlemageKeepFiles = {
-			new ResourceLocation(AncientSpellcraft.MODID, "battlemage_keep_chest_0"),
-			new ResourceLocation(AncientSpellcraft.MODID, "battlemage_keep_chest_1"),
-			new ResourceLocation(AncientSpellcraft.MODID, "battlemage_keep_0"),
-			new ResourceLocation(AncientSpellcraft.MODID, "battlemage_keep_1")};
+	public ResourceLocation[] battlemageCampFiles = {new ResourceLocation(AncientSpellcraft.MODID, "battlemage_camp_chest_0"), new ResourceLocation(AncientSpellcraft.MODID, "battlemage_camp_0")};
+	public ResourceLocation[] battlemageKeepFiles = {new ResourceLocation(AncientSpellcraft.MODID, "battlemage_keep_chest_0"), new ResourceLocation(AncientSpellcraft.MODID, "battlemage_keep_chest_1"), new ResourceLocation(AncientSpellcraft.MODID, "battlemage_keep_0"), new ResourceLocation(AncientSpellcraft.MODID, "battlemage_keep_1")};
 
-	public ResourceLocation[] sageHillWithChestFiles = {
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_0"),
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_1"),
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_2"),
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_3"),
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_4"),
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_5"),
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_6"),
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_7"),
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0"),
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0"),
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0"),
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0"),
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0"),
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0"),
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0"),
-			new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0")
-	};
+	public ResourceLocation[] sageHillWithChestFiles = {new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_0"), new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_1"), new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_2"), new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_3"), new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_4"), new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_5"), new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_6"), new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_chest_7"), new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0"), new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0"), new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0"), new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0"), new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0"), new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0"), new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0"), new ResourceLocation(AncientSpellcraft.MODID, "sage_hill_0")};
 	public ResourceLocation[] ancientVaultFiles = {new ResourceLocation(AncientSpellcraft.MODID, "ancient_vault_0"), new ResourceLocation(AncientSpellcraft.MODID, "ancient_vault_1")};
 	public ResourceLocation[] fallenTowerFiles = {new ResourceLocation(AncientSpellcraft.MODID, "fallen_tower_0")};
 	public ResourceLocation[] ancientTempleFiles = {new ResourceLocation(AncientSpellcraft.MODID, "ancient_temple_0")};
@@ -70,12 +46,12 @@ public class Settings {
 
 	/**
 	 * Helper method to figure out if an item was disabled in the ebwiz configs, as unfortunately itemArtefact#enabled private and has no getter method
+	 *
 	 * @param artefact to check
 	 * @return true if the item is enabled (or if it has no config)
 	 */
 	public static boolean isArtefactEnabled(Item artefact) {
-		if (artefact instanceof ItemArtefact &&
-				(Wizardry.settings.getConfigCategory(ARTEFACTS_CATEGORY).containsKey(artefact.getRegistryName().toString()))) {
+		if (artefact instanceof ItemArtefact && (Wizardry.settings.getConfigCategory(ARTEFACTS_CATEGORY).containsKey(artefact.getRegistryName().toString()))) {
 			return (Wizardry.settings.getConfigCategory(ARTEFACTS_CATEGORY).get(artefact.getRegistryName().toString()).getBoolean());
 		}
 
@@ -153,19 +129,9 @@ public class Settings {
 
 		@Config.Name("Loot Inject Locations")
 		@Config.Comment("List of loot tables to inject Ancient Spellcraft loot (as specified in loot_tables/chests/dungeon_additions.json) into. This currently includes stuff like Stone Tablets.")
-		public String[] DEFAULT_LOOT_INJECTION_LOCATIONS = {
-				"ebwizardry:chests/wizard_tower",
-				"ebwizardry:chests/shrine",
-				"ebwizardry:chests/obelisk",
+		public String[] DEFAULT_LOOT_INJECTION_LOCATIONS = {"ebwizardry:chests/wizard_tower", "ebwizardry:chests/shrine", "ebwizardry:chests/obelisk",
 
-				"minecraft:chests/desert_pyramid",
-				"minecraft:chests/jungle_temple",
-				"minecraft:chests/stronghold_corridor",
-				"minecraft:chests/stronghold_crossing",
-				"minecraft:chests/stronghold_library",
-				"minecraft:chests/igloo_chest",
-				"minecraft:chests/woodland_mansion",
-				"minecraft:chests/end_city_treasure"};
+				"minecraft:chests/desert_pyramid", "minecraft:chests/jungle_temple", "minecraft:chests/stronghold_corridor", "minecraft:chests/stronghold_crossing", "minecraft:chests/stronghold_library", "minecraft:chests/igloo_chest", "minecraft:chests/woodland_mansion", "minecraft:chests/end_city_treasure"};
 
 		@Config.Name("Amulet of Resistance Mana Capacity")
 		@Config.Comment("List of loot tables to inject Ancient Spellcraft artefacts into.")
@@ -195,11 +161,7 @@ public class Settings {
 
 		@Config.Name("Artefact Inject locations")
 		@Config.Comment("List of loot tables to inject Ancient Spellcraft artefacts into.")
-		private String[] ARTEFACT_INJECTION_LOCATIONS = {
-				"ebwizardry:subsets/uncommon_artefacts",
-				"ebwizardry:subsets/rare_artefacts",
-				"ebwizardry:subsets/epic_artefacts"
-		};
+		private String[] ARTEFACT_INJECTION_LOCATIONS = {"ebwizardry:subsets/uncommon_artefacts", "ebwizardry:subsets/rare_artefacts", "ebwizardry:subsets/epic_artefacts"};
 
 //		@Config.Name("Imbuement Scroll Recipe List")
 //		@Config.Comment("List of recipes for the Scroll of Imbuement. Format: input|auto/[ice/fire/lightning/sorcery/necromancy/healing/earth]|output"
@@ -211,44 +173,25 @@ public class Settings {
 
 		@Config.Name("Extension Spell Potion Blacklist")
 		@Config.Comment("List of potion effect which cannot be extended with the Extension sage spell.")
-		public String[] extension_spell_blacklist = {
-		};
+		public String[] extension_spell_blacklist = {};
 
 		@Config.Name("Absorb Artefact Blacklist")
 		@Config.Comment("Artefacts Which cannot be absorbed. The default list contains artefacts which won't work in an absorbed form. You can add entries for balancing.")
-		public String[] absorb_artefact_blacklist = {
-				"ancientspellcraft:charm_philosophers_stone",
-				"ancientspellcraft:cornucopia",
-				"ancientspellcraft:charm_bucket_coal",
-				"ancientspellcraft:charm_evergrowing_crystal",
-				"ancientspellcraft:charm_gold_bag",
+		public String[] absorb_artefact_blacklist = {"ancientspellcraft:charm_philosophers_stone", "ancientspellcraft:cornucopia", "ancientspellcraft:charm_bucket_coal", "ancientspellcraft:charm_evergrowing_crystal", "ancientspellcraft:charm_gold_bag",
 
 		};
 
 		@Config.Name("Scroll Items Bought By Wizards Using The Crown of The Merchant King Artefact")
-		@Config.Comment("Wizards will always offer 1 magic crystal for these items. Be sure to not remove all scrolls (that are instance of ItemScroll) or the item won't work, but otherwise,"
-				+ "you can add pretty much any items, not just scrolls")
-		public String[] scroll_items_for_crown_of_the_merchant_king = {
-				"ebwizardry:scroll",
-				"ancientspellcraft:ancient_spellcraft_scroll"
-		};
+		@Config.Comment("Wizards will always offer 1 magic crystal for these items. Be sure to not remove all scrolls (that are instance of ItemScroll) or the item won't work, but otherwise," + "you can add pretty much any items, not just scrolls")
+		public String[] scroll_items_for_crown_of_the_merchant_king = {"ebwizardry:scroll", "ancientspellcraft:ancient_spellcraft_scroll"};
 
 		@Config.Name("Additional Items Accepted by the Golden Scroll Holder")
-		@Config.Comment("These have no effect and they are just included for roleplay."
-				+ "you can add pretty much any items, not just scrolls")
-		public String[] golden_scroll_holder_additional_items = {
-				"minecraft:paper",
-				"minecraft:map",
-				"minecraft:filled_map",
-				"minecraft:enchanted_book",
-				"minecraft:writable_book",
-				"minecraft:written_book"
-		};
+		@Config.Comment("These have no effect and they are just included for roleplay." + "you can add pretty much any items, not just scrolls")
+		public String[] golden_scroll_holder_additional_items = {"minecraft:paper", "minecraft:map", "minecraft:filled_map", "minecraft:enchanted_book", "minecraft:writable_book", "minecraft:written_book"};
 
 		@Config.Name("Expertiment Debuff Blacklist")
 		@Config.Comment("List of negative potion effect which cannot occur as a side effect of the Experiment spell. Must be in a 'modid:potion_registry_name' format.")
-		public String[] experiment_debuff_blacklist = {
-		};
+		public String[] experiment_debuff_blacklist = {};
 
 		@Config.Name("Expertiment Buff Blacklist")
 		@Config.Comment("List of postive potion effect which cannot occur as a side effect of the Experiment spell. Must be in a 'modid:potion_registry_name' format.")
@@ -351,14 +294,12 @@ public class Settings {
 		public String[] skeleton_mage_biome_blacklist = {"mushroom_island", "mushroom_island_shore"};
 
 		@Config.Name("Void Creeper Dimension Whitelist")
-		@Config.Comment("List of Dimensions where Void Creepers are allowed to spawn. Defaults to Overworld only."
-				+ "\n make")
+		@Config.Comment("List of Dimensions where Void Creepers are allowed to spawn. Defaults to Overworld only." + "\n make")
 		@Config.RequiresMcRestart
 		public Integer[] void_creeper_dimension_whitelist = {0};
 
 		@Config.Name("Skeleton Mage Dimension Whitelist")
-		@Config.Comment("List of Dimensions where Skeleton Mages are allowed to spawn. Defaults to Overworld only."
-				+ "\n make")
+		@Config.Comment("List of Dimensions where Skeleton Mages are allowed to spawn. Defaults to Overworld only." + "\n make")
 		@Config.RequiresMcRestart
 		public Integer[] skeleton_mage_dimension_whitelist = {0};
 
@@ -390,16 +331,10 @@ public class Settings {
 		@Config.Name("Elemental Lightning Crystal Shard Biome List")
 		@Config.Comment("List of Biomes where Lightning Crystal Shards can spawn.")
 		@Config.RequiresMcRestart
-		public String[] lightning_shard_biome_whitelist = {"extreme_hills",
-				"smaller_extreme_hills",
-				"extreme_hills_with_trees",
-				"mutated_extreme_hills",
-				"mutated_extreme_hills_with_trees"};
+		public String[] lightning_shard_biome_whitelist = {"extreme_hills", "smaller_extreme_hills", "extreme_hills_with_trees", "mutated_extreme_hills", "mutated_extreme_hills_with_trees"};
 
 		@Config.Name("Use biomes for Skeleton and Ghost Mage elements")
-		@Config.Comment("This setting decides how much the other skeleton and ghost mage biome settings matter (chance to consider the lists)."
-				+ "If 1 = biome whitelist settings always apply for element selection"
-				+ "if 0 = elements are always random, and the biome lists won't be considered")
+		@Config.Comment("This setting decides how much the other skeleton and ghost mage biome settings matter (chance to consider the lists)." + "If 1 = biome whitelist settings always apply for element selection" + "if 0 = elements are always random, and the biome lists won't be considered")
 		@Config.RequiresMcRestart
 		public float use_biomes_for_mage_elements = 1.0f;
 
@@ -436,11 +371,7 @@ public class Settings {
 		@Config.Name("Lightning Skeleton and Ghost Mage Biome List")
 		@Config.Comment("List of Biomes where Lightning Skeleton and Ghost Mages can spawn.")
 		@Config.RequiresMcRestart
-		public String[] lightning_skeleton_and_ghost_biome_whitelist = {"extreme_hills",
-				"smaller_extreme_hills",
-				"extreme_hills_with_trees",
-				"mutated_extreme_hills",
-				"mutated_extreme_hills_with_trees"};
+		public String[] lightning_skeleton_and_ghost_biome_whitelist = {"extreme_hills", "smaller_extreme_hills", "extreme_hills_with_trees", "mutated_extreme_hills", "mutated_extreme_hills_with_trees"};
 
 		@Config.Name("Ice Skeleton and Ghost Mage Biome List")
 		@Config.Comment("List of Biomes where Ice Skeleton and Ghost Mages can spawn.")
@@ -461,96 +392,30 @@ public class Settings {
 		@Config.Name("Immobility Contingency Spell Trigger Effects")
 		@Config.Comment("List of potion effects which can be considered as an immobilizing effect. Receiving one of these will trigger the stored Contingency - Immobility spell")
 		@Config.RequiresMcRestart
-		public String[] immobility_contingency_effects = {
-				"ebwizardry:paralysis",
-				"ebwizardry:containment",
-				"ebwizardry:slow_time",
-				"ebwizardry:frost",
-				"minecraft:slowness"
-		};
+		public String[] immobility_contingency_effects = {"ebwizardry:paralysis", "ebwizardry:containment", "ebwizardry:slow_time", "ebwizardry:frost", "minecraft:slowness"};
 
 		@Config.Name("Curses that the Dispel Item Curse spell can remove. Should work with modded enchantments as well.")
 		@Config.RequiresMcRestart
-		public String[] dispel_item_curse_list = {
-				"minecraft:vanishing_curse",
-				"minecraft:binding_curse",
-				"somanyenchantments:bluntness",
-				"somanyenchantments:curseofdecay",
-				"somanyenchantments:curseofholding",
-				"somanyenchantments:curseofinaccuracy",
-				"somanyenchantments:curseofpossession",
-				"somanyenchantments:curseofvulnerability",
-				"somanyenchantments:cursededge",
-				"somanyenchantments:inefficent",
-				"somanyenchantments:instability",
-				"somanyenchantments:powerless",
-				"somanyenchantments:rusted",
-				"somanyenchantments:heavyweight",
-				"somanyenchantments:curseofvulnerability",
-				"somanyenchantments:unpredictable",
-				"charm:clumsiness_curse",
-				"charm:harming_curse",
-				"charm:haunting_curse",
-				"charm:rusting_curse"
-		};
+		public String[] dispel_item_curse_list = {"minecraft:vanishing_curse", "minecraft:binding_curse", "somanyenchantments:bluntness", "somanyenchantments:curseofdecay", "somanyenchantments:curseofholding", "somanyenchantments:curseofinaccuracy", "somanyenchantments:curseofpossession", "somanyenchantments:curseofvulnerability", "somanyenchantments:cursededge", "somanyenchantments:inefficent", "somanyenchantments:instability", "somanyenchantments:powerless", "somanyenchantments:rusted", "somanyenchantments:heavyweight", "somanyenchantments:curseofvulnerability", "somanyenchantments:unpredictable", "charm:clumsiness_curse", "charm:harming_curse", "charm:haunting_curse", "charm:rusting_curse"};
 
 		@Config.Name("Metamagic - Projectile incompatible spells")
 		@Config.RequiresMcRestart
-		public String[] metamagic_projectile_incompatible_spells = {
-				"ancientspellcraft:animate_item",
-				"ancientspellcraft:animate_weapon",
-				"ancientspellcraft:aquatic_agility",
-				"ancientspellcraft:arcane_aegis",
-				"ancientspellcraft:bubble_head",
-				"ancientspellcraft:conjure_ink",
-				"ancientspellcraft:eagle_eye",
-				"ancientspellcraft:experiment",
-				"ancientspellcraft:farsight",
-				"ancientspellcraft:ice_tower",
-				"ancientspellcraft:locating",
-				"ancientspellcraft:magic_sparks",
-				"ancientspellcraft:projectile_ward",
-				"ancientspellcraft:resist_fire",
-		};
+		public String[] metamagic_projectile_incompatible_spells = {"ancientspellcraft:animate_item", "ancientspellcraft:animate_weapon", "ancientspellcraft:aquatic_agility", "ancientspellcraft:arcane_aegis", "ancientspellcraft:bubble_head", "ancientspellcraft:conjure_ink", "ancientspellcraft:eagle_eye", "ancientspellcraft:experiment", "ancientspellcraft:farsight", "ancientspellcraft:ice_tower", "ancientspellcraft:locating", "ancientspellcraft:magic_sparks", "ancientspellcraft:projectile_ward", "ancientspellcraft:resist_fire",};
 
 		@Config.Name("Alter Potion Spell Mapping")
 		@Config.Comment("Alter Potion Spell Mapping, entries should be separated by | ")
 		@Config.RequiresMcRestart
-		public String[] alter_potion_mapping = {
-				"minecraft:speed|minecraft:slowness",
-				"minecraft:regeneration|minecraft:poison",
-				"minecraft:strength|minecraft:weakness",
-				"minecraft:haste|minecraft:mining_fatigue",
-				"minecraft:instant_health|minecraft:instant_damage",
-				"minecraft:luck|minecraft:unluck",
-				"minecraft:invisibility|minecraft:glowing",
-				"minecraft:jump_boost|minecraft:levitation",
-				"minecraft:night_vision|minecraft:blindness",
-				"ebwizardry:empowerment|ancientspellcraft:magical_exhaustion",
-		};
+		public String[] alter_potion_mapping = {"minecraft:speed|minecraft:slowness", "minecraft:regeneration|minecraft:poison", "minecraft:strength|minecraft:weakness", "minecraft:haste|minecraft:mining_fatigue", "minecraft:instant_health|minecraft:instant_damage", "minecraft:luck|minecraft:unluck", "minecraft:invisibility|minecraft:glowing", "minecraft:jump_boost|minecraft:levitation", "minecraft:night_vision|minecraft:blindness", "ebwizardry:empowerment|ancientspellcraft:magical_exhaustion",};
 
 		@Config.Name("Sorcery Cloak Potion Effects")
 		@Config.Comment("List of potion effects that can be granted by the Cloak of Spellweaving. Must be in 'modid:potion_registry_name' format. Default includes beneficial vanilla and mod potions.")
 		@Config.RequiresMcRestart
-		public String[] sorcery_cloak_potion_effects = {
-				"minecraft:speed",
-				"minecraft:jump_boost",
-				"minecraft:strength",
-				"minecraft:regeneration",
-				"minecraft:absorption",
-				"minecraft:night_vision",
-				"minecraft:water_breathing",
-				"minecraft:resistance",
-				"ancientspellcraft:spell_range",
-				"ancientspellcraft:spell_blast",
-				"ancientspellcraft:spell_duration",
-				"ancientspellcraft:spell_siphon"
-		};
+		public String[] sorcery_cloak_potion_effects = {"minecraft:speed", "minecraft:jump_boost", "minecraft:strength", "minecraft:regeneration", "minecraft:absorption", "minecraft:night_vision", "minecraft:water_breathing", "minecraft:resistance", "ancientspellcraft:spell_range", "ancientspellcraft:spell_blast", "ancientspellcraft:spell_duration", "ancientspellcraft:spell_siphon"};
 
 		@Config.Name("Duplication Scroll Additonal Items")
 		@Config.Comment("List of registry names (in a 'modid:itemname' format) of additional items that can be duplicated by the Scroll of Duplication")
 		@Config.RequiresMcRestart
-		public String[] duplication_scroll_additional_items = { };
+		public String[] duplication_scroll_additional_items = {};
 
 		@Config.Name("Wizards Buy Ancient Element Books")
 		@Config.Comment("If true, friendly Wizards will buy ancient element books (the gray ones)")
@@ -577,8 +442,7 @@ public class Settings {
 		public boolean transportation_portal_teleports_any_entites = true;
 
 		@Config.Name("Sage Lectern Allowed Item List")
-		@Config.Comment("List of item registry names that are allowed to be placed on the sage lectern. Each entry has a format of 'modid:item_name', example: antiqueatlas:antique_atlas. All spell books are allowed by default, without listing them."
-				+ "NOTE that this probably won't work with many items as they expect the player to hold the item in their hand to function, so only experiment with this in a testworld.")
+		@Config.Comment("List of item registry names that are allowed to be placed on the sage lectern. Each entry has a format of 'modid:item_name', example: antiqueatlas:antique_atlas. All spell books are allowed by default, without listing them." + "NOTE that this probably won't work with many items as they expect the player to hold the item in their hand to function, so only experiment with this in a testworld.")
 		@Config.RequiresMcRestart
 		public String[] sage_lectern_item_whitelist = {"ancientspellcraft:empty_mystic_spell_book", "antiqueatlas:antique_atlas", "minecraft:writable_book", "minecraft:written_book", "minecraft:book", "minecraft:enchanted_book"};
 
@@ -589,9 +453,7 @@ public class Settings {
 		public int sage_tome_enchanted_page_requirement = 2;
 
 		@Config.Name("Sage Tome Required Enchanted Pages Per Tier Multiplier")
-		@Config.Comment("Works in conjunction with \"Sage Tome Required Enchanted Pages Per Tier\"."
-				+ "This is basically a multiplier, to require more and more Enchanted Pages for each tier. If set to 0, all tiers will require the amount of Enchanted Pages defined in \"Sage Tome Required Enchanted Pages Per Tier\"."
-				+ "The formula: (\"Sage Tome Required Enchanted Pages Per Tier\") * (this multiplier) * (tierNumber (1->3, Apprentice->Master))")
+		@Config.Comment("Works in conjunction with \"Sage Tome Required Enchanted Pages Per Tier\"." + "This is basically a multiplier, to require more and more Enchanted Pages for each tier. If set to 0, all tiers will require the amount of Enchanted Pages defined in \"Sage Tome Required Enchanted Pages Per Tier\"." + "The formula: (\"Sage Tome Required Enchanted Pages Per Tier\") * (this multiplier) * (tierNumber (1->3, Apprentice->Master))")
 		@Config.RequiresMcRestart
 		@Config.RangeInt(min = 0, max = 10)
 		public int sage_tome_enchanted_page_requirement_multiplier = 2;
@@ -655,32 +517,7 @@ public class Settings {
 
 		@Config.Name("Verdant Crucible Ingredient List")
 		@Config.Comment("List of alchemical ingredients and their min/max quantities for the Verdant Crucible. Format: modid:itemname|meta|nbt|min|max, e.g. minecraft:redstone|0||1|3. Meta is required (use 0 for default), nbt is optional (empty for none).")
-		public String[] verdant_crucible_ingredients = {
-				"minecraft:redstone|0||3|6",
-				"minecraft:glowstone_dust|0||1|2",
-				"minecraft:magma_cream|0||1|2",
-				"minecraft:carrot|0||1|2",
-				"minecraft:spider_eye|0||1|2",
-				"minecraft:sugar|0||1|4",
-				"minecraft:blaze_powder|0||1|2",
-				"minecraft:ghast_tear|0||1|1",
-				"minecraft:fish|3||1|1",
-				"minecraft:rabbit_foot|0||1|1",
-				"minecraft:speckled_melon|0||1|1",
-				"rustic:aloe_vera:0:1:2",
-				"rustic:blood_orchid:0:1:2",
-				"rustic:chamomile:0:1:2",
-				"rustic:cohosh:0:1:2",
-				"rustic:deathstalk:0:1:2",
-				"rustic:horsetail:0:1:2",
-				"rustic:mooncap:0:1:2",
-				"rustic:wind_thistle:0:1:2",
-				"rustic:vanta_lily:0:1:2",
-				"rustic:cloudsbluff:0:1:2",
-				"rustic:core_root:0:1:2",
-				"rustic:ginseng:0:1:2",
-				"rustic:marsh_mallow:0:1:2"
-		};
+		public String[] verdant_crucible_ingredients = {"minecraft:redstone|0||3|6", "minecraft:glowstone_dust|0||1|2", "minecraft:magma_cream|0||1|2", "minecraft:carrot|0||1|2", "minecraft:spider_eye|0||1|2", "minecraft:sugar|0||1|4", "minecraft:blaze_powder|0||1|2", "minecraft:ghast_tear|0||1|1", "minecraft:fish|3||1|1", "minecraft:rabbit_foot|0||1|1", "minecraft:speckled_melon|0||1|1", "rustic:aloe_vera:0:1:2", "rustic:blood_orchid:0:1:2", "rustic:chamomile:0:1:2", "rustic:cohosh:0:1:2", "rustic:deathstalk:0:1:2", "rustic:horsetail:0:1:2", "rustic:mooncap:0:1:2", "rustic:wind_thistle:0:1:2", "rustic:vanta_lily:0:1:2", "rustic:cloudsbluff:0:1:2", "rustic:core_root:0:1:2", "rustic:ginseng:0:1:2", "rustic:marsh_mallow:0:1:2"};
 	}
 
 	public static class ClientSettings {
@@ -717,54 +554,42 @@ public class Settings {
 	public static class SpellCompatSettings {
 
 		@Config.Name("Mine Spell Override")
-		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Mine spell to add compatibility to the Fortune related artefact."
-				+ "Disabling this feature will cause the game to load the default Mine spell class which can be helpful if you are having issues, but it also makes the Circlet of Fortune artefact useless!")
+		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Mine spell to add compatibility to the Fortune related artefact." + "Disabling this feature will cause the game to load the default Mine spell class which can be helpful if you are having issues, but it also makes the Circlet of Fortune artefact useless!")
 		@Config.RequiresMcRestart
 		public boolean mineSpellOverride = true;
 
 		@Config.Name("Mine Spell Network ID")
-		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! "
-				+ "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update. "
-				+ "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
+		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! " + "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update. " + "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
 		@Config.RequiresMcRestart
 		public int mineSpellNetworkID = 141;
 
 		@Config.Name("Charge Spell Network ID")
-		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! "
-				+ "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update. "
-				+ "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
+		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! " + "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update. " + "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
 		@Config.RequiresMcRestart
 		public int chargeSpellNetworkID = 147;
 
 		@Config.Name("Charge Spell Override")
-		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Charge spell to add compatibility for the related artefact."
-				+ "\nDisabling this feature will cause the game to load the default Charge spell class which can be helpful if you are having issues, but it also makes the related artefact useless!")
+		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Charge spell to add compatibility for the related artefact." + "\nDisabling this feature will cause the game to load the default Charge spell class which can be helpful if you are having issues, but it also makes the related artefact useless!")
 		@Config.RequiresMcRestart
 		public boolean chargeSpellOverride = true;
 
 		@Config.Name("Clairvoyance Spell Override")
-		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Charge spell to add compatibility for the related artefact."
-				+ "\nDisabling this feature will cause the game to load the default Clairvoyance spell class which can be helpful if you are having issues, but it also makes the related artefact useless!")
+		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Charge spell to add compatibility for the related artefact." + "\nDisabling this feature will cause the game to load the default Clairvoyance spell class which can be helpful if you are having issues, but it also makes the related artefact useless!")
 		@Config.RequiresMcRestart
 		public boolean clairvoyanceSpellOverride = true;
 
 		@Config.Name("Conjure Pickaxe Spell Override")
-		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Conjure Pickaxe spell to add compatibility to the Fortune related artefact."
-				+ "\nDisabling this feature will cause the game to load the default Conjure Pickaxe spell class which can be helpful if you are having issues, but it also makes the Circlet of Fortune artefact useless!")
+		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Conjure Pickaxe spell to add compatibility to the Fortune related artefact." + "\nDisabling this feature will cause the game to load the default Conjure Pickaxe spell class which can be helpful if you are having issues, but it also makes the Circlet of Fortune artefact useless!")
 		@Config.RequiresMcRestart
 		public boolean conjurePickaxeSpellOverride = true;
 
 		@Config.Name("Conjure Pickaxe Spell Network ID")
-		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! "
-				+ "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update."
-				+ "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
+		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! " + "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update." + "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
 		@Config.RequiresMcRestart
 		public int conjurePickaxeSpellNetworkID = 41;
 
 		@Config.Name("Plague of Darkenss Spell Network ID")
-		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! "
-				+ "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update."
-				+ "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
+		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! " + "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update." + "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
 		@Config.RequiresMcRestart
 		public int plagueOfDarknessSpellNetworkID = 99;
 
@@ -773,6 +598,32 @@ public class Settings {
 	@Config.Name("Worldgen Settings")
 	@Config.LangKey("settings.ancientspellcraft:worldgen_settings")
 	public static WorldgenSettings worldgenSettings = new WorldgenSettings();
+
+	@Config.Name("Entity Spawn Settings")
+	@Config.LangKey("settings.ancientspellcraft:entity_spawn_settings")
+	public static EntitySpawnSettings entitySpawnSettings = new EntitySpawnSettings();
+
+	public static class EntitySpawnSettings {
+
+		@Config.Name("Enable Wizard Merchant Spawns")
+		@Config.Comment("Set to true to enable natural spawning of the Wizard Merchant NPC.")
+		public boolean wizardMerchantSpawnEnabled = true;
+
+		@Config.Name("Wizard Merchant Spawn Weight")
+		@Config.Comment("Controls the rarity of the Wizard Merchant NPC. Higher values mean more frequent spawns. (Default: 1, very rare)")
+		@Config.RangeInt(min = 0, max = 100)
+		public int wizardMerchantSpawnWeight = 1;
+
+		@Config.Name("Wizard Merchant Min Group Size")
+		@Config.Comment("Minimum number of Wizard Merchants that can spawn in a group.")
+		@Config.RangeInt(min = 1, max = 5)
+		public int wizardMerchantMinGroupSize = 1;
+
+		@Config.Name("Wizard Merchant Max Group Size")
+		@Config.Comment("Maximum number of Wizard Merchants that can spawn in a group.")
+		@Config.RangeInt(min = 1, max = 5)
+		public int wizardMerchantMaxGroupSize = 1;
+	}
 
 	public static class WorldgenSettings {
 
