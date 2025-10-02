@@ -491,6 +491,7 @@ public final class ASSpells {
 		registry.register(new AnimateItem());
 		registry.register(new AnimateWeapon());
 		registry.register(new SpectralArmy());
+		registry.register(new SummonSpectralSoldier());
 		registry.register(new DirtWall());
 		registry.register(new WindBlast());
 		registry.register(new SpellConstructRangedAS<>("healing_sigil", EntityHealingSigil::new, true).floor(true).addProperties(Spell.EFFECT_RADIUS, Spell.HEALTH));
