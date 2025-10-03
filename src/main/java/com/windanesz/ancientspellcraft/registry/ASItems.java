@@ -43,11 +43,14 @@ import java.util.List;
 @Mod.EventBusSubscriber
 public final class ASItems {
 
-	private ASItems() {} // No instances!
+	private ASItems() {
+	} // No instances!
 
 	@Nonnull
 	@SuppressWarnings("ConstantConditions")
-	private static <T> T placeholder() {return null;}
+	private static <T> T placeholder() {
+		return null;
+	}
 
 	public static final Item ancient_spellcraft_spell_book = placeholder();
 	public static final Item ancient_spell_book = placeholder();
@@ -149,6 +152,7 @@ public final class ASItems {
 	public static final Item charm_sorcery_orb = placeholder();
 	public static final Item charm_majestic_mana = placeholder();
 	public static final Item charm_guardian_blade = placeholder();
+	public static final Item charm_cat_eye = placeholder();
 
 	public static final Item charm_bucket_coal = placeholder();
 	public static final Item cornucopia = placeholder();
@@ -780,10 +784,10 @@ public final class ASItems {
 		registerItem(registry, "amulet_spellbinding", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_cursed_pendant", AncientSpellcraft.MODID, new ItemAmuletCursedPendant(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_elemental_defense", AncientSpellcraft.MODID, new AbstractItemArtefactWithSlots(EnumRarity.RARE, ItemArtefact.Type.AMULET, 1, 1, true) {
-				@Override
-				public boolean isItemValid(Item item) {
-					return item instanceof ItemCrystal;
-				}
+			@Override
+			public boolean isItemValid(Item item) {
+				return item instanceof ItemCrystal;
+			}
 		});
 		registerItem(registry, "amulet_black_tongue", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.AMULET));
 		registerItem(registry, "amulet_of_resistance", AncientSpellcraft.MODID, new ItemAmuletOfResistance(EnumRarity.RARE, ItemArtefact.Type.AMULET));
@@ -881,6 +885,7 @@ public final class ASItems {
 		registerItem(registry, "charm_skeleton_ghosts", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_guardian_blade", AncientSpellcraft.MODID, new ItemGuardianBlade(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_rainbowstring", AncientSpellcraft.MODID, new ItemRainbowString(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_cat_eye", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 
 		registerItem(registry, "charm_arcane_mirror", AncientSpellcraft.MODID, new ItemArcaneMirror(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_ancient_wand", AncientSpellcraft.MODID, new ItemAncientWand(EnumRarity.EPIC, ItemArtefact.Type.CHARM));

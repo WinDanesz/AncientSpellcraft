@@ -6,7 +6,8 @@
 	"mixins": [
 		"MixinEntityDamageSource",
 		"MixinItemPotion",
-		"MixinIsEntityUndead"
+		"MixinIsEntityUndead",
+		"MixinEntityCreeper"
 	],
 	"client": []
 }

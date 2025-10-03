@@ -50,7 +50,7 @@ public class TameAnimal extends SpellRay {
 	@Override
 	protected boolean onEntityHit(World world, Entity entity, Vec3d vec3d,
 			@Nullable EntityLivingBase entityLivingBase, Vec3d vec3d1, int i, SpellModifiers spellModifiers) {
-		if (casterPlayer != null) {
+		if (casterPlayer != null && !casterPlayer.world.isRemote) {
 			world.playSound((double) entity.getPosition().getX(), (double) entity.getPosition().getY(), (double) entity.getPosition().getZ(), SoundEvents.BLOCK_NOTE_CHIME, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
 
 			if (entity instanceof EntityParrot) {

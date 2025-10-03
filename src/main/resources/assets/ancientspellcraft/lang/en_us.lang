@@ -372,6 +372,7 @@ item.ancientspellcraft\:amulet_time_knot.name=Eye of Foresight
 item.ancientspellcraft\:amulet_time_slow.desc=Slows down time around the wearer upon taking critical damage (8 minutes cooldown)
 item.ancientspellcraft\:amulet_time_slow.name=Kairos' Momentous Medallion
 item.ancientspellcraft\:amulet_celerity.desc=Grants a %1$s Speed effect while worn
+item.ancientspellcraft\:amulet_celerity.desc=Grants movement speed bonus while worn
 item.ancientspellcraft\:amulet_celerity.name=Amulet of Celerity
 item.ancientspellcraft\:amulet_celerity.tooltip=Grants +%d%% movement speed while worn
 item.ancientspellcraft\:ancient_bound_stone.name=Ancient Bound Stone
@@ -1849,23 +1850,21 @@ item.ancientspellcraft\:charm_vessel_of_the_withered_oath.desc=Can contain a sin
 item.ancientspellcraft\:charm_vessel_of_the_withered_oath.curse_restored=The curse flows back on you as you remove the Vessel
 item.ancientspellcraft\:charm_vessel_of_the_withered_oath.curse_contained=The Vessel absorbs the curse!
 item.ancientspellcraft\:charm_vessel_of_the_withered_oath.contains=Contains: %s
-item.ancientspellcraft\:amulet_celerity.name=Amulet of Celerity
-item.ancientspellcraft\:amulet_celerity.desc=Grants movement speed bonus while worn
-A curse of smoldering damnation, causing the victim to erupt in arcane fire when least expected.
+entity.ancientspellcraft\:silverfish_minion.name=Silverfish Minion
+item.ancientspellcraft\:charm_cat_eye.name=Cat Eye
+item.ancientspellcraft\:charm_cat_eye.desc=Creepers avoid the wearer of this
+spell.ancientspellcraft\:plasma_cutter=Plasma Cutter
+spell.ancientspellcraft\:plasma_cutter.desc=Fires a continuous blue lightning beam that rapidly cuts through blocks, breaking them 3x faster than a player.
+
 potion.ancientspellcraft\:curse_of_eternal_combustion=Curse of Eternal Combustion
 
-
-# Curse of Eternal Combustion
 spell.ancientspellcraft\:curse_of_eternal_combustion.name=Curse of Eternal Combustion
-spell.ancientspellcraft\:curse_of_eternal_combustion.desc=The curse has a chance to set the target on fire for 2-5 seconds, randomly, maybe every 30-60 seconds.
-potion.ancientspellcraft\:curse_of_eternal_combustion=Curse of Eternal Combustion
+spell.ancientspellcraft\:curse_of_eternal_combustion.desc=Causes the victim to erupt in arcane fire when least expected.
 
-# Curse of Insomnia
 spell.ancientspellcraft\:curse_of_insomnia.name=Curse of Insomnia
 spell.ancientspellcraft\:curse_of_insomnia.desc=Prevents the target from sleeping. "The whispers will keep you awake."
 potion.ancientspellcraft\:curse_of_insomnia=Curse of Insomnia
 
-# Curse of Eternal Tempest
 spell.ancientspellcraft\:curse_of_eternal_tempest.name=Curse of Eternal Tempest
 spell.ancientspellcraft\:curse_of_eternal_tempest.desc=A swirling vortex of storm clouds follows the afflicted, occasionally calling down the sky's fury.
 potion.ancientspellcraft\:curse_of_eternal_tempest=Curse of Eternal Tempest
