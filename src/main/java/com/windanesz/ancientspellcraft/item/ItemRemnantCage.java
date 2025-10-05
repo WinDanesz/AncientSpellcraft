@@ -4,7 +4,6 @@ import com.windanesz.ancientspellcraft.entity.living.EntityRemnantMinion;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.entity.living.EntityRemnant;
 import electroblob.wizardry.registry.WizardryItems;
-import electroblob.wizardry.item.ItemArtefact;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -24,155 +23,163 @@ import java.util.List;
 
 public class ItemRemnantCage extends ItemDailyArtefact {
 
-    private static final String HAS_REMNANT_TAG = "hasRemnant";
-    private static final String STORED_ELEMENT_TAG = "storedElement";
+	private static final String HAS_REMNANT_TAG = "hasRemnant";
+	private static final String STORED_ELEMENT_TAG = "storedElement";
 
-    public ItemRemnantCage(EnumRarity rarity) {
-        super(rarity);
-        this.addReadinessPropertyOverride();
-    }
+	public ItemRemnantCage(EnumRarity rarity) {
+		super(rarity);
+		this.addReadinessPropertyOverride();
+	}
 
-    @Override
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
-        if (!player.world.isRemote && target instanceof EntityRemnant) {
-            EntityRemnant remnant = (EntityRemnant) target;
+	@Override
+	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase target, EnumHand hand) {
+		   if (!player.world.isRemote && target instanceof EntityRemnant) {
+			   EntityRemnant remnant = (EntityRemnant) target;
 
-            // Check if cage is empty
-            if (hasRemnant(stack)) {
-                return false; // Cage already contains a remnant
-            }
+			   // Check if cage is empty
+			   if (hasRemnant(stack)) {
+				   return false; // Cage already contains a remnant
+			   }
 
-            // Capture the remnant
-            Element element = remnant.getElement();
+			   // Capture the remnant
+			   Element element = remnant.getElement();
 
-            // Store the element in the cage
-            setStoredElement(stack, element);
+			   // Store the element in the cage
+			   setStoredElement(stack, element);
 
-            // Update the player's held item to reflect the changes
-            if (hand == EnumHand.MAIN_HAND) {
-                player.setHeldItem(EnumHand.MAIN_HAND, stack);
-            } else {
-                player.setHeldItem(EnumHand.OFF_HAND, stack);
-            }
+			   // Update the player's held item to reflect the changes
+			   if (hand == EnumHand.MAIN_HAND) {
+				   player.setHeldItem(EnumHand.MAIN_HAND, stack);
+			   } else {
+				   player.setHeldItem(EnumHand.OFF_HAND, stack);
+			   }
 
-            // Remove the remnant from the world without triggering death events
-            target.setDead();
+			   // Sync inventory to client
+			   player.inventory.markDirty();
+			   if (player.openContainer != null) {
+				   player.openContainer.detectAndSendChanges();
+			   }
 
-            return true;
-        }
-        return false;
-    }
+			   // Remove the remnant from the world without triggering death events
+			   target.setDead();
 
-    @Override
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        // Allow normal right-click behavior for daily artefact functionality
-        return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
-    }
+			   return true;
+		   }
+		   return false;
+	}
 
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-        ItemStack stack = player.getHeldItem(hand);
+	@Override
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		// Allow normal right-click behavior for daily artefact functionality
+		return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
+	}
 
-        // Check if player is sneaking and cage has a remnant
-        if (player.isSneaking() && hasRemnant(stack)) {
-            if (!world.isRemote) {
-                Element element = getStoredElement(stack);
-                if (element != null) {
-                    // Spawn EntityRemnantMinion at player's location
-                    EntityRemnantMinion minion = new EntityRemnantMinion(world);
-                    minion.setPosition(player.posX, player.posY, player.posZ);
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+		ItemStack stack = player.getHeldItem(hand);
 
-                    // Set the minion's element
-                    minion.setElement(element);
+		   // Only allow releasing the remnant as a minion if sneaking
+		   if (player.isSneaking()) {
+			   if (hasRemnant(stack)) {
+				   if (!world.isRemote) {
+					   Element element = getStoredElement(stack);
+					   if (element != null) {
+						   // Spawn EntityRemnantMinion at player's location
+						   EntityRemnantMinion minion = new EntityRemnantMinion(world);
+						   minion.setPosition(player.posX, player.posY, player.posZ);
 
-                    // Set the owner to the player
-                    minion.setOwnerId(player.getUniqueID());
+						   // Set the minion's element
+						   minion.setElement(element);
 
-                    // Spawn the minion in the world
-                    world.spawnEntity(minion);
+						   // Set the owner to the player
+						   minion.setOwnerId(player.getUniqueID());
 
-                    // Clear the cage
-                    clearRemnant(stack);
+						   // Spawn the minion in the world
+						   world.spawnEntity(minion);
 
-                    // Update the player's held item
-                    player.setHeldItem(hand, stack);
-                }
-            }
-            return new ActionResult<>(EnumActionResult.SUCCESS, stack);
-        }
+						   // Clear the cage
+						   clearRemnant(stack);
 
-        // If not sneaking or empty, use normal daily artefact behavior
-        return super.onItemRightClick(world, player, hand);
-    }
+						   // Update the player's held item
+						   player.setHeldItem(hand, stack);
+					   }
+				   }
+				   return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+			   } else {
+				   // If sneaking but no remnant, do not call super, just pass
+				   return new ActionResult<>(EnumActionResult.FAIL, stack);
+			   }
+		   } else {
+			   // If not sneaking, never release the remnant, always perform daily artefact behavior
+			   return super.onItemRightClick(world, player, hand);
+		   }
+	}
 
-    @Override
-    public void performAction(EntityPlayer player) {
-        ItemStack stack = player.getHeldItemMainhand();
+	@Override
+	public void performAction(EntityPlayer player) {
+		ItemStack stack = player.getHeldItemMainhand();
 
-        if (hasRemnant(stack)) {
-            Element element = getStoredElement(stack);
-            if (element != null) {
-                // Create spectral dust based on element
-                ItemStack dust = new ItemStack(WizardryItems.spectral_dust, 1, element.ordinal());
+		if (hasRemnant(stack)) {
+			Element element = getStoredElement(stack);
+			if (element != null) {
+				// Create spectral dust based on element
+				ItemStack dust = new ItemStack(WizardryItems.spectral_dust, 1, element.ordinal());
 
-                // Try to give to player inventory, drop if full
-                if (!player.inventory.addItemStackToInventory(dust)) {
-                    player.dropItem(dust, false);
-                }
+				// Try to give to player inventory, drop if full
+				if (!player.inventory.addItemStackToInventory(dust)) {
+					player.dropItem(dust, false);
+				}
 
-                // Clear the cage after releasing dust
-                clearRemnant(stack);
-                // Update the player's held item to reflect the changes
-                player.setHeldItem(EnumHand.MAIN_HAND, stack);
-            }
-        }
-    }
+				// Clear the cage after releasing dust
+				clearRemnant(stack);
+				// Update the player's held item to reflect the changes
+				player.setHeldItem(EnumHand.MAIN_HAND, stack);
+			}
+		}
+	}
 
-    private boolean hasRemnant(ItemStack stack) {
-        return stack.hasTagCompound() && stack.getTagCompound().getBoolean(HAS_REMNANT_TAG);
-    }
+	private boolean hasRemnant(ItemStack stack) {
+		return stack.hasTagCompound() && stack.getTagCompound().getBoolean(HAS_REMNANT_TAG);
+	}
 
-    private void setStoredElement(ItemStack stack, Element element) {
-        if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
-        }
-        NBTTagCompound nbt = stack.getTagCompound();
-        nbt.setBoolean(HAS_REMNANT_TAG, true);
-        nbt.setInteger(STORED_ELEMENT_TAG, element.ordinal());
-        stack.setTagCompound(nbt);
-    }
+	private void setStoredElement(ItemStack stack, Element element) {
+		if (!stack.hasTagCompound()) {
+			stack.setTagCompound(new NBTTagCompound());
+		}
+		NBTTagCompound nbt = stack.getTagCompound();
+		nbt.setBoolean(HAS_REMNANT_TAG, true);
+		nbt.setInteger(STORED_ELEMENT_TAG, element.ordinal());
+		stack.setTagCompound(nbt);
+	}
 
-    private Element getStoredElement(ItemStack stack) {
-        if (stack.hasTagCompound() && stack.getTagCompound().hasKey(STORED_ELEMENT_TAG)) {
-            int elementOrdinal = stack.getTagCompound().getInteger(STORED_ELEMENT_TAG);
-            return Element.values()[elementOrdinal];
-        }
-        return null;
-    }
+	private Element getStoredElement(ItemStack stack) {
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(STORED_ELEMENT_TAG)) {
+			int elementOrdinal = stack.getTagCompound().getInteger(STORED_ELEMENT_TAG);
+			return Element.values()[elementOrdinal];
+		}
+		return null;
+	}
 
-    private void clearRemnant(ItemStack stack) {
-        if (stack.hasTagCompound()) {
-            NBTTagCompound nbt = stack.getTagCompound();
-            nbt.removeTag(HAS_REMNANT_TAG);
-            nbt.removeTag(STORED_ELEMENT_TAG);
-            stack.setTagCompound(nbt);
-        }
-    }
+	private void clearRemnant(ItemStack stack) {
+		if (stack.hasTagCompound()) {
+			NBTTagCompound nbt = stack.getTagCompound();
+			nbt.removeTag(HAS_REMNANT_TAG);
+			nbt.removeTag(STORED_ELEMENT_TAG);
+			stack.setTagCompound(nbt);
+		}
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
-        super.addInformation(stack, world, tooltip, advanced);
-
-        if (hasRemnant(stack)) {
-            Element element = getStoredElement(stack);
-            if (element != null) {
-                tooltip.add("Contains a " + element.getDisplayName() + " remnant");
-                tooltip.add("Sneak-right-click to release as minion");
-            }
-        } else {
-            tooltip.add("Empty - right-click a remnant to capture it");
-            tooltip.add("Sneak-right-click to release captured remnant as minion");
-        }
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, net.minecraft.client.util.ITooltipFlag advanced) {
+		if (hasRemnant(stack)) {
+			Element element = getStoredElement(stack);
+			if (element != null) {
+				tooltip.add("Contains a " + element.getFormattingCode() + element.getDisplayName() + " remnant");
+				tooltip.add("Sneak-right-click to release as minion (resets daily usage)");
+			}
+		} else {
+			super.addInformation(stack, world, tooltip, advanced);
+		}
+	}
 }

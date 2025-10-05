@@ -11,6 +11,7 @@ import com.windanesz.wizardryutils.entity.ai.EntityAIMinionOwnerHurtTarget;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -19,6 +20,7 @@ import net.minecraft.pathfinding.PathNavigateFlying;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -60,8 +62,12 @@ public class EntityRemnantMinion extends EntityRemnant implements ISummonedCreat
 		super(world);
 		this.moveHelper = new EntityRemnantMinion.AIMoveControl(this);
 		this.experienceValue = 0;
-
 	}
+
+	@Override protected boolean canDropLoot(){ return false; }
+	@Override protected Item getDropItem(){ return null; }
+	@Override protected ResourceLocation getLootTable(){ return null; }
+	@Override public boolean canPickUpLoot(){ return false; }
 
 	protected PathNavigate createNavigator(World worldIn)
 	{
