@@ -12,6 +12,7 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityDispelMagic;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityHeart;
 import com.windanesz.ancientspellcraft.spell.CurseOfEternalCombustion;
 import com.windanesz.ancientspellcraft.spell.CurseOfInsomnia;
+import com.windanesz.ancientspellcraft.spell.CurseOfEternalTempest;
 import com.windanesz.ancientspellcraft.spell.*;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
@@ -54,6 +55,7 @@ public final class ASSpells {
 	public static final Spell curse_of_ender = placeholder();
 	public static final Spell curse_of_eternal_combustion = placeholder();
 	public static final Spell curse_of_insomnia = placeholder();
+	public static final Spell curse_of_eternal_tempest = placeholder();
 	public static final Spell conjure_water = placeholder();
 	public static final Spell conjure_shield = placeholder();
 	public static final Spell drought = placeholder();
@@ -303,6 +305,7 @@ public final class ASSpells {
 		registry.register(new CurseOfEnder());
 		registry.register(new CurseOfEternalCombustion());
 		registry.register(new CurseOfInsomnia());
+		registry.register(new CurseOfEternalTempest());
 		registry.register(new ConjureWater(modId, "conjure_water", EnumAction.BLOCK, false));
 		registry.register(new SpellConjurationAS("conjure_shield", ASItems.spectral_shield));
 		registry.register(new Drought(modId, "drought", EnumAction.BLOCK, false));

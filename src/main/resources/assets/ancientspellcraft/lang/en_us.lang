@@ -1864,3 +1864,8 @@ potion.ancientspellcraft\:curse_of_eternal_combustion=Curse of Eternal Combustio
 spell.ancientspellcraft\:curse_of_insomnia.name=Curse of Insomnia
 spell.ancientspellcraft\:curse_of_insomnia.desc=Prevents the target from sleeping. "The whispers will keep you awake."
 potion.ancientspellcraft\:curse_of_insomnia=Curse of Insomnia
+
+# Curse of Eternal Tempest
+spell.ancientspellcraft\:curse_of_eternal_tempest.name=Curse of Eternal Tempest
+spell.ancientspellcraft\:curse_of_eternal_tempest.desc=A swirling vortex of storm clouds follows the afflicted, occasionally calling down the sky's fury.
+potion.ancientspellcraft\:curse_of_eternal_tempest=Curse of Eternal Tempest
