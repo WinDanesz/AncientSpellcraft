@@ -10,6 +10,7 @@ import com.windanesz.ancientspellcraft.potion.PotionCurseAS;
 import com.windanesz.ancientspellcraft.potion.PotionCurseDeath;
 import com.windanesz.ancientspellcraft.potion.PotionCurseEnder;
 import com.windanesz.ancientspellcraft.potion.PotionCurseGills;
+import com.windanesz.ancientspellcraft.potion.PotionCurseOfInsomnia;
 import com.windanesz.ancientspellcraft.potion.PotionCurseUmbra;
 import com.windanesz.ancientspellcraft.potion.PotionCurseOfEternalCombustion;
 import com.windanesz.ancientspellcraft.potion.PotionCurseWard;
@@ -57,6 +58,7 @@ public class ASPotions {
 
 	public static final Potion curse_of_ender = placeholder();
 	public static final Potion curse_of_eternal_combustion = placeholder();
+	public static final Potion curse_of_insomnia = placeholder();
 	public static final Potion unlimited_power = placeholder();
 	public static final Potion martyr = placeholder();
 	public static final Potion martyr_beneficial = placeholder();
@@ -124,6 +126,7 @@ public class ASPotions {
 
 		registerPotion(registry, "curse_of_ender", new PotionCurseEnder());
 		registerPotion(registry, "curse_of_eternal_combustion", new PotionCurseOfEternalCombustion());
+		registerPotion(registry, "curse_of_insomnia", new PotionCurseOfInsomnia());
 
 		// AS 1.1
 		registerPotion(registry, "unlimited_power", new PotionUnlimitedPower());
