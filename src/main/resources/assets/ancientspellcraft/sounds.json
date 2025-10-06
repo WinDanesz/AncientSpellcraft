@@ -118,6 +118,7 @@
     "spell.curse_armor":                        {"category": "spells", "sounds": ["ancientspellcraft:curse"]},
     "spell.curse_of_death": 	            	{"category": "spells", "sounds": ["mob/guardian/curse"]},
     "spell.curse_of_ender":                     {"category": "spells", "sounds": ["ancientspellcraft:curse"]},
+    "spell.curse_of_eternal_combustion":        {"category": "spells", "sounds": ["ancientspellcraft:curse"]},
     "spell.curse_of_gills":                     {"category": "spells", "sounds": ["ancientspellcraft:curse"]},
     "spell.curse_of_umbra":                     {"category": "spells", "sounds": ["ancientspellcraft:curse"]},
     "spell.curse_temporal_casualty": 			{"category": "spells", "sounds": ["ancientspellcraft:time_magic"]},

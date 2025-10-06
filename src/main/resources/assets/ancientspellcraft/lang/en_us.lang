@@ -1851,4 +1851,11 @@ item.ancientspellcraft\:charm_vessel_of_the_withered_oath.curse_contained=The Ve
 item.ancientspellcraft\:charm_vessel_of_the_withered_oath.contains=Contains: %s
 item.ancientspellcraft\:amulet_celerity.name=Amulet of Celerity
 item.ancientspellcraft\:amulet_celerity.desc=Grants movement speed bonus while worn
-entity.ancientspellcraft\:silverfish_minion.name=Silverfish Minion
+A curse of smoldering damnation, causing the victim to erupt in arcane fire when least expected.
+potion.ancientspellcraft\:curse_of_eternal_combustion=Curse of Eternal Combustion
+
+
+# Curse of Eternal Combustion
+spell.ancientspellcraft\:curse_of_eternal_combustion.name=Curse of Eternal Combustion
+spell.ancientspellcraft\:curse_of_eternal_combustion.desc=The curse has a chance to set the target on fire for 2-5 seconds, randomly, maybe every 30-60 seconds.
+potion.ancientspellcraft\:curse_of_eternal_combustion=Curse of Eternal Combustion
