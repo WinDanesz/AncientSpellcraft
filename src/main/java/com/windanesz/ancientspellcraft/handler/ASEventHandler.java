@@ -74,6 +74,7 @@ import net.minecraftforge.event.entity.EntityMountEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -166,6 +167,15 @@ public class ASEventHandler {
 					}
 				}
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onPlayerSleep(PlayerSleepInBedEvent event) {
+		if (event.getEntityPlayer().isPotionActive(ASPotions.curse_of_insomnia)) {
+			ASUtils.sendMessage(event.getEntityPlayer(), "message.ancientspellcraft:curse.of_insomnia.sleep_prevented", true);
+			event.setResult(EntityPlayer.SleepResult.OTHER_PROBLEM);
+			event.setCanceled(true);
 		}
 	}
 

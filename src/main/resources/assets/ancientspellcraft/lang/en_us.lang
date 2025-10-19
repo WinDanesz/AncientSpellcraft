@@ -1855,17 +1855,21 @@ entity.ancientspellcraft\:silverfish_minion.name=Silverfish Minion
 item.ancientspellcraft\:charm_cat_eye.name=Cat Eye
 item.ancientspellcraft\:charm_cat_eye.desc=Creepers avoid the wearer of this
 spell.ancientspellcraft\:plasma_cutter=Plasma Cutter
-spell.ancientspellcraft\:plasma_cutter.desc=Fires a continuous blue lightning beam that rapidly cuts through blocks, breaking them 3x faster than a player.
+spell.ancientspellcraft\:plasma_cutter.desc=Fires a continuous lightning beam that rapidly cuts through blocks.
 
+spell.ancientspellcraft\:curse_of_eternal_combustion=Curse of Eternal Combustion
+spell.ancientspellcraft\:curse_of_eternal_combustion.desc=Cursed to kindle without end, as flames betray the flesh they rend.
 potion.ancientspellcraft\:curse_of_eternal_combustion=Curse of Eternal Combustion
 
-spell.ancientspellcraft\:curse_of_eternal_combustion.name=Curse of Eternal Combustion
-spell.ancientspellcraft\:curse_of_eternal_combustion.desc=Causes the victim to erupt in arcane fire when least expected.
+spell.ancientspellcraft\:curse_of_eternal_frost=Curse of Eternal Frost
+spell.ancientspellcraft\:curse_of_eternal_frost.desc=When warmth departs, the soul shall tire, bound forever in frost’s cruel ire.
+potion.ancientspellcraft\:curse_of_eternal_frost=Curse of Eternal Frost
 
-spell.ancientspellcraft\:curse_of_insomnia.name=Curse of Insomnia
-spell.ancientspellcraft\:curse_of_insomnia.desc=Prevents the target from sleeping. "The whispers will keep you awake."
+spell.ancientspellcraft\:curse_of_insomnia=Curse of Insomnia
+spell.ancientspellcraft\:curse_of_insomnia.desc=Eyes unclosed, the mind shall weep, forever denied the mercy of sleep.
 potion.ancientspellcraft\:curse_of_insomnia=Curse of Insomnia
+message.ancientspellcraft\:curse.of_insomnia.sleep_prevented=You feel too restless to sleep...
 
-spell.ancientspellcraft\:curse_of_eternal_tempest.name=Curse of Eternal Tempest
-spell.ancientspellcraft\:curse_of_eternal_tempest.desc=A swirling vortex of storm clouds follows the afflicted, occasionally calling down the sky's fury.
+spell.ancientspellcraft\:curse_of_eternal_tempest=Curse of Eternal Tempest
+spell.ancientspellcraft\:curse_of_eternal_tempest.desc=The skies remember, the storm obeys—bound in tempest for endless days.
 potion.ancientspellcraft\:curse_of_eternal_tempest=Curse of Eternal Tempest

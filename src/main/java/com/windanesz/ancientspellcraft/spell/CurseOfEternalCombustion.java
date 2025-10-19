@@ -38,7 +38,7 @@ public class CurseOfEternalCombustion extends SpellRayAS {
 
     @Override
     protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-        return false;
+        return true;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class CurseOfEternalCombustion extends SpellRayAS {
 
     @Override
     protected void spawnParticle(World world, double x, double y, double z, double vx, double vy, double vz) {
-        ParticleBuilder.create(ParticleBuilder.Type.FLAME).pos(x, y, z).spawn(world);
-        ParticleBuilder.create(ParticleBuilder.Type.SMOKE).pos(x, y, z).spawn(world);
+        ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).pos(x, y, z).spawn(world);
+        ParticleBuilder.create(ParticleBuilder.Type.DUST).pos(x, y, z).spawn(world);
     }
 }

@@ -1,4 +1,3 @@
-
 package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
@@ -39,7 +38,7 @@ public class SpellPlasmaCutter extends SpellRay {
 			   if (hardness >= 0) {
 				   // Determine the best tool for the block
 				   String tool = state.getBlock().getHarvestTool(state);
-				   float breakSpeed = 1.0f;
+				   double breakSpeed; // initialized in branches below
 				   if (tool != null) {
 					   net.minecraft.item.ItemStack toolStack;
 					   switch (tool) {
@@ -56,22 +55,40 @@ public class SpellPlasmaCutter extends SpellRay {
 							   toolStack = net.minecraft.item.ItemStack.EMPTY;
 					   }
 					   if (!toolStack.isEmpty()) {
-						   breakSpeed = toolStack.getDestroySpeed(state) * 5.0f;
+						   breakSpeed = toolStack.getDestroySpeed(state) * 5.0; // use double literal
 					   } else {
-						   breakSpeed = player.getDigSpeed(state, pos) * 5.0f;
+						   breakSpeed = player.getDigSpeed(state, pos) * 5.0;
 					   }
 				   } else {
-					   breakSpeed = player.getDigSpeed(state, pos) * 5.0f;
+					   breakSpeed = player.getDigSpeed(state, pos) * 5.0;
 				   }
 				   // Scale breakSpeed with potency modifier
-				   breakSpeed *= modifiers.get(SpellModifiers.POTENCY);
-				   System.out.println("breakSpeed: " + breakSpeed );
+				   double potency = modifiers.get(SpellModifiers.POTENCY);
+				   breakSpeed *= potency;
+				   System.out.println("breakSpeed: " + breakSpeed + ", potency: " + potency);
+
+				   // Determine extra minimum ticks based on potency ranges.
+				   // Assumption: ranges are inclusive at the lower bound and exclusive at the upper bound (e.g. [1.0,1.15)), except final range includes upper bound.
+				   // Ranges requested:
+				   // 1.0 - 1.15 : add 15 ticks
+				   // 1.15 - 1.3 : add 10 ticks
+				   // 1.45 - 1.6 : add 5 ticks
+				   int extraMinTicks = 0;
+				   if (potency >= 1.0 && potency < 1.15) {
+					   extraMinTicks = 15;
+				   } else if (potency >= 1.15 && potency < 1.3) {
+					   extraMinTicks = 10;
+				   } else if (potency >= 1.45 && potency <= 1.6) {
+					   extraMinTicks = 5;
+				   }
+
 				   // Improved scaling: linear with min/max clamp
-				   final int minTicks = 5;
+				   final int baseMinTicks = 5;
 				   final int maxTicks = 20;
 				   final double base = 20.0; // Adjust base for good spread
+				   int minTicks = baseMinTicks + extraMinTicks;
 				   int ticksToBreak = (int) Math.ceil(Math.max(minTicks, Math.min(maxTicks, (hardness * base) / breakSpeed)));
-				   System.out.println("ticksToBreak: " + ticksToBreak );
+				   System.out.println("minTicks: " + minTicks + ", ticksToBreak: " + ticksToBreak);
 				   // Use a timer based on the player's ticksExisted and block position to avoid skipping
 				   if ((player.ticksExisted + pos.hashCode()) % ticksToBreak == 0) {
 					   world.destroyBlock(pos, true);

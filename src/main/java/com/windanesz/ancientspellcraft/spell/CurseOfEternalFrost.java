@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.spell;
 
 import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.item.SpellActions;
+import electroblob.wizardry.spell.SpellBuff;
 import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -13,11 +14,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class CurseOfEternalTempest extends SpellRayAS {
+public class CurseOfEternalFrost extends SpellRayAS {
 
-    public CurseOfEternalTempest() {
-        super("curse_of_eternal_tempest", SpellActions.POINT, false);
+    public CurseOfEternalFrost() {
+        super("curse_of_eternal_frost", SpellActions.POINT, false);
         this.soundValues(1, 1.1f, 0.2f);
+        addProperties(EFFECT_STRENGTH);
     }
 
     @Override
@@ -26,7 +28,8 @@ public class CurseOfEternalTempest extends SpellRayAS {
         if (EntityUtils.isLiving(target)) {
 
             if (!world.isRemote) {
-                ((EntityLivingBase) target).addPotionEffect(new PotionEffect(ASPotions.curse_of_eternal_tempest, Integer.MAX_VALUE, 0));
+                ((EntityLivingBase) target).addPotionEffect(new PotionEffect(ASPotions.curse_of_eternal_frost, Integer.MAX_VALUE,
+                        getProperty(EFFECT_STRENGTH).intValue() + SpellBuff.getStandardBonusAmplifier(modifiers.get(SpellModifiers.POTENCY))));
             }
         }
 
@@ -45,7 +48,9 @@ public class CurseOfEternalTempest extends SpellRayAS {
 
     @Override
     protected void spawnParticle(World world, double x, double y, double z, double vx, double vy, double vz) {
-        ParticleBuilder.create(ParticleBuilder.Type.CLOUD).pos(x, y, z).clr(0.3f, 0.3f, 0.3f).shaded(true).spawn(world);
-        ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).pos(x, y, z).spawn(world);
+		float brightness = 0.5f + (world.rand.nextFloat() / 2);
+		ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x, y, z).time(12 + world.rand.nextInt(8))
+				.clr(brightness, brightness + 0.1f, 1).spawn(world);
+		ParticleBuilder.create(ParticleBuilder.Type.SNOW).pos(x, y, z).spawn(world);
     }
 }

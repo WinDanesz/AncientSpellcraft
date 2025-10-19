@@ -565,6 +565,7 @@ public final class ASSpells {
 		registry.register(new Compulsion());
 		registry.register(new CurseOfUmbra());
 		registry.register(new CurseOfGills());
+		registry.register(new CurseOfEternalFrost());
 		registry.register(new CursedTouch());
 		registry.register(new Sufferance());
 		registry.register(new DeathMark());
@@ -615,8 +616,6 @@ public final class ASSpells {
 		registry.register(new ChaosBlast());
 		registry.register(new ChaosVortex());
 		registry.register(new AbsorbProjectile());
-		//registry.register(new WarlockSpellPlaceholder("chaos_storm"));
-		//registry.register(new WarlockSpellPlaceholder("confusion"));
 		registry.register(new OrbSpace());
 		registry.register(new ChaoticEmpowerment());
 		registry.register(new ChaosField());

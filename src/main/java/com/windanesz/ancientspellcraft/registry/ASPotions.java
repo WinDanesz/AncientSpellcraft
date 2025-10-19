@@ -1,40 +1,10 @@
 package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.potion.PotionAstralProjection;
-import com.windanesz.ancientspellcraft.potion.PotionBubbleHead;
-import com.windanesz.ancientspellcraft.potion.PotionBurrow;
-import com.windanesz.ancientspellcraft.potion.PotionCandleLight;
-import com.windanesz.ancientspellcraft.potion.PotionChaos;
-import com.windanesz.ancientspellcraft.potion.PotionCurseAS;
-import com.windanesz.ancientspellcraft.potion.PotionCurseDeath;
-import com.windanesz.ancientspellcraft.potion.PotionCurseEnder;
-import com.windanesz.ancientspellcraft.potion.PotionCurseGills;
-import com.windanesz.ancientspellcraft.potion.PotionCurseOfInsomnia;
-import com.windanesz.ancientspellcraft.potion.PotionCurseUmbra;
-import com.windanesz.ancientspellcraft.potion.PotionCurseOfEternalCombustion;
-import com.windanesz.ancientspellcraft.potion.PotionCurseOfEternalTempest;
-import com.windanesz.ancientspellcraft.potion.PotionCurseWard;
-import com.windanesz.ancientspellcraft.potion.PotionDimensionalAnchor;
-import com.windanesz.ancientspellcraft.potion.PotionDegradedArmor;
-import com.windanesz.ancientspellcraft.potion.PotionEagleEye;
-import com.windanesz.ancientspellcraft.potion.PotionFeatherFall;
-import com.windanesz.ancientspellcraft.potion.PotionGrowth;
-import com.windanesz.ancientspellcraft.potion.PotionImprovedArmor;
-import com.windanesz.ancientspellcraft.potion.PotionMageLight;
-import com.windanesz.ancientspellcraft.potion.PotionMagicEffectAS;
-import com.windanesz.ancientspellcraft.potion.PotionManaRegeneration;
-import com.windanesz.ancientspellcraft.potion.PotionMetamagicEffect;
-import com.windanesz.ancientspellcraft.potion.PotionProjectileWard;
-import com.windanesz.ancientspellcraft.potion.PotionShrinkage;
-import com.windanesz.ancientspellcraft.potion.PotionSoulScorch;
-import com.windanesz.ancientspellcraft.potion.PotionTenacity;
-import com.windanesz.ancientspellcraft.potion.PotionTimeKnot;
-import com.windanesz.ancientspellcraft.potion.PotionUnlimitedPower;
-import com.windanesz.ancientspellcraft.potion.PotionWaterWalking;
-import com.windanesz.ancientspellcraft.potion.PotionWizardShield;
+import com.windanesz.ancientspellcraft.potion.*;
 import com.windanesz.ancientspellcraft.spell.FortifiedArchery;
 import electroblob.wizardry.event.SpellCastEvent;
+import electroblob.wizardry.potion.Curse;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -55,12 +25,15 @@ public class ASPotions {
 
 	@Nonnull
 	@SuppressWarnings("ConstantConditions")
-	private static <T> T placeholder() { return null; }
+	private static <T> T placeholder() {
+		return null;
+	}
 
 	public static final Potion curse_of_ender = placeholder();
 	public static final Potion curse_of_eternal_combustion = placeholder();
 	public static final Potion curse_of_insomnia = placeholder();
 	public static final Potion curse_of_eternal_tempest = placeholder();
+	public static final Potion curse_of_eternal_frost = placeholder();
 	public static final Potion unlimited_power = placeholder();
 	public static final Potion martyr = placeholder();
 	public static final Potion martyr_beneficial = placeholder();
@@ -128,8 +101,9 @@ public class ASPotions {
 
 		registerPotion(registry, "curse_of_ender", new PotionCurseEnder());
 		registerPotion(registry, "curse_of_eternal_combustion", new PotionCurseOfEternalCombustion());
-		registerPotion(registry, "curse_of_insomnia", new PotionCurseOfInsomnia());
+		registerPotion(registry, "curse_of_insomnia", new Curse(true, 0x483D8B, new ResourceLocation(AncientSpellcraft.MODID, "textures/gui/potion_icon_curse_of_insomnia.png")));
 		registerPotion(registry, "curse_of_eternal_tempest", new PotionCurseOfEternalTempest());
+		registerPotion(registry, "curse_of_eternal_frost", new PotionCurseOfEternalFrost());
 
 		// AS 1.1
 		registerPotion(registry, "unlimited_power", new PotionUnlimitedPower());
@@ -232,7 +206,8 @@ public class ASPotions {
 	}
 
 	// Stuffing this here temporarily, TODO: unify these SpellCastEvent.Pre events to save a minor performance
-	@SubscribeEvent(priority = EventPriority.HIGHEST) // processing after electroblob.wizardry.item.ItemArtefact.onSpellCastPreEvent (EventPriority.LOW)
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	// processing after electroblob.wizardry.item.ItemArtefact.onSpellCastPreEvent (EventPriority.LOW)
 	public static void onSpellCastPreEvent(SpellCastEvent.Pre event) {
 		float POTENCY_DECREASE_PER_LEVEL = 0.3f;
 

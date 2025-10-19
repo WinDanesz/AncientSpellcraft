@@ -1,19 +1,23 @@
 {
-    "enabled": {
-        "book": true,
-        "scroll": true,
-        "wands": true,
-        "npcs": true,
-        "dispensers": true,
-        "commands": true,
-        "treasure": true,
-        "trades": true,
-        "looting": true
-    },
-    "tier": "advanced",
-    "element": "necromancy",
-    "type": "curse",
-    "cost": 75,
-    "chargeup": 0,
-    "cooldown": 90
+  "enabled": {
+    "book": true,
+    "scroll": true,
+    "wands": true,
+    "npcs": true,
+    "dispensers": true,
+    "commands": true,
+    "treasure": true,
+    "trades": true,
+    "looting": true
+  },
+  "tier": "advanced",
+  "element": "necromancy",
+  "type": "alteration",
+  "cost": 100,
+  "chargeup": 0,
+  "cooldown": 90,
+  "base_properties": {
+    "range": 10,
+    "effect_strength": 0
+  }
 }
