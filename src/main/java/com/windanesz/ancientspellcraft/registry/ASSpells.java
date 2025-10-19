@@ -284,6 +284,7 @@ public final class ASSpells {
     public static final Spell chaos_touch = placeholder();
     public static final Spell chaotic_rebinding = placeholder();
     public static final Spell alter_potion = placeholder();
+	public static final Spell woodbending = placeholder();
     //public static final Spell obliteration = placeholder();
 
 	@SuppressWarnings("unchecked")
@@ -629,8 +630,8 @@ public final class ASSpells {
 		// registry.register(new HeatFurnace()); TODO
 		//registry.register(new WarpWeapon()); TODO
 
-		// Custom Spell: Plasma Cutter
 		registry.register(new SpellPlasmaCutter());
+		registry.register(new Woodbending());
 
 		/// BASE SPELL MODIFICATION OVERRIDES  ///
 
