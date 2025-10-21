@@ -4,6 +4,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.8.1] - 2025-10-21
+### :sparkles: New Features
+- [`09685a4`](https://github.com/WinDanesz/AncientSpellcraft/commit/09685a49782f666fd96aa02dc9606cab0042254a) - Dimensinal Anchor doesn't have particles in pocket dim *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`027e101`](https://github.com/WinDanesz/AncientSpellcraft/commit/027e101745882c7b68cf37fdaab24f73d528c229) - Added Aurelian Cup *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`b8f0697`](https://github.com/WinDanesz/AncientSpellcraft/commit/b8f06971dd1ec5436d4a66a07fe1a6dcd3cf765d) - Added Amulet of Celerity *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`3950229`](https://github.com/WinDanesz/AncientSpellcraft/commit/39502290831ab057b669e279baac2b4efbc3e2e2) - Added Beastcaller's Horn *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`98680a3`](https://github.com/WinDanesz/AncientSpellcraft/commit/98680a3658e9f287730a2858846078d7d333b06f) - Added Summon Remnant spell and Remnant Cage *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`7a0c3cd`](https://github.com/WinDanesz/AncientSpellcraft/commit/7a0c3cd0018cefd1f67f3ea86762ef2ea3a63f1b) - Added naturally spawning Merchant Wizards as a rare spawn during daytime only *(PR [#284](https://github.com/WinDanesz/AncientSpellcraft/pull/284) by [@WinDanesz](https://github.com/WinDanesz))*
+- [`496db27`](https://github.com/WinDanesz/AncientSpellcraft/commit/496db2756988af18c0d24d359d6b89f86f22687b) - Added Spectral Soldier spell *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`85bab8d`](https://github.com/WinDanesz/AncientSpellcraft/commit/85bab8d9d2470dfe4f023aa11f37c294ed697bea) - Added Curse of Eternal Combustion
+- [`5dec35c`](https://github.com/WinDanesz/AncientSpellcraft/commit/5dec35caa2e9cf89cf0e5169b161539079656989) - Added Curse of Insomnia
+- [`d39b881`](https://github.com/WinDanesz/AncientSpellcraft/commit/d39b88196fe84a14d5f43cf1a4535f8d478fee66) - Added Curse of Eternal Tempest
+- [`7e7ae91`](https://github.com/WinDanesz/AncientSpellcraft/commit/7e7ae91d7f6084e4f1ce2b56a0e9fbf31ee0679e) - Added Cat Eye *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`0be8f53`](https://github.com/WinDanesz/AncientSpellcraft/commit/0be8f5351f5b5a18c3d1b2e43a30644e92a10f16) - Added Plasma Cutter spell *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`e5ba896`](https://github.com/WinDanesz/AncientSpellcraft/commit/e5ba89674bbb807a0bd21d77c326071cdb453313) - Added Curse of Eternal Frost *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`2a93d64`](https://github.com/WinDanesz/AncientSpellcraft/commit/2a93d648a786ab8ac8d3a3cd295d061a16708b9c) - Added Woodbending spell *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+### :bug: Bug Fixes
+- [`a4c2c1d`](https://github.com/WinDanesz/AncientSpellcraft/commit/a4c2c1d5bcc44dfdf2b5e3d070d53d3577fbad8b) - ASFakePlayer memory leak (Issue [#281](https://github.com/WinDanesz/AncientSpellcraft/pull/281)) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`67fa7d5`](https://github.com/WinDanesz/AncientSpellcraft/commit/67fa7d573c1dbce2dff86fca7c93ef7ed4aae2fe) - Allow Mystic Spell Books, Forbidden Tomes, and Runic Plates in Sphere of Cognizance. Fixes [#157](https://github.com/WinDanesz/AncientSpellcraft/pull/157) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`65da958`](https://github.com/WinDanesz/AncientSpellcraft/commit/65da958e67f9612f17bb2f462167971cd94c5818) - Summon Quicksand issues with items, dispensers, and area of effect. Fixes [#188](https://github.com/WinDanesz/AncientSpellcraft/pull/188)
+
+### :wrench: Chores
+- [`170e03c`](https://github.com/WinDanesz/AncientSpellcraft/commit/170e03c5f8533712cefaee4a187049fa332e70c5) - Amnesia scroll shrinks stacks and no longer removes stack upon usage *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`401e304`](https://github.com/WinDanesz/AncientSpellcraft/commit/401e3047d680a19082908edf1f71fd0ddc1a7918) - some more unused assets *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`56094f1`](https://github.com/WinDanesz/AncientSpellcraft/commit/56094f141464b8059e6a5fc48731d7e3830ebdf6) - remnant fixes *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`bdb8931`](https://github.com/WinDanesz/AncientSpellcraft/commit/bdb8931dee732a0656b275ce45e63de7c0183053) - Fixed stuff failing in tests *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+
 ## [v1.8.0] - 2025-08-30
 ### :sparkles: New Features
 - [`f6cd39e`](https://github.com/WinDanesz/AncientSpellcraft/commit/f6cd39eea1ad8808a0dfe6363a9f673dea048ee1) - Skull sentinels now notify the caster about the detected entity's name and position periodically. *(commit by [@WinDanesz](https://github.com/WinDanesz))*
@@ -424,3 +453,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v1.7.0]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.6.3...v1.7.0
 [v1.7.1]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.7.0...v1.7.1
 [v1.8.0]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.7.8...v1.8.0
+[v1.8.1]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.8.0...v1.8.1
