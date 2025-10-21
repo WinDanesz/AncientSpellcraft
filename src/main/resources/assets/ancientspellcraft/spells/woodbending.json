@@ -13,7 +13,7 @@
     "tier": "master",
     "element": "earth",
     "type": "utility",
-    "cost": 30,
+    "cost": 50,
     "chargeup": 5,
     "cooldown": 0,
     "base_properties": {

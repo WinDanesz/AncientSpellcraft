@@ -48,7 +48,7 @@ public class Woodbending extends SpellRayAS {
 				} else {
 					axis = BlockLog.EnumAxis.Z;
 				}
-				
+
 				// Get biome-specific wood type
 				IBlockState logState = getBiomeWoodType(world, placePos, axis);
 				world.setBlockState(placePos, logState);
@@ -62,49 +62,34 @@ public class Woodbending extends SpellRayAS {
 	 */
 	private IBlockState getBiomeWoodType(World world, BlockPos pos, BlockLog.EnumAxis axis) {
 		Biome biome = world.getBiome(pos);
-		
+
 		// Birch biomes
 		if (biome == Biomes.BIRCH_FOREST || biome == Biomes.BIRCH_FOREST_HILLS || biome == Biomes.MUTATED_BIRCH_FOREST || biome == Biomes.MUTATED_BIRCH_FOREST_HILLS) {
-			return Blocks.LOG.getDefaultState()
-					.withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.BIRCH)
-					.withProperty(BlockLog.LOG_AXIS, axis);
+			return Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.BIRCH).withProperty(BlockLog.LOG_AXIS, axis);
 		}
-		
+
 		// Acacia biomes
 		if (biome == Biomes.SAVANNA || biome == Biomes.SAVANNA_PLATEAU || biome == Biomes.MUTATED_SAVANNA || biome == Biomes.MUTATED_SAVANNA_ROCK) {
-			return Blocks.LOG2.getDefaultState()
-					.withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.ACACIA)
-					.withProperty(BlockLog.LOG_AXIS, axis);
+			return Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.ACACIA).withProperty(BlockLog.LOG_AXIS, axis);
 		}
-		
+
 		// Dark Oak biomes
 		if (biome == Biomes.ROOFED_FOREST || biome == Biomes.MUTATED_ROOFED_FOREST) {
-			return Blocks.LOG2.getDefaultState()
-					.withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.DARK_OAK)
-					.withProperty(BlockLog.LOG_AXIS, axis);
+			return Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.DARK_OAK).withProperty(BlockLog.LOG_AXIS, axis);
 		}
-		
+
 		// Jungle biomes
-		if (biome == Biomes.JUNGLE || biome == Biomes.JUNGLE_HILLS || biome == Biomes.JUNGLE_EDGE || 
-			biome == Biomes.MUTATED_JUNGLE || biome == Biomes.MUTATED_JUNGLE_EDGE) {
-			return Blocks.LOG.getDefaultState()
-					.withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE)
-					.withProperty(BlockLog.LOG_AXIS, axis);
+		if (biome == Biomes.JUNGLE || biome == Biomes.JUNGLE_HILLS || biome == Biomes.JUNGLE_EDGE || biome == Biomes.MUTATED_JUNGLE || biome == Biomes.MUTATED_JUNGLE_EDGE) {
+			return Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLog.LOG_AXIS, axis);
 		}
-		
+
 		// Spruce/Taiga biomes
-		if (biome == Biomes.TAIGA || biome == Biomes.TAIGA_HILLS || biome == Biomes.COLD_TAIGA || biome == Biomes.COLD_TAIGA_HILLS ||
-			biome == Biomes.REDWOOD_TAIGA || biome == Biomes.REDWOOD_TAIGA_HILLS || biome == Biomes.MUTATED_TAIGA ||
-			biome == Biomes.MUTATED_TAIGA_COLD || biome == Biomes.MUTATED_REDWOOD_TAIGA || biome == Biomes.MUTATED_REDWOOD_TAIGA_HILLS) {
-			return Blocks.LOG.getDefaultState()
-					.withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.SPRUCE)
-					.withProperty(BlockLog.LOG_AXIS, axis);
+		if (biome == Biomes.TAIGA || biome == Biomes.TAIGA_HILLS || biome == Biomes.COLD_TAIGA || biome == Biomes.COLD_TAIGA_HILLS || biome == Biomes.REDWOOD_TAIGA || biome == Biomes.REDWOOD_TAIGA_HILLS || biome == Biomes.MUTATED_TAIGA || biome == Biomes.MUTATED_TAIGA_COLD || biome == Biomes.MUTATED_REDWOOD_TAIGA || biome == Biomes.MUTATED_REDWOOD_TAIGA_HILLS) {
+			return Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.SPRUCE).withProperty(BlockLog.LOG_AXIS, axis);
 		}
-		
+
 		// Default to Oak for all other biomes
-		return Blocks.LOG.getDefaultState()
-				.withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.OAK)
-				.withProperty(BlockLog.LOG_AXIS, axis);
+		return Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.OAK).withProperty(BlockLog.LOG_AXIS, axis);
 	}
 
 	@Override
@@ -114,7 +99,7 @@ public class Woodbending extends SpellRayAS {
 
 	@Override
 	protected void spawnParticle(World world, double x, double y, double z, double vx, double vy, double vz) {
-		if (world.rand.nextInt(10) == 0) {
+		if (world.rand.nextInt(20) == 0) {
 			ParticleBuilder.create(ParticleBuilder.Type.LEAF).pos(x, y, z).vel(vx, vy, vz).clr(0, 0.8f, 0).spawn(world);
 		}
 	}

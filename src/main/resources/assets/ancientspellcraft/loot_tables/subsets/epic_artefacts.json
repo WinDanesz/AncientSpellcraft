@@ -75,6 +75,7 @@
                 { "type": "item", "name": "ancientspellcraft:charm_vault_key", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:charm_wand_upgrade", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:charm_war_horn", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_cat_eye", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:head_ardor_crown", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:head_chaos_magic", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:head_disruptor_crown", "weight": 1 },
