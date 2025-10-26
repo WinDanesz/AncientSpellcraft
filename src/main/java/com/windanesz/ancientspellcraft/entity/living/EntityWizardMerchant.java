@@ -147,6 +147,11 @@ public class EntityWizardMerchant extends EntityWizard {
 		}
 	}
 
+	@Override
+	protected boolean canDespawn() {
+		return lifetime <= 0;
+	}
+
 	/**
 	 * Had to copy this to alter as it was more feasible than using reflection for all the private fields and methods
 	 *

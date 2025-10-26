@@ -268,9 +268,8 @@ public final class ASSpells {
     public static final Spell absorb_crystal = placeholder();
     public static final Spell absorb_object = placeholder();
     public static final Spell absorb_potion = placeholder();
-    public static final Spell absorb_projetile = placeholder();
+    public static final Spell absorb_projectile = placeholder();
     public static final Spell absorb_spell = placeholder();
-    public static final Spell chaos_storm = placeholder();
     public static final Spell confusion = placeholder();
     public static final Spell orb_space = placeholder();
     //public static final Spell psychic_slash = placeholder();
@@ -286,6 +285,46 @@ public final class ASSpells {
     public static final Spell alter_potion = placeholder();
 	public static final Spell woodbending = placeholder();
     //public static final Spell obliteration = placeholder();
+
+	public static final Spell candlelight = placeholder();
+	public static final Spell celerity = placeholder();
+	public static final Spell chaos_blast_charge = placeholder();
+	public static final Spell conflagration = placeholder();
+	public static final Spell conjure_fishing_rod = placeholder();
+	public static final Spell contingency_drown = placeholder();
+	public static final Spell curse_temporal_casualty = placeholder();
+	public static final Spell dart = placeholder();
+	public static final Spell destroy_undead = placeholder();
+	public static final Spell eye_of_the_storm = placeholder();
+	public static final Spell feather_fall = placeholder();
+	public static final Spell fire_ant_swarm = placeholder();
+	public static final Spell fire_sigil = placeholder();
+	public static final Spell firewall = placeholder();
+	public static final Spell harvest = placeholder();
+	public static final Spell horse_whistle = placeholder();
+	public static final Spell magma_wall = placeholder();
+	public static final Spell metabolism_overdrive = placeholder();
+	public static final Spell molten_earth = placeholder();
+	public static final Spell pyrokinesis = placeholder();
+	public static final Spell regrowth = placeholder();
+	public static final Spell runeword_blast = placeholder();
+	public static final Spell runeword_sealbreaker = placeholder();
+	public static final Spell sacred_mace = placeholder();
+	public static final Spell spirit_ward = placeholder();
+	public static final Spell sporelings_aid = placeholder();
+	public static final Spell static_charge = placeholder();
+	public static final Spell stone_fist = placeholder();
+	public static final Spell summon_boat = placeholder();
+	public static final Spell summon_quicksand = placeholder();
+	public static final Spell summon_skeleton_horse = placeholder();
+	public static final Spell summon_spirit_bear = placeholder();
+	public static final Spell suppression = placeholder();
+	public static final Spell transference = placeholder();
+	public static final Spell wall_of_dirt = placeholder();
+	public static final Spell weakness = placeholder();
+	public static final Spell wild_sporeling = placeholder();
+	public static final Spell wind_blast = placeholder();
+
 
 	@SuppressWarnings("unchecked")
 	@SubscribeEvent

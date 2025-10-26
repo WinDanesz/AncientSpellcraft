@@ -16,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -33,7 +34,23 @@ public class LivingComet extends Spell {
 	}
 
 	@Override
+	protected void playSound(World world, EntityLivingBase entity, int ticksInUse, int duration, SpellModifiers modifiers, String... sounds){
+		this.playSoundLoop(world, entity, ticksInUse);
+	}
+
+	@Override
+	protected void playSound(World world, double x, double y, double z, int ticksInUse, int duration, SpellModifiers modifiers, String... sounds){
+		this.playSoundLoop(world, x, y, z, ticksInUse, duration);
+	}
+
+	@Override
+	protected SoundEvent[] createSounds(){
+		return this.createContinuousSpellSounds();
+	}
+
+	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		this.playSound(world, caster, ticksInUse, -1, modifiers);
 		if (caster.world.isRemote) {
 
 			for (int i = 0; i < 5; i++) {
@@ -167,9 +184,6 @@ public class LivingComet extends Spell {
 			z = caster.posZ - 1 + world.rand.nextDouble() * 2;
 			ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).pos(x, y, z).vel(0, -0.1, 0).time(15).spawn(world);
 		}
-
-		if (ticksInUse % 24 == 0)
-			playSound(world, caster, ticksInUse, -1, modifiers);
 
 		return true;
 	}
