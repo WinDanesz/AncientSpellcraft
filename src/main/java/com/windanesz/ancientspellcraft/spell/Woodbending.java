@@ -26,6 +26,7 @@ public class Woodbending extends SpellRayAS {
 	public Woodbending() {
 		super("woodbending", SpellActions.POINT, true);
 		this.particleSpacing = 0.3;
+		this.soundValues(0.5f, 1.0f, 0.8f);
 	}
 
 	@Override
@@ -35,6 +36,12 @@ public class Woodbending extends SpellRayAS {
 
 	@Override
 	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, @Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
+		if (world.isRemote ) {
+			ParticleBuilder.create(ParticleBuilder.Type.LEAF).scale(1).time(30).spin(1, 0.1).pos(pos.getX() + 0.5, pos.getY() + world.rand.nextFloat(), pos.getZ() + 0.5).spawn(world);
+		}
+		if (ticksInUse % 401 == 0) {
+			this.playSound(world, caster, ticksInUse, -1, modifiers);
+		}
 		if (!world.isRemote && ticksInUse % 10 == 0) {
 			BlockPos placePos = pos.offset(side);
 			IBlockState existingState = world.getBlockState(placePos);
