@@ -1,6 +1,7 @@
 package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.entity.projectile.EntityDevoritiumArrow;
 import com.windanesz.ancientspellcraft.entity.projectile.EntityDevoritiumBomb;
 import com.windanesz.ancientspellcraft.item.*;
 import electroblob.wizardry.Wizardry;
@@ -1077,6 +1078,14 @@ public final class ASItems {
 			protected IProjectile getProjectileEntity(World world, IPosition position, ItemStack stack) {
 				EntityDevoritiumBomb entity = new EntityDevoritiumBomb(world);
 				entity.setPosition(position.getX(), position.getY(), position.getZ());
+				return entity;
+			}
+		});
+
+		BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(devoritium_arrow, new BehaviorProjectileDispense() {
+			@Override
+			protected IProjectile getProjectileEntity(World world, IPosition position, ItemStack stack) {
+				EntityDevoritiumArrow entity = new EntityDevoritiumArrow(world, position.getX(), position.getY(), position.getZ());
 				return entity;
 			}
 		});
