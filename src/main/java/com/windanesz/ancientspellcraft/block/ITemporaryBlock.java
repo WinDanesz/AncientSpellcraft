@@ -51,6 +51,10 @@ public interface ITemporaryBlock {
 			return false;
 		}
 
+		if (world.getBlockState(pos).getBlock() instanceof BlockSealedStone) {
+			return false;
+		}
+
 		if ((world.getTileEntity(pos) instanceof TileEntityRevertingBlock) || world.getTileEntity(pos) != null) {
 			return false;
 		}
