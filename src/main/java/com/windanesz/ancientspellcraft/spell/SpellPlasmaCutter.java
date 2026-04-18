@@ -4,6 +4,7 @@ import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.spell.SpellRay;
+import electroblob.wizardry.util.BlockUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.block.state.IBlockState;
@@ -90,7 +91,7 @@ public class SpellPlasmaCutter extends SpellRay {
 				   int ticksToBreak = (int) Math.ceil(Math.max(minTicks, Math.min(maxTicks, (hardness * base) / breakSpeed)));
 				   System.out.println("minTicks: " + minTicks + ", ticksToBreak: " + ticksToBreak);
 				   // Use a timer based on the player's ticksExisted and block position to avoid skipping
-				   if ((player.ticksExisted + pos.hashCode()) % ticksToBreak == 0) {
+				   if ((player.ticksExisted + pos.hashCode()) % ticksToBreak == 0 && BlockUtils.canBreakBlock(caster, world, pos)) {
 					   world.destroyBlock(pos, true);
 				   }
 			   }
