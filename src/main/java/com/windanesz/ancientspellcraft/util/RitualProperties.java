@@ -203,8 +203,6 @@ public final class RitualProperties {
 		// Rituals will be removed from this list as their properties are set
 		// If everything works properly, it should be empty by the end
 		List<Ritual> rituals = Ritual.getRituals(s -> s.getRegistryName().getNamespace().equals(modID));
-		if (modID.equals(AncientSpellcraft.MODID))
-			rituals.add(Rituals.none); // In this particular case we do need the none ritual
 
 		AncientSpellcraft.logger.info("Loading built-in ritual properties for " + rituals.size() + " rituals in mod " + modID);
 
