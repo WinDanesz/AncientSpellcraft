@@ -417,8 +417,8 @@ public class PocketLibrary extends Spell implements IClassSpell {
 			// Get the tile entity at this position
 			TileEntity tileEntity = world.getTileEntity(pos);
 			
-			// Store block state or air if it's not an allowed tile
-			if (tileEntity == null || isAllowedTile(tileEntity)) {
+			// Store block state, but save air for protected or disallowed-tile blocks
+			if (!isProtectedBlock(world, pos) && (tileEntity == null || isAllowedTile(tileEntity))) {
 				NBTUtil.writeBlockState(state, world.getBlockState(pos));
 			} else {
 				NBTUtil.writeBlockState(state, Blocks.AIR.getDefaultState());
@@ -440,6 +440,9 @@ public class PocketLibrary extends Spell implements IClassSpell {
 		if (!blocksPlaced.isEmpty()) {
 			// First pass: remove tile entities
 			for (BlockPos pos : blocksPlaced) {
+				if (isProtectedBlock(world, pos)) {
+					continue;
+				}
 				TileEntity tileEntity = world.getTileEntity(pos);
 				if (tileEntity != null && isAllowedTile(tileEntity)) {
 					world.removeTileEntity(pos);
@@ -448,6 +451,9 @@ public class PocketLibrary extends Spell implements IClassSpell {
 			
 			// Second pass: remove torches
 			for (BlockPos pos : blocksPlaced) {
+				if (isProtectedBlock(world, pos)) {
+					continue;
+				}
 				if (world.getBlockState(pos).getBlock() instanceof BlockTorch) {
 					world.setBlockToAir(pos);
 				}
@@ -455,6 +461,9 @@ public class PocketLibrary extends Spell implements IClassSpell {
 			
 			// Third pass: remove door bottoms
 			for (BlockPos pos : blocksPlaced) {
+				if (isProtectedBlock(world, pos)) {
+					continue;
+				}
 				if (world.getBlockState(pos).getBlock() instanceof BlockDoor && 
 					world.getBlockState(pos).getValue(BlockDoor.HALF) == BlockDoor.EnumDoorHalf.LOWER) {
 					world.setBlockToAir(pos);
@@ -463,6 +472,9 @@ public class PocketLibrary extends Spell implements IClassSpell {
 			
 			// Final pass: remove all remaining blocks
 			for (BlockPos pos : blocksPlaced) {
+				if (isProtectedBlock(world, pos)) {
+					continue;
+				}
 				TileEntity tileEntity = world.getTileEntity(pos);
 				if (tileEntity == null || isAllowedTile(tileEntity)) {
 					world.setBlockToAir(pos);
@@ -614,6 +626,25 @@ public class PocketLibrary extends Spell implements IClassSpell {
 	}
 	
 	/**
+	 * Checks if a block is protected and should never be replaced, removed, or moved by the library.
+	 * This includes unbreakable blocks (bedrock, end portal frames, barriers, etc.) and portal blocks.
+	 *
+	 * @param world The world to check in
+	 * @param pos The position to check
+	 * @return true if the block is protected, false otherwise
+	 */
+	private boolean isProtectedBlock(World world, BlockPos pos) {
+		IBlockState state = world.getBlockState(pos);
+		// Blocks with negative hardness are unbreakable (bedrock, end portal frame, barriers, command blocks, etc.)
+		if (state.getBlockHardness(world, pos) < 0) {
+			return true;
+		}
+		Block block = state.getBlock();
+		// Also protect portal blocks explicitly
+		return block == Blocks.END_PORTAL || block == Blocks.PORTAL;
+	}
+
+	/**
 	 * Checks if the block at the given position can be safely replaced by the library structure.
 	 * Only allows replacing air, grass, tall grass, flowers, and other non-solid plants.
 	 * 
@@ -704,8 +735,8 @@ public class PocketLibrary extends Spell implements IClassSpell {
 				if (canSafelyReplace(w, p)) {
 					return i;
 				} else {
-					// Return air if we can't replace the block
-					return new Template.BlockInfo(i.pos, Blocks.AIR.getDefaultState(), i.tileentityData);
+					// Return null to skip placement entirely, preserving the existing block
+					return null;
 				}
 			}
 		);
