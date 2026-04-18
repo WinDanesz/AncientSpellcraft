@@ -23,6 +23,6 @@ public abstract class MixinEntityCreeper {
 		((EntityCreeper) (Object) this).targetTasks.taskEntries.removeIf(entityAITaskEntry -> entityAITaskEntry.action instanceof EntityAINearestAttackableTarget);
 		((EntityCreeper) (Object) this).targetTasks.addTask(1,
 				new EntityAINearestAttackableTarget<>((EntityCreeper) (Object) this, EntityPlayer.class, 1, true,
-						true, HandleCatEye::shouldAvoid));
+						true, player -> !HandleCatEye.shouldAvoid(player)));
 	}
 }
