@@ -239,6 +239,7 @@ public final class ASItems {
 	public static final Item belt_spring_charge = placeholder();
 	public static final Item belt_soul_scorch = placeholder();
 	public static final Item belt_emberguard = placeholder();
+	public static final Item body_clockwork_heart = placeholder();
 	public static final Item body_fire = placeholder();
 	public static final Item body_ice = placeholder();
 	public static final Item body_lightning = placeholder();
@@ -932,6 +933,7 @@ public final class ASItems {
 		registerItem(registry, "body_earth", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.EARTH));
 		registerItem(registry, "body_sorcery", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.SORCERY));
 		registerItem(registry, "body_healing", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.HEALING));
+		registerItem(registry, "body_clockwork_heart", AncientSpellcraft.MODID, new ItemClockworkHeart(EnumRarity.RARE, ItemArtefact.Type.BODY));
 		registerItem(registry, "tome_controller", new ItemTomeController());
 
 		registerItem(registry, "belt_scroll_holder", AncientSpellcraft.MODID, new ItemBeltScrollHolder(EnumRarity.RARE, ItemArtefact.Type.BELT));
