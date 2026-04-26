@@ -12,6 +12,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+
+import com.windanesz.ancientspellcraft.tileentity.TileEntityRevertingBlock;
+
 import java.util.Random;
 
 public class BlockConjuredDirt extends Block implements ITileEntityProvider, ITemporaryBlock {
@@ -23,7 +26,18 @@ public class BlockConjuredDirt extends Block implements ITileEntityProvider, ITe
 	}
 
 	//////////////// ITemporaryBlock Interface implementation ////////////////
-
+	@Override
+	public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
+		TileEntity te = worldIn.getTileEntity(pos);
+		if (te instanceof TileEntityRevertingBlock) {
+			IBlockState oldState = ((TileEntityRevertingBlock) te).getOldState();
+			if (oldState == null || oldState.getBlock().isAir(oldState, worldIn, pos)) {
+				return 0.5F; // Dirt hardness — breakable when placed in air
+			}
+		}
+		return -1.0F; // Unbreakable when it replaced a solid block
+	}
+	
 	@Override
 	public boolean isToolEffective(String type, IBlockState state) { return false; }
 

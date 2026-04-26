@@ -56,4 +56,8 @@ public class TileEntityRevertingBlock extends TileEntityPlayerSave implements IT
 	public void setOldState(IBlockState oldState) {
 		this.oldState = oldState;
 	}
+
+	public IBlockState getOldState() {
+		return oldState;
+	}
 }

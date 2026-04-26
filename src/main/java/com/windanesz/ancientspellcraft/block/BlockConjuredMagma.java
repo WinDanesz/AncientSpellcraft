@@ -26,6 +26,18 @@ public class BlockConjuredMagma extends BlockMagma implements ITileEntityProvide
 		setTemporaryBlockProperties(this);
 	}
 
+	@Override
+	public float getBlockHardness(IBlockState blockState, World worldIn, BlockPos pos) {
+		TileEntity te = worldIn.getTileEntity(pos);
+		if (te instanceof TileEntityRevertingBlock) {
+			IBlockState oldState = ((TileEntityRevertingBlock) te).getOldState();
+			if (oldState == null || oldState.getBlock().isAir(oldState, worldIn, pos)) {
+				return 0.5F; // Dirt hardness — breakable when placed in air
+			}
+		}
+		return -1.0F; // Unbreakable when it replaced a solid block
+	}
+
 	public void onEntityWalk(World worldIn, BlockPos pos, Entity walkingEntity) {
 
 		EntityLivingBase caster = worldIn.getTileEntity(pos) instanceof TileEntityRevertingBlock ? ((TileEntityRevertingBlock) worldIn.getTileEntity(pos)).getCaster() : null;
