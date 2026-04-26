@@ -86,6 +86,7 @@
                 { "type": "item", "name": "ancientspellcraft:head_riftstone", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:head_shield", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:head_whispering_veil", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:head_mask_of_silence", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:ring_arcane_flames", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:ring_eternal_contingency", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:ring_permanent_growth", "weight": 1 },

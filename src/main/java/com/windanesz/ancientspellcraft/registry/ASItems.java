@@ -266,6 +266,7 @@ public final class ASItems {
 	public static final Item head_circlet_of_the_unknown = placeholder();
 	public static final Item head_ardor_crown = placeholder();
 	public static final Item head_mask_of_perseigni = placeholder();
+	public static final Item head_mask_of_silence = placeholder();
 
 	/// misc
 	public static final Item magic_shield = placeholder();
@@ -982,6 +983,7 @@ public final class ASItems {
 		registerItem(registry, "head_disruptor_crown", AncientSpellcraft.MODID, new ItemDisruptorCrown(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
 		registerItem(registry, "head_circlet_of_the_unknown", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.HEAD));
 		registerItem(registry, "head_mask_of_perseigni", AncientSpellcraft.MODID, new ItemMaskOfPerseigni(EnumRarity.RARE, ItemArtefact.Type.HEAD));
+		registerItem(registry, "head_mask_of_silence", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.HEAD));
 
 		/// misc
 

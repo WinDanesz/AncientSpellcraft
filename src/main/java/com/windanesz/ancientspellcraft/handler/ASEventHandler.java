@@ -168,6 +168,21 @@ public class ASEventHandler {
 				}
 			}
 		}
+
+		// head_mask_of_silence: apply Magical Exhaustion I to nearby players and spell-casting NPCs
+		if (!event.getEntityLiving().world.isRemote
+				&& event.getEntityLiving() instanceof EntityPlayer
+				&& event.getEntityLiving().ticksExisted % 20 == 0) {
+			EntityPlayer wearer = (EntityPlayer) event.getEntityLiving();
+			if (ItemArtefact.isArtefactActive(wearer, ASItems.head_mask_of_silence)) {
+				for (EntityLivingBase nearby : EntityUtils.getEntitiesWithinRadius(8, wearer.posX, wearer.posY, wearer.posZ, wearer.world, EntityLivingBase.class)) {
+					if (nearby == wearer) continue;
+					if (nearby instanceof EntityPlayer || nearby instanceof ISpellCaster) {
+						nearby.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, 40, 0));
+					}
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -1551,18 +1566,23 @@ public class ASEventHandler {
 				}
 			}
 
-			// charm_voltaic_vessel: grant Regeneration I (3s) when casting a lightning spell below 75% health
+			// charm_voltaic_vessel: lightning spells interact based on health threshold
+			// below 75%: consume 20 mana to grant Regeneration I (3s)
+			// above 75%: restore 10 mana to the vessel
 			if (!player.world.isRemote
 					&& event.getSpell().getElement() == Element.LIGHTNING
-					&& player.getHealth() < player.getMaxHealth() * 0.75f
 					&& ItemArtefact.isArtefactActive(player, ASItems.charm_voltaic_vessel)) {
 				List<ItemStack> charmStacks = ASBaublesIntegration.getEquippedArtefactStacks(player, ItemArtefact.Type.CHARM);
 				for (ItemStack charmStack : charmStacks) {
 					if (charmStack.getItem() instanceof ItemVoltaicVessel) {
 						ItemVoltaicVessel vessel = (ItemVoltaicVessel) charmStack.getItem();
-						if (vessel.getMana(charmStack) >= 20) {
-							vessel.setMana(charmStack, vessel.getMana(charmStack) - 20);
-							player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 80, 0));
+						if (player.getHealth() < player.getMaxHealth() * 0.75f) {
+							if (vessel.getMana(charmStack) >= 20) {
+								vessel.setMana(charmStack, vessel.getMana(charmStack) - 20);
+								player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 60, 0));
+							}
+						} else {
+							vessel.rechargeMana(charmStack, 10);
 						}
 						break;
 					}
