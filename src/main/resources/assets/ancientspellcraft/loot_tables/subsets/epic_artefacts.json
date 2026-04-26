@@ -91,6 +91,7 @@
                 { "type": "item", "name": "ancientspellcraft:ring_permanent_growth", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:ring_permanent_shrinkage", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:ring_shivering", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:ring_eternal_servitude", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:ring_undeath", "weight": 1 }
             ]
         }

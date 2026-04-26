@@ -796,6 +796,28 @@ public class ASEventHandler {
 			}
 		}
 
+		// ring_eternal_servitude — clear stored UUID when the eternal minion is killed
+		if (!event.getEntityLiving().world.isRemote && event.getEntityLiving() instanceof ISummonedCreature) {
+			UUID dyingUUID = event.getEntityLiving().getUniqueID();
+			for (EntityPlayer player : event.getEntityLiving().world.playerEntities) {
+				WizardData data = WizardData.get(player);
+				if (data != null) {
+					String storedUUID = data.getVariable(ItemRingEternalServitude.ETERNAL_MINION_UUID);
+					if (storedUUID != null) {
+						try {
+							if (UUID.fromString(storedUUID).equals(dyingUUID)) {
+								data.setVariable(ItemRingEternalServitude.ETERNAL_MINION_UUID, null);
+								data.sync();
+								break;
+							}
+						} catch (IllegalArgumentException ignored) {
+							data.setVariable(ItemRingEternalServitude.ETERNAL_MINION_UUID, null);
+						}
+					}
+				}
+			}
+		}
+
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST) // No siphoning if the event is cancelled, that could be exploited...
@@ -1959,6 +1981,35 @@ public class ASEventHandler {
 						EntityCreature creature = (EntityCreature) event.getEntity();
 						EntitySummonAIFollowOwner task = new EntitySummonAIFollowOwner(creature, 1.0D, 10.0F, 2.0F);
 						creature.tasks.addTask(5, task);
+					}
+				}
+			}
+		}
+
+		// ring_eternal_servitude — make the next summoned creature permanent; ignore new summons while one already exists
+		if (!event.getWorld().isRemote && event.getEntity() instanceof ISummonedCreature) {
+			ISummonedCreature summon = (ISummonedCreature) event.getEntity();
+			EntityLivingBase owner = summon.getCaster();
+			if (owner instanceof EntityPlayer) {
+				EntityPlayer player = (EntityPlayer) owner;
+				if (ItemArtefact.isArtefactActive(player, ASItems.ring_eternal_servitude)) {
+					WizardData data = WizardData.get(player);
+					if (data != null) {
+						String existingUUID = data.getVariable(ItemRingEternalServitude.ETERNAL_MINION_UUID);
+						boolean hasLiveEternalMinion = false;
+						if (existingUUID != null) {
+							try {
+								Entity old = EntityUtils.getEntityByUUID(player.world, UUID.fromString(existingUUID));
+								hasLiveEternalMinion = old != null && !old.isDead;
+							} catch (IllegalArgumentException ignored) {}
+						}
+						if (!hasLiveEternalMinion) {
+							// No current eternal minion — claim this one
+							summon.setLifetime(-1);
+							data.setVariable(ItemRingEternalServitude.ETERNAL_MINION_UUID, event.getEntity().getUniqueID().toString());
+							data.sync();
+						}
+						// If a live eternal minion already exists, leave this summon's lifetime untouched
 					}
 				}
 			}

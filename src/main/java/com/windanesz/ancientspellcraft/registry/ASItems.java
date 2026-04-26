@@ -99,6 +99,7 @@ public final class ASItems {
 	public static final Item ring_of_force = placeholder();
 	public static final Item ring_life_drain = placeholder();
 	public static final Item ring_eternal_contingency = placeholder();
+	public static final Item ring_eternal_servitude = placeholder();
 	public static final Item ring_solid_air = placeholder();
 	public static final Item ring_shivering = placeholder();
 	public static final Item ring_arcane_flames = placeholder();
@@ -755,6 +756,7 @@ public final class ASItems {
 		registerItem(registry, "ring_life_drain", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_undeath", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_eternal_contingency", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_eternal_servitude", AncientSpellcraft.MODID, new ItemRingEternalServitude());
 		registerItem(registry, "ring_shivering", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_permanent_shrinkage", AncientSpellcraft.MODID, new ItemASArtemisLibArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_permanent_growth", AncientSpellcraft.MODID, new ItemASArtemisLibArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
