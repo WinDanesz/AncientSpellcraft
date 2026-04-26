@@ -1550,6 +1550,24 @@ public class ASEventHandler {
 					}
 				}
 			}
+
+			// charm_voltaic_vessel: grant Regeneration I (3s) when casting a lightning spell below 75% health
+			if (!player.world.isRemote
+					&& event.getSpell().getElement() == Element.LIGHTNING
+					&& player.getHealth() < player.getMaxHealth() * 0.75f
+					&& ItemArtefact.isArtefactActive(player, ASItems.charm_voltaic_vessel)) {
+				List<ItemStack> charmStacks = ASBaublesIntegration.getEquippedArtefactStacks(player, ItemArtefact.Type.CHARM);
+				for (ItemStack charmStack : charmStacks) {
+					if (charmStack.getItem() instanceof ItemVoltaicVessel) {
+						ItemVoltaicVessel vessel = (ItemVoltaicVessel) charmStack.getItem();
+						if (vessel.getMana(charmStack) >= 20) {
+							vessel.setMana(charmStack, vessel.getMana(charmStack) - 20);
+							player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 80, 0));
+						}
+						break;
+					}
+				}
+			}
 		}
 	}
 

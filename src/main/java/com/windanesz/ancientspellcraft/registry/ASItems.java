@@ -152,6 +152,7 @@ public final class ASItems {
 	public static final Item charm_necromancy_orb = placeholder();
 	public static final Item charm_fire_orb = placeholder();
 	public static final Item charm_sorcery_orb = placeholder();
+	public static final Item charm_voltaic_vessel = placeholder();
 	public static final Item charm_majestic_mana = placeholder();
 	public static final Item charm_guardian_blade = placeholder();
 	public static final Item charm_cat_eye = placeholder();
@@ -826,6 +827,7 @@ public final class ASItems {
 		registerItem(registry, "charm_burrow", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_hoarders_orb", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_metamagic_amplifier", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_voltaic_vessel", AncientSpellcraft.MODID, new ItemVoltaicVessel());
 		registerItem(registry, "charm_majestic_mana", AncientSpellcraft.MODID, new ItemManaArtefact(EnumRarity.RARE, ItemArtefact.Type.RING, 2500));
 		registerItem(registry, "charm_plunderers_mark", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_wizard_ale", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
