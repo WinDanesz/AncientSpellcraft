@@ -7,7 +7,9 @@
 		"MixinEntityDamageSource",
 		"MixinItemPotion",
 		"MixinIsEntityUndead",
-		"MixinEntityCreeper"
+		"MixinEntityCreeper",
+		"MixinEnchantRandomly",
+		"MixinListEnchantedBookForEmeralds"
 	],
 	"client": []
 }
