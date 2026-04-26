@@ -623,6 +623,11 @@ public class Settings {
 		@Config.Comment("Maximum number of Wizard Merchants that can spawn in a group.")
 		@Config.RangeInt(min = 1, max = 5)
 		public int wizardMerchantMaxGroupSize = 1;
+
+		@Config.Name("Wizard Merchant Max Per Dimension")
+		@Config.Comment("Maximum number of Wizard Merchants that can exist in a single dimension at once. Set to 0 for no limit.")
+		@Config.RangeInt(min = 0, max = 15)
+		public int wizardMerchantMaxPerDimension = 1;
 	}
 
 	public static class WorldgenSettings {

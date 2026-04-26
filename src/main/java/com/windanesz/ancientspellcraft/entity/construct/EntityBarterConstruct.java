@@ -64,7 +64,7 @@ public class EntityBarterConstruct extends EntityMagicConstruct {
 	}
 
 	private boolean summonMerchant() {
-		BlockPos spawnPos = BlockUtils.findNearbyFloorSpace(world, this.getPosition(), 15, 5);
+				BlockPos spawnPos = BlockUtils.findNearbyFloorSpace(world, this.getPosition(), 15, 5);
 		if (spawnPos == null) {
 			return false;
 		}

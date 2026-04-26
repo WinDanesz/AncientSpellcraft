@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.entity.living;
 
+import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.block.BlockReceptacle;
@@ -61,7 +62,25 @@ public class EntityWizardMerchant extends EntityWizard {
 
 	@Override
 	public boolean getCanSpawnHere() {
-		return this.world.canSeeSky(new BlockPos(this)) && this.world.getLightBrightness(new BlockPos(this)) >= 0.5f && super.getCanSpawnHere();
+		if (!this.world.canSeeSky(new BlockPos(this)) || this.world.getLightBrightness(new BlockPos(this)) < 0.5f) {
+			return false;
+		}
+
+		// Enforce per-dimension spawn cap to prevent overspawning
+		int maxPerDimension = Settings.entitySpawnSettings.wizardMerchantMaxPerDimension;
+		if (maxPerDimension > 0) {
+			int existingCount = this.world.getEntities(EntityWizardMerchant.class, e -> !e.isDead).size();
+			if (existingCount >= maxPerDimension) {
+				return false;
+			}
+		}
+
+		return super.getCanSpawnHere();
+	}
+
+	@Override
+	public boolean isCreatureType(net.minecraft.entity.EnumCreatureType type, boolean forSpawnCount) {
+		return type == net.minecraft.entity.EnumCreatureType.CREATURE || super.isCreatureType(type, forSpawnCount);
 	}
 
 	public int lifetime = 24000; // a full MC day
