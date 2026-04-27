@@ -5,6 +5,7 @@ import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.packet.ASPacketHandler;
 import com.windanesz.ancientspellcraft.packet.PacketActivateBauble;
 import com.windanesz.ancientspellcraft.packet.PacketCastWarlockSpell;
+import com.windanesz.ancientspellcraft.packet.PacketControlInput;
 import electroblob.wizardry.item.ItemArtefact;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
@@ -25,6 +26,13 @@ public class ControlHandler {
 
 	static boolean charmKeyPressed = false;
 	static boolean warlockSpellPressed = false;
+
+	/** Tracks whether jump was held last tick (for double-tap detection) */
+	private static boolean jumpKeyWasDown = false;
+	/** Countdown window (ticks) in which a second jump press counts as double-tap */
+	private static int jumpDoubleTapWindow = 0;
+	/** Number of ticks between two jump presses to count as a double-tap */
+	private static final int DOUBLE_TAP_TICKS = 10;
 
 	@SubscribeEvent
 	public static void onTickEvent(TickEvent.ClientTickEvent event) {
@@ -60,6 +68,24 @@ public class ControlHandler {
 					castOrStopWarlockSpell(player, false);
 				}
 
+				// Double-tap jump detection for Cloak of Levitation
+				if (Minecraft.getMinecraft().inGameHasFocus) {
+					boolean jumpDown = GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindJump);
+					if (jumpDoubleTapWindow > 0) jumpDoubleTapWindow--;
+
+					if (jumpDown && !jumpKeyWasDown) {
+						// Rising edge: jump key was just pressed
+						if (jumpDoubleTapWindow > 0) {
+							// Second press within window: fire double-tap
+							jumpDoubleTapWindow = 0;
+							ASPacketHandler.net.sendToServer(new PacketControlInput.Message(PacketControlInput.ControlType.LEVITATION_TOGGLE));
+						} else {
+							// First press: start window
+							jumpDoubleTapWindow = DOUBLE_TAP_TICKS;
+						}
+					}
+					jumpKeyWasDown = jumpDown;
+				}
 
 				boolean resetTimeout = false;
 				// Astral Travel movement logic
@@ -109,3 +135,4 @@ public class ControlHandler {
 		}
 	}
 }
+

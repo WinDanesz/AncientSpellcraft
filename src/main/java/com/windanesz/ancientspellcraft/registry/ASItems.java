@@ -197,6 +197,7 @@ public final class ASItems {
 	public static final Item charm_plunderers_mark = placeholder();
 	public static final Item charm_wizard_ale = placeholder();
 	public static final Item charm_dimensional_disk = placeholder();
+	public static final Item charm_dimensional_cube = placeholder();
 	public static final Item charm_crystal_sickle = placeholder();
 	public static final Item charm_monster_charm = placeholder();
 	public static final Item charm_teleportation_stone = placeholder();
@@ -242,6 +243,7 @@ public final class ASItems {
 	public static final Item belt_soul_scorch = placeholder();
 	public static final Item belt_emberguard = placeholder();
 	public static final Item body_clockwork_heart = placeholder();
+	public static final Item body_cloak_of_levitation = placeholder();
 	public static final Item body_fire = placeholder();
 	public static final Item body_ice = placeholder();
 	public static final Item body_lightning = placeholder();
@@ -887,6 +889,7 @@ public final class ASItems {
 		registerItem(registry, "charm_aurelian_cup", AncientSpellcraft.MODID, new ItemAurelianCup(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_thousand_anvils", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_dimensional_disk", AncientSpellcraft.MODID, new ItemDimensionalDisk(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_dimensional_cube", AncientSpellcraft.MODID, new ItemDimensionalCube(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_vault_key", AncientSpellcraft.MODID, new ItemVaultKey(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_arcane_diffuser", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_skeleton_ghosts", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.CHARM));
@@ -939,6 +942,7 @@ public final class ASItems {
 		registerItem(registry, "body_sorcery", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.SORCERY));
 		registerItem(registry, "body_healing", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.HEALING));
 		registerItem(registry, "body_clockwork_heart", AncientSpellcraft.MODID, new ItemClockworkHeart(EnumRarity.RARE, ItemArtefact.Type.BODY));
+		registerItem(registry, "body_cloak_of_levitation", AncientSpellcraft.MODID, new ItemCloakOfLevitation(EnumRarity.RARE));
 		registerItem(registry, "tome_controller", new ItemTomeController());
 
 		registerItem(registry, "belt_scroll_holder", AncientSpellcraft.MODID, new ItemBeltScrollHolder(EnumRarity.RARE, ItemArtefact.Type.BELT));

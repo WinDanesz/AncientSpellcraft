@@ -47,6 +47,7 @@ public final class ASBaublesIntegration {
 		WIZARDRY_ARTEFACT_TYPE_MAP.put(ItemArtefact.Type.CHARM, BaubleType.CHARM);
 		WIZARDRY_ARTEFACT_TYPE_MAP.put(ItemArtefact.Type.BELT, BaubleType.BELT);
 		WIZARDRY_ARTEFACT_TYPE_MAP.put(ItemArtefact.Type.HEAD, BaubleType.HEAD);
+		WIZARDRY_ARTEFACT_TYPE_MAP.put(ItemArtefact.Type.BODY, BaubleType.BODY);
 
 		//		ARTEFACT_TYPE_MAP.put(ItemArtefact.Type.BELT, BaubleType.BELT);
 		//		ARTEFACT_TYPE_MAP.put(ItemArtefact.Type.HEAD, BaubleType.HEAD);

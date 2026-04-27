@@ -277,6 +277,16 @@ public class Settings {
 		@Config.RangeInt(min = 0, max = 100)
 		public int cloak_potency_bonus = 15;
 
+		@Config.Name("Cloak of Levitation Max Charges")
+		@Config.Comment("Maximum levitation charges for the Cloak of Levitation. Each charge equals 1 second of flight.")
+		@Config.RangeInt(min = 1, max = 300)
+		public int cloak_of_levitation_max_charges = 12;
+
+		@Config.Name("Cloak of Levitation Recharge Rate (ticks per charge)")
+		@Config.Comment("Number of ticks required to regenerate one charge unit for the Cloak of Levitation. 20 ticks = 1 second. Default: 60 (3 seconds per charge).")
+		@Config.RangeInt(min = 1, max = 6000)
+		public int cloak_of_levitation_recharge_ticks = 60;
+
 		@Config.Name("Talisman of Affinity Percent Chance for Elemental Spells")
 		@Config.Comment("Determines the chance of getting the talisman's currently bound crystal's element when looting spell books. Note that even at 100% this is not guaranteed to be always the desired element.")
 		@Config.RequiresMcRestart

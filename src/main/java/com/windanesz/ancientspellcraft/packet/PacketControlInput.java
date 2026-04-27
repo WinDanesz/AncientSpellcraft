@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft.packet;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.client.gui.ContainerScribingDesk;
 import com.windanesz.ancientspellcraft.client.gui.ContainerSphereCognizance;
+import com.windanesz.ancientspellcraft.item.ItemCloakOfLevitation;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -52,6 +53,10 @@ public class PacketControlInput implements IMessageHandler<PacketControlInput.Me
 						}
 
 						break;
+
+					case LEVITATION_TOGGLE:
+						ItemCloakOfLevitation.toggleLevitation(player);
+						break;
 				}
 			});
 		}
@@ -61,7 +66,8 @@ public class PacketControlInput implements IMessageHandler<PacketControlInput.Me
 
 	public enum ControlType {
 		APPLY_BUTTON,
-		CRAFT_SPELL
+		CRAFT_SPELL,
+		LEVITATION_TOGGLE
 	}
 
 	public static class Message implements IMessage {
