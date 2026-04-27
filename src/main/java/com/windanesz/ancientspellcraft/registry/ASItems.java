@@ -172,6 +172,7 @@ public final class ASItems {
 	public static final Item charm_omnicron = placeholder();
 	public static final Item charm_burrow = placeholder();
 	public static final Item charm_quicksand_walker = placeholder();
+	public static final Item charm_vaulting_boots = placeholder();
 	//	public static final Item charm_book_death = placeholder();
 	//	public static final Item charm_book_life = placeholder();
 	public static final Item charm_prismatic_spray = placeholder();
@@ -826,6 +827,7 @@ public final class ASItems {
 		registerItem(registry, "cornucopia", AncientSpellcraft.MODID, new ItemCornucopia(EnumRarity.RARE));
 		registerItem(registry, "charm_gold_bag", AncientSpellcraft.MODID, new ItemGoldBag(EnumRarity.RARE));
 		registerItem(registry, "charm_quicksand_walker", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
+		registerItem(registry, "charm_vaulting_boots", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_magic_light", AncientSpellcraft.MODID, new ItemPhialOfEternalFlame(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_burrow", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 		registerItem(registry, "charm_hoarders_orb", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.CHARM));
