@@ -79,6 +79,7 @@ public class ControlHandler {
 							// Second press within window: fire double-tap
 							jumpDoubleTapWindow = 0;
 							ASPacketHandler.net.sendToServer(new PacketControlInput.Message(PacketControlInput.ControlType.LEVITATION_TOGGLE));
+							ASPacketHandler.net.sendToServer(new PacketControlInput.Message(PacketControlInput.ControlType.DOUBLE_JUMP));
 						} else {
 							// First press: start window
 							jumpDoubleTapWindow = DOUBLE_TAP_TICKS;

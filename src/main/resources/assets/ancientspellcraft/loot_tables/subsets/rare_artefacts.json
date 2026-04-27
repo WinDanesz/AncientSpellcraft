@@ -101,6 +101,7 @@
                 { "type": "item", "name": "ancientspellcraft:ring_withdraw_life", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:charm_vessel_of_the_withered_oath", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:charm_voltaic_vessel", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:charm_vaulting_boots", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:body_clockwork_heart", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:charm_beastcallers_horn", "weight": 1 }
             ]
