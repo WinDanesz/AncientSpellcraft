@@ -13,9 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+
 
 /**
  * Fixes enchant_randomly loot function applying enchantments that are not allowed on books
@@ -26,12 +24,12 @@ public class MixinEnchantRandomly {
 
 	@Shadow
 	@Final
-	private List<Enchantment> enchantments;
+	private java.util.List<Enchantment> enchantments;
 
 	@Inject(method = "apply", at = @At("HEAD"), cancellable = true)
-	private void filterDisallowedBookEnchantments(ItemStack stack, Random rand, LootContext context, CallbackInfoReturnable<ItemStack> cir) {
+	private void filterDisallowedBookEnchantments(ItemStack stack, java.util.Random rand, LootContext context, CallbackInfoReturnable<ItemStack> cir) {
 		if (this.enchantments.isEmpty() && stack.getItem() == Items.BOOK) {
-			List<Enchantment> list = new ArrayList<>();
+			java.util.List<Enchantment> list = new java.util.ArrayList<>();
 
 			for (Enchantment enchantment : Enchantment.REGISTRY) {
 				if (enchantment.isAllowedOnBooks()) {

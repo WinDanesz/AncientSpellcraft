@@ -15,9 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+
 
 /**
  * Fixes villager librarian trades offering enchanted books for enchantments that are not allowed on books
@@ -27,8 +25,8 @@ import java.util.Random;
 public class MixinListEnchantedBookForEmeralds {
 
 	@Inject(method = "addMerchantRecipe", at = @At("HEAD"), cancellable = true)
-	private void filterDisallowedBookEnchantments(IMerchant merchant, MerchantRecipeList recipeList, Random random, CallbackInfo ci) {
-		List<Enchantment> validEnchantments = new ArrayList<>();
+	private void filterDisallowedBookEnchantments(IMerchant merchant, MerchantRecipeList recipeList, java.util.Random random, CallbackInfo ci) {
+		java.util.List<Enchantment> validEnchantments = new java.util.ArrayList<>();
 
 		for (Enchantment enchantment : Enchantment.REGISTRY) {
 			if (enchantment.isAllowedOnBooks()) {

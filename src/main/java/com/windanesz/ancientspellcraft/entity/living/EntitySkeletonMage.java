@@ -423,12 +423,32 @@ public class EntitySkeletonMage extends AbstractSkeleton implements ISpellCaster
 
 	@Override
 	public boolean getCanSpawnHere() {
+		boolean dimensionOk = false;
 		for (int i : Settings.generalSettings.skeleton_mage_dimension_whitelist) {
-			if (super.getCanSpawnHere() && this.dimension == i) {
-				return true;
+			if (this.dimension == i) {
+				dimensionOk = true;
+				break;
 			}
 		}
-		return false;
+		if (!dimensionOk || !super.getCanSpawnHere()) return false;
+
+		// When biome-based element selection is active, only allow spawning in biomes
+		// that are claimed by at least one element whitelist. This prevents mages from
+		// appearing in biomes with no configured element (e.g. nether biomes, oceans).
+		if (Settings.generalSettings.use_biomes_for_mage_elements >= 1.0f) {
+			String biomeName = world.getBiome(this.getPosition()).getRegistryName().getPath();
+			boolean biomeHasElement =
+					Arrays.stream(Settings.generalSettings.fire_skeleton_and_ghost_biome_whitelist).anyMatch(biomeName::equals) ||
+					Arrays.stream(Settings.generalSettings.earth_skeleton_and_ghost_biome_whitelist).anyMatch(biomeName::equals) ||
+					Arrays.stream(Settings.generalSettings.sorcery_skeleton_and_ghost_biome_whitelist).anyMatch(biomeName::equals) ||
+					Arrays.stream(Settings.generalSettings.healing_skeleton_and_ghost_biome_whitelist).anyMatch(biomeName::equals) ||
+					Arrays.stream(Settings.generalSettings.lightning_skeleton_and_ghost_biome_whitelist).anyMatch(biomeName::equals) ||
+					Arrays.stream(Settings.generalSettings.ice_skeleton_and_ghost_biome_whitelist).anyMatch(biomeName::equals) ||
+					Arrays.stream(Settings.generalSettings.necromancy_skeleton_and_ghost_biome_whitelist).anyMatch(biomeName::equals);
+			if (!biomeHasElement) return false;
+		}
+
+		return true;
 	}
 
 	@Override
