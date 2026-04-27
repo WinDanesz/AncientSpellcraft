@@ -4,6 +4,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.8.2] - 2026-04-27
+### :sparkles: New Features
+- [`5fec671`](https://github.com/WinDanesz/AncientSpellcraft/commit/5fec67119e3f49ef91e3b56105e3507606a7fac6) - Improve visuals of Woodbending *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`80a500a`](https://github.com/WinDanesz/AncientSpellcraft/commit/80a500a9f53270cd8a097a983611e3c38eed470c) - Added missing sounds to ~50 spells *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`3fa721a`](https://github.com/WinDanesz/AncientSpellcraft/commit/3fa721a14d0ed234e3918fb445c18d9551c38fd6) - Added Clockwork Heart artefact *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`492012a`](https://github.com/WinDanesz/AncientSpellcraft/commit/492012aa8d5cc116f2fb80fb0da9acef246f393d) - Added Ring of Eternal Servitude artefact *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`8ef2f59`](https://github.com/WinDanesz/AncientSpellcraft/commit/8ef2f59cfd1e592fb3fe436bb59f1e9c6ed334ee) - Added Voltaic Vessel artefact *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`65629d2`](https://github.com/WinDanesz/AncientSpellcraft/commit/65629d23ba8338cc95e4c4fd8b1e5b137ed1d798) - Conjured dirt of the Dirt Wall spell is breakable *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`21f9645`](https://github.com/WinDanesz/AncientSpellcraft/commit/21f9645943b083d7772bece719b163fd6137f405) - Added Mask of Silence artefact *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`daf2eed`](https://github.com/WinDanesz/AncientSpellcraft/commit/daf2eed48ffe2de8a06434a9435cd5481a92f0ea) - Added Cloak of Levitation artefact *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`bb59d70`](https://github.com/WinDanesz/AncientSpellcraft/commit/bb59d70bf20cfdbed1e96e914f600389084e42ba) - Added Dimensional Cube artefact *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`2eb30c4`](https://github.com/WinDanesz/AncientSpellcraft/commit/2eb30c4a80a4bce22a73c6f70817f872f9f2d28d) - Added the Vaulting Boots of Vagron artefact *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+### :bug: Bug Fixes
+- [`4dcb92a`](https://github.com/WinDanesz/AncientSpellcraft/commit/4dcb92a363e99720aa29b17bd551f2ad4594dce5) - Fix Scroll of Amnesia desc typo *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`3646c2e`](https://github.com/WinDanesz/AncientSpellcraft/commit/3646c2eb93c5a5451766eb92d71dd2dc4d98f7d7) - Fix creepers being passive, fixes [#297](https://github.com/WinDanesz/AncientSpellcraft/pull/297) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`a341021`](https://github.com/WinDanesz/AncientSpellcraft/commit/a3410213d2005492a360a9cfa769161b63355817) - Fix Plasma Cutter not respecting claims, fixes [#289](https://github.com/WinDanesz/AncientSpellcraft/pull/289) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`5ee3bc5`](https://github.com/WinDanesz/AncientSpellcraft/commit/5ee3bc5034bc708199ccce190451d4258761d67e) - Prevent placement of temporary blocks on sealed stone [#293](https://github.com/WinDanesz/AncientSpellcraft/pull/293) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`fbc88bb`](https://github.com/WinDanesz/AncientSpellcraft/commit/fbc88bb8487c30cf2549001ead7ce2db0114085f) - Fix devoritium arrows not working in dispensers, fixes [#292](https://github.com/WinDanesz/AncientSpellcraft/pull/292) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`594e215`](https://github.com/WinDanesz/AncientSpellcraft/commit/594e215715c3e7fbaffa687dd25d959212f6daf2) - Added spell icon for Plasma Cutter, fixes [#291](https://github.com/WinDanesz/AncientSpellcraft/pull/291) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`79643e9`](https://github.com/WinDanesz/AncientSpellcraft/commit/79643e931893d47bd4aca6f3c949380f7477462c) - "none" ritual  log error, fixes [#287](https://github.com/WinDanesz/AncientSpellcraft/pull/287) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`856223f`](https://github.com/WinDanesz/AncientSpellcraft/commit/856223f9d7e0969cd74121c202127d0d9afae3ae) - Enhance block protection in PocketLibrary to prevent modification of unbreakable and portal blocks, fixes [#103](https://github.com/WinDanesz/AncientSpellcraft/pull/103) *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`f8aa777`](https://github.com/WinDanesz/AncientSpellcraft/commit/f8aa777a104a392e59d0816835a11ecf4673ef2b) - Fix Wizard merchant overspawn *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`aac8cd3`](https://github.com/WinDanesz/AncientSpellcraft/commit/aac8cd3de25a3e4b18bf667bf85fa97d765148b7) - Fix ebwizardry bug with enchanted books of spell effects (imbuements) appearing in trades and loot *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+- [`0e26ac9`](https://github.com/WinDanesz/AncientSpellcraft/commit/0e26ac93026844eb56762a2d0201468f605c707b) - Refactor enchantment filtering to use fully qualified names and remove unused imports *(commit by [@WinDanesz](https://github.com/WinDanesz))*
+
+
 ## [v1.8.1] - 2025-10-21
 ### :sparkles: New Features
 - [`09685a4`](https://github.com/WinDanesz/AncientSpellcraft/commit/09685a49782f666fd96aa02dc9606cab0042254a) - Dimensinal Anchor doesn't have particles in pocket dim *(commit by [@WinDanesz](https://github.com/WinDanesz))*
@@ -454,3 +481,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v1.7.1]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.7.0...v1.7.1
 [v1.8.0]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.7.8...v1.8.0
 [v1.8.1]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.8.0...v1.8.1
+[v1.8.2]: https://github.com/WinDanesz/AncientSpellcraft/compare/v1.8.1...v1.8.2
