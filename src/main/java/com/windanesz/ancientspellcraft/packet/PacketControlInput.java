@@ -21,6 +21,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
  */
 public class PacketControlInput implements IMessageHandler<PacketControlInput.Message, IMessage> {
 
+	public static final String VAULT_FALL_BUFFER_TAG = "as_vault_fall_buffer";
+
 	@Override
 	public IMessage onMessage(Message message, MessageContext ctx) {
 		if (ctx.side.isClient()) {
@@ -79,6 +81,8 @@ public class PacketControlInput implements IMessageHandler<PacketControlInput.Me
 							player.getCooldownTracker().setCooldown(ASItems.charm_vaulting_boots, 20);
 							// Authorize the vault and send it back to this client only.
 							ASPacketHandler.net.sendTo(new PacketControlInput.Message(ControlType.DOUBLE_JUMP), player);
+							// Mark next landing for reduced fall damage from the vault impulse.
+							player.getEntityData().setBoolean(VAULT_FALL_BUFFER_TAG, true);
 							player.fallDistance = 0;
 							spawnVaultDiskParticles(player);
 						}

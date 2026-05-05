@@ -13,6 +13,7 @@
                 { "type": "item", "name": "ancientspellcraft:amulet_healing_mushroom", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:amulet_imbued_marble", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:amulet_inspiration", "weight": 1 },
+                { "type": "item", "name": "ancientspellcraft:amulet_invisibility", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:amulet_oakflesh", "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:amulet_of_resistance" , "weight": 1 },
                 { "type": "item", "name": "ancientspellcraft:amulet_persistence", "weight": 1 },

@@ -186,6 +186,20 @@ public class ASEventHandler {
 	}
 
 	@SubscribeEvent
+	public static void onLivingFall(LivingFallEvent event) {
+		if (!(event.getEntityLiving() instanceof EntityPlayer)) return;
+
+		EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+		NBTTagCompound data = player.getEntityData();
+
+		if (data.getBoolean(PacketControlInput.VAULT_FALL_BUFFER_TAG)) {
+			data.removeTag(PacketControlInput.VAULT_FALL_BUFFER_TAG);
+			// Remove roughly the extra fall distance introduced by the vault jump.
+			event.setDistance(Math.max(0.0f, event.getDistance() - 4.0f));
+		}
+	}
+
+	@SubscribeEvent
 	public static void onPlayerSleep(PlayerSleepInBedEvent event) {
 		if (event.getEntityPlayer().isPotionActive(ASPotions.curse_of_insomnia)) {
 			ASUtils.sendMessage(event.getEntityPlayer(), "message.ancientspellcraft:curse.of_insomnia.sleep_prevented", true);
