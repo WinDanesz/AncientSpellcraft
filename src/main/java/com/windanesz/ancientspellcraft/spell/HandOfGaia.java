@@ -52,8 +52,9 @@ public class HandOfGaia extends Spell {
 
 			if (AllyDesignationSystem.isAllied(caster, target)) {
 				entityCount--;
-
-				target.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 30, 0));
+                if (!world.isRemote) {
+                    target.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 30, 0));
+                }
 			}
 
 			if (world.isRemote) {

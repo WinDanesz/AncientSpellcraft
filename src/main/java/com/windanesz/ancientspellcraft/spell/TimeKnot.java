@@ -53,28 +53,30 @@ public class TimeKnot extends SpellBuff {
 	 */
 	protected boolean applyEffects(EntityLivingBase caster, SpellModifiers modifiers) {
 
-		float baseDur = (getProperty(getDurationKey(ASPotions.time_knot)).floatValue());
-		float durationUpgrade = (modifiers.get(WizardryItems.duration_upgrade));
-		float potency = (modifiers.get(SpellModifiers.POTENCY));
-		if (potency > 1.0f) {
-			potency = (potency - 1) * 8 + 1;
-		}
+        if (!caster.world.isRemote) {
+            float baseDur = (getProperty(getDurationKey(ASPotions.time_knot)).floatValue());
+            float durationUpgrade = (modifiers.get(WizardryItems.duration_upgrade));
+            float potency = (modifiers.get(SpellModifiers.POTENCY));
+            if (potency > 1.0f) {
+                potency = (potency - 1) * 8 + 1;
+            }
 
-		if (durationUpgrade > 1.0f) {
-			durationUpgrade = (durationUpgrade - 1) * 10 + 1;
-		}
+            if (durationUpgrade > 1.0f) {
+                durationUpgrade = (durationUpgrade - 1) * 10 + 1;
+            }
 
-		int duration = (int) (baseDur * potency * durationUpgrade);
+            int duration = (int) (baseDur * potency * durationUpgrade);
 
-		for (Potion potion : potionSet) {
-			caster.addPotionEffect(new PotionEffect(potion, potion.isInstant() ? 1 : duration, (int) getProperty(getStrengthKey(potion)).floatValue(), false, false));
-		}
-		//		for (Potion potion : potionSet) {
-		//			caster.addPotionEffect(new PotionEffect(potion, potion.isInstant() ? 1 :
-		//					(int) (getProperty(getDurationKey(potion)).floatValue() * modifiers.get(WizardryItems.duration_upgrade)),
-		//					(int) getProperty(getStrengthKey(potion)).floatValue(),
-		//					false, false));
-		//		}
+            for (Potion potion : potionSet) {
+                caster.addPotionEffect(new PotionEffect(potion, potion.isInstant() ? 1 : duration, (int) getProperty(getStrengthKey(potion)).floatValue(), false, false));
+            }
+            //		for (Potion potion : potionSet) {
+            //			caster.addPotionEffect(new PotionEffect(potion, potion.isInstant() ? 1 :
+            //					(int) (getProperty(getDurationKey(potion)).floatValue() * modifiers.get(WizardryItems.duration_upgrade)),
+            //					(int) getProperty(getStrengthKey(potion)).floatValue(),
+            //					false, false));
+            //		}
+        }
 		return true;
 	}
 
@@ -85,26 +87,28 @@ public class TimeKnot extends SpellBuff {
 
 	@Override
 	public boolean cast(World world, EntityPlayer player, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		if (world.isRemote)
-			this.spawnParticles(world, player, modifiers);
+		if (world.isRemote) this.spawnParticles(world, player, modifiers);
 
-		if (!player.isPotionActive(ASPotions.time_knot)) {
+        if (!world.isRemote) {
+            if (!player.isPotionActive(ASPotions.time_knot)) {
 
-			if (player.isPotionActive(ASPotions.curse_temporal_casualty)) {
-				player.removePotionEffect(ASPotions.curse_temporal_casualty);
-			}
-			WizardData data = WizardData.get(player);
-			if (data != null) {
+                if (player.isPotionActive(ASPotions.curse_temporal_casualty)) {
+                    player.removePotionEffect(ASPotions.curse_temporal_casualty);
+                }
+                WizardData data = WizardData.get(player);
+                if (data != null) {
 
-				NBTTagCompound compound = storeCurrentPlayerData(player);
-				data.setVariable(TIME_KNOT_DATA, compound);
-				data.sync();
+                    NBTTagCompound compound = storeCurrentPlayerData(player);
+                    data.setVariable(TIME_KNOT_DATA, compound);
+                    data.sync();
 
-			}
-			return super.cast(world, player, hand, ticksInUse, modifiers);
-		} else {
-			return false;
-		}
+                }
+                return super.cast(world, player, hand, ticksInUse, modifiers);
+            } else {
+                return false;
+            }
+        }
+        return true;
 	}
 
 	public static NBTTagCompound storeCurrentPlayerData(EntityPlayer caster) {
@@ -160,7 +164,7 @@ public class TimeKnot extends SpellBuff {
 
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 
-			if (event.getPotionEffect().getPotion() == ASPotions.time_knot && player.isEntityAlive() && player.getHealth() != 0F) {
+			if (!player.world.isRemote && event.getPotionEffect().getPotion() == ASPotions.time_knot && player.isEntityAlive() && player.getHealth() != 0F) {
 				loopPlayer(player);
 			}
 		}

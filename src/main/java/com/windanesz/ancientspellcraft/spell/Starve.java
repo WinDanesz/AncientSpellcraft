@@ -26,23 +26,21 @@ public class Starve extends SpellRayAS {
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit,
 			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 
-		if (target instanceof EntityPlayer) {
-
-			EntityPlayer targetPlayer = (EntityPlayer) target;
-
-			int foodlevel = targetPlayer.getFoodStats().getFoodLevel();
-			targetPlayer.getFoodStats().setFoodLevel(foodlevel / 2);
-
-			float saturation = targetPlayer.getFoodStats().getSaturationLevel();
-			targetPlayer.getFoodStats().addExhaustion((int) (saturation / 2));
-
-			return true;
-		} else if (target instanceof EntityLivingBase) {
-			EntityLivingBase entityLivingBase = (EntityLivingBase) target;
-			entityLivingBase.addPotionEffect(new net.minecraft.potion.PotionEffect(net.minecraft.init.MobEffects.HUNGER, 200, 2));
-			entityLivingBase.addPotionEffect(new net.minecraft.potion.PotionEffect(MobEffects.SLOWNESS, 200, 1));
-			entityLivingBase.addPotionEffect(new net.minecraft.potion.PotionEffect(MobEffects.WEAKNESS, 200, 1));
-		}
+        if(!world.isRemote) {
+            if (target instanceof EntityPlayer) {
+                EntityPlayer targetPlayer = (EntityPlayer) target;
+                int foodlevel = targetPlayer.getFoodStats().getFoodLevel();
+                targetPlayer.getFoodStats().setFoodLevel(foodlevel / 2);
+                float saturation = targetPlayer.getFoodStats().getSaturationLevel();
+                targetPlayer.getFoodStats().addExhaustion((int) (saturation / 2));
+            } else if (target instanceof EntityLivingBase) {
+                EntityLivingBase entityLivingBase = (EntityLivingBase) target;
+                entityLivingBase.addPotionEffect(new net.minecraft.potion.PotionEffect(net.minecraft.init.MobEffects.HUNGER, 200, 2));
+                entityLivingBase.addPotionEffect(new net.minecraft.potion.PotionEffect(MobEffects.SLOWNESS, 200, 1));
+                entityLivingBase.addPotionEffect(new net.minecraft.potion.PotionEffect(MobEffects.WEAKNESS, 200, 1));
+            }
+            return true;
+        }
 		return false;
 	}
 

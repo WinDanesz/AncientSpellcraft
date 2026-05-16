@@ -63,8 +63,10 @@ public class HorseWhistle extends Spell {
 
 		if (caster.isRiding() && caster.getRidingEntity() instanceof EntityHorse && ItemArtefact.isArtefactActive(caster, ASItems.belt_horse)) {
 
-			EntityHorse horse = (EntityHorse) caster.getRidingEntity();
-			horse.addPotionEffect(new PotionEffect(MobEffects.SPEED, 600, 0));
+            EntityHorse horse = (EntityHorse) caster.getRidingEntity();
+            if (!world.isRemote) {
+                horse.addPotionEffect(new PotionEffect(MobEffects.SPEED, 600, 0));
+            }
 
 			if (world.isRemote) {
 				for (int i = 0; i < 4; i++) {
@@ -77,9 +79,7 @@ public class HorseWhistle extends Spell {
 				ParticleBuilder.create(ParticleBuilder.Type.BUFF).entity(horse).clr(MobEffects.SPEED.getLiquidColor()).spawn(world);
 			}
 
-			return true;
-
-		} else {
+        } else {
 			this.playSound(world, caster, ticksInUse, -1, modifiers);
 
 			if (!world.isRemote) {
@@ -115,9 +115,9 @@ public class HorseWhistle extends Spell {
 				}
 			}
 
-			return true;
-		}
-	}
+        }
+        return true;
+    }
 
 	private void callHorse(EntityPlayer caster, EntityHorse horse) {
 		if (!horse.isBeingRidden()) {

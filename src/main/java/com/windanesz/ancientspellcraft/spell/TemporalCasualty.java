@@ -39,13 +39,16 @@ public class TemporalCasualty extends SpellRay {
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit,
 			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-		if (target instanceof EntityPlayer) {
+		if (!world.isRemote && target instanceof EntityPlayer) {
 			cursePlayer((EntityPlayer) target);
 		}
 		return true;
 	}
 
 	public static boolean cursePlayer(EntityPlayer target) {
+        if (target.world.isRemote) {
+            return true;
+        }
 		EntityPlayer player = (EntityPlayer) target;
 
 		WizardData data = WizardData.get(player);
@@ -90,7 +93,7 @@ public class TemporalCasualty extends SpellRay {
 	private static long update(EntityPlayer player, Long nextLoopStart) {
 		if (nextLoopStart == null)
 			return 0;
-		if (player.world.getTotalWorldTime() == nextLoopStart && player.isPotionActive(ASPotions.curse_temporal_casualty) && player.isEntityAlive()) {
+		if (!player.world.isRemote && player.world.getTotalWorldTime() == nextLoopStart && player.isPotionActive(ASPotions.curse_temporal_casualty) && player.isEntityAlive()) {
 			loopPlayer(player);
 			long l = player.world.getTotalWorldTime() + LOOP_DURATION;
 			player.addPotionEffect(new PotionEffect(ASPotions.curse_temporal_casualty, Integer.MAX_VALUE, 0));

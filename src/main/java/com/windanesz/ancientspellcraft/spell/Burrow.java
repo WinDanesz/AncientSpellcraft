@@ -71,17 +71,18 @@ public class Burrow extends Spell {
 			}
 
 			if (!isDiggable(world.getBlockState(caster.getPosition().down()), caster) || !isDiggable(world.getBlockState(caster.getPosition()), caster)) {
-				if (ticksInUse % 20 == 0) {
+				if (!world.isRemote && ticksInUse % 20 == 0) {
 					caster.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 41, 2));
 					caster.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 81));
 					caster.addPotionEffect(new PotionEffect(ASPotions.burrow, 20));
-					if (!world.isRemote)
-						caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:burrow.hard_material"), false);
+					caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:burrow.hard_material"), false);
 				}
 				return false;
 			}
 
-			caster.addPotionEffect(new PotionEffect(ASPotions.burrow, 20));
+            if (!world.isRemote) {
+                caster.addPotionEffect(new PotionEffect(ASPotions.burrow, 20));
+            }
 
 			if (ticksInUse % 20 == 0 && !world.isRemote) {
 				caster.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 41));

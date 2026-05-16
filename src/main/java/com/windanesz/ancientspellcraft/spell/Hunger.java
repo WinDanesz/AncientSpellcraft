@@ -28,7 +28,7 @@ public class Hunger extends SpellRayAS {
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit,
 			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 
-		if (target instanceof EntityLivingBase) {
+		if (!world.isRemote && target instanceof EntityLivingBase) {
 
 			EntityLivingBase targetEntity = (EntityLivingBase) target;
 			targetEntity.addPotionEffect(new PotionEffect(MobEffects.HUNGER, getProperty(EFFECT_DURATION).intValue(), getProperty(EFFECT_STRENGTH).intValue()));

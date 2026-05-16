@@ -43,7 +43,6 @@ public class Confusion extends SpellRay implements IClassSpell {
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 		if (!world.isRemote) {
-
 			if (target instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) target;
 				// Get the player's hotbar items

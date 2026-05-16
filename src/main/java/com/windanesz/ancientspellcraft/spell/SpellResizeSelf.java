@@ -56,7 +56,7 @@ public class SpellResizeSelf extends SpellBuffAS {
 	@Override
 	protected boolean applyEffects(EntityLivingBase caster, SpellModifiers modifiers) {
 
-		if (caster != null) {
+		if (caster != null && !caster.world.isRemote) {
 			int modifier = caster.isSneaking() ? 0 : 1;
 
 			for (Potion potion : potionSet) {

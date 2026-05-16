@@ -163,15 +163,15 @@ public class RunewordSelfBuff extends Runeword {
 	protected boolean applyEffects(EntityLivingBase caster, SpellModifiers modifiers){
 		// This will generate 0 for novice and apprentice, and 1 for advanced and master
 		// TODO: Once we've found a way of detecting if amplifiers actually affect the potion type, implement it here.
-		int bonusAmplifier = getBonusAmplifier(modifiers.get(SpellModifiers.POTENCY));
-
-		for(Potion potion : potionSet){
-			caster.addPotionEffect(new PotionEffect(potion, potion.isInstant() ? 1 :
-					(int)(getProperty(getDurationKey(potion)).floatValue() * modifiers.get(WizardryItems.duration_upgrade)),
-					(int)getProperty(getStrengthKey(potion)).floatValue() + bonusAmplifier,
-					false, true));
-		}
-
+        if (!caster.world.isRemote) {
+            int bonusAmplifier = getBonusAmplifier(modifiers.get(SpellModifiers.POTENCY));
+            for (Potion potion : potionSet) {
+                caster.addPotionEffect(new PotionEffect(potion, potion.isInstant() ? 1 :
+                        (int) (getProperty(getDurationKey(potion)).floatValue() * modifiers.get(WizardryItems.duration_upgrade)),
+                        (int) getProperty(getStrengthKey(potion)).floatValue() + bonusAmplifier,
+                        false, true));
+            }
+        }
 		return true;
 	}
 

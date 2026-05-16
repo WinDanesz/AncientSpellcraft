@@ -145,13 +145,15 @@ public class PrismaticSpray extends Spell {
 								spawnBeamFocused(world, origin, look, endpoint2, caster, target, range, Element.ICE, 144, 236, 252);
 							}
 						}
-						EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.MAGIC), damage * 1.5f);
-						target.addPotionEffect(new PotionEffect(MobEffects.POISON, duration));
-						target.addPotionEffect(new PotionEffect(WizardryPotions.paralysis, duration, 0));
-						target.addPotionEffect(new PotionEffect(MobEffects.WITHER, duration));
-						target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, duration, 0));
-						target.addPotionEffect(new PotionEffect(WizardryPotions.frost, duration, 0));
-						target.setFire(duration / 20);
+                        if (!world.isRemote) {
+                            EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.MAGIC), damage * 1.5f);
+                            target.addPotionEffect(new PotionEffect(MobEffects.POISON, duration));
+                            target.addPotionEffect(new PotionEffect(WizardryPotions.paralysis, duration, 0));
+                            target.addPotionEffect(new PotionEffect(MobEffects.WITHER, duration));
+                            target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, duration, 0));
+                            target.addPotionEffect(new PotionEffect(WizardryPotions.frost, duration, 0));
+                            target.setFire(duration / 20);
+                        }
 					}
 				}
 			}
@@ -182,48 +184,62 @@ public class PrismaticSpray extends Spell {
 
 		switch (element) {
 			case EARTH:
-				EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.POISON), damage);
-				target.addPotionEffect(new PotionEffect(MobEffects.POISON, duration));
+                if (!caster.world.isRemote) {
+                    EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.POISON), damage);
+                    target.addPotionEffect(new PotionEffect(MobEffects.POISON, duration));
+                }
 				spawnBeam(caster.world, origin, look, caster, target, range, element, 58, 92, 24);
 				break;
 
 			case LIGHTNING:
-				EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.SHOCK), damage);
-				target.addPotionEffect(new PotionEffect(WizardryPotions.paralysis, duration, 0));
+                if (!caster.world.isRemote) {
+                    EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.SHOCK), damage);
+                    target.addPotionEffect(new PotionEffect(WizardryPotions.paralysis, duration, 0));
+                }
 				spawnBeam(caster.world, origin, look, caster, target, range, element, 70, 76, 163);
 				break;
 
 			case NECROMANCY:
-				EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER), damage);
-				target.addPotionEffect(new PotionEffect(MobEffects.WITHER, duration));
+                if (!caster.world.isRemote) {
+                    EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER), damage);
+                    target.addPotionEffect(new PotionEffect(MobEffects.WITHER, duration));
+                }
 				spawnBeam(caster.world, origin, look, caster, target, range, element, 99, 9, 93);
 				break;
 
 			case FIRE:
-				EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FIRE), damage);
-				target.setFire(duration / 20);
+                if (!caster.world.isRemote) {
+                    EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FIRE), damage);
+                    target.setFire(duration / 20);
+                }
 				spawnBeam(caster.world, origin, look, caster, target, range, element, 252, 118, 23);
 				break;
 
 			case HEALING:
-				EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.RADIANT), damage);
-				target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, duration, 0));
-				if (target.isEntityUndead()) {
-					target.setFire(duration / 40);
-				}
+                if (!caster.world.isRemote) {
+                    EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.RADIANT), damage);
+                    target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, duration, 0));
+                    if (target.isEntityUndead()) {
+                        target.setFire(duration / 40);
+                    }
+                }
 				spawnBeam(caster.world, origin, look, caster, target, range, element, 253, 255, 122);
 
 				break;
 
 			case SORCERY:
-				EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FORCE), damage);
-				EntityUtils.applyStandardKnockback(caster, target, 2f);
+                if (!caster.world.isRemote) {
+                    EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FORCE), damage);
+                    EntityUtils.applyStandardKnockback(caster, target, 2f);
+                }
 				spawnBeam(caster.world, origin, look, caster, target, range, element, 0, 222, 23);
 				break;
 
 			case ICE:
-				EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), damage);
-				target.addPotionEffect(new PotionEffect(WizardryPotions.frost, duration, 0));
+                if (!caster.world.isRemote) {
+                    EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), damage);
+                    target.addPotionEffect(new PotionEffect(WizardryPotions.frost, duration, 0));
+                }
 				spawnBeam(caster.world, origin, look, caster, target, range, element, 144, 236, 252);
 				break;
 			default:

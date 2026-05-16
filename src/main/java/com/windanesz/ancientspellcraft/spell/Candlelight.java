@@ -25,22 +25,24 @@ public class Candlelight extends SpellBuff {
 	 * <b>Overriding as we don't want to spawn particles.</b>
 	 */
 	protected boolean applyEffects(EntityLivingBase caster, SpellModifiers modifiers) {
-		// magelight and candlelight is mutually exclusive
-		if (caster.isPotionActive(ASPotions.magelight)) {
-			caster.removePotionEffect(ASPotions.magelight);
-		}
+        if (!caster.world.isRemote) {
+            // magelight and candlelight is mutually exclusive
+            if (caster.isPotionActive(ASPotions.magelight)) {
+                caster.removePotionEffect(ASPotions.magelight);
+            }
 
-		for (Potion potion : potionSet) {
-			caster.addPotionEffect(new PotionEffect(potion, potion.isInstant() ? 1 :
-					(int) (getProperty(getDurationKey(potion)).floatValue() * modifiers.get(WizardryItems.duration_upgrade)),
-					(int) getProperty(getStrengthKey(potion)).floatValue(),
-					false, false));
-		}
+            for (Potion potion : potionSet) {
+                caster.addPotionEffect(new PotionEffect(potion, potion.isInstant() ? 1 :
+                        (int) (getProperty(getDurationKey(potion)).floatValue() * modifiers.get(WizardryItems.duration_upgrade)),
+                        (int) getProperty(getStrengthKey(potion)).floatValue(),
+                        false, false));
+            }
 
-		if (caster instanceof EntityPlayer && !caster.world.isRemote && caster.world.isAirBlock(caster.getPosition().up())) {
-			caster.world.setBlockState(caster.getPosition().up(), ASBlocks.CANDLELIGHT.getDefaultState());
-		}
-		return true;
+            if (caster instanceof EntityPlayer && !caster.world.isRemote && caster.world.isAirBlock(caster.getPosition().up())) {
+                caster.world.setBlockState(caster.getPosition().up(), ASBlocks.CANDLELIGHT.getDefaultState());
+            }
+        }
+        return true;
 	}
 
 	@Override

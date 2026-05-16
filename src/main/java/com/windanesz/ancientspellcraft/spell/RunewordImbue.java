@@ -33,16 +33,18 @@ public class RunewordImbue extends Runeword {
 
 	@Override
 	public boolean onAboutToHitEntity(World world, EntityLivingBase caster, EntityLivingBase target, EnumHand hand, ItemStack sword, SpellModifiers modifiers, boolean charged) {
-		HashMap<Runeword, NBTTagCompound> data = ItemBattlemageSword.getTemporaryRunewordData(sword);
-		if (data.containsKey(this) ) {
-			NBTTagCompound imbuement = data.get(this);
-			if (imbuement.hasKey(POTION_TAG)) {
-				PotionEffect effect = new PotionEffect(ForgeRegistries.POTIONS.getValue(new ResourceLocation(imbuement.getString(POTION_TAG))),
-						(int) (getProperty(EFFECT_DURATION).intValue() * modifiers.get(WizardryItems.duration_upgrade)));
-				target.addPotionEffect(effect);
-				spendCharge(sword);
-			}
-		}
+        if (!world.isRemote) {
+            HashMap<Runeword, NBTTagCompound> data = ItemBattlemageSword.getTemporaryRunewordData(sword);
+            if (data.containsKey(this)) {
+                NBTTagCompound imbuement = data.get(this);
+                if (imbuement.hasKey(POTION_TAG)) {
+                    PotionEffect effect = new PotionEffect(ForgeRegistries.POTIONS.getValue(new ResourceLocation(imbuement.getString(POTION_TAG))),
+                            (int) (getProperty(EFFECT_DURATION).intValue() * modifiers.get(WizardryItems.duration_upgrade)));
+                    target.addPotionEffect(effect);
+                    spendCharge(sword);
+                }
+            }
+        }
 		return true;
 	}
 

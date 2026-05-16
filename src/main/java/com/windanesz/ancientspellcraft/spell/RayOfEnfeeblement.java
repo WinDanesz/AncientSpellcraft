@@ -50,7 +50,7 @@ public class RayOfEnfeeblement extends SpellRay implements IClassSpell {
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 
-		if (target instanceof EntityLivingBase) {
+		if (!world.isRemote && target instanceof EntityLivingBase) {
 
 			((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.WEAKNESS,
 					(int) (getProperty(EFFECT_DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade)),

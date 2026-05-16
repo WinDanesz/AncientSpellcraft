@@ -63,7 +63,7 @@ public class PoisonSpray extends SpellRay implements IClassSpell {
 						this.getNameForTranslationFormatted()), true);
 			// This now only damages in line with the maxHurtResistantTime. Some mods don't play nicely and fiddle
 			// with this mechanic for their own purposes, so this line makes sure that doesn't affect wizardry.
-			}else if(ticksInUse % ((EntityLivingBase)target).maxHurtResistantTime == 1){
+			}else if(!world.isRemote && ticksInUse % ((EntityLivingBase)target).maxHurtResistantTime == 1){
 				((EntityLivingBase)target).addPotionEffect(new PotionEffect(MobEffects.POISON,
 						(int)(getProperty(EFFECT_DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade)),
 						getProperty(EFFECT_STRENGTH).intValue()));				EntityUtils.attackEntityWithoutKnockback(target,

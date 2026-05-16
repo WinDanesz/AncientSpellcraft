@@ -28,8 +28,7 @@ public class PowerSiphon extends SpellRayAS {
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit,
 			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 
-		if (target instanceof EntityLivingBase) {
-
+		if (!world.isRemote && target instanceof EntityLivingBase) {
 			EntityLivingBase targetEntity = (EntityLivingBase) target;
 			targetEntity.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, getProperty(EFFECT_DURATION).intValue(), 0));
 			if (caster != null)
