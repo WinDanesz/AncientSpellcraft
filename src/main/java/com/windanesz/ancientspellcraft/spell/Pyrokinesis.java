@@ -65,22 +65,24 @@ public class Pyrokinesis extends SpellRay {
 		// Can't be cast by dispensers so we know caster isn't null, but just in case...
 		if (caster != null && (target instanceof EntityLivingBase)) {
 
-			if (MagicDamage.isEntityImmune(MagicDamage.DamageType.FIRE, target)) {
-				if (!world.isRemote && ticksInUse == 1 && caster instanceof EntityPlayer)
-					((EntityPlayer) caster)
-							.sendStatusMessage(new TextComponentTranslation("spell.resist", target.getName(),
-									this.getNameForTranslationFormatted()), true);
-				// This now only damages in line with the maxHurtResistantTime. Some mods don't play nicely and fiddle
-				// with this mechanic for their own purposes, so this line makes sure that doesn't affect wizardry.
-			} else if (ticksInUse % ((EntityLivingBase) target).maxHurtResistantTime == 1) {
-				target.setFire((int) (getProperty(BURN_DURATION).floatValue()));
-				EntityUtils.attackEntityWithoutKnockback(target,
-						MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FIRE),
-						getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY));
+            if (!world.isRemote) {
+                if (MagicDamage.isEntityImmune(MagicDamage.DamageType.FIRE, target)) {
+                    if (ticksInUse == 1 && caster instanceof EntityPlayer)
+                        ((EntityPlayer) caster)
+                                .sendStatusMessage(new TextComponentTranslation("spell.resist", target.getName(),
+                                        this.getNameForTranslationFormatted()), true);
+                    // This now only damages in line with the maxHurtResistantTime. Some mods don't play nicely and fiddle
+                    // with this mechanic for their own purposes, so this line makes sure that doesn't affect wizardry.
+                } else if (ticksInUse % ((EntityLivingBase) target).maxHurtResistantTime == 1) {
+                    target.setFire((int) (getProperty(BURN_DURATION).floatValue()));
+                    EntityUtils.attackEntityWithoutKnockback(target,
+                            MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FIRE),
+                            getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY));
 
-				((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS,
-						(int) (getProperty(SLOW_DURATION).floatValue()), 1));
-			}
+                    ((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS,
+                            (int) (getProperty(SLOW_DURATION).floatValue()), 1));
+                }
+            }
 
 			if (world.isRemote) {
 

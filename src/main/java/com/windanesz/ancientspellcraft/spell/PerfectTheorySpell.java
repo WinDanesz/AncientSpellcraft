@@ -90,7 +90,7 @@ public class PerfectTheorySpell extends Spell implements IClassSpell {
 					String potionName = effect.split(",")[0];
 					int duration = Integer.parseInt(effect.split(",")[1]);
 					Potion potion = ForgeRegistries.POTIONS.getValue(new ResourceLocation(potionName));
-					if (potion != null) {
+					if (!world.isRemote && potion != null) {
 						caster.addPotionEffect(new PotionEffect(potion, duration));
 						return true;
 					}

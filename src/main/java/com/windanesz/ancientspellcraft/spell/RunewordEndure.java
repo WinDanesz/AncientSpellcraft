@@ -37,9 +37,11 @@ public class RunewordEndure extends Runeword {
 	}
 
 	private void apply(EntityLivingBase caster) {
-		int effectDuration = getProperty(EFFECT_DURATION).intValue();
-		caster.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, effectDuration, 1));
-		caster.addPotionEffect(new PotionEffect(WizardryPotions.ward, effectDuration, 1));
-		caster.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, effectDuration, 3));
+        if (!caster.world.isRemote) {
+            int effectDuration = getProperty(EFFECT_DURATION).intValue();
+            caster.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, effectDuration, 1));
+            caster.addPotionEffect(new PotionEffect(WizardryPotions.ward, effectDuration, 1));
+            caster.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, effectDuration, 3));
+        }
 	}
 }

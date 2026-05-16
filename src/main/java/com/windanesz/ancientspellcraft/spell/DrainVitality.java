@@ -33,7 +33,7 @@ public class DrainVitality extends SpellRay {
 
 			// This will actually run out in the end, but only if you leave Minecraft running for 3.4 years
 			if (!world.isRemote)
-			((EntityLivingBase) target).addPotionEffect(new PotionEffect(ASPotions.curse_of_ender, Integer.MAX_VALUE,
+			    ((EntityLivingBase) target).addPotionEffect(new PotionEffect(ASPotions.curse_of_ender, Integer.MAX_VALUE,
 					getProperty(EFFECT_STRENGTH).intValue() + SpellBuff.getStandardBonusAmplifier(modifiers.get(SpellModifiers.POTENCY))));
 		}
 

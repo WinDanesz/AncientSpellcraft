@@ -61,7 +61,7 @@ public class Extinguish extends Spell {
 			caster.extinguish();
 		}
 
-		if (!caster.isPotionActive(MobEffects.FIRE_RESISTANCE)) {
+		if (!world.isRemote && !caster.isPotionActive(MobEffects.FIRE_RESISTANCE)) {
 			caster.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 60));
 		}
 

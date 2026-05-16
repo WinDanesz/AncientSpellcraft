@@ -50,7 +50,7 @@ public class DimensionalAnchor extends SpellRay {
 
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-		if (EntityUtils.isLiving(target)) {
+		if (!world.isRemote && EntityUtils.isLiving(target)) {
 			((EntityLivingBase) target).addPotionEffect(new PotionEffect(ASPotions.dimensional_anchor, getProperty(EFFECT_DURATION).intValue(), 0));
 		}
 		return true;

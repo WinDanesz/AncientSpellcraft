@@ -18,8 +18,10 @@ public class RunewordSol extends Runeword {
 
 	@Override
 	public boolean onAboutToHitEntity(World world, EntityLivingBase caster, EntityLivingBase target, EnumHand hand, ItemStack sword, SpellModifiers modifiers, boolean charged) {
-		target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, getProperty(EFFECT_DURATION).intValue(), 0));
-		spendCharge(sword);
+        if (!world.isRemote) {
+            target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, getProperty(EFFECT_DURATION).intValue(), 0));
+            spendCharge(sword);
+        }
 
 		return true;
 	}

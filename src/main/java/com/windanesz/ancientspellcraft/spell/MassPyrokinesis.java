@@ -61,7 +61,7 @@ public boolean pyrokinesis(World world, EntityLivingBase caster, EnumHand hand, 
 
         if (MagicDamage.isEntityImmune(MagicDamage.DamageType.FIRE, entity)) {
 
-        } else if (entity != caster && ticksInUse % entity.maxHurtResistantTime == 1) {
+        } else if (!world.isRemote && entity != caster && ticksInUse % entity.maxHurtResistantTime == 1) {
             entity.setFire((int) (getProperty(BURN_DURATION).floatValue()));
             EntityUtils.attackEntityWithoutKnockback(entity,
                 MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FIRE),

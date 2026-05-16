@@ -18,19 +18,21 @@ public class RunewordSuppress extends Runeword {
 
 	@Override
 	public boolean onAboutToHitEntity(World world, EntityLivingBase caster, EntityLivingBase target, EnumHand hand, ItemStack sword, SpellModifiers modifiers, boolean charged) {
-		int amplifier = 0;
-		if (target.isPotionActive(ASPotions.magical_exhaustion)) {
-			//noinspection ConstantConditions
-			amplifier = target.getActivePotionEffect(ASPotions.magical_exhaustion).getAmplifier() + 1;
+        if (!world.isRemote) {
+            int amplifier = 0;
+            if (target.isPotionActive(ASPotions.magical_exhaustion)) {
+                //noinspection ConstantConditions
+                amplifier = target.getActivePotionEffect(ASPotions.magical_exhaustion).getAmplifier() + 1;
 
-			// if the effect stacks, this backfires on the caster too for a smaller extent
-			target.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion,  (int)(getProperty(EFFECT_DURATION).floatValue()* 0.5f), 0));
-		}
+                // if the effect stacks, this backfires on the caster too for a smaller extent
+                target.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, (int) (getProperty(EFFECT_DURATION).floatValue() * 0.5f), 0));
+            }
 
-		// affect target
-		target.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, getProperty(EFFECT_DURATION).intValue(), amplifier));
+            // affect target
+            target.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, getProperty(EFFECT_DURATION).intValue(), amplifier));
 
-		spendCharge(sword);
+            spendCharge(sword);
+        }
 		return true;
 	}
 }

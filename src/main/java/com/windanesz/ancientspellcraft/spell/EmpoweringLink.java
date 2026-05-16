@@ -37,7 +37,7 @@ public class EmpoweringLink extends SpellRayAS {
 
 	private static UUID update(EntityPlayer player, UUID uuid) {
 
-		if (player != null && player.ticksExisted % 60 == 0 && uuid != null) {
+		if (player != null && player.ticksExisted % 60 == 0 && uuid != null && !player.world.isRemote) {
 			EntityPlayer empoweredPlayer = player.world.getPlayerEntityByUUID(uuid);
 			if (empoweredPlayer != null) {
 

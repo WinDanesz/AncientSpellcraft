@@ -46,12 +46,15 @@ public class TurnUndead extends SpellRay {
 			EntityLivingBase targetEntity = (EntityLivingBase) target;
 			int bonusAmplifier = SpellBuff.getStandardBonusAmplifier(modifiers.get(SpellModifiers.POTENCY));
 
-			NBTTagCompound entityNBT = targetEntity.getEntityData();
-			if (entityNBT != null) { entityNBT.setUniqueId(Intimidate.NBT_KEY, caster.getUniqueID()); }
-
-			targetEntity.addPotionEffect(new PotionEffect(WizardryPotions.fear,
-					(int) (getProperty(EFFECT_DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade)),
-					getProperty(EFFECT_STRENGTH).intValue() + bonusAmplifier));
+            if (!world.isRemote) {
+                NBTTagCompound entityNBT = targetEntity.getEntityData();
+                if (entityNBT != null) {
+                    entityNBT.setUniqueId(Intimidate.NBT_KEY, caster.getUniqueID());
+                }
+                targetEntity.addPotionEffect(new PotionEffect(WizardryPotions.fear,
+                        (int) (getProperty(EFFECT_DURATION).floatValue() * modifiers.get(WizardryItems.duration_upgrade)),
+                        getProperty(EFFECT_STRENGTH).intValue() + bonusAmplifier));
+            }
 			
 			if (world.isRemote) {
 				origin = targetEntity.getPositionEyes(1);

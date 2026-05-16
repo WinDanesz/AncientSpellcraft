@@ -30,16 +30,17 @@ public class RevealUndead extends Spell {
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		double radius = getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
 		int count = 0;
-		for (EntityLivingBase entity : EntityUtils.getEntitiesWithinRadius(radius, caster.posX, caster.posY, caster.posZ, world, EntityLivingBase.class)) {
-			if (ASUtils.isEntityConsideredUndead(entity)) {
-				entity.addPotionEffect(new PotionEffect(MobEffects.GLOWING, (int)(getProperty(EFFECT_DURATION).intValue() * modifiers.get(WizardryItems.duration_upgrade)), 0));
-				count++;
-			}
-		}
 
-		if (!world.isRemote) {
+        if (!world.isRemote) {
+            for (EntityLivingBase entity : EntityUtils.getEntitiesWithinRadius(radius, caster.posX, caster.posY, caster.posZ, world, EntityLivingBase.class)) {
+                if (ASUtils.isEntityConsideredUndead(entity)) {
+                    entity.addPotionEffect(new PotionEffect(MobEffects.GLOWING, (int)(getProperty(EFFECT_DURATION).intValue() * modifiers.get(WizardryItems.duration_upgrade)), 0));
+                    count++;
+                }
+            }
 			caster.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:reveal_undead.count", count), false);
-		} else {
+		}
+        if (world.isRemote) {
 			Vec3d origin = caster.getPositionEyes(1);
 			for (int i = 0; i < 30; i++) {
 				double x = origin.x - 1 + world.rand.nextDouble() * 2;

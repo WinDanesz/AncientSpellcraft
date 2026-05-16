@@ -26,9 +26,10 @@ public class RunewordExpose extends Runeword {
 		}
 
 		// affect target
-		target.addPotionEffect(new PotionEffect(ASPotions.degraded_armor, getProperty(EFFECT_DURATION).intValue(), amplifier));
-
-		spendCharge(sword);
+        if (!world.isRemote) {
+            target.addPotionEffect(new PotionEffect(ASPotions.degraded_armor, getProperty(EFFECT_DURATION).intValue(), amplifier));
+            spendCharge(sword);
+        }
 		return true;
 	}
 }

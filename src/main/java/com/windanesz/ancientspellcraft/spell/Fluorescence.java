@@ -27,7 +27,7 @@ public class Fluorescence extends SpellRayAS {
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit,
 			@Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 
-		if (target instanceof EntityLivingBase) {
+		if (!world.isRemote && target instanceof EntityLivingBase) {
 			((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.GLOWING, getProperty(EFFECT_DURATION).intValue(), 0));
 			return true;
 		}

@@ -30,21 +30,24 @@ public class WizardShield extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		int amplifier = 0;
+        if (!world.isRemote) {
+            int amplifier = 0;
 
-		if (caster.isPotionActive(ASPotions.wizard_shield)) {
-			PotionEffect effect = caster.getActivePotionEffect(ASPotions.wizard_shield);
-			if (effect != null) {
-				amplifier = effect.getAmplifier();
-			}
-		}
+            if (caster.isPotionActive(ASPotions.wizard_shield)) {
+                PotionEffect effect = caster.getActivePotionEffect(ASPotions.wizard_shield);
+                if (effect != null) {
+                    amplifier = effect.getAmplifier();
+                }
+            }
 
-		if (ticksInUse <= 80 && ticksInUse % 2 == 0) {
-			caster.addPotionEffect(new PotionEffect(ASPotions.wizard_shield, 80, amplifier + 1));
-		} else if (ticksInUse % 40 == 0 && amplifier <= 15) {
-			caster.addPotionEffect(new PotionEffect(ASPotions.wizard_shield, 80, amplifier + 1));
-		}
-		this.playSound(world, caster, ticksInUse, -1, modifiers);
+            if (ticksInUse <= 80 && ticksInUse % 2 == 0) {
+                caster.addPotionEffect(new PotionEffect(ASPotions.wizard_shield, 80, amplifier + 1));
+            } else if (ticksInUse % 40 == 0 && amplifier <= 15) {
+                caster.addPotionEffect(new PotionEffect(ASPotions.wizard_shield, 80, amplifier + 1));
+            }
+        }
+
+        this.playSound(world, caster, ticksInUse, -1, modifiers);
 
 		return true;
 	}

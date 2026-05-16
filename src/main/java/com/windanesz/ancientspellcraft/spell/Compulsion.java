@@ -63,7 +63,10 @@ public class Compulsion extends SpellRayAS {
 				livingEntity.setRevengeTarget(null);
 				livingEntity.setAttackTarget(null);
 
-				((EntityLivingBase)target).addPotionEffect(new PotionEffect(WizardryPotions.mind_trick, 200, 0));
+                if (!world.isRemote) {
+                    ((EntityLivingBase) target).addPotionEffect(new PotionEffect(WizardryPotions.mind_trick, 200, 0));
+                }
+
 				if (hasWhisperingVeil) {
 					player.sendStatusMessage(new TextComponentTranslation("spell.ancientspellcraft:compulsion.target_selected_whispering_veil", target.getName()), true);
 				} else {

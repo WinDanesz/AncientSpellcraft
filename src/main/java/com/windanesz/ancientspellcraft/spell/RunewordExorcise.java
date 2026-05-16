@@ -22,7 +22,7 @@ public class RunewordExorcise extends Runeword {
 
 	@Override
 	public boolean onAboutToHitEntity(World world, EntityLivingBase caster, EntityLivingBase target, EnumHand hand, ItemStack sword, SpellModifiers modifiers, boolean charged) {
-		if (ASUtils.isEntityConsideredUndead(target)) {
+		if (!world.isRemote && !ASUtils.isEntityConsideredUndead(target)) {
 			target.setFire(getProperty(EFFECT_DURATION).intValue() / 20);
 			target.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS, getProperty(EFFECT_DURATION).intValue()));
 		}
