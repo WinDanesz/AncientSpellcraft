@@ -22,7 +22,7 @@ public class PotionCurseWard extends PotionMagicEffect {
 
 	@SubscribeEvent
 	public static void onPotionApplicableEvent(PotionEvent.PotionApplicableEvent event) {
-		if (!event.getEntityLiving().world.isRemote && event.getEntityLiving() != null && event.getEntityLiving().isPotionActive(ASPotions.curse_ward)) {
+		if (event.getEntityLiving() != null && !event.getEntityLiving().world.isRemote && event.getEntityLiving().isPotionActive(ASPotions.curse_ward)) {
 			if (event.getPotionEffect().getPotion() instanceof Curse) {
 				PotionEffect curseWard = event.getEntityLiving().getActivePotionEffect(ASPotions.curse_ward);
                 if (curseWard != null) {
@@ -34,5 +34,4 @@ public class PotionCurseWard extends PotionMagicEffect {
 			}
 		}
 	}
-
 }
