@@ -32,6 +32,9 @@ public class PotionWizardShield extends PotionMagicEffectAS {
 
 	@Override
 	public void performEffect(EntityLivingBase entity, int amplifier) {
+        if (entity.world.isRemote) {
+            return;
+        }
 
 		super.performEffect(entity, amplifier);
 

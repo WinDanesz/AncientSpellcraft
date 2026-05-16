@@ -56,6 +56,10 @@ public class PotionShrinkage extends PotionMagicEffectAS {
 
 	@Override
 	public void performEffect(EntityLivingBase entitylivingbase, int strength) {
+        if (entitylivingbase.world.isRemote) {
+            return;
+        }
+
 		if (strength > MAX_LEVEL) {
 			if (entitylivingbase.isPotionActive(ASPotions.shrinkage)) {
 				PotionEffect effect = entitylivingbase.getActivePotionEffect(ASPotions.shrinkage);

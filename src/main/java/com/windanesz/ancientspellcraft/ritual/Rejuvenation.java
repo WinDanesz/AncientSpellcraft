@@ -45,21 +45,23 @@ public class Rejuvenation extends Ritual {
 	@Override
 	public void effect(World world, EntityPlayer caster, TileRune centerPiece) {
 		super.effect(world, caster, centerPiece);
-		List<EntityLivingBase> entities = EntityUtils.getEntitiesWithinRadius(1.5f, centerPiece.getX(), centerPiece.getY(), centerPiece.getPos().getZ(), world, EntityLivingBase.class);
-		for (EntityLivingBase entityLivingBase : entities) {
-			if (!entityLivingBase.isPotionActive(MobEffects.REGENERATION)) {
-				entityLivingBase.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 60, 1));
-			}
-			if (entityLivingBase.isPotionActive(MobEffects.WITHER)) {
-				entityLivingBase.removePotionEffect(MobEffects.WITHER);
-			}
-			if (entityLivingBase.isPotionActive(MobEffects.POISON)) {
-				entityLivingBase.removePotionEffect(MobEffects.POISON);
-			}
-			if (entityLivingBase.isPotionActive(MobEffects.NAUSEA)) {
-				entityLivingBase.removePotionEffect(MobEffects.NAUSEA);
-			}
-		}
+        if (!world.isRemote) {
+            List<EntityLivingBase> entities = EntityUtils.getEntitiesWithinRadius(1.5f, centerPiece.getX(), centerPiece.getY(), centerPiece.getPos().getZ(), world, EntityLivingBase.class);
+            for (EntityLivingBase entityLivingBase : entities) {
+                if (!entityLivingBase.isPotionActive(MobEffects.REGENERATION)) {
+                    entityLivingBase.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 60, 1));
+                }
+                if (entityLivingBase.isPotionActive(MobEffects.WITHER)) {
+                    entityLivingBase.removePotionEffect(MobEffects.WITHER);
+                }
+                if (entityLivingBase.isPotionActive(MobEffects.POISON)) {
+                    entityLivingBase.removePotionEffect(MobEffects.POISON);
+                }
+                if (entityLivingBase.isPotionActive(MobEffects.NAUSEA)) {
+                    entityLivingBase.removePotionEffect(MobEffects.NAUSEA);
+                }
+            }
+        }
 		if (world.isRemote) {
 			if (world.getTotalWorldTime() % 5 == 0) {
 				Random rand = world.rand;

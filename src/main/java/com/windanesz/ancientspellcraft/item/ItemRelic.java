@@ -270,18 +270,22 @@ public class ItemRelic extends Item {
 			((EntityPlayer) entityLiving).getCooldownTracker().setCooldown(this, 60);
 			RelicType relicType = getRelicType(itemStack);
 			if (relicType == RelicType.INCANTATION) {
-				Potion potion = getIncantationFromRelic(itemStack);
-				int duration = itemStack.getTagCompound().getInteger("duration");
-				entityLiving.addPotionEffect(new PotionEffect(potion, duration, 0));
-				worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, ASSounds.RELIC_ACTIVATE_2, SoundCategory.NEUTRAL, 0.9F, 1F);
+                if (!worldIn.isRemote) {
+                    Potion potion = getIncantationFromRelic(itemStack);
+                    int duration = itemStack.getTagCompound().getInteger("duration");
+                    entityLiving.addPotionEffect(new PotionEffect(potion, duration, 0));
+                    worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, ASSounds.RELIC_ACTIVATE_2, SoundCategory.NEUTRAL, 0.9F, 1F);
+                }
 				return ItemStack.EMPTY;
 
 			} else if (relicType == RelicType.POWER) {
-				Potion potion = getPowerFromRelic(itemStack);
-				int duration = itemStack.getTagCompound().getInteger("duration");
-				entityLiving.addPotionEffect(new PotionEffect(potion, duration, 0));
-				worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, ASSounds.RELIC_ACTIVATE_2, SoundCategory.NEUTRAL, 0.9F, 1F);
-				return ItemStack.EMPTY;
+                if (!worldIn.isRemote) {
+                    Potion potion = getPowerFromRelic(itemStack);
+                    int duration = itemStack.getTagCompound().getInteger("duration");
+                    entityLiving.addPotionEffect(new PotionEffect(potion, duration, 0));
+                    worldIn.playSound(null, entityLiving.posX, entityLiving.posY, entityLiving.posZ, ASSounds.RELIC_ACTIVATE_2, SoundCategory.NEUTRAL, 0.9F, 1F);
+                }
+                return ItemStack.EMPTY;
 
 			} else if (relicType == RelicType.ENCHANTMENT) {
 				if (!entityLiving.getHeldItemOffhand().isEmpty()) {

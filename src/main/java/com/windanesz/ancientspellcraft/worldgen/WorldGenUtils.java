@@ -29,7 +29,10 @@ public class WorldGenUtils {
 	private static final String EVIL_WARLOCK_TAG = "warlock";
 
 	public static void spawnEntityByType(World world, String entityType, ItemWizardArmour.ArmourClass armourClass, BlockPos origin, Vec3d vec, Set<BlockPos> towerBlocks, Element element, boolean isSkeletonGhost) {
-		switch (entityType) {
+        if (world.isRemote) {
+            return;
+        }
+        switch (entityType) {
 			case WIZARD_DATA_BLOCK_TAG:
 			case EVIL_WARLOCK_TAG:
 				spawnClassWizard(world, armourClass, origin, vec, towerBlocks);

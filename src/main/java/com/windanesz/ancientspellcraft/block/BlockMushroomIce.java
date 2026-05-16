@@ -24,8 +24,7 @@ public class BlockMushroomIce extends BlockMagicMushroom {
 			@Nullable Block block, BlockPos pos, DamageSource source, float damage, IBlockState state,
 			@Nullable EntityLivingBase caster, EntityLivingBase target, float potency) {
 
-		if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, target)) {
-
+		if (!world.isRemote && !MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, target)) {
 			target.addPotionEffect(new PotionEffect(WizardryPotions.frost, POTION_DURATION, 1));
 			EntityUtils.attackEntityWithoutKnockback(target, source, damage);
 			return true;

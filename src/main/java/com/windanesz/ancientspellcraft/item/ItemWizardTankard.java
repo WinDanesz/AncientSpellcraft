@@ -69,10 +69,13 @@ public class ItemWizardTankard extends ItemASArtefact implements ITickableArtefa
 				CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) entityplayer, stack);
 			}
 
-			entityLiving.addPotionEffect(new PotionEffect(ASPotions.mana_regeneration, 400, 7));
+            if (!worldIn.isRemote) {
+                entityLiving.addPotionEffect(new PotionEffect(ASPotions.mana_regeneration, 400, 7));
+                // Reset mana on server only
+                setMana(stack, 0);
+            }
 		}
 
-		setMana(stack, 0);
 		return stack;
 	}
 

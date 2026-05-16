@@ -31,14 +31,14 @@ public interface IDevoritium {
 	}
 
 	default void onEntityWalkDelegate(World worldIn, BlockPos pos, Entity entityIn) {
-		if (entityIn instanceof EntityLivingBase) {
+		if (!worldIn.isRemote && entityIn instanceof EntityLivingBase) {
 			((EntityLivingBase) entityIn).addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, 40, 2));
 			damageSummonedCreature(entityIn, 1);
 		}
 	}
 
 	default void damageSummonedCreature(Entity entityIn, float multiplier) {
-		if (entityIn instanceof ISummonedCreature || entityIn instanceof EntitySpiritWolf || entityIn instanceof EntitySpiritBear) {
+		if (!entityIn.world.isRemote && entityIn instanceof ISummonedCreature || entityIn instanceof EntitySpiritWolf || entityIn instanceof EntitySpiritBear) {
 			EntityUtils.attackEntityWithoutKnockback(entityIn, DamageSource.GENERIC, multiplier > 0 ? (DEFAULT_SUMMON_DAMAGE * multiplier) : DEFAULT_SUMMON_DAMAGE);
 		}
 	}
@@ -54,7 +54,7 @@ public interface IDevoritium {
 	}
 
 	default void hitEntityDelegate(Entity attacker, Entity target, int bonusAmplifier, int bonusDuration) {
-		if (target instanceof EntityLivingBase) {
+		if (!target.world.isRemote && target instanceof EntityLivingBase) {
 			EntityLivingBase entityLivingBase = (EntityLivingBase) target;
 			if (!entityLivingBase.isPotionActive(ASPotions.magical_exhaustion)) {
 				entityLivingBase.addPotionEffect(new PotionEffect(ASPotions.magical_exhaustion, 30 + bonusDuration, + bonusAmplifier));
@@ -78,7 +78,7 @@ public interface IDevoritium {
 	}
 
 	default void onUpdateDelegate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (worldIn.getTotalWorldTime() % 20 == 0) {
+		if (!worldIn.isRemote && worldIn.getTotalWorldTime() % 20 == 0) {
 
 			if (entityIn instanceof EntityPlayer) {
 				if (isSelected || ((EntityPlayer) entityIn).getHeldItemOffhand() == stack) {

@@ -20,6 +20,9 @@ public class PotionChaos extends PotionMagicEffectAS {
 
 	@Override
 	public void performEffect(EntityLivingBase entity, int strength) {
+        if (entity.world.isRemote) {
+            return;
+        }
 		switch (strength) {
 			case 0:
 				entity.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 60, 3));

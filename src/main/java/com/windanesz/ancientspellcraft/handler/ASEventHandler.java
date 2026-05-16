@@ -378,7 +378,7 @@ public class ASEventHandler {
 
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 
-			if (player.isPotionActive(ASPotions.wizard_shield)) {
+			if (!player.world.isRemote && player.isPotionActive(ASPotions.wizard_shield)) {
 				PotionEffect effect = player.getActivePotionEffect(ASPotions.wizard_shield);
 				if (effect != null) {
 					float oldAmount = event.getAmount();
@@ -423,7 +423,7 @@ public class ASEventHandler {
 				}
 
 				if (artefact == ASItems.amulet_time_slow && !player.getCooldownTracker().hasCooldown(ASItems.amulet_time_slow)) {
-					if ((player.getHealth() <= 6 || (player.getHealth() - event.getAmount() <= 6))) {
+					if (!player.world.isRemote && (player.getHealth() <= 6 || (player.getHealth() - event.getAmount() <= 6))) {
 						player.addPotionEffect(new PotionEffect(WizardryPotions.slow_time, 120));
 						player.getCooldownTracker().setCooldown(ASItems.amulet_time_slow, 9600);
 					}
@@ -475,9 +475,9 @@ public class ASEventHandler {
 						}
 					}
 				} else if (artefact == ASItems.ring_berserker) {
-					if (!player.world.isRemote && (player.getHealth() <= 6 || (player.getHealth() - event.getAmount() <= 6))) {
+					if ((player.getHealth() <= 6 || (player.getHealth() - event.getAmount() <= 6))) {
 
-						if (!player.isPotionActive(MobEffects.STRENGTH)) {
+						if (!player.world.isRemote && !player.isPotionActive(MobEffects.STRENGTH)) {
 							player.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 300)); // 15 seconds of strength
 						}
 					}
@@ -492,18 +492,24 @@ public class ASEventHandler {
 					}
 				} else if (artefact == ASItems.amulet_shield && !player.getCooldownTracker().hasCooldown(ASItems.amulet_shield)) {
 					if (event.getAmount() > 1) {
-						player.addPotionEffect(new PotionEffect(ASPotions.wizard_shield, 100, 15));
+                        if (!player.world.isRemote) {
+                            player.addPotionEffect(new PotionEffect(ASPotions.wizard_shield, 100, 15));
+                        }
 						player.getCooldownTracker().setCooldown(ASItems.amulet_shield, 3600); // 3 mins cd
 					}
 				} else if (artefact == ASItems.belt_soul_scorch && event.getSource().getImmediateSource() instanceof EntityLivingBase) {
-					((EntityLivingBase) event.getSource().getImmediateSource()).addPotionEffect(new PotionEffect(ASPotions.soul_scorch, 60));
+					if (!player.world.isRemote) {
+                        ((EntityLivingBase) event.getSource().getImmediateSource()).addPotionEffect(new PotionEffect(ASPotions.soul_scorch, 60));
+                    }
 				} else if (artefact == ASItems.ring_undeath && !player.isPotionActive(WizardryPotions.curse_of_undeath)) {
 					if (player.getHealth() - event.getAmount() <= 0 && !player.getCooldownTracker().hasCooldown(ASItems.ring_undeath)) {
-						player.addPotionEffect(new PotionEffect(WizardryPotions.curse_of_undeath, Integer.MAX_VALUE, 0));
-						player.getCooldownTracker().setCooldown(ASItems.ring_undeath, 6000);
-						ASUtils.sendMessage(player, "item.ancientspellcraft:ring_undeath.resurrect", true);
-						event.setAmount(0);
-						player.heal(player.getMaxHealth() * Settings.generalSettings.ring_of_undeath_heal_amount);
+                        if (!player.world.isRemote) {
+                            player.addPotionEffect(new PotionEffect(WizardryPotions.curse_of_undeath, Integer.MAX_VALUE, 0));
+                            ASUtils.sendMessage(player, "item.ancientspellcraft:ring_undeath.resurrect", true);
+                            player.heal(player.getMaxHealth() * Settings.generalSettings.ring_of_undeath_heal_amount);
+                        }
+                        player.getCooldownTracker().setCooldown(ASItems.ring_undeath, 6000);
+                        event.setAmount(0);
 					}
 				} else if (artefact == ASItems.amulet_elemental_defense) {
 					List<ItemStack> amuletz = ASBaublesIntegration.getEquippedArtefactStacks(player, ItemArtefact.Type.AMULET);
@@ -553,56 +559,54 @@ public class ASEventHandler {
 			}
 		}
 
-		{
-			if (!event.getEntity().world.isRemote && event.getEntityLiving().isPotionActive(ASPotions.martyr_beneficial) && event.getEntityLiving() instanceof EntityPlayer
-					&& !event.getSource().isUnblockable() && !(event.getSource() instanceof IElementalDamage
-					&& ((IElementalDamage) event.getSource()).isRetaliatory())) {
+        if (!event.getEntity().world.isRemote && event.getEntityLiving().isPotionActive(ASPotions.martyr_beneficial) && event.getEntityLiving() instanceof EntityPlayer
+                && !event.getSource().isUnblockable() && !(event.getSource() instanceof IElementalDamage
+                && ((IElementalDamage) event.getSource()).isRetaliatory()))
+        {
 
-				EntityPlayer player = (EntityPlayer) event.getEntityLiving(); // the beneficial who is attacked
-				WizardData data = WizardData.get(player);
+            EntityPlayer player = (EntityPlayer) event.getEntityLiving(); // the beneficial who is attacked
+            WizardData data = WizardData.get(player);
 
-				if (data != null) {
+            if (data != null) {
 
-					for (Iterator<UUID> iterator = Martyr.getMartyrBoundEntities(data).iterator(); iterator.hasNext(); ) {
+                for (Iterator<UUID> iterator = Martyr.getMartyrBoundEntities(data).iterator(); iterator.hasNext(); ) {
 
-						Entity entity = EntityUtils.getEntityByUUID(player.world, iterator.next()); // the target who will take the damage instead
+                    Entity entity = EntityUtils.getEntityByUUID(player.world, iterator.next()); // the target who will take the damage instead
 
-						if (entity == null) {iterator.remove();}
+                    if (entity == null) {iterator.remove();}
 
-						if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isPotionActive(ASPotions.martyr)) {
-							// Retaliatory effect
-							if (DamageSafetyChecker.attackEntitySafely(entity, MagicDamage.causeDirectMagicDamage(player,
-											MagicDamage.DamageType.MAGIC, true), event.getAmount(), event.getSource().getDamageType(),
-									DamageSource.MAGIC, false)) {
-								// Sound only plays if the damage succeeds
-								entity.playSound(WizardrySounds.SPELL_CURSE_OF_SOULBINDING_RETALIATE, 1.0F, player.world.rand.nextFloat() * 0.2F + 1.0F);
-							}
-							// cancel the damage
-							event.setCanceled(true);
-						}
-					}
+                    if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isPotionActive(ASPotions.martyr)) {
+                        // Retaliatory effect
+                        if (DamageSafetyChecker.attackEntitySafely(entity, MagicDamage.causeDirectMagicDamage(player,
+                                        MagicDamage.DamageType.MAGIC, true), event.getAmount(), event.getSource().getDamageType(),
+                                DamageSource.MAGIC, false)) {
+                            // Sound only plays if the damage succeeds
+                            entity.playSound(WizardrySounds.SPELL_CURSE_OF_SOULBINDING_RETALIATE, 1.0F, player.world.rand.nextFloat() * 0.2F + 1.0F);
+                        }
+                        // cancel the damage
+                        event.setCanceled(true);
+                    }
+                }
 
-				}
-			}
+            }
+        }
 
-			// Static weapon
-			if (event.getSource().getTrueSource() instanceof EntityLivingBase) {
+        // Static weapon
+        if (event.getSource().getTrueSource() instanceof EntityLivingBase) {
 
-				EntityLivingBase attacker = (EntityLivingBase) event.getSource().getTrueSource();
+            EntityLivingBase attacker = (EntityLivingBase) event.getSource().getTrueSource();
 
-				// Players can only ever attack with their main hand, so this is the right method to use here.
-				if (!attacker.getHeldItemMainhand().isEmpty() && ImbueWeapon.isSword(attacker.getHeldItemMainhand())) {
+            // Players can only ever attack with their main hand, so this is the right method to use here.
+            if (!attacker.getHeldItemMainhand().isEmpty() && ImbueWeapon.isSword(attacker.getHeldItemMainhand())) {
 
-					int level = EnchantmentHelper.getEnchantmentLevel(ASEnchantments.static_charge,
-							attacker.getHeldItemMainhand());
+                int level = EnchantmentHelper.getEnchantmentLevel(ASEnchantments.static_charge,
+                        attacker.getHeldItemMainhand());
 
-					if (level > 0 && !MagicDamage.isEntityImmune(MagicDamage.DamageType.SHOCK, event.getEntityLiving())) {
-						event.setAmount(event.getAmount() + level * 2);
-					}
-				}
-			}
-		}
-
+                if (level > 0 && !MagicDamage.isEntityImmune(MagicDamage.DamageType.SHOCK, event.getEntityLiving())) {
+                    event.setAmount(event.getAmount() + level * 2);
+                }
+            }
+        }
 	}
 
 	@SubscribeEvent
@@ -639,7 +643,7 @@ public class ASEventHandler {
 			}
 		}
 
-		if (event.getEntity() instanceof EntityPlayer) {
+		if (!event.getEntityLiving().world.isRemote && event.getEntity() instanceof EntityPlayer) {
 
 			EntityPlayer player = (EntityPlayer) event.getEntity();
 
@@ -1100,24 +1104,24 @@ public class ASEventHandler {
 			for (ItemArtefact artefact : getActiveArtefacts(player)) {
 				if (artefact == ASItems.ring_shivering && event.getSpell().getElement() == Element.ICE && !player.getCooldownTracker().hasCooldown(ASItems.ring_shivering)) {
 					player.getCooldownTracker().setCooldown(ASItems.ring_shivering, 100);
-					for (EntityLivingBase currTarget : EntityUtils.getEntitiesWithinRadius(4, player.posX, player.posY, player.posZ, player.world, EntityLivingBase.class)) {
+                    if (!player.world.isRemote) {
+                        for (EntityLivingBase currTarget : EntityUtils.getEntitiesWithinRadius(4, player.posX, player.posY, player.posZ, player.world, EntityLivingBase.class)) {
 
-						if (currTarget == player || AllyDesignationSystem.isAllied(player, currTarget)) {
-							continue;
-						}
+                            if (currTarget == player || AllyDesignationSystem.isAllied(player, currTarget)) {
+                                continue;
+                            }
 
-						if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, currTarget)) {
-							EntityUtils.attackEntityWithoutKnockback(currTarget, MagicDamage.causeDirectMagicDamage(player, MagicDamage.DamageType.FROST), 3.5f);
-							currTarget.addPotionEffect(new PotionEffect(WizardryPotions.frost, 60, 0));
-						}
+                            if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, currTarget)) {
+                                EntityUtils.attackEntityWithoutKnockback(currTarget, MagicDamage.causeDirectMagicDamage(player, MagicDamage.DamageType.FROST), 3.5f);
+                                currTarget.addPotionEffect(new PotionEffect(WizardryPotions.frost, 60, 0));
+                            }
 
-						double angle = (getAngleBetweenEntities(player, currTarget) + 90) * Math.PI / 180;
-						double distance = player.getDistance(currTarget) - 4;
-						currTarget.motionX += Math.min(1 / (distance * distance), 1) * -1 * Math.cos(angle);
-						currTarget.motionZ += Math.min(1 / (distance * distance), 1) * -1 * Math.sin(angle);
-
-					}
-					if (player.world.isRemote) {
+                            double angle = (getAngleBetweenEntities(player, currTarget) + 90) * Math.PI / 180;
+                            double distance = player.getDistance(currTarget) - 4;
+                            currTarget.motionX += Math.min(1 / (distance * distance), 1) * -1 * Math.cos(angle);
+                            currTarget.motionZ += Math.min(1 / (distance * distance), 1) * -1 * Math.sin(angle);
+                        }
+                    } else {
 						double particleX, particleZ;
 
 						for (int i = 0; i < 10; i++) {
@@ -1320,9 +1324,11 @@ public class ASEventHandler {
 							event.getModifiers().set(SpellModifiers.POTENCY,
 									event.getModifiers().get(SpellModifiers.POTENCY) * 1.15f, false);
 							// Extinguish the player
-							player.extinguish();
-							// Apply fire resistance for 2 seconds (40 ticks)
-							player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 40));
+                            if (!player.world.isRemote) {
+                                player.extinguish();
+                                // Apply fire resistance for 2 seconds (40 ticks)
+                                player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 40));
+                            }
 						}
 					}
 				}
@@ -1614,7 +1620,7 @@ public class ASEventHandler {
 	 */
 	private static void handleRingOfHealerEffect(EntityPlayer player, Spell spell, SpellModifiers modifiers) {
 		// Check if player has the ring of healer artefact active
-		if (isArtefactActive(player, ASItems.ring_healer)) {
+		if (!player.world.isRemote && ItemArtefact.isArtefactActive(player, ASItems.ring_healer)) {
 			// Check if the spell is a buff spell
 			if (spell.getType() == SpellType.BUFF || spell instanceof SpellBuff) {
 				// Get nearby allies using AllyDesignationSystem
@@ -1665,6 +1671,9 @@ public class ASEventHandler {
 	 * Applies the specific effect for each cloak type
 	 */
 	private static void applyCloakEffect(EntityPlayer player, Element element, Spell spell) {
+        if (player.world.isRemote) {
+            return;
+        }
 		switch (element) {
 			case EARTH:
 				// Cloak of Verdure: +15% Earth spell potency, cleanse poison, chance to poison nearby creatures
@@ -1850,7 +1859,7 @@ public class ASEventHandler {
 
 				if (artefact == ASItems.ring_prismarine) {
 
-					if (player.isBurning()) {
+					if (!player.world.isRemote && !player.isBurning()) {
 						float i = player.getCooldownTracker().getCooldown(ASItems.ring_prismarine, 0.0F);
 						if (i == 0) {
 							player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 120));
