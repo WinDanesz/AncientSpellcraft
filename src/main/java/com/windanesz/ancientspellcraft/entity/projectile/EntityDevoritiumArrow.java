@@ -34,8 +34,10 @@ public class EntityDevoritiumArrow extends EntityArrow {
 
 	protected void arrowHit(EntityLivingBase living) {
 		super.arrowHit(living);
-		PotionEffect potioneffect = new PotionEffect(ASPotions.magical_exhaustion, 60, 2);
-		living.addPotionEffect(potioneffect);
+        if (!this.world.isRemote) {
+            PotionEffect potioneffect = new PotionEffect(ASPotions.magical_exhaustion, 60, 2);
+            living.addPotionEffect(potioneffect);
+        }
 	}
 
 	@Override

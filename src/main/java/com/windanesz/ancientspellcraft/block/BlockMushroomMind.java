@@ -31,7 +31,7 @@ public class BlockMushroomMind extends BlockMagicMushroom {
 			@Nullable EntityLivingBase caster, EntityLivingBase target, float potency) {
 
 		// affects players with nausea and weakness
-		if (target instanceof EntityPlayer) {
+		if (!world.isRemote && target instanceof EntityPlayer) {
 			target.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, (int) POTION_DURATION / 2, 0));
 			target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, (int) POTION_DURATION / 2, 0));
 			return true;

@@ -67,7 +67,7 @@ public class ItemGlyphAuraArtefact extends ItemGlyphArtefact implements ITickabl
 
 	public static void applyPotionIfNotActive(EntityPlayer player, EntityLivingBase entity, Potion potion, int duration, int amplifier, boolean damaging) {
 		//noinspection DataFlowIssue
-		if (!entity.isPotionActive(potion) || entity.getActivePotionEffect(potion).getAmplifier() < amplifier) {
+		if (!entity.world.isRemote && (!entity.isPotionActive(potion) || entity.getActivePotionEffect(potion).getAmplifier() < amplifier)) {
 			if (damaging && entity.getRevengeTarget() != player) {
 				EntityUtils.attackEntityWithoutKnockback(entity, MagicDamage.causeDirectMagicDamage(player, MagicDamage.DamageType.MAGIC), 0.01f);
 			}

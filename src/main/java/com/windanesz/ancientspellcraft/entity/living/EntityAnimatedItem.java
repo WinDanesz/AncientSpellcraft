@@ -580,7 +580,7 @@ public class EntityAnimatedItem extends EntitySummonedCreature implements ISpell
 				iceLevel++;
 			}
 
-			if (iceLevel > 0 && !MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, livingTarget)) {
+			if (!this.world.isRemote && iceLevel > 0 && !MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, livingTarget)) {
 				livingTarget.addPotionEffect(new PotionEffect(WizardryPotions.frost, iceLevel * 200, 0));
 			}
 

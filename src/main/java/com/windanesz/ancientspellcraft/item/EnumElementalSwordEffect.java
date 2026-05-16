@@ -79,14 +79,15 @@ public enum EnumElementalSwordEffect {
 
 		@Override
 		void greaterPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
+            if (!wielder.world.isRemote) {
+                // Nether special
+                wielder.addPotionEffect(new PotionEffect(WizardryPotions.fireskin, 160, 0));
+                wielder.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 160, 0));
 
-			// Nether special
-			wielder.addPotionEffect(new PotionEffect(WizardryPotions.fireskin, 160, 0));
-			wielder.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 160, 0));
-
-			if (target.isBurning()) {
-				target.addPotionEffect(new PotionEffect(ASPotions.soul_scorch, 100, 0));
-			}
+                if (target.isBurning()) {
+                    target.addPotionEffect(new PotionEffect(ASPotions.soul_scorch, 100, 0));
+                }
+            }
 		}
 	},
 
@@ -96,6 +97,10 @@ public enum EnumElementalSwordEffect {
 
 		@Override
 		void lesserPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder, boolean charged) {
+            if (target.world.isRemote) {
+                return;
+            }
+
 			int duration = 40;
 			int amplifier = 0;
 
@@ -133,6 +138,9 @@ public enum EnumElementalSwordEffect {
 
 		@Override
 		void greaterPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
+            if (target.world.isRemote) {
+                return;
+            }
 
 			for (EntityLivingBase currTarget : EntityUtils.getEntitiesWithinRadius(4, target.posX, target.posY, target.posZ, target.world, EntityLivingBase.class)) {
 
@@ -157,7 +165,7 @@ public enum EnumElementalSwordEffect {
 		void onUpdateEffect(ItemStack stack, World world, Entity entity, int slot, boolean isHeld) {
 			if (world.getTotalWorldTime() % 20 == 0 && entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
-				if (player.onGround && hasPosChanged(player)) {
+				if (!world.isRemote && player.onGround && hasPosChanged(player)) {
 					if (ItemBattlemageSword.hasManaStorage(stack) && !((IManaStoringItem) stack.getItem()).isManaFull(stack)) {
 						((IManaStoringItem) stack.getItem()).rechargeMana(stack, 1);
 					} else if (player.getHeldItemOffhand().getItem() instanceof IManaStoringItem) {
@@ -203,6 +211,9 @@ public enum EnumElementalSwordEffect {
 
 		@Override
 		void lesserPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder, boolean charged) {
+            if (target.world.isRemote) {
+                return;
+            }
 			target.addPotionEffect(new PotionEffect(MobEffects.WITHER, 60, 1));
 			wielder.heal(0.5f);
 			if (target.getHealth() == 0f) {
@@ -214,6 +225,9 @@ public enum EnumElementalSwordEffect {
 
 		@Override
 		void greaterPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
+            if (target.world.isRemote) {
+                return;
+            }
 
 			EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(wielder, MagicDamage.DamageType.WITHER), 2.5f);
 			wielder.heal(1.5f);
@@ -257,6 +271,9 @@ public enum EnumElementalSwordEffect {
 
 		@Override
 		void lesserPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder, boolean charged) {
+            if (target.world.isRemote) {
+                return;
+            }
 			int duration = 80;
 			int amplifier = 0;
 
@@ -350,7 +367,7 @@ public enum EnumElementalSwordEffect {
 
 		@Override
 		void lesserPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder, boolean charged) {
-			if (ASUtils.isEntityConsideredUndead(target)) {
+			if (!target.world.isRemote && ASUtils.isEntityConsideredUndead(target)) {
 
 				// sets undeads on fire
 				target.setFire(2);
@@ -365,6 +382,9 @@ public enum EnumElementalSwordEffect {
 
 		@Override
 		void greaterPowerOnEntityHit(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder) {
+            if (wielder.world.isRemote) {
+                return;
+            }
 			List<EntityLivingBase> nearbyEntities = EntityUtils.getEntitiesWithinRadius(16, wielder.posX, wielder.posY, wielder.posZ, wielder.world, EntityLivingBase.class);
 			List<EntityLivingBase> entitiesToBuff = nearbyEntities.stream().filter(e -> AllyDesignationSystem.isAllied(wielder, e)).collect(Collectors.toList());
 

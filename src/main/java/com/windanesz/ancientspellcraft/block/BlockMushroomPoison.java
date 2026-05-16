@@ -26,15 +26,13 @@ public class BlockMushroomPoison extends BlockMagicMushroom {
 			@Nullable EntityLivingBase caster, EntityLivingBase target, float potency) {
 
 		if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.POISON, target)) {
-
-			target.addPotionEffect(new PotionEffect(MobEffects.POISON, POTION_DURATION, 1));
-
 			if (!world.isRemote) {
+                target.addPotionEffect(new PotionEffect(MobEffects.POISON, POTION_DURATION, 1));
 				EntityUtils.attackEntityWithoutKnockback(target, source, damage);
-			} else {
+			}
+            if (world.isRemote) {
 				ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(pos.getX() + 0.5f, pos.getY() + 0.3f, pos.getZ() + 0.5f).scale(2.2f)
 						.clr(0.2f + world.rand.nextFloat() * 0.3f, 0.6f, 0.0f).time(20).shaded(true).spawn(world);
-
 
 				ParticleBuilder.create(ParticleBuilder.Type.DARK_MAGIC, world.rand, pos.getX() + 0.5f, pos.getY() + 0.3f, pos.getZ() + 0.5f, 2, false)
 						.clr(0.2f + world.rand.nextFloat() * 0.2f, 0.8f, 0.0f).spawn(world);

@@ -15,7 +15,7 @@ public class ItemSearingSkinAmulet extends ItemASArtefact implements ITickableAr
 
 	@Override
 	public void onWornTick(ItemStack itemstack, EntityLivingBase player) {
-		if (player.ticksExisted % 10 == 0 && player.isPotionActive(WizardryPotions.fireskin)) {
+		if (!player.world.isRemote && player.ticksExisted % 10 == 0 && player.isPotionActive(WizardryPotions.fireskin)) {
 			player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 40));
 		}
 	}

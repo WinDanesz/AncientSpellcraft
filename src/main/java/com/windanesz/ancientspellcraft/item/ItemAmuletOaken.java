@@ -16,14 +16,11 @@ public class ItemAmuletOaken extends ItemASArtefact implements ITickableArtefact
 	}
 
 	public void onWornTick(ItemStack itemstack, EntityLivingBase player) {
-        if (player.world.isRemote) {
-            return;
-        }
-//		if (player.ticksExisted % 10 == 0 && player.isPotionActive(WizardryPotions.oakflesh)
+//		if (!player.world.isRemote && player.ticksExisted % 10 == 0 && player.isPotionActive(WizardryPotions.oakflesh)
 //				&& player.world.getBiome(player.getPosition()).getRegistryName().getPath().matches(".*forest.*|.*wood.*")) {
 //			player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 20, 0));
 //		}
-        if (player.ticksExisted % 10 == 0 && player.isPotionActive(WizardryPotions.oakflesh)) {
+        if (!player.world.isRemote && player.ticksExisted % 10 == 0 && player.isPotionActive(WizardryPotions.oakflesh)) {
 
             Biome biome = player.world.getBiome(player.getPosition());
 

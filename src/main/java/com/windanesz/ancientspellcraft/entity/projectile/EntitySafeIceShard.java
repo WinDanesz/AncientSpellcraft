@@ -27,7 +27,7 @@ public class EntitySafeIceShard extends EntityIceShard {
 		}
 
 		// Adds a freeze effect to the target.
-		if(!MagicDamage.isEntityImmune(DamageType.FROST, entityHit))
+		if(!this.world.isRemote && !MagicDamage.isEntityImmune(DamageType.FROST, entityHit))
 			entityHit.addPotionEffect(new PotionEffect(WizardryPotions.frost,
 					Spells.ice_shard.getProperty(Spell.EFFECT_DURATION).intValue(),
 					Spells.ice_shard.getProperty(Spell.EFFECT_STRENGTH).intValue()));

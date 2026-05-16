@@ -24,19 +24,21 @@ public class HandleVanillaPotionMixins {
 
 			EntityPlayer player = (EntityPlayer) entityLiving;
 			if (ItemArtefact.isArtefactActive(player, ASItems.charm_arcane_diffuser)) {
-				List<EntityLivingBase> entities = EntityUtils.getEntitiesWithinRadius(7, player.posX, player.posY, player.posZ, world, EntityLivingBase.class);
-				entities.removeIf(e -> !AllyDesignationSystem.isAllied(player, e));
-				entities.removeIf(e -> e == player);
+                if (!world.isRemote) {
+                    List<EntityLivingBase> entities = EntityUtils.getEntitiesWithinRadius(7, player.posX, player.posY, player.posZ, world, EntityLivingBase.class);
+                    entities.removeIf(e -> !AllyDesignationSystem.isAllied(player, e));
+                    entities.removeIf(e -> e == player);
 
-				for (PotionEffect potioneffect : PotionUtils.getEffectsFromStack(stack)) {
-					for (EntityLivingBase entity : entities) {
-						if (potioneffect.getPotion().isInstant()) {
-							potioneffect.getPotion().affectEntity(entity, player, entity, potioneffect.getAmplifier(), 0.3D);
-						} else {
-							entity.addPotionEffect(new PotionEffect(potioneffect.getPotion(), (int) (potioneffect.getDuration() * 0.3f), potioneffect.getAmplifier()));
-						}
-					}
-				}
+                    for (PotionEffect potioneffect : PotionUtils.getEffectsFromStack(stack)) {
+                        for (EntityLivingBase entity : entities) {
+                            if (potioneffect.getPotion().isInstant()) {
+                                potioneffect.getPotion().affectEntity(entity, player, entity, potioneffect.getAmplifier(), 0.3D);
+                            } else {
+                                entity.addPotionEffect(new PotionEffect(potioneffect.getPotion(), (int) (potioneffect.getDuration() * 0.3f), potioneffect.getAmplifier()));
+                            }
+                        }
+                    }
+                }
 
 				if (world.isRemote) {
 					Vec3d origin = player.getPositionVector();

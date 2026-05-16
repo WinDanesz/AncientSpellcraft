@@ -100,7 +100,7 @@ public class ItemElementalOrb extends ItemASArtefact implements ISpellCastingIte
 				} else {
 					if (cast(stack, spell, player, hand, 0, modifiers)) {
 
-						if (element == Element.HEALING) {
+						if (!world.isRemote && element == Element.HEALING) {
 							player.removePotionEffect(MobEffects.ABSORPTION);
 							player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION,
 									300, 1));

@@ -116,7 +116,7 @@ public class BlockLightning extends Block implements ITileEntityProvider {
 	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity target) {
 		if (target.ticksExisted % 5 != 0) return;
 
-		if (target instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) target, ASItems.ring_kinetic)) {
+		if (!world.isRemote && target instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) target, ASItems.ring_kinetic)) {
 			((EntityPlayer) target).addPotionEffect(new PotionEffect(MobEffects.SPEED, 40,1));
 		}
 

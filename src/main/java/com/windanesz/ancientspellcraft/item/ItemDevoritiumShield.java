@@ -47,7 +47,9 @@ public class ItemDevoritiumShield extends ItemShield implements IDevoritium {
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn) {
 		ItemStack itemstack = player.getHeldItem(handIn);
 		player.setActiveHand(handIn);
-		player.addPotionEffect(new PotionEffect(WizardryPotions.ward, 20, 0));
+        if (!worldIn.isRemote) {
+            player.addPotionEffect(new PotionEffect(WizardryPotions.ward, 20, 0));
+        }
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
 	}
 
@@ -65,7 +67,9 @@ public class ItemDevoritiumShield extends ItemShield implements IDevoritium {
 	@Override
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
 		super.onUsingTick(stack, player, count);
-		player.addPotionEffect(new PotionEffect(WizardryPotions.ward, 20, 0));
+        if (!player.world.isRemote) {
+            player.addPotionEffect(new PotionEffect(WizardryPotions.ward, 20, 0));
+        }
 	}
 
 	@Override

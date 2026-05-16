@@ -184,8 +184,10 @@ public class ItemShadowBlade extends ItemSword implements IConjuredItem {
 	}
 
 	private static void applyWitherDamage(EntityLivingBase target) {
+        if (target.world.isRemote) {
+            return;
+        }
 		target.addPotionEffect(new PotionEffect(MobEffects.WITHER, ASSpells.conjure_shadow_blade.getProperty(ConjureShadowBlade.WITHER_DURATION).intValue()));
-
 	}
 
 	@Override
