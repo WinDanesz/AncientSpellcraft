@@ -80,9 +80,10 @@ public class AbsorbPotion extends Spell implements IClassSpell {
 
 				WizardData data = WizardData.get(caster);
 				for (PotionEffect potioneffect : PotionUtils.getEffectsFromStack(caster.getHeldItemOffhand())) {
-					if (!potioneffect.getPotion().isInstant()) {
+                    ResourceLocation registryName = potioneffect.getPotion().getRegistryName();
+					if (registryName != null && !potioneffect.getPotion().isInstant()) {
 						ASUtils.sendMessage(caster, "Absorbed " + caster.getHeldItemOffhand().getDisplayName(), true);
-						data.setVariable(EFFECT, potioneffect.getPotion().getRegistryName().toString());
+						data.setVariable(EFFECT, registryName.toString());
 						data.setVariable(DURATION, (int) (potioneffect.getDuration() * 0.7f));
 						caster.getHeldItemOffhand().shrink(1);
 						caster.getCooldownTracker().setCooldown(caster.getHeldItemMainhand().getItem(), 20);
@@ -104,37 +105,39 @@ public class AbsorbPotion extends Spell implements IClassSpell {
 
 		if (duration == null) {return 0;}
 
- 		if (duration > 0 && duration % 10 == 0 && !player.world.isRemote) {
+        if (!player.world.isRemote) {
+            if (duration > 0 && duration % 10 == 0) {
 
-			WizardData data = WizardData.get(player);
+                WizardData data = WizardData.get(player);
 
-			String potionName = data.getVariable(EFFECT);
+                String potionName = data.getVariable(EFFECT);
 
-			if (potionName == null) {
-				WizardData.get(player).setVariable(AbsorbPotion.EFFECT, null);
-				WizardData.get(player).sync();
-				return 0;
-			}
+                if (potionName == null) {
+                    WizardData.get(player).setVariable(AbsorbPotion.EFFECT, null);
+                    WizardData.get(player).sync();
+                    return 0;
+                }
 
-			Potion potion = ForgeRegistries.POTIONS.getValue(new ResourceLocation(potionName));
-			if (potion != null) {
-				boolean isAllyEffect = !potion.isBadEffect();
-				for (EntityLivingBase target : EntityUtils.getEntitiesWithinRadius(ASSpells.absorb_potion.getProperty(EFFECT_RADIUS).floatValue(), player.posX, player.posY, player.posZ, player.world, EntityLivingBase.class)) {
-					boolean isAllied = AllyDesignationSystem.isAllied(player, target);
-					if (target != player && ((!isAllyEffect && !isAllied)) || (target.ticksExisted > 20 && isAllyEffect && isAllied)) {
-						target.addPotionEffect(new PotionEffect(potion, 50, 0));
-					}
-				}
-			}
-		}
+                Potion potion = ForgeRegistries.POTIONS.getValue(new ResourceLocation(potionName));
+                if (potion != null) {
+                    boolean isAllyEffect = !potion.isBadEffect();
+                    for (EntityLivingBase target : EntityUtils.getEntitiesWithinRadius(ASSpells.absorb_potion.getProperty(EFFECT_RADIUS).floatValue(), player.posX, player.posY, player.posZ, player.world, EntityLivingBase.class)) {
+                        boolean isAllied = AllyDesignationSystem.isAllied(player, target);
+                        if (target != player && ((!isAllyEffect && !isAllied)) || (target.ticksExisted > 20 && isAllyEffect && isAllied)) {
+                            target.addPotionEffect(new PotionEffect(potion, 50, 0));
+                        }
+                    }
+                }
+            }
 
-		if (duration > 1) {
-			duration--;
-		} else if (duration == 1) {
-			duration--;
-			WizardData.get(player).setVariable(EFFECT, "none");
-			WizardData.get(player).sync();
-		}
+            if (duration > 1) {
+                duration--;
+            } else if (duration == 1) {
+                duration--;
+                WizardData.get(player).setVariable(EFFECT, "none");
+                WizardData.get(player).sync();
+            }
+        }
 
 		return duration;
 	}
