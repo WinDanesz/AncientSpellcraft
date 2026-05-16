@@ -1859,7 +1859,7 @@ public class ASEventHandler {
 
 				if (artefact == ASItems.ring_prismarine) {
 
-					if (!player.world.isRemote && !player.isBurning()) {
+					if (!player.world.isRemote && player.isBurning()) {
 						float i = player.getCooldownTracker().getCooldown(ASItems.ring_prismarine, 0.0F);
 						if (i == 0) {
 							player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 120));
