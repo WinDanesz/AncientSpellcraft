@@ -66,23 +66,27 @@ public class WarlockElementalSpellEffects {
 		World world = target.world;
 		switch (element) {
 			case MAGIC:
-				if (damageEntity && !MagicDamage.isEntityImmune(MagicDamage.DamageType.MAGIC, target)) {
+				if (!target.world.isRemote && damageEntity && !MagicDamage.isEntityImmune(MagicDamage.DamageType.MAGIC, target)) {
 					EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.MAGIC), 4);
 				}
 				break;
 			case FIRE:
-				if (!target.isBurning()) {
-					target.setFire(4);
-				}
-				if (damageEntity && !MagicDamage.isEntityImmune(MagicDamage.DamageType.FIRE, target)) {
-					EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FIRE), 2);
-				}
+                if (!target.world.isRemote) {
+                    if (!target.isBurning()) {
+                        target.setFire(4);
+                    }
+                    if (damageEntity && !MagicDamage.isEntityImmune(MagicDamage.DamageType.FIRE, target)) {
+                        EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FIRE), 2);
+                    }
+                }
 				break;
 			case ICE:
-				target.addPotionEffect(new PotionEffect(WizardryPotions.frost, 60));
-				if (damageEntity && !MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, target)) {
-					EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), 2);
-				}
+                if(!target.world.isRemote) {
+                    target.addPotionEffect(new PotionEffect(WizardryPotions.frost, 60));
+                    if (damageEntity && !MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, target)) {
+                        EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), 2);
+                    }
+                }
 				break;
 			case LIGHTNING:
 				if(target.world.isRemote){
@@ -91,48 +95,54 @@ public class WarlockElementalSpellEffects {
 				}
 
 				// This is a lot neater than it was, thanks to the damage type system.
-				if (damageEntity && !MagicDamage.isEntityImmune(MagicDamage.DamageType.SHOCK, target)) {
+				if (!target.world.isRemote && damageEntity && !MagicDamage.isEntityImmune(MagicDamage.DamageType.SHOCK, target)) {
 					target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.SHOCK),
 							3);
 				}
 				break;
 			case NECROMANCY:
-				if (damageEntity && !MagicDamage.isEntityImmune(MagicDamage.DamageType.WITHER, target)) {
-					EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER), 2);
-				}
-				if (!target.isPotionActive(MobEffects.WITHER)) {
-					target.addPotionEffect(new PotionEffect(MobEffects.WITHER, 40, 1));
-				}
+                if(!target.world.isRemote) {
+                    if (damageEntity && !MagicDamage.isEntityImmune(MagicDamage.DamageType.WITHER, target)) {
+                        EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER), 2);
+                    }
+                    if (!target.isPotionActive(MobEffects.WITHER)) {
+                        target.addPotionEffect(new PotionEffect(MobEffects.WITHER, 40, 1));
+                    }
+                }
 				break;
 			case EARTH:
-				if (damageEntity && !MagicDamage.isEntityImmune(MagicDamage.DamageType.POISON, target)) {
-					EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.POISON), 2);
-				}
-				if (!target.isPotionActive(MobEffects.POISON)) {
-					target.addPotionEffect(new PotionEffect(MobEffects.POISON, 60));
-				}
+                if(!target.world.isRemote) {
+                    if (damageEntity && !MagicDamage.isEntityImmune(MagicDamage.DamageType.POISON, target)) {
+                        EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.POISON), 2);
+                    }
+                    if (!target.isPotionActive(MobEffects.POISON)) {
+                        target.addPotionEffect(new PotionEffect(MobEffects.POISON, 60));
+                    }
+                }
 				break;
 			case SORCERY:
-				if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FORCE, target)) {
+				if (!target.world.isRemote && !MagicDamage.isEntityImmune(MagicDamage.DamageType.FORCE, target)) {
 					modifiers.set(SpellModifiers.POTENCY, damageEntity ? 0.8f : 0, false);
 					if (caster instanceof EntityPlayer) {
 						SpellcastUtils.proxyTargetedSpell(world, caster, target, ASSpells.force_shove, modifiers);
-					} else {
-						SpellcastUtils.tryCastSpellAsMob((EntityLiving) caster, ASSpells.force_shove, target);
-					}
+					} else if (caster instanceof EntityLiving) {
+                        SpellcastUtils.tryCastSpellAsMob((EntityLiving) caster, ASSpells.force_shove, target);
+                    }
 				}
 				break;
 
 			case HEALING:
-				if (damageEntity && !MagicDamage.isEntityImmune(MagicDamage.DamageType.RADIANT, target)) {
-					EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.RADIANT), 2);
-				}
-				if (!target.isPotionActive(MobEffects.BLINDNESS)) {
-					target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 40));
-				}
-				if (target.isEntityUndead() && !target.isBurning()) {
-					target.setFire(4);
-				}
+                if(!target.world.isRemote) {
+                    if (damageEntity && !MagicDamage.isEntityImmune(MagicDamage.DamageType.RADIANT, target)) {
+                        EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.RADIANT), 2);
+                    }
+                    if (!target.isPotionActive(MobEffects.BLINDNESS)) {
+                        target.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 40));
+                    }
+                    if (target.isEntityUndead() && !target.isBurning()) {
+                        target.setFire(4);
+                    }
+                }
 				break;
 
 		}
