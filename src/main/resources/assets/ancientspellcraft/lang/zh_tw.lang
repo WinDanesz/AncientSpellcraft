@@ -399,7 +399,6 @@ item.ancientspellcraft\:stone_tablet_large.name=大型石板
 item.ancientspellcraft\:stone_tablet_small.desc=一個小型的石板，上面刻錄著以某種不知名語言寫就的長長文字
 item.ancientspellcraft\:stone_tablet_small.name=小型石板
 item.ancientspellcraft\:wizard_hat_ancient.name=古代巫師帽
-item.ancientspellcraft\:wizard_hat_ancient=古代巫師帽
 
 # block
 block.ancientspellcraft\:dimension_boundary=維度界限
@@ -1180,8 +1179,6 @@ item.ancientspellcraft\:transmutation_scroll.name=Scroll of Transmutation
 item.ancientspellcraft\:transmutation_scroll.results_in_same_item=This transmutation would result in the same item!
 item.ancientspellcraft\:transmutation.no_items_to_transmute=You must hold an item in your offhand which can be transmuted.
 item.ancientspellcraft\:transmutation.invalid_item=This item cannot be transformed.
-item.ancientspellcraft\:wizard_hat_ancient.name=古代巫師帽
-item.ancientspellcraft\:wizard_hat_ancient=古代巫師帽
 item.ancientspellcraft\:scepter_mind_control.name=Scepter of the Overlord
 item.ancientspellcraft\:scepter_mind_control.desc=Hitting a creature with the scepter permanently mind controls the creature\nYou can only charm one creature at a time with this item
 
