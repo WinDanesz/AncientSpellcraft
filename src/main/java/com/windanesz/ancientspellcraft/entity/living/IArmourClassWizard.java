@@ -82,7 +82,7 @@ public interface IArmourClassWizard {
 				// Removes spells that the wizard already has
 				list.removeAll(spells);
 
-				list.removeIf(s -> s.getElement() != element);
+				list.removeIf(s -> s.getElement() != element || s.getTier() != tier);
 
 				if (list.isEmpty()) {
 					list = Spell.getSpells(new Spell.TierElementFilter(tier, element, SpellProperties.Context.NPCS));
