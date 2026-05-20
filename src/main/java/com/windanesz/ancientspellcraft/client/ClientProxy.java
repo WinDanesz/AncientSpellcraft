@@ -198,6 +198,9 @@ public class ClientProxy extends CommonProxy {
 
 		KEY_ACTIVATE_RING2_BAUBLE = new KeyBinding("key.ancientspellcraft.charm_ring_2_activate", Keyboard.KEY_J, "key.ancientspellcraft.category");
 		ClientRegistry.registerKeyBinding(KEY_ACTIVATE_RING2_BAUBLE);
+
+        KEY_WARLOCK_CAST = new KeyBinding("key.ancientspellcraft.key_warlock_cast", Keyboard.KEY_H, "key.ancientspellcraft.category");
+        ClientRegistry.registerKeyBinding(KEY_WARLOCK_CAST);
 	}
 
 	public void registerRenderers() {

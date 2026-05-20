@@ -38,12 +38,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
 
 import java.util.Optional;
 import java.util.Random;
 
-import static com.windanesz.ancientspellcraft.client.ClientProxy.KEY_ACTIVATE_CHARM_BAUBLE;
+import static com.windanesz.ancientspellcraft.client.ClientProxy.KEY_WARLOCK_CAST;
 
 public class AbsorbSpell extends Spell implements IClassSpell {
 
@@ -166,10 +165,17 @@ public class AbsorbSpell extends Spell implements IClassSpell {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public String getDescription() {
-		if (Minecraft.getMinecraft().player != null) {
-			String descTransKey = super.getDescriptionTranslationKey();
-			return Wizardry.proxy.translate(descTransKey, Keyboard.getKeyName(KEY_ACTIVATE_CHARM_BAUBLE.getKeyCode()), Tier.values()[getProperty(TIER_LIMIT).intValue()].getDisplayName());
-		}
+        if (Minecraft.getMinecraft().player != null) {
+            String descTransKey = super.getDescriptionTranslationKey();
+
+            // Pull the tier display name safely
+            String tierName = Tier.values()[getProperty(TIER_LIMIT).intValue()].getDisplayName();
+
+            // Get the dynamic localized name of the keybind safely
+            String keyName = net.minecraft.client.resources.I18n.format(KEY_WARLOCK_CAST.getDisplayName());
+
+            return net.minecraft.client.resources.I18n.format(descTransKey, keyName, tierName);
+        }
 		return super.getDescription();
 	}
 

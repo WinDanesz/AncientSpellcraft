@@ -762,7 +762,6 @@ item.ancientspellcraft\:imbuement_scroll.name=Свиток наполнения
 item.ancientspellcraft\:imbuement_scroll.desc=Можно спользовать на алтаре наполнения для изменения элемента Жезла или брони волшебника\nНужно поместиь 4 вместилища с прахом одного вида на алтарь, и использовать на нем свиток
 item.ancientspellcraft\:transmutation_scroll.results_in_same_item=Эта трансмутация приведет к тому же предмету!
 item.ancientspellcraft\:wizard_hat_ancient.name=Древняя Шляпа Волшебника
-item.ancientspellcraft\:wizard_hat_ancient=Древняя Шляпа Волшебника
 item.ancientspellcraft\:empty_mystic_spell_book.name=Пустая Мистическая книга заклинаний
 item.ancientspellcraft\:empty_mystic_spell_book.desc=Мудрецы могу записывать Мистические заклинания в эти книги на Мистической Кафедре при помощи заклинания "Запись"
 item.ancientspellcraft\:empty_theory_scroll.name=Пустой свиток Теории
