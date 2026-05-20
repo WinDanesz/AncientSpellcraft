@@ -169,7 +169,7 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
         // Make sure local subclass list is perfectly clean
         this.spells.clear();
 
-		Tier maxTier = IArmourClassWizard.populateSpells(this, spells, element, this.getArmourClass() == ItemWizardArmour.ArmourClass.SAGE || this.getArmourClass() == ItemWizardArmour.ArmourClass.WARLOCK, spellCount, rand);
+		Tier maxTier = IArmourClassWizard.populateSpells(this, spells, element, this.getArmourClass() == ItemWizardArmour.ArmourClass.SAGE || this.getArmourClass() == ItemWizardArmour.ArmourClass.WARLOCK || this.getArmourClass() == ItemWizardArmour.ArmourClass.BATTLEMAGE, spellCount, rand);
 
 		if (this.getArmourClass() == ItemWizardArmour.ArmourClass.WARLOCK) {
 			spells.remove(Spells.magic_missile);
