@@ -93,11 +93,21 @@ public abstract class LayerSkeletonMageHat extends LayerArmorBase<ModelBiped> {
 			if (itemarmor.getEquipmentSlot() == slotIn) {
 				ModelBiped t = this.getModelFromSlot(slotIn);
 				t = getArmorModelHook(entityLivingBaseIn, itemstack, slotIn, t);
+
+                // SAFETY CHECK: If the custom armor model hook or slot model returned null, abort rendering
+                // IDEs will warn that this is always false, it isn't when we are in a modded environment like when renderlib or xaeros is present
+                if (t == null) return;
+
 				t.setModelAttributes(this.renderer.getMainModel());
 				t.setLivingAnimations(entityLivingBaseIn, limbSwing, limbSwingAmount, partialTicks);
 				this.setModelSlotVisible(t, slotIn);
 				boolean flag = this.isLegSlot(slotIn);
-				this.renderer.bindTexture(this.getArmorResource(entityLivingBaseIn, itemstack, slotIn, null));
+
+                // Yep, same issue here
+                net.minecraft.util.ResourceLocation armorResource = this.getArmorResource(entityLivingBaseIn, itemstack, slotIn, null);
+                if (armorResource != null) {
+                    this.renderer.bindTexture(armorResource);
+                }
 
 				{
 					if (itemarmor.hasOverlay(itemstack)) // Allow this for anything, not only cloth
@@ -108,7 +118,12 @@ public abstract class LayerSkeletonMageHat extends LayerArmorBase<ModelBiped> {
 						float f2 = (float) (i & 255) / 255.0F;
 						GlStateManager.color(this.colorR * f, this.colorG * f1, this.colorB * f2, this.alpha);
 						t.render(entityLivingBaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-						this.renderer.bindTexture(this.getArmorResource(entityLivingBaseIn, itemstack, slotIn, "overlay"));
+
+                        // We check again here
+                        net.minecraft.util.ResourceLocation overlayResource = this.getArmorResource(entityLivingBaseIn, itemstack, slotIn, "overlay");
+                        if (overlayResource != null) {
+                            this.renderer.bindTexture(overlayResource);
+                        }
 					}
 					{ // Non-colored
 						GlStateManager.color(this.colorR, this.colorG, this.colorB, this.alpha);
