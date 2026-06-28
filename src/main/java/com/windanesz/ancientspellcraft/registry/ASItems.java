@@ -946,7 +946,7 @@ public final class ASItems {
 		registerItem(registry, "body_sorcery", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.SORCERY));
 		registerItem(registry, "body_healing", AncientSpellcraft.MODID, new ItemElementalCloak(EnumRarity.EPIC, ItemArtefact.Type.BODY, Element.HEALING));
 		registerItem(registry, "body_clockwork_heart", AncientSpellcraft.MODID, new ItemClockworkHeart(EnumRarity.RARE, ItemArtefact.Type.BODY));
-		registerItem(registry, "body_cloak_of_levitation", AncientSpellcraft.MODID, new ItemCloakOfLevitation(EnumRarity.RARE));
+		registerItem(registry, "body_cloak_of_levitation", AncientSpellcraft.MODID, new ItemCloakOfLevitation(EnumRarity.EPIC));
 		registerItem(registry, "tome_controller", new ItemTomeController());
 
 		registerItem(registry, "belt_scroll_holder", AncientSpellcraft.MODID, new ItemBeltScrollHolder(EnumRarity.RARE, ItemArtefact.Type.BELT));
