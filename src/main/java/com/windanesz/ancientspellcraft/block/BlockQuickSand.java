@@ -2,7 +2,7 @@ package com.windanesz.ancientspellcraft.block;
 
 import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import com.windanesz.ancientspellcraft.registry.ASItems;
-import electroblob.wizardry.item.ItemArtefact;
+import com.windanesz.ancientspellcraft.util.ASUtils;
 import electroblob.wizardry.tileentity.TileEntityPlayerSave;
 import electroblob.wizardry.util.MagicDamage;
 import net.minecraft.block.Block;
@@ -64,7 +64,8 @@ public class BlockQuickSand extends Block implements ITileEntityProvider, ITempo
 	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes,
 			@Nullable Entity entityIn, boolean isActualState) {
 
-		if (entityIn instanceof EntityPlayer && ItemArtefact.isArtefactActive((EntityPlayer) entityIn, ASItems.charm_quicksand_walker) || entityIn instanceof net.minecraft.entity.item.EntityItem) {
+		if (entityIn instanceof EntityPlayer && ASUtils.hasQuicksandImmunity((EntityPlayer) entityIn, ASItems.charm_quicksand_walker)
+				|| entityIn instanceof net.minecraft.entity.item.EntityItem) {
 			super.addCollisionBoxToList(state,worldIn, pos,entityBox, collidingBoxes, entityIn, isActualState);
 		}
 
