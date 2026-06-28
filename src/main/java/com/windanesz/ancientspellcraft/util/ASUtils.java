@@ -1,6 +1,8 @@
 package com.windanesz.ancientspellcraft.util;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
+import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.registry.ASPotions;
 import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.constants.Element;
@@ -8,6 +10,7 @@ import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.item.IWorkbenchItem;
+import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.item.ItemCrystal;
 import electroblob.wizardry.item.ItemSpellBook;
 import electroblob.wizardry.item.ItemWand;
@@ -18,10 +21,12 @@ import electroblob.wizardry.util.BlockUtils;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderBiped;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -439,6 +444,72 @@ public final class ASUtils {
 			return false;
 		}
 	}
+
+	public static boolean isQuicksandBlock(@Nullable IBlockState state) {
+		if (state == null) {
+			return false;
+		}
+
+		if (state.getBlock() == ASBlocks.QUICKSAND) {
+			return true;
+		}
+
+		ResourceLocation registryName = state.getBlock().getRegistryName();
+		if (registryName == null) {
+			return false;
+		}
+
+		String path = registryName.getPath();
+		if ("quicksand".equals(path) || path.contains("quicksand")) {
+			return true;
+		}
+
+		return "biomesoplenty".equals(registryName.getNamespace()) && ("sand".equals(path) || "sand_fluid".equals(path));
+	}
+
+	public static boolean isDruidBootsActive(@Nullable EntityPlayer player) {
+		if (player == null) {
+			return false;
+		}
+
+		String[] druidBootsNames = {"wizard_boots_earth", "sage_boots_earth", "warlock_boots_earth", "druid_boots"};
+		for (String name : druidBootsNames) {
+			Item druidBoots = ForgeRegistries.ITEMS.getValue(new ResourceLocation("ebwizardry", name));
+			if (druidBoots == null) {
+				druidBoots = ForgeRegistries.ITEMS.getValue(new ResourceLocation("wizardry", name));
+			}
+			if (druidBoots != null && druidBoots instanceof ItemArtefact && ItemArtefact.isArtefactActive(player, druidBoots)) {
+				return true;
+			}
+			if (druidBoots != null && com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration.enabled()) {
+				for (ItemStack stack : com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration.getEquippedArtefactStacks(player, ItemArtefact.Type.CHARM, ItemArtefact.Type.BELT, ItemArtefact.Type.AMULET, ItemArtefact.Type.RING)) {
+					if (!stack.isEmpty() && stack.getItem() == druidBoots) {
+						return true;
+					}
+				}
+			}
+		}
+
+		ItemStack boots = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
+		if (!boots.isEmpty()) {
+			ResourceLocation bootsRegistryName = boots.getItem().getRegistryName();
+			if (bootsRegistryName != null) {
+				String path = bootsRegistryName.getPath();
+				if ("druid_boots".equals(path) || "wizard_boots_earth".equals(path) || "sage_boots_earth".equals(path) || "warlock_boots_earth".equals(path) || path.contains("quicksand") || path.contains("druid")) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean hasQuicksandImmunity(@Nullable EntityPlayer player) {
+		if (player == null || !(ASItems.charm_quicksand_walker instanceof ItemArtefact)) {
+			return false;
+		}
+        return ItemArtefact.isArtefactActive(player, ASItems.charm_quicksand_walker);
+    }
 
 	public static List<BlockPos> getHollowSphere(EntityLivingBase caster, SpellModifiers modifiers, float radius) {
 		List<BlockPos> largeFilledSphere = BlockUtils.getBlockSphere(caster.getPosition().up(), radius * modifiers.get(WizardryItems.blast_upgrade));

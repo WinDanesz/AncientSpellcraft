@@ -9,6 +9,7 @@ import com.windanesz.ancientspellcraft.entity.projectile.EntityMetamagicProjecti
 import com.windanesz.ancientspellcraft.integration.artemislib.ASArtemisLibIntegration;
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.item.*;
+import com.windanesz.ancientspellcraft.packet.PacketControlInput;
 import com.windanesz.ancientspellcraft.potion.PotionMetamagicEffect;
 import com.windanesz.ancientspellcraft.registry.*;
 import com.windanesz.ancientspellcraft.ritual.ElementalAttunement;
@@ -168,6 +169,7 @@ public class ASEventHandler {
 				}
 			}
 		}
+
 
 		// head_mask_of_silence: apply Magical Exhaustion I to nearby players and spell-casting NPCs
 		if (!event.getEntityLiving().world.isRemote
@@ -1904,8 +1906,7 @@ public class ASEventHandler {
 						if (activeContingencies.hasKey(Contingency.Type.IMMOBILITY.spellName)) {
 
 							for (BlockPos pos : Arrays.asList(player.getPosition(), player.getPosition().up())) {
-								if (player.world.getBlockState(pos).getMaterial() == Material.WEB || player.world.getBlockState(pos).getBlock() == ASBlocks.QUICKSAND
-										|| player.world.getBlockState(pos).getBlock().getRegistryName().toString().equals("biomesoplenty:quicksand")) {
+								if (player.world.getBlockState(pos).getMaterial() == Material.WEB || ASUtils.isQuicksandBlock(player.world.getBlockState(pos))) {
 									Contingency.tryCastContingencySpell(player, data, Contingency.Type.IMMOBILITY);
 									break;
 								}
