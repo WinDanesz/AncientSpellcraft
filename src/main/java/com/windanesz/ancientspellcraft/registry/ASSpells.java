@@ -263,6 +263,7 @@ public final class ASSpells {
     public static final Spell ternary_storm = placeholder();
     public static final Spell arcane_wall = placeholder();
     public static final Spell tome_warp = placeholder();
+    public static final Spell mystic_sigil = placeholder();
 //    public static final Spell absorb_armor = placeholder();
     public static final Spell absorb_artefact = placeholder();
     public static final Spell absorb_crystal = placeholder();
@@ -646,6 +647,7 @@ public final class ASSpells {
 		registry.register(new TernaryStorm());
 		registry.register(new ArcaneWall());
 		registry.register(new TomeWarp());
+		registry.register(new MysticSigil());
 		registry.register(new ChaosOrb<>(AncientSpellcraft.MODID, "chaos_orb", EntityChaosOrb::new));
 		registry.register(new AbsorbObject());
 //		registry.register(new WarlockSpellPlaceholder("absorb_armor"));

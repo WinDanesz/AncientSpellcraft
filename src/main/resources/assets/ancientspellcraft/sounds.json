@@ -1,4 +1,4 @@
-﻿{ 
+{ 
   "bartering_scroll":                         {"category": "player", "sounds": ["ancientspellcraft:bartering_scroll"]},
   "charm_omnicron":                           {"category": "player", "sounds": ["ancientspellcraft:charm_omnicron"]},
   "contingency":                              {"category": "spells", "sounds": ["ancientspellcraft:contingency"]},
@@ -286,6 +286,7 @@
   "spell.shock_zone":                         {"category": "spells", "sounds": ["ebwizardry:lightning_ray_start"]},
   "spell.shrink_self":                        {"category": "spells", "sounds": ["ancientspellcraft:shrink_effect"]},
   "spell.silencing_sigil":                    {"category": "spells", "sounds": ["ancientspellcraft:dispel_entity"]},
+  "spell.mystic_sigil":                       {"category": "spells", "sounds": ["ancientspellcraft:dispel_entity"]},
   "spell.singe":                              {"category": "spells", "sounds": ["mob/ghast/fireball4"]},
   "spell.skull_sentinel":                     {"category": "spells", "sounds": ["ancientspellcraft:dispel_entity"]},
   "spell.snow_block":                         {"category": "spells", "sounds": ["ancientspellcraft:conjure_ice"]},

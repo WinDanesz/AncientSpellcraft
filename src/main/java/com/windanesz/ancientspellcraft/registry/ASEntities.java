@@ -108,6 +108,7 @@ public class ASEntities {
 		registry.register(createEntry(EntitySpiritWard.class, "spirit_ward", TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntitySilencingSigil.class, "silencing_sigil", TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntityHealingSigil.class, "healing_sigil", TrackingType.CONSTRUCT).build());
+		registry.register(createEntry(EntityMysticSigil.class, "mystic_sigil", TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntityVolcano.class, "entity_volcano", TrackingType.LIVING).build());
 
 		registry.register(createEntry(EntityAntiMagicField.class, "anti_magic_field", TrackingType.CONSTRUCT).build());
