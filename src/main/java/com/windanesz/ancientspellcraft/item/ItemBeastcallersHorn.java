@@ -126,7 +126,7 @@ public class ItemBeastcallersHorn extends ItemASArtefact {
 
         // Add usage and cooldown info
         int cooldownMinutes = Settings.generalSettings.beastcallers_flute_cooldown / 60;
-        String usageText = I18n.format("item.ancientspellcraft:charm_beastcallers_flute.tooltip", cooldownMinutes);
+        String usageText = I18n.format("item.ancientspellcraft:charm_beastcallers_horn.tooltip", cooldownMinutes);
         tooltip.add(usageText);
 
         if (!Settings.isArtefactEnabled(this)) {

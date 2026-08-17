@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft.entity.living;
 import com.google.common.base.Optional;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.entity.living.ISummonedCreature;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.ParticleBuilder.Type;
 import io.netty.buffer.ByteBuf;
@@ -56,12 +57,41 @@ public class EntityWolfMinion extends EntityWolf implements ISummonedCreature {
 
 	@Override
 	public void setLifetime(int lifetime) { this.lifetime = lifetime; }
-	//	@Override public UUID getOwnerId(){ return casterUUID; }
-	//	@Override public void setOwnerId(UUID uuid){ this.casterUUID = uuid; }
+	@Override
+	public UUID getOwnerId() {
+		return this.casterUUID != null ? this.casterUUID : super.getOwnerId();
+	}
+
+	@Override
+	public void setOwnerId(UUID uuid) {
+		this.casterUUID = uuid;
+		super.setOwnerId(uuid);
+	}
+
+	@Override
+	public EntityLivingBase getCaster() {
+		if (this.casterUUID != null) {
+			Entity entity = EntityUtils.getEntityByUUID(world, this.casterUUID);
+			if (entity instanceof EntityLivingBase) {
+				return (EntityLivingBase) entity;
+			}
+		}
+		return getOwner();
+	}
+
+	@Override
+	public void setCaster(EntityLivingBase caster) {
+		if (caster != null) {
+			setOwner(caster);
+		}
+	}
 
 	public void setOwner(EntityLivingBase owner) {
 		this.casterUUID = owner.getUniqueID();
 		this.dataManager.set(OWNER_UNIQUE_ID, Optional.fromNullable(owner.getUniqueID()));
+		if (owner instanceof EntityPlayer) {
+			this.setTamed(true);
+		}
 	}
 
 	@Override
@@ -209,10 +239,17 @@ public class EntityWolfMinion extends EntityWolf implements ISummonedCreature {
 	@Override
 	public void readEntityFromNBT(NBTTagCompound compound) {
 		super.readEntityFromNBT(compound);
+		this.readNBTDelegate(compound);
 	}
 
 	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {
 		super.writeEntityToNBT(compound);
+		this.writeNBTDelegate(compound);
+	}
+
+	@Override
+	protected boolean canDespawn() {
+		return getCaster() == null && getOwnerId() == null;
 	}
 }

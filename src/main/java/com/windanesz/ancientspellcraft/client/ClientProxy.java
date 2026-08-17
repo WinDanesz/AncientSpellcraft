@@ -47,6 +47,7 @@ import com.windanesz.ancientspellcraft.entity.construct.EntityBuilder;
 import com.windanesz.ancientspellcraft.entity.construct.EntityChaosField;
 import com.windanesz.ancientspellcraft.entity.construct.EntityHealingSigil;
 import com.windanesz.ancientspellcraft.entity.construct.EntityMoltenBoulder;
+import com.windanesz.ancientspellcraft.entity.construct.EntityMysticSigil;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySilencingSigil;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpellTicker;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
@@ -252,6 +253,7 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpiritWard.class, manager -> new RenderSigil(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/spirit_ward.png"), 0.0f, false));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySilencingSigil.class, manager -> new RenderSigil(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/silencing_sigil.png"), 0.0f, false));
 		RenderingRegistry.registerEntityRenderingHandler(EntityHealingSigil.class, manager -> new RenderSigil(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/healing_sigil.png"), 0.0f, false));
+		RenderingRegistry.registerEntityRenderingHandler(EntityMysticSigil.class, manager -> new RenderSigil(manager, new ResourceLocation(AncientSpellcraft.MODID, "textures/entity/mystic_sigil.png"), 0.0f, false));
 
 		////////// NO render //////////
 		RenderingRegistry.registerEntityRenderingHandler(EntityAntiMagicField.class, RenderBlank::new);

@@ -17,7 +17,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -109,6 +108,7 @@ public class ASEntities {
 		registry.register(createEntry(EntitySpiritWard.class, "spirit_ward", TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntitySilencingSigil.class, "silencing_sigil", TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntityHealingSigil.class, "healing_sigil", TrackingType.CONSTRUCT).build());
+		registry.register(createEntry(EntityMysticSigil.class, "mystic_sigil", TrackingType.CONSTRUCT).build());
 		registry.register(createEntry(EntityVolcano.class, "entity_volcano", TrackingType.LIVING).build());
 
 		registry.register(createEntry(EntityAntiMagicField.class, "anti_magic_field", TrackingType.CONSTRUCT).build());
@@ -138,15 +138,7 @@ public class ASEntities {
 //			AncientSpellcraft.logger.info("Applying ebwizardry:evil_wizard entity overrides by Ancient Spellcraft");
 //			registry.register(createEntry(EntityEvilWizardAS.class, "evil_wizard_as", AncientSpellcraft.MODID, TrackingType.LIVING).build());
 //		}
-		registry.register(createEntry(EntityWizardMerchant.class, "wizardmerchant", AncientSpellcraft.MODID, TrackingType.LIVING)
-				.spawn(EnumCreatureType.CREATURE, Settings.entitySpawnSettings.wizardMerchantSpawnWeight, Settings.entitySpawnSettings.wizardMerchantMinGroupSize, Settings.entitySpawnSettings.wizardMerchantMaxGroupSize, ForgeRegistries.BIOMES.getValuesCollection().stream()
-						.filter(b -> Settings.entitySpawnSettings.wizardMerchantSpawnEnabled
-								&& !BiomeDictionary.hasType(b, BiomeDictionary.Type.OCEAN)
-								&& !BiomeDictionary.hasType(b, BiomeDictionary.Type.NETHER)
-								&& !BiomeDictionary.hasType(b, BiomeDictionary.Type.END)
-								&& !BiomeDictionary.hasType(b, BiomeDictionary.Type.VOID)
-								&& !BiomeDictionary.hasType(b, BiomeDictionary.Type.MUSHROOM))
-						.collect(Collectors.toSet())).build());
+		registry.register(createEntry(EntityWizardMerchant.class, "wizardmerchant", AncientSpellcraft.MODID, TrackingType.LIVING).build());
 		//registry.register(createEntry(EntityClassWizard.class, "class_wizard", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0xbcc2e8, 0xffffff).build());
 		registry.register(createEntry(EntityEvilClassWizard.class, "evil_class_wizard", AncientSpellcraft.MODID, TrackingType.LIVING).egg(0x290404, 0xee9312)
 				// For reference: 5, 1, 1 are the parameters for the witch in vanilla

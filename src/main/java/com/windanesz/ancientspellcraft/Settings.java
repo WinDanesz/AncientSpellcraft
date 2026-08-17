@@ -670,7 +670,7 @@ public class Settings {
 		@Config.Name("Warlock Camp Rarity")
 		@Config.Comment("[Server-only] The rarity of warlock camps, used by the world generator. Larger numbers are rarer.")
 		@Config.RequiresMcRestart
-		public int warlockCampRarity = 3200;
+		public int warlockCampRarity = 4000;
 
 		@Config.Name("Book Vault Rarity")
 		@Config.Comment("[Server-only] The rarity of battlemage camps, used by the world generator. Larger numbers are rarer.")
@@ -680,17 +680,17 @@ public class Settings {
 		@Config.Name("Battlemage Keep Rarity")
 		@Config.Comment("[Server-only] The rarity of battlemage keeps, used by the world generator. Larger numbers are rarer.")
 		@Config.RequiresMcRestart
-		public int battlemageKeepRarity = 3000;
+		public int battlemageKeepRarity = 4000;
 
 		@Config.Name("Sage hill Rarity")
 		@Config.Comment("[Server-only] The rarity of the sage hill structure, used by the world generator. Larger numbers are rarer.")
 		@Config.RequiresMcRestart
-		public int sageHillRarity = 3000;
+		public int sageHillRarity = 4000;
 
 		@Config.Name("Ancient Vault Structure")
 		@Config.Comment("[Server-only] The rarity of the ancient vault and others (e.g. ancient temple) structures, used by the world generator. Larger numbers are rarer.")
 		@Config.RequiresMcRestart
-		public int ancientVaultRarity = 4000;
+		public int ancientVaultRarity = 12000;
 
 		@Config.Name("Fallen Tower Rarity")
 		@Config.Comment("[Server-only] The rarity of the ancient vault and others (e.g. ancient temple) structures, used by the world generator. Larger numbers are rarer.")
@@ -700,7 +700,7 @@ public class Settings {
 		@Config.Name("Warlock Structure Rarity")
 		@Config.Comment("[Server-only] The rarity of the warlock structures. Larger numbers are rarer.")
 		@Config.RequiresMcRestart
-		public int warlockStructureRarity = 3600;
+		public int warlockStructureRarity = 4000;
 
 		@Config.Name("Elemental Ore Worldgen Size")
 		@Config.RequiresMcRestart
