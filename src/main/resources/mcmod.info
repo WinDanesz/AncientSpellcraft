@@ -1,12 +1,12 @@
 [{
-    "modid": "${modid}",
-    "name": "${name}",
-    "description": "${description}",
-    "version": "${version}",
-    "mcversion": "${mcversion}",
-    "url": "${url}",
-    "updateUrl": "${update_url}",
+    "modid": "${mod_id}",
+    "name": "${mod_name}",
+    "description": "${mod_description}",
+    "version": "${mod_version}",
+    "mcversion": "1.12.2",
+    "url": "${mod_url}",
+    "updateUrl": "${mod_update_json}",
     "authorList": ["WinDanesz"],
-    "credits": "${credits}",
-    "logoFile":"assets/${modid}/textures/gui/logo.png"
+    "credits": "${mod_credits}",
+    "logoFile":"assets/${mod_id}/textures/gui/logo.png"
 }]

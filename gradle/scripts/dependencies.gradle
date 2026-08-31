@@ -1,0 +1,67 @@
+apply from: 'gradle/scripts/helpers.gradle'
+
+repositories {
+    // Other repositories described by default:
+    // CleanroomMC: https://maven.cleanroommc.com
+    exclusiveContent {
+        forRepository {
+            maven {
+                name 'CurseMaven'
+                url 'https://cursemaven.com'
+            }
+        }
+        filter {
+            includeGroup 'curse.maven'
+        }
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name 'Modrinth'
+                url 'https://api.modrinth.com/maven'
+            }
+        }
+        filter {
+            includeGroup 'maven.modrinth'
+        }
+    }
+    
+    maven {
+        name = 'Sponge'
+        url = uri('https://repo.spongepowered.org/maven')
+    }
+    maven {
+        url = uri('https://maven.blamejared.com')
+    }
+    maven {
+        url = uri('https://m2.dv8tion.net/releases')
+    }
+    maven {
+        url = uri('https://jitpack.io')
+    }
+    flatDir {
+        // location for sources
+        dirs 'build/libs'
+    }
+    // For local development
+    flatDir {
+        dirs '../Wizardry/build/libs'
+    }
+    
+    mavenLocal() // Must be last for caching to work
+}
+
+dependencies {
+    // Include StripLatestForgeRequirements by default for the dev env, saves everyone a hassle
+    runtimeOnly 'com.cleanroommc:strip-latest-forge-requirements:1.0'
+    // Include OSXNarratorBlocker by default for the dev env, for M1+ Macs
+    runtimeOnly 'com.cleanroommc:osxnarratorblocker:1.0'
+
+    implementation rfg.deobf("curse.maven:ElectroblobsWizardry-${propertyString('wizardry_projectid')}:${propertyString('wizardry_fileid')}")
+    implementation rfg.deobf("curse.maven:baubles-${propertyString('baubles_projectid')}:${propertyString('baubles_fileid')}")
+    implementation rfg.deobf("mezz.jei:jei_1.12.2:${propertyString('jei_version')}")
+    implementation rfg.deobf("curse.maven:artemislib-${propertyString('artemislib_projectid')}:${propertyString('artemislib_fileid')}")
+    implementation rfg.deobf("curse.maven:antique-atlas-${propertyString('antiqueatlas_projectid')}:${propertyString('antiqueatlas_fileid')}")
+    implementation rfg.deobf("curse.maven:WizardryUtils-${propertyString('wizardryutils_projectid')}:${propertyString('wizardryutils_fileid')}")
+
+}

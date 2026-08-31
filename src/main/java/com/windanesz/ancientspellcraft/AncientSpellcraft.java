@@ -38,12 +38,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
-@Mod(modid = AncientSpellcraft.MODID, name = AncientSpellcraft.NAME, version = "@VERSION@", acceptedMinecraftVersions = "1.12.2", dependencies = AncientSpellcraft.DEPENDENCIES)
+@Mod(modid = AncientSpellcraft.MODID, name = AncientSpellcraft.NAME, version = Tags.VERSION, acceptedMinecraftVersions = "1.12.2", dependencies = AncientSpellcraft.DEPENDENCIES)
 public class AncientSpellcraft {
 
 	public static final String MODID = "ancientspellcraft";
 	public static final String NAME = "Ancient Spellcraft by Dan";
-	public static final String DEPENDENCIES = "required-after:mixinbooter;" + "required-after:ebwizardry@[@WIZARDRY_VERSION@,4.4);" + "required-after:wizardryutils@[1.2.2,);" + "required-after:baubles;" + "after:jei@[4.15.0,);" + "after:artemislib;";
+	public static final String DEPENDENCIES = "required-after:mixinbooter;required-after:ebwizardry@[" + Tags.WIZARDRY_VERSION + ",4.4);required-after:wizardryutils@[1.2.2,);required-after:baubles;after:jei@[4.15.0,);after:artemislib;";
 
 	public static final Random rand = new Random();
 	public static final Material DEVORITIUM = (new Material(MapColor.BLACK));
@@ -142,6 +142,7 @@ public class AncientSpellcraft {
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event) {
 		event.registerServerCommand(new CommandListBiomes());
+		SpellPropertiesDumper.dumpProperties(event);
 	}
 
 }
