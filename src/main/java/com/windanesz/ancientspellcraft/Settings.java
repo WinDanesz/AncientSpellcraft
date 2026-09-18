@@ -26,6 +26,14 @@ public class Settings {
 
 	public ResourceLocation[] voidCreeperBiomeBlacklist = toResourceLocations(generalSettings.void_creeper_biome_blacklist);
 	public ResourceLocation[] skeletonMageBiomeBlacklist = toResourceLocations(generalSettings.skeleton_mage_biome_blacklist);
+	public List<ResourceLocation> skeletonMageBiomeWhitelist = Arrays.asList(toResourceLocations(
+			concat(generalSettings.fire_skeleton_and_ghost_biome_whitelist,
+					generalSettings.earth_skeleton_and_ghost_biome_whitelist,
+					generalSettings.sorcery_skeleton_and_ghost_biome_whitelist,
+					generalSettings.necromancy_skeleton_and_ghost_biome_whitelist,
+					generalSettings.healing_skeleton_and_ghost_biome_whitelist,
+					generalSettings.lightning_skeleton_and_ghost_biome_whitelist,
+					generalSettings.ice_skeleton_and_ghost_biome_whitelist)));
 
 	public List<ResourceLocation> shardEarthShardBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.earth_shard_biome_whitelist));
 	public List<ResourceLocation> shardSorceryShardBiomeWhitelist = Arrays.asList(toResourceLocations(generalSettings.sorcery_shard_biome_whitelist));
@@ -43,6 +51,10 @@ public class Settings {
 	public ResourceLocation[] fallenTowerFiles = {new ResourceLocation(AncientSpellcraft.MODID, "fallen_tower_0")};
 	public ResourceLocation[] ancientTempleFiles = {new ResourceLocation(AncientSpellcraft.MODID, "ancient_temple_0")};
 	public ResourceLocation[] bookVaultFiles = {new ResourceLocation(AncientSpellcraft.MODID, "bookvault_0")};
+
+	private static String[] concat(String[]... values) {
+		return Arrays.stream(values).flatMap(Arrays::stream).toArray(String[]::new);
+	}
 
 	/**
 	 * Helper method to figure out if an item was disabled in the ebwiz configs, as unfortunately itemArtefact#enabled private and has no getter method
@@ -360,7 +372,7 @@ public class Settings {
 		public String[] lightning_shard_biome_whitelist = {"extreme_hills", "smaller_extreme_hills", "extreme_hills_with_trees", "mutated_extreme_hills", "mutated_extreme_hills_with_trees"};
 
 		@Config.Name("Use biomes for Skeleton and Ghost Mage elements")
-		@Config.Comment("This setting decides how much the other skeleton and ghost mage biome settings matter (chance to consider the lists)." + "If 1 = biome whitelist settings always apply for element selection" + "if 0 = elements are always random, and the biome lists won't be considered")
+		@Config.Comment("Chance to select the mage's element from its biome list. At 1, the biome always selects the element; at 0, the element is random. The biome lists always restrict natural mage spawning.")
 		@Config.RequiresMcRestart
 		public float use_biomes_for_mage_elements = 1.0f;
 

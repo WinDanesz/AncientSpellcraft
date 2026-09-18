@@ -109,30 +109,34 @@ public class EntitySkeletonMage extends AbstractSkeleton implements ISpellCaster
 			return Element.values()[rand.nextInt(Element.values().length - 1) + 1];
 		} else {
 			Biome biome = world.getBiome(this.getPosition());
-			String name = biome.getRegistryName().getPath();
-			if (Arrays.stream(Settings.generalSettings.fire_skeleton_and_ghost_biome_whitelist).anyMatch(b -> b.equals(name))) {
+			ResourceLocation name = biome.getRegistryName();
+			if (containsBiome(Settings.generalSettings.fire_skeleton_and_ghost_biome_whitelist, name)) {
 				return Element.FIRE;
 			}
-			if (Arrays.stream(Settings.generalSettings.earth_skeleton_and_ghost_biome_whitelist).anyMatch(b -> b.equals(name))) {
+			if (containsBiome(Settings.generalSettings.earth_skeleton_and_ghost_biome_whitelist, name)) {
 				return Element.EARTH;
 			}
-			if (Arrays.stream(Settings.generalSettings.sorcery_skeleton_and_ghost_biome_whitelist).anyMatch(b -> b.equals(name))) {
+			if (containsBiome(Settings.generalSettings.sorcery_skeleton_and_ghost_biome_whitelist, name)) {
 				return Element.SORCERY;
 			}
-			if (Arrays.stream(Settings.generalSettings.healing_skeleton_and_ghost_biome_whitelist).anyMatch(b -> b.equals(name))) {
+			if (containsBiome(Settings.generalSettings.healing_skeleton_and_ghost_biome_whitelist, name)) {
 				return Element.HEALING;
 			}
-			if (Arrays.stream(Settings.generalSettings.lightning_skeleton_and_ghost_biome_whitelist).anyMatch(b -> b.equals(name))) {
+			if (containsBiome(Settings.generalSettings.lightning_skeleton_and_ghost_biome_whitelist, name)) {
 				return Element.LIGHTNING;
 			}
-			if (Arrays.stream(Settings.generalSettings.ice_skeleton_and_ghost_biome_whitelist).anyMatch(b -> b.equals(name))) {
+			if (containsBiome(Settings.generalSettings.ice_skeleton_and_ghost_biome_whitelist, name)) {
 				return Element.ICE;
 			}
-			if (Arrays.stream(Settings.generalSettings.necromancy_skeleton_and_ghost_biome_whitelist).anyMatch(b -> b.equals(name))) {
+			if (containsBiome(Settings.generalSettings.necromancy_skeleton_and_ghost_biome_whitelist, name)) {
 				return Element.NECROMANCY;
 			}
 		}
 		return Element.values()[rand.nextInt(Element.values().length - 1) + 1];
+	}
+
+	private static boolean containsBiome(String[] biomeWhitelist, ResourceLocation biomeName) {
+		return Arrays.asList(electroblob.wizardry.Settings.toResourceLocations(biomeWhitelist)).contains(biomeName);
 	}
 
 	@Override
@@ -436,15 +440,8 @@ public class EntitySkeletonMage extends AbstractSkeleton implements ISpellCaster
 		// that are claimed by at least one element whitelist. This prevents mages from
 		// appearing in biomes with no configured element (e.g. nether biomes, oceans).
 		if (Settings.generalSettings.use_biomes_for_mage_elements >= 1.0f) {
-			String biomeName = world.getBiome(this.getPosition()).getRegistryName().getPath();
-			boolean biomeHasElement =
-					Arrays.stream(Settings.generalSettings.fire_skeleton_and_ghost_biome_whitelist).anyMatch(biomeName::equals) ||
-					Arrays.stream(Settings.generalSettings.earth_skeleton_and_ghost_biome_whitelist).anyMatch(biomeName::equals) ||
-					Arrays.stream(Settings.generalSettings.sorcery_skeleton_and_ghost_biome_whitelist).anyMatch(biomeName::equals) ||
-					Arrays.stream(Settings.generalSettings.healing_skeleton_and_ghost_biome_whitelist).anyMatch(biomeName::equals) ||
-					Arrays.stream(Settings.generalSettings.lightning_skeleton_and_ghost_biome_whitelist).anyMatch(biomeName::equals) ||
-					Arrays.stream(Settings.generalSettings.ice_skeleton_and_ghost_biome_whitelist).anyMatch(biomeName::equals) ||
-					Arrays.stream(Settings.generalSettings.necromancy_skeleton_and_ghost_biome_whitelist).anyMatch(biomeName::equals);
+			ResourceLocation biomeName = world.getBiome(this.getPosition()).getRegistryName();
+			boolean biomeHasElement = AncientSpellcraft.settings.skeletonMageBiomeWhitelist.contains(biomeName);
 			if (!biomeHasElement) return false;
 		}
 
