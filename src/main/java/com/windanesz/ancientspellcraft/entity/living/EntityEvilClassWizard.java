@@ -122,12 +122,14 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 	@Override
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
 
-        // Temporarily mark as a structure spawn to bypass Electroblob's automatic spell selection routine during the early super call.
-        this.hasStructure = true;
-        // call the super call
-		livingdata = super.onInitialSpawn(difficulty, livingdata);
-        // Immediately restore the flag so normal despawning and world rules apply.
-        this.hasStructure = false;
+		// Temporarily mark as a structure spawn to bypass Electroblob's automatic spell selection routine during the early super call.
+		boolean wasStructure = this.hasStructure;
+		this.hasStructure = true;
+		try {
+			livingdata = super.onInitialSpawn(difficulty, livingdata);
+		} finally {
+			this.hasStructure = wasStructure;
+		}
 
 		if (getElement() == null) {
 			if (rand.nextInt(10) > 2) {
