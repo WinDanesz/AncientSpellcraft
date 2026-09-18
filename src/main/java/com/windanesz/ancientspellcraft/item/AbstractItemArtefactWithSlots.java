@@ -59,8 +59,8 @@ public abstract class AbstractItemArtefactWithSlots extends ItemArtefact impleme
 	}
 
 	public static boolean isSlotEmpty(ItemStack stack, int slot) {
-		if (stack.getItem() instanceof AbstractItemArtefactWithSlots) {
-			int maxCount = ((AbstractItemArtefactWithSlots) stack.getItem()).getSlotCount();
+		if (stack.getItem() instanceof IItemWithSlots) {
+			int maxCount = ((IItemWithSlots) stack.getItem()).getSlotCount();
 
 			if (slot <= maxCount) {
 				if (stack.hasTagCompound() && stack.getTagCompound().hasKey("Items")) {
@@ -75,8 +75,8 @@ public abstract class AbstractItemArtefactWithSlots extends ItemArtefact impleme
 	}
 
 	public static ItemStack getItemForSlot(ItemStack stack, int slot) {
-		if (stack.getItem() instanceof AbstractItemArtefactWithSlots) {
-			int maxCount = ((AbstractItemArtefactWithSlots) stack.getItem()).getSlotCount();
+		if (stack.getItem() instanceof IItemWithSlots) {
+			int maxCount = ((IItemWithSlots) stack.getItem()).getSlotCount();
 
 			if (slot <= maxCount) {
 				if (stack.hasTagCompound() && stack.getTagCompound().hasKey("Items")) {
@@ -91,8 +91,8 @@ public abstract class AbstractItemArtefactWithSlots extends ItemArtefact impleme
 	}
 
 	public static void setItemForSlot(ItemStack stack, int slot, ItemStack item) {
-		if (stack.getItem() instanceof AbstractItemArtefactWithSlots) {
-			int maxCount = ((AbstractItemArtefactWithSlots) stack.getItem()).getSlotCount();
+		if (stack.getItem() instanceof IItemWithSlots) {
+			int maxCount = ((IItemWithSlots) stack.getItem()).getSlotCount();
 
 			if (slot <= maxCount) {
 				NBTTagCompound nbt = stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();

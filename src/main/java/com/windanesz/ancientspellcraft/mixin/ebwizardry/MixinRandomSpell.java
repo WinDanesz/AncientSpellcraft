@@ -1,12 +1,13 @@
 package com.windanesz.ancientspellcraft.mixin.ebwizardry;
 
-import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.item.AbstractItemArtefactWithSlots;
+import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.item.ItemArtefact;
+import electroblob.wizardry.item.ItemCrystal;
 import electroblob.wizardry.item.ItemScroll;
 import electroblob.wizardry.item.ItemSpellBook;
 import electroblob.wizardry.loot.RandomSpell;
@@ -107,20 +108,18 @@ public abstract class MixinRandomSpell {
 
 		if (possibleElements.isEmpty()) return Spells.none; // A bit more likely I guess, but still pretty unlikely
 
-		Element element = possibleElements.get(random.nextInt(possibleElements.size()));
-
 		/////////////// MIXIN CHANGES
-		// Check if the player has ASItems.amulet_talisman_of_affinity and filter spells accordingly
-		if (player != null && ASBaublesIntegration.enabled()) {
-			List<ItemStack> equippedArtefacts = ASBaublesIntegration.getEquippedArtefactStacks(player, ItemArtefact.Type.AMULET);
-			equippedArtefacts.stream()
+		// The talisman is an inventory item rather than an equipped artefact.
+		if (player != null) {
+			player.inventory.mainInventory.stream()
 					.filter(s -> s.getItem() == ASItems.amulet_talisman_of_affinity)
 					.findFirst()
 					.ifPresent(s -> {
-						if (s.getItem() instanceof AbstractItemArtefactWithSlots) {
-							ItemStack crystalStack = AbstractItemArtefactWithSlots.getItemForSlot(s, 0);
+						ItemStack crystalStack = AbstractItemArtefactWithSlots.getItemForSlot(s, 0);
+						if (crystalStack.getItem() instanceof ItemCrystal && crystalStack.getMetadata() != 0) {
 							Element element1 = Element.values()[crystalStack.getMetadata()];
-							if (random.nextFloat() < 0.99) {
+							if (possibleElements.contains(element1)
+									&& random.nextDouble() < Settings.generalSettings.talisman_of_affinity_chance) {
 								possibleElements.clear();
 								possibleElements.add(element1);
 							}
@@ -128,6 +127,7 @@ public abstract class MixinRandomSpell {
 					});
 		}
 		/////////////// MIXIN CHANGES
+		Element element = possibleElements.get(random.nextInt(possibleElements.size()));
 
 		// Remove all spells that aren't of the selected tier
 		possibleSpells.removeIf(s -> s.getElement() != element);

@@ -5,6 +5,7 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+/** A crystal-configurable item which biases looted spell books toward that crystal's element. */
 public class ItemTalismanOfAffinity extends AbstractItemArtefactWithSlots {
 
 	public ItemTalismanOfAffinity(EnumRarity rarity, Type type) {
