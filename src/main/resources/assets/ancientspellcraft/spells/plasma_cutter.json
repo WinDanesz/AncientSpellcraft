@@ -17,7 +17,6 @@
     "chargeup": 0,
     "cooldown": 0,
     "base_properties": {
-        "range": 13,
-        "break_speed_multiplier": 3
+        "range": 13
     }
 }
