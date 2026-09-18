@@ -43,7 +43,10 @@ public class AncientSpellcraft {
 
 	public static final String MODID = "ancientspellcraft";
 	public static final String NAME = "Ancient Spellcraft by Dan";
-	public static final String DEPENDENCIES = "required-after:mixinbooter;required-after:ebwizardry@[" + Tags.WIZARDRY_VERSION + ",4.4);required-after:wizardryutils@[1.2.2,);required-after:baubles;after:jei@[4.15.0,);after:artemislib;";
+	// MixinBooter is still a runtime dependency, but it may register its mod container after MixinCompat has
+	// initialised the shared Mixin service. Requiring it here makes Forge reject a valid installation before
+	// MixinBooter gets that opportunity.
+	public static final String DEPENDENCIES = "after:mixinbooter;required-after:ebwizardry@[" + Tags.WIZARDRY_VERSION + ",4.4);required-after:wizardryutils@[1.2.2,);required-after:baubles;after:jei@[4.15.0,);after:artemislib;";
 
 	public static final Random rand = new Random();
 	public static final Material DEVORITIUM = (new Material(MapColor.BLACK));
