@@ -2,6 +2,7 @@ package com.windanesz.ancientspellcraft.entity.living;
 
 import com.windanesz.ancientspellcraft.entity.ai.EntityAIAttackSpellImproved;
 import com.windanesz.ancientspellcraft.registry.ASItems;
+import com.windanesz.ancientspellcraft.registry.ASSpells;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.entity.living.ISpellCaster;
@@ -75,7 +76,8 @@ public class EntitySkeletonMageMinion extends EntitySkeletonMage implements ISpe
 	private EntityAINearestAttackableTarget<EntityPlayer> healerTargetingAI = new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, false, true) {
 		@Override
 		protected boolean isSuitableTarget(@Nullable EntityLivingBase target, boolean includeInvincibles) {
-			return target instanceof EntityPlayer && ((EntityPlayer) target).getUniqueID() == getOwnerId() && (target.getHealth() < target.getMaxHealth());
+			return target instanceof EntityPlayer && getOwnerId() != null
+					&& getOwnerId().equals(((EntityPlayer) target).getUniqueID()) && target.getHealth() < target.getMaxHealth();
 		}
 	};
 
@@ -255,6 +257,20 @@ public class EntitySkeletonMageMinion extends EntitySkeletonMage implements ISpe
 
 	public void setElement(Element element) {
 		this.dataManager.set(ELEMENT, element.ordinal());
+	}
+
+	/**
+	 * Healing skeleton mages target their owner, so they must use a beneficial spell rather than the hostile
+	 * healing-element spell selection used by naturally spawned skeleton mages.
+	 */
+	@Override
+	public void populateSpellList(Element element, Spell spell) {
+		if (element == Element.HEALING && spell == null) {
+			spells.clear();
+			spells.add(ASSpells.healing_heart);
+		} else {
+			super.populateSpellList(element, spell);
+		}
 	}
 
 	private static int getRandomNumberInRange(int min, int max) {
