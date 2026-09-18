@@ -43,7 +43,9 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -318,13 +320,13 @@ public class EntityEvilClassWizard extends EntityEvilWizard implements ICustomCo
 	protected void updateActiveHand() {
 		if (isHandActive()) {
 			ItemStack itemstack = getHeldItem(getActiveHand());
-			if (net.minecraftforge.common.ForgeHooks.canContinueUsing(activeItemStack, itemstack) || itemstack.getItem().isShield(itemstack, this)) {
+			if (ForgeHooks.canContinueUsing(activeItemStack, itemstack) || itemstack.getItem().isShield(itemstack, this)) {
 				activeItemStack = itemstack;
 			}
 
 			if (itemstack == activeItemStack) {
 				if (!activeItemStack.isEmpty()) {
-					activeItemStackUseCount = net.minecraftforge.event.ForgeEventFactory.onItemUseTick(this, activeItemStack, activeItemStackUseCount);
+					activeItemStackUseCount = ForgeEventFactory.onItemUseTick(this, activeItemStack, activeItemStackUseCount);
 					if (activeItemStackUseCount > 0) {activeItemStack.getItem().onUsingTick(activeItemStack, this, activeItemStackUseCount);}
 				}
 
