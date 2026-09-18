@@ -1,21 +1,18 @@
 package com.windanesz.ancientspellcraft.item;
 
+import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.entity.living.EntityAnimatedItem;
 import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.registry.ASItems;
 import electroblob.wizardry.util.BlockUtils;
-import electroblob.wizardry.util.EntityUtils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-
-import static electroblob.wizardry.spell.SpellMinion.POTENCY_ATTRIBUTE_MODIFIER;
 
 public class ItemGuardianBlade extends ItemASArtefact implements ITickableArtefact {
 
@@ -35,10 +32,16 @@ public class ItemGuardianBlade extends ItemASArtefact implements ITickableArtefa
 					minion.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 					minion.setLifetime(300);
 					minion.setCaster(player);
+
+					IAttributeInstance healthAttr = minion.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
+					if (healthAttr != null) {
+						healthAttr.setBaseValue(Settings.generalSettings.guardian_blade_hp);
+						minion.setHealth((float) Settings.generalSettings.guardian_blade_hp);
+					}
+
 					IAttributeInstance attribute = minion.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
 					if (attribute != null) {
-						attribute.applyModifier( // Apparently some things don't have an attack damage
-								new AttributeModifier(POTENCY_ATTRIBUTE_MODIFIER, 6, EntityUtils.Operations.MULTIPLY_CUMULATIVE));
+						attribute.setBaseValue(Settings.generalSettings.guardian_blade_damage);
 					}
 
 					minion.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ASItems.charm_guardian_blade));

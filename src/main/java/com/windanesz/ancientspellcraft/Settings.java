@@ -265,6 +265,22 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public int[] spell_blade_base_mana_per_tier = {150, 300, 600, 900};
 
+		@Config.Name("Spellslayer Damage")
+		@Config.Comment("The attack damage of The Spellslayer (not including the base 1.0 unarmed damage)")
+		@Config.RequiresMcRestart
+		@Config.RangeDouble(min = 0, max = 1000)
+		public double spellslayer_damage = 5.0;
+
+		@Config.Name("Guardian Blade HP")
+		@Config.Comment("The health of the Guardian Blade summoned minion")
+		@Config.RangeDouble(min = 1, max = 10000)
+		public double guardian_blade_hp = 20.0;
+
+		@Config.Name("Guardian Blade Damage")
+		@Config.Comment("The attack damage of the Guardian Blade summoned minion")
+		@Config.RangeDouble(min = 0, max = 1000)
+		public double guardian_blade_damage = 7.0;
+
 		@Config.Name("Orb Artefact Potency Percent Bonus")
 		@Config.Comment("Determines the potency bonus of the elemental orb artefacts in a percentage value")
 		@Config.RequiresMcRestart
@@ -525,6 +541,10 @@ public class Settings {
 		@Config.RangeInt(min = 2, max = 32)
 		public int diamondGooseDetectionRange = 8;
 
+		@Config.Name("Recall Seal Delay Presets (seconds)")
+		@Config.Comment("The list of recall delay values (in seconds) that the Recall Seal cycles through when sneak-right-clicked with an empty offhand and no container targeted.")
+		public int[] recall_seal_delay_presets_seconds = {30, 60, 300, 600, 1800, 3600};
+
 		@Config.Name("Verdant Crucible Ingredient List")
 		@Config.Comment("List of alchemical ingredients and their min/max quantities for the Verdant Crucible. Format: modid:itemname|meta|nbt|min|max, e.g. minecraft:redstone|0||1|3. Meta is required (use 0 for default), nbt is optional (empty for none).")
 		public String[] verdant_crucible_ingredients = {"minecraft:redstone|0||3|6", "minecraft:glowstone_dust|0||1|2", "minecraft:magma_cream|0||1|2", "minecraft:carrot|0||1|2", "minecraft:spider_eye|0||1|2", "minecraft:sugar|0||1|4", "minecraft:blaze_powder|0||1|2", "minecraft:ghast_tear|0||1|1", "minecraft:fish|3||1|1", "minecraft:rabbit_foot|0||1|1", "minecraft:speckled_melon|0||1|1", "rustic:aloe_vera:0:1:2", "rustic:blood_orchid:0:1:2", "rustic:chamomile:0:1:2", "rustic:cohosh:0:1:2", "rustic:deathstalk:0:1:2", "rustic:horsetail:0:1:2", "rustic:mooncap:0:1:2", "rustic:wind_thistle:0:1:2", "rustic:vanta_lily:0:1:2", "rustic:cloudsbluff:0:1:2", "rustic:core_root:0:1:2", "rustic:ginseng:0:1:2", "rustic:marsh_mallow:0:1:2"};
@@ -568,16 +588,6 @@ public class Settings {
 		@Config.RequiresMcRestart
 		public boolean mineSpellOverride = true;
 
-		@Config.Name("Mine Spell Network ID")
-		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! " + "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update. " + "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
-		@Config.RequiresMcRestart
-		public int mineSpellNetworkID = 141;
-
-		@Config.Name("Charge Spell Network ID")
-		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! " + "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update. " + "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
-		@Config.RequiresMcRestart
-		public int chargeSpellNetworkID = 147;
-
 		@Config.Name("Charge Spell Override")
 		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Charge spell to add compatibility for the related artefact." + "\nDisabling this feature will cause the game to load the default Charge spell class which can be helpful if you are having issues, but it also makes the related artefact useless!")
 		@Config.RequiresMcRestart
@@ -592,16 +602,6 @@ public class Settings {
 		@Config.Comment("If enabled, Ancient Spellcraft will override the base Wizardry mod's Conjure Pickaxe spell to add compatibility to the Fortune related artefact." + "\nDisabling this feature will cause the game to load the default Conjure Pickaxe spell class which can be helpful if you are having issues, but it also makes the Circlet of Fortune artefact useless!")
 		@Config.RequiresMcRestart
 		public boolean conjurePickaxeSpellOverride = true;
-
-		@Config.Name("Conjure Pickaxe Spell Network ID")
-		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! " + "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update." + "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
-		@Config.RequiresMcRestart
-		public int conjurePickaxeSpellNetworkID = 41;
-
-		@Config.Name("Plague of Darkenss Spell Network ID")
-		@Config.Comment("WARNING! Don't change this value unless you are told you so, otherwise your world won't start! " + "\nThe reason this value exists as a settings is to provide a quick way to fix compatibility (until the A.S. update is released to fix it) if the network ID of the spell is changed by an EBWiz update." + "\nThis could possibly happen if new spells are added by the base mod and the NetworkIDs shift.")
-		@Config.RequiresMcRestart
-		public int plagueOfDarknessSpellNetworkID = 99;
 
 	}
 

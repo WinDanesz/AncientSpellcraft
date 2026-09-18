@@ -1,11 +1,16 @@
 package com.windanesz.ancientspellcraft.item;
 
+import com.google.common.collect.Multimap;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
+import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.material.IDevoritium;
 import com.windanesz.ancientspellcraft.registry.ASTabs;
 import electroblob.wizardry.Wizardry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -23,6 +28,16 @@ public class ItemDevoritiumScimitar extends ItemSword implements IDevoritium {
 		super(AncientSpellcraft.DEVORITIUM_TOOL_MATERIAL);
 		setCreativeTab(ASTabs.ANCIENTSPELLCRAFT_GEAR);
 		setMaxDamage(0);
+	}
+
+	@Override
+	public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot) {
+		Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
+		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
+			multimap.removeAll(SharedMonsterAttributes.ATTACK_DAMAGE.getName());
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", Settings.generalSettings.spellslayer_damage, 0));
+		}
+		return multimap;
 	}
 
 	@Override
