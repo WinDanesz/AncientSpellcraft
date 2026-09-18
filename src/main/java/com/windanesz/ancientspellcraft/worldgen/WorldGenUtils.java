@@ -92,6 +92,7 @@ public class WorldGenUtils {
 
 	public static void spawnSkeletonMage(World world, BlockPos origin, Vec3d vec, Element element, boolean ghost) {
 		EntitySkeletonMage skeleton = new EntitySkeletonMage(world);
+		skeleton.enablePersistence();
 		skeleton.setElement(element);
 		skeleton.setRare(true);
 		skeleton.setLocationAndAngles(vec.x, vec.y, vec.z, 0, 0);
