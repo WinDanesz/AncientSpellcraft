@@ -1,0 +1,22 @@
+{
+    "enabled": {
+        "book": true,
+        "scroll": true,
+        "wands": true,
+        "npcs": false,
+        "dispensers": false,
+        "commands": true,
+        "treasure": true,
+        "trades": true,
+        "looting": true
+    },
+    "tier": "novice",
+    "element": "magic",
+    "type": "utility",
+    "cost": 10,
+    "chargeup": 0,
+    "cooldown": 20,
+    "base_properties": {
+        "xp_cost_per_bottle": 7
+    }
+}

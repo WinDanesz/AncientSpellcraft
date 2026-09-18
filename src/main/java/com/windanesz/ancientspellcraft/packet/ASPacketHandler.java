@@ -22,6 +22,7 @@ public class ASPacketHandler {
 		registerMessage(PacketExtendedSwordReach.class, PacketExtendedSwordReach.Message.class);
 		registerMessage(PacketCastWarlockSpell.class, PacketCastWarlockSpell.Message.class);
 		registerMessage(PacketItemGuiButton.class, PacketItemGuiButton.Message.class);
+		registerMessage(PacketVinekeeperTarget.class, PacketVinekeeperTarget.Message.class);
 	}
 
 	private static int nextPacketId = 0;

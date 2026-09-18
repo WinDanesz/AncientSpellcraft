@@ -27,7 +27,8 @@
                 { "type": "item", "name": "ancientspellcraft:ring_power", "weight": 1},
                 { "type": "item", "name": "ancientspellcraft:ring_prismarine", "weight": 1},
                 { "type": "item", "name": "ancientspellcraft:ring_protector", "weight": 1},
-                { "type": "item", "name": "ancientspellcraft:ring_solid_air", "weight": 1}
+                { "type": "item", "name": "ancientspellcraft:ring_solid_air", "weight": 1},
+                { "type": "item", "name": "ancientspellcraft:ring_vinekeeper", "weight": 1 }
             ]
         }
     ]

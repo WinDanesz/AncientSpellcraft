@@ -12,6 +12,7 @@ import com.windanesz.ancientspellcraft.tileentity.TileArcaneAnvil;
 import com.windanesz.ancientspellcraft.tileentity.TileSageLectern;
 import com.windanesz.ancientspellcraft.tileentity.TileScribingDesk;
 import com.windanesz.ancientspellcraft.tileentity.TileSphereCognizance;
+import electroblob.wizardry.client.gui.GuiSpellBook;
 import electroblob.wizardry.item.ItemSpellBook;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -144,7 +145,7 @@ public class GuiHandlerAS implements IGuiHandler {
 				if (book.getItem() instanceof ItemASSpellBook) {
 					return new GuiAncientElementSpellBook(book);
 				} else if (book.getItem() instanceof ItemSpellBook) {
-					return new electroblob.wizardry.client.gui.GuiSpellBook(book);
+					return new GuiSpellBook(book);
 				} else if (book.getItem() instanceof ItemRitualBook) {
 					return new GuiRitualBook(book);
 				} else if (book.getItem() instanceof ItemSageTome) {

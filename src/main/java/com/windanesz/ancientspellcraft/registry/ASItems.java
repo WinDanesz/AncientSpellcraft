@@ -15,6 +15,7 @@ import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardryTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
@@ -104,6 +105,7 @@ public final class ASItems {
 	public static final Item ring_shivering = placeholder();
 	public static final Item ring_arcane_flames = placeholder();
 	public static final Item ring_healer = placeholder();
+	public static final Item ring_vinekeeper = placeholder();
 
 	/// amulet
 	public static final Item charm_cryostasis = placeholder();
@@ -721,8 +723,8 @@ public final class ASItems {
 			@Override
 			@SideOnly(Side.CLIENT)
 			public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-				tooltip.add(net.minecraft.client.resources.I18n.format("item." + this.getRegistryName() + ".desc"));
-				tooltip.add("\u00A7c" + net.minecraft.client.resources.I18n.format("item." + this.getRegistryName() + ".desc2"));
+				tooltip.add(I18n.format("item." + this.getRegistryName() + ".desc"));
+				tooltip.add("\u00A7c" + I18n.format("item." + this.getRegistryName() + ".desc2"));
 			}
 		});
 
@@ -730,16 +732,16 @@ public final class ASItems {
 			@Override
 			@SideOnly(Side.CLIENT)
 			public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-				tooltip.add(net.minecraft.client.resources.I18n.format("item." + this.getRegistryName() + ".desc"));
-				tooltip.add("\u00A7c" + net.minecraft.client.resources.I18n.format("item." + this.getRegistryName() + ".desc2"));
+				tooltip.add(I18n.format("item." + this.getRegistryName() + ".desc"));
+				tooltip.add("\u00A7c" + I18n.format("item." + this.getRegistryName() + ".desc2"));
 			}
 		});
 		registerItem(registry, "ring_duration", new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING) {
 			@Override
 			@SideOnly(Side.CLIENT)
 			public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-				tooltip.add(net.minecraft.client.resources.I18n.format("item." + this.getRegistryName() + ".desc"));
-				tooltip.add("\u00A7c" + net.minecraft.client.resources.I18n.format("item." + this.getRegistryName() + ".desc2"));
+				tooltip.add(I18n.format("item." + this.getRegistryName() + ".desc"));
+				tooltip.add("\u00A7c" + I18n.format("item." + this.getRegistryName() + ".desc2"));
 			}
 		});
 
@@ -768,6 +770,7 @@ public final class ASItems {
 		registerItem(registry, "ring_permanent_growth", AncientSpellcraft.MODID, new ItemASArtemisLibArtefact(EnumRarity.EPIC, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_arcane_flames", AncientSpellcraft.MODID, new ItemArcaneFlameRing(EnumRarity.EPIC, ItemArtefact.Type.RING));
 		registerItem(registry, "ring_healer", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.RARE, ItemArtefact.Type.RING));
+		registerItem(registry, "ring_vinekeeper", AncientSpellcraft.MODID, new ItemRingVinekeeper(EnumRarity.UNCOMMON, ItemArtefact.Type.RING));
 
 		/// amulet
 		registerItem(registry, "amulet_mana", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.UNCOMMON, ItemArtefact.Type.AMULET));
@@ -935,6 +938,7 @@ public final class ASItems {
 		registerItem(registry, "charm_vessel_of_the_withered_oath", AncientSpellcraft.MODID, new ItemVesselOfTheWitheredOath(EnumRarity.RARE, ItemArtefact.Type.CHARM));
 
 		registerItem(registry, "charm_verdant_crucible", AncientSpellcraft.MODID, new ItemVerdantCrucible(EnumRarity.UNCOMMON));
+		registerItem(registry, "charm_recall_seal", AncientSpellcraft.MODID, new ItemRecallSeal());
 
 
 		registerItem(registry, "body_power_gem", AncientSpellcraft.MODID, new ItemASArtefact(EnumRarity.EPIC, ItemArtefact.Type.BODY));
