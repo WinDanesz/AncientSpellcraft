@@ -4,13 +4,19 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "MixinCharge",
+    "MixinClairvoyance",
     "MixinConjureBlock",
     "MixinItemArtefact",
     "MixinItemWizardArmour",
     "MixinLifeDrain",
+    "MixinMine",
+    "MixinPlagueOfDarkness",
     "MixinPocketFurnace",
     "MixinPotionSlowTime",
     "MixinRandomSpell",
+    "MixinSpellAreaEffect",
+    "MixinSpellConjuration",
     "MixinWizardryItems"
   ],
   "client": []

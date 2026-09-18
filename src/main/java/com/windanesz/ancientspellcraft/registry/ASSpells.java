@@ -1,7 +1,6 @@
 package com.windanesz.ancientspellcraft.registry;
 
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
-import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.entity.EntityChaosOrb;
 import com.windanesz.ancientspellcraft.entity.construct.EntityHealingSigil;
 import com.windanesz.ancientspellcraft.entity.construct.EntitySpiritWard;
@@ -15,7 +14,6 @@ import com.windanesz.ancientspellcraft.spell.CurseOfInsomnia;
 import com.windanesz.ancientspellcraft.spell.CurseOfEternalTempest;
 import com.windanesz.ancientspellcraft.spell.*;
 import electroblob.wizardry.item.SpellActions;
-import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.spell.SpellConstruct;
 import electroblob.wizardry.spell.SpellProjectile;
@@ -264,6 +262,7 @@ public final class ASSpells {
     public static final Spell arcane_wall = placeholder();
     public static final Spell tome_warp = placeholder();
     public static final Spell mystic_sigil = placeholder();
+    public static final Spell preserve_experience = placeholder();
 //    public static final Spell absorb_armor = placeholder();
     public static final Spell absorb_artefact = placeholder();
     public static final Spell absorb_crystal = placeholder();
@@ -648,6 +647,7 @@ public final class ASSpells {
 		registry.register(new ArcaneWall());
 		registry.register(new TomeWarp());
 		registry.register(new MysticSigil());
+		registry.register(new PreserveExperience());
 		registry.register(new ChaosOrb<>(AncientSpellcraft.MODID, "chaos_orb", EntityChaosOrb::new));
 		registry.register(new AbsorbObject());
 //		registry.register(new WarlockSpellPlaceholder("absorb_armor"));
@@ -674,23 +674,15 @@ public final class ASSpells {
 		registry.register(new SpellPlasmaCutter());
 		registry.register(new Woodbending());
 
-		/// BASE SPELL MODIFICATION OVERRIDES  ///
-
-		if (Settings.spellCompatSettings.mineSpellOverride) {
-			registry.register(new MineAS());
-		}
-		if (Settings.spellCompatSettings.conjurePickaxeSpellOverride) {
-			registry.register(new ConjurePickaxe("conjure_pickaxe", WizardryItems.spectral_pickaxe));
-		}
-		if (Settings.spellCompatSettings.chargeSpellOverride) {
-			registry.register(new ChargeAS());
-		}
-		if (Settings.spellCompatSettings.clairvoyanceSpellOverride) {
-			registry.register(new ClairvoyanceAS());
-		}
-		registry.register(new PlagueOfDarknessAS());
-
-		/// BASE SPELL MODIFICATION OVERRIDES ///
+		// Mine, Charge, Clairvoyance, Conjure Pickaxe and Plague of Darkness are no longer overridden/re-registered
+		// here - the base Wizardry spell stays as the sole registered instance for each, and the AS-specific
+		// compatibility behaviour (artefact hooks etc.) is instead added via mixins into those classes directly
+		// (see com.windanesz.ancientspellcraft.mixin.ebwizardry). This avoids re-registering spells under an
+		// existing registry name, which used to require manually patching up Wizardry's internal networkID
+		// bookkeeping and was fragile enough to silently corrupt spell property/casting sync between client and
+		// server whenever Wizardry added or reordered spells. The mineSpellOverride/chargeSpellOverride/
+		// clairvoyanceSpellOverride/conjurePickaxeSpellOverride settings still work exactly as before; they're just
+		// checked from within the relevant mixin now instead of gating which spell class got registered.
 	}
 }
 

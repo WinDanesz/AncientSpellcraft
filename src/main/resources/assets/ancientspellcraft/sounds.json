@@ -287,6 +287,7 @@
   "spell.shrink_self":                        {"category": "spells", "sounds": ["ancientspellcraft:shrink_effect"]},
   "spell.silencing_sigil":                    {"category": "spells", "sounds": ["ancientspellcraft:dispel_entity"]},
   "spell.mystic_sigil":                       {"category": "spells", "sounds": ["ancientspellcraft:dispel_entity"]},
+  "spell.preserve_experience":                {"category": "spells", "sounds": ["ancientspellcraft:transmutation"]},
   "spell.singe":                              {"category": "spells", "sounds": ["mob/ghast/fireball4"]},
   "spell.skull_sentinel":                     {"category": "spells", "sounds": ["ancientspellcraft:dispel_entity"]},
   "spell.snow_block":                         {"category": "spells", "sounds": ["ancientspellcraft:conjure_ice"]},

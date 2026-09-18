@@ -142,7 +142,6 @@ public class AncientSpellcraft {
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event) {
 		event.registerServerCommand(new CommandListBiomes());
-		SpellPropertiesDumper.dumpProperties(event);
 	}
 
 }
