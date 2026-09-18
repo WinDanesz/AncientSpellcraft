@@ -3,6 +3,7 @@ package com.windanesz.ancientspellcraft.worldgen;
 import com.windanesz.ancientspellcraft.AncientSpellcraft;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.integration.antiqueatlas.ASAntiqueAtlasIntegration;
+import com.windanesz.ancientspellcraft.registry.ASBlocks;
 import com.windanesz.ancientspellcraft.tileentity.TileSageLectern;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.item.ItemWizardArmour;
@@ -117,6 +118,7 @@ public class WorldGenAncientTemple extends WorldGenSurfaceStructureAS {
 		);
 
 		template.addBlocksToWorld(world, origin, processor, settings, 2 | 16);
+		addSealedFoundation(world, origin, template, settings);
 
 		ASAntiqueAtlasIntegration.markMysteryStructure(world, origin.getX(), origin.getZ());
 
@@ -125,6 +127,28 @@ public class WorldGenAncientTemple extends WorldGenSurfaceStructureAS {
 		for (Map.Entry<BlockPos, String> entry : dataBlocks.entrySet()) {
 			Vec3d vec = GeometryUtils.getCentre(entry.getKey());
 			WorldGenUtils.spawnEntityByType(world, entry.getValue(), ItemWizardArmour.ArmourClass.BATTLEMAGE, origin, vec, blocksPlaced, Element.MAGIC, false);
+		}
+	}
+
+	/**
+	 * Adds a second sealed layer beneath the temple. The template floor itself is deliberately left untouched so
+	 * its decoration remains intact, while the two layers below prevent players from clipping into sealed rooms.
+	 */
+	private static void addSealedFoundation(World world, BlockPos origin, Template template, PlacementSettings settings) {
+		BlockPos size = template.getSize();
+		BlockPos firstCorner = Template.transformedBlockPos(settings, BlockPos.ORIGIN);
+		BlockPos secondCorner = Template.transformedBlockPos(settings, new BlockPos(size.getX() - 1, 0, 0));
+		BlockPos thirdCorner = Template.transformedBlockPos(settings, new BlockPos(0, 0, size.getZ() - 1));
+		BlockPos fourthCorner = Template.transformedBlockPos(settings, new BlockPos(size.getX() - 1, 0, size.getZ() - 1));
+
+		int minX = Math.min(Math.min(firstCorner.getX(), secondCorner.getX()), Math.min(thirdCorner.getX(), fourthCorner.getX()));
+		int maxX = Math.max(Math.max(firstCorner.getX(), secondCorner.getX()), Math.max(thirdCorner.getX(), fourthCorner.getX()));
+		int minZ = Math.min(Math.min(firstCorner.getZ(), secondCorner.getZ()), Math.min(thirdCorner.getZ(), fourthCorner.getZ()));
+		int maxZ = Math.max(Math.max(firstCorner.getZ(), secondCorner.getZ()), Math.max(thirdCorner.getZ(), fourthCorner.getZ()));
+
+		for (BlockPos.MutableBlockPos pos : BlockPos.getAllInBoxMutable(
+				origin.add(minX, -1, minZ), origin.add(maxX, 0, maxZ))) {
+			world.setBlockState(pos, ASBlocks.sealed_stone.getDefaultState(), 2);
 		}
 	}
 
