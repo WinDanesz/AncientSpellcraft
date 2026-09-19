@@ -1,0 +1,4 @@
+{
+    "parent": "item/generated",
+    "textures": {"layer0": "ancientspellcraft:items/amulet_talisman_of_affinity_lightning"}
+}

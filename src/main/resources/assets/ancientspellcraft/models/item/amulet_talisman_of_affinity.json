@@ -2,5 +2,14 @@
     "parent": "item/generated",
     "textures": {
         "layer0": "ancientspellcraft:items/amulet_talisman_of_affinity"
-    }
+    },
+    "overrides": [
+        {"predicate": {"element": 0.1}, "model": "ancientspellcraft:item/amulet_talisman_of_affinity_fire"},
+        {"predicate": {"element": 0.2}, "model": "ancientspellcraft:item/amulet_talisman_of_affinity_ice"},
+        {"predicate": {"element": 0.3}, "model": "ancientspellcraft:item/amulet_talisman_of_affinity_lightning"},
+        {"predicate": {"element": 0.4}, "model": "ancientspellcraft:item/amulet_talisman_of_affinity_necromancy"},
+        {"predicate": {"element": 0.5}, "model": "ancientspellcraft:item/amulet_talisman_of_affinity_earth"},
+        {"predicate": {"element": 0.6}, "model": "ancientspellcraft:item/amulet_talisman_of_affinity_sorcery"},
+        {"predicate": {"element": 0.7}, "model": "ancientspellcraft:item/amulet_talisman_of_affinity_healing"}
+    ]
 }

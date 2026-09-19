@@ -1,5 +1,6 @@
 package com.windanesz.ancientspellcraft.mixin.ebwizardry;
 
+import com.windanesz.ancientspellcraft.integration.baubles.ASBaublesIntegration;
 import com.windanesz.ancientspellcraft.item.AbstractItemArtefactWithSlots;
 import com.windanesz.ancientspellcraft.Settings;
 import com.windanesz.ancientspellcraft.registry.ASItems;
@@ -109,9 +110,10 @@ public abstract class MixinRandomSpell {
 		if (possibleElements.isEmpty()) return Spells.none; // A bit more likely I guess, but still pretty unlikely
 
 		/////////////// MIXIN CHANGES
-		// The talisman is an inventory item rather than an equipped artefact.
-		if (player != null) {
-			player.inventory.mainInventory.stream()
+		// The talisman must be equipped in an amulet bauble slot.
+		if (player != null && ASBaublesIntegration.enabled()) {
+			List<ItemStack> equippedArtefacts = ASBaublesIntegration.getEquippedArtefactStacks(player, ItemArtefact.Type.AMULET);
+			equippedArtefacts.stream()
 					.filter(s -> s.getItem() == ASItems.amulet_talisman_of_affinity)
 					.findFirst()
 					.ifPresent(s -> {
