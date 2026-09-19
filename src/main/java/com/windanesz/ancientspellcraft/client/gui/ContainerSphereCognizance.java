@@ -1,7 +1,6 @@
 package com.windanesz.ancientspellcraft.client.gui;
 
 import com.windanesz.ancientspellcraft.packet.PacketControlInput;
-import com.windanesz.ancientspellcraft.registry.ASItems;
 import com.windanesz.ancientspellcraft.tileentity.TileSphereCognizance;
 import electroblob.wizardry.inventory.SlotItemList;
 import electroblob.wizardry.registry.WizardryItems;
@@ -71,22 +70,18 @@ public class ContainerSphereCognizance extends Container {
 		// crystal slot
 		this.addSlotToContainer(new SlotItemList(te, 0, 14, 100 + 26, 64, WizardryItems.magic_crystal, WizardryItems.crystal_shard, WizardryItems.grand_crystal));
 
-		/// book
-		this.addSlotToContainer(new SlotItemList(te, 1, 62 + 17, 100 + 15, 1,
-				WizardryItems.spell_book,
-				WizardryItems.scroll,
-				ASItems.ancient_spellcraft_spell_book,
-				ASItems.ancient_spellcraft_scroll,
-				ASItems.stone_tablet_small,
-				ASItems.stone_tablet,
-				ASItems.stone_tablet_large,
-				ASItems.stone_tablet_grand,
-				ASItems.ancient_mana_flask,
-				ASItems.ancient_bound_stone,
-				ASItems.mystic_spell_book,
-				ASItems.forbidden_tome,
-				ASItems.runic_plate
-		));
+		// Keep GUI insertion consistent with the tile entity, including spell books supplied by add-ons.
+		this.addSlotToContainer(new Slot(te, BOOK_SLOT, 62 + 17, 100 + 15) {
+			@Override
+			public boolean isItemValid(ItemStack stack) {
+				return te.isItemValidForSlot(BOOK_SLOT, stack);
+			}
+
+			@Override
+			public int getSlotStackLimit() {
+				return 1;
+			}
+		});
 
 		int n = 75;
 
